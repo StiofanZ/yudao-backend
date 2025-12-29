@@ -3,7 +3,7 @@ package cn.gszs.yudao.module.lghjft.service.wfsqtfsq;
 import cn.gszs.yudao.module.lghjft.controller.admin.wfsqtfsq.vo.WfSqTfsqPageReqVO;
 import cn.gszs.yudao.module.lghjft.controller.admin.wfsqtfsq.vo.WfSqTfsqSaveReqVO;
 import cn.gszs.yudao.module.lghjft.dal.dataobject.wfsqtfsq.WfSqTfsqDO;
-import cn.gszs.yudao.module.lghjft.dal.dataobject.wfsqtfsqmx.WfSqTfsqmxDO;
+import cn.gszs.yudao.module.lghjft.dal.dataobject.wfsqtfsq.WfSqTfsqmxDO;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import jakarta.validation.Valid;
 

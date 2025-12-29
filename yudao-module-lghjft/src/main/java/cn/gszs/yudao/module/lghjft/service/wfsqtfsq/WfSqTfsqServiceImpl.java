@@ -3,10 +3,11 @@ package cn.gszs.yudao.module.lghjft.service.wfsqtfsq;
 import cn.gszs.yudao.module.lghjft.controller.admin.wfsqtfsq.vo.WfSqTfsqPageReqVO;
 import cn.gszs.yudao.module.lghjft.controller.admin.wfsqtfsq.vo.WfSqTfsqSaveReqVO;
 import cn.gszs.yudao.module.lghjft.dal.dataobject.wfsqtfsq.WfSqTfsqDO;
-import cn.gszs.yudao.module.lghjft.dal.dataobject.wfsqtfsqmx.WfSqTfsqmxDO;
+import cn.gszs.yudao.module.lghjft.dal.dataobject.wfsqtfsq.WfSqTfsqmxDO;
 import cn.gszs.yudao.module.lghjft.dal.mysql.wfsqtfsq.WfSqTfsqMapper;
-import cn.gszs.yudao.module.lghjft.dal.mysql.wfsqtfsqmx.WfSqTfsqmxMapper;
+import cn.gszs.yudao.module.lghjft.dal.mysql.wfsqtfsq.WfSqTfsqmxMapper;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import jakarta.annotation.Resource;
@@ -18,6 +19,7 @@ import java.util.List;
 
 import static cn.gszs.yudao.module.lghjft.enums.ErrorCodeConstants.WF_SQ_TFSQ_NOT_EXISTS;
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertList;
 import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.diffList;
 
 /**

@@ -1,6 +1,6 @@
 package cn.gszs.yudao.module.lghjft.controller.admin.wfsqtfsq.vo;
 
-import cn.gszs.yudao.module.lghjft.dal.dataobject.wfsqtfsqmx.WfSqTfsqmxDO;
+import cn.gszs.yudao.module.lghjft.dal.dataobject.wfsqtfsq.WfSqTfsqmxDO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
