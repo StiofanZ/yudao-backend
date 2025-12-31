@@ -2,6 +2,8 @@ package cn.iocoder.yudao.module.report.framework.jmreport.core.service;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.iocoder.yudao.framework.common.biz.system.oauth2.OAuth2TokenCommonApi;
+import cn.iocoder.yudao.framework.common.biz.system.oauth2.dto.OAuth2AccessTokenCheckRespDTO;
 import cn.iocoder.yudao.framework.common.biz.system.permission.PermissionCommonApi;
 import cn.iocoder.yudao.framework.common.exception.ServiceException;
 import cn.iocoder.yudao.framework.common.util.servlet.ServletUtils;
@@ -10,9 +12,6 @@ import cn.iocoder.yudao.framework.security.core.LoginUser;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.framework.tenant.core.context.TenantContextHolder;
 import cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils;
-import cn.iocoder.yudao.framework.common.biz.system.oauth2.OAuth2TokenCommonApi;
-import cn.iocoder.yudao.framework.common.biz.system.oauth2.dto.OAuth2AccessTokenCheckRespDTO;
-import cn.iocoder.yudao.module.system.api.permission.PermissionApi;
 import cn.iocoder.yudao.module.system.enums.permission.RoleCodeEnum;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -57,7 +56,7 @@ public class JmReportTokenServiceImpl implements JmReportTokenServiceI {
 
         // 设置到 yudao 系统的 token
         HttpHeaders headers = new HttpHeaders();
-        headers.add(securityProperties.getTokenHeader(), String.format(AUTHORIZATION_FORMAT, token));
+        headers.add(securityProperties.getTokenHeader(), String.format(AUTHORIZATION_FORMAT, "auth"));
         return headers;
     }
 
