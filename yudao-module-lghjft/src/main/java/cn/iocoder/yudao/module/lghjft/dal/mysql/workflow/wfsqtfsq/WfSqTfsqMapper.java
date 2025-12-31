@@ -1,9 +1,9 @@
-package cn.iocoder.yudao.module.lghjft.dal.mysql.wfsqtfsq;
+package cn.iocoder.yudao.module.lghjft.dal.mysql.workflow.wfsqtfsq;
 
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
-import cn.iocoder.yudao.module.lghjft.controller.admin.wfsqtfsq.vo.WfSqTfsqKtfxxRespVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.wfsqtfsq.WfSqTfsqDO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.wfsqtfsq.WfSqTfsqmxDO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqtfsq.vo.WfSqTfsqKtfxxRespVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.wfsqtfsq.WfSqTfsqDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.wfsqtfsq.WfSqTfsqmxDO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

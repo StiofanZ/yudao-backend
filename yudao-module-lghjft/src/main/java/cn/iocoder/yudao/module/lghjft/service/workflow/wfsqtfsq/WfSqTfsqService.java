@@ -1,8 +1,8 @@
-package cn.iocoder.yudao.module.lghjft.service.wfsqtfsq;
+package cn.iocoder.yudao.module.lghjft.service.workflow.wfsqtfsq;
 
-import cn.iocoder.yudao.module.lghjft.controller.admin.wfsqtfsq.vo.WfSqTfsqKtfxxRespVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.wfsqtfsq.vo.WfSqTfsqRespVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.wfsqtfsq.vo.WfSqTfsqSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqtfsq.vo.WfSqTfsqKtfxxRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqtfsq.vo.WfSqTfsqRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqtfsq.vo.WfSqTfsqSaveReqVO;
 
 import java.time.LocalDate;
 import java.util.List;

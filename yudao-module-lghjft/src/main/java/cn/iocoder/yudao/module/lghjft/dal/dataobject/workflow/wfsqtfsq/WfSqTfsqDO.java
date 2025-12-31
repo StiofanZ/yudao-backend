@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.lghjft.dal.dataobject.wfsqtfsq;
+package cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.wfsqtfsq;
 
 import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.IdType;

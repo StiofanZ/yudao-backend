@@ -1,18 +1,18 @@
-package cn.iocoder.yudao.module.lghjft.service.wfsqtfsq;
+package cn.iocoder.yudao.module.lghjft.service.workflow.wfsqtfsq;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils;
 import cn.iocoder.yudao.module.bpm.api.task.BpmProcessInstanceApi;
 import cn.iocoder.yudao.module.bpm.api.task.dto.BpmProcessInstanceCreateReqDTO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.wfsqtfsq.vo.WfSqTfsqKtfxxRespVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.wfsqtfsq.vo.WfSqTfsqRespVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.wfsqtfsq.vo.WfSqTfsqSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.wfsqtfsq.vo.WfSqTfsqmxRespVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.wfsqtfsq.WfSqTfsqDO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.wfsqtfsq.WfSqTfsqmxDO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqtfsq.vo.WfSqTfsqKtfxxRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqtfsq.vo.WfSqTfsqRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqtfsq.vo.WfSqTfsqSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqtfsq.vo.WfSqTfsqmxRespVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.wfsqtfsq.WfSqTfsqDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.wfsqtfsq.WfSqTfsqmxDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.nsrxx.NsrxxMapper;
-import cn.iocoder.yudao.module.lghjft.dal.mysql.wfsqtfsq.WfSqTfsqMapper;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.workflow.wfsqtfsq.WfSqTfsqMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
