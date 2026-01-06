@@ -1,8 +1,12 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.hj.bqgl;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hj.bqgl.vo.BqglCreateReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hj.bqgl.vo.BqglHjxxPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hj.bqgl.vo.BqglHjxxRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hj.bqgl.vo.BqglHjxxSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hj.bqgl.vo.BqglRespVO;
 import cn.iocoder.yudao.module.lghjft.service.hj.bqgl.BqglService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -43,6 +47,20 @@ public class BqglController {
     @Parameter(name = "id", description = "编号", required = true)
     public CommonResult<Boolean> deleteBqxx(@RequestParam("id") String id) {
         bqglService.deleteBqxx(id);
+        return success(true);
+    }
+
+    @GetMapping("/getHjxx")
+    @Operation(summary = "查询标签关联的户籍信息")
+    public CommonResult<PageResult<BqglHjxxRespVO>> getHjxx(@Valid BqglHjxxPageReqVO pageReqVO) {
+        Long deptId = SecurityFrameworkUtils.getLoginUserDeptId();
+        return success(bqglService.getHjxxPage(pageReqVO, deptId));
+    }
+
+    @PostMapping("/saveHjxx")
+    @Operation(summary = "保存户籍标签信息")
+    public CommonResult<Boolean> saveHjxx(@Valid @RequestBody BqglHjxxSaveReqVO saveReqVO) {
+        bqglService.saveHjxx(saveReqVO);
         return success(true);
     }
 }
