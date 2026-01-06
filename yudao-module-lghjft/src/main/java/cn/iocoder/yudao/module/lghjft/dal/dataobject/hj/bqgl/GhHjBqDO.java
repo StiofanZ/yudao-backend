@@ -35,4 +35,14 @@ public class GhHjBqDO extends BaseDO {
      */
     private String djxh;
 
+    /**
+     * 有效期起
+     */
+    private java.time.LocalDate yxqq;
+
+    /**
+     * 有效期止
+     */
+    private java.time.LocalDate yxqz;
+
 }

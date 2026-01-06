@@ -21,4 +21,10 @@ public class BqglHjxxRespVO {
 
     @Schema(description = "标签名称", example = "重点企业")
     private String bqMc;
+
+    @Schema(description = "有效期起", example = "2023-01-01")
+    private java.time.LocalDate yxqq;
+
+    @Schema(description = "有效期止", example = "2023-12-31")
+    private java.time.LocalDate yxqz;
 }
