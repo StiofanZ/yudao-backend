@@ -26,6 +26,9 @@ import java.time.LocalDate;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 
+import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.BQ_HAS_VALID_DATA;
+
 /**
  * 标签管理 Service 实现类
  *
@@ -64,6 +67,13 @@ public class BqglServiceImpl implements BqglService {
 
     @Override
     public void deleteBqxx(String id) {
+        // 校验是否存在有效数据
+        Long count = ghHjBqMapper.selectCount(new LambdaQueryWrapper<GhHjBqDO>()
+                .eq(GhHjBqDO::getBqId, id)
+                .ge(GhHjBqDO::getYxqz, LocalDate.now()));
+        if (count > 0) {
+            throw exception(BQ_HAS_VALID_DATA);
+        }
         ghDmHjBqMapper.deleteById(id);
     }
 
