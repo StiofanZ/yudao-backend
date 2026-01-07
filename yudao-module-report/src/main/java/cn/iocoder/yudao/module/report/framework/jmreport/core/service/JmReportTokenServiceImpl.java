@@ -52,11 +52,10 @@ public class JmReportTokenServiceImpl implements JmReportTokenServiceI {
     public HttpHeaders customApiHeader() {
         // 读取积木标标系统的 token
         HttpServletRequest request = ServletUtils.getRequest();
-        String token = request.getHeader(JM_TOKEN_HEADER);
-
+        String token = request.getParameter("token");
         // 设置到 yudao 系统的 token
         HttpHeaders headers = new HttpHeaders();
-        headers.add(securityProperties.getTokenHeader(), String.format(AUTHORIZATION_FORMAT, "auth"));
+        headers.add(securityProperties.getTokenHeader(), String.format(AUTHORIZATION_FORMAT, token));
         return headers;
     }
 
