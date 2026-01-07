@@ -156,4 +156,8 @@ public class JmReportTokenServiceImpl implements JmReportTokenServiceI {
         return StrUtil.toStringOrNull(loginUser.getTenantId());
     }
 
+    @Override
+    public String[] getPermissions(String token) {
+        return new String[]{"drag:datasource:testConnection", "onl:drag:clear:recovery", "drag:analysis:sql", "drag:design:getTotalData", "onl:drag:page:delete", "drag:dataset:save"};
+    }
 }
