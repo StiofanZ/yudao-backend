@@ -25,7 +25,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 public class AuthenticateController {
     @Resource
     private AuthenticateService authenticateService;
-    @PostMapping("/login-by-lgh")
+    @PostMapping("/login/login-by-lgh")
     @PermitAll
     @Operation(summary = "LGH 授权登录")
     public CommonResult<AuthLoginRespVO> loginByLgh(@RequestBody @Valid AuthenticateReqVO reqVO) {
