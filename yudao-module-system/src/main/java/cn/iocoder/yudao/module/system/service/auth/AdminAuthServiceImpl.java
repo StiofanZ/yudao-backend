@@ -112,8 +112,13 @@ public class AdminAuthServiceImpl implements AdminAuthService {
             socialUserService.bindSocialUser(new SocialUserBindReqDTO(user.getId(), getUserType().getValue(),
                     reqVO.getSocialType(), reqVO.getSocialCode(), reqVO.getSocialState()));
         }
-        // 创建 Token 令牌，记录登录日志
-        return createTokenAfterLoginSuccess(user.getId(), reqVO.getUsername(), LoginLogTypeEnum.LOGIN_USERNAME);
+        // 创建 Token 令牌，记录登录日志，处理返回用户数据
+        AuthLoginRespVO authLoginRespVO = createTokenAfterLoginSuccess(user.getId(), reqVO.getUsername(), LoginLogTypeEnum.LOGIN_USERNAME);
+        authLoginRespVO.setNickName(user.getNickname());
+        authLoginRespVO.setAvatar(user.getAvatar());
+        authLoginRespVO.setDeptId(user.getDeptId());
+
+        return authLoginRespVO;
     }
 
     @Override
