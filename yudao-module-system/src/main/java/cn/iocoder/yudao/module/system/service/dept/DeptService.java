@@ -2,6 +2,7 @@ package cn.iocoder.yudao.module.system.service.dept;
 
 import cn.iocoder.yudao.framework.common.util.collection.CollectionUtils;
 import cn.iocoder.yudao.module.system.controller.admin.dept.vo.dept.DeptListReqVO;
+import cn.iocoder.yudao.module.system.controller.admin.dept.vo.dept.DeptRespVO;
 import cn.iocoder.yudao.module.system.controller.admin.dept.vo.dept.DeptSaveReqVO;
 import cn.iocoder.yudao.module.system.dal.dataobject.dept.DeptDO;
 
@@ -50,6 +51,14 @@ public interface DeptService {
      * @return 部门信息
      */
     DeptDO getDept(Long id);
+
+    /**
+     * 获得部门信息VO
+     *
+     * @param id 部门编号
+     * @return 部门信息
+     */
+    DeptRespVO getDeptVO(Long id);
 
     /**
      * 获得部门信息数组

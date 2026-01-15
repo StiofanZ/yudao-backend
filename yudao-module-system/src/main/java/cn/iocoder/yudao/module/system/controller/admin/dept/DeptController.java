@@ -90,4 +90,12 @@ public class DeptController {
         return success(BeanUtils.toBean(dept, DeptRespVO.class));
     }
 
+    @GetMapping("/getVO")
+    @Operation(summary = "获得部门信息VO")
+    @Parameter(name = "id", description = "编号", required = true, example = "1024")
+    @PreAuthorize("@ss.hasPermission('system:dept:query')")
+    public CommonResult<DeptRespVO> getDeptVO(@RequestParam("id") Long id) {
+        return success(deptService.getDeptVO(id));
+    }
+
 }

@@ -6,10 +6,14 @@ import cn.iocoder.yudao.framework.common.enums.CommonStatusEnum;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.datapermission.core.annotation.DataPermission;
 import cn.iocoder.yudao.module.system.controller.admin.dept.vo.dept.DeptListReqVO;
+import cn.iocoder.yudao.module.system.controller.admin.dept.vo.dept.DeptRespVO;
 import cn.iocoder.yudao.module.system.controller.admin.dept.vo.dept.DeptSaveReqVO;
 import cn.iocoder.yudao.module.system.dal.dataobject.dept.DeptDO;
+import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
 import cn.iocoder.yudao.module.system.dal.mysql.dept.DeptMapper;
+import cn.iocoder.yudao.module.system.dal.mysql.user.AdminUserMapper;
 import cn.iocoder.yudao.module.system.dal.redis.RedisKeyConstants;
+import cn.iocoder.yudao.module.system.service.user.AdminUserService;
 import com.google.common.annotations.VisibleForTesting;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
@@ -36,6 +40,9 @@ public class DeptServiceImpl implements DeptService {
 
     @Resource
     private DeptMapper deptMapper;
+
+    @Resource
+    private AdminUserMapper userMapper;
 
     @Override
     @CacheEvict(cacheNames = RedisKeyConstants.DEPT_CHILDREN_ID_LIST,
@@ -167,6 +174,20 @@ public class DeptServiceImpl implements DeptService {
     @Override
     public DeptDO getDept(Long id) {
         return deptMapper.selectById(id);
+    }
+
+    @Override
+    public DeptRespVO getDeptVO(Long id) {
+        DeptDO deptDO = deptMapper.selectById(id);
+        DeptRespVO deptRespVO = BeanUtils.toBean(deptDO, DeptRespVO.class);
+        DeptDO deptParentDO = deptMapper.selectDeptDOByParentId(deptDO.getParentId());
+        if(!Objects.isNull(deptParentDO)){
+            deptRespVO.setParentName(deptParentDO.getName());
+        }
+        AdminUserDO userDO = userMapper.selectById(deptDO.getLeaderUserId());
+        deptRespVO.setLeaderUserName(userDO.getUsername());
+        deptRespVO.setLeaderNickname(userDO.getNickname());
+        return deptRespVO;
     }
 
     @Override

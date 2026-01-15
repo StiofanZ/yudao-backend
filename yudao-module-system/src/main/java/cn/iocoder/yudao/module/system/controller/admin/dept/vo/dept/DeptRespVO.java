@@ -18,11 +18,20 @@ public class DeptRespVO {
     @Schema(description = "父部门 ID", example = "1024")
     private Long parentId;
 
+    @Schema(description = "父部门名称", example = "1024")
+    private String parentName;
+
     @Schema(description = "显示顺序", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
     private Integer sort;
 
     @Schema(description = "负责人的用户编号", example = "2048")
     private Long leaderUserId;
+
+    @Schema(description = "负责人的用户编号", example = "2048")
+    private String leaderUserName;
+
+    @Schema(description = "负责人的用户昵称", example = "2048")
+    private String leaderNickname;
 
     @Schema(description = "联系电话", example = "15601691000")
     private String phone;
