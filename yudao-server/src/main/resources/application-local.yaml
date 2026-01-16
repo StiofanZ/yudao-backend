@@ -261,7 +261,7 @@ yudao:
       - iot:device
       - iot:thing_model_list
 
-
+#pc
   lghjft:
     auth:
       app-id: testPc001
@@ -269,6 +269,13 @@ yudao:
       platform: testPc001
       gateway-url: https://gansu-gateway-test.gobestsoft.cn/gbs/admin/sys/sso/getUserInfoByToken
       decrypt-key: d94a89ae8b5e40ae
+#app
+    app:
+      app-id: testApp
+      app-secret: 28a740ea93b74d61
+      decrypt-key: 8244bbf03a214426
+      gateway-url: https://gansu-gateway-test.gobestsoft.cn/sso/getUserInfoByToken
+      platform: testApp
 
 justauth:
   enabled: true
