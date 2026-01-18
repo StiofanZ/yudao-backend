@@ -1,13 +1,13 @@
-package cn.iocoder.yudao.module.lghjft.service.xxzx.notify;
+package cn.iocoder.yudao.module.lghjft.service.xxzx.xxtx;
 
 import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-import cn.iocoder.yudao.module.system.controller.admin.notify.vo.template.NotifyTemplatePageReqVO;
-import cn.iocoder.yudao.module.system.controller.admin.notify.vo.template.NotifyTemplateSaveReqVO;
-import cn.iocoder.yudao.module.system.dal.dataobject.notify.NotifyTemplateDO;
-import cn.iocoder.yudao.module.system.dal.mysql.notify.NotifyTemplateMapper;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.template.XxtxTemplatePageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.template.XxtxTemplateSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.xxzx.xxtx.XxtxTemplateDO;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.xxzx.xxtx.XxtxTemplateMapper;
 import cn.iocoder.yudao.module.system.dal.redis.RedisKeyConstants;
 import com.google.common.annotations.VisibleForTesting;
 import jakarta.annotation.Resource;
@@ -33,7 +33,7 @@ import static cn.iocoder.yudao.module.system.enums.ErrorCodeConstants.NOTIFY_TEM
 @Service
 @Validated
 @Slf4j
-public class NotifyTemplateServiceImpl implements NotifyTemplateService {
+public class XxtxTemplateServiceImpl implements XxtxTemplateService {
 
     /**
      * 正则表达式，匹配 {} 中的变量
@@ -41,33 +41,33 @@ public class NotifyTemplateServiceImpl implements NotifyTemplateService {
     private static final Pattern PATTERN_PARAMS = Pattern.compile("\\{(.*?)}");
 
     @Resource
-    private NotifyTemplateMapper notifyTemplateMapper;
+    private XxtxTemplateMapper xxtxTemplateMapper;
 
     @Override
-    public Long createNotifyTemplate(NotifyTemplateSaveReqVO createReqVO) {
+    public Long createXxtxTemplate(XxtxTemplateSaveReqVO createReqVO) {
         // 校验站内信编码是否重复
-        validateNotifyTemplateCodeDuplicate(null, createReqVO.getCode());
+        validateXxtxTemplateCodeDuplicate(null, createReqVO.getCode());
 
         // 插入
-        NotifyTemplateDO notifyTemplate = BeanUtils.toBean(createReqVO, NotifyTemplateDO.class);
-        notifyTemplate.setParams(parseTemplateContentParams(notifyTemplate.getContent()));
-        notifyTemplateMapper.insert(notifyTemplate);
-        return notifyTemplate.getId();
+        XxtxTemplateDO xxtxTemplate = BeanUtils.toBean(createReqVO, XxtxTemplateDO.class);
+        xxtxTemplate.setParams(parseTemplateContentParams(xxtxTemplate.getContent()));
+        xxtxTemplateMapper.insert(xxtxTemplate);
+        return xxtxTemplate.getId();
     }
 
     @Override
     @CacheEvict(cacheNames = RedisKeyConstants.NOTIFY_TEMPLATE,
             allEntries = true) // allEntries 清空所有缓存，因为可能修改到 code 字段，不好清理
-    public void updateNotifyTemplate(NotifyTemplateSaveReqVO updateReqVO) {
+    public void updateXxtxTemplate(XxtxTemplateSaveReqVO updateReqVO) {
         // 校验存在
-        validateNotifyTemplateExists(updateReqVO.getId());
+        validateXxtxTemplateExists(updateReqVO.getId());
         // 校验站内信编码是否重复
-        validateNotifyTemplateCodeDuplicate(updateReqVO.getId(), updateReqVO.getCode());
+        validateXxtxTemplateCodeDuplicate(updateReqVO.getId(), updateReqVO.getCode());
 
         // 更新
-        NotifyTemplateDO updateObj = BeanUtils.toBean(updateReqVO, NotifyTemplateDO.class);
+        XxtxTemplateDO updateObj = BeanUtils.toBean(updateReqVO, XxtxTemplateDO.class);
         updateObj.setParams(parseTemplateContentParams(updateObj.getContent()));
-        notifyTemplateMapper.updateById(updateObj);
+        xxtxTemplateMapper.updateById(updateObj);
     }
 
     @VisibleForTesting
@@ -78,46 +78,46 @@ public class NotifyTemplateServiceImpl implements NotifyTemplateService {
     @Override
     @CacheEvict(cacheNames = RedisKeyConstants.NOTIFY_TEMPLATE,
             allEntries = true) // allEntries 清空所有缓存，因为 id 不是直接的缓存 code，不好清理
-    public void deleteNotifyTemplate(Long id) {
+    public void deleteXxtxTemplate(Long id) {
         // 校验存在
-        validateNotifyTemplateExists(id);
+        validateXxtxTemplateExists(id);
         // 删除
-        notifyTemplateMapper.deleteById(id);
+        xxtxTemplateMapper.deleteById(id);
     }
 
     @Override
     @CacheEvict(cacheNames = RedisKeyConstants.NOTIFY_TEMPLATE,
             allEntries = true) // allEntries 清空所有缓存，因为 id 不是直接的缓存 code，不好清理
-    public void deleteNotifyTemplateList(List<Long> ids) {
-        notifyTemplateMapper.deleteByIds(ids);
+    public void deleteXxtxTemplateList(List<Long> ids) {
+        xxtxTemplateMapper.deleteByIds(ids);
     }
 
-    private void validateNotifyTemplateExists(Long id) {
-        if (notifyTemplateMapper.selectById(id) == null) {
+    private void validateXxtxTemplateExists(Long id) {
+        if (xxtxTemplateMapper.selectById(id) == null) {
             throw exception(NOTIFY_TEMPLATE_NOT_EXISTS);
         }
     }
 
     @Override
-    public NotifyTemplateDO getNotifyTemplate(Long id) {
-        return notifyTemplateMapper.selectById(id);
+    public XxtxTemplateDO getXxtxTemplate(Long id) {
+        return xxtxTemplateMapper.selectById(id);
     }
 
     @Override
     @Cacheable(cacheNames = RedisKeyConstants.NOTIFY_TEMPLATE, key = "#code",
             unless = "#result == null")
-    public NotifyTemplateDO getNotifyTemplateByCodeFromCache(String code) {
-        return notifyTemplateMapper.selectByCode(code);
+    public XxtxTemplateDO getXxtxTemplateByCodeFromCache(String code) {
+        return xxtxTemplateMapper.selectByCode(code);
     }
 
     @Override
-    public PageResult<NotifyTemplateDO> getNotifyTemplatePage(NotifyTemplatePageReqVO pageReqVO) {
-        return notifyTemplateMapper.selectPage(pageReqVO);
+    public PageResult<XxtxTemplateDO> getXxtxTemplatePage(XxtxTemplatePageReqVO pageReqVO) {
+        return xxtxTemplateMapper.selectPage(pageReqVO);
     }
 
     @VisibleForTesting
-    void validateNotifyTemplateCodeDuplicate(Long id, String code) {
-        NotifyTemplateDO template = notifyTemplateMapper.selectByCode(code);
+    void validateXxtxTemplateCodeDuplicate(Long id, String code) {
+        XxtxTemplateDO template = xxtxTemplateMapper.selectByCode(code);
         if (template == null) {
             return;
         }
@@ -138,7 +138,7 @@ public class NotifyTemplateServiceImpl implements NotifyTemplateService {
      * @return 格式化后的内容
      */
     @Override
-    public String formatNotifyTemplateContent(String content, Map<String, Object> params) {
+    public String formatXxtxTemplateContent(String content, Map<String, Object> params) {
         return StrUtil.format(content, params);
     }
 

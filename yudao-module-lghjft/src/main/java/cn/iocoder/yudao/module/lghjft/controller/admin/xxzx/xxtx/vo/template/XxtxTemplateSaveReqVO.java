@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.notify.vo.template;
+package cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.template;
 
 import cn.iocoder.yudao.framework.common.enums.CommonStatusEnum;
 import cn.iocoder.yudao.framework.common.validation.InEnum;
@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Schema(description = "管理后台 - 站内信模版创建/修改 Request VO")
 @Data
-public class NotifyTemplateSaveReqVO {
+public class XxtxTemplateSaveReqVO {
 
     @Schema(description = "ID", example = "1024")
     private Long id;

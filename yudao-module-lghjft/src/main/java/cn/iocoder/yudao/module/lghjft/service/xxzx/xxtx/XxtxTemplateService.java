@@ -1,9 +1,9 @@
-package cn.iocoder.yudao.module.lghjft.service.xxzx.notify;
+package cn.iocoder.yudao.module.lghjft.service.xxzx.xxtx;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.module.system.controller.admin.notify.vo.template.NotifyTemplatePageReqVO;
-import cn.iocoder.yudao.module.system.controller.admin.notify.vo.template.NotifyTemplateSaveReqVO;
-import cn.iocoder.yudao.module.system.dal.dataobject.notify.NotifyTemplateDO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.template.XxtxTemplatePageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.template.XxtxTemplateSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.xxzx.xxtx.XxtxTemplateDO;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.Map;
  *
  * @author xrcoder
  */
-public interface NotifyTemplateService {
+public interface XxtxTemplateService {
 
     /**
      * 创建站内信模版
@@ -22,28 +22,28 @@ public interface NotifyTemplateService {
      * @param createReqVO 创建信息
      * @return 编号
      */
-    Long createNotifyTemplate(@Valid NotifyTemplateSaveReqVO createReqVO);
+    Long createXxtxTemplate(@Valid XxtxTemplateSaveReqVO createReqVO);
 
     /**
      * 更新站内信模版
      *
      * @param updateReqVO 更新信息
      */
-    void updateNotifyTemplate(@Valid NotifyTemplateSaveReqVO updateReqVO);
+    void updateXxtxTemplate(@Valid XxtxTemplateSaveReqVO updateReqVO);
 
     /**
      * 删除站内信模版
      *
      * @param id 编号
      */
-    void deleteNotifyTemplate(Long id);
+    void deleteXxtxTemplate(Long id);
 
     /**
      * 批量删除站内信模版
      *
      * @param ids 编号列表
      */
-    void deleteNotifyTemplateList(List<Long> ids);
+    void deleteXxtxTemplateList(List<Long> ids);
 
     /**
      * 获得站内信模版
@@ -51,7 +51,7 @@ public interface NotifyTemplateService {
      * @param id 编号
      * @return 站内信模版
      */
-    NotifyTemplateDO getNotifyTemplate(Long id);
+    XxtxTemplateDO getXxtxTemplate(Long id);
 
     /**
      * 获得站内信模板，从缓存中
@@ -59,7 +59,7 @@ public interface NotifyTemplateService {
      * @param code 模板编码
      * @return 站内信模板
      */
-    NotifyTemplateDO getNotifyTemplateByCodeFromCache(String code);
+    XxtxTemplateDO getXxtxTemplateByCodeFromCache(String code);
 
     /**
      * 获得站内信模版分页
@@ -67,7 +67,7 @@ public interface NotifyTemplateService {
      * @param pageReqVO 分页查询
      * @return 站内信模版分页
      */
-    PageResult<NotifyTemplateDO> getNotifyTemplatePage(NotifyTemplatePageReqVO pageReqVO);
+    PageResult<XxtxTemplateDO> getXxtxTemplatePage(XxtxTemplatePageReqVO pageReqVO);
 
     /**
      * 格式化站内信内容
@@ -76,6 +76,6 @@ public interface NotifyTemplateService {
      * @param params 站内信内容的参数
      * @return 格式化后的内容
      */
-    String formatNotifyTemplateContent(String content, Map<String, Object> params);
+    String formatXxtxTemplateContent(String content, Map<String, Object> params);
 
 }

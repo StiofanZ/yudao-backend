@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.notify.vo.template;
+package cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.template;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Schema(description = "管理后台 - 站内信模板的发送 Request VO")
 @Data
-public class NotifyTemplateSendReqVO {
+public class XxtxTemplateSendReqVO {
 
     @Schema(description = "用户id", requiredMode = Schema.RequiredMode.REQUIRED, example = "01")
     @NotNull(message = "用户id不能为空")

@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.lghjft.service.xxzx.notify;
+package cn.iocoder.yudao.module.lghjft.service.xxzx.xxtx;
 
 import java.util.List;
 import java.util.Map;
@@ -8,7 +8,7 @@ import java.util.Map;
  *
  * @author xrcoder
  */
-public interface NotifySendService {
+public interface XxtxSendService {
 
     /**
      * 发送单条站内信给管理后台的用户
@@ -20,7 +20,7 @@ public interface NotifySendService {
      * @param templateParams 短信模板参数
      * @return 发送日志编号
      */
-    Long sendSingleNotifyToAdmin(Long userId,
+    Long sendSingleXxtxToAdmin(Long userId,
                                  String templateCode, Map<String, Object> templateParams);
     /**
      * 发送单条站内信给用户 APP 的用户
@@ -32,7 +32,7 @@ public interface NotifySendService {
      * @param templateParams 站内信模板参数
      * @return 发送日志编号
      */
-    Long sendSingleNotifyToMember(Long userId,
+    Long sendSingleXxtxToMember(Long userId,
                                   String templateCode, Map<String, Object> templateParams);
 
     /**
@@ -44,10 +44,10 @@ public interface NotifySendService {
      * @param templateParams 站内信模板参数
      * @return 发送日志编号
      */
-    Long sendSingleNotify( Long userId, Integer userType,
+    Long sendSingleXxtx( Long userId, Integer userType,
                            String templateCode, Map<String, Object> templateParams);
 
-    default void sendBatchNotify(List<String> mobiles, List<Long> userIds, Integer userType,
+    default void sendBatchXxtx(List<String> mobiles, List<Long> userIds, Integer userType,
                                  String templateCode, Map<String, Object> templateParams) {
         throw new UnsupportedOperationException("暂时不支持该操作，感兴趣可以实现该功能哟！");
     }

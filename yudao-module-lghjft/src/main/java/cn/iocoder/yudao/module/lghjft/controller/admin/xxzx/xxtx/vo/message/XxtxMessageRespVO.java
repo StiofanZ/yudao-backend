@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.notify.vo.message;
+package cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.message;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -8,7 +8,7 @@ import java.util.Map;
 
 @Schema(description = "管理后台 - 站内信 Response VO")
 @Data
-public class NotifyMessageRespVO {
+public class XxtxMessageRespVO {
 
     @Schema(description = "ID", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
     private Long id;

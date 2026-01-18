@@ -1,8 +1,8 @@
-package cn.iocoder.yudao.module.lghjft.service.xxzx.notify;
+package cn.iocoder.yudao.module.lghjft.service.xxzx.xxtx;
 
 import cn.iocoder.yudao.framework.common.enums.CommonStatusEnum;
 import cn.iocoder.yudao.framework.common.enums.UserTypeEnum;
-import cn.iocoder.yudao.module.system.dal.dataobject.notify.NotifyTemplateDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.xxzx.xxtx.XxtxTemplateDO;
 import com.google.common.annotations.VisibleForTesting;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -24,44 +24,44 @@ import static cn.iocoder.yudao.module.system.enums.ErrorCodeConstants.NOTIFY_SEN
 @Service
 @Validated
 @Slf4j
-public class NotifySendServiceImpl implements NotifySendService {
+public class XxtxSendServiceImpl implements XxtxSendService {
 
     @Resource
-    private NotifyTemplateService notifyTemplateService;
+    private XxtxTemplateService xxtxTemplateService;
 
     @Resource
-    private NotifyMessageService notifyMessageService;
+    private XxtxMessageService xxtxMessageService;
 
     @Override
-    public Long sendSingleNotifyToAdmin(Long userId, String templateCode, Map<String, Object> templateParams) {
-        return sendSingleNotify(userId, UserTypeEnum.ADMIN.getValue(), templateCode, templateParams);
+    public Long sendSingleXxtxToAdmin(Long userId, String templateCode, Map<String, Object> templateParams) {
+        return sendSingleXxtx(userId, UserTypeEnum.ADMIN.getValue(), templateCode, templateParams);
     }
 
     @Override
-    public Long sendSingleNotifyToMember(Long userId, String templateCode, Map<String, Object> templateParams) {
-        return sendSingleNotify(userId, UserTypeEnum.MEMBER.getValue(), templateCode, templateParams);
+    public Long sendSingleXxtxToMember(Long userId, String templateCode, Map<String, Object> templateParams) {
+        return sendSingleXxtx(userId, UserTypeEnum.MEMBER.getValue(), templateCode, templateParams);
     }
 
     @Override
-    public Long sendSingleNotify(Long userId, Integer userType, String templateCode, Map<String, Object> templateParams) {
+    public Long sendSingleXxtx(Long userId, Integer userType, String templateCode, Map<String, Object> templateParams) {
         // 校验模版
-        NotifyTemplateDO template = validateNotifyTemplate(templateCode);
+        XxtxTemplateDO template = validateXxtxTemplate(templateCode);
         if (Objects.equals(template.getStatus(), CommonStatusEnum.DISABLE.getStatus())) {
-            log.info("[sendSingleNotify][模版({})已经关闭，无法给用户({}/{})发送]", templateCode, userId, userType);
+            log.info("[sendSingleXxtx][模版({})已经关闭，无法给用户({}/{})发送]", templateCode, userId, userType);
             return null;
         }
         // 校验参数
         validateTemplateParams(template, templateParams);
 
         // 发送站内信
-        String content = notifyTemplateService.formatNotifyTemplateContent(template.getContent(), templateParams);
-        return notifyMessageService.createNotifyMessage(userId, userType, template, content, templateParams);
+        String content = xxtxTemplateService.formatXxtxTemplateContent(template.getContent(), templateParams);
+        return xxtxMessageService.createXxtxMessage(userId, userType, template, content, templateParams);
     }
 
     @VisibleForTesting
-    public NotifyTemplateDO validateNotifyTemplate(String templateCode) {
+    public XxtxTemplateDO validateXxtxTemplate(String templateCode) {
         // 获得站内信模板。考虑到效率，从缓存中获取
-        NotifyTemplateDO template = notifyTemplateService.getNotifyTemplateByCodeFromCache(templateCode);
+        XxtxTemplateDO template = xxtxTemplateService.getXxtxTemplateByCodeFromCache(templateCode);
         // 站内信模板不存在
         if (template == null) {
             throw exception(NOTICE_NOT_FOUND);
@@ -76,7 +76,7 @@ public class NotifySendServiceImpl implements NotifySendService {
      * @param templateParams 参数列表
      */
     @VisibleForTesting
-    public void validateTemplateParams(NotifyTemplateDO template, Map<String, Object> templateParams) {
+    public void validateTemplateParams(XxtxTemplateDO template, Map<String, Object> templateParams) {
         template.getParams().forEach(key -> {
             Object value = templateParams.get(key);
             if (value == null) {

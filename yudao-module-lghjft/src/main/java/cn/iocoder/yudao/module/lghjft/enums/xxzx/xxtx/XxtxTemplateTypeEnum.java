@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.system.enums.notify;
+package cn.iocoder.yudao.module.lghjft.enums.xxzx.xxtx;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum NotifyTemplateTypeEnum {
+public enum XxtxTemplateTypeEnum {
 
     /**
      * 系统消息

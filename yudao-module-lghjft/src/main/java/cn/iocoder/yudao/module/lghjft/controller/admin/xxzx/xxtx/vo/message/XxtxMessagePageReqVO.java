@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.notify.vo.message;
+package cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.message;
 
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,7 +15,7 @@ import static cn.iocoder.yudao.framework.common.util.date.DateUtils.FORMAT_YEAR_
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class NotifyMessagePageReqVO extends PageParam {
+public class XxtxMessagePageReqVO extends PageParam {
 
     @Schema(description = "用户编号", example = "25025")
     private Long userId;
