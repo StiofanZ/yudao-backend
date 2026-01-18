@@ -27,4 +27,7 @@ public class TzggRespVO {
     @Schema(description = "创建时间", requiredMode = Schema.RequiredMode.REQUIRED, example = "时间戳格式")
     private LocalDateTime createTime;
 
+    @Schema(description = "部门ID", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
+    private Long deptId;
+
 }

@@ -14,6 +14,7 @@ public interface TzggMapper extends BaseMapperX<TzggDO> {
         return selectPage(reqVO, new LambdaQueryWrapperX<TzggDO>()
                 .likeIfPresent(TzggDO::getTitle, reqVO.getTitle())
                 .eqIfPresent(TzggDO::getStatus, reqVO.getStatus())
+                .inIfPresent(TzggDO::getDeptId, reqVO.getDeptIds())
                 .orderByDesc(TzggDO::getId));
     }
 

@@ -6,7 +6,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
 
-@ConfigurationProperties(prefix = "yudao.lghjft.app")
 @Validated
 @Data
 public class LghJftAppAuthProperties {

@@ -44,4 +44,9 @@ public class TzggDO extends BaseDO {
      */
     private Integer status;
 
+    /**
+     * 部门ID
+     */
+    private Long deptId;
+
 }

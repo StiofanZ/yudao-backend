@@ -28,4 +28,7 @@ public class TzggSaveReqVO {
     @Schema(description = "状态，参见 CommonStatusEnum 枚举类", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
     private Integer status;
 
+    @Schema(description = "部门ID", example = "1024")
+    private Long deptId;
+
 }
