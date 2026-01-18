@@ -11,6 +11,6 @@ public interface ErrorCodeConstants {
     ErrorCode SKGK_NOT_EXISTS = new ErrorCode(2_005_000_001, "收款国库不存在");
     ErrorCode HJFL_NOT_EXISTS = new ErrorCode(2_006_000_001, "户籍分类不存在");
     ErrorCode RWS_NOT_EXISTS = new ErrorCode(2_007_000_001, "年度任务不存在");
-    ErrorCode MESSAGE_NOT_EXISTS = new ErrorCode(2_008_000_001, "消息不存在");
+    ErrorCode CONTENT_NOT_EXISTS = new ErrorCode(2_009_000_001, "内容管理不存在");
 
 }
