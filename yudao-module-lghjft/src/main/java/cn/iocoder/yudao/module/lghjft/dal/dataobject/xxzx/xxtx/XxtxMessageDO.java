@@ -1,99 +1,76 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.xxzx.xxtx;
 
-import cn.iocoder.yudao.framework.common.enums.UserTypeEnum;
 import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import java.time.LocalDateTime;
-import java.util.Map;
+import java.util.List;
 
 /**
- * 站内信 DO
+ * 消息表
  *
- * @author xrcoder
+ * @author ruoyi
  */
 @TableName(value = "gh_xxzx_xxtx_message", autoResultMap = true)
-@KeySequence("gh_xxzx_xxtx_message_seq") // 用于 Oracle、PostgreSQL、Kingbase、DB2、H2 数据库的主键自增。如果是 MySQL 等数据库，可不写。
+@KeySequence("gh_xxzx_xxtx_message_seq")
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class XxtxMessageDO extends BaseDO {
 
     /**
-     * 站内信编号，自增
+     * 消息主键
      */
-    @TableId
     private Long id;
+    
     /**
-     * 用户编号
-     *
-     * 关联 MemberUserDO 的 id 字段、或者 AdminUserDO 的 id 字段
+     * 消息标题
      */
-    private Long userId;
+    private String title;
+    
     /**
-     * 用户类型
-     *
-     * 枚举 {@link UserTypeEnum}
+     * 消息内容
      */
-    private Integer userType;
+    private String content;
+    
+    /**
+     * 消息类型（0：系统消息，1：业务消息）
+     */
+    private Integer messageType;
+    
+    /**
+     * 发送者ID
+     */
+    private Long senderId;
+    
+    /**
+     * 发送者姓名
+     */
+    private String senderName;
+    
+    /**
+     * 发送时间
+     */
+    private String sendTime;
+    
+    /**
+     * 消息状态（0：草稿，1：已发送，2：已撤回）
+     */
+    private Integer status;
 
-    // ========= 模板相关字段 =========
-
     /**
-     * 模版编号
-     *
-     * 关联 {@link XxtxTemplateDO#getId()}
-     */
-    private Long templateId;
-    /**
-     * 模版编码
-     *
-     * 关联 {@link XxtxTemplateDO#getCode()}
-     */
-    private String templateCode;
-    /**
-     * 模版类型
-     *
-     * 冗余 {@link XxtxTemplateDO#getType()}
-     */
-    private Integer templateType;
-    /**
-     * 模版发送人名称
-     *
-     * 冗余 {@link XxtxTemplateDO#getNickname()}
-     */
-    private String templateNickname;
-    /**
-     * 模版内容
-     *
-     * 基于 {@link XxtxTemplateDO#getContent()} 格式化后的内容
-     */
-    private String templateContent;
-    /**
-     * 模版参数
-     *
-     * 基于 {@link XxtxTemplateDO#getParams()} 输入后的参数
+     * 部门ID列表
      */
     @TableField(typeHandler = JacksonTypeHandler.class)
-    private Map<String, Object> templateParams;
-
-    // ========= 读取相关字段 =========
+    private List<Long> deptIds;
 
     /**
-     * 是否已读
+     * 用户ID列表
      */
-    private Boolean readStatus;
-    /**
-     * 阅读时间
-     */
-    private LocalDateTime readTime;
-
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private List<Long> userIds;
+    
 }
