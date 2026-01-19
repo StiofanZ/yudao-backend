@@ -15,6 +15,7 @@ public interface TzggMapper extends BaseMapperX<TzggDO> {
                 .likeIfPresent(TzggDO::getTitle, reqVO.getTitle())
                 .eqIfPresent(TzggDO::getStatus, reqVO.getStatus())
                 .inIfPresent(TzggDO::getDeptId, reqVO.getDeptIds())
+                .eqIfPresent(TzggDO::getType, reqVO.getType())
                 .orderByDesc(TzggDO::getId));
     }
 
