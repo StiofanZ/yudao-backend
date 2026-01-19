@@ -21,4 +21,9 @@ public class TzggPageReqVO extends PageParam {
     @Schema(description = "部门ID列表，用于权限过滤")
     private List<Long> deptIds;
 
+    @Schema(description = "公告类型（1通知 2公告）", example = "1")
+    private Integer type;
+
+    @Schema(description = "模糊搜索字段", example = "公告")
+    private String searchKey;
 }
