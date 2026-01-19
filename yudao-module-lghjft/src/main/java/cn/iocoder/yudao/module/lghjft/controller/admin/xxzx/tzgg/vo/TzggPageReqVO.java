@@ -24,6 +24,4 @@ public class TzggPageReqVO extends PageParam {
     @Schema(description = "公告类型（1通知 2公告）", example = "1")
     private Integer type;
 
-    @Schema(description = "模糊搜索字段", example = "公告")
-    private String searchKey;
 }
