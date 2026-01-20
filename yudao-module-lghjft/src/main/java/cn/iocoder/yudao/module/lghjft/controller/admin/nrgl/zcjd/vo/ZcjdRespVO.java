@@ -3,6 +3,8 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 政策解读 Response VO")
@@ -85,7 +87,7 @@ public class ZcjdRespVO extends ZcjdBaseVO {
      * 原文件发布日期
      */
     @Schema(description = "原文件发布日期", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
-    private java.time.LocalDateTime fbrq;
+    private LocalDate fbrq;
 
     /**
      * 关联政策ID
