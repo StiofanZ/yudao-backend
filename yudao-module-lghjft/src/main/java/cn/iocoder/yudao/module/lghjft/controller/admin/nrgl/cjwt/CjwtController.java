@@ -97,6 +97,22 @@ public class CjwtController {
         return success(true);
     }
 
+    @PutMapping("/off-shelf")
+    @Operation(summary = "下架常见问题")
+    @PreAuthorize("@ss.hasPermission('lghjft:nrgl-cjwt:update')")
+    public CommonResult<Boolean> offShelfCjwt(@RequestParam("id") Long id, @RequestParam("reason") String reason) {
+        cjwtService.offShelfCjwt(id, reason);
+        return success(true);
+    }
+
+    @PutMapping("/audit")
+    @Operation(summary = "审核常见问题")
+    @PreAuthorize("@ss.hasPermission('lghjft:nrgl-cjwt:update')")
+    public CommonResult<Boolean> auditCjwt(@RequestParam("id") Long id, @RequestParam("status") Integer status) {
+        cjwtService.auditCjwt(id, status);
+        return success(true);
+    }
+
     @GetMapping("/public/list")
     @Operation(summary = "获得公开常见问题列表")
     @Parameter(name = "deptId", description = "部门编号", required = true)

@@ -97,6 +97,22 @@ public class ZcjdController {
         return success(true);
     }
 
+    @PutMapping("/off-shelf")
+    @Operation(summary = "下架政策解读")
+    @PreAuthorize("@ss.hasPermission('lghjft:nrgl-zcjd:update')")
+    public CommonResult<Boolean> offShelfZcjd(@RequestParam("id") Long id, @RequestParam("reason") String reason) {
+        zcjdService.offShelfZcjd(id, reason);
+        return success(true);
+    }
+
+    @PutMapping("/audit")
+    @Operation(summary = "审核政策解读")
+    @PreAuthorize("@ss.hasPermission('lghjft:nrgl-zcjd:update')")
+    public CommonResult<Boolean> auditZcjd(@RequestParam("id") Long id, @RequestParam("status") Integer status) {
+        zcjdService.auditZcjd(id, status);
+        return success(true);
+    }
+
     @GetMapping("/public/list")
     @Operation(summary = "获得公开政策解读列表")
     @Parameter(name = "deptId", description = "部门编号", required = true)

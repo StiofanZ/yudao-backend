@@ -31,9 +31,9 @@ public class BsznDO extends BaseDO {
     private Long parentId;
 
     /**
-     * 标题
+     * 事项名称
      */
-    private String title;
+    private String sxmc;
 
     /**
      * 内容
@@ -47,7 +47,7 @@ public class BsznDO extends BaseDO {
 
     /**
      * 状态
-     * 0: 草稿, 1: 发布
+     * 0: 未审核, 1: 已审核, 2: 已发布, 3: 已过期, 4: 已下架
      */
     private Integer status;
 
@@ -63,9 +63,29 @@ public class BsznDO extends BaseDO {
     private Integer kjfw;
 
     /**
-     * 办理窗口
+     * 办理部门
      */
-    private String blck;
+    private String blbm;
+
+    /**
+     * 下架原因(1:已失效政策,2:新政策替代)
+     */
+    private String xjyy;
+
+    /**
+     * 业务分类(1:缴费管理,2:返拨管理,3:退费管理,4:缓交管理)
+     */
+    private Integer ywfl;
+
+    /**
+     * 办理主体(1:全总工会,2:省总工会,3:基层工会,4:缴费单位)
+     */
+    private Integer blzt;
+
+    /**
+     * 发布时间
+     */
+    private java.time.LocalDate fbsj;
 
     /**
      * 咨询电话

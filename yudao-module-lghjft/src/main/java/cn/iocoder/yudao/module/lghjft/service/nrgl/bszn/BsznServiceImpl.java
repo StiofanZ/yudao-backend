@@ -190,8 +190,8 @@ public class BsznServiceImpl implements BsznService {
         // 构建查询条件
         LambdaQueryWrapper<BsznDO> queryWrapper = new LambdaQueryWrapper<>();
         // 基础查询条件
-        if (listReqVO.getTitle() != null) {
-            queryWrapper.like(BsznDO::getTitle, listReqVO.getTitle());
+        if (listReqVO.getSxmc() != null) {
+            queryWrapper.like(BsznDO::getSxmc, listReqVO.getSxmc());
         }
         if (listReqVO.getStatus() != null) {
             queryWrapper.eq(BsznDO::getStatus, listReqVO.getStatus());
@@ -226,8 +226,52 @@ public class BsznServiceImpl implements BsznService {
             throw exception(FORBIDDEN);
         }
 
-        // 更新状态为发布 (1)
-        bszn.setStatus(1);
+        // 如果是 620000，允许直接发布
+        if (loginDeptId != null && loginDeptId == 620000L) {
+             bszn.setStatus(2); // 2: 已发布
+             bsznMapper.updateById(bszn);
+             return;
+        }
+
+        // 其他部门，必须是 已审核(1) 才能发布
+        if (bszn.getStatus() != 1) {
+             throw exception(new cn.iocoder.yudao.framework.common.exception.ErrorCode(400, "该内容未审核，无法发布"));
+        }
+
+        // 更新状态为发布 (2)
+        bszn.setStatus(2);
+        bsznMapper.updateById(bszn);
+    }
+
+    @Override
+    public void offShelfBszn(Long id, String reason) {
+        BsznDO bszn = validateBsznExists(id);
+        // 校验权限：允许自己部门下架
+        Long loginDeptId = SecurityFrameworkUtils.getLoginUserDeptId();
+        if (!Objects.equals(bszn.getDeptId(), loginDeptId) && (loginDeptId == null || loginDeptId != 620000L)) {
+             throw exception(FORBIDDEN);
+        }
+        
+        // 允许 已发布(2) 或 已过期(3) 下架
+        if (bszn.getStatus() != 2 && bszn.getStatus() != 3) {
+            throw exception(new cn.iocoder.yudao.framework.common.exception.ErrorCode(400, "当前状态不允许下架"));
+        }
+        
+        bszn.setStatus(4); // 4: 已下架
+        bszn.setXjyy(reason);
+        bsznMapper.updateById(bszn);
+    }
+
+    @Override
+    public void auditBszn(Long id, Integer status) {
+        // 校验权限：仅 620000 可审核
+        Long loginDeptId = SecurityFrameworkUtils.getLoginUserDeptId();
+        if (loginDeptId == null || loginDeptId != 620000L) {
+             throw exception(FORBIDDEN);
+        }
+        
+        BsznDO bszn = validateBsznExists(id);
+        bszn.setStatus(status);
         bsznMapper.updateById(bszn);
     }
 

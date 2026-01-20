@@ -60,6 +60,22 @@ public interface BsznService {
     void publishBszn(Long id);
 
     /**
+     * 下架办事指南
+     *
+     * @param id 编号
+     * @param reason 下架原因
+     */
+    void offShelfBszn(Long id, String reason);
+
+    /**
+     * 审核办事指南
+     *
+     * @param id 编号
+     * @param status 状态
+     */
+    void auditBszn(Long id, Integer status);
+
+    /**
      * 获得公开办事指南列表
      *
      * @param deptId 部门编号

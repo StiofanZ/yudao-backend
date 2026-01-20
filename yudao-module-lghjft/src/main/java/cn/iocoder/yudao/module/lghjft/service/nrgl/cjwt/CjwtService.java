@@ -60,6 +60,22 @@ public interface CjwtService {
     void publishCjwt(Long id);
 
     /**
+     * 下架常见问题
+     *
+     * @param id 编号
+     * @param reason 下架原因
+     */
+    void offShelfCjwt(Long id, String reason);
+
+    /**
+     * 审核常见问题
+     *
+     * @param id 编号
+     * @param status 状态
+     */
+    void auditCjwt(Long id, Integer status);
+
+    /**
      * 获得公开常见问题列表
      *
      * @param deptId 部门编号

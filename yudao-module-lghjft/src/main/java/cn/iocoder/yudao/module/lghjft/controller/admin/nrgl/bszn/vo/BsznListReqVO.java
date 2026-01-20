@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class BsznListReqVO {
 
-    @Schema(description = "标题", example = "办事指南")
-    private String title;
+    @Schema(description = "事项名称", example = "办事指南")
+    private String sxmc;
 
     @Schema(description = "状态", example = "1")
     private Integer status;

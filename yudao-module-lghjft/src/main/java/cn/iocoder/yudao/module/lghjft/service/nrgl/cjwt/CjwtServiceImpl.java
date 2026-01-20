@@ -226,8 +226,52 @@ public class CjwtServiceImpl implements CjwtService {
             throw exception(FORBIDDEN);
         }
 
-        // 更新状态为发布 (1)
-        cjwt.setStatus(1);
+        // 如果是 620000，允许直接发布
+        if (loginDeptId != null && loginDeptId == 620000L) {
+             cjwt.setStatus(2); // 2: 已发布
+             cjwtMapper.updateById(cjwt);
+             return;
+        }
+
+        // 其他部门，必须是 已审核(1) 才能发布
+        if (cjwt.getStatus() != 1) {
+             throw exception(new cn.iocoder.yudao.framework.common.exception.ErrorCode(400, "该内容未审核，无法发布"));
+        }
+
+        // 更新状态为发布 (2)
+        cjwt.setStatus(2);
+        cjwtMapper.updateById(cjwt);
+    }
+
+    @Override
+    public void offShelfCjwt(Long id, String reason) {
+        CjwtDO cjwt = validateCjwtExists(id);
+        // 校验权限：允许自己部门下架
+        Long loginDeptId = SecurityFrameworkUtils.getLoginUserDeptId();
+        if (!Objects.equals(cjwt.getDeptId(), loginDeptId) && (loginDeptId == null || loginDeptId != 620000L)) {
+             throw exception(FORBIDDEN);
+        }
+        
+        // 允许 已发布(2) 或 已过期(3) 下架
+        if (cjwt.getStatus() != 2 && cjwt.getStatus() != 3) {
+            throw exception(new cn.iocoder.yudao.framework.common.exception.ErrorCode(400, "当前状态不允许下架"));
+        }
+        
+        cjwt.setStatus(4); // 4: 已下架
+        cjwt.setXjyy(reason);
+        cjwtMapper.updateById(cjwt);
+    }
+
+    @Override
+    public void auditCjwt(Long id, Integer status) {
+        // 校验权限：仅 620000 可审核
+        Long loginDeptId = SecurityFrameworkUtils.getLoginUserDeptId();
+        if (loginDeptId == null || loginDeptId != 620000L) {
+             throw exception(FORBIDDEN);
+        }
+        
+        CjwtDO cjwt = validateCjwtExists(id);
+        cjwt.setStatus(status);
         cjwtMapper.updateById(cjwt);
     }
 

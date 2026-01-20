@@ -47,7 +47,7 @@ public class CjwtDO extends BaseDO {
 
     /**
      * 状态
-     * 0: 草稿, 1: 发布
+     * 0: 未审核, 1: 已审核, 2: 已发布, 3: 已过期, 4: 已下架
      */
     private Integer status;
 
@@ -66,5 +66,10 @@ public class CjwtDO extends BaseDO {
      * 问题分类
      */
     private String wtfl;
+
+    /**
+     * 下架原因(1:已失效政策,2:新政策替代)
+     */
+    private String xjyy;
 
 }

@@ -47,7 +47,7 @@ public class ZcjdDO extends BaseDO {
 
     /**
      * 状态
-     * 0: 草稿, 1: 发布
+     * 0: 未审核, 1: 已审核, 2: 已发布, 3: 已过期, 4: 已下架
      */
     private Integer status;
 
@@ -68,9 +68,14 @@ public class ZcjdDO extends BaseDO {
     private String fjlj;
 
     /**
-     * 解读部门
+     * 发布部门(0:全总,1:省总,2:市州)
      */
-    private String jdbm;
+    private Integer fbbm;
+
+    /**
+     * 下架原因(1:已失效政策,2:新政策替代)
+     */
+    private String xjyy;
 
     /**
      * 原文件发布日期

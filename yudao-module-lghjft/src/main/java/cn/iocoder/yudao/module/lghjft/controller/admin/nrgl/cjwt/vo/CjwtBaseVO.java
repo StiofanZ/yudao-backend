@@ -34,7 +34,10 @@ public class CjwtBaseVO {
     @NotNull(message = "可见范围不能为空")
     private Integer kjfw;
 
-    @Schema(description = "问题分类", example = "业务问题")
+    @Schema(description = "问题分类", example = "分类1")
     private String wtfl;
+
+    @Schema(description = "下架原因(1:已失效政策,2:新政策替代)", example = "1")
+    private String xjyy;
 
 }

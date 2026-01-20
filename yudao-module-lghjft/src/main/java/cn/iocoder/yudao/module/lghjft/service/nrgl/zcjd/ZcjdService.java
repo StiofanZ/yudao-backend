@@ -60,6 +60,22 @@ public interface ZcjdService {
     void publishZcjd(Long id);
 
     /**
+     * 下架政策解读
+     *
+     * @param id 编号
+     * @param reason 下架原因
+     */
+    void offShelfZcjd(Long id, String reason);
+
+    /**
+     * 审核政策解读
+     *
+     * @param id 编号
+     * @param status 状态
+     */
+    void auditZcjd(Long id, Integer status);
+
+    /**
      * 获得公开政策解读列表
      *
      * @param deptId 部门编号
