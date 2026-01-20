@@ -1,14 +1,5 @@
 package cn.iocoder.yudao.module.lghjft.service.nrgl.zcjd;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
-import jakarta.annotation.Resource;
-import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
-
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdCreateReqVO;
@@ -19,11 +10,17 @@ import cn.iocoder.yudao.module.lghjft.dal.mysql.nrgl.zcjd.ZcjdMapper;
 import cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants;
 import cn.iocoder.yudao.module.system.api.dept.DeptApi;
 import cn.iocoder.yudao.module.system.api.dept.dto.DeptRespDTO;
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
-import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import static cn.iocoder.yudao.framework.common.exception.enums.GlobalErrorCodeConstants.FORBIDDEN;
+import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 
 /**
  * 政策解读 Service 实现类
@@ -273,33 +270,6 @@ public class ZcjdServiceImpl implements ZcjdService {
         ZcjdDO zcjd = validateZcjdExists(id);
         zcjd.setStatus(status);
         zcjdMapper.updateById(zcjd);
-    }
-
-    @Override
-    public List<ZcjdDO> getPublicZcjdList(Long deptId) {
-        if (deptId == null) {
-            return Collections.emptyList();
-        }
-        // 获取当前部门及上级部门ID列表
-        List<Long> deptIds = getAncestorIds(deptId);
-        if (deptIds.isEmpty()) {
-            return Collections.emptyList();
-        }
-
-        // 查询公开且已发布的内容
-        return zcjdMapper.selectList(new LambdaQueryWrapper<ZcjdDO>()
-                .eq(ZcjdDO::getStatus, 1) // 1: 发布
-                .and(wrapper -> {
-                    // 本级部门
-                    wrapper.eq(ZcjdDO::getDeptId, deptId)
-                           .or(subWrapper -> {
-                               // 上级部门：查看 1 和 2
-                               subWrapper.in(ZcjdDO::getDeptId, deptIds)
-                                         .ne(ZcjdDO::getDeptId, deptId)
-                                         .in(ZcjdDO::getKjfw, 1, 2);
-                           });
-                })
-                .orderByDesc(ZcjdDO::getSort));
     }
 
     /**

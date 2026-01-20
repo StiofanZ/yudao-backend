@@ -1,9 +1,9 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
 /**
  * 政策解读 Base VO，提供给添加、修改、详情的子 VO 使用
@@ -43,9 +43,9 @@ public class ZcjdBaseVO {
     @Schema(description = "下架原因(1:已失效政策,2:新政策替代)", example = "1")
     private String xjyy;
 
-    @Schema(description = "原文件发布日期", example = "2023-01-01 12:00:00")
-    @org.springframework.format.annotation.DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private java.time.LocalDateTime fbrq;
+    @Schema(description = "发布日期", example = "2023-01-01 12:00:00")
+    @org.springframework.format.annotation.DateTimeFormat(pattern = "yyyy-MM-dd")
+    private java.time.LocalDate fbrq;
 
     @Schema(description = "关联政策ID", example = "100")
     private Long glzcId;

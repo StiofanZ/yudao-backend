@@ -1,11 +1,12 @@
 package cn.iocoder.yudao.module.lghjft.service.nrgl.zcjd;
 
-import java.util.List;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdCreateReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdListReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdUpdateReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.zcjd.ZcjdDO;
 import jakarta.validation.Valid;
+
+import java.util.List;
 
 /**
  * 政策解读 Service 接口
@@ -74,13 +75,5 @@ public interface ZcjdService {
      * @param status 状态
      */
     void auditZcjd(Long id, Integer status);
-
-    /**
-     * 获得公开政策解读列表
-     *
-     * @param deptId 部门编号
-     * @return 政策解读列表
-     */
-    List<ZcjdDO> getPublicZcjdList(Long deptId);
 
 }

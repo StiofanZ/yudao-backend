@@ -2,7 +2,10 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.*;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdCreateReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdListReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdUpdateReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.zcjd.ZcjdDO;
 import cn.iocoder.yudao.module.lghjft.service.nrgl.zcjd.ZcjdService;
 import cn.iocoder.yudao.module.system.api.dept.DeptApi;
@@ -111,27 +114,6 @@ public class ZcjdController {
     public CommonResult<Boolean> auditZcjd(@RequestParam("id") Long id, @RequestParam("status") Integer status) {
         zcjdService.auditZcjd(id, status);
         return success(true);
-    }
-
-    @GetMapping("/public/list")
-    @Operation(summary = "获得公开政策解读列表")
-    @Parameter(name = "deptId", description = "部门编号", required = true)
-    public CommonResult<List<ZcjdRespVO>> getPublicZcjdList(@RequestParam("deptId") Long deptId) {
-        List<ZcjdDO> list = zcjdService.getPublicZcjdList(deptId);
-        List<ZcjdRespVO> result = BeanUtils.toBean(list, ZcjdRespVO.class);
-        
-        // 填充部门名称
-        if (!result.isEmpty()) {
-            Map<Long, DeptRespDTO> deptMap = deptApi.getDeptMap(convertSet(result, ZcjdRespVO::getDeptId));
-            result.forEach(item -> {
-                DeptRespDTO dept = deptMap.get(item.getDeptId());
-                if (dept != null) {
-                    item.setDeptName(dept.getName());
-                }
-            });
-        }
-        
-        return success(result);
     }
 
 }
