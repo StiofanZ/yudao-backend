@@ -13,10 +13,12 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -58,6 +60,14 @@ public class ZcjdAppController {
         }
 
         return success(result);
+    }
+
+    @GetMapping("/get")
+    @Operation(summary = "获得政策解读")
+    @Parameter(name = "id", description = "编号", required = true, example = "1024")
+    public CommonResult<ZcjdRespVO> getZcjd(@RequestParam("id") Long id) {
+        ZcjdDO zcjd = zcjdService.getZcjd(id);
+        return success(BeanUtils.toBean(zcjd, ZcjdRespVO.class));
     }
 
 }
