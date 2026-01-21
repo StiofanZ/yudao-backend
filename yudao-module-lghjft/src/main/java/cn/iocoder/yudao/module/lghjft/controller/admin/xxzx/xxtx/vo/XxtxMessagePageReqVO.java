@@ -30,4 +30,10 @@ public class XxtxMessagePageReqVO extends PageParam {
     @Schema(description = "发送时间范围结束", example = "2023-12-31")
     private String sendTimeEnd;
 
+    @Schema(description = "阅读状态（0：未读，1：已读）", example = "1")
+    private Integer readStatus;
+
+    @Schema(description = "接收着ID", example = "1")
+    private Integer receiverId;
+
 }

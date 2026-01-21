@@ -2,10 +2,11 @@ package cn.iocoder.yudao.module.lghjft.service.xxzx.xxtx;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessagePageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessageRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessageSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessageSendReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessageRespVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.xxzx.xxtx.XxtxMessageDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.xxzx.xxtx.XxtxMessageReceiverDO;
 
 import java.util.List;
 
@@ -88,5 +89,13 @@ public interface XxtxService {
      * @param userId 用户ID
      */
     void markMessageAsRead(Long messageId, Long userId);
+
+    /**
+     * 根据人员ID获取接收到的消息
+     *
+     * @param reqVO 分页条件
+     * @return 消息接收列表
+     */
+    PageResult<XxtxMessageReceiverDO> getMessageReceiverPage(XxtxMessagePageReqVO reqVO);
 
 }

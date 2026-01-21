@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,7 @@ public class TzggAppController {
 
     @GetMapping("/list-page")
     @Operation(summary = "获取通知公告列表")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<PageResult<TzggRespVO>> getTzggList(@Validated TzggPageReqVO pageReqVO) {
         PageResult<TzggDO> pageResult = tzggService.getTzggPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, TzggRespVO.class));
@@ -38,6 +40,7 @@ public class TzggAppController {
     @GetMapping("/get")
     @Operation(summary = "获得通知公告")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<TzggRespVO> getTzgg(@RequestParam("id") Long id) {
         TzggDO tzgg = tzggService.getTzgg(id);
         return success(BeanUtils.toBean(tzgg, TzggRespVO.class));
