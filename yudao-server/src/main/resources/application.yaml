@@ -351,3 +351,21 @@ yudao:
       type: redis # 消息总线的类型
 
 debug: false
+
+
+
+# minio配置
+minio:
+  #此处需注意，需要配置minio的api的端口，配置可视化管理界面的端口会导致接口不报错但是文件操作不了
+  url: http://192.168.116.200:9000
+  #url: http://192.168.2.59:9000
+  access-key: minioadmin
+  secret-key: minioadmin
+  bucket-name: order
+  watermark : false
+  avatar-bucket-name: avatar
+
+# 项目相关配置
+project:
+  # 文件路径 示例（ Windows配置D:/scr/uploadPath，Linux配置 /home/scr/uploadPath）
+  profile: D:/scr/uploadPath

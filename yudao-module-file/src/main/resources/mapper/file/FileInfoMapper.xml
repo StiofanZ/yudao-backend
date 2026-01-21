@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.file.dal.mysql.FileInfoMapper">
+
+    <resultMap type="cn.iocoder.yudao.module.file.dal.dataobject.FileInfoDO" id="FileInfoResult">
+        <result property="fileId" column="file_id"/>
+        <result property="fileName" column="file_name"/>
+        <result property="fileOriginName" column="file_origin_name"/>
+        <result property="fileType" column="file_type"/>
+        <result property="filePath" column="file_path"/>
+        <result property="fileUrl" column="file_url"/>
+        <result property="bizId" column="biz_id"/>
+        <result property="fileSize" column="file_size"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <resultMap type="cn.iocoder.yudao.module.file.dal.dataobject.vo.FileInfoVO" id="FileInfoVOResult">
+        <result property="fileId" column="file_id"/>
+        <result property="fileName" column="file_name"/>
+        <result property="fileOriginName" column="file_origin_name"/>
+        <result property="fileType" column="file_type"/>
+        <result property="filePath" column="file_path"/>
+        <result property="fileUrl" column="file_url"/>
+        <result property="bizId" column="biz_id"/>
+        <result property="fileSize" column="file_size"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectFileInfoVo">
+        select file_id,
+               file_name,
+               file_origin_name,
+               file_type,
+               file_path,
+               file_url,
+               biz_id,
+               file_size,
+               del_flag,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from file_info
+    </sql>
+
+    <select id="selectFileInfoList" parameterType="cn.iocoder.yudao.module.file.dal.dataobject.dto.FileInfoDTO" resultMap="FileInfoVOResult">
+        <include refid="selectFileInfoVo"/>
+        <where>
+            and del_flag = '0'
+            <if test="fileName != null  and fileName != ''">and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="fileOriginName != null  and fileOriginName != ''">and file_origin_name like concat('%',
+                #{fileOriginName}, '%')
+            </if>
+            <if test="fileType != null  and fileType != ''">and file_type = #{fileType}</if>
+            <if test="filePath != null  and filePath != ''">and file_path = #{filePath}</if>
+            <if test="fileUrl != null  and fileUrl != ''">and file_url = #{fileUrl}</if>
+            <if test="bizId != null ">and biz_id = #{bizId}</if>
+            <if test="fileSize != null ">and file_size = #{fileSize}</if>
+        </where>
+    </select>
+
+    <select id="selectFileInfoByFileId" parameterType="Long" resultMap="FileInfoResult">
+        <include refid="selectFileInfoVo"/>
+        where file_id = #{fileId}
+    </select>
+
+    <select id="selectFileInfoVOByFileId" parameterType="Long" resultMap="FileInfoVOResult">
+        <include refid="selectFileInfoVo"/>
+        where file_id = #{fileId}
+    </select>
+    <select id="selectFileInfoVOByBizId" parameterType="Long" resultMap="FileInfoVOResult">
+        <include refid="selectFileInfoVo"/>
+        where del_flag = '0' and biz_id = #{bizId}
+    </select>
+
+    <select id="selectFileInfoByBizId" parameterType="Long" resultMap="FileInfoResult">
+        <include refid="selectFileInfoVo"/>
+        where biz_id = #{bizId}
+    </select>
+
+    <insert id="insertFileInfo" parameterType="cn.iocoder.yudao.module.file.dal.dataobject.FileInfoDO">
+        insert into file_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fileId != null">file_id,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="fileOriginName != null">file_origin_name,</if>
+            <if test="fileType != null">file_type,</if>
+            <if test="filePath != null">file_path,</if>
+            <if test="fileUrl != null">file_url,</if>
+            <if test="bizId != null">biz_id,</if>
+            <if test="fileSize != null">file_size,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fileId != null">#{fileId},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="fileOriginName != null">#{fileOriginName},</if>
+            <if test="fileType != null">#{fileType},</if>
+            <if test="filePath != null">#{filePath},</if>
+            <if test="fileUrl != null">#{fileUrl},</if>
+            <if test="bizId != null">#{bizId},</if>
+            <if test="fileSize != null">#{fileSize},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+    <insert id="insertBizIdBatchFileInfo">
+        insert into
+        file_info(file_id,file_name,file_origin_name,file_type,file_path,file_url,biz_id,file_size,create_by,create_time,update_by,update_time)
+        values
+        <foreach collection="fileInfoList" item="item" index="index" open="" close="" separator=",">
+            (#{item.fileId},
+            #{item.fileName},
+            #{item.fileOriginName},
+            #{item.fileType},
+            #{item.filePath},
+            #{item.fileUrl},
+            #{item.bizId},
+            #{item.fileSize},
+            #{item.createBy},
+            #{item.createTime},
+            #{item.updateBy},
+            #{item.updateTime})
+        </foreach>
+    </insert>
+
+    <update id="updateFileInfo" parameterType="cn.iocoder.yudao.module.file.dal.dataobject.FileInfoDO">
+        update file_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="fileOriginName != null">file_origin_name = #{fileOriginName},</if>
+            <if test="fileType != null">file_type = #{fileType},</if>
+            <if test="filePath != null">file_path = #{filePath},</if>
+            <if test="fileUrl != null">file_url = #{fileUrl},</if>
+            <if test="bizId != null">biz_id = #{bizId},</if>
+            <if test="fileSize != null">file_size = #{fileSize},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="createBy != null and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where file_id = #{fileId}
+    </update>
+
+    <update id="deleteFileInfoByFileId" parameterType="Map">
+        update file_info
+        set del_flag    = '1',
+            update_by   = #{updateBy},
+            update_time = #{updateTime}
+        where del_flag = '0'
+          and file_id = #{fileId}
+    </update>
+
+    <update id="deleteFileInfoByFileIds" parameterType="Map">
+        update file_info set del_flag = '1',update_by = #{updateBy},update_time = #{updateTime} where del_flag = '0' and
+        file_id in
+        <foreach item="fileId" collection="fileIds" open="(" separator="," close=")">
+            #{fileId}
+        </foreach>
+    </update>
+
+    <update id="updateBizIdBatchFileInfo">
+        <foreach collection="fileInfoList" item="item" index="index" open="" close="" separator=";">
+            update file_info
+            <set>
+                <if test="item.bizId != null and item.bizId != ''">
+                    biz_id = #{item.bizId},
+                </if>
+                <if test="item.updateBy != null and item.updateBy != ''">
+                    update_by = #{item.updateBy},
+                </if>
+                <if test="item.updateTime != null">
+                    update_time = #{item.updateTime}
+                </if>
+            </set>
+            where file_id = ${item.fileId}
+        </foreach>
+    </update>
+    <update id="deleteFileInfoByBizId" parameterType="Map">
+        update file_info
+        set del_flag    = '1',
+            update_by   = #{updateBy},
+            update_time = #{updateTime}
+        where del_flag = '0'
+          and biz_id = #{bizId}
+    </update>
+
+</mapper>

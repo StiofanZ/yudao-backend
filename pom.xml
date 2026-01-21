@@ -26,6 +26,7 @@
 <!--        <module>yudao-module-ai</module>-->
 <!--        <module>yudao-module-iot</module>-->
         <module>yudao-module-lghjft</module>
+        <module>yudao-module-file</module>
     </modules>
 
     <name>${project.artifactId}</name>
