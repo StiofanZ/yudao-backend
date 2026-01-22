@@ -11,5 +11,6 @@ public class ZcjdPageAppReqVO extends ZcjdListReqVO {
     @Schema(description = "发布部门", example = "1")
     private Integer fbbm;
 
-
+    @Schema(description = "标题", example = "1")
+    private String title;
 }
