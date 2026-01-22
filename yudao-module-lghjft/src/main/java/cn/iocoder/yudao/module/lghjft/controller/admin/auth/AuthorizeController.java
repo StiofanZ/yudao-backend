@@ -1,10 +1,11 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.auth;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
-import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthenticateReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeLghReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeResVO;
 import cn.iocoder.yudao.module.lghjft.service.auth.AuthenticateService;
 import cn.iocoder.yudao.module.lghjft.service.auth.app.AppAuthenticateService;
-import cn.iocoder.yudao.module.system.controller.admin.auth.vo.AuthLoginRespVO;
 import cn.iocoder.yudao.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import cn.iocoder.yudao.module.system.service.oauth2.OAuth2TokenService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,7 +25,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 @RequestMapping("/lghjft")
 @Validated
 @Slf4j
-public class AuthenticateController {
+public class AuthorizeController {
     @Resource
     private AuthenticateService authenticateService;
     // 新增的App端Service
@@ -33,10 +34,19 @@ public class AuthenticateController {
     @Resource
     private OAuth2TokenService oauth2TokenService;
 
+    @PostMapping("/lghjft/login")
+    @PermitAll
+    @Operation(summary = "授权登录")
+    public CommonResult<AuthorizeResVO> login(@RequestBody @Valid AuthorizeReqVO reqVO) {
+        return success(authenticateService.login(reqVO));
+    }
+
+
+
     @PostMapping("/login/login-by-lgh")
     @PermitAll
     @Operation(summary = "LGH 授权登录")
-    public CommonResult<AuthLoginRespVO> loginByLgh(@RequestBody @Valid AuthenticateReqVO reqVO) {
+    public CommonResult<AuthorizeResVO> loginByLgh(@RequestBody @Valid AuthorizeLghReqVO reqVO) {
 
         // 判断逻辑：App端会传loginSign参数，PC端不传
         if (StringUtils.isNotBlank(reqVO.getLoginSign()) && !reqVO.getLoginSign().equals("app")) {

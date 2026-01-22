@@ -11,26 +11,29 @@ import cn.iocoder.yudao.framework.common.util.json.JsonUtils;
 import cn.iocoder.yudao.framework.common.util.monitor.TracerUtils;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.common.util.servlet.ServletUtils;
-import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthenticateReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeLghReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.auth.GhCsSsoDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.auth.GhQxDlzhxxDO;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.auth.DwQxSfMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.auth.GhCsSsoMapper;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.auth.GhQxDlzhxxMapper;
 import cn.iocoder.yudao.module.lghjft.framework.auth.config.LghJftAppAuthProperties;
-import cn.iocoder.yudao.module.lghjft.framework.auth.config.LghJftAuthProperties;
+import cn.iocoder.yudao.module.lghjft.service.auth.LghOAuth2TokenService;
 import cn.iocoder.yudao.module.system.api.logger.dto.LoginLogCreateReqDTO;
-import cn.iocoder.yudao.module.system.controller.admin.auth.vo.AuthLoginRespVO;
 import cn.iocoder.yudao.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
 import cn.iocoder.yudao.module.system.enums.logger.LoginLogTypeEnum;
 import cn.iocoder.yudao.module.system.enums.logger.LoginResultEnum;
 import cn.iocoder.yudao.module.system.enums.oauth2.OAuth2ClientConstants;
 import cn.iocoder.yudao.module.system.service.logger.LoginLogService;
-import cn.iocoder.yudao.module.system.service.oauth2.OAuth2TokenService;
 import cn.iocoder.yudao.module.system.service.user.AdminUserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -46,16 +49,20 @@ public class AppAuthenticateServiceImpl implements  AppAuthenticateService{
     @Resource
     private GhCsSsoMapper ghCsSsoMapper;
     @Resource
+    private GhQxDlzhxxMapper ghQxDlzhxxMapper;
+    @Resource
+    private DwQxSfMapper dwQxSfMapper;
+    @Resource
     private LghJftAppAuthProperties lghJftAppAuthProperties;
     @Resource
     private AdminUserService userService;
     @Resource
-    private OAuth2TokenService oauth2TokenService;
+    private LghOAuth2TokenService lghOAuth2TokenService;
     @Resource
     private LoginLogService loginLogService;
 
     @Override
-    public AuthLoginRespVO appLoginAuthCode(AuthenticateReqVO reqVO) {
+    public AuthorizeResVO appLoginAuthCode(AuthorizeLghReqVO reqVO) {
         // 1. 解密 authCode
         String token;
         AES aes = new AES(Mode.ECB, Padding.PKCS5Padding, lghJftAppAuthProperties.getDecryptKey().getBytes(StandardCharsets.UTF_8));
@@ -149,19 +156,32 @@ public class AppAuthenticateServiceImpl implements  AppAuthenticateService{
             throw exception(USER_NOT_EXISTS);
         }
 
+        // 8. 获取新表用户信息
+        GhQxDlzhxxDO userDO = ghQxDlzhxxMapper.selectByYhzh(user.getUsername());
+        if (userDO == null) {
+            throw exception(USER_NOT_EXISTS);
+        }
 
-        // 6. 创建 Token 令牌，记录登录日志
-        return createTokenAfterLoginSuccess(user.getId(), user.getUsername(), LoginLogTypeEnum.LOGIN_SOCIAL);
+        // 9. 创建 Token 令牌，记录登录日志
+        AuthorizeResVO authorizeResVO = createTokenAfterLoginSuccess(userDO, auid, LoginLogTypeEnum.LOGIN_SOCIAL);
+        // 10. 获取单位权限身份列表
+        authorizeResVO.setDwQxSf(dwQxSfMapper.selectDwQxSfListByDlzh(authorizeResVO.getDlzh()));
+        return authorizeResVO;
     }
 
-    private AuthLoginRespVO createTokenAfterLoginSuccess(Long userId, String username, LoginLogTypeEnum logType) {
+    private AuthorizeResVO createTokenAfterLoginSuccess(GhQxDlzhxxDO user, String loginUsername, LoginLogTypeEnum logType) {
         // 插入登陆日志
-        createLoginLog(userId, username, logType, LoginResultEnum.SUCCESS);
+        createLoginLog(user.getId(), loginUsername, logType, LoginResultEnum.SUCCESS);
         // 创建访问令牌
-        OAuth2AccessTokenDO accessTokenDO = oauth2TokenService.createAccessToken(userId, getUserType().getValue(),
+        OAuth2AccessTokenDO accessTokenDO = lghOAuth2TokenService.createAccessToken(user, getUserType().getValue(),
                 OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);
         // 构建返回结果
-        return BeanUtils.toBean(accessTokenDO, AuthLoginRespVO.class);
+        AuthorizeResVO respVO = BeanUtils.toBean(accessTokenDO, AuthorizeResVO.class);
+        respVO.setYhzh(user.getYhzh());
+        respVO.setYhnc(user.getYhnc());
+        respVO.setTxdz(user.getTxdz());
+        respVO.setDlzh(loginUsername);
+        return respVO;
     }
 
     private void createLoginLog(Long userId, String username,
@@ -177,9 +197,13 @@ public class AppAuthenticateServiceImpl implements  AppAuthenticateService{
         reqDTO.setUserIp(ServletUtils.getClientIP());
         reqDTO.setResult(loginResult.getResult());
         loginLogService.createLoginLog(reqDTO);
-        // 更新最后登录时间
+        // 更新最后登录时间 (更新新表)
         if (userId != null && Objects.equals(LoginResultEnum.SUCCESS.getResult(), loginResult.getResult())) {
-            userService.updateUserLogin(userId, ServletUtils.getClientIP());
+            ghQxDlzhxxMapper.updateById(GhQxDlzhxxDO.builder()
+                    .id(userId)
+                    .loginIp(ServletUtils.getClientIP())
+                    .loginDate(LocalDateTime.now())
+                    .build());
         }
     }
 
