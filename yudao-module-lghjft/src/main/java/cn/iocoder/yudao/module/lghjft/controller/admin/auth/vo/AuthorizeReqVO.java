@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo;
 
+import cn.iocoder.yudao.module.lghjft.enums.logger.LoginTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -24,4 +25,6 @@ public class AuthorizeReqVO {
     private String yhyx;
     @Schema(description = "社会信用代码", example = "91320114MA1X7L7X7G")
     private String shxydm;
+    @Schema(description = "登录类型", example = "91320114MA1X7L7X7G")
+    private LoginTypeEnum loginType;
 }

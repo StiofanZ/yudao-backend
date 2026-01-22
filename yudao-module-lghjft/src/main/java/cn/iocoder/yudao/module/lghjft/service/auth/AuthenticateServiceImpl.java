@@ -23,7 +23,6 @@ import cn.iocoder.yudao.module.lghjft.enums.logger.LoginTypeEnum;
 import cn.iocoder.yudao.module.lghjft.framework.auth.config.LghJftAuthProperties;
 import cn.iocoder.yudao.module.system.api.logger.dto.LoginLogCreateReqDTO;
 import cn.iocoder.yudao.module.system.controller.admin.auth.vo.AuthLoginReqVO;
-import cn.iocoder.yudao.module.system.controller.admin.auth.vo.AuthLoginRespVO;
 import cn.iocoder.yudao.module.system.dal.dataobject.dept.DeptDO;
 import cn.iocoder.yudao.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
@@ -70,23 +69,29 @@ public class AuthenticateServiceImpl implements AuthenticateService {
     private LghOAuth2TokenService lghOAuth2TokenService;
     @Resource
     private OAuth2ClientService oauth2ClientService;
+    @Resource
+    private AdminAuthService adminAuthService;
 
     @Override
     public AuthorizeResVO login(AuthorizeReqVO reqVO) {
-        // 1. 针对 username 登录形式仅使用系统默认验证
         AuthorizeResVO authorizeResVO = new AuthorizeResVO();
+        GhQxDlzhxxDO userDO = null;
+        // 1. 针对 username 登录形式仅使用系统默认验证
         if (StringUtils.isNotBlank(reqVO.getYhzh())) {
             AuthLoginReqVO systemLoginReq = AuthLoginReqVO.builder()
                     .username(reqVO.getYhzh())
                     .password(reqVO.getPassword())
                     .build();
-            AuthLoginRespVO authLoginRespVO = authService.login(systemLoginReq);
-            BeanUtils.copyProperties(authLoginRespVO, authorizeResVO);
-            authorizeResVO.setYhzh(authLoginRespVO.getUserName()); // 将系统用户名设置到新业务字段
-            authorizeResVO.setYhnc(authLoginRespVO.getNickName());
-            authorizeResVO.setTxdz(authLoginRespVO.getAvatar());
+            //AuthLoginRespVO authLoginRespVO = authService.login(systemLoginReq);
+
+            // 使用账号密码，进行登录
+            AdminUserDO user = adminAuthService.authenticate(reqVO.getYhzh(), reqVO.getPassword());
+            authorizeResVO.setUserId(user.getId());
+            authorizeResVO.setYhzh(user.getUsername()); // 将系统用户名设置到新业务字段
+            authorizeResVO.setYhnc(user.getNickname());
+            authorizeResVO.setTxdz(user.getAvatar());
             authorizeResVO.setDlzh(reqVO.getYhzh());
-            DeptDO deptDO = deptService.getDept(authLoginRespVO.getDeptId());
+            DeptDO deptDO = deptService.getDept(user.getDeptId());
             authorizeResVO.setQxbmId(deptDO.getId());
             authorizeResVO.setQxbmMc(deptDO.getName());
             DeptDO sjDeptDO = deptService.getDept(deptDO.getParentId());
@@ -94,11 +99,13 @@ public class AuthenticateServiceImpl implements AuthenticateService {
                 authorizeResVO.setSjQxbmId(sjDeptDO.getId());
                 authorizeResVO.setSjQxbmMc(sjDeptDO.getName());
             }
-
+            if (Objects.isNull(reqVO.getLoginType())) {
+                authorizeResVO.setLoginType(LoginTypeEnum.LOGIN_USERNAME.getType());
+            } else {
+                authorizeResVO.setLoginType(reqVO.getLoginType().getType());
+            }
         } else {
-
-            // 2. 手机、邮箱、社会信用代码采用新逻辑登录
-            GhQxDlzhxxDO userDO = null;
+            // 2.手机、邮箱、社会信用代码采用新逻辑登录
             if (StringUtils.isNotBlank(reqVO.getLxdh())) {
                 userDO = ghQxDlzhxxMapper.selectByLxdh(reqVO.getLxdh());
                 authorizeResVO.setDlzh(reqVO.getLxdh());
@@ -136,6 +143,13 @@ public class AuthenticateServiceImpl implements AuthenticateService {
                 throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
             }
         }
+        createLoginLog(authorizeResVO.getUserId(), authorizeResVO, LoginResultEnum.SUCCESS);
+        if (Objects.isNull(userDO)) {
+            userDO = new GhQxDlzhxxDO();
+            userDO.setId(authorizeResVO.getUserId());
+            userDO.setYhnc(authorizeResVO.getYhnc());
+        }
+        createTokenAfterLoginSuccess(userDO, authorizeResVO);
 
         // 获取单位权限身份列表
         authorizeResVO.setDwQxSf(getDwQxSfList(authorizeResVO.getDlzh()));
@@ -259,7 +273,9 @@ public class AuthenticateServiceImpl implements AuthenticateService {
         // 插入登陆日志
         createLoginLog(user.getId(), authorizeResVO, LoginResultEnum.SUCCESS);
         // 创建访问令牌
-        OAuth2AccessTokenDO accessTokenDO = lghOAuth2TokenService.createAccessToken(user, getUserType().getValue(),
+        Integer userType = UserTypeEnum.ADMIN.getValue();
+        if (!LoginTypeEnum.LOGIN_USERNAME.getType().equals(authorizeResVO.getLoginType())) userType = UserTypeEnum.MEMBER.getValue();
+        OAuth2AccessTokenDO accessTokenDO = lghOAuth2TokenService.createAccessToken(user, userType,
                 OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);
         // 构建返回结果
         BeanUtils.copyProperties(accessTokenDO, authorizeResVO);

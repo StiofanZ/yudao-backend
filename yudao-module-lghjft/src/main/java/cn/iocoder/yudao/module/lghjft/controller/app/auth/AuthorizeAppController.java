@@ -7,6 +7,7 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeResVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.auth.vo.AuthorizeAppReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.auth.vo.AuthorizeAppResVO;
+import cn.iocoder.yudao.module.lghjft.enums.logger.LoginTypeEnum;
 import cn.iocoder.yudao.module.lghjft.service.auth.AuthenticateService;
 import cn.iocoder.yudao.module.lghjft.service.auth.app.AppAuthenticateService;
 import cn.iocoder.yudao.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
@@ -43,6 +44,7 @@ public class AuthorizeAppController {
     @Operation(summary = "授权登录")
     public CommonResult<AuthorizeAppResVO> login(@RequestBody @Valid AuthorizeAppReqVO appReqVO) {
         AuthorizeReqVO reqVO = BeanUtils.toBean(appReqVO, AuthorizeReqVO.class);
+        reqVO.setLoginType(LoginTypeEnum.LOGIN_SHXYDM);
         AuthorizeResVO resVO = authenticateService.login(reqVO);
         return success(BeanUtils.toBean(resVO, AuthorizeAppResVO.class));
     }
