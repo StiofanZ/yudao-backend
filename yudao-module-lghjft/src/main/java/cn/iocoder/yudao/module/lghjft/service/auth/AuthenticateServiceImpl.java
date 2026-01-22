@@ -90,8 +90,11 @@ public class AuthenticateServiceImpl implements AuthenticateService {
             authorizeResVO.setQxbmId(deptDO.getId());
             authorizeResVO.setQxbmMc(deptDO.getName());
             DeptDO sjDeptDO = deptService.getDept(deptDO.getParentId());
-            authorizeResVO.setSjQxbmId(sjDeptDO.getId());
-            authorizeResVO.setSjQxbmMc(sjDeptDO.getName());
+            if (!Objects.isNull(sjDeptDO)) {
+                authorizeResVO.setSjQxbmId(sjDeptDO.getId());
+                authorizeResVO.setSjQxbmMc(sjDeptDO.getName());
+            }
+
         } else {
 
             // 2. 手机、邮箱、社会信用代码采用新逻辑登录
