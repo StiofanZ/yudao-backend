@@ -38,7 +38,7 @@ public class AuthorizeAppController {
     @Resource
     private OAuth2TokenService oauth2TokenService;
 
-    @PostMapping("/lghjft/login")
+    @PostMapping("/auth/login")
     @PermitAll
     @Operation(summary = "授权登录")
     public CommonResult<AuthorizeAppResVO> login(@RequestBody @Valid AuthorizeAppReqVO appReqVO) {
@@ -48,7 +48,7 @@ public class AuthorizeAppController {
     }
 
 
-    @PostMapping("/login/login-by-lgh")
+    @PostMapping("/auth/login-by-lgh")
     @PermitAll
     @Operation(summary = "LGH 授权登录")
     public CommonResult<AuthorizeResVO> loginByLgh(@RequestBody @Valid AuthorizeLghReqVO reqVO) {
@@ -63,7 +63,7 @@ public class AuthorizeAppController {
         }
     }
 
-    @GetMapping("/check-token")
+    @GetMapping("/auth/check-token")
     @PermitAll
     @Operation(summary = "校验令牌")
     @Parameter(name = "token", description = "访问令牌", required = true)
