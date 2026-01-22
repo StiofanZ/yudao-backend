@@ -41,7 +41,7 @@ public class WtfkDO extends BaseDO {
      */
     private String userName;
     /**
-     * 反馈类型：bug-功能异常 suggestion-体验建议 question-其他问题
+     * 反馈类型
      */
     private String type;
     /**
@@ -62,7 +62,7 @@ public class WtfkDO extends BaseDO {
     private String contactEmail;
 
     /**
-     * 处理状态：0-未处理 1-已处理 2-已关闭
+     * 处理状态
      */
     private Integer status;
     /**

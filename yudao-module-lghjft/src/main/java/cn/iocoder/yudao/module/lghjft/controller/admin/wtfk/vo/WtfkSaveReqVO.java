@@ -14,13 +14,6 @@ public class WtfkSaveReqVO {
     @Schema(description = "主键ID", requiredMode = Schema.RequiredMode.REQUIRED, example = "16018")
     private Long id;
 
-    @Schema(description = "用户ID（关联系统用户表）", requiredMode = Schema.RequiredMode.REQUIRED, example = "18846")
-    @NotNull(message = "用户ID（关联系统用户表）不能为空")
-    private Long userId;
-
-    @Schema(description = "用户名（冗余存储）", requiredMode = Schema.RequiredMode.REQUIRED, example = "芋艿")
-    @NotEmpty(message = "用户名（冗余存储）不能为空")
-    private String userName;
 
     @Schema(description = "反馈类型：bug-功能异常 suggestion-体验建议 question-其他问题", requiredMode = Schema.RequiredMode.REQUIRED, example = "2")
     @NotEmpty(message = "反馈类型：bug-功能异常 suggestion-体验建议 question-其他问题不能为空")
@@ -49,7 +42,5 @@ public class WtfkSaveReqVO {
     @Schema(description = "处理时间")
     private LocalDateTime processTime;
 
-    @Schema(description = "处理备注：管理员处理说明")
-    private String processNotes;
 
 }

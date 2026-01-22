@@ -19,6 +19,7 @@ public interface WtfkMapper extends BaseMapperX<WtfkDO> {
 
     default PageResult<WtfkDO> selectPage(WtfkPageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<WtfkDO>()
+                .likeIfPresent(WtfkDO::getFeedbackId, reqVO.getFeedbackId())
                 .eqIfPresent(WtfkDO::getUserId, reqVO.getUserId())
                 .likeIfPresent(WtfkDO::getUserName, reqVO.getUserName())
                 .eqIfPresent(WtfkDO::getType, reqVO.getType())
@@ -30,6 +31,7 @@ public interface WtfkMapper extends BaseMapperX<WtfkDO> {
                 .betweenIfPresent(WtfkDO::getProcessTime, reqVO.getProcessTime())
                 .eqIfPresent(WtfkDO::getProcessNotes, reqVO.getProcessNotes())
                 .betweenIfPresent(WtfkDO::getCreateTime, reqVO.getCreateTime())
+                .ne(Boolean.TRUE.equals(reqVO.getIsAdminView()), WtfkDO::getStatus, 4)
                 .orderByDesc(WtfkDO::getId));
     }
 

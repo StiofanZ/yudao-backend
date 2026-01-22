@@ -4,13 +4,18 @@ import cn.hutool.core.collection.CollUtil;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.wtfk.WtfkLogDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.wtfk.WtfkLogMapper;
+import cn.iocoder.yudao.module.system.api.user.AdminUserApi;
+import cn.iocoder.yudao.module.system.api.user.dto.AdminUserRespDTO;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.transaction.annotation.Transactional;
+import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
+
 import cn.iocoder.yudao.module.lghjft.controller.admin.wtfk.vo.*;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.wtfk.WtfkDO;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
@@ -36,6 +41,8 @@ public class WtfkServiceImpl implements WtfkService {
 
     @Resource
     private WtfkMapper wtfkMapper;
+    @Resource
+    private AdminUserApi adminUserApi; // 用于获取系统用户信息
 
     @Resource
     private WtfkLogMapper wtfkLogMapper; // 注入建立的日志 Mapper
@@ -79,10 +86,23 @@ public class WtfkServiceImpl implements WtfkService {
     @Override
     public Long createWtfk(WtfkSaveReqVO createReqVO) {
         // 1. 插入前转换 DO
-        WtfkDO wtfk = new WtfkDO();
-        BeanUtils.copyProperties(createReqVO, wtfk);
+        WtfkDO wtfk = BeanUtils.toBean(createReqVO, WtfkDO.class);
 
-        // 2. 生成业务单号 (例如：FB + 时间戳)
+        // 2. 获取当前登录用户 ID
+        // 使用框架提供的 SecurityFrameworkUtils 获取当前会话 ID
+        Long loginUserId = SecurityFrameworkUtils.getLoginUserId();
+        wtfk.setUserId(loginUserId);
+
+        // 3. 获取并设置用户名（昵称）
+        // 通过 AdminUserApi 查找用户信息，确保数据库中 userName 字段不为空
+        if (loginUserId != null) {
+            AdminUserRespDTO user = adminUserApi.getUser(loginUserId);
+            if (user != null) {
+                wtfk.setUserName(user.getNickname());
+            }
+        }
+
+        // 4. 生成业务单号 (例如：FB + 时间戳)
         // 也可以使用框架自带的序列号生成工具
         String bizId = "FB" + System.currentTimeMillis();
         wtfk.setFeedbackId(bizId);
@@ -113,17 +133,25 @@ public class WtfkServiceImpl implements WtfkService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteWtfk(Long id) {
+
         // 校验存在
         validateWtfkExists(id);
         // 删除
-        wtfkMapper.deleteById(id);
+        WtfkDO updateObj = new WtfkDO().setId(id).setStatus(4);
+        wtfkMapper.updateById(updateObj);
+
+        //wtfkLogMapper.deleteByFeedbackId(id);
     }
 
     @Override
         public void deleteWtfkListByIds(List<Long> ids) {
         // 删除
-        wtfkMapper.deleteByIds(ids);
+        //wtfkMapper.deleteByIds(ids);
+        if (CollUtil.isNotEmpty(ids)) {
+            ids.forEach(this::deleteWtfk);
+        }
         }
 
 
@@ -140,12 +168,66 @@ public class WtfkServiceImpl implements WtfkService {
 
     @Override
     public PageResult<WtfkDO> getWtfkPage(WtfkPageReqVO pageReqVO) {
+        // 判断是否【非】管理端视图
+        // 如果 isAdminView 为 null (默认) 或 false，则认为是“用户个人中心”场景
+        if (pageReqVO.getIsAdminView() == null || !pageReqVO.getIsAdminView()) {
+            // 获取当前登录人 ID 并强制赋值给查询参数
+            pageReqVO.setUserId(SecurityFrameworkUtils.getLoginUserId());
+        }
+
+        // 如果 isAdminView 为 true，则不进入上面的 if 语句
+        // 这样 userId 保持前端传来的值（通常是空），实现查询全量数据（管理端场景）
         return wtfkMapper.selectPage(pageReqVO);
+
     }
 
     @Override
-    public List<WtfkLogDO> getWtfkLogList(Long feedbackId) {
-        return wtfkLogMapper.selectListByFeedbackId(feedbackId);
+    public List<Map<String, Object>> getWtfkLogList(Long feedbackId) {
+        // 1. 获取原始日志 DO 列表
+        List<WtfkLogDO> list = wtfkLogMapper.selectListByFeedbackId(feedbackId);
+        if (CollUtil.isEmpty(list)) {
+            return Collections.emptyList();
+        }
+
+        // 2. 批量获取用户信息，避免在循环中查数据库
+        Set<Long> userIds = cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertSet(list, WtfkLogDO::getOperatorId);
+        Map<Long, AdminUserRespDTO> userMap = adminUserApi.getUserMap(userIds);
+
+        // 3. 转换为 Map 列表并补齐 operatorName
+        return list.stream().map(log -> {
+            // 将 DO 转为 Map
+            Map<String, Object> map = BeanUtils.toBean(log, HashMap.class);
+
+            // 查找操作人姓名
+            AdminUserRespDTO user = userMap.get(log.getOperatorId());
+            // 补齐字段，对应前端的 log.operatorName
+            map.put("operatorName", user != null ? user.getNickname() : "系统");
+
+            return map;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public WtfkRespVO getWtfkDetail(Long id) {
+        // 1. 查询数据库主表数据 (DO)
+        WtfkDO wtfk = wtfkMapper.selectById(id);
+        if (wtfk == null) {
+            return null;
+        }
+
+        // 2. 将 DO 转换为 VO
+        WtfkRespVO respVO = BeanUtils.toBean(wtfk, WtfkRespVO.class);
+
+        // 3. 补齐处理人姓名 (processorName)
+        if (respVO.getProcessorId() != null) {
+            // 调用你已经注入好的 adminUserApi
+            AdminUserRespDTO user = adminUserApi.getUser(respVO.getProcessorId());
+            if (user != null) {
+                respVO.setProcessorName(user.getNickname());
+            }
+        }
+
+        return respVO;
     }
 
 }

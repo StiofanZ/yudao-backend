@@ -13,13 +13,16 @@ import static cn.iocoder.yudao.framework.common.util.date.DateUtils.FORMAT_YEAR_
 @Data
 public class WtfkPageReqVO extends PageParam {
 
+
     @Schema(description = "用户ID（关联系统用户表）", example = "18846")
     private Long userId;
 
-    @Schema(description = "用户名（冗余存储）", example = "芋艿")
+    private String feedbackId;
+
+    @Schema(description = "用户名", example = "芋艿")
     private String userName;
 
-    @Schema(description = "反馈类型：bug-功能异常 suggestion-体验建议 question-其他问题", example = "2")
+    @Schema(description = "反馈类型", example = "2")
     private String type;
 
     @Schema(description = "反馈内容（Fan Kui Nei Rong）")
@@ -33,7 +36,7 @@ public class WtfkPageReqVO extends PageParam {
 
 
 
-    @Schema(description = "处理状态（Chu Li Zhuang Tai）：0-未处理 1-已处理 2-已关闭", example = "2")
+    @Schema(description = "处理状态", example = "2")
     private Integer status;
 
     @Schema(description = "处理人ID", example = "3038")
@@ -49,5 +52,9 @@ public class WtfkPageReqVO extends PageParam {
     @Schema(description = "创建时间")
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private LocalDateTime[] createTime;
+
+    @Schema(description = "是否管理端视图")
+    private Boolean isAdminView;
+
 
 }

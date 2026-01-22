@@ -1,6 +1,5 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.wtfk;
 
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.wtfk.WtfkLogDO;
 import cn.iocoder.yudao.module.system.api.user.AdminUserApi;
 import cn.iocoder.yudao.module.system.api.user.dto.AdminUserRespDTO;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +10,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Operation;
 
-import jakarta.validation.constraints.*;
 import jakarta.validation.*;
 import jakarta.servlet.http.*;
 import java.util.*;
@@ -23,7 +21,7 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
-
+import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 
 import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
@@ -53,7 +51,8 @@ public class WtfkController {
     @Operation(summary = "获得问题反馈处理日志列表")
     @Parameter(name = "feedbackId", description = "反馈编号", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:wtfk:query')")
-    public CommonResult<List<WtfkLogDO>> getWtfkLogList(@RequestParam("feedbackId") Long feedbackId) {
+// 修改返回值类型，以匹配 Service 的实现
+    public CommonResult<List<Map<String, Object>>> getWtfkLogList(@RequestParam("feedbackId") Long feedbackId) {
         return success(wtfkService.getWtfkLogList(feedbackId));
     }
 
@@ -65,7 +64,7 @@ public class WtfkController {
     }
 
     @PutMapping("/update")
-    @Operation(summary = "更新工会经费通-问题反馈")
+    @Operation(summary = "更新问题反馈")
     @PreAuthorize("@ss.hasPermission('lghjft:wtfk:update')")
     public CommonResult<Boolean> updateWtfk(@Valid @RequestBody WtfkSaveReqVO updateReqVO) {
         wtfkService.updateWtfk(updateReqVO);
@@ -92,11 +91,11 @@ public class WtfkController {
 
     @GetMapping("/get")
     @Operation(summary = "获得工会经费通-问题反馈")
-    @Parameter(name = "id", description = "编号", required = true, example = "1024")
+    @Parameter(name = "id", description = "编号", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:wtfk:query')")
     public CommonResult<WtfkRespVO> getWtfk(@RequestParam("id") Long id) {
-        WtfkDO wtfk = wtfkService.getWtfk(id);
-        return success(BeanUtils.toBean(wtfk, WtfkRespVO.class));
+        // 直接调用 Service 中补齐了姓名的方法
+        return success(wtfkService.getWtfkDetail(id));
     }
 
     @Resource
@@ -131,11 +130,16 @@ public class WtfkController {
     @ApiAccessLog(operateType = EXPORT)
     public void exportWtfkExcel(@Valid WtfkPageReqVO pageReqVO,
               HttpServletResponse response) throws IOException {
+
+        // 设置为不分页，查询全部符合条件的数据
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
+
+        // 获取数据列表
         List<WtfkDO> list = wtfkService.getWtfkPage(pageReqVO).getList();
+
         // 导出 Excel
         ExcelUtils.write(response, "工会经费通-问题反馈.xls", "数据", WtfkRespVO.class,
-                        BeanUtils.toBean(list, WtfkRespVO.class));
+                BeanUtils.toBean(list, WtfkRespVO.class));
     }
 
 }

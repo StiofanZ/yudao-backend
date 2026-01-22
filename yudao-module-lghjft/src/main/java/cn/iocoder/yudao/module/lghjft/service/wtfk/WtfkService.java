@@ -2,7 +2,6 @@ package cn.iocoder.yudao.module.lghjft.service.wtfk;
 
 import java.util.*;
 
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.wtfk.WtfkLogDO;
 import jakarta.validation.*;
 import cn.iocoder.yudao.module.lghjft.controller.admin.wtfk.vo.*;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.wtfk.WtfkDO;
@@ -15,6 +14,7 @@ import cn.iocoder.yudao.framework.common.pojo.PageParam;
  * @author 李文军
  */
 public interface WtfkService {
+
 
     /**
      * 创建工会经费通-问题反馈
@@ -71,8 +71,15 @@ public interface WtfkService {
     /**
      * 获得问题反馈处理日志列表
      * @param feedbackId 反馈编号
-     * @return 处理日志列表
+     * @return 处理日志列表 (包含操作人姓名 operatorName)
      */
-    List<WtfkLogDO> getWtfkLogList(Long feedbackId);
+    List<Map<String, Object>> getWtfkLogList(Long feedbackId); // 返回值改为 List<Map>
 
+    /**
+     * 获得工会经费通-问题反馈详情（包含处理人姓名）
+     *
+     * @param id 编号
+     * @return 问题反馈详情
+     */
+    WtfkRespVO getWtfkDetail(Long id);
 }

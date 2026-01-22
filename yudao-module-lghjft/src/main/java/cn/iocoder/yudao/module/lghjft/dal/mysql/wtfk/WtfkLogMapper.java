@@ -23,6 +23,12 @@ public interface WtfkLogMapper extends BaseMapperX<WtfkLogDO> {
      * @param feedbackId 反馈主表 ID
      * @return 处理日志列表
      */
+
+    // 根据主表 ID 删除对应的处理日志
+    default void deleteByFeedbackId(Long feedbackId) {
+        delete(new LambdaQueryWrapperX<WtfkLogDO>()
+                .eq(WtfkLogDO::getFeedbackId, feedbackId));
+    }
     default List<WtfkLogDO> selectListByFeedbackId(Long feedbackId) {
         return selectList(new LambdaQueryWrapperX<WtfkLogDO>()
                 .eq(WtfkLogDO::getFeedbackId, feedbackId)
