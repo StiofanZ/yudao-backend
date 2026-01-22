@@ -14,6 +14,5 @@ public interface ErrorCodeConstants {
 
     ErrorCode WTFK_NOT_EXISTS = new ErrorCode(2_008_000_001, "问题反馈不存在");
     ErrorCode CONTENT_NOT_EXISTS = new ErrorCode(2_009_000_001, "内容管理不存在");
-
-
+ErrorCode MARKER_INFO_NOT_EXISTS = new ErrorCode(2_010_000_001, "高德地图标注点信息不存在");
 }
