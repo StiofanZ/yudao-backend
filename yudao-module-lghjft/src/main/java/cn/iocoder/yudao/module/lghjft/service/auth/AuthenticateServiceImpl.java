@@ -135,21 +135,23 @@ public class AuthenticateServiceImpl implements AuthenticateService {
                 // 3.3 更新登录信息到业务表（最后登录时间/IP）
                 userDO.setLoginIp(ServletUtils.getClientIP());
                 userDO.setLoginDate(LocalDateTime.now());
+                authorizeResVO.setYhnc(userDO.getYhnc());
+                authorizeResVO.setYhyx(userDO.getYhyx());
+                authorizeResVO.setTxdz(userDO.getTxdz());
                 BeanUtils.copyProperties(userDO, authorizeResVO);
                 // 3.4 创建 Token 令牌，记录登录日志
-                authorizeResVO = createTokenAfterLoginSuccess(userDO, authorizeResVO);
+                authorizeResVO = createTokenAfterLoginSuccess(authorizeResVO);
             } else {
                 // 如果既没有在 gh_qx_dlzhxx 找到，或者所有方式都失败
                 throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
             }
         }
-        createLoginLog(authorizeResVO.getUserId(), authorizeResVO, LoginResultEnum.SUCCESS);
-        if (Objects.isNull(userDO)) {
-            userDO = new GhQxDlzhxxDO();
-            userDO.setId(authorizeResVO.getUserId());
-            userDO.setYhnc(authorizeResVO.getYhnc());
-        }
-        createTokenAfterLoginSuccess(userDO, authorizeResVO);
+//        if (Objects.isNull(userDO)) {
+//            userDO = new GhQxDlzhxxDO();
+//            userDO.setId(authorizeResVO.getUserId());
+//            userDO.setYhnc(authorizeResVO.getYhnc());
+//        }
+        createTokenAfterLoginSuccess(authorizeResVO);
 
         // 获取单位权限身份列表
         authorizeResVO.setDwQxSf(getDwQxSfList(authorizeResVO.getDlzh()));
@@ -248,7 +250,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
         authorizeResVO.setLoginType(LoginTypeEnum.LOGIN_SOCIAL.getType());
 
         // 8. 创建 Token 令牌，记录登录日志
-        authorizeResVO = createTokenAfterLoginSuccess(userDO, authorizeResVO);
+        authorizeResVO = createTokenAfterLoginSuccess(authorizeResVO);
 
         // 获取单位权限身份列表
         authorizeResVO.setDwQxSf(getDwQxSfList(authorizeResVO.getDlzh()));
@@ -269,17 +271,17 @@ public class AuthenticateServiceImpl implements AuthenticateService {
         return dwQxSfList;
     }
 
-    private AuthorizeResVO createTokenAfterLoginSuccess(GhQxDlzhxxDO user, AuthorizeResVO authorizeResVO) {
+    private AuthorizeResVO createTokenAfterLoginSuccess(AuthorizeResVO resVO) {
         // 插入登陆日志
-        createLoginLog(user.getId(), authorizeResVO, LoginResultEnum.SUCCESS);
+        createLoginLog(resVO.getUserId(), resVO, LoginResultEnum.SUCCESS);
         // 创建访问令牌
         Integer userType = UserTypeEnum.ADMIN.getValue();
-        if (!LoginTypeEnum.LOGIN_USERNAME.getType().equals(authorizeResVO.getLoginType())) userType = UserTypeEnum.MEMBER.getValue();
-        OAuth2AccessTokenDO accessTokenDO = lghOAuth2TokenService.createAccessToken(user, userType,
+        if (!LoginTypeEnum.LOGIN_USERNAME.getType().equals(resVO.getLoginType())) userType = UserTypeEnum.MEMBER.getValue();
+        OAuth2AccessTokenDO accessTokenDO = lghOAuth2TokenService.createAccessToken(resVO, userType,
                 OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);
         // 构建返回结果
-        BeanUtils.copyProperties(accessTokenDO, authorizeResVO);
-        return authorizeResVO;
+        BeanUtils.copyProperties(accessTokenDO, resVO);
+        return resVO;
     }
 
     private void createLoginLog(Long userId, AuthorizeResVO authorizeResVO, LoginResultEnum loginResult) {
@@ -309,7 +311,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
     }
 
     @Override
-    public OAuth2AccessTokenDO createAccessToken(GhQxDlzhxxDO user, Integer userType, String clientId, List<String> scopes) {
+    public OAuth2AccessTokenDO createAccessToken(AuthorizeResVO user, Integer userType, String clientId, List<String> scopes) {
         return lghOAuth2TokenService.createAccessToken(user, userType, clientId, scopes);
     }
 

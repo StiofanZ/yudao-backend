@@ -4,7 +4,7 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.iocoder.yudao.framework.security.core.LoginUser;
 import cn.iocoder.yudao.framework.tenant.core.context.TenantContextHolder;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.auth.GhQxDlzhxxDO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeResVO;
 import cn.iocoder.yudao.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import cn.iocoder.yudao.module.system.dal.dataobject.oauth2.OAuth2ClientDO;
 import cn.iocoder.yudao.module.system.dal.dataobject.oauth2.OAuth2RefreshTokenDO;
@@ -43,18 +43,18 @@ public class LghOAuth2TokenServiceImpl implements LghOAuth2TokenService {
     }
 
     @Override
-    public OAuth2AccessTokenDO createAccessToken(GhQxDlzhxxDO user, Integer userType, String clientId, List<String> scopes) {
+    public OAuth2AccessTokenDO createAccessToken(AuthorizeResVO resVO, Integer userType, String clientId, List<String> scopes) {
         OAuth2ClientDO clientDO = oauth2ClientService.validOAuthClientFromCache(clientId);
         // 创建刷新令牌
-        OAuth2RefreshTokenDO refreshTokenDO = createOAuth2RefreshToken(user.getId(), userType, clientDO, scopes);
+        OAuth2RefreshTokenDO refreshTokenDO = createOAuth2RefreshToken(resVO.getUserId(), userType, clientDO, scopes);
         // 创建访问令牌
-        return createOAuth2AccessToken(refreshTokenDO, clientDO, user);
+        return createOAuth2AccessToken(refreshTokenDO, clientDO, resVO);
     }
 
-    private OAuth2AccessTokenDO createOAuth2AccessToken(OAuth2RefreshTokenDO refreshTokenDO, OAuth2ClientDO clientDO, GhQxDlzhxxDO user) {
+    private OAuth2AccessTokenDO createOAuth2AccessToken(OAuth2RefreshTokenDO refreshTokenDO, OAuth2ClientDO clientDO, AuthorizeResVO resVO) {
         OAuth2AccessTokenDO accessTokenDO = new OAuth2AccessTokenDO().setAccessToken(generateAccessToken())
                 .setUserId(refreshTokenDO.getUserId()).setUserType(refreshTokenDO.getUserType())
-                .setUserInfo(buildUserInfo(user))
+                .setUserInfo(buildUserInfo(resVO))
                 .setClientId(clientDO.getClientId()).setScopes(refreshTokenDO.getScopes())
                 .setRefreshToken(refreshTokenDO.getRefreshToken())
                 .setExpiresTime(LocalDateTime.now().plusSeconds(clientDO.getAccessTokenValiditySeconds()));
@@ -83,9 +83,9 @@ public class LghOAuth2TokenServiceImpl implements LghOAuth2TokenService {
         return refreshToken;
     }
 
-    private Map<String, String> buildUserInfo(GhQxDlzhxxDO user) {
-        return MapUtil.builder(LoginUser.INFO_KEY_NICKNAME, user.getYhnc())
-                .put(LoginUser.INFO_KEY_DEPT_ID, null) // 陇工会用户暂无部门 ID
+    private Map<String, String> buildUserInfo(AuthorizeResVO resVO) {
+        return MapUtil.builder(LoginUser.INFO_KEY_NICKNAME, resVO.getYhnc())
+                .put(LoginUser.INFO_KEY_DEPT_ID, String.valueOf(resVO.getQxbmId())) // 陇工会用户暂无部门 ID
                 .build();
     }
 

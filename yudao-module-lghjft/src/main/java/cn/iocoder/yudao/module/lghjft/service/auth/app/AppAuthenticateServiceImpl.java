@@ -163,25 +163,23 @@ public class AppAuthenticateServiceImpl implements  AppAuthenticateService{
         }
 
         // 9. 创建 Token 令牌，记录登录日志
-        AuthorizeResVO authorizeResVO = createTokenAfterLoginSuccess(userDO, auid, LoginLogTypeEnum.LOGIN_SOCIAL);
+//        AuthorizeResVO authorizeResVO = createTokenAfterLoginSuccess(res, auid, LoginLogTypeEnum.LOGIN_SOCIAL);
+        AuthorizeResVO authorizeResVO = new AuthorizeResVO();
+
         // 10. 获取单位权限身份列表
         authorizeResVO.setDwQxSf(dwQxSfMapper.selectDwQxSfListByDlzh(authorizeResVO.getDlzh()));
         return authorizeResVO;
     }
 
-    private AuthorizeResVO createTokenAfterLoginSuccess(GhQxDlzhxxDO user, String loginUsername, LoginLogTypeEnum logType) {
+    private AuthorizeResVO createTokenAfterLoginSuccess(AuthorizeResVO resVO, String loginUsername, LoginLogTypeEnum logType) {
         // 插入登陆日志
-        createLoginLog(user.getId(), loginUsername, logType, LoginResultEnum.SUCCESS);
+        createLoginLog(resVO.getUserId(), loginUsername, logType, LoginResultEnum.SUCCESS);
         // 创建访问令牌
-        OAuth2AccessTokenDO accessTokenDO = lghOAuth2TokenService.createAccessToken(user, getUserType().getValue(),
+        OAuth2AccessTokenDO accessTokenDO = lghOAuth2TokenService.createAccessToken(resVO, getUserType().getValue(),
                 OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);
         // 构建返回结果
-        AuthorizeResVO respVO = BeanUtils.toBean(accessTokenDO, AuthorizeResVO.class);
-        respVO.setYhzh(user.getYhzh());
-        respVO.setYhnc(user.getYhnc());
-        respVO.setTxdz(user.getTxdz());
-        respVO.setDlzh(loginUsername);
-        return respVO;
+        BeanUtils.copyProperties(accessTokenDO, resVO);
+        return resVO;
     }
 
     private void createLoginLog(Long userId, String username,
