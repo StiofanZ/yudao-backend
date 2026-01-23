@@ -17,8 +17,8 @@ public class MarkerInfoAppRespVO {
     @ExcelProperty("主键ID")
     private Long id;
 
-    @Schema(description = "地点名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "赵六")
-    @ExcelProperty("地点名称")
+    @Schema(description = "工会名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "赵六")
+    @ExcelProperty("工会名称")
     private String name;
 
     @Schema(description = "联系电话")
@@ -51,7 +51,12 @@ public class MarkerInfoAppRespVO {
     @ExcelProperty("创建时间")
     private LocalDateTime createTime;
 
-    @Schema(description = "是否删除（0-未删，1-已删）", requiredMode = Schema.RequiredMode.REQUIRED)
-    @ExcelProperty("是否删除（0-未删，1-已删）")
-    private Integer isDeleted;
+
+    @Schema(description = "工会级别文字显示")
+    private String gradeText;  // 新增字段
+
+
+//    @Schema(description = "是否删除（0-未删，1-已删）", requiredMode = Schema.RequiredMode.REQUIRED)
+//    @ExcelProperty("是否删除（0-未删，1-已删）")
+//    private Integer isDeleted;
   }

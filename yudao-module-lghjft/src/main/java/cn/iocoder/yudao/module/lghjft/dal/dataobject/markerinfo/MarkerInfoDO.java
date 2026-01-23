@@ -61,10 +61,10 @@ public class MarkerInfoDO extends BaseDO {
      * 备注信息
      */
     private String remark;
-    /**
-     * 是否删除（0-未删，1-已删）
-     */
-    private Integer isDeleted;
+//    /**
+//     * 是否删除（0-未删，1-已删）
+//     */
+//    private Integer isDeleted;
 
 
     @TableField(exist = false)  // 告诉MyBatis这个字段不在表中

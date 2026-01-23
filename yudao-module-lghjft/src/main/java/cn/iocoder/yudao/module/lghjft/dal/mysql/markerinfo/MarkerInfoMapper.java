@@ -24,9 +24,9 @@ public interface MarkerInfoMapper extends BaseMapperX<MarkerInfoDO> {
                 .eqIfPresent(MarkerInfoDO::getAddress, reqVO.getAddress())
                 .eqIfPresent(MarkerInfoDO::getLng, reqVO.getLng())
                 .eqIfPresent(MarkerInfoDO::getLat, reqVO.getLat())
-                .eqIfPresent(MarkerInfoDO::getRemark, reqVO.getRemark())
+//                .eqIfPresent(MarkerInfoDO::getRemark, reqVO.getRemark())
                 .betweenIfPresent(MarkerInfoDO::getCreateTime, reqVO.getCreateTime())
-                .eqIfPresent(MarkerInfoDO::getIsDeleted, reqVO.getIsDeleted())
+//                .eqIfPresent(MarkerInfoDO::getIsDeleted, reqVO.getIsDeleted())
                 .orderByDesc(MarkerInfoDO::getId));
     }
 

@@ -29,6 +29,12 @@ public class MarkerInfoRespVO {
     @ExcelProperty("详细地址")
     private String address;
 
+    @Schema(description = "工作时间")
+    private String jobtime;
+
+    @Schema(description = "级别")
+    private String grade;
+
     @Schema(description = "经度（保留6位小数，满足高德地图精度）", requiredMode = Schema.RequiredMode.REQUIRED)
     @ExcelProperty("经度（保留6位小数，满足高德地图精度）")
     private BigDecimal lng;
@@ -45,10 +51,9 @@ public class MarkerInfoRespVO {
     @ExcelProperty("创建时间")
     private LocalDateTime createTime;
 
-    @Schema(description = "是否删除（0-未删，1-已删）", requiredMode = Schema.RequiredMode.REQUIRED)
-    @ExcelProperty("是否删除（0-未删，1-已删）")
-    private Integer isDeleted;
-    @Schema(description = "工作时间")
-    private  String jobtime;
-    @Schema(description = "级别")
-    private  String grade;}
+//    @Schema(description = "是否删除（0-未删，1-已删）", requiredMode = Schema.RequiredMode.REQUIRED)
+//    @ExcelProperty("是否删除（0-未删，1-已删）")
+//    private Integer isDeleted;
+
+
+}

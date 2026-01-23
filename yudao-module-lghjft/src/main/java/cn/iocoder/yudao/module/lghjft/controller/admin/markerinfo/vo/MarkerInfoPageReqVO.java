@@ -40,7 +40,7 @@ public class MarkerInfoPageReqVO extends PageParam {
     private  String jobtime;
     @Schema(description = "级别")
     private  String grade;
-    @Schema(description = "是否删除（0-未删，1-已删）")
-    private Integer isDeleted;
+//    @Schema(description = "是否删除（0-未删，1-已删）")
+//    private Integer isDeleted;
 
 }

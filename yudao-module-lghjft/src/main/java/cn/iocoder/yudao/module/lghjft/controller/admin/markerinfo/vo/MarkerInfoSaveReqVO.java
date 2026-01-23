@@ -34,10 +34,10 @@ public class MarkerInfoSaveReqVO {
 
     @Schema(description = "备注信息", example = "你猜")
     private String remark;
-
-    @Schema(description = "是否删除（0-未删，1-已删）", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotNull(message = "是否删除（0-未删，1-已删）不能为空")
-    private Integer isDeleted;
+//
+//    @Schema(description = "是否删除（0-未删，1-已删）", requiredMode = Schema.RequiredMode.REQUIRED)
+//    @NotNull(message = "是否删除（0-未删，1-已删）不能为空")
+//    private Integer isDeleted;
 
     @Schema(description = "工作时间")
     private  String jobtime;
