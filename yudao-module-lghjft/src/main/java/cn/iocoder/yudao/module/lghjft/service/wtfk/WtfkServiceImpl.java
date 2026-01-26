@@ -182,7 +182,6 @@ public class WtfkServiceImpl implements WtfkService {
     @Override
     public PageResult<WtfkDO> getWtfkPage(WtfkPageReqVO pageReqVO) {
         // 1. 核心逻辑：状态转换处理
-        // 如果前端传了 status，我们在这里把它转换成集合，Mapper 只需要执行简单的 IN 查询
         if (pageReqVO.getStatus() != null) {
             if (Objects.equals(pageReqVO.getStatus(), 3)) {
                 // 选“已处理”，实际查 3 和 4
@@ -196,12 +195,11 @@ public class WtfkServiceImpl implements WtfkService {
             }
         }
 
-        // 2. 原有的权限逻辑（保持不变）
+
         if (pageReqVO.getIsAdminView() == null || !pageReqVO.getIsAdminView()) {
             pageReqVO.setUserId(SecurityFrameworkUtils.getLoginUserId());
         }
 
-        // 3. 提交给 Mapper，Mapper 那边只需要一行 .inIfPresent，非常整洁
         return wtfkMapper.selectPage(pageReqVO);
     }
 
