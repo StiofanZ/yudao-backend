@@ -2,6 +2,10 @@ package cn.iocoder.yudao.module.lghjft.service.wtfk;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
+import cn.iocoder.yudao.module.file.dal.dataobject.FileInfoDO;
+import cn.iocoder.yudao.module.file.dal.dataobject.vo.FileInfoVO;
+import cn.iocoder.yudao.module.file.dal.mysql.FileInfoMapper;
+import cn.iocoder.yudao.module.file.service.IFileInfoService;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.wtfk.WtfkLogDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.wtfk.WtfkLogMapper;
 import cn.iocoder.yudao.module.system.api.user.AdminUserApi;
@@ -46,6 +50,12 @@ public class WtfkServiceImpl implements WtfkService {
 
     @Resource
     private WtfkLogMapper wtfkLogMapper; // 注入建立的日志 Mapper
+
+    @Resource
+    private IFileInfoService fileInfoService;//关于文件上传
+
+    @Resource
+    private FileInfoMapper fileInfoMapper; //关于文件上传
     /**
      * 实现处理逻辑：多次处理记录并更新主表状态
      */
@@ -84,35 +94,36 @@ public class WtfkServiceImpl implements WtfkService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Long createWtfk(WtfkSaveReqVO createReqVO) {
-        // 1. 插入前转换 DO
+        // 1. 基础信息设置
         WtfkDO wtfk = BeanUtils.toBean(createReqVO, WtfkDO.class);
-
-        // 2. 获取当前登录用户 ID
-        // 使用框架提供的 SecurityFrameworkUtils 获取当前会话 ID
         Long loginUserId = SecurityFrameworkUtils.getLoginUserId();
         wtfk.setUserId(loginUserId);
 
-        // 3. 获取并设置用户名（昵称）
-        // 通过 AdminUserApi 查找用户信息，确保数据库中 userName 字段不为空
+        // 获取昵称
         if (loginUserId != null) {
             AdminUserRespDTO user = adminUserApi.getUser(loginUserId);
-            if (user != null) {
-                wtfk.setUserName(user.getNickname());
-            }
+            if (user != null) wtfk.setUserName(user.getNickname());
         }
 
-        // 4. 生成业务单号 (例如：FB + 时间戳)
-        // 也可以使用框架自带的序列号生成工具
-        String bizId = "FB" + System.currentTimeMillis();
-        wtfk.setFeedbackId(bizId);
+        // 生成业务单号
+        wtfk.setFeedbackId("FB" + System.currentTimeMillis());
 
-        // 3. 插入数据库
+        wtfk.setStatus(1); //新增的反馈单默认设为1待处理
+
+        // 插入数据库
         wtfkMapper.insert(wtfk);
+
+        //  使用 Service 批量绑定附件
+        this.saveFileInfos(wtfk.getId(), createReqVO.getFileUrls());
+
         return wtfk.getId();
     }
 
+
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateWtfk(WtfkSaveReqVO updateReqVO) {
 
         // 1. 校验存在
@@ -130,6 +141,8 @@ public class WtfkServiceImpl implements WtfkService {
 
         // 4. 更新
         wtfkMapper.updateById(updateObj);
+        fileInfoService.deleteFileInfoByBizId(updateReqVO.getId());
+        this.saveFileInfos(updateReqVO.getId(), updateReqVO.getFileUrls());
     }
 
     @Override
@@ -168,18 +181,30 @@ public class WtfkServiceImpl implements WtfkService {
 
     @Override
     public PageResult<WtfkDO> getWtfkPage(WtfkPageReqVO pageReqVO) {
-        // 判断是否【非】管理端视图
-        // 如果 isAdminView 为 null (默认) 或 false，则认为是“用户个人中心”场景
+        // 1. 核心逻辑：状态转换处理
+        // 如果前端传了 status，我们在这里把它转换成集合，Mapper 只需要执行简单的 IN 查询
+        if (pageReqVO.getStatus() != null) {
+            if (Objects.equals(pageReqVO.getStatus(), 3)) {
+                // 选“已处理”，实际查 3 和 4
+                pageReqVO.setStatuses(Arrays.asList(3, 4));
+            } else if (Objects.equals(pageReqVO.getStatus(), 1)) {
+                // 选“待处理”，实际查 0 和 1
+                pageReqVO.setStatuses(Arrays.asList(0, 1));
+            } else {
+                // 其他状态（如跟进中），查它自己
+                pageReqVO.setStatuses(Collections.singletonList(pageReqVO.getStatus()));
+            }
+        }
+
+        // 2. 原有的权限逻辑（保持不变）
         if (pageReqVO.getIsAdminView() == null || !pageReqVO.getIsAdminView()) {
-            // 获取当前登录人 ID 并强制赋值给查询参数
             pageReqVO.setUserId(SecurityFrameworkUtils.getLoginUserId());
         }
 
-        // 如果 isAdminView 为 true，则不进入上面的 if 语句
-        // 这样 userId 保持前端传来的值（通常是空），实现查询全量数据（管理端场景）
+        // 3. 提交给 Mapper，Mapper 那边只需要一行 .inIfPresent，非常整洁
         return wtfkMapper.selectPage(pageReqVO);
-
     }
+
 
     @Override
     public List<Map<String, Object>> getWtfkLogList(Long feedbackId) {
@@ -209,25 +234,57 @@ public class WtfkServiceImpl implements WtfkService {
 
     @Override
     public WtfkRespVO getWtfkDetail(Long id) {
-        // 1. 查询数据库主表数据 (DO)
         WtfkDO wtfk = wtfkMapper.selectById(id);
-        if (wtfk == null) {
-            return null;
-        }
+        if (wtfk == null) return null;
 
-        // 2. 将 DO 转换为 VO
         WtfkRespVO respVO = BeanUtils.toBean(wtfk, WtfkRespVO.class);
 
-        // 3. 补齐处理人姓名 (processorName)
+        // 补齐处理人姓名
         if (respVO.getProcessorId() != null) {
-            // 调用你已经注入好的 adminUserApi
             AdminUserRespDTO user = adminUserApi.getUser(respVO.getProcessorId());
-            if (user != null) {
-                respVO.setProcessorName(user.getNickname());
-            }
+            if (user != null) respVO.setProcessorName(user.getNickname());
+        }
+
+        // 4. 使用 Service 查询附件 (重构点)
+        List<FileInfoVO> files = fileInfoService.selectFileInfoVOByBizId(id);
+        if (CollUtil.isNotEmpty(files)) {
+            respVO.setFileUrls(files.stream().map(FileInfoVO::getFileUrl).collect(Collectors.toList()));
         }
 
         return respVO;
     }
+    /**
+     * 封装 FileInfoDO 并调用 Service 批量入库
+     */
+    private void saveFileInfos(Long bizId, List<String> fileUrls) {
+        if (CollUtil.isEmpty(fileUrls)) {
+            return;
+        }
 
+        // 1. 直接获取 Long 类型的用户 ID
+        Long loginUserId = SecurityFrameworkUtils.getLoginUserId();
+        // 如果获取不到登录用户（例如未登录反馈），给一个默认的管理员 ID 1L
+        Long creatorId = (loginUserId != null) ? loginUserId : 1L;
+
+        List<FileInfoDO> fileInfoList = fileUrls.stream().map(url -> {
+            FileInfoDO fileInfo = new FileInfoDO();
+            fileInfo.setBizId(bizId);
+            fileInfo.setFileUrl(url);
+
+            String fileName = url.substring(url.lastIndexOf("/") + 1);
+            fileInfo.setFileName(fileName);
+            fileInfo.setFileOriginName(fileName);
+
+            // 2. 修复点：直接传入 Long 类型变量
+            fileInfo.setCreateBy(creatorId);
+
+            fileInfo.setCreateTime(LocalDateTime.now());
+            fileInfo.setDelFlag("0");
+            fileInfo.setFileType("1");
+
+            return fileInfo;
+        }).collect(Collectors.toList());
+
+        fileInfoService.insertBizIdBatchFileInfo(fileInfoList);
+    }
 }

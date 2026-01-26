@@ -26,7 +26,7 @@ public interface WtfkMapper extends BaseMapperX<WtfkDO> {
                 .eqIfPresent(WtfkDO::getContent, reqVO.getContent())
                 .eqIfPresent(WtfkDO::getContactPhone, reqVO.getContactPhone())
                 .eqIfPresent(WtfkDO::getContactEmail, reqVO.getContactEmail())
-                .eqIfPresent(WtfkDO::getStatus, reqVO.getStatus())
+                .inIfPresent(WtfkDO::getStatus, reqVO.getStatuses())
                 .eqIfPresent(WtfkDO::getProcessorId, reqVO.getProcessorId())
                 .betweenIfPresent(WtfkDO::getProcessTime, reqVO.getProcessTime())
                 .eqIfPresent(WtfkDO::getProcessNotes, reqVO.getProcessNotes())

@@ -71,4 +71,7 @@ public class WtfkRespVO {
     @ExcelProperty("创建时间")
     private LocalDateTime createTime;
 
+    @Schema(description = "附件URL列表")
+    private List<String> fileUrls;
+
 }

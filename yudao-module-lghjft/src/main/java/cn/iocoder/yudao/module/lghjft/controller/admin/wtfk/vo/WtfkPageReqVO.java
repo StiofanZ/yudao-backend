@@ -56,5 +56,6 @@ public class WtfkPageReqVO extends PageParam {
     @Schema(description = "是否管理端视图")
     private Boolean isAdminView;
 
+    private Collection<Integer> statuses;
 
 }

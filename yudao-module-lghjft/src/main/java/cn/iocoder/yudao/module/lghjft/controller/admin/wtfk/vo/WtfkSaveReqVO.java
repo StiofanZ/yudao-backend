@@ -4,8 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import java.util.*;
 import jakarta.validation.constraints.*;
-import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
+import cn.iocoder.yudao.framework.common.validation.Mobile;
 
 @Schema(description = "管理后台 - 工会经费通-问题反馈新增/修改 Request VO")
 @Data
@@ -15,25 +15,26 @@ public class WtfkSaveReqVO {
     private Long id;
 
 
-    @Schema(description = "反馈类型：bug-功能异常 suggestion-体验建议 question-其他问题", requiredMode = Schema.RequiredMode.REQUIRED, example = "2")
-    @NotEmpty(message = "反馈类型：bug-功能异常 suggestion-体验建议 question-其他问题不能为空")
+    @Schema(description = "反馈类型", requiredMode = Schema.RequiredMode.REQUIRED, example = "2")
+    @NotEmpty(message = "反馈类型")
     private String type;
 
     @Schema(description = "平台名称")
     private String platformName;
 
-    @Schema(description = "反馈内容（Fan Kui Nei Rong）", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotEmpty(message = "反馈内容（Fan Kui Nei Rong）不能为空")
+    @Schema(description = "反馈内容", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotEmpty(message = "反馈内容不能为空")
     private String content;
 
+    @Mobile
     @Schema(description = "联系电话")
     private String contactPhone;
 
     @Schema(description = "联系邮箱")
     private String contactEmail;
 
-    @Schema(description = "处理状态：0-未处理 1-已处理 2-已关闭", requiredMode = Schema.RequiredMode.REQUIRED, example = "2")
-    @NotNull(message = "处理状态：0-未处理 1-已处理 2-已关闭不能为空")
+    @Schema(description = "处理状态", requiredMode = Schema.RequiredMode.REQUIRED, example = "2")
+    @NotNull(message = "处理状态")
     private Integer status;
 
     @Schema(description = "处理人ID", example = "3038")
@@ -41,6 +42,9 @@ public class WtfkSaveReqVO {
 
     @Schema(description = "处理时间")
     private LocalDateTime processTime;
+
+    @Schema(description = "附件URL列表")
+    private List<String> fileUrls;
 
 
 }
