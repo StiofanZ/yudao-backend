@@ -47,5 +47,7 @@ public class XxtxMessageAppRespVO {
 
     @Schema(description = "用户名称列表", example = "['张三', '李四']")
     private List<String> userNames;
+    @Schema(description = "阅读状态（0：未读，1：已读）", example = "0")
+    private Integer readStatus;
 
 }

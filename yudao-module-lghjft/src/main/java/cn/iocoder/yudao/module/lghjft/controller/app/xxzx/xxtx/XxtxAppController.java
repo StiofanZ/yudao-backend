@@ -43,6 +43,7 @@ public class XxtxAppController {
             BeanUtils.copyProperties(receiverDO, respVO);
             XxtxMessageDO messageDO = xxtxService.getMessage(receiverDO.getMessageId());
             BeanUtils.copyProperties(messageDO, respVO);
+            respVO.setReadStatus(respVO.getReadStatus());
             return respVO;
         }).toList());
         return success(BeanUtils.toBean(appRespVOPageResult, XxtxMessageRespVO.class));
