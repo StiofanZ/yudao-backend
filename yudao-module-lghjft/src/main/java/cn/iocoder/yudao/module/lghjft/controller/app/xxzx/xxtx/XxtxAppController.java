@@ -34,6 +34,7 @@ public class XxtxAppController {
     @Operation(summary = "获取消息分页列表")
     @PreAuthorize("isAuthenticated()")
     public CommonResult<PageResult<XxtxMessageRespVO>> getMessagePage(@Validated XxtxMessagePageReqVO pageReqVO) {
+        pageReqVO.setReceiverId(SecurityFrameworkUtils.getLoginUserId());
         PageResult<XxtxMessageReceiverDO> receiverDOPageResult = xxtxService.getMessageReceiverPage(pageReqVO);
         PageResult<XxtxMessageAppRespVO> appRespVOPageResult = new PageResult<>();
         appRespVOPageResult.setTotal(receiverDOPageResult.getTotal());

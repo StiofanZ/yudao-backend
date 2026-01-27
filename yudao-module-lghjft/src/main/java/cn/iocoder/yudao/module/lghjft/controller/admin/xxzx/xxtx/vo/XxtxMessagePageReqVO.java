@@ -34,6 +34,6 @@ public class XxtxMessagePageReqVO extends PageParam {
     private Integer readStatus;
 
     @Schema(description = "接收着ID", example = "1")
-    private Integer receiverId;
+    private Long receiverId;
 
 }
