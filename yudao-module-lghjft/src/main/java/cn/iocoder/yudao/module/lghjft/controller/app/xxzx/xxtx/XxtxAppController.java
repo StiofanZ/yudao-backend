@@ -33,7 +33,7 @@ public class XxtxAppController {
     @GetMapping("/list-page")
     @Operation(summary = "获取消息分页列表")
     @PreAuthorize("isAuthenticated()")
-    public CommonResult<PageResult<XxtxMessageRespVO>> getMessagePage(@Validated XxtxMessagePageReqVO pageReqVO) {
+    public CommonResult<PageResult<XxtxMessageAppRespVO>> getMessagePage(@Validated XxtxMessagePageReqVO pageReqVO) {
         pageReqVO.setReceiverId(SecurityFrameworkUtils.getLoginUserId());
         PageResult<XxtxMessageReceiverDO> receiverDOPageResult = xxtxService.getMessageReceiverPage(pageReqVO);
         PageResult<XxtxMessageAppRespVO> appRespVOPageResult = new PageResult<>();
@@ -46,7 +46,7 @@ public class XxtxAppController {
             respVO.setReadStatus(respVO.getReadStatus());
             return respVO;
         }).toList());
-        return success(BeanUtils.toBean(appRespVOPageResult, XxtxMessageRespVO.class));
+        return success(BeanUtils.toBean(appRespVOPageResult, XxtxMessageAppRespVO.class));
     }
 
     @GetMapping("/get")
