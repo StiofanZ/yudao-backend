@@ -196,6 +196,9 @@ public class BsznServiceImpl implements BsznService {
         if (listReqVO.getStatus() != null) {
             queryWrapper.eq(BsznDO::getStatus, listReqVO.getStatus());
         }
+        if (listReqVO.getYwfl() != null){
+            queryWrapper.eq(BsznDO::getYwfl, listReqVO.getYwfl());
+        }
         // 部门权限过滤：查看本级及上级部门的内容，并应用可见性过滤
         if (!deptIds.isEmpty()) {
             queryWrapper.and(wrapper -> {
