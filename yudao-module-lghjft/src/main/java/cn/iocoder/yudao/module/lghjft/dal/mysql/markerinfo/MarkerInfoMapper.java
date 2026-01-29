@@ -22,6 +22,7 @@ public interface MarkerInfoMapper extends BaseMapperX<MarkerInfoDO> {
                 .likeIfPresent(MarkerInfoDO::getName, reqVO.getName())
                 .eqIfPresent(MarkerInfoDO::getPhone, reqVO.getPhone())
                 .eqIfPresent(MarkerInfoDO::getAddress, reqVO.getAddress())
+                .eqIfPresent(MarkerInfoDO::getGrade, reqVO.getGrade())
                 .eqIfPresent(MarkerInfoDO::getLng, reqVO.getLng())
                 .eqIfPresent(MarkerInfoDO::getLat, reqVO.getLat())
 //                .eqIfPresent(MarkerInfoDO::getRemark, reqVO.getRemark())
