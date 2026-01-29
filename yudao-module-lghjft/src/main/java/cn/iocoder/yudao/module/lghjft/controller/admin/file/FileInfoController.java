@@ -1,7 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.file;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
-import cn.iocoder.yudao.module.file.dal.dataobject.FileInfoDO;
+import cn.iocoder.yudao.module.file.dal.dataobject.dos.FileInfoDO;
 import cn.iocoder.yudao.module.file.dal.dataobject.dto.FileInfoDTO;
 import cn.iocoder.yudao.module.file.dal.dataobject.vo.FileInfoVO;
 import cn.iocoder.yudao.module.file.service.IFileInfoService;
