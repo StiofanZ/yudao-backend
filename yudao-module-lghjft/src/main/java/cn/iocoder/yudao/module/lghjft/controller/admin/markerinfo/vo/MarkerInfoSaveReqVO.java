@@ -13,8 +13,8 @@ public class MarkerInfoSaveReqVO {
     @Schema(description = "主键ID", requiredMode = Schema.RequiredMode.REQUIRED, example = "32339")
     private Long id;
 
-    @Schema(description = "地点名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "赵六")
-    @NotEmpty(message = "地点名称不能为空")
+    @Schema(description = "工会名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "赵六")
+    @NotEmpty(message = "工会名称")
     private String name;
 
     @Schema(description = "联系电话")
@@ -44,4 +44,6 @@ public class MarkerInfoSaveReqVO {
 
     @Schema(description = "级别")
     private  String grade;
+
+
 }

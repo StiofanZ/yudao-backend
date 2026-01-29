@@ -2,6 +2,7 @@ package cn.iocoder.yudao.module.lghjft.dal.mysql.markerinfo;
 
 import java.util.*;
 
+import cn.hutool.core.util.StrUtil;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
@@ -16,19 +17,19 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.markerinfo.vo.*;
  */
 @Mapper
 public interface MarkerInfoMapper extends BaseMapperX<MarkerInfoDO> {
-
     default PageResult<MarkerInfoDO> selectPage(MarkerInfoPageReqVO reqVO) {
-        return selectPage(reqVO, new LambdaQueryWrapperX<MarkerInfoDO>()
-                .likeIfPresent(MarkerInfoDO::getName, reqVO.getName())
-                .eqIfPresent(MarkerInfoDO::getPhone, reqVO.getPhone())
-                .eqIfPresent(MarkerInfoDO::getAddress, reqVO.getAddress())
-                .eqIfPresent(MarkerInfoDO::getGrade, reqVO.getGrade())
-                .eqIfPresent(MarkerInfoDO::getLng, reqVO.getLng())
-                .eqIfPresent(MarkerInfoDO::getLat, reqVO.getLat())
-//                .eqIfPresent(MarkerInfoDO::getRemark, reqVO.getRemark())
-                .betweenIfPresent(MarkerInfoDO::getCreateTime, reqVO.getCreateTime())
-//                .eqIfPresent(MarkerInfoDO::getIsDeleted, reqVO.getIsDeleted())
-                .orderByDesc(MarkerInfoDO::getId));
+        LambdaQueryWrapperX<MarkerInfoDO> wrapper = new LambdaQueryWrapperX<MarkerInfoDO>()
+                .orderByDesc(MarkerInfoDO::getId);
+
+        // 如果 searchKey 非空，则添加 (name LIKE ? OR address LIKE ?)
+        if (StrUtil.isNotBlank(reqVO.getSearchKey())) {
+            String key = "%" + reqVO.getSearchKey() + "%";
+            wrapper.and(w -> w.like(MarkerInfoDO::getName, key)
+                    .or()
+                    .like(MarkerInfoDO::getAddress, key));
+        }
+
+        return selectPage(reqVO, wrapper);
     }
 
 }

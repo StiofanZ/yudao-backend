@@ -13,8 +13,10 @@ import static cn.iocoder.yudao.framework.common.util.date.DateUtils.FORMAT_YEAR_
 @Schema(description = "管理后台 - 高德地图标注点信息分页 Request VO")
 @Data
 public class MarkerInfoPageReqVO extends PageParam {
+    @Schema(description = "行政区划", example = "620523")
+    private Integer id;
 
-    @Schema(description = "地点名称", example = "赵六")
+    @Schema(description = "工会名称", example = "甘肃省总工会")
     private String name;
 
     @Schema(description = "联系电话")

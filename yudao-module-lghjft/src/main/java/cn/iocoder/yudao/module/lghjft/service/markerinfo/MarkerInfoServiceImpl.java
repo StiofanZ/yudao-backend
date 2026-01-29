@@ -1,6 +1,9 @@
 package cn.iocoder.yudao.module.lghjft.service.markerinfo;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -37,7 +40,6 @@ public class MarkerInfoServiceImpl implements MarkerInfoService {
         // 插入
         MarkerInfoDO markerInfo = BeanUtils.toBean(createReqVO, MarkerInfoDO.class);
         markerInfoMapper.insert(markerInfo);
-
         // 返回
         return markerInfo.getId();
     }
@@ -79,7 +81,40 @@ public class MarkerInfoServiceImpl implements MarkerInfoService {
 
     @Override
     public PageResult<MarkerInfoDO> getMarkerInfoPage(MarkerInfoPageReqVO pageReqVO) {
+        // 如果传了 id → 走 grade 联动查询
+        if (pageReqVO.getId() != null) {
+            return getMarkerInfoByGradeRule(pageReqVO);
+        }
         return markerInfoMapper.selectPage(pageReqVO);
     }
+
+
+//查询标记点周边数据
+    private PageResult<MarkerInfoDO> getMarkerInfoByGradeRule(MarkerInfoPageReqVO reqVO) {
+        MarkerInfoDO current = markerInfoMapper.selectById(reqVO.getId());
+        if (current == null || current.getGrade() == null) {
+            return new PageResult<>(Collections.emptyList(), 0L);
+        }
+
+        String grade = current.getGrade();
+        LambdaQueryWrapperX<MarkerInfoDO> wrapper = new LambdaQueryWrapperX<>();
+
+        if ("1".equals(grade)) {
+            wrapper.eq(MarkerInfoDO::getSjxzqhDm, reqVO.getId());
+        } else if ("0".equals(grade)) {
+            if (current.getSjxzqhDm() != null) {
+                wrapper.eq(MarkerInfoDO::getSjxzqhDm, current.getSjxzqhDm());
+            } else {
+                return new PageResult<>(Collections.emptyList(), 0L);
+            }
+        } else if ("3".equals(grade)) {
+            wrapper.eq(MarkerInfoDO::getSjxzqhDm, "620100");
+        } else {
+            return new PageResult<>(Collections.emptyList(), 0L);
+        }
+
+        return markerInfoMapper.selectPage(reqVO, wrapper);
+    }
+
 
 }

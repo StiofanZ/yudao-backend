@@ -82,5 +82,6 @@ public class MarkerInfoDO extends BaseDO {
     @TableField(exist = false)
     private Boolean deleted;
 
-
+    @TableField(exist = false)
+    private String sjxzqhDm;
 }

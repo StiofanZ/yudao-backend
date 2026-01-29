@@ -17,8 +17,8 @@ public class MarkerInfoRespVO {
     @ExcelProperty("主键ID")
     private Long id;
 
-    @Schema(description = "地点名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "赵六")
-    @ExcelProperty("地点名称")
+    @Schema(description = "工会名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "赵六")
+    @ExcelProperty("工会名称")
     private String name;
 
     @Schema(description = "联系电话")

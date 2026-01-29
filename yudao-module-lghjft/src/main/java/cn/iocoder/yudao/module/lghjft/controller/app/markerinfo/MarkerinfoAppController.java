@@ -5,7 +5,6 @@ import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.markerinfo.vo.MarkerInfoPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.markerinfo.vo.MarkerInfoRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.markerinfo.vo.MarkerInfoAppRespVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.markerinfo.MarkerInfoDO;
 import cn.iocoder.yudao.module.lghjft.service.markerinfo.MarkerInfoService;
@@ -22,9 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
@@ -52,7 +49,7 @@ public class MarkerinfoAppController {
     }
 
     @GetMapping("/get")
-    @Operation(summary = "获得高德地图标注点信息")
+    @Operation(summary = "获得办事地图标注点信息")
     @PreAuthorize("isAuthenticated()")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     public CommonResult<MarkerInfoAppRespVO> getMarkerInfo(@RequestParam("id") Long id) {
@@ -70,7 +67,7 @@ public class MarkerinfoAppController {
     }
 
     @GetMapping("/list-page")
-    @Operation(summary = "获得高德地图标注点信息分页")
+    @Operation(summary = "获得办事地图标注点信息分页")
     @PreAuthorize("isAuthenticated()")
     public CommonResult<PageResult<MarkerInfoAppRespVO>> getMarkerInfoPage(@Valid MarkerInfoPageReqVO pageReqVO) {
         // 1. 获取分页数据
@@ -98,4 +95,34 @@ public class MarkerinfoAppController {
 
         return success(result);
     }
+
+//    @GetMapping("/around-page")
+//    @Operation(summary = "获得高德地图标注点信息分页")
+//    @PreAuthorize("isAuthenticated()")
+//    public CommonResult<PageResult<MarkerInfoAppRespVO>> getMarkerAround(@RequestParam("id") Long id) {
+//        // 1. 获取分页数据
+//        PageResult<MarkerInfoDO> pageResult = markerInfoService.getMarkerInfoPage(id);
+//
+//        // 2. 创建一个列表来存放转换后的数据
+//        List<MarkerInfoAppRespVO> voList = new ArrayList<>();
+//
+//        // 3. 遍历转换
+//        for (MarkerInfoDO markerInfo : pageResult.getList()) {
+//            // 3.1 转换为 VO
+//            MarkerInfoAppRespVO vo = BeanUtils.toBean(markerInfo, MarkerInfoAppRespVO.class);
+//
+//            // 3.2 设置 gradeText
+//            String grade = markerInfo.getGrade();
+//            String gradeText = getGradeText(grade);
+//            vo.setGradeText(gradeText);
+//
+//            // 3.3 添加到列表
+//            voList.add(vo);
+//        }
+//
+//        // 4. 创建新的分页结果
+//        PageResult<MarkerInfoAppRespVO> result = new PageResult<>(voList, pageResult.getTotal());
+//
+//        return success(result);
+//    }
 }

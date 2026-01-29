@@ -8,7 +8,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Schema(description = "用户 App - 高德地图标注点信息 Response VO")
+@Schema(description = "用户 App - 办事地图标注点信息 Response VO")
 @Data
 @ExcelIgnoreUnannotated
 public class MarkerInfoAppRespVO {
