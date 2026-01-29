@@ -43,4 +43,7 @@ public class MarkerInfoPageReqVO extends PageParam {
 //    @Schema(description = "是否删除（0-未删，1-已删）")
 //    private Integer isDeleted;
 
+    @Schema(description = "搜索关键字", example = "名称或地址")
+    private String searchKey;
+
 }
