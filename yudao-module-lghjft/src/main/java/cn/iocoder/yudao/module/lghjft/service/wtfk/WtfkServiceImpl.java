@@ -1,9 +1,9 @@
 package cn.iocoder.yudao.module.lghjft.service.wtfk;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
-import cn.iocoder.yudao.module.file.dal.dataobject.FileInfoDO;
-import cn.iocoder.yudao.module.file.dal.dataobject.vo.FileInfoVO;
+import cn.iocoder.yudao.module.file.dal.dataobject.dos.FileInfoDO;
 import cn.iocoder.yudao.module.file.dal.mysql.FileInfoMapper;
 import cn.iocoder.yudao.module.file.service.IFileInfoService;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.wtfk.WtfkLogDO;
@@ -141,7 +141,9 @@ public class WtfkServiceImpl implements WtfkService {
 
         // 4. 更新
         wtfkMapper.updateById(updateObj);
-        fileInfoService.deleteFileInfoByBizId(updateReqVO.getId());
+        fileInfoMapper.delete(new LambdaQueryWrapperX<FileInfoDO>()
+                .eq(FileInfoDO::getBizId, updateReqVO.getId())
+                .eq(FileInfoDO::getTableName, "lghjft_wtfk"));
         this.saveFileInfos(updateReqVO.getId(), updateReqVO.getFileUrls());
     }
 
@@ -245,9 +247,13 @@ public class WtfkServiceImpl implements WtfkService {
         }
 
         // 4. 使用 Service 查询附件 (重构点)
-        List<FileInfoVO> files = fileInfoService.selectFileInfoVOByBizId(id);
+        List<FileInfoDO> files = fileInfoMapper.selectList(new LambdaQueryWrapperX<FileInfoDO>()
+                .eq(FileInfoDO::getBizId, id)
+                .eq(FileInfoDO::getTableName, "lghjft_wtfk"));
         if (CollUtil.isNotEmpty(files)) {
-            respVO.setFileUrls(files.stream().map(FileInfoVO::getFileUrl).collect(Collectors.toList()));
+            respVO.setFileUrls(files.stream()
+                    .map(FileInfoDO::getFileUrl)
+                    .collect(Collectors.toList()));
         }
 
         return respVO;
@@ -268,6 +274,7 @@ public class WtfkServiceImpl implements WtfkService {
         List<FileInfoDO> fileInfoList = fileUrls.stream().map(url -> {
             FileInfoDO fileInfo = new FileInfoDO();
             fileInfo.setBizId(bizId);
+            fileInfo.setTableName("lghjft_wtfk");
             fileInfo.setFileUrl(url);
 
             String fileName = url.substring(url.lastIndexOf("/") + 1);
