@@ -1,7 +1,7 @@
 package cn.iocoder.yudao.module.file.dal.mysql;
 
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
-import cn.iocoder.yudao.module.file.dal.dataobject.FileInfoDO;
+import cn.iocoder.yudao.module.file.dal.dataobject.dos.FileInfoDO;
 import cn.iocoder.yudao.module.file.dal.dataobject.dto.FileInfoDTO;
 import cn.iocoder.yudao.module.file.dal.dataobject.vo.FileInfoVO;
 import org.apache.ibatis.annotations.Mapper;

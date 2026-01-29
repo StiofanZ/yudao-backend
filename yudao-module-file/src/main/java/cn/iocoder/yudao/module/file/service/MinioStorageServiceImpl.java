@@ -1,6 +1,6 @@
 package cn.iocoder.yudao.module.file.service;
 
-import cn.iocoder.yudao.module.file.dal.dataobject.FileInfoDO;
+import cn.iocoder.yudao.module.file.dal.dataobject.dos.FileInfoDO;
 import cn.iocoder.yudao.module.file.dal.dataobject.dto.FileInfoDTO;
 import cn.iocoder.yudao.module.file.dal.dataobject.vo.FileInfoInputVO;
 import cn.iocoder.yudao.module.file.dal.dataobject.vo.FileInfoVO;
@@ -91,7 +91,7 @@ public class MinioStorageServiceImpl implements IMinioStorageService {
             //文件日志
             String fileUrl = getObjectURL(bucket, fileName);
             fileInfoService.insertFileInfo(new FileInfoDO(null, fileName, originalFilename,
-                    fileType, bucket, fileUrl, null, fileSize, DelFlag.NO_DEL.getKey()));
+                    fileType, bucket, fileUrl, null,fileInfoInputVO.getTableName(), fileSize, DelFlag.NO_DEL.getKey()));
             FileInfoDTO fileInfoDTO = new FileInfoDTO();
             fileInfoDTO.setFileName(fileName);
             List<FileInfoVO> fileInfoVOS = fileInfoService.selectFileInfoList(fileInfoDTO);
@@ -144,7 +144,7 @@ public class MinioStorageServiceImpl implements IMinioStorageService {
             //文件日志
             String fileUrl = getObjectURL(bucketName, fileName);
             Long fileId = fileInfoService.insertFileInfo(new FileInfoDO(null, fileName, originalFilename,
-                    fileType, bucketName, fileUrl, null, fileSize, DelFlag.NO_DEL.getKey()));
+                    fileType, bucketName, fileUrl, null, null,fileSize, DelFlag.NO_DEL.getKey()));
             fileInfoVO = fileInfoService.selectFileInfoVOByFileId(fileId);
         } catch (Exception e) {
             log.error("文件上传异常：{}", e.getMessage());

@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.file.dal.dataobject;
+package cn.iocoder.yudao.module.file.dal.dataobject.dos;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -46,6 +46,9 @@ public class FileInfoDO implements Serializable
     /** 业务id */
     private Long bizId;
 
+    /** 关联业务表名 **/
+    private String tableName;
+
     /** 文件大小（kb） */
     private Long fileSize;
 
@@ -67,7 +70,7 @@ public class FileInfoDO implements Serializable
     /** 删除标志 */
     private String delFlag;
 
-    public FileInfoDO(Long fileId, String fileName, String originalFilename, String fileType, String bucket, String fileUrl, Long bizId, Long fileSize, String delFlag) {
+    public FileInfoDO(Long fileId, String fileName, String originalFilename, String fileType, String bucket, String fileUrl, Long bizId, String tableName, Long fileSize, String delFlag) {
         this.fileId = fileId;
         this.fileName = fileName;
         this.fileOriginName = originalFilename;
@@ -75,6 +78,7 @@ public class FileInfoDO implements Serializable
         this.filePath = bucket + fileUrl;
         this.fileUrl = fileUrl;
         this.bizId = bizId;
+        this.tableName = tableName;
         this.fileSize = fileSize;
         this.delFlag = delFlag;
     }

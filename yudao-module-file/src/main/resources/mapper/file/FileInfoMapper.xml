@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.iocoder.yudao.module.file.dal.mysql.FileInfoMapper">
 
-    <resultMap type="cn.iocoder.yudao.module.file.dal.dataobject.FileInfoDO" id="FileInfoResult">
+    <resultMap type="cn.iocoder.yudao.module.file.dal.dataobject.dos.FileInfoDO" id="FileInfoResult">
         <result property="fileId" column="file_id"/>
         <result property="fileName" column="file_name"/>
         <result property="fileOriginName" column="file_origin_name"/>
@@ -12,6 +12,7 @@
         <result property="filePath" column="file_path"/>
         <result property="fileUrl" column="file_url"/>
         <result property="bizId" column="biz_id"/>
+        <result property="tableName" column="table_name"/>
         <result property="fileSize" column="file_size"/>
         <result property="delFlag" column="del_flag"/>
         <result property="createBy" column="create_by"/>
@@ -27,6 +28,7 @@
         <result property="filePath" column="file_path"/>
         <result property="fileUrl" column="file_url"/>
         <result property="bizId" column="biz_id"/>
+        <result property="tableName" column="table_name"/>
         <result property="fileSize" column="file_size"/>
         <result property="delFlag" column="del_flag"/>
         <result property="createBy" column="create_by"/>
@@ -43,6 +45,7 @@
                file_path,
                file_url,
                biz_id,
+               table_name,
                file_size,
                del_flag,
                create_by,
@@ -87,7 +90,7 @@
         where biz_id = #{bizId}
     </select>
 
-    <insert id="insertFileInfo" parameterType="cn.iocoder.yudao.module.file.dal.dataobject.FileInfoDO">
+    <insert id="insertFileInfo" parameterType="cn.iocoder.yudao.module.file.dal.dataobject.dos.FileInfoDO">
         insert into file_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="fileId != null">file_id,</if>
@@ -97,6 +100,7 @@
             <if test="filePath != null">file_path,</if>
             <if test="fileUrl != null">file_url,</if>
             <if test="bizId != null">biz_id,</if>
+            <if test="tableName != null">table_name,</if>
             <if test="fileSize != null">file_size,</if>
             <if test="delFlag != null and delFlag != ''">del_flag,</if>
             <if test="createBy != null and createBy != ''">create_by,</if>
@@ -112,6 +116,7 @@
             <if test="filePath != null">#{filePath},</if>
             <if test="fileUrl != null">#{fileUrl},</if>
             <if test="bizId != null">#{bizId},</if>
+            <if test="tableName != null">#{tableName},</if>
             <if test="fileSize != null">#{fileSize},</if>
             <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
             <if test="createBy != null and createBy != ''">#{createBy},</if>
@@ -122,7 +127,7 @@
     </insert>
     <insert id="insertBizIdBatchFileInfo">
         insert into
-        file_info(file_id,file_name,file_origin_name,file_type,file_path,file_url,biz_id,file_size,create_by,create_time,update_by,update_time)
+        file_info(file_id,file_name,file_origin_name,file_type,file_path,file_url,biz_id,table_name,file_size,create_by,create_time,update_by,update_time)
         values
         <foreach collection="fileInfoList" item="item" index="index" open="" close="" separator=",">
             (#{item.fileId},
@@ -132,6 +137,7 @@
             #{item.filePath},
             #{item.fileUrl},
             #{item.bizId},
+            #{item.tableName},
             #{item.fileSize},
             #{item.createBy},
             #{item.createTime},
@@ -140,7 +146,7 @@
         </foreach>
     </insert>
 
-    <update id="updateFileInfo" parameterType="cn.iocoder.yudao.module.file.dal.dataobject.FileInfoDO">
+    <update id="updateFileInfo" parameterType="cn.iocoder.yudao.module.file.dal.dataobject.dos.FileInfoDO">
         update file_info
         <trim prefix="SET" suffixOverrides=",">
             <if test="fileName != null">file_name = #{fileName},</if>
@@ -149,6 +155,7 @@
             <if test="filePath != null">file_path = #{filePath},</if>
             <if test="fileUrl != null">file_url = #{fileUrl},</if>
             <if test="bizId != null">biz_id = #{bizId},</if>
+            <if test="tableName != null">table_name = #{tableName},</if>
             <if test="fileSize != null">file_size = #{fileSize},</if>
             <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
             <if test="createBy != null and createBy != ''">create_by = #{createBy},</if>

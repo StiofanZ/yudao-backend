@@ -22,9 +22,12 @@ public class FileInfoInputVO implements Serializable
     /** 桶 */
     private String bucket;
 
+    /** 关联业务表名 **/
+    private String tableName;
 
-    public FileInfoInputVO(MultipartFile file, String bucket){
+    public FileInfoInputVO(MultipartFile file, String bucket,String tableName){
         this.file = file;
         this.bucket = bucket;
+        this.tableName = tableName;
     }
 }

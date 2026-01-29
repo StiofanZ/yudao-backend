@@ -37,6 +37,9 @@ public class FileInfoVO implements Serializable
     /** 业务id */
     private Long bizId;
 
+    /** 关联业务表名 **/
+    private String tableName;
+
     /** 文件大小（kb） */
     private Long fileSize;
 
