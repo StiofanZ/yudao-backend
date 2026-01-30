@@ -14,10 +14,10 @@ import cn.iocoder.yudao.framework.common.util.servlet.ServletUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeLghReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.auth.GhCsSsoDO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.auth.GhQxDlzhxxDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.dlzh.GhQxDlzhDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.auth.DwQxSfMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.auth.GhCsSsoMapper;
-import cn.iocoder.yudao.module.lghjft.dal.mysql.auth.GhQxDlzhxxMapper;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.dlzh.GhQxDlzhMapper;
 import cn.iocoder.yudao.module.lghjft.framework.auth.config.LghJftAppAuthProperties;
 import cn.iocoder.yudao.module.lghjft.service.auth.LghOAuth2TokenService;
 import cn.iocoder.yudao.module.system.api.logger.dto.LoginLogCreateReqDTO;
@@ -49,7 +49,7 @@ public class AppAuthenticateServiceImpl implements  AppAuthenticateService{
     @Resource
     private GhCsSsoMapper ghCsSsoMapper;
     @Resource
-    private GhQxDlzhxxMapper ghQxDlzhxxMapper;
+    private GhQxDlzhMapper ghQxDlzhMapper;
     @Resource
     private DwQxSfMapper dwQxSfMapper;
     @Resource
@@ -157,7 +157,7 @@ public class AppAuthenticateServiceImpl implements  AppAuthenticateService{
         }
 
         // 8. 获取新表用户信息
-        GhQxDlzhxxDO userDO = ghQxDlzhxxMapper.selectByYhzh(user.getUsername());
+        GhQxDlzhDO userDO = ghQxDlzhMapper.selectByYhzh(user.getUsername());
         if (userDO == null) {
             throw exception(USER_NOT_EXISTS);
         }
@@ -197,7 +197,7 @@ public class AppAuthenticateServiceImpl implements  AppAuthenticateService{
         loginLogService.createLoginLog(reqDTO);
         // 更新最后登录时间 (更新新表)
         if (userId != null && Objects.equals(LoginResultEnum.SUCCESS.getResult(), loginResult.getResult())) {
-            ghQxDlzhxxMapper.updateById(GhQxDlzhxxDO.builder()
+            ghQxDlzhMapper.updateById(GhQxDlzhDO.builder()
                     .id(userId)
                     .loginIp(ServletUtils.getClientIP())
                     .loginDate(LocalDateTime.now())

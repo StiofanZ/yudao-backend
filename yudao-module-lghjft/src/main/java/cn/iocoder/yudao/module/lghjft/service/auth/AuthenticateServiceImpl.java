@@ -15,10 +15,10 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeLghReqVO
 import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.auth.GhCsSsoDO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.auth.GhQxDlzhxxDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.dlzh.GhQxDlzhDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.auth.DwQxSfMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.auth.GhCsSsoMapper;
-import cn.iocoder.yudao.module.lghjft.dal.mysql.auth.GhQxDlzhxxMapper;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.dlzh.GhQxDlzhMapper;
 import cn.iocoder.yudao.module.lghjft.enums.logger.LoginTypeEnum;
 import cn.iocoder.yudao.module.lghjft.framework.auth.config.LghJftAuthProperties;
 import cn.iocoder.yudao.module.system.api.logger.dto.LoginLogCreateReqDTO;
@@ -54,7 +54,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
     @Resource
     private GhCsSsoMapper ghCsSsoMapper;
     @Resource
-    private GhQxDlzhxxMapper ghQxDlzhxxMapper;
+    private GhQxDlzhMapper ghQxDlzhMapper;
     @Resource
     private DwQxSfMapper dwQxSfMapper;
     @Resource
@@ -75,7 +75,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
     @Override
     public AuthorizeResVO login(AuthorizeReqVO reqVO) {
         AuthorizeResVO authorizeResVO = new AuthorizeResVO();
-        GhQxDlzhxxDO userDO = null;
+        GhQxDlzhDO userDO = null;
         // 1. 针对 username 登录形式仅使用系统默认验证
         if (StringUtils.isNotBlank(reqVO.getYhzh())) {
             AuthLoginReqVO systemLoginReq = AuthLoginReqVO.builder()
@@ -105,20 +105,20 @@ public class AuthenticateServiceImpl implements AuthenticateService {
         } else {
             // 2.手机、邮箱、社会信用代码采用新逻辑登录
             if (StringUtils.isNotBlank(reqVO.getLxdh())) {
-                userDO = ghQxDlzhxxMapper.selectByLxdh(reqVO.getLxdh());
+                userDO = ghQxDlzhMapper.selectByLxdh(reqVO.getLxdh());
                 authorizeResVO.setDlzh(reqVO.getLxdh());
                 authorizeResVO.setLoginType(LoginTypeEnum.LOGIN_MOBILE.getType());
             } else if (StringUtils.isNotBlank(reqVO.getYhyx())) {
-                userDO = ghQxDlzhxxMapper.selectByYhyx(reqVO.getYhyx());
+                userDO = ghQxDlzhMapper.selectByYhyx(reqVO.getYhyx());
                 authorizeResVO.setDlzh(reqVO.getYhyx());
                 authorizeResVO.setLoginType(LoginTypeEnum.LOGIN_EMAIL.getType());
             } else if (StringUtils.isNotBlank(reqVO.getShxydm())) {
-                userDO = ghQxDlzhxxMapper.selectByShxydm(reqVO.getShxydm());
+                userDO = ghQxDlzhMapper.selectByShxydm(reqVO.getShxydm());
                 authorizeResVO.setDlzh(reqVO.getShxydm());
                 authorizeResVO.setLoginType(LoginTypeEnum.LOGIN_SHXYDM.getType());
             }
 
-            // 3. 如果 gh_qx_dlzhxx 找到用户，则尝试使用该表信息登录
+            // 3. 如果 gh_qx_dlzh 找到用户，则尝试使用该表信息登录
             if (userDO != null) {
                 // 3.1 校验密码
                 if (!userService.isPasswordMatch(reqVO.getPassword(), userDO.getPassword())) {
@@ -133,19 +133,19 @@ public class AuthenticateServiceImpl implements AuthenticateService {
                 // 3.3 更新登录信息到业务表（最后登录时间/IP）
                 userDO.setLoginIp(ServletUtils.getClientIP());
                 userDO.setLoginDate(LocalDateTime.now());
-                authorizeResVO.setYhnc(userDO.getYhnc());
+                authorizeResVO.setYhnc(userDO.getYhxm());
                 authorizeResVO.setYhyx(userDO.getYhyx());
                 authorizeResVO.setTxdz(userDO.getTxdz());
                 BeanUtils.copyProperties(userDO, authorizeResVO);
                 // 3.4 创建 Token 令牌，记录登录日志
                 authorizeResVO = createTokenAfterLoginSuccess(authorizeResVO);
             } else {
-                // 如果既没有在 gh_qx_dlzhxx 找到，或者所有方式都失败
+                // 如果既没有在 gh_qx_dlzh 找到，或者所有方式都失败
                 throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
             }
         }
 //        if (Objects.isNull(userDO)) {
-//            userDO = new GhQxDlzhxxDO();
+//            userDO = new GhQxDlzhDO();
 //            userDO.setId(authorizeResVO.getUserId());
 //            userDO.setYhnc(authorizeResVO.getYhnc());
 //        }
@@ -238,7 +238,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
         }
 
         // 7. 获取新表用户信息
-        GhQxDlzhxxDO userDO = ghQxDlzhxxMapper.selectByYhzh(user.getUsername());
+        GhQxDlzhDO userDO = ghQxDlzhMapper.selectByYhzh(user.getUsername());
         if (userDO == null) {
             throw exception(USER_NOT_EXISTS);
         }
@@ -296,7 +296,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
         loginLogService.createLoginLog(reqDTO);
         // 更新最后登录时间 (更新新表)
         if (userId != null && Objects.equals(LoginResultEnum.SUCCESS.getResult(), loginResult.getResult())) {
-            ghQxDlzhxxMapper.updateById(GhQxDlzhxxDO.builder()
+            ghQxDlzhMapper.updateById(GhQxDlzhDO.builder()
                     .id(userId)
                     .loginIp(ServletUtils.getClientIP())
                     .loginDate(LocalDateTime.now())
