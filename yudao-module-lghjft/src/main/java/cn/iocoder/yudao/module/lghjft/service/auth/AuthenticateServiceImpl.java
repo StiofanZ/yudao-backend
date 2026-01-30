@@ -82,8 +82,6 @@ public class AuthenticateServiceImpl implements AuthenticateService {
                     .username(reqVO.getYhzh())
                     .password(reqVO.getPassword())
                     .build();
-            //AuthLoginRespVO authLoginRespVO = authService.login(systemLoginReq);
-
             // 使用账号密码，进行登录
             AdminUserDO user = adminAuthService.authenticate(reqVO.getYhzh(), reqVO.getPassword());
             authorizeResVO.setUserId(user.getId());

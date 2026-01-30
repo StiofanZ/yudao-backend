@@ -203,7 +203,7 @@ public class XxtxServiceImpl implements XxtxService {
         return messageReceiverMapper.selectPage(reqVO, new LambdaQueryWrapperX<XxtxMessageReceiverDO>()
                 .eq(XxtxMessageReceiverDO::getReceiverId, reqVO.getReceiverId())
                 .eq(XxtxMessageReceiverDO::getDeleted, 0)
-                .in(XxtxMessageReceiverDO::getReadStatus, ObjectUtils.isEmpty(reqVO.getReadStatus()) ? List.of(1, 2).toArray() : new Object[]{reqVO.getReadStatus()}));
+                .in(XxtxMessageReceiverDO::getReadStatus, ObjectUtils.isEmpty(reqVO.getReadStatus()) ? List.of(0, 1).toArray() : new Object[]{reqVO.getReadStatus()}));
     }
 
     /**

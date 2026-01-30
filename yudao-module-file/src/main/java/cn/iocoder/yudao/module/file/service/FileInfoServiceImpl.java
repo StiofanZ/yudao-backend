@@ -11,20 +11,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.jni.FileInfo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * 文件信息Service业务层处理
- * 
+ *
  * @author shipj
  * @date 2025-05-09
  */
 @Slf4j
 @Service
-public class FileInfoServiceImpl implements IFileInfoService
-{
+public class FileInfoServiceImpl implements IFileInfoService {
     @Resource
     private FileInfoMapper fileInfoMapper;
 
@@ -33,31 +33,28 @@ public class FileInfoServiceImpl implements IFileInfoService
 
     /**
      * 查询文件信息
-     * 
+     *
      * @param fileId 文件信息主键
      * @return 文件信息
      */
     @Override
-    public FileInfoVO selectFileInfoVOByFileId(Long fileId)
-    {
+    public FileInfoVO selectFileInfoVOByFileId(Long fileId) {
         return fileInfoMapper.selectFileInfoVOByFileId(fileId);
     }
 
     @Override
-    public FileInfoDO selectFileInfoByFileId(Long fileId)
-    {
+    public FileInfoDO selectFileInfoByFileId(Long fileId) {
         return fileInfoMapper.selectFileInfoByFileId(fileId);
     }
 
     /**
      * 查询文件信息列表
-     * 
+     *
      * @param fileInfo 文件信息
      * @return 文件信息
      */
     @Override
-    public List<FileInfoVO> selectFileInfoList(FileInfoDTO fileInfo)
-    {
+    public List<FileInfoVO> selectFileInfoList(FileInfoDTO fileInfo) {
         return fileInfoMapper.selectFileInfoList(fileInfo);
     }
 
@@ -68,27 +65,25 @@ public class FileInfoServiceImpl implements IFileInfoService
      * @return 结果
      */
     @Override
-    public Long insertFileInfo(FileInfoDO fileInfo)
-    {
+    public Long insertFileInfo(FileInfoDO fileInfo) {
         fileInfo.setCreateBy(SecurityFrameworkUtils.getLoginUserId());
         fileInfo.setCreateTime(DateUtils.getNowDate());
         int result = fileInfoMapper.insertFileInfo(fileInfo);
-        if(result > 0){
-           return fileInfo.getFileId();
-        }else{
+        if (result > 0) {
+            return fileInfo.getFileId();
+        } else {
             return 0L;
         }
     }
 
     /**
      * 修改文件信息
-     * 
+     *
      * @param fileInfo 文件信息
      * @return 结果
      */
     @Override
-    public int updateFileInfo(FileInfoDO fileInfo)
-    {
+    public int updateFileInfo(FileInfoDO fileInfo) {
         fileInfo.setUpdateBy(SecurityFrameworkUtils.getLoginUserId());
         fileInfo.setUpdateTime(DateUtils.getNowDate());
         return fileInfoMapper.updateFileInfo(fileInfo);
@@ -96,13 +91,12 @@ public class FileInfoServiceImpl implements IFileInfoService
 
     /**
      * 批量删除文件信息
-     * 
+     *
      * @param fileIds 需要删除的文件信息主键
      * @return 结果
      */
     @Override
-    public int deleteFileInfoByFileIds(Long[] fileIds)
-    {
+    public int deleteFileInfoByFileIds(Long[] fileIds) {
         Map<String, Object> params = new HashMap<>(3);
         params.put("fileIds", fileIds);
         params.put("updateTime", DateUtils.getNowDate());
@@ -112,13 +106,12 @@ public class FileInfoServiceImpl implements IFileInfoService
 
     /**
      * 删除文件信息信息
-     * 
+     *
      * @param fileId 文件信息主键
      * @return 结果
      */
     @Override
-    public int deleteFileInfoByFileId(Long fileId)
-    {
+    public int deleteFileInfoByFileId(Long fileId) {
         Map<String, Object> params = new HashMap<>(3);
         params.put("fileId", fileId);
         params.put("updateTime", DateUtils.getNowDate());
@@ -128,6 +121,7 @@ public class FileInfoServiceImpl implements IFileInfoService
 
     /**
      * 业务id查询文件
+     *
      * @param bizId
      * @return
      */
@@ -143,6 +137,7 @@ public class FileInfoServiceImpl implements IFileInfoService
 
     /**
      * 批量插入
+     *
      * @param fileInfoList
      * @return
      */
@@ -153,6 +148,7 @@ public class FileInfoServiceImpl implements IFileInfoService
 
     /**
      * 批量更新
+     *
      * @param fileInfoList
      * @return
      */
@@ -163,6 +159,7 @@ public class FileInfoServiceImpl implements IFileInfoService
 
     /**
      * 根据业务id删除
+     *
      * @param bizId
      * @return
      */
