@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.bbfb;
 
 import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
@@ -57,5 +58,16 @@ public class BbfbDO extends BaseDO {
      * 发布时间
      */
     private LocalDate fbsj;
+
+    /**
+     * 阅读量
+     */
+    private Integer readCount;
+
+    /**
+     * 排名 (非数据库字段)
+     */
+    @TableField(exist = false)
+    private Integer rank;
 
 }

@@ -1,19 +1,18 @@
 package cn.iocoder.yudao.module.lghjft.service.nrgl.zcjd;
 
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
+import cn.iocoder.yudao.framework.mybatis.core.util.MyBatisUtils;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdCreateReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdListReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdUpdateReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.zcjd.ZcjdDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.nrgl.zcjd.ZcjdMapper;
-import cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants;
 import cn.iocoder.yudao.module.system.api.dept.DeptApi;
 import cn.iocoder.yudao.module.system.api.dept.dto.DeptRespDTO;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,6 @@ import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionU
  * @author 芋道源码
  */
 @Service
-@Validated
 public class ZcjdServiceImpl implements ZcjdService {
 
     @Resource
@@ -47,12 +45,14 @@ public class ZcjdServiceImpl implements ZcjdService {
         zcjd.setDeptId(SecurityFrameworkUtils.getLoginUserDeptId());
         // 默认状态为草稿 (0)
         zcjd.setStatus(0);
+        // 默认阅读量 0
+        zcjd.setReadCount(0);
         zcjdMapper.insert(zcjd);
         return zcjd.getId();
     }
 
     @Override
-    public void updateZcjd(ZcjdUpdateReqVO updateReqVO) {
+    public void updateZcjd(cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdUpdateReqVO updateReqVO) {
         // 校验存在
         ZcjdDO oldZcjd = validateZcjdExists(updateReqVO.getId());
         
@@ -80,6 +80,21 @@ public class ZcjdServiceImpl implements ZcjdService {
         // 不允许修改发布部门
         updateObj.setDeptId(null); 
         zcjdMapper.updateById(updateObj);
+    }
+
+    @Override
+    public void deleteZcjd(Long id) {
+        // 校验存在
+        ZcjdDO oldZcjd = validateZcjdExists(id);
+
+        // 校验权限：仅允许删除自己部门发布的内容
+        Long loginDeptId = SecurityFrameworkUtils.getLoginUserDeptId();
+        if (!Objects.equals(oldZcjd.getDeptId(), loginDeptId)) {
+            throw exception(FORBIDDEN);
+        }
+
+        // 删除
+        zcjdMapper.deleteById(id);
     }
     
     /**
@@ -150,68 +165,70 @@ public class ZcjdServiceImpl implements ZcjdService {
         }
     }
 
-    @Override
-    public void deleteZcjd(Long id) {
-        // 校验存在
-        ZcjdDO oldZcjd = validateZcjdExists(id);
-        
-        // 校验权限：仅允许删除自己部门发布的内容
-        Long loginDeptId = SecurityFrameworkUtils.getLoginUserDeptId();
-        if (!Objects.equals(oldZcjd.getDeptId(), loginDeptId)) {
-            throw exception(FORBIDDEN);
-        }
-        
-        // 删除
-        zcjdMapper.deleteById(id);
-    }
-
     private ZcjdDO validateZcjdExists(Long id) {
         ZcjdDO zcjd = zcjdMapper.selectById(id);
         if (zcjd == null) {
-            throw exception(ErrorCodeConstants.CONTENT_NOT_EXISTS);
+            throw exception(new cn.iocoder.yudao.framework.common.exception.ErrorCode(404, "内容不存在"));
         }
         return zcjd;
     }
 
     @Override
     public ZcjdDO getZcjd(Long id) {
-        return zcjdMapper.selectById(id);
+        ZcjdDO zcjd = zcjdMapper.selectById(id);
+        if (zcjd != null) {
+            // 增加阅读量
+            ZcjdDO updateObj = new ZcjdDO();
+            updateObj.setId(id);
+            updateObj.setReadCount(zcjd.getReadCount() == null ? 1 : zcjd.getReadCount() + 1);
+            zcjdMapper.updateById(updateObj);
+            zcjd.setReadCount(updateObj.getReadCount());
+        }
+        return zcjd;
     }
 
     @Override
-    public List<ZcjdDO> getZcjdList(ZcjdListReqVO listReqVO) {
-        // 获取当前部门及上级部门ID列表
-        Long loginDeptId = SecurityFrameworkUtils.getLoginUserDeptId();
-        List<Long> deptIds = getAncestorIds(loginDeptId);
-
-        // 构建查询条件
-        LambdaQueryWrapper<ZcjdDO> queryWrapper = new LambdaQueryWrapper<>();
-        // 基础查询条件
-        if (listReqVO.getTitle() != null) {
-            queryWrapper.like(ZcjdDO::getTitle, listReqVO.getTitle());
-        }
-        if (listReqVO.getStatus() != null) {
-            queryWrapper.eq(ZcjdDO::getStatus, listReqVO.getStatus());
-        }
-        // 部门权限过滤：查看本级及上级部门的内容，并应用可见性过滤
-        if (!deptIds.isEmpty()) {
-            queryWrapper.and(wrapper -> {
-                // 本级部门：查看所有
-                wrapper.eq(ZcjdDO::getDeptId, loginDeptId)
-                       .or(subWrapper -> {
-                           // 上级部门：仅查看 完全可见(1) 和 下级可见(2) 的内容
-                           // 排除 本级可见(3)
-                           subWrapper.in(ZcjdDO::getDeptId, deptIds)
-                                     .ne(ZcjdDO::getDeptId, loginDeptId)
-                                     .in(ZcjdDO::getKjfw, 1, 2);
-                       });
-            });
-        }
-        
-        queryWrapper.orderByDesc(ZcjdDO::getSort);
-
-        return zcjdMapper.selectList(queryWrapper);
+    public List<ZcjdDO> getZcjdList(ZcjdPageReqVO listReqVO) {
+        // 暂时保留，但建议也迁移到 selectPageWithRank 逻辑如果需要分页
+        // 这里主要关注 getPublicZcjdList 的重构
+        return zcjdMapper.selectList(listReqVO);
     }
+
+    /**
+     * 获得政策解读分页列表（包含公开查询逻辑）
+     *
+     * @param reqVO 查询条件
+     * @return 分页结果
+     */
+    public PageResult<ZcjdDO> getZcjdPage(cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdPageReqVO reqVO) {
+        // 1. 确定上下文部门ID
+        Long loginDeptId = null;
+        try {
+            loginDeptId = SecurityFrameworkUtils.getLoginUserDeptId();
+        } catch (Exception e) {
+            // ignore
+        }
+
+        // 2. 确定用于权限查询的基础部门ID
+        Long baseDeptId = null;
+        if (loginDeptId != null) {
+            baseDeptId = loginDeptId;
+        } else if (reqVO.getDeptId() != null) {
+            baseDeptId = reqVO.getDeptId();
+        } else {
+            return PageResult.empty();
+        }
+
+        // 3. 获取上级部门ID列表
+        List<Long> ancestorIds = getAncestorIds(baseDeptId);
+
+        // 4. 执行分页查询 (包含排名计算)
+        IPage<ZcjdDO> page = MyBatisUtils.buildPage(reqVO);
+        zcjdMapper.selectPageWithRank(page, reqVO, loginDeptId, ancestorIds);
+
+        return new PageResult<>(page.getRecords(), page.getTotal());
+    }
+
 
     @Override
     public void publishZcjd(Long id) {

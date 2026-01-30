@@ -1,6 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.service.nrgl.bszn;
 
-import java.util.List;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznCreateReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznListReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznUpdateReqVO;
@@ -45,12 +45,13 @@ public interface BsznService {
     BsznDO getBszn(Long id);
 
     /**
-     * 获得办事指南列表
+     * 获得办事指南分页列表
+     * 支持管理端查询和公开端查询
      *
      * @param listReqVO 查询条件
-     * @return 办事指南列表
+     * @return 办事指南分页列表
      */
-    List<BsznDO> getBsznList(BsznListReqVO listReqVO);
+    PageResult<BsznDO> getBsznPage(BsznListReqVO listReqVO);
 
     /**
      * 发布办事指南
@@ -74,13 +75,5 @@ public interface BsznService {
      * @param status 状态
      */
     void auditBszn(Long id, Integer status);
-
-    /**
-     * 获得公开办事指南列表
-     *
-     * @param deptId 部门编号
-     * @return 办事指南列表
-     */
-    List<BsznDO> getPublicBsznList(Long deptId);
 
 }

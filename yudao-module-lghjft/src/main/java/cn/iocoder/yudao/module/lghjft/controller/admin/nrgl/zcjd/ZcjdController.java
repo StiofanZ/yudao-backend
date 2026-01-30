@@ -1,9 +1,10 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdCreateReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdListReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdUpdateReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.zcjd.ZcjdDO;
@@ -24,7 +25,6 @@ import java.util.Map;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertSet;
-
 @Tag(name = "管理后台 - 政策解读")
 @RestController
 @RequestMapping("/lghjft/nrgl/zcjd")
@@ -70,12 +70,15 @@ public class ZcjdController {
         return success(BeanUtils.toBean(zcjd, ZcjdRespVO.class));
     }
 
-    @GetMapping("/list")
-    @Operation(summary = "获得政策解读列表")
+
+// ...
+
+    @GetMapping("/list-page")
+    @Operation(summary = "获得政策解读分页列表")
     @PreAuthorize("@ss.hasPermission('lghjft:nrgl-zcjd:query')")
-    public CommonResult<List<ZcjdRespVO>> getZcjdList(@Valid ZcjdListReqVO listReqVO) {
-        List<ZcjdDO> list = zcjdService.getZcjdList(listReqVO);
-        List<ZcjdRespVO> result = BeanUtils.toBean(list, ZcjdRespVO.class);
+    public CommonResult<PageResult<ZcjdRespVO>> getZcjdPage(@Validated ZcjdPageReqVO pageReqVO) {
+        PageResult<ZcjdDO> pageResult = zcjdService.getZcjdPage(pageReqVO);
+        List<ZcjdRespVO> result = BeanUtils.toBean(pageResult.getList(), ZcjdRespVO.class);
         
         // 填充部门名称
         if (!result.isEmpty()) {
@@ -87,8 +90,8 @@ public class ZcjdController {
                 }
             });
         }
-        
-        return success(result);
+
+        return success(new PageResult<>(result, pageResult.getTotal()));
     }
 
     @PutMapping("/publish")

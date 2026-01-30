@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.zcjd;
 
 import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
@@ -86,5 +87,16 @@ public class ZcjdDO extends BaseDO {
      * 关联政策ID
      */
     private Long glzcId;
+
+    /**
+     * 阅读量
+     */
+    private Integer readCount;
+
+    /**
+     * 排名 (非数据库字段)
+     */
+    @TableField(exist = false)
+    private Integer rank;
 
 }

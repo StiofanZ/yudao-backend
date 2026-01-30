@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.nrgl.bszn.BsznMapper">
+
+    <!-- 
+        查询办事指南列表（支持分页），并使用窗口函数计算排名 
+        rank 计算基于全量数据，不受分页影响（窗口函数在分页前计算）
+        查询条件需同时满足 BsznListReqVO 和 部门权限
+    -->
+    <select id="selectPageWithRank" resultType="cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.bszn.BsznDO">
+        SELECT * FROM (
+        SELECT
+        t.*,
+        RANK() OVER (ORDER BY t.read_count DESC, t.id DESC) as `rank`
+        FROM gh_nrgl_bszn t
+        WHERE t.deleted = 0
+        <if test="reqVO.sxmc != null and reqVO.sxmc != ''">
+            AND t.sxmc LIKE CONCAT('%', #{reqVO.sxmc}, '%')
+        </if>
+        <if test="reqVO.status != null">
+            AND t.status = #{reqVO.status}
+        </if>
+        <if test="reqVO.ywfl != null">
+            AND t.ywfl = #{reqVO.ywfl}
+        </if>
+
+        <!-- 部门权限过滤 -->
+        AND (
+        <!-- 场景1：登录用户查看本部门及上级 -->
+        <if test="loginDeptId != null">
+            (
+            t.dept_id = #{loginDeptId}
+            OR (
+            t.dept_id IN
+            <foreach item="item" index="index" collection="ancestorIds" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            AND t.dept_id != #{loginDeptId}
+            AND t.kjfw IN (1, 2)
+            )
+            )
+        </if>
+
+        <!-- 场景2：未登录/公开访问指定部门 -->
+        <if test="loginDeptId == null and reqVO.deptId != null">
+            (
+            t.dept_id = #{reqVO.deptId}
+            OR (
+            t.dept_id IN
+            <foreach item="item" index="index" collection="ancestorIds" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            AND t.dept_id != #{reqVO.deptId}
+            AND t.kjfw IN (1, 2)
+            )
+            )
+            AND t.status = 2 <!-- 公开访问仅看已发布 -->
+        </if>
+        )
+        ) temp_table
+        ORDER BY sort DESC
+    </select>
+
+</mapper>

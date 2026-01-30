@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbCreateReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbListReqVO;
@@ -16,8 +17,6 @@ import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
@@ -63,12 +62,12 @@ public class BbfbController {
         return success(BeanUtils.toBean(bbfb, BbfbRespVO.class));
     }
 
-    @GetMapping("/list")
-    @Operation(summary = "获得版本发布列表")
+    @GetMapping("/list-page")
+    @Operation(summary = "获得版本发布分页列表")
     @PreAuthorize("@ss.hasPermission('lghjft:nrgl-bbfb:query')")
-    public CommonResult<List<BbfbRespVO>> getBbfbList(@Valid BbfbListReqVO listReqVO) {
-        List<BbfbDO> list = bbfbService.getBbfbList(listReqVO);
-        return success(BeanUtils.toBean(list, BbfbRespVO.class));
+    public CommonResult<PageResult<BbfbRespVO>> getBbfbPage(@Valid BbfbListReqVO listReqVO) {
+        PageResult<BbfbDO> pageResult = bbfbService.getBbfbPage(listReqVO);
+        return success(BeanUtils.toBean(pageResult, BbfbRespVO.class));
     }
 
     @PutMapping("/publish")
@@ -80,11 +79,5 @@ public class BbfbController {
         return success(true);
     }
 
-    @GetMapping("/public/list")
-    @Operation(summary = "获得公开版本发布列表")
-    public CommonResult<List<BbfbRespVO>> getPublicBbfbList() {
-        List<BbfbDO> list = bbfbService.getPublicBbfbList();
-        return success(BeanUtils.toBean(list, BbfbRespVO.class));
-    }
 
 }

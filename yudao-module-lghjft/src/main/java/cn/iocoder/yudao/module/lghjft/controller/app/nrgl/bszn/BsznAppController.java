@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.controller.app.nrgl.bszn;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.nrgl.bszn.vo.BsznPageAppReqVO;
@@ -47,15 +48,15 @@ public class BsznAppController {
 
     @GetMapping("/list-page")
     @Operation(summary = "获得办事指南列表")
-    public CommonResult<List<BsznRespVO>> getBsznList(@Valid BsznPageAppReqVO listReqVO) {
-        List<BsznDO> list = bsznService.getBsznList(listReqVO);
-        list.removeIf(zcjdDO -> !List.of(2, 3).contains(zcjdDO.getStatus())); //only 2,3
-        List<BsznRespVO> result = BeanUtils.toBean(list, BsznRespVO.class);
+    public CommonResult<PageResult<BsznRespVO>> getBsznPage(@Valid BsznPageAppReqVO listReqVO) {
+        PageResult<BsznDO> list = bsznService.getBsznPage(listReqVO);
+        list.getList().removeIf(zcjdDO -> !List.of(2, 3).contains(zcjdDO.getStatus())); //only 2,3
+        PageResult<BsznRespVO> result = BeanUtils.toBean(list, BsznRespVO.class);
 
         // 填充部门名称
-        if (!result.isEmpty()) {
-            Map<Long, DeptRespDTO> deptMap = deptApi.getDeptMap(convertSet(result, BsznRespVO::getDeptId));
-            result.forEach(item -> {
+        if (!result.getList().isEmpty()) {
+            Map<Long, DeptRespDTO> deptMap = deptApi.getDeptMap(convertSet(result.getList(), BsznRespVO::getDeptId));
+            result.getList().forEach(item -> {
                 DeptRespDTO dept = deptMap.get(item.getDeptId());
                 if (dept != null) {
                     item.setDeptName(dept.getName());

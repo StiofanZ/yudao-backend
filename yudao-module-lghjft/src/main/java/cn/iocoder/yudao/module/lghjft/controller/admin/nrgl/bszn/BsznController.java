@@ -1,8 +1,12 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.*;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznCreateReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznListReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznUpdateReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.bszn.BsznDO;
 import cn.iocoder.yudao.module.lghjft.service.nrgl.bszn.BsznService;
 import cn.iocoder.yudao.module.system.api.dept.DeptApi;
@@ -11,6 +15,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -61,18 +66,19 @@ public class BsznController {
     @GetMapping("/get")
     @Operation(summary = "获得办事指南")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:nrgl-bszn:query')")
+    @PermitAll
     public CommonResult<BsznRespVO> getBszn(@RequestParam("id") Long id) {
         BsznDO bszn = bsznService.getBszn(id);
         return success(BeanUtils.toBean(bszn, BsznRespVO.class));
     }
 
-    @GetMapping("/list")
-    @Operation(summary = "获得办事指南列表")
-    @PreAuthorize("@ss.hasPermission('lghjft:nrgl-bszn:query')")
-    public CommonResult<List<BsznRespVO>> getBsznList(@Valid BsznListReqVO listReqVO) {
-        List<BsznDO> list = bsznService.getBsznList(listReqVO);
-        List<BsznRespVO> result = BeanUtils.toBean(list, BsznRespVO.class);
+    @GetMapping("/list-page")
+    @Operation(summary = "获得办事指南分页列表")
+    @PermitAll
+    public CommonResult<PageResult<BsznRespVO>> getBsznListPage(@Valid BsznListReqVO listReqVO) {
+        PageResult<BsznDO> pageResult = bsznService.getBsznPage(listReqVO);
+
+        List<BsznRespVO> result = BeanUtils.toBean(pageResult.getList(), BsznRespVO.class);
         
         // 填充部门名称
         if (!result.isEmpty()) {
@@ -84,8 +90,8 @@ public class BsznController {
                 }
             });
         }
-        
-        return success(result);
+
+        return success(new PageResult<>(result, pageResult.getTotal()));
     }
 
     @PutMapping("/publish")
@@ -111,27 +117,6 @@ public class BsznController {
     public CommonResult<Boolean> auditBszn(@RequestParam("id") Long id, @RequestParam("status") Integer status) {
         bsznService.auditBszn(id, status);
         return success(true);
-    }
-
-    @GetMapping("/public/list")
-    @Operation(summary = "获得公开办事指南列表")
-    @Parameter(name = "deptId", description = "部门编号", required = true)
-    public CommonResult<List<BsznRespVO>> getPublicBsznList(@RequestParam("deptId") Long deptId) {
-        List<BsznDO> list = bsznService.getPublicBsznList(deptId);
-        List<BsznRespVO> result = BeanUtils.toBean(list, BsznRespVO.class);
-        
-        // 填充部门名称
-        if (!result.isEmpty()) {
-            Map<Long, DeptRespDTO> deptMap = deptApi.getDeptMap(convertSet(result, BsznRespVO::getDeptId));
-            result.forEach(item -> {
-                DeptRespDTO dept = deptMap.get(item.getDeptId());
-                if (dept != null) {
-                    item.setDeptName(dept.getName());
-                }
-            });
-        }
-        
-        return success(result);
     }
 
 }

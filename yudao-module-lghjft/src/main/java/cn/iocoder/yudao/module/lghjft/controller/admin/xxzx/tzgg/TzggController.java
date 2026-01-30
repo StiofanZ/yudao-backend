@@ -71,7 +71,7 @@ public class TzggController {
     }
 
     @GetMapping("/page")
-    @Operation(summary = "获取通知公告列表")
+    @Operation(summary = "获得通知公告分页")
     @PreAuthorize("@ss.hasPermission('lghjft:xxzx-tzgg:query')")
     public CommonResult<PageResult<TzggRespVO>> getTzggPage(@Validated TzggPageReqVO pageReqVO) {
         PageResult<TzggDO> pageResult = tzggService.getTzggPage(pageReqVO);

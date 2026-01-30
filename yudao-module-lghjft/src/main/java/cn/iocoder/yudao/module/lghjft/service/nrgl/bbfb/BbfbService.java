@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.service.nrgl.bbfb;
 
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbCreateReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbListReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbUpdateReqVO;
@@ -44,13 +45,14 @@ public interface BbfbService {
      */
     BbfbDO getBbfb(Long id);
 
+
     /**
-     * 获得版本发布列表
+     * 获得版本发布分页列表
      *
      * @param listReqVO 查询条件
      * @return 版本发布列表
      */
-    List<BbfbDO> getBbfbList(BbfbListReqVO listReqVO);
+    PageResult<BbfbDO> getBbfbPage(BbfbListReqVO listReqVO);
 
     /**
      * 发布版本

@@ -6,12 +6,15 @@ import lombok.Data;
 
 @Schema(description = "管理后台 - 政策解读列表 Request VO")
 @Data
-public class ZcjdListReqVO extends PageParam {
+public class ZcjdPageReqVO extends PageParam {
 
     @Schema(description = "标题", example = "政策解读")
     private String title;
 
     @Schema(description = "状态", example = "1")
     private Integer status;
+
+    @Schema(description = "部门ID", example = "1024")
+    private Long deptId;
 
 }

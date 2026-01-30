@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.bszn;
 
 import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
@@ -106,5 +107,16 @@ public class BsznDO extends BaseDO {
      * 收费标准
      */
     private String sfbz;
+
+    /**
+     * 阅读量
+     */
+    private Integer readCount;
+
+    /**
+     * 排名 (非数据库字段)
+     */
+    @TableField(exist = false)
+    private Integer rank;
 
 }

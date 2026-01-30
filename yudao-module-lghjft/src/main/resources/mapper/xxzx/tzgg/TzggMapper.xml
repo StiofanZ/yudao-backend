@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.xxzx.tzgg.TzggMapper">
+
+    <select id="selectPageWithRank" resultType="cn.iocoder.yudao.module.lghjft.dal.dataobject.xxzx.tzgg.TzggDO">
+        SELECT * FROM (
+        SELECT
+        t.*,
+        RANK() OVER (ORDER BY t.read_count DESC, t.id DESC) as `rank`
+        FROM gh_xxzx_tzgg t
+        WHERE t.deleted = 0
+        <if test="reqVO.title != null and reqVO.title != ''">
+            AND t.title LIKE CONCAT('%', #{reqVO.title}, '%')
+        </if>
+        <if test="reqVO.status != null">
+            AND t.status = #{reqVO.status}
+        </if>
+        <if test="reqVO.type != null">
+            AND t.type = #{reqVO.type}
+        </if>
+        <if test="reqVO.deptIds != null and reqVO.deptIds.size() > 0">
+            AND t.dept_id IN
+            <foreach item="deptId" collection="reqVO.deptIds" open="(" separator="," close=")">
+                #{deptId}
+            </foreach>
+        </if>
+        ) temp_table
+        ORDER BY create_time DESC
+    </select>
+
+</mapper>

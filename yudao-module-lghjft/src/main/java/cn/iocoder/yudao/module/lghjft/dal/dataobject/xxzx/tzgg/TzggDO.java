@@ -4,6 +4,7 @@ import cn.iocoder.yudao.framework.common.enums.CommonStatusEnum;
 import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
 import cn.iocoder.yudao.module.system.enums.notice.NoticeTypeEnum;
 import com.baomidou.mybatisplus.annotation.KeySequence;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -44,9 +45,21 @@ public class TzggDO extends BaseDO {
      */
     private Integer status;
 
+
     /**
      * 部门ID
      */
     private Long deptId;
+
+    /**
+     * 阅读量
+     */
+    private Integer readCount;
+
+    /**
+     * 排名 (非数据库字段)
+     */
+    @TableField(exist = false)
+    private Integer rank;
 
 }

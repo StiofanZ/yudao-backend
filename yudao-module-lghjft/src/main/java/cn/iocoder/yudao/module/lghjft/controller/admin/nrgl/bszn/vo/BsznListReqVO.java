@@ -17,4 +17,7 @@ public class BsznListReqVO extends PageParam {
     @Schema(description = "业务分类(1:缴费管理,2:返拨管理,3:退费管理,4:缓交管理)", example = "1")
     private Integer ywfl;
 
+    @Schema(description = "部门ID", example = "100")
+    private Long deptId;
+
 }

@@ -4,7 +4,9 @@ import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbListReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.bbfb.BbfbDO;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -23,5 +25,14 @@ public interface BbfbMapper extends BaseMapperX<BbfbDO> {
                 .eqIfPresent(BbfbDO::getStatus, reqVO.getStatus())
                 .orderByDesc(BbfbDO::getId));
     }
+
+    /**
+     * 查询版本发布分页列表（带排名）
+     *
+     * @param page  分页参数
+     * @param reqVO 查询条件
+     * @return 分页结果
+     */
+    IPage<BbfbDO> selectPageWithRank(IPage<BbfbDO> page, @Param("reqVO") BbfbListReqVO reqVO);
 
 }
