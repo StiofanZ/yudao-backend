@@ -4,6 +4,8 @@ import cn.hutool.core.collection.CollUtil;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.mybatis.logging.Logger;
+import org.mybatis.logging.LoggerFactory;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -31,10 +33,10 @@ import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.*;
 @Service
 @Validated
 public class MarkerInfoServiceImpl implements MarkerInfoService {
-
+// 兰州市市级行政区划代码（Integer类型，匹配id字段类型）
+    private static final Integer LANZHOU_CITY_CODE = 620100;
     @Resource
     private MarkerInfoMapper markerInfoMapper;
-
     @Override
     public Long createMarkerInfo(MarkerInfoSaveReqVO createReqVO) {
         // 插入
@@ -81,40 +83,60 @@ public class MarkerInfoServiceImpl implements MarkerInfoService {
 
     @Override
     public PageResult<MarkerInfoDO> getMarkerInfoPage(MarkerInfoPageReqVO pageReqVO) {
-        // 如果传了 id → 走 grade 联动查询
-        if (pageReqVO.getId() != null) {
-            return getMarkerInfoByGradeRule(pageReqVO);
-        }
+
         return markerInfoMapper.selectPage(pageReqVO);
     }
+    @Override
+    public List<MarkerInfoDO> getCountyData(Integer xzqhDm) {
+        if (xzqhDm == null || xzqhDm <= 0) {
+            return Collections.emptyList();
+        }
 
+        // 按 xzqhDm 查询
+        LambdaQueryWrapperX<MarkerInfoDO> wrapper = new LambdaQueryWrapperX<>();
+        wrapper.eq(MarkerInfoDO::getXzqhDm, xzqhDm);
+        MarkerInfoDO current = markerInfoMapper.selectOne(wrapper);
 
-//查询标记点周边数据
-    private PageResult<MarkerInfoDO> getMarkerInfoByGradeRule(MarkerInfoPageReqVO reqVO) {
-        MarkerInfoDO current = markerInfoMapper.selectById(reqVO.getId());
-        if (current == null || current.getGrade() == null) {
-            return new PageResult<>(Collections.emptyList(), 0L);
+        if (current == null) {
+            return Collections.emptyList();
         }
 
         String grade = current.getGrade();
-        LambdaQueryWrapperX<MarkerInfoDO> wrapper = new LambdaQueryWrapperX<>();
+        Integer cityXzqhDm = null;
 
-        if ("1".equals(grade)) {
-            wrapper.eq(MarkerInfoDO::getSjxzqhDm, reqVO.getId());
+        if ("3".equals(grade)) {
+            cityXzqhDm = 620100; // 省级 → 兰州市
+        } else if ("1".equals(grade)) {
+            cityXzqhDm = xzqhDm; // 市级
         } else if ("0".equals(grade)) {
-            if (current.getSjxzqhDm() != null) {
-                wrapper.eq(MarkerInfoDO::getSjxzqhDm, current.getSjxzqhDm());
-            } else {
-                return new PageResult<>(Collections.emptyList(), 0L);
-            }
-        } else if ("3".equals(grade)) {
-            wrapper.eq(MarkerInfoDO::getSjxzqhDm, "620100");
+            cityXzqhDm = (xzqhDm / 100) * 100; // 县级 → 推导市
         } else {
-            return new PageResult<>(Collections.emptyList(), 0L);
+            return Collections.emptyList();
         }
 
-        return markerInfoMapper.selectPage(reqVO, wrapper);
+        if (cityXzqhDm == null || cityXzqhDm <= 0) {
+            return Collections.emptyList();
+        }
+
+        // 查询市级（按 xzqhDm）
+        LambdaQueryWrapperX<MarkerInfoDO> cityWrapper = new LambdaQueryWrapperX<>();
+        cityWrapper.eq(MarkerInfoDO::getXzqhDm, cityXzqhDm);
+        MarkerInfoDO city = markerInfoMapper.selectOne(cityWrapper);
+
+        List<MarkerInfoDO> result = new ArrayList<>();
+        if (city != null) {
+            result.add(city);
+        }
+
+        // 查询该市下所有县级：xzqhDm 范围 [cityXzqhDm + 1, cityXzqhDm + 99]
+        List<MarkerInfoDO> counties = markerInfoMapper.selectList(
+                new LambdaQueryWrapperX<MarkerInfoDO>()
+                        .ge(MarkerInfoDO::getXzqhDm, cityXzqhDm + 1)
+                        .le(MarkerInfoDO::getXzqhDm, cityXzqhDm + 99)
+                        .eq(MarkerInfoDO::getGrade, "0")
+        );
+        result.addAll(counties);
+
+        return result;
     }
-
-
 }

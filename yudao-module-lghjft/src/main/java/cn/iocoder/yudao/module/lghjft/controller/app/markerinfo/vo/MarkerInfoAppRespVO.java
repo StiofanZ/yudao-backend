@@ -43,9 +43,8 @@ public class MarkerInfoAppRespVO {
     @ExcelProperty("纬度（保留6位小数，满足高德地图精度）")
     private BigDecimal lat;
 
-    @Schema(description = "备注信息", example = "你猜")
-    @ExcelProperty("备注信息")
-    private String remark;
+    @Schema(description = "行政区划")
+    private Integer xzqhDm;
 
     @Schema(description = "创建时间", requiredMode = Schema.RequiredMode.REQUIRED)
     @ExcelProperty("创建时间")

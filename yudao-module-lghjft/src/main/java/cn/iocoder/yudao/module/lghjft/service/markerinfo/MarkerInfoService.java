@@ -60,4 +60,5 @@ public interface MarkerInfoService {
     PageResult<MarkerInfoDO> getMarkerInfoPage(MarkerInfoPageReqVO pageReqVO);
 
 
+    List<MarkerInfoDO> getCountyData(Integer xzqhDm);
 }

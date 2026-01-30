@@ -40,6 +40,7 @@ public class MarkerInfoPageReqVO extends PageParam {
 
     @Schema(description = "工作时间")
     private  String jobtime;
+
     @Schema(description = "级别")
     private  String grade;
 //    @Schema(description = "是否删除（0-未删，1-已删）")
@@ -47,5 +48,11 @@ public class MarkerInfoPageReqVO extends PageParam {
 
     @Schema(description = "搜索关键字", example = "名称或地址")
     private String searchKey;
+
+    /**
+     * 行政区划代码
+     * */
+    @Schema(description = "行政区划")
+    private Integer xzqhDm;
 
 }

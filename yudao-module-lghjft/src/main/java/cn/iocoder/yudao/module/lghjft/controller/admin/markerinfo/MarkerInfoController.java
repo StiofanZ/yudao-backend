@@ -99,4 +99,12 @@ public class MarkerInfoController {
                         BeanUtils.toBean(list, MarkerInfoRespVO.class));
     }
 
+    // 前端访问地址：http://你的域名/getCounty?id=6位数字
+    @Operation(summary = "标注点周边工会信息")
+    @GetMapping("/getCounty")
+    public List<MarkerInfoDO> getCounty(@RequestParam Integer xzqhDm) {
+        // 直接调方法返回数据，无任何包装
+        return markerInfoService.getCountyData(xzqhDm);
+    }
+
 }

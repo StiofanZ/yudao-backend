@@ -57,14 +57,9 @@ public class MarkerInfoDO extends BaseDO {
      *级别
      */
     private  String grade;
-    /**
-     * 备注信息
-     */
-    private String remark;
-//    /**
-//     * 是否删除（0-未删，1-已删）
-//     */
-//    private Integer isDeleted;
+
+
+    private Integer xzqhDm;
 
 
     @TableField(exist = false)  // 告诉MyBatis这个字段不在表中
@@ -82,6 +77,5 @@ public class MarkerInfoDO extends BaseDO {
     @TableField(exist = false)
     private Boolean deleted;
 
-    @TableField(exist = false)
-    private String sjxzqhDm;
+
 }

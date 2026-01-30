@@ -35,6 +35,9 @@ public class MarkerInfoRespVO {
     @Schema(description = "级别")
     private String grade;
 
+    @Schema(description = "行政区划")
+    private Integer xzqhDm;
+
     @Schema(description = "经度（保留6位小数，满足高德地图精度）", requiredMode = Schema.RequiredMode.REQUIRED)
     @ExcelProperty("经度（保留6位小数，满足高德地图精度）")
     private BigDecimal lng;

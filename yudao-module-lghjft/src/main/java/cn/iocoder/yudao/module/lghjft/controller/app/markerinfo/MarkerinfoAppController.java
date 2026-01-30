@@ -25,7 +25,7 @@ import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
-@Tag(name = "用户App  - 高德地图标注点信息")
+@Tag(name = "用户App-办事地图标注点信息")
 @RestController
 @RequestMapping("/lghjft/bsdt/marker-info")
 @Validated
@@ -96,33 +96,21 @@ public class MarkerinfoAppController {
         return success(result);
     }
 
-//    @GetMapping("/around-page")
-//    @Operation(summary = "获得高德地图标注点信息分页")
-//    @PreAuthorize("isAuthenticated()")
-//    public CommonResult<PageResult<MarkerInfoAppRespVO>> getMarkerAround(@RequestParam("id") Long id) {
-//        // 1. 获取分页数据
-//        PageResult<MarkerInfoDO> pageResult = markerInfoService.getMarkerInfoPage(id);
-//
-//        // 2. 创建一个列表来存放转换后的数据
-//        List<MarkerInfoAppRespVO> voList = new ArrayList<>();
-//
-//        // 3. 遍历转换
-//        for (MarkerInfoDO markerInfo : pageResult.getList()) {
-//            // 3.1 转换为 VO
-//            MarkerInfoAppRespVO vo = BeanUtils.toBean(markerInfo, MarkerInfoAppRespVO.class);
-//
-//            // 3.2 设置 gradeText
-//            String grade = markerInfo.getGrade();
-//            String gradeText = getGradeText(grade);
-//            vo.setGradeText(gradeText);
-//
-//            // 3.3 添加到列表
-//            voList.add(vo);
-//        }
-//
-//        // 4. 创建新的分页结果
-//        PageResult<MarkerInfoAppRespVO> result = new PageResult<>(voList, pageResult.getTotal());
-//
-//        return success(result);
-//    }
+    @Operation(summary = "标注点周边工会信息")
+    @GetMapping("/getCounty")
+    public CommonResult<List<MarkerInfoAppRespVO>> getCounty(@RequestParam Integer xzqhDm) {
+        // 1. 调用服务获取原始 DO 列表
+        List<MarkerInfoDO> doList = markerInfoService.getCountyData(xzqhDm);
+
+        // 2. 转换为 VO 列表（带 gradeText）
+        List<MarkerInfoAppRespVO> voList = new ArrayList<>();
+        for (MarkerInfoDO markerInfo : doList) {
+            MarkerInfoAppRespVO vo = BeanUtils.toBean(markerInfo, MarkerInfoAppRespVO.class);
+            vo.setGradeText(getGradeText(markerInfo.getGrade()));
+            voList.add(vo);
+        }
+
+        // 3. 返回统一包装结果
+        return success(voList);
+    }
 }

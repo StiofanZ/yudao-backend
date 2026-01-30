@@ -32,7 +32,7 @@ public class MarkerInfoSaveReqVO {
     @NotNull(message = "纬度（保留6位小数，满足高德地图精度）不能为空")
     private BigDecimal lat;
 
-    @Schema(description = "备注信息", example = "你猜")
+    @Schema(description = "备注信息", example = "")
     private String remark;
 //
 //    @Schema(description = "是否删除（0-未删，1-已删）", requiredMode = Schema.RequiredMode.REQUIRED)
@@ -45,5 +45,7 @@ public class MarkerInfoSaveReqVO {
     @Schema(description = "级别")
     private  String grade;
 
+    @Schema(description = "行政区划")
+    private Integer xzqhDm;
 
 }
