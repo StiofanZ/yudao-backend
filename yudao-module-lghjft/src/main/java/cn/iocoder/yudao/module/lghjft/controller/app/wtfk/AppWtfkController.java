@@ -17,6 +17,7 @@ import cn.iocoder.yudao.module.system.api.user.AdminUserApi;
 import cn.iocoder.yudao.module.system.api.user.dto.AdminUserRespDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
@@ -76,19 +77,27 @@ public class AppWtfkController {
 
     @DeleteMapping("/delete")
     @Operation(summary = "删除工会经费通-问题反馈")
-    @Parameter(name = "id", description = "编号", required = true)
-    //@PreAuthorize("@ss.hasPermission('lghjft:wtfk:delete')")
-    public CommonResult<Boolean> deleteWtfk(@RequestParam("id") Long id) {
-        wtfkService.deleteWtfk(id);
+    @Parameters({
+            @Parameter(name = "id", description = "编号", required = true),
+            @Parameter(name = "isAdminView", description = "是否管理端视图", required = false)
+    })
+    public CommonResult<Boolean> deleteWtfk(@RequestParam("id") Long id,
+                                            @RequestParam(value = "isAdminView", required = false, defaultValue = "false") Boolean isAdminView) {
+        // 调用修改后的 service 方法，移动端默认传入 isAdminView = false
+        // 这样在移动端删除后，status 会变为 5
+        wtfkService.deleteWtfk(id, isAdminView);
         return success(true);
     }
 
     @DeleteMapping("/delete-list")
-    @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除工会经费通-问题反馈")
-    //@PreAuthorize("@ss.hasPermission('lghjft:wtfk:delete')")
-    public CommonResult<Boolean> deleteWtfkList(@RequestParam("ids") List<Long> ids) {
-        wtfkService.deleteWtfkListByIds(ids);
+    @Parameters({
+            @Parameter(name = "ids", description = "编号列表", required = true),
+            @Parameter(name = "isAdminView", description = "是否管理端视图", required = false)
+    })
+    public CommonResult<Boolean> deleteWtfkList(@RequestParam("ids") List<Long> ids,
+                                                @RequestParam(value = "isAdminView", required = false, defaultValue = "false") Boolean isAdminView) {
+        wtfkService.deleteWtfkListByIds(ids, isAdminView);
         return success(true);
     }
 
@@ -101,8 +110,6 @@ public class AppWtfkController {
         return success(wtfkService.getWtfkDetail(id));
     }
 
-    @Resource
-    private AdminUserApi adminUserApi; // 注入系统用户接口
     @GetMapping("/page")
     @Operation(summary = "获得问题反馈分页")
     public CommonResult<PageResult<WtfkRespVO>> getWtfkPage(@Valid WtfkPageReqVO pageReqVO) {
@@ -112,8 +119,8 @@ public class AppWtfkController {
         // 2. 手动锁定 userId
         pageReqVO.setUserId(loginUserId);
 
-        // 3. 关键点：设置为 true！
-
+        // 3. 明确设置为 false
+        // 这样 Service 会进入用户端过滤逻辑，排除 status = 5 的数据
         pageReqVO.setIsAdminView(false);
 
         // 4. 调用 Service

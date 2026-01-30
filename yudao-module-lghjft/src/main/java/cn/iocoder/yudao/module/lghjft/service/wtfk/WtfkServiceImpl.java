@@ -149,25 +149,38 @@ public class WtfkServiceImpl implements WtfkService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteWtfk(Long id) {
+    public void deleteWtfk(Long id, Boolean isAdminView) {
+        // 校验数据是否存在
+        WtfkDO wtfk = wtfkMapper.selectById(id);
+        if (wtfk == null) {
+            throw exception(WTFK_NOT_EXISTS);
+        }
 
-        // 校验存在
-        validateWtfkExists(id);
-        // 删除
-        WtfkDO updateObj = new WtfkDO().setId(id).setStatus(4);
-        wtfkMapper.updateById(updateObj);
+        // 当前状态（直接用 Integer）
+        int currentStatus = wtfk.getStatus();
+        int nextStatus;
 
-        //wtfkLogMapper.deleteByFeedbackId(id);
+        if (Boolean.TRUE.equals(isAdminView)) {
+            // 管理员删除
+            // 用户已删(5) → 终态(6)，否则 → 管理员删除(4)
+            nextStatus = (currentStatus == 5) ? 6 : 4;
+        } else {
+            // 用户删除
+            // 管理员已删(4) → 终态(6)，否则 → 用户删除(5)
+            nextStatus = (currentStatus == 4) ? 6 : 5;
+        }
+
+        WtfkDO update = new WtfkDO();
+        update.setId(id);
+        update.setStatus(nextStatus);
+        wtfkMapper.updateById(update);
     }
-
     @Override
-        public void deleteWtfkListByIds(List<Long> ids) {
-        // 删除
-        //wtfkMapper.deleteByIds(ids);
+    public void deleteWtfkListByIds(List<Long> ids, Boolean isAdminView) {
         if (CollUtil.isNotEmpty(ids)) {
-            ids.forEach(this::deleteWtfk);
+            ids.forEach(id -> this.deleteWtfk(id, isAdminView));
         }
-        }
+    }
 
 
     private void validateWtfkExists(Long id) {
@@ -181,38 +194,43 @@ public class WtfkServiceImpl implements WtfkService {
         return wtfkMapper.selectById(id);
     }
 
+    /**
+ Status = 4：管理员端删除（管理员不可见，用户可见）。
+
+Status = 5：用户端删除（用户不可见，管理员可见）。
+    * */
     @Override
     public PageResult<WtfkDO> getWtfkPage(WtfkPageReqVO pageReqVO) {
-
-        // 1. 核心逻辑：状态转换处理
+        // 1. 处理前端选择的搜索状态映射
         if (pageReqVO.getStatus() != null) {
             if (Objects.equals(pageReqVO.getStatus(), 3)) {
-                // 选“已处理”，实际查 3 和 4
-                pageReqVO.setStatuses(Arrays.asList(3, 4));
+                // 选“已处理”，包括正常已处理(3)、管理删(4)、用户删(5)
+                pageReqVO.setStatuses(Arrays.asList(3, 4, 5));
             } else if (Objects.equals(pageReqVO.getStatus(), 1)) {
-                // 选“待处理”，实际查 0 和 1
                 pageReqVO.setStatuses(Arrays.asList(0, 1));
             } else {
-                // 其他状态（如跟进中），查它自己
                 pageReqVO.setStatuses(Collections.singletonList(pageReqVO.getStatus()));
             }
         }
 
-
         if (pageReqVO.getIsAdminView() == null || !pageReqVO.getIsAdminView()) {
-            // 【普通用户端】逻辑：锁定用户 ID，statuses 保持包含 4 的状态
+            // 【用户端视图】
             pageReqVO.setUserId(SecurityFrameworkUtils.getLoginUserId());
-        } else {
-            // 【管理员端】逻辑：处理“isAdminView 为 true”的情况
-            // 如果管理员没有筛选特定状态（statuses 为空），为了不显示 4，强制设置范围为 0, 1, 2, 3
+            // 排除 5 (用户删) 和 6 (双删)；保留 4 (管理删，用户可见)
             if (CollUtil.isEmpty(pageReqVO.getStatuses())) {
-                pageReqVO.setStatuses(Arrays.asList(0, 1, 2, 3));
+                pageReqVO.setStatuses(Arrays.asList(0, 1, 2, 3, 4));
             } else {
-                // 如果管理员筛选了“已处理”（此时 statuses 包含 3 和 4），则移除 4
-                List<Integer> filteredStatuses = pageReqVO.getStatuses().stream()
-                        .filter(s -> !Objects.equals(s, 4))
-                        .collect(Collectors.toList());
-                pageReqVO.setStatuses(filteredStatuses);
+                pageReqVO.setStatuses(pageReqVO.getStatuses().stream()
+                        .filter(s -> s != 5 && s != 6).collect(Collectors.toList()));
+            }
+        } else {
+            // 【管理端视图】
+            // 排除 4 (管理删) 和 6 (双删)；保留 5 (用户删，管理可见)
+            if (CollUtil.isEmpty(pageReqVO.getStatuses())) {
+                pageReqVO.setStatuses(Arrays.asList(0, 1, 2, 3, 5));
+            } else {
+                pageReqVO.setStatuses(pageReqVO.getStatuses().stream()
+                        .filter(s -> s != 4 && s != 6).collect(Collectors.toList()));
             }
         }
 

@@ -77,6 +77,11 @@ public class WtfkDO extends BaseDO {
      * 处理备注：管理员处理说明
      */
     private String processNotes;
+    /**
+     * 是否删除
+     */
+    @TableLogic  // 必须有这个注解，MyBatis-Plus 才会把 deleteById 识别为逻辑删除
+    private Boolean deleted;
 
 
 }

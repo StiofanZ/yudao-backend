@@ -2,6 +2,7 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.wtfk;
 
 import cn.iocoder.yudao.module.system.api.user.AdminUserApi;
 import cn.iocoder.yudao.module.system.api.user.dto.AdminUserRespDTO;
+import io.swagger.v3.oas.annotations.Parameters;
 import org.springframework.web.bind.annotation.*;
 import jakarta.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -68,27 +69,33 @@ public class WtfkController {
     @PreAuthorize("@ss.hasPermission('lghjft:wtfk:update')")
     public CommonResult<Boolean> updateWtfk(@Valid @RequestBody WtfkSaveReqVO updateReqVO) {
         wtfkService.updateWtfk(updateReqVO);
+        wtfkService.updateWtfk(updateReqVO);
         return success(true);
     }
 
     @DeleteMapping("/delete")
     @Operation(summary = "删除工会经费通-问题反馈")
-    @Parameter(name = "id", description = "编号", required = true)
+    @Parameters({
+            @Parameter(name = "id", description = "编号", required = true),
+            @Parameter(name = "isAdminView", description = "是否管理端操作", required = false)
+    })
     @PreAuthorize("@ss.hasPermission('lghjft:wtfk:delete')")
-    public CommonResult<Boolean> deleteWtfk(@RequestParam("id") Long id) {
-        wtfkService.deleteWtfk(id);
+    public CommonResult<Boolean> deleteWtfk(@RequestParam("id") Long id,
+                                            @RequestParam(value = "isAdminView", required = false, defaultValue = "false") Boolean isAdminView) {
+        wtfkService.deleteWtfk(id, isAdminView);
         return success(true);
     }
 
     @DeleteMapping("/delete-list")
-    @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除工会经费通-问题反馈")
-                @PreAuthorize("@ss.hasPermission('lghjft:wtfk:delete')")
-    public CommonResult<Boolean> deleteWtfkList(@RequestParam("ids") List<Long> ids) {
-        wtfkService.deleteWtfkListByIds(ids);
+    @PreAuthorize("@ss.hasPermission('lghjft:wtfk:delete')")
+    public CommonResult<Boolean> deleteWtfkList(
+            @RequestParam("ids") List<Long> ids,
+            @RequestParam(value = "isAdminView", required = false, defaultValue = "false") Boolean isAdminView) {
+
+        wtfkService.deleteWtfkListByIds(ids, isAdminView);
         return success(true);
     }
-
     @GetMapping("/get")
     @Operation(summary = "获得工会经费通-问题反馈")
     @Parameter(name = "id", description = "编号", required = true)

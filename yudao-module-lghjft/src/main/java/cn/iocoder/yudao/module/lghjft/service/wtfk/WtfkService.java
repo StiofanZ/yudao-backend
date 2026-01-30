@@ -36,14 +36,14 @@ public interface WtfkService {
      *
      * @param id 编号
      */
-    void deleteWtfk(Long id);
+    void deleteWtfk(Long id, Boolean isAdminView);
 
     /**
     * 批量删除工会经费通-问题反馈
     *
     * @param ids 编号
     */
-    void deleteWtfkListByIds(List<Long> ids);
+    void deleteWtfkListByIds(List<Long> ids, Boolean isAdminView);
 
     /**
      * 获得工会经费通-问题反馈
