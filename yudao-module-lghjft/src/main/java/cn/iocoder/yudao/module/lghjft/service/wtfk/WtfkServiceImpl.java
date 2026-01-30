@@ -200,7 +200,20 @@ public class WtfkServiceImpl implements WtfkService {
 
 
         if (pageReqVO.getIsAdminView() == null || !pageReqVO.getIsAdminView()) {
+            // 【普通用户端】逻辑：锁定用户 ID，statuses 保持包含 4 的状态
             pageReqVO.setUserId(SecurityFrameworkUtils.getLoginUserId());
+        } else {
+            // 【管理员端】逻辑：处理“isAdminView 为 true”的情况
+            // 如果管理员没有筛选特定状态（statuses 为空），为了不显示 4，强制设置范围为 0, 1, 2, 3
+            if (CollUtil.isEmpty(pageReqVO.getStatuses())) {
+                pageReqVO.setStatuses(Arrays.asList(0, 1, 2, 3));
+            } else {
+                // 如果管理员筛选了“已处理”（此时 statuses 包含 3 和 4），则移除 4
+                List<Integer> filteredStatuses = pageReqVO.getStatuses().stream()
+                        .filter(s -> !Objects.equals(s, 4))
+                        .collect(Collectors.toList());
+                pageReqVO.setStatuses(filteredStatuses);
+            }
         }
 
         return wtfkMapper.selectPage(pageReqVO);
