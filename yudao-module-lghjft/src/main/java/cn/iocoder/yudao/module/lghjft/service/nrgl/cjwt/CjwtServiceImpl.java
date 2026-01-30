@@ -12,7 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.cjwt.vo.CjwtCreateReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.cjwt.vo.CjwtListReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.cjwt.vo.CjwtReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.cjwt.vo.CjwtUpdateReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.cjwt.CjwtDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.nrgl.cjwt.CjwtMapper;
@@ -20,7 +20,10 @@ import cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants;
 import cn.iocoder.yudao.module.system.api.dept.DeptApi;
 import cn.iocoder.yudao.module.system.api.dept.dto.DeptRespDTO;
 
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.framework.mybatis.core.util.MyBatisUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.framework.common.exception.enums.GlobalErrorCodeConstants.FORBIDDEN;
@@ -50,6 +53,8 @@ public class CjwtServiceImpl implements CjwtService {
         cjwt.setDeptId(SecurityFrameworkUtils.getLoginUserDeptId());
         // 默认状态为草稿 (0)
         cjwt.setStatus(0);
+        // 默认阅读量 0
+        cjwt.setReadCount(0);
         cjwtMapper.insert(cjwt);
         return cjwt.getId();
     }
@@ -178,42 +183,46 @@ public class CjwtServiceImpl implements CjwtService {
 
     @Override
     public CjwtDO getCjwt(Long id) {
-        return cjwtMapper.selectById(id);
+        CjwtDO cjwt = cjwtMapper.selectById(id);
+        if (cjwt != null) {
+            // 增加阅读量
+            CjwtDO updateObj = new CjwtDO();
+            updateObj.setId(id);
+            updateObj.setReadCount(cjwt.getReadCount() == null ? 1 : cjwt.getReadCount() + 1);
+            cjwtMapper.updateById(updateObj);
+            cjwt.setReadCount(updateObj.getReadCount());
+        }
+        return cjwt;
     }
 
     @Override
-    public List<CjwtDO> getCjwtList(CjwtListReqVO listReqVO) {
-        // 获取当前部门及上级部门ID列表
-        Long loginDeptId = SecurityFrameworkUtils.getLoginUserDeptId();
-        List<Long> deptIds = getAncestorIds(loginDeptId);
-
-        // 构建查询条件
-        LambdaQueryWrapper<CjwtDO> queryWrapper = new LambdaQueryWrapper<>();
-        // 基础查询条件
-        if (listReqVO.getTitle() != null) {
-            queryWrapper.like(CjwtDO::getTitle, listReqVO.getTitle());
-        }
-        if (listReqVO.getStatus() != null) {
-            queryWrapper.eq(CjwtDO::getStatus, listReqVO.getStatus());
-        }
-        // 部门权限过滤：查看本级及上级部门的内容，并应用可见性过滤
-        if (!deptIds.isEmpty()) {
-            queryWrapper.and(wrapper -> {
-                // 本级部门：查看所有
-                wrapper.eq(CjwtDO::getDeptId, loginDeptId)
-                       .or(subWrapper -> {
-                           // 上级部门：仅查看 完全可见(1) 和 下级可见(2) 的内容
-                           // 排除 本级可见(3)
-                           subWrapper.in(CjwtDO::getDeptId, deptIds)
-                                     .ne(CjwtDO::getDeptId, loginDeptId)
-                                     .in(CjwtDO::getKjfw, 1, 2);
-                       });
-            });
+    public PageResult<CjwtDO> getCjwtPage(CjwtReqVO reqVO) {
+        // 1. 确定上下文部门ID
+        Long loginDeptId = null;
+        try {
+            loginDeptId = SecurityFrameworkUtils.getLoginUserDeptId();
+        } catch (Exception e) {
+            // ignore
         }
         
-        queryWrapper.orderByDesc(CjwtDO::getSort);
+        // 2. 确定用于权限查询的基础部门ID
+        Long baseDeptId = null;
+        if (loginDeptId != null) {
+            baseDeptId = loginDeptId;
+        } else if (reqVO.getDeptId() != null) {
+            baseDeptId = reqVO.getDeptId();
+        } else {
+            return PageResult.empty();
+        }
 
-        return cjwtMapper.selectList(queryWrapper);
+        // 3. 获取上级部门ID列表
+        List<Long> ancestorIds = getAncestorIds(baseDeptId);
+
+        // 4. 执行分页查询 (包含排名计算)
+        IPage<CjwtDO> page = MyBatisUtils.buildPage(reqVO);
+        cjwtMapper.selectPageWithRank(page, reqVO, loginDeptId, ancestorIds);
+        
+        return new PageResult<>(page.getRecords(), page.getTotal());
     }
 
     @Override

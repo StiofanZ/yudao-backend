@@ -4,7 +4,7 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.mybatis.core.util.MyBatisUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbCreateReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbListReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbUpdateReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.bbfb.BbfbDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.nrgl.bbfb.BbfbMapper;
@@ -78,7 +78,7 @@ public class BbfbServiceImpl implements BbfbService {
     }
 
     @Override
-    public PageResult<BbfbDO> getBbfbPage(BbfbListReqVO listReqVO) {
+    public PageResult<BbfbDO> getBbfbPage(BbfbReqVO listReqVO) {
         // 使用自定义的分页查询（带排名）
         IPage<BbfbDO> page = MyBatisUtils.buildPage(listReqVO);
         bbfbMapper.selectPageWithRank(page, listReqVO);

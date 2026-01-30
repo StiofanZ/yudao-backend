@@ -2,7 +2,7 @@ package cn.iocoder.yudao.module.lghjft.service.nrgl.bszn;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznCreateReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznListReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznUpdateReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.bszn.BsznDO;
 import jakarta.validation.Valid;
@@ -51,7 +51,7 @@ public interface BsznService {
      * @param listReqVO 查询条件
      * @return 办事指南分页列表
      */
-    PageResult<BsznDO> getBsznPage(BsznListReqVO listReqVO);
+    PageResult<BsznDO> getBsznPage(BsznReqVO listReqVO);
 
     /**
      * 发布办事指南

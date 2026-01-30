@@ -2,7 +2,7 @@ package cn.iocoder.yudao.module.lghjft.dal.mysql.nrgl.bbfb;
 
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbListReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.bbfb.BbfbDO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,7 +18,7 @@ import java.util.List;
 @Mapper
 public interface BbfbMapper extends BaseMapperX<BbfbDO> {
 
-    default List<BbfbDO> selectList(BbfbListReqVO reqVO) {
+    default List<BbfbDO> selectList(BbfbReqVO reqVO) {
         return selectList(new LambdaQueryWrapperX<BbfbDO>()
                 .likeIfPresent(BbfbDO::getTitle, reqVO.getTitle())
                 .likeIfPresent(BbfbDO::getVersion, reqVO.getVersion())
@@ -33,6 +33,6 @@ public interface BbfbMapper extends BaseMapperX<BbfbDO> {
      * @param reqVO 查询条件
      * @return 分页结果
      */
-    IPage<BbfbDO> selectPageWithRank(IPage<BbfbDO> page, @Param("reqVO") BbfbListReqVO reqVO);
+    IPage<BbfbDO> selectPageWithRank(IPage<BbfbDO> page, @Param("reqVO") BbfbReqVO reqVO);
 
 }

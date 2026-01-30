@@ -5,7 +5,7 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.mybatis.core.util.MyBatisUtils;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznCreateReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznListReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznUpdateReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.bszn.BsznDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.nrgl.bszn.BsznMapper;
@@ -188,7 +188,7 @@ public class BsznServiceImpl implements BsznService {
     }
 
     @Override
-    public PageResult<BsznDO> getBsznPage(BsznListReqVO listReqVO) {
+    public PageResult<BsznDO> getBsznPage(BsznReqVO listReqVO) {
         // 1. 确定上下文部门ID
         Long loginDeptId = null;
         try {

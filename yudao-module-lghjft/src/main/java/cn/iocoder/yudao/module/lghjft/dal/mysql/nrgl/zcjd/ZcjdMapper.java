@@ -2,7 +2,7 @@ package cn.iocoder.yudao.module.lghjft.dal.mysql.nrgl.zcjd;
 
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.zcjd.ZcjdDO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
@@ -28,11 +28,11 @@ public interface ZcjdMapper extends BaseMapperX<ZcjdDO> {
      * @return 分页结果
      */
     IPage<ZcjdDO> selectPageWithRank(IPage<ZcjdDO> page,
-                                     @Param("reqVO") ZcjdPageReqVO reqVO,
+                                     @Param("reqVO") ZcjdReqVO reqVO,
                                      @Param("loginDeptId") Long loginDeptId,
                                      @Param("ancestorIds") List<Long> ancestorIds);
 
-    default List<ZcjdDO> selectList(ZcjdPageReqVO reqVO) {
+    default List<ZcjdDO> selectList(ZcjdReqVO reqVO) {
         return selectList(new LambdaQueryWrapperX<ZcjdDO>()
                 .likeIfPresent(ZcjdDO::getTitle, reqVO.getTitle())
                 .eqIfPresent(ZcjdDO::getStatus, reqVO.getStatus())

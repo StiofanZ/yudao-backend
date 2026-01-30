@@ -4,8 +4,8 @@ import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdCreateReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdUpdateReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.zcjd.ZcjdDO;
 import cn.iocoder.yudao.module.lghjft.service.nrgl.zcjd.ZcjdService;
@@ -65,25 +65,23 @@ public class ZcjdController {
     @Operation(summary = "获得政策解读")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:nrgl-zcjd:query')")
-    public CommonResult<ZcjdRespVO> getZcjd(@RequestParam("id") Long id) {
+    public CommonResult<ZcjdResVO> getZcjd(@RequestParam("id") Long id) {
         ZcjdDO zcjd = zcjdService.getZcjd(id);
-        return success(BeanUtils.toBean(zcjd, ZcjdRespVO.class));
+        return success(BeanUtils.toBean(zcjd, ZcjdResVO.class));
     }
 
-
-// ...
 
     @GetMapping("/list-page")
     @Operation(summary = "获得政策解读分页列表")
     @PreAuthorize("@ss.hasPermission('lghjft:nrgl-zcjd:query')")
-    public CommonResult<PageResult<ZcjdRespVO>> getZcjdPage(@Validated ZcjdPageReqVO pageReqVO) {
+    public CommonResult<PageResult<ZcjdResVO>> getZcjdPage(@Validated ZcjdReqVO pageReqVO) {
         PageResult<ZcjdDO> pageResult = zcjdService.getZcjdPage(pageReqVO);
-        List<ZcjdRespVO> result = BeanUtils.toBean(pageResult.getList(), ZcjdRespVO.class);
+        PageResult<ZcjdResVO> result = BeanUtils.toBean(pageResult, ZcjdResVO.class);
         
         // 填充部门名称
-        if (!result.isEmpty()) {
-            Map<Long, DeptRespDTO> deptMap = deptApi.getDeptMap(convertSet(result, ZcjdRespVO::getDeptId));
-            result.forEach(item -> {
+        if (!result.getList().isEmpty()) {
+            Map<Long, DeptRespDTO> deptMap = deptApi.getDeptMap(convertSet(result.getList(), ZcjdResVO::getDeptId));
+            result.getList().forEach(item -> {
                 DeptRespDTO dept = deptMap.get(item.getDeptId());
                 if (dept != null) {
                     item.setDeptName(dept.getName());
@@ -91,7 +89,7 @@ public class ZcjdController {
             });
         }
 
-        return success(new PageResult<>(result, pageResult.getTotal()));
+        return success(result);
     }
 
     @PutMapping("/publish")

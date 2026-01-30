@@ -2,7 +2,7 @@ package cn.iocoder.yudao.module.lghjft.service.nrgl.zcjd;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdCreateReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdUpdateReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.zcjd.ZcjdDO;
 import jakarta.validation.Valid;
@@ -53,7 +53,7 @@ public interface ZcjdService {
      * @param listReqVO 查询条件
      * @return 政策解读列表
      */
-    List<ZcjdDO> getZcjdList(ZcjdPageReqVO listReqVO);
+    List<ZcjdDO> getZcjdList(ZcjdReqVO listReqVO);
 
     /**
      * 获得政策解读分页列表
@@ -61,7 +61,7 @@ public interface ZcjdService {
      * @param reqVO 查询条件
      * @return 政策解读列表
      */
-    PageResult<ZcjdDO> getZcjdPage(ZcjdPageReqVO reqVO);
+    PageResult<ZcjdDO> getZcjdPage(ZcjdReqVO reqVO);
 
     /**
      * 发布政策解读

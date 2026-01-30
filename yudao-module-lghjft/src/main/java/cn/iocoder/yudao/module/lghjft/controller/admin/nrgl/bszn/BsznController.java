@@ -4,8 +4,8 @@ import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznCreateReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznListReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznUpdateReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.bszn.BsznDO;
 import cn.iocoder.yudao.module.lghjft.service.nrgl.bszn.BsznService;
@@ -67,22 +67,22 @@ public class BsznController {
     @Operation(summary = "获得办事指南")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PermitAll
-    public CommonResult<BsznRespVO> getBszn(@RequestParam("id") Long id) {
+    public CommonResult<BsznResVO> getBszn(@RequestParam("id") Long id) {
         BsznDO bszn = bsznService.getBszn(id);
-        return success(BeanUtils.toBean(bszn, BsznRespVO.class));
+        return success(BeanUtils.toBean(bszn, BsznResVO.class));
     }
 
     @GetMapping("/list-page")
     @Operation(summary = "获得办事指南分页列表")
     @PermitAll
-    public CommonResult<PageResult<BsznRespVO>> getBsznListPage(@Valid BsznListReqVO listReqVO) {
+    public CommonResult<PageResult<BsznResVO>> getBsznListPage(@Valid BsznReqVO listReqVO) {
         PageResult<BsznDO> pageResult = bsznService.getBsznPage(listReqVO);
 
-        List<BsznRespVO> result = BeanUtils.toBean(pageResult.getList(), BsznRespVO.class);
+        List<BsznResVO> result = BeanUtils.toBean(pageResult.getList(), BsznResVO.class);
         
         // 填充部门名称
         if (!result.isEmpty()) {
-            Map<Long, DeptRespDTO> deptMap = deptApi.getDeptMap(convertSet(result, BsznRespVO::getDeptId));
+            Map<Long, DeptRespDTO> deptMap = deptApi.getDeptMap(convertSet(result, BsznResVO::getDeptId));
             result.forEach(item -> {
                 DeptRespDTO dept = deptMap.get(item.getDeptId());
                 if (dept != null) {

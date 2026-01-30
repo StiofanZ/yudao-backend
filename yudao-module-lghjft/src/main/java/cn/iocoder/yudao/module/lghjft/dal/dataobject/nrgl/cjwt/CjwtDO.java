@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+
 /**
  * 常见问题 DO
  *
@@ -71,5 +73,16 @@ public class CjwtDO extends BaseDO {
      * 下架原因(1:已失效政策,2:新政策替代)
      */
     private String xjyy;
+
+    /**
+     * 阅读量
+     */
+    private Integer readCount;
+
+    /**
+     * 排名 (非数据库字段)
+     */
+    @TableField(exist = false)
+    private Integer rank;
 
 }

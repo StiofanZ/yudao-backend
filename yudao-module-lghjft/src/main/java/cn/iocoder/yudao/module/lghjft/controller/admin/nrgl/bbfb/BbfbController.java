@@ -4,8 +4,8 @@ import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbCreateReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbListReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbUpdateReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.bbfb.BbfbDO;
 import cn.iocoder.yudao.module.lghjft.service.nrgl.bbfb.BbfbService;
@@ -17,6 +17,8 @@ import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
@@ -57,17 +59,18 @@ public class BbfbController {
     @Operation(summary = "获得版本发布")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:nrgl-bbfb:query')")
-    public CommonResult<BbfbRespVO> getBbfb(@RequestParam("id") Long id) {
+    public CommonResult<BbfbResVO> getBbfb(@RequestParam("id") Long id) {
         BbfbDO bbfb = bbfbService.getBbfb(id);
-        return success(BeanUtils.toBean(bbfb, BbfbRespVO.class));
+        return success(BeanUtils.toBean(bbfb, BbfbResVO.class));
     }
 
     @GetMapping("/list-page")
     @Operation(summary = "获得版本发布分页列表")
     @PreAuthorize("@ss.hasPermission('lghjft:nrgl-bbfb:query')")
-    public CommonResult<PageResult<BbfbRespVO>> getBbfbPage(@Valid BbfbListReqVO listReqVO) {
+    public CommonResult<PageResult<BbfbResVO>> getBbfbPage(@Valid BbfbReqVO listReqVO) {
         PageResult<BbfbDO> pageResult = bbfbService.getBbfbPage(listReqVO);
-        return success(BeanUtils.toBean(pageResult, BbfbRespVO.class));
+        List<BbfbResVO> list = BeanUtils.toBean(pageResult.getList(), BbfbResVO.class);
+        return success(new PageResult<>(list, pageResult.getTotal()));
     }
 
     @PutMapping("/publish")

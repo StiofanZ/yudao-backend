@@ -2,7 +2,7 @@ package cn.iocoder.yudao.module.lghjft.service.nrgl.bbfb;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbCreateReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbListReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bbfb.vo.BbfbUpdateReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.bbfb.BbfbDO;
 
@@ -52,7 +52,7 @@ public interface BbfbService {
      * @param listReqVO 查询条件
      * @return 版本发布列表
      */
-    PageResult<BbfbDO> getBbfbPage(BbfbListReqVO listReqVO);
+    PageResult<BbfbDO> getBbfbPage(BbfbReqVO listReqVO);
 
     /**
      * 发布版本

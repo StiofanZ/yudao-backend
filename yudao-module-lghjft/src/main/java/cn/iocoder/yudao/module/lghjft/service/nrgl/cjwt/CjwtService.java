@@ -2,9 +2,10 @@ package cn.iocoder.yudao.module.lghjft.service.nrgl.cjwt;
 
 import java.util.List;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.cjwt.vo.CjwtCreateReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.cjwt.vo.CjwtListReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.cjwt.vo.CjwtReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.cjwt.vo.CjwtUpdateReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.cjwt.CjwtDO;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import jakarta.validation.Valid;
 
 /**
@@ -45,12 +46,12 @@ public interface CjwtService {
     CjwtDO getCjwt(Long id);
 
     /**
-     * 获得常见问题列表
+     * 获得常见问题分页列表
      *
-     * @param listReqVO 查询条件
-     * @return 常见问题列表
+     * @param reqVO 查询条件
+     * @return 常见问题分页列表
      */
-    List<CjwtDO> getCjwtList(CjwtListReqVO listReqVO);
+    PageResult<CjwtDO> getCjwtPage(CjwtReqVO reqVO);
 
     /**
      * 发布常见问题

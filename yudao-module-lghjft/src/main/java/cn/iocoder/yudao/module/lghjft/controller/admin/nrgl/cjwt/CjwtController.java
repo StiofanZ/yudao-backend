@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.cjwt;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.cjwt.vo.*;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.cjwt.CjwtDO;
@@ -62,21 +63,21 @@ public class CjwtController {
     @Operation(summary = "获得常见问题")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:nrgl-cjwt:query')")
-    public CommonResult<CjwtRespVO> getCjwt(@RequestParam("id") Long id) {
+    public CommonResult<CjwtResVO> getCjwt(@RequestParam("id") Long id) {
         CjwtDO cjwt = cjwtService.getCjwt(id);
-        return success(BeanUtils.toBean(cjwt, CjwtRespVO.class));
+        return success(BeanUtils.toBean(cjwt, CjwtResVO.class));
     }
 
-    @GetMapping("/list")
-    @Operation(summary = "获得常见问题列表")
+    @GetMapping("/list-page")
+    @Operation(summary = "获得常见问题分页列表")
     @PreAuthorize("@ss.hasPermission('lghjft:nrgl-cjwt:query')")
-    public CommonResult<List<CjwtRespVO>> getCjwtList(@Valid CjwtListReqVO listReqVO) {
-        List<CjwtDO> list = cjwtService.getCjwtList(listReqVO);
-        List<CjwtRespVO> result = BeanUtils.toBean(list, CjwtRespVO.class);
+    public CommonResult<PageResult<CjwtResVO>> getCjwtPage(@Valid CjwtReqVO listReqVO) {
+        PageResult<CjwtDO> pageResult = cjwtService.getCjwtPage(listReqVO);
+        List<CjwtResVO> result = BeanUtils.toBean(pageResult.getList(), CjwtResVO.class);
         
         // 填充部门名称
         if (!result.isEmpty()) {
-            Map<Long, DeptRespDTO> deptMap = deptApi.getDeptMap(convertSet(result, CjwtRespVO::getDeptId));
+            Map<Long, DeptRespDTO> deptMap = deptApi.getDeptMap(convertSet(result, CjwtResVO::getDeptId));
             result.forEach(item -> {
                 DeptRespDTO dept = deptMap.get(item.getDeptId());
                 if (dept != null) {
@@ -85,7 +86,7 @@ public class CjwtController {
             });
         }
         
-        return success(result);
+        return success(new PageResult<>(result, pageResult.getTotal()));
     }
 
     @PutMapping("/publish")
@@ -113,25 +114,6 @@ public class CjwtController {
         return success(true);
     }
 
-    @GetMapping("/public/list")
-    @Operation(summary = "获得公开常见问题列表")
-    @Parameter(name = "deptId", description = "部门编号", required = true)
-    public CommonResult<List<CjwtRespVO>> getPublicCjwtList(@RequestParam("deptId") Long deptId) {
-        List<CjwtDO> list = cjwtService.getPublicCjwtList(deptId);
-        List<CjwtRespVO> result = BeanUtils.toBean(list, CjwtRespVO.class);
-        
-        // 填充部门名称
-        if (!result.isEmpty()) {
-            Map<Long, DeptRespDTO> deptMap = deptApi.getDeptMap(convertSet(result, CjwtRespVO::getDeptId));
-            result.forEach(item -> {
-                DeptRespDTO dept = deptMap.get(item.getDeptId());
-                if (dept != null) {
-                    item.setDeptName(dept.getName());
-                }
-            });
-        }
-        
-        return success(result);
-    }
+
 
 }

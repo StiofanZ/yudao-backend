@@ -6,11 +6,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-@Schema(description = "管理后台 - 版本发布列表 Request VO")
+@Schema(description = "管理后台 - 版本发布分页 Request VO")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class BbfbListReqVO extends PageParam {
+public class BbfbReqVO extends PageParam {
 
     @Schema(description = "标题", example = "版本更新")
     private String title;
@@ -20,5 +20,5 @@ public class BbfbListReqVO extends PageParam {
 
     @Schema(description = "状态", example = "1")
     private Integer status;
-
 }
+

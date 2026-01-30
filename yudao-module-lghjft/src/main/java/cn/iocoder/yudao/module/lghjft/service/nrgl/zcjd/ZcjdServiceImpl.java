@@ -5,7 +5,7 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.mybatis.core.util.MyBatisUtils;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdCreateReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.zcjd.ZcjdDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.nrgl.zcjd.ZcjdMapper;
 import cn.iocoder.yudao.module.system.api.dept.DeptApi;
@@ -188,7 +188,7 @@ public class ZcjdServiceImpl implements ZcjdService {
     }
 
     @Override
-    public List<ZcjdDO> getZcjdList(ZcjdPageReqVO listReqVO) {
+    public List<ZcjdDO> getZcjdList(ZcjdReqVO listReqVO) {
         // 暂时保留，但建议也迁移到 selectPageWithRank 逻辑如果需要分页
         // 这里主要关注 getPublicZcjdList 的重构
         return zcjdMapper.selectList(listReqVO);
@@ -200,7 +200,7 @@ public class ZcjdServiceImpl implements ZcjdService {
      * @param reqVO 查询条件
      * @return 分页结果
      */
-    public PageResult<ZcjdDO> getZcjdPage(cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdPageReqVO reqVO) {
+    public PageResult<ZcjdDO> getZcjdPage(ZcjdReqVO reqVO) {
         // 1. 确定上下文部门ID
         Long loginDeptId = null;
         try {

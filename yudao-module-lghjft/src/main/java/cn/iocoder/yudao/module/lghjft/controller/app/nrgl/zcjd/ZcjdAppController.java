@@ -2,7 +2,7 @@ package cn.iocoder.yudao.module.lghjft.controller.app.nrgl.zcjd;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdResVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.nrgl.zcjd.vo.ZcjdPageAppReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.zcjd.ZcjdDO;
 import cn.iocoder.yudao.module.lghjft.service.nrgl.zcjd.ZcjdService;
@@ -42,15 +42,15 @@ public class ZcjdAppController {
     @GetMapping("/list-page")
     @Operation(summary = "获得政策解读列表")
     @Parameter(name = "deptId", description = "部门编号", required = true)
-    public CommonResult<List<ZcjdRespVO>> getZcjdList(@Valid ZcjdPageAppReqVO reqVO) {
+    public CommonResult<List<ZcjdResVO>> getZcjdList(@Valid ZcjdPageAppReqVO reqVO) {
         List<ZcjdDO> list = zcjdService.getZcjdList(reqVO);
         list.removeIf(zcjdDO -> !List.of(2, 3).contains(zcjdDO.getStatus())); //only 2,3
         list.removeIf(zcjdDO -> !ObjectUtils.isEmpty(reqVO.getFbbm()) && !reqVO.getFbbm().equals(zcjdDO.getFbbm()));
-        List<ZcjdRespVO> result = BeanUtils.toBean(list, ZcjdRespVO.class);
+        List<ZcjdResVO> result = BeanUtils.toBean(list, ZcjdResVO.class);
 
         // 填充部门名称
         if (!result.isEmpty()) {
-            Map<Long, DeptRespDTO> deptMap = deptApi.getDeptMap(convertSet(result, ZcjdRespVO::getDeptId));
+            Map<Long, DeptRespDTO> deptMap = deptApi.getDeptMap(convertSet(result, ZcjdResVO::getDeptId));
             result.forEach(item -> {
                 DeptRespDTO dept = deptMap.get(item.getDeptId());
                 if (dept != null) {
@@ -65,9 +65,9 @@ public class ZcjdAppController {
     @GetMapping("/get")
     @Operation(summary = "获得政策解读")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    public CommonResult<ZcjdRespVO> getZcjd(@RequestParam("id") Long id) {
+    public CommonResult<ZcjdResVO> getZcjd(@RequestParam("id") Long id) {
         ZcjdDO zcjd = zcjdService.getZcjd(id);
-        return success(BeanUtils.toBean(zcjd, ZcjdRespVO.class));
+        return success(BeanUtils.toBean(zcjd, ZcjdResVO.class));
     }
 
 }

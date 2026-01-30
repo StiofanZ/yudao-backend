@@ -3,10 +3,14 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-@Schema(description = "管理后台 - 办事指南列表 Request VO")
+@Schema(description = "管理后台 - 办事指南分页 Request VO")
 @Data
-public class BsznListReqVO extends PageParam {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class BsznReqVO extends PageParam {
 
     @Schema(description = "事项名称", example = "办事指南")
     private String sxmc;
@@ -21,3 +25,4 @@ public class BsznListReqVO extends PageParam {
     private Long deptId;
 
 }
+

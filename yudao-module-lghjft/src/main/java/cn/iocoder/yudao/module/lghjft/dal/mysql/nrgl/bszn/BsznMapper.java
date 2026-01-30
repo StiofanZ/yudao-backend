@@ -1,7 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.dal.mysql.nrgl.bszn;
 
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznListReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.bszn.vo.BsznReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.bszn.BsznDO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
@@ -27,7 +27,7 @@ public interface BsznMapper extends BaseMapperX<BsznDO> {
      * @return 分页结果
      */
     IPage<BsznDO> selectPageWithRank(IPage<BsznDO> page,
-                                     @Param("reqVO") BsznListReqVO reqVO,
+                                     @Param("reqVO") BsznReqVO reqVO,
                                      @Param("loginDeptId") Long loginDeptId,
                                      @Param("ancestorIds") List<Long> ancestorIds);
 
