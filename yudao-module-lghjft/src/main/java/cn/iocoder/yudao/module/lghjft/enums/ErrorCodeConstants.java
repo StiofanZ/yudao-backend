@@ -22,4 +22,8 @@ ErrorCode MARKER_INFO_NOT_EXISTS = new ErrorCode(2_010_000_001, "高德地图标
     ErrorCode DLZH_LXDH_EXISTS = new ErrorCode(2_012_000_004, "联系电话已存在");
     ErrorCode DLZH_YHYX_EXISTS = new ErrorCode(2_012_000_005, "用户邮箱已存在");
     ErrorCode DLZH_SHXYDM_EXISTS = new ErrorCode(2_012_000_006, "社会信用代码已存在");
+    ErrorCode WF_TDFSQ_NOT_EXISTS = new ErrorCode(2_011_000_001, "退抵费申请不存在");
+    ErrorCode  WF_TDF_SQ_NOT_EXISTS= new ErrorCode(2_012_000_001, "退还申请不存在");
+
+
 }
