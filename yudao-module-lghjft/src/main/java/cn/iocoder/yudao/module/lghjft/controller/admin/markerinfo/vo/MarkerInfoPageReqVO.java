@@ -31,7 +31,7 @@ public class MarkerInfoPageReqVO extends PageParam {
     @Schema(description = "纬度（保留6位小数，满足高德地图精度）")
     private BigDecimal lat;
 
-    @Schema(description = "备注信息", example = "你猜")
+    @Schema(description = "备注信息", example = "")
     private String remark;
 
     @Schema(description = "创建时间")
@@ -43,8 +43,6 @@ public class MarkerInfoPageReqVO extends PageParam {
 
     @Schema(description = "级别")
     private  String grade;
-//    @Schema(description = "是否删除（0-未删，1-已删）")
-//    private Integer isDeleted;
 
     @Schema(description = "搜索关键字", example = "名称或地址")
     private String searchKey;

@@ -23,11 +23,16 @@ public interface MarkerInfoMapper extends BaseMapperX<MarkerInfoDO> {
 
         // 如果 searchKey 非空，则添加 (name LIKE ? OR address LIKE ?)
         if (StrUtil.isNotBlank(reqVO.getSearchKey())) {
+
             String key = "%" + reqVO.getSearchKey() + "%";
             wrapper.and(w -> w.like(MarkerInfoDO::getName, key)
                     .or()
-                    .like(MarkerInfoDO::getAddress, key));
+                    .like(MarkerInfoDO::getAddress, key)
+                   );
         }
+        wrapper.eqIfPresent(MarkerInfoDO::getJobtime, reqVO.getJobtime())
+                .eqIfPresent(MarkerInfoDO::getGrade, reqVO.getGrade())
+                .eqIfPresent(MarkerInfoDO::getXzqhDm, reqVO.getXzqhDm());
 
         return selectPage(reqVO, wrapper);
     }
