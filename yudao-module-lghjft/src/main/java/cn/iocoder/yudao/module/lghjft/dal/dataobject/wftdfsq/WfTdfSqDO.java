@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.wftdfsq;
 
 import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
@@ -45,4 +46,6 @@ public class WfTdfSqDO extends BaseDO {
     private String provinceHandlerName;
     private LocalDate provinceApproveTime;
     private Integer refundMethod;
+    @TableField(exist = false)
+    private Boolean deleted;
 }

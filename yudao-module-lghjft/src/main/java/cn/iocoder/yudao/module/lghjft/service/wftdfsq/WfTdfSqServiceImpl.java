@@ -17,9 +17,11 @@ import cn.iocoder.yudao.module.lghjft.dal.mysql.wftdfsq.WfTdfSqMapper;
 import cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,31 +37,6 @@ public  class WfTdfSqServiceImpl implements WfTdfSqService {
     private WfTdfSqAttachmentMapper attachmentMapper;
     @Resource
     private BpmProcessInstanceApi bpmProcessInstanceApi;
-    @Resource
-    private FileMapper fileMapper; // 来自 infra 模块
-
-//    @Override
-//    public WfTdfSqRespVO getDetail(Long id) {
-//        WfTdfSqDO main = wfTdfSqMapper.selectById(id);
-//        if (main == null) {
-//            throw ServiceExceptionUtil.exception(ErrorCodeConstants.WF_TDF_SQ_NOT_EXISTS);
-//        }
-//
-//        List<WfTdfSqAttachmentDO> attachments = attachmentMapper.selectBySqId(id);
-//        List<WfTdfSqRespVO.AttachmentVO> attachmentVOs = attachments.stream()
-//                .map(att -> {
-//                    FileDO fileDO = fileMapper.selectById(att.getFileId());
-//                    String name = fileDO != null ? fileDO.getName() : "未知文件";
-//                    return new WfTdfSqRespVO.AttachmentVO() {{
-//                        setType(att.getType());
-//                        setFileId(att.getFileId());
-//                        setName(name);
-//                    }};
-//                }).collect(Collectors.toList());
-//
-//        return BeanUtils.toBean(main, WfTdfSqRespVO.class, vo -> vo.setAttachments(attachmentVOs));
-//    }
-
     @Override
     public WfTdfSqRespVO getDetail(Long id) {
         // ========== 新增：打印用户ID完整链路 ==========
@@ -70,8 +47,6 @@ public  class WfTdfSqServiceImpl implements WfTdfSqService {
 
         // 2. 转换为字符串后的结果
         String creatorStr = String.valueOf(rawLoginUserId);
-        System.out.println("3. 转换为字符串后的值：" + creatorStr);
-        System.out.println("==========================");
         // 1. 查询主表
         WfTdfSqDO main = wfTdfSqMapper.selectById(id);
         if (main == null) {
@@ -107,11 +82,11 @@ public  class WfTdfSqServiceImpl implements WfTdfSqService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Long create(WfTdfSqSaveReqVO req) {
+    public Long create(@Valid WfTdfSqSaveReqVO req) {
         // 1. 保存主表
         WfTdfSqDO main = BeanUtils.toBean(req, WfTdfSqDO.class);
         main.setCreator(String.valueOf(WebFrameworkUtils.getLoginUserId()));
-//        main.setStatus(1); // 审批中
+        main.setApplyDate(LocalDate.now());
         wfTdfSqMapper.insert(main);
 
         // 2. 保存附件（仅新增部分）
@@ -146,42 +121,3 @@ public  class WfTdfSqServiceImpl implements WfTdfSqService {
         return main.getId();
     }
 }
-//    @Override
-//    @Transactional(rollbackFor = Exception.class)
-//    public void approve(WfTdfSqApproveReqVO reqVO) {
-//        // 1. 查询申请记录
-//        WfTdfSqDO entity = wfTdfSqMapper.selectById(reqVO.getApplyId());
-//        if (entity == null) {
-//            throw ServiceExceptionUtil.exception(ErrorCodeConstants.WF_TDF_SQ_NOT_EXISTS);
-//        }
-//
-//        // 2. 根据任务Key更新不同字段
-//        switch (reqVO.getTaskKey()) {
-//            case "managerAudit": // 主管工会审批
-//                entity.setManagerOpinion(reqVO.getOpinion());
-//                entity.setManagerLeaderName(reqVO.getLeaderName());
-//                entity.setManagerHandlerName(reqVO.getHandlerName());
-//                entity.setManagerApproveTime(reqVO.getApproveTime());
-//
-//                break;
-//
-//            case "provinceAudit": // 省总工会审批
-//                entity.setProvinceOpinion(reqVO.getOpinion());
-//                entity.setProvinceLeaderName(reqVO.getLeaderName());
-//                entity.setProvinceHandlerName(reqVO.getHandlerName());
-//                entity.setProvinceApproveTime(reqVO.getApproveTime());
-//                entity.setRefundMethod(reqVO.getRefundMethod());
-//
-//                break;
-//
-//            default:
-//                throw ServiceExceptionUtil.exception(ErrorCodeConstants.WF_TDF_SQ_TASK_KEY_ERROR);
-//        }
-//
-//        // 3. 设置更新人
-//        entity.setUpdater(String.valueOf(WebFrameworkUtils.getLoginUserId()));
-//
-//        // 4. 更新数据库
-//        wfTdfSqMapper.updateById(entity);
-//    }
-//}

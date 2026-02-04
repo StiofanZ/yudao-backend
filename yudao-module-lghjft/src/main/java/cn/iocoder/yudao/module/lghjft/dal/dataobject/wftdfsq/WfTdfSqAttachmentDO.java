@@ -1,5 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.wftdfsq;
 
+import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
@@ -9,7 +11,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class WfTdfSqAttachmentDO { // 移除BaseDO继承
+public class WfTdfSqAttachmentDO extends BaseDO { // 移除BaseDO继承
 
     @TableId
     private Long id;
@@ -18,4 +20,9 @@ public class WfTdfSqAttachmentDO { // 移除BaseDO继承
     private String fileUrl;
     private String creator;
 
+//    @TableField(exist = false)
+//    private String updater;
+
+    @TableField(exist = false)
+    private Boolean deleted;
 }

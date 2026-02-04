@@ -1,8 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.wftdfsq;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
-
-//import cn.iocoder.yudao.module.lghjft.controller.admin.wftdfsq.vo.WfTdfSqApproveReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.wftdfsq.vo.WfTdfSqRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.wftdfsq.vo.WfTdfSqSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.service.wftdfsq.WfTdfSqService;
@@ -37,13 +35,6 @@ public class WfTdfSqController {
     public CommonResult<Long> create(@Valid @RequestBody WfTdfSqSaveReqVO req) {
         return success(wfTdfSqService.create(req));
     }
-//    // WfTdfSqController.java 中添加：
-//    @PostMapping("/approve")
-//    @Operation(summary = "审批操作")
-//    @PreAuthorize("@ss.hasPermission('lghjft:workflow-wftdfsq:approve')")
-//    public CommonResult<Boolean> approve(@Valid @RequestBody WfTdfSqApproveReqVO req) {
-//        wfTdfSqService.approve(req);
-//        return success(true);
-//    }
+
 
 }
