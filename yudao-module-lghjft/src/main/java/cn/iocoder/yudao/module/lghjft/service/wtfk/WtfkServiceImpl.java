@@ -4,12 +4,14 @@ import cn.hutool.core.collection.CollUtil;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.file.dal.dataobject.dos.FileInfoDO;
+import cn.iocoder.yudao.module.file.dal.dataobject.vo.FileInfoVO;
 import cn.iocoder.yudao.module.file.dal.mysql.FileInfoMapper;
 import cn.iocoder.yudao.module.file.service.IFileInfoService;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.wtfk.WtfkLogDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.wtfk.WtfkLogMapper;
 import cn.iocoder.yudao.module.system.api.user.AdminUserApi;
 import cn.iocoder.yudao.module.system.api.user.dto.AdminUserRespDTO;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -116,7 +118,7 @@ public class WtfkServiceImpl implements WtfkService {
         wtfkMapper.insert(wtfk);
 
         //  使用 Service 批量绑定附件
-        this.saveFileInfos(wtfk.getId(), createReqVO.getFileUrls());
+        this.saveFileInfos(wtfk.getId(), createReqVO.getFiles());
 
         return wtfk.getId();
     }
@@ -144,7 +146,7 @@ public class WtfkServiceImpl implements WtfkService {
         fileInfoMapper.delete(new LambdaQueryWrapperX<FileInfoDO>()
                 .eq(FileInfoDO::getBizId, updateReqVO.getId())
                 .eq(FileInfoDO::getTableName, "lghjft_wtfk"));
-        this.saveFileInfos(updateReqVO.getId(), updateReqVO.getFileUrls());
+        this.saveFileInfos(updateReqVO.getId(), updateReqVO.getFiles());
     }
 
     @Override
@@ -282,9 +284,7 @@ Status = 5：用户端删除（用户不可见，管理员可见）。
                 .eq(FileInfoDO::getBizId, id)
                 .eq(FileInfoDO::getTableName, "lghjft_wtfk"));
         if (CollUtil.isNotEmpty(files)) {
-            respVO.setFileUrls(files.stream()
-                    .map(FileInfoDO::getFileUrl)
-                    .collect(Collectors.toList()));
+            respVO.setFiles(BeanUtils.toBean(files,FileInfoVO.class));
         }
 
         return respVO;
@@ -292,8 +292,8 @@ Status = 5：用户端删除（用户不可见，管理员可见）。
     /**
      * 封装 FileInfoDO 并调用 Service 批量入库
      */
-    private void saveFileInfos(Long bizId, List<String> fileUrls) {
-        if (CollUtil.isEmpty(fileUrls)) {
+    private void saveFileInfos(Long bizId, List<FileInfoVO> files) {
+        if (CollectionUtils.isEmpty(files)) {
             return;
         }
 
@@ -302,15 +302,14 @@ Status = 5：用户端删除（用户不可见，管理员可见）。
         // 如果获取不到登录用户（例如未登录反馈），给一个默认的管理员 ID 1L
         Long creatorId = (loginUserId != null) ? loginUserId : 1L;
 
-        List<FileInfoDO> fileInfoList = fileUrls.stream().map(url -> {
+        List<FileInfoDO> fileInfoList = files.stream().map(file -> {
             FileInfoDO fileInfo = new FileInfoDO();
             fileInfo.setBizId(bizId);
             fileInfo.setTableName("lghjft_wtfk");
-            fileInfo.setFileUrl(url);
+            fileInfo.setFileUrl(file.getFileUrl());
 
-            String fileName = url.substring(url.lastIndexOf("/") + 1);
-            fileInfo.setFileName(fileName);
-            fileInfo.setFileOriginName(fileName);
+            fileInfo.setFileName(file.getFileName());
+            fileInfo.setFileOriginName(file.getFileOriginName());
 
             // 2. 修复点：直接传入 Long 类型变量
             fileInfo.setCreateBy(creatorId);

@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.wtfk.vo;
 
+import cn.iocoder.yudao.module.file.dal.dataobject.vo.FileInfoVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import java.util.*;
@@ -71,7 +72,7 @@ public class WtfkRespVO {
     @ExcelProperty("创建时间")
     private LocalDateTime createTime;
 
-    @Schema(description = "附件URL列表")
-    private List<String> fileUrls;
+    @Schema(description = "附件列表")
+    private List<FileInfoVO> files;
 
 }
