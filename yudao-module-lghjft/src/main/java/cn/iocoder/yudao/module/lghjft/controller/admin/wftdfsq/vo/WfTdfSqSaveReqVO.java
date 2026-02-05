@@ -50,10 +50,6 @@ public class WfTdfSqSaveReqVO {
     @Schema(description = "开户行行号")
     private String bankCode;
 
-    @Schema(description = "申请日期", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotNull(message = "申请日期不能为空")
-    private java.time.LocalDate applyDate;
-
     // 附件（前端传 fileId 列表）
 
     @Schema(description = "附件列表")
