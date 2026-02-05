@@ -18,6 +18,9 @@ public class CjwtReqVO extends PageParam {
     @Schema(description = "状态", example = "1")
     private Integer status;
 
+    @Schema(description = "问题分类")
+    private String wtfl;
+
     @Schema(description = "部门ID", example = "1024")
     private Long deptId;
 }
