@@ -1,6 +1,5 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.wtfk.vo;
 
-import cn.iocoder.yudao.module.file.dal.dataobject.vo.FileInfoVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import java.util.*;
@@ -15,9 +14,8 @@ public class WtfkSaveReqVO {
     @Schema(description = "主键ID", requiredMode = Schema.RequiredMode.REQUIRED, example = "16018")
     private Long id;
 
-
     @Schema(description = "反馈类型", requiredMode = Schema.RequiredMode.REQUIRED, example = "2")
-    @NotEmpty(message = "反馈类型")
+    @NotEmpty(message = "反馈类型不能为空")
     private String type;
 
     @Schema(description = "平台名称")
@@ -35,7 +33,7 @@ public class WtfkSaveReqVO {
     private String contactEmail;
 
     @Schema(description = "处理状态", requiredMode = Schema.RequiredMode.REQUIRED, example = "2")
-    @NotNull(message = "处理状态")
+    @NotNull(message = "处理状态不能为空")
     private Integer status;
 
     @Schema(description = "处理人ID", example = "3038")
@@ -45,7 +43,22 @@ public class WtfkSaveReqVO {
     private LocalDateTime processTime;
 
     @Schema(description = "附件列表")
-    private List<FileInfoVO> files;
+    private List<FileItem> files;
 
+    /**
+     * 附件项结构（保持与 DO 结构一致，确保 BeanUtils 自动拷贝）
+     */
+    @Data
+    @Schema(description = "附件项")
+    public static class FileItem {
 
+        @Schema(description = "文件访问地址", requiredMode = Schema.RequiredMode.REQUIRED, example = "http://localhost/a.png")
+        private String fileUrl;
+
+        @Schema(description = "文件名", requiredMode = Schema.RequiredMode.REQUIRED, example = "截图.png")
+        private String fileName;
+
+        @Schema(description = "原始文件名", example = "screenshot_2024.png")
+        private String fileOriginName;
+    }
 }
