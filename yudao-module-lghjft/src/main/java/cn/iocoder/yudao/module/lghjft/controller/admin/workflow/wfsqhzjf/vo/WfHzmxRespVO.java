@@ -3,7 +3,6 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqhzjf.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 工会经费汇总缴纳申请明细表（分支机构）返回 VO")
 @Data

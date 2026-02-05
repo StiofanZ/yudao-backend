@@ -3,6 +3,7 @@ package cn.iocoder.yudao.module.lghjft.service.workflow.wfsqhzjs;
 import java.util.*;
 
 //import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqhzjf.vo.WfHzPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqhzjf.vo.WfHzRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqhzjf.vo.WfHzSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.wfsqhzjf.WfHzDO;
 import jakarta.validation.*;
@@ -32,6 +33,6 @@ public interface WfHzService {
      * @param id 编号
      * @return 工会经费汇总缴纳申请表（主表）
      */
-    WfHzDO getDetail(Long id);
+    WfHzRespVO getDetail(Long id);
 
 }

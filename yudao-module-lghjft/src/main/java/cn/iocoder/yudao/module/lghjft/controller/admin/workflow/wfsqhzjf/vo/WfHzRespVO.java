@@ -2,9 +2,9 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqhzjf.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Schema(description = "管理后台 - 工会经费汇总缴纳申请表（主表）返回 VO")

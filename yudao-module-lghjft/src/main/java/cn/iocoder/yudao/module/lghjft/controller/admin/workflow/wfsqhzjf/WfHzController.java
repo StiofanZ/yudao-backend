@@ -49,9 +49,9 @@ public class WfHzController {
     @GetMapping("/get")
     @Operation(summary = "获得工会经费汇总缴纳申请表（主表）")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:wf-hz:query')")
+//    @PreAuthorize("@ss.hasPermission('lghjft:wf-hz:query')")
     public CommonResult<WfHzRespVO> getWfHz(@RequestParam("id") Long id) {
-        WfHzDO wfHz = wfHzService.getDetail(id);
+        WfHzRespVO wfHz = wfHzService.getDetail(id);
         return success(BeanUtils.toBean(wfHz, WfHzRespVO.class));
     }
 

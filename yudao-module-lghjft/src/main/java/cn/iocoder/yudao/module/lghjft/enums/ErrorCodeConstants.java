@@ -14,7 +14,7 @@ public interface ErrorCodeConstants {
 
     ErrorCode WTFK_NOT_EXISTS = new ErrorCode(2_008_000_001, "问题反馈不存在");
     ErrorCode CONTENT_NOT_EXISTS = new ErrorCode(2_009_000_001, "内容管理不存在");
-ErrorCode MARKER_INFO_NOT_EXISTS = new ErrorCode(2_010_000_001, "高德地图标注点信息不存在");
+    ErrorCode MARKER_INFO_NOT_EXISTS = new ErrorCode(2_010_000_001, "高德地图标注点信息不存在");
     ErrorCode SFXX_NOT_EXISTS = new ErrorCode(2_011_000_001, "身份信息不存在");
     ErrorCode DLZH_NOT_EXISTS = new ErrorCode(2_012_000_001, "登录账号不存在");
     ErrorCode DLZH_PASSWORD_REQUIRED = new ErrorCode(2_012_000_002, "密码不能为空");
@@ -22,8 +22,8 @@ ErrorCode MARKER_INFO_NOT_EXISTS = new ErrorCode(2_010_000_001, "高德地图标
     ErrorCode DLZH_LXDH_EXISTS = new ErrorCode(2_012_000_004, "联系电话已存在");
     ErrorCode DLZH_YHYX_EXISTS = new ErrorCode(2_012_000_005, "用户邮箱已存在");
     ErrorCode DLZH_SHXYDM_EXISTS = new ErrorCode(2_012_000_006, "社会信用代码已存在");
-    ErrorCode WF_TDFSQ_NOT_EXISTS = new ErrorCode(2_011_000_001, "退抵费申请不存在");
+    ErrorCode WF_HZJF_SQ_NOT_EXISTS = new ErrorCode(2_011_000_001, "汇总缴费申请不存在");
     ErrorCode  WF_TDF_SQ_NOT_EXISTS= new ErrorCode(2_012_000_001, "退还申请不存在");
-
+    ErrorCode WF_JFHJ_SQ_NOT_EXISTS = new ErrorCode(2_012_000_002, "缴费缓缴申请不存在");
 
 }

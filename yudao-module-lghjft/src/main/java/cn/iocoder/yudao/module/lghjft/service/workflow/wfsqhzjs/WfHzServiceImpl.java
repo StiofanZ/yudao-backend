@@ -2,15 +2,21 @@ package cn.iocoder.yudao.module.lghjft.service.workflow.wfsqhzjs;
 
 import cn.hutool.core.collection.CollUtil;
 //import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqhzjf.vo.WfHzPageReqVO;
+import cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil;
 import cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils;
 import cn.iocoder.yudao.module.bpm.api.task.BpmProcessInstanceApi;
 import cn.iocoder.yudao.module.bpm.api.task.dto.BpmProcessInstanceCreateReqDTO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqhzjf.vo.WfHzRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqhzjf.vo.WfHzSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqhzjf.vo.WfHzmxRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqhzjf.vo.WfHzmxSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.wfsqhzjf.WfHzDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.wfsqhzjf.WfHzmxDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.workflow.wfsqhzjf.WfHzMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.workflow.wfsqhzjf.WfHzmxMapper;
+import cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants;
+import com.aliyun.oss.ServiceException;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
@@ -20,6 +26,7 @@ import org.springframework.validation.annotation.Validated;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 
 /**
@@ -37,6 +44,7 @@ public class WfHzServiceImpl implements WfHzService {
     private WfHzMapper wfHzMapper;
     @Resource
     private BpmProcessInstanceApi bpmProcessInstanceApi;
+
     @Override
     public Long createWfHz(WfHzSaveReqVO createReqVO) {
         // 1. 插入主表数据
@@ -84,28 +92,36 @@ public class WfHzServiceImpl implements WfHzService {
     }
 
 
-    @Override
-    public WfHzDO getDetail(Long id) {
-//        // 1. 查询主表DO
-//        WfHzDO mainDO = wfHzMapper.selectById(id);
-//        if (mainDO == null) {
-//            throw new BusinessException(ErrorCode.NOT_FOUND);
-//        }
-//
-//        // 2. 查询该主表下的所有明细表DO
-//        List<WfHzmxDO> detailDOList = wfHzmxMapper.selectList(Wrappers.lambdaQuery(WfHzmxDO.class)
-//                .eq(WfHzmxDO::getHzId, id));
-//
-//        // 3. DO转RespVO
-//        WfHzRespVO mainRespVO = BeanUtils.toBean(mainDO, WfHzRespVO.class);
-//        // 转换明细表DO为明细表RespVO
-//        List<WfHzmxRespVO> detailRespVOList = BeanUtils.toBean(detailDOList, WfHzmxRespVO.class);
-//        // 把明细表列表设置到主表RespVO中
-//        mainRespVO.setDetailList(detailRespVOList);
+    public WfHzRespVO getDetail(Long id) {
+        // 1. 查询主表数据，校验存在性
+        WfHzDO mainDO = wfHzMapper.selectById(id);
+        if (mainDO == null) {
+            // 建议替换为你项目中统一的异常码（比如 ErrorCodeConstants.WF_HZ_NOT_EXISTS）
+            throw ServiceExceptionUtil.exception(ErrorCodeConstants.WF_HZJF_SQ_NOT_EXISTS);
+        }
 
+        // 2按主表ID（hzId）查询所有关联的明细
+        List<WfHzmxDO> mxDOList = wfHzmxMapper.selectList(
+                new LambdaQueryWrapper<WfHzmxDO>()
+                        .eq(WfHzmxDO::getHzId, id) // 关联字段：明细表hzId = 主表id
+        );
 
+        // 3.1 主表DO → 主表VO
+        WfHzRespVO respVO = BeanUtils.toBean(mainDO, WfHzRespVO.class);
 
-        return wfHzMapper.selectById(id);
+        // 3.2 明细表DO列表 → 明细表VO列表
+        List<WfHzmxRespVO> mxVOList = new ArrayList<>(); // 初始化空列表，避免null
+        if (mxDOList != null && !mxDOList.isEmpty()) {
+            for (WfHzmxDO mxDO : mxDOList) {
+                // 逐个转换
+                WfHzmxRespVO mxVO = BeanUtils.toBean(mxDO, WfHzmxRespVO.class);
+                mxVOList.add(mxVO);
+            }
+        }
+        // 3.3 把明细表VO列表设置到主VO的detailList字段（你的核心嵌套字段）
+        respVO.setDetailList(mxVOList);
+
+        return respVO;
     }
 
 }

@@ -13,7 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
-@Tag(name = "管理后台 - 工会经费退抵费申请")
+@Tag(name = "App - 工会经费退抵费申请")
 @RestController
 @RequestMapping("/lghjft/workflow/wftdfsq")
 @Validated
