@@ -23,18 +23,16 @@ public class WfHzmxSaveReqVO {
     @NotEmpty(message = "分支机构单位全称不能为空")
     private String fjgdwqc;
 
-    @Schema(description = "分支机构主管税务部门")
+    @Schema(description = "分支机构主管税务部门", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotEmpty(message = "分支机构主管税务部门不能为空")
     private String fjgzgsbm;
 
-    @Schema(description = "分支机构职工人数")
+    @Schema(description = "分支机构职工人数", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotNull(message = "分支机构职工人数不能为空")
     private Integer fjggzs;
 
-    @Schema(description = "分支机构月工资总额")
+    @Schema(description = "分支机构月工资总额", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotNull(message = "分支机构月工资总额不能为空")
     private BigDecimal fjggzze;
 
-    // 创建/更新时间前端不传，后端自动填充，隐藏掉
-//    @Schema(hidden = true)
-//    private LocalDateTime cjsj;
-//    @Schema(hidden = true)
-//    private LocalDateTime gxsj;
 }

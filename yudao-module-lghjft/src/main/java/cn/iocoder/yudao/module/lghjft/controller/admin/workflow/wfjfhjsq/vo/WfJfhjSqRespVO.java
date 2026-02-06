@@ -31,6 +31,7 @@ public class WfJfhjSqRespVO {
 
     @Schema(description = "联系人及电话")
     @ExcelProperty("联系人及电话")
+    private String contact;
     private String contactPhone;
 
     @Schema(description = "适用费率（%）")
