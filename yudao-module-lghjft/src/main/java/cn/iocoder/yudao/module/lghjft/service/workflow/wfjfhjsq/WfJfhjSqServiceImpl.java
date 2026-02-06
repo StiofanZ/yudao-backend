@@ -17,6 +17,8 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 /**
@@ -33,6 +35,7 @@ public class WfJfhjSqServiceImpl implements WfJfhjSqService {
     private WfJfhjSqMapper wfJfhjSqMapper;
     @Resource
     private BpmProcessInstanceApi bpmProcessInstanceApi;
+
     @Override
 //    有异常进行回滚
     @Transactional(rollbackFor = Exception.class)
@@ -40,12 +43,10 @@ public class WfJfhjSqServiceImpl implements WfJfhjSqService {
         // 1. 插入主表数据
         WfJfhjSqDO wfJfhjSq = BeanUtils.toBean(createReqVO, WfJfhjSqDO.class);
         Long loginUserId = WebFrameworkUtils.getLoginUserId();
+        wfJfhjSq.setApplyDate(LocalDate.now());
         wfJfhjSq.setUpdater(String.valueOf(loginUserId));
-        wfJfhjSq.setApplyDate(LocalDate.now());// 缴费单位-日期时间
-        wfJfhjSq.setGrassrootsApproveTime(LocalDate.now());//基层单位审批时间
-//        wfJfhjSq.setManagerApproveTime(LocalDate.now());//主管工会填审批时间
-//        wfJfhjSq.setCreateTime(LocalDateTime.now()); // 补充创建时间（如果DO里有该字段）
-//        wfJfhjSq.setUpdateTime(LocalDateTime.now()); // 补充更新时间（如果DO里有该字段）
+        wfJfhjSq.setCreateTime(LocalDateTime.now()); // 补充创建时间（如果DO里有该字段）
+        wfJfhjSq.setUpdateTime(LocalDateTime.now()); // 补充更新时间（如果DO里有该字段）
         wfJfhjSqMapper.insert(wfJfhjSq);
         // 3. 启动流程
         String processInstanceId = bpmProcessInstanceApi.createProcessInstance(
@@ -73,6 +74,5 @@ public class WfJfhjSqServiceImpl implements WfJfhjSqService {
         }
         return wfJfhjSq;
     }
-
 
 }

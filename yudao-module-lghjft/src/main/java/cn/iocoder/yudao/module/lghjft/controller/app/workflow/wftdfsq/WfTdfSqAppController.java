@@ -1,9 +1,9 @@
 package cn.iocoder.yudao.module.lghjft.controller.app.workflow.wftdfsq;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
-import cn.iocoder.yudao.module.lghjft.controller.admin.wftdfsq.vo.WfTdfSqRespVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.wftdfsq.vo.WfTdfSqSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.service.wftdfsq.WfTdfSqService;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wftdfsq.vo.WfTdfSqRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wftdfsq.vo.WfTdfSqSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.service.workflow.wftdfsq.WfTdfSqService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;

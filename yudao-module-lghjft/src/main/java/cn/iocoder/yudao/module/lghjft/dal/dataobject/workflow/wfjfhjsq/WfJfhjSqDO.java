@@ -45,6 +45,7 @@ public class WfJfhjSqDO extends BaseDO {
     /**
      * 联系人及电话
      */
+    private String contact;
     private String contactPhone;
     /**
      * 适用费率（%）

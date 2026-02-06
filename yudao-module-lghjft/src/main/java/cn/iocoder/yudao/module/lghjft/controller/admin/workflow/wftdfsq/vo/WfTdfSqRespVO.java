@@ -1,5 +1,5 @@
 // WfTdfsqRespVO.java
-package cn.iocoder.yudao.module.lghjft.controller.admin.wftdfsq.vo;
+package cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wftdfsq.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

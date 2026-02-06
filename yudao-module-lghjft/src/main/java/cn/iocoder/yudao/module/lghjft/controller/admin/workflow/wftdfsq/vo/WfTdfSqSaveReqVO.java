@@ -1,12 +1,8 @@
-package cn.iocoder.yudao.module.lghjft.controller.admin.wftdfsq.vo;
-
+package cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wftdfsq.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -32,6 +28,7 @@ public class WfTdfSqSaveReqVO {
     private String handler;
 
     @Schema(description = "联系电话")
+    @NotEmpty(message = "联系电话不能为空")
     private String contactPhone;
 
     // 账户信息
@@ -48,6 +45,7 @@ public class WfTdfSqSaveReqVO {
     private String accountNo;
 
     @Schema(description = "开户行行号")
+    @NotEmpty(message = "开户行行号不能为空")
     private String bankCode;
 
     // 附件（前端传 fileId 列表）

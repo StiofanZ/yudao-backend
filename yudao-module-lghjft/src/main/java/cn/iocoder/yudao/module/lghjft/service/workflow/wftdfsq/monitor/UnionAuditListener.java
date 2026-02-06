@@ -1,7 +1,7 @@
-package cn.iocoder.yudao.module.lghjft.service.wftdfsq.monitor;
+package cn.iocoder.yudao.module.lghjft.service.workflow.wftdfsq.monitor;
 
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.wftdfsq.WfTdfSqDO;
-import cn.iocoder.yudao.module.lghjft.dal.mysql.wftdfsq.WfTdfSqMapper;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.wftdfsq.WfTdfSqDO;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.workflow.wftdfsq.WfTdfSqMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.flowable.engine.delegate.TaskListener;
 import org.flowable.task.service.delegate.DelegateTask;
