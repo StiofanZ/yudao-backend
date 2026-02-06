@@ -1,9 +1,11 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfjfhjsq.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.*;
 import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
@@ -38,11 +40,12 @@ public class WfJfhjSqSaveReqVO {
     @Schema(description = "月拨缴金额（元）")
     private BigDecimal monthlyPayAmount;
 
-    @Schema(description = "申请缓缴期限-自（年/月）")
-    private LocalDate deferStartDate;
 
-    @Schema(description = "申请缓缴期限-至（年/月）")
-    private LocalDate deferEndDate;
+    @Schema(description = "缓缴开始日期（年月）", example = "2026-03")
+    private String deferStartDate; // 原 LocalDate 改为 YearMonth
+
+    @Schema(description = "缓缴结束日期（年月）", example = "2026-06")
+    private String deferEndDate; // 原 LocalDate 改为 YearMonth
 
     @Schema(description = "申请缓缴期限-共（月）")
     private Integer deferTotalMonth;

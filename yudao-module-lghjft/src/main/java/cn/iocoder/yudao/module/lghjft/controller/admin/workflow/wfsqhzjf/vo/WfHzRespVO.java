@@ -43,7 +43,7 @@ public class WfHzRespVO {
     @Schema(description = "联系电话", example = "13800138000")
     private String lxdh;
 
-    @Schema(description = "工会账户账号", example = "6222081234567890")
+    @Schema(description = "工会账户", example = "6222081234567890")
     private String ghzhzh;
 
     @Schema(description = "开户银行名称", example = "中国工商银行XX支行")

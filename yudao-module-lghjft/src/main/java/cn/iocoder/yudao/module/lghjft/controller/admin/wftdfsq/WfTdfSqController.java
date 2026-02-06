@@ -1,8 +1,10 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.wftdfsq;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.wftdfsq.vo.WfTdfSqRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.wftdfsq.vo.WfTdfSqSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.app.markerinfo.vo.MarkerInfoAppRespVO;
 import cn.iocoder.yudao.module.lghjft.service.wftdfsq.WfTdfSqService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,6 +28,7 @@ public class WfTdfSqController {
     @GetMapping("/get")
     @Operation(summary = "获取退还申请详情")
     public CommonResult<WfTdfSqRespVO> get(@RequestParam("id") Long id) {
+
         return success(wfTdfSqService.getDetail(id));
     }
 

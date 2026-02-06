@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.*;
 import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
+import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
 /**
  * 工会经费缓缴申请 DO
@@ -61,14 +62,16 @@ public class WfJfhjSqDO extends BaseDO {
      * 月拨缴金额（元）
      */
     private BigDecimal monthlyPayAmount;
+
+
     /**
      * 申请缓缴期限-自（年/月）
      */
-    private LocalDate deferStartDate;
+    private String deferStartDate;
     /**
      * 申请缓缴期限-至（年/月）
      */
-    private LocalDate deferEndDate;
+    private String deferEndDate;
     /**
      * 申请缓缴期限-共（月）
      */
@@ -133,6 +136,12 @@ public class WfJfhjSqDO extends BaseDO {
      * 流程实例ID（BPMN）
      */
     private String processInstanceId;
+
+    @TableField(exist = false)
+    private String creator;
+
+    @TableField(exist = false)
+    private Boolean deleted;
 
 
 }

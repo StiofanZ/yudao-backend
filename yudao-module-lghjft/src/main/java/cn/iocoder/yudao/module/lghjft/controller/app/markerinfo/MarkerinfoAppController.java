@@ -55,10 +55,8 @@ public class MarkerinfoAppController {
     public CommonResult<MarkerInfoAppRespVO> getMarkerInfo(@RequestParam("id") Long id) {
         // 1. 获取数据
         MarkerInfoDO markerInfo = markerInfoService.getMarkerInfo(id);
-
         // 2. 转换为 VO
         MarkerInfoAppRespVO vo = BeanUtils.toBean(markerInfo, MarkerInfoAppRespVO.class);
-
         // 3. 设置 gradeText（注意：markerInfo.getGrade() 返回的是 String）
         String grade = markerInfo.getGrade();
         String gradeText = getGradeText(grade);

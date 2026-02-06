@@ -17,10 +17,13 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 
 import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
+
+import java.time.YearMonth;
+
 import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.*;
 @Tag(name = "管理后台 - 工会经费缓缴申请")
 @RestController
-@RequestMapping("/lghjft/wf-jfhj-sq")
+@RequestMapping("/lghjft/workflow/wfjfhjsq")
 @Validated
 public class WfJfhjSqController {
 
@@ -42,7 +45,9 @@ public class WfJfhjSqController {
 //    @PreAuthorize("@ss.hasPermission('lghjft:wf-jfhj-sq:query')")
     public CommonResult<WfJfhjSqRespVO> getWfJfhjSq(@RequestParam("id") Long id) {
         WfJfhjSqDO wfJfhjSq = wfJfhjSqService.getWfJfhjSq(id);
-        return success(BeanUtils.toBean(wfJfhjSq, WfJfhjSqRespVO.class));
+        // 核心转换逻辑（最简写法，合并拷贝+赋值）
+        WfJfhjSqRespVO respVO = BeanUtils.toBean(wfJfhjSq, WfJfhjSqRespVO.class);
+        return success(respVO);
     }
 
 
