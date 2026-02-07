@@ -2,7 +2,6 @@ package cn.iocoder.yudao.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
 /**
  * 项目的启动类

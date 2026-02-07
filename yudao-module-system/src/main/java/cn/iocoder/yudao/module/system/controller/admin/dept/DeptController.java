@@ -12,12 +12,12 @@ import cn.iocoder.yudao.module.system.service.dept.DeptService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.annotation.Resource;
-import jakarta.validation.Valid;
 import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
@@ -88,14 +88,6 @@ public class DeptController {
     public CommonResult<DeptRespVO> getDept(@RequestParam("id") Long id) {
         DeptDO dept = deptService.getDept(id);
         return success(BeanUtils.toBean(dept, DeptRespVO.class));
-    }
-
-    @GetMapping("/getVO")
-    @Operation(summary = "获得部门信息VO")
-    @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('system:dept:query')")
-    public CommonResult<DeptRespVO> getDeptVO(@RequestParam("id") Long id) {
-        return success(deptService.getDeptVO(id));
     }
 
 }

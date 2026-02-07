@@ -34,8 +34,4 @@ public interface DeptMapper extends BaseMapperX<DeptDO> {
         return selectList(DeptDO::getLeaderUserId, id);
     }
 
-    default DeptDO selectDeptDOByParentId(Long parentId) {
-        return selectOne(DeptDO::getId, parentId);
-    }
-
 }
