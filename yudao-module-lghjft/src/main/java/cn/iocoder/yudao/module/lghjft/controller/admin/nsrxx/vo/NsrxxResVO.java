@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.nsrxx.vo;
 
+import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxResVO;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -9,7 +10,7 @@ import java.math.BigInteger;
 
 @Schema(description = "管理后台 - 纳税人信息 Response VO")
 @Data
-public class NsrxxRespVO {
+public class NsrxxResVO {
 
     @Schema(description = "纳税人识别号", requiredMode = Schema.RequiredMode.REQUIRED, example = "91110108551385082Q")
     private String nsrsbh;
@@ -32,4 +33,22 @@ public class NsrxxRespVO {
 
     @Schema(description = "联系电话", example = "010-12345678")
     private String lxdh;
+
+    @Schema(description = "法定代表人姓名", example = "张三")
+    private String fddbrxm;
+
+    @Schema(description = "法定代表人移动电话", example = "13800000000")
+    private String fddbryddh;
+
+    @Schema(description = "财务负责人姓名", example = "李四")
+    private String cwfzrxm;
+
+    @Schema(description = "财务负责人移动电话", example = "13900000000")
+    private String cwfzryddh;
+
+    @Schema(description = "已存在的身份信息")
+    private SfxxResVO sfxx;
+
+    @Schema(description = "部门编号")
+    private Long deptId;
 }

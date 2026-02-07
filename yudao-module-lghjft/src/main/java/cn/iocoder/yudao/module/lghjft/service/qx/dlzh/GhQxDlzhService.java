@@ -1,7 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.service.qx.dlzh;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dlzh.vo.DlzhPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dlzh.vo.DlzhReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dlzh.vo.DlzhResetPasswordReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dlzh.vo.DlzhSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.dlzh.GhQxDlzhDO;
@@ -23,7 +23,8 @@ public interface GhQxDlzhService {
 
     GhQxDlzhDO getDlzh(Long id);
 
-    PageResult<GhQxDlzhDO> getDlzhPage(DlzhPageReqVO pageReqVO);
+    PageResult<GhQxDlzhDO> getDlzhPage(DlzhReqVO pageReqVO);
+
+    List<GhQxDlzhDO> getDlzhList(java.util.Collection<Long> ids);
 
 }
-

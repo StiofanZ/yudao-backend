@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 身份信息 Response VO")
 @Data
-public class SfxxRespVO {
+public class SfxxResVO {
 
     @Schema(description = "ID", example = "1024")
     private Long id;
@@ -15,20 +15,29 @@ public class SfxxRespVO {
     @Schema(description = "登录账号ID", example = "1024")
     private Long dlzhId;
 
+    @Schema(description = "登录账号（显示用）")
+    private String dlzh;
+
     @Schema(description = "登记序号")
     private String djxh;
 
-    @Schema(description = "身份类型（01-08）", example = "01")
+    @Schema(description = "社会信用代码（显示用）")
+    private String shxydm;
+
+    @Schema(description = "身份类型（01:法定代表人,02:财务负责人）", example = "01")
     private String sflx;
+
+    @Schema(description = "工会类型（01-08）", example = "01")
+    private String ghlx;
 
     @Schema(description = "权限类型（01:管理员,02:一般人）", example = "01")
     private String qxlx;
 
     @Schema(description = "授权原因", example = "0")
-    private Integer sqyy;
+    private String sqyy;
 
     @Schema(description = "解绑原因", example = "0")
-    private Integer jbyy;
+    private String jbyy;
 
     @Schema(description = "部门编号", example = "100")
     private Long deptId;

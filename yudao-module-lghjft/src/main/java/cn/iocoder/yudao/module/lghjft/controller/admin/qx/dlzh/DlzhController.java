@@ -3,9 +3,9 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.qx.dlzh;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dlzh.vo.DlzhPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dlzh.vo.DlzhReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dlzh.vo.DlzhResetPasswordReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dlzh.vo.DlzhRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dlzh.vo.DlzhResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dlzh.vo.DlzhSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.dlzh.GhQxDlzhDO;
 import cn.iocoder.yudao.module.lghjft.service.qx.dlzh.GhQxDlzhService;
@@ -76,18 +76,17 @@ public class DlzhController {
     @Operation(summary = "获得登录账号")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:qx-dlzh:query')")
-    public CommonResult<DlzhRespVO> getDlzh(@RequestParam("id") Long id) {
+    public CommonResult<DlzhResVO> getDlzh(@RequestParam("id") Long id) {
         GhQxDlzhDO dlzh = ghQxDlzhService.getDlzh(id);
-        return success(BeanUtils.toBean(dlzh, DlzhRespVO.class));
+        return success(BeanUtils.toBean(dlzh, DlzhResVO.class));
     }
 
     @GetMapping("/page")
     @Operation(summary = "获得登录账号分页")
     @PreAuthorize("@ss.hasPermission('lghjft:qx-dlzh:query')")
-    public CommonResult<PageResult<DlzhRespVO>> getDlzhPage(@Valid DlzhPageReqVO pageReqVO) {
+    public CommonResult<PageResult<DlzhResVO>> getDlzhPage(@Valid DlzhReqVO pageReqVO) {
         PageResult<GhQxDlzhDO> pageResult = ghQxDlzhService.getDlzhPage(pageReqVO);
-        return success(BeanUtils.toBean(pageResult, DlzhRespVO.class));
+        return success(BeanUtils.toBean(pageResult, DlzhResVO.class));
     }
 
 }
-

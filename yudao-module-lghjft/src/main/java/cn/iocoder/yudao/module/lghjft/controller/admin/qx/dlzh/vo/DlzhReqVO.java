@@ -11,7 +11,7 @@ import static cn.iocoder.yudao.framework.common.util.date.DateUtils.FORMAT_YEAR_
 
 @Schema(description = "管理后台 - 登录账号分页 Request VO")
 @Data
-public class DlzhPageReqVO extends PageParam {
+public class DlzhReqVO extends PageParam {
 
     @Schema(description = "用户账号", example = "zhangsan")
     private String yhzh;

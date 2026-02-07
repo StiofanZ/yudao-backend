@@ -2,13 +2,16 @@ package cn.iocoder.yudao.module.lghjft.service.qx.dlzh;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dlzh.vo.DlzhPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dlzh.vo.DlzhReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dlzh.vo.DlzhResetPasswordReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dlzh.vo.DlzhSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.dlzh.GhQxDlzhDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.dlzh.GhQxDlzhMapper;
+import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
+import cn.iocoder.yudao.module.system.service.user.AdminUserServiceImpl;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -27,6 +30,8 @@ public class GhQxDlzhServiceImpl implements GhQxDlzhService {
     private GhQxDlzhMapper ghQxDlzhMapper;
     @Resource
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private AdminUserServiceImpl adminUserService;
 
     @Override
     public Long createDlzh(DlzhSaveReqVO createReqVO) {
@@ -82,8 +87,13 @@ public class GhQxDlzhServiceImpl implements GhQxDlzhService {
     }
 
     @Override
-    public PageResult<GhQxDlzhDO> getDlzhPage(DlzhPageReqVO pageReqVO) {
+    public PageResult<GhQxDlzhDO> getDlzhPage(DlzhReqVO pageReqVO) {
         return ghQxDlzhMapper.selectPage(pageReqVO);
+    }
+
+    @Override
+    public List<GhQxDlzhDO> getDlzhList(java.util.Collection<Long> ids) {
+        return ghQxDlzhMapper.selectBatchIds(ids);
     }
 
     private void validateDlzhExists(Long id) {
@@ -96,6 +106,10 @@ public class GhQxDlzhServiceImpl implements GhQxDlzhService {
         if (StringUtils.isNotBlank(reqVO.getYhzh())) {
             GhQxDlzhDO exist = ghQxDlzhMapper.selectByYhzh(reqVO.getYhzh());
             if (exist != null && !Objects.equals(exist.getId(), id)) {
+                throw exception(DLZH_YHZH_EXISTS);
+            }
+            AdminUserDO userDO = adminUserService.getUserByUsername(reqVO.getYhzh());
+            if(userDO!=null){
                 throw exception(DLZH_YHZH_EXISTS);
             }
         }
@@ -120,4 +134,3 @@ public class GhQxDlzhServiceImpl implements GhQxDlzhService {
     }
 
 }
-

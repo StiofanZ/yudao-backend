@@ -22,10 +22,14 @@ public class SfxxSaveReqVO {
     @Length(max = 20, message = "登记序号长度不能超过20个字符")
     private String djxh;
 
-    @Schema(description = "身份类型（01-08）", requiredMode = Schema.RequiredMode.REQUIRED, example = "01")
+    @Schema(description = "身份类型（01:法定代表人,02:财务负责人）", requiredMode = Schema.RequiredMode.REQUIRED, example = "01")
     @NotEmpty(message = "身份类型不能为空")
     @Length(max = 2, message = "身份类型长度不能超过2个字符")
     private String sflx;
+
+    @Schema(description = "工会类型（01-08）", example = "01")
+    @Length(max = 2, message = "工会类型长度不能超过2个字符")
+    private String ghlx;
 
     @Schema(description = "权限类型（01:管理员,02:一般人）", requiredMode = Schema.RequiredMode.REQUIRED, example = "01")
     @NotEmpty(message = "权限类型不能为空")
@@ -33,12 +37,15 @@ public class SfxxSaveReqVO {
     private String qxlx;
 
     @Schema(description = "授权原因", example = "0")
-    private Integer sqyy;
+    private String sqyy;
 
     @Schema(description = "解绑原因", example = "0")
-    private Integer jbyy;
+    private String jbyy;
 
     @Schema(description = "部门编号", example = "100")
     private Long deptId;
+
+    @Schema(description = "状态 0:待审核 1:已审核", example = "0")
+    private Integer status;
 
 }

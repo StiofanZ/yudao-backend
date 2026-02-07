@@ -14,7 +14,7 @@ public class SfxxPageReqVO extends PageParam {
     @Schema(description = "登记序号")
     private String djxh;
 
-    @Schema(description = "身份类型（01-02）", example = "01")
+    @Schema(description = "身份类型（01:法定代表人,02:财务负责人）", example = "01")
     private String sflx;
 
     @Schema(description = "工会类型（01-08）", example = "01")

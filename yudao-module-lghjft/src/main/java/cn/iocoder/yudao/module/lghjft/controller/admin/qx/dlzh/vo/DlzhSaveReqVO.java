@@ -12,8 +12,7 @@ public class DlzhSaveReqVO {
     @Schema(description = "ID", example = "1024")
     private Long id;
 
-    @Schema(description = "用户账号", requiredMode = Schema.RequiredMode.REQUIRED, example = "zhangsan")
-    @NotEmpty(message = "用户账号不能为空")
+    @Schema(description = "用户账号", example = "zhangsan")
     @Length(max = 30, message = "用户账号长度不能超过30个字符")
     private String yhzh;
 

@@ -41,8 +41,10 @@ public class AuthorizeResVO {
     private LocalDateTime expiresTime;
     @Schema(description = "登录账号，登录验证成功时所使用的账号信息", requiredMode = Schema.RequiredMode.REQUIRED)
     private String dlzh;
-    @Schema(description = "登录类型", requiredMode = Schema.RequiredMode.REQUIRED)
-    private Integer loginType;
+    @Schema(description = "登录方式", requiredMode = Schema.RequiredMode.REQUIRED)
+    private Integer dlfs;
+    @Schema(description = "用户类型", requiredMode = Schema.RequiredMode.REQUIRED)
+    private Integer yhlx;
     @Schema(description = "权限部门编号")
     private Long qxbmId;
     @Schema(description = "权限部门名称")

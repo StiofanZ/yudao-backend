@@ -25,6 +25,8 @@ public class AuthorizeReqVO {
     private String yhyx;
     @Schema(description = "社会信用代码", example = "91320114MA1X7L7X7G")
     private String shxydm;
-    @Schema(description = "登录类型", example = "91320114MA1X7L7X7G")
-    private LoginTypeEnum loginType;
+    @Schema(description = "登录方式", example = "100")
+    private Integer dlfs;
+    @Schema(description = "用户类型",example = "1")
+    private Integer yhlx;
 }

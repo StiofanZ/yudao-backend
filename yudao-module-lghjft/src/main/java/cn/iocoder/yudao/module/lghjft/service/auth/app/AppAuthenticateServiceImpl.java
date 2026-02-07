@@ -19,7 +19,8 @@ import cn.iocoder.yudao.module.lghjft.dal.mysql.auth.DwQxSfMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.auth.GhCsSsoMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.dlzh.GhQxDlzhMapper;
 import cn.iocoder.yudao.module.lghjft.framework.auth.config.LghJftAppAuthProperties;
-import cn.iocoder.yudao.module.lghjft.service.auth.LghOAuth2TokenService;
+import cn.iocoder.yudao.module.lghjft.service.auth.AuthenticateService;
+import cn.iocoder.yudao.module.lghjft.service.auth.AuthenticateServiceImpl;
 import cn.iocoder.yudao.module.system.api.logger.dto.LoginLogCreateReqDTO;
 import cn.iocoder.yudao.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
@@ -57,9 +58,9 @@ public class AppAuthenticateServiceImpl implements  AppAuthenticateService{
     @Resource
     private AdminUserService userService;
     @Resource
-    private LghOAuth2TokenService lghOAuth2TokenService;
-    @Resource
     private LoginLogService loginLogService;
+    @Resource
+    private AuthenticateService authenticateService;
 
     @Override
     public AuthorizeResVO appLoginAuthCode(AuthorizeLghReqVO reqVO) {
@@ -175,7 +176,7 @@ public class AppAuthenticateServiceImpl implements  AppAuthenticateService{
         // 插入登陆日志
         createLoginLog(resVO.getUserId(), loginUsername, logType, LoginResultEnum.SUCCESS);
         // 创建访问令牌
-        OAuth2AccessTokenDO accessTokenDO = lghOAuth2TokenService.createAccessToken(resVO, getUserType().getValue(),
+        OAuth2AccessTokenDO accessTokenDO = authenticateService.createAccessToken(resVO, getUserType().getValue(),
                 OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);
         // 构建返回结果
         BeanUtils.copyProperties(accessTokenDO, resVO);

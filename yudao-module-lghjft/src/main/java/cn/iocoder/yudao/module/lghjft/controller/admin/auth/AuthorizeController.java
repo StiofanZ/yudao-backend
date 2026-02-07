@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.auth;
 
+import cn.iocoder.yudao.framework.common.enums.UserTypeEnum;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeLghReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeReqVO;
@@ -34,10 +35,11 @@ public class AuthorizeController {
     @Resource
     private OAuth2TokenService oauth2TokenService;
 
-    @PostMapping("/lghjft/login")
+    @PostMapping("/login")
     @PermitAll
     @Operation(summary = "授权登录")
     public CommonResult<AuthorizeResVO> login(@RequestBody @Valid AuthorizeReqVO reqVO) {
+        reqVO.setYhlx(UserTypeEnum.ADMIN.getValue());
         return success(authenticateService.login(reqVO));
     }
 

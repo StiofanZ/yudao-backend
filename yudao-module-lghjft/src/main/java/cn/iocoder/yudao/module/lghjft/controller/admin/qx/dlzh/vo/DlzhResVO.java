@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 登录账号 Response VO")
 @Data
-public class DlzhRespVO {
+public class DlzhResVO {
 
     @Schema(description = "ID", example = "1024")
     private Long id;

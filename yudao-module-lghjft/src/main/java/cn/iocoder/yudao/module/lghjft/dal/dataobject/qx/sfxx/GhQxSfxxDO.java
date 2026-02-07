@@ -24,13 +24,13 @@ public class GhQxSfxxDO extends BaseDO {
 
     private String sflx;
 
-    private String qhlx;
+    private String ghlx;
 
     private String qxlx;
 
-    private Integer sqyy;
+    private String sqyy;
 
-    private Integer jbyy;
+    private String jbyy;
 
     private Long deptId;
 

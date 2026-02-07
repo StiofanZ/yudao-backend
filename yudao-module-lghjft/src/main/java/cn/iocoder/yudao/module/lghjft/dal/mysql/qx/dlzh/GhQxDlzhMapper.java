@@ -3,14 +3,14 @@ package cn.iocoder.yudao.module.lghjft.dal.mysql.qx.dlzh;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
-import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dlzh.vo.DlzhPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dlzh.vo.DlzhReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.dlzh.GhQxDlzhDO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface GhQxDlzhMapper extends BaseMapperX<GhQxDlzhDO> {
 
-    default PageResult<GhQxDlzhDO> selectPage(DlzhPageReqVO reqVO) {
+    default PageResult<GhQxDlzhDO> selectPage(DlzhReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<GhQxDlzhDO>()
                 .likeIfPresent(GhQxDlzhDO::getYhzh, reqVO.getYhzh())
                 .likeIfPresent(GhQxDlzhDO::getYhxm, reqVO.getYhxm())

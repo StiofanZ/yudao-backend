@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.controller.app.auth.vo;
 
+import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeReqVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;

@@ -26,21 +26,13 @@ public interface AuthenticateService {
     AuthorizeResVO login(@Valid AuthorizeReqVO reqVO);
 
     /**
-     * 为陇工会用户创建访问令牌
-     *
-     * @param user     陇工会用户
-     * @param userType 用户类型
-     * @param clientId 客户端编号
-     * @param scopes   授权范围
-     * @return 访问令牌的信息
-     */
-    OAuth2AccessTokenDO createAccessToken(AuthorizeResVO user, Integer userType, String clientId, List<String> scopes);
-
-    /**
      * 获取单位权限身份列表
      *
      * @param dlzh 登录账号
      * @return 单位权限身份列表
      */
-    List<AuthorizeResVO.DwQxSf> getDwQxSfList(String dlzh);
+    List<AuthorizeResVO.DwQxSf> getDwQxSfList(Long dlzh);
+
+    OAuth2AccessTokenDO createAccessToken(AuthorizeResVO resVO, Integer userType, String clientId, List<String> scopes);
+
 }
