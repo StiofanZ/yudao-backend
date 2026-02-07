@@ -32,8 +32,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
-import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertSet;
 import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertMap;
+import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertSet;
 
 @Tag(name = "管理后台 - 身份信息")
 @RestController
@@ -170,6 +170,14 @@ public class SfxxController {
     @PreAuthorize("@ss.hasPermission('lghjft:qx-sfxx:audit')")
     public CommonResult<Boolean> auditSfxx(@RequestParam("id") Long id, @RequestParam("status") Integer status) {
         ghQxSfxxService.auditSfxx(id, status);
+        return success(true);
+    }
+
+    @PutMapping("/unbind")
+    @Operation(summary = "解绑身份信息")
+    @PreAuthorize("@ss.hasPermission('lghjft:qx-sfxx:audit')")
+    public CommonResult<Boolean> unbindSfxx(@RequestParam("id") Long id, @RequestParam("jbyy") String jbyy) {
+        ghQxSfxxService.unbindSfxx(id, jbyy);
         return success(true);
     }
 

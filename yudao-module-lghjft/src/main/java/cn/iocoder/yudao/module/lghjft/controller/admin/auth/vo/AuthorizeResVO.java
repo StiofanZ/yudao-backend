@@ -88,5 +88,7 @@ public class AuthorizeResVO {
         private String ghhh;
         @Schema(description = "工会银行", requiredMode = Schema.RequiredMode.REQUIRED)
         private String ghyh;
+        @Schema(description = "身份信息ID", requiredMode = Schema.RequiredMode.REQUIRED)
+        private Long sfxxId;
     }
 }

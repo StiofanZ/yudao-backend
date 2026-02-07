@@ -50,7 +50,6 @@ import cn.iocoder.yudao.module.system.service.user.AdminUserServiceImpl;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -293,6 +292,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
                     DeptDO sjDeptDO = deptMapper.selectById(deptDO.getParentId());
                     dwQxSf.setSjZgghId(sjDeptDO.getId());
                     dwQxSf.setSjZgghMc(sjDeptDO.getName());
+                    dwQxSf.setSfxxId(sfxx.getId());
                     return dwQxSf;
                 }).toList();
     }

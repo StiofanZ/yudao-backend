@@ -73,6 +73,18 @@ public class GhQxSfxxServiceImpl implements GhQxSfxxService {
         ghQxSfxxMapper.updateById(updateObj);
     }
 
+    @Override
+    public void unbindSfxx(Long id, String jbyy) {
+        validateSfxxExists(id);
+        // 更新解绑原因
+        GhQxSfxxDO updateObj = new GhQxSfxxDO();
+        updateObj.setId(id);
+        updateObj.setJbyy(jbyy);
+        ghQxSfxxMapper.updateById(updateObj);
+        // 逻辑删除
+        ghQxSfxxMapper.deleteById(id);
+    }
+
     private void validateSfxxExists(Long id) {
         if (id == null || ghQxSfxxMapper.selectById(id) == null) {
             throw exception(SFXX_NOT_EXISTS);

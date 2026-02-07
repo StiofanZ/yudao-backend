@@ -23,4 +23,6 @@ public interface GhQxSfxxService {
 
     void auditSfxx(Long id, Integer status);
 
+    void unbindSfxx(Long id, String jbyy);
+
 }
