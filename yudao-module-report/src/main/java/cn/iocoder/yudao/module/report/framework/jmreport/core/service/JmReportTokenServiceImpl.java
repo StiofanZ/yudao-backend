@@ -52,7 +52,8 @@ public class JmReportTokenServiceImpl implements JmReportTokenServiceI {
     public HttpHeaders customApiHeader() {
         // 读取积木标标系统的 token
         HttpServletRequest request = ServletUtils.getRequest();
-        String token = request.getParameter("token");
+        String token = request.getHeader(JM_TOKEN_HEADER);
+
         // 设置到 yudao 系统的 token
         HttpHeaders headers = new HttpHeaders();
         headers.add(securityProperties.getTokenHeader(), String.format(AUTHORIZATION_FORMAT, token));
@@ -158,6 +159,31 @@ public class JmReportTokenServiceImpl implements JmReportTokenServiceI {
 
     @Override
     public String[] getPermissions(String token) {
-        return new String[]{"drag:datasource:testConnection", "onl:drag:clear:recovery", "drag:analysis:sql", "drag:design:getTotalData", "onl:drag:page:delete", "drag:dataset:save"};
+        // 设置租户上下文
+        LoginUser loginUser = SecurityFrameworkUtils.getLoginUser();
+        if (loginUser == null) {
+            return null;
+        }
+        TenantContextHolder.setTenantId(loginUser.getTenantId());
+
+        // 参见文档 https://help.jimureport.com/prodSafe/ 文档
+        // 适配：如果是本系统的管理员，则返回积木报表（仪表盘/大屏设计器）的所有权限指令
+        // 如果不处理，会碰到 https://t.zsxq.com/yzlkA 反馈的问题
+        Long userId = SecurityFrameworkUtils.getLoginUserId();
+        if (permissionApi.hasAnyRoles(userId, RoleCodeEnum.SUPER_ADMIN.getCode())) {
+            return new String[]{
+                    "drag:datasource:testConnection",  // 数据库连接测试
+                    "drag:datasource:saveOrUpate",     // 数据源保存
+                    "drag:datasource:delete",          // 数据源删除
+                    "drag:analysis:sql",               // SQL解析
+                    "drag:design:getTotalData",        // 展示Online表单数据
+                    "drag:dataset:save",               // 数据集保存
+                    "drag:dataset:delete",             // 数据集删除
+                    "onl:drag:clear:recovery",         // 清空回收站
+                    "onl:drag:page:delete"             // 数据删除
+            };
+        }
+        return null;
     }
+
 }
