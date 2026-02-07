@@ -69,7 +69,7 @@ spring:
           username: lghjft
           password: Lghjft@2026
 #        tdengine: # IoT 数据库（需要 IoT 物联网再开启噢！）
-#          url: jdbc:TAOS-WS://127.0.0.1:6041/ruoyi_vue_pro
+#          url: jdbc:TAOS-WS://127.0.0.1:6041/ruoyi_vue_pro?varcharAsString=true
 #          driver-class-name: com.taosdata.jdbc.ws.WebSocketDriver
 #          username: root
 #          password: taosdata
