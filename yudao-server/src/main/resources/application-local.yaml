@@ -75,6 +75,13 @@ spring:
 #          password: taosdata
 #          druid:
 #            validation-query: SELECT SERVER_STATUS() # TDengine 数据源的有效性检查 SQL
+#
+#    iot:
+#      mqtt:
+#        password:
+#        port: 1883
+#        host: 127.0.0.1
+#        username:
 
   # Redis 配置。Redisson 默认的配置足够使用，一般不需要进行调优
   data:
