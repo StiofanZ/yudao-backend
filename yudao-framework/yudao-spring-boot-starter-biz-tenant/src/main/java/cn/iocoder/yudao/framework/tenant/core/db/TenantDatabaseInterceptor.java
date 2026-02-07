@@ -1,7 +1,6 @@
 package cn.iocoder.yudao.framework.tenant.core.db;
 
 import cn.iocoder.yudao.framework.tenant.config.TenantProperties;
-import cn.iocoder.yudao.framework.tenant.core.aop.TenantIgnore;
 import cn.iocoder.yudao.framework.tenant.core.context.TenantContextHolder;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
@@ -72,12 +71,10 @@ public class TenantDatabaseInterceptor implements TenantLineHandler {
             return true;
         }
         // 如果继承了 TenantBaseDO 基类，显然不忽略租户
-        if (TenantBaseDO.class.isAssignableFrom(tableInfo.getEntityType())) {
-            return false;
-        }
+        return !TenantBaseDO.class.isAssignableFrom(tableInfo.getEntityType());
         // 如果添加了 @TenantIgnore 注解，则忽略租户
-        TenantIgnore tenantIgnore = tableInfo.getEntityType().getAnnotation(TenantIgnore.class);
-        return tenantIgnore != null;
+        // TenantIgnore tenantIgnore = tableInfo.getEntityType().getAnnotation(TenantIgnore.class);
+        // return tenantIgnore != null;
     }
 
 }
