@@ -44,9 +44,6 @@ public  class WfTdfSqServiceImpl implements WfTdfSqService {
         // ========== 新增：打印用户ID完整链路 ==========
         // 1. 打印工具类获取的原始用户ID（未转换）
         Long rawLoginUserId = WebFrameworkUtils.getLoginUserId();
-        System.out.println("1. WebFrameworkUtils.getLoginUserId() 原始返回值：" + rawLoginUserId);
-        System.out.println("2. 原始值类型：" + (rawLoginUserId == null ? "null" : rawLoginUserId.getClass().getName()));
-
         // 2. 转换为字符串后的结果
         String creatorStr = String.valueOf(rawLoginUserId);
         // 1. 查询主表

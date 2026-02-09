@@ -78,19 +78,18 @@ public class WfJfhjSqSaveReqVO {
     private String situationDesc;
 
     @Schema(description = "缴费单位-单位负责人", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotEmpty(message = "缴费单位负责人不能为空")
+//    @NotEmpty(message = "缴费单位负责人不能为空")
     private String unitLeader;
 
     @Schema(description = "缴费单位-经办", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotEmpty(message = "缴费单位经办人不能为空")
+//    @NotEmpty(message = "缴费单位经办人不能为空")
     private String handler;
 
     @Schema(description = "缴费单位-日期", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotNull(message = "缴费单位填报日期不能为空") // 日期类型用@NotNull
     private LocalDate applyDate;
 
     @Schema(description = "基层工会意见（章）", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotEmpty(message = "基层工会意见不能为空")
+//    @NotEmpty(message = "基层工会意见不能为空")
     private String grassrootsOpinion;
 
     @Schema(description = "基层工会-工会负责人", requiredMode = Schema.RequiredMode.REQUIRED)
@@ -98,11 +97,11 @@ public class WfJfhjSqSaveReqVO {
     private String grassrootsLeader;
 
     @Schema(description = "基层工会-经办", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotEmpty(message = "基层工会经办不能为空")
+//    @NotEmpty(message = "基层工会经办不能为空")
     private String grassrootsHandler;
 
     @Schema(description = "基层工会-盖章日期（年/月/日）", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotNull(message = "基层工会盖章日期不能为空")
+//    @NotNull(message = "基层工会盖章日期不能为空")
     private LocalDate grassrootsApproveTime;
 
     @Schema(description = "主管工会审核意见", requiredMode = Schema.RequiredMode.REQUIRED)
@@ -110,7 +109,7 @@ public class WfJfhjSqSaveReqVO {
     private String managerOpinion;
 
     @Schema(description = "主管工会-工会负责人", example = "李四", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotEmpty(message = "主管工会负责人不能为空")
+//    @NotEmpty(message = "主管工会负责人不能为空")
     private String managerLeaderName;
 
     @Schema(description = "主管工会-经办人", example = "芋艿", requiredMode = Schema.RequiredMode.REQUIRED)
@@ -118,7 +117,7 @@ public class WfJfhjSqSaveReqVO {
     private String managerHandlerName;
 
     @Schema(description = "主管工会-日期", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotNull(message = "主管工会审核日期不能为空")
+//    @NotNull(message = "主管工会审核日期不能为空")
     private LocalDate managerApproveTime;
 
     @Schema(description = "主管工会-财务负责人", requiredMode = Schema.RequiredMode.REQUIRED)

@@ -35,17 +35,25 @@ public class UnionAuditListener implements TaskListener {
                     new LambdaQueryWrapper<WfHzDO>()
                             .eq(WfHzDO::getProcessInstanceId, processId)
             );
+
             if (data == null) return;
+            if("Activity_10gibem".equals(taskKey)){
+
+            }
+            if("Activity_18chyfc".equals(taskKey)){
+                String handlerName = (String) localVars.get("manager_handler_name");
+                String ContactPhone = (String) localVars.get("manager_phone");
+                System.out.println(handlerName);
+                System.out.println(ContactPhone);
+                data.setZgghsjbr(handlerName);//审批经办人
+                data.setZgghsjbrdh(ContactPhone);//审批经办人手机号
+            }
             // 3. 主管审批节点取值
             if ("Activity_09jy0vr".equals(taskKey)) {
                 String opinion = (String) localVars.get("manager_opinion");
                 String leaderName = (String) localVars.get("manager_leader_name");
-                String handlerName = (String) localVars.get("manager_handler_name");
-                String ContactPhone = (String) localVars.get("manager_phone");
                 data.setZgghsjy(opinion);//审批意见
                 data.setZgghsfzr(leaderName);//审批负责人
-                data.setZgghsjbr(handlerName);//审批经办人
-                data.setZgghsjbrdh(ContactPhone);//审批经办人手机号
                 data.setZgghsrq(LocalDate.now());//审批时间
             }
             // 4. 省总审批节点取值

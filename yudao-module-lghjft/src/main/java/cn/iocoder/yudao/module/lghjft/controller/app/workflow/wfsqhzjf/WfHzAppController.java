@@ -23,7 +23,7 @@ import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUti
 @RestController
 @RequestMapping("/lghjft/wf-hz")
 @Validated
-public class WfHzAppontroller { // 注意类名拼写，你之前可能是 WfHzAppontroller
+public class WfHzAppController { // 注意类名拼写，你之前可能是 WfHzAppontroller
 
     @Resource
     private WfHzService wfHzService;
