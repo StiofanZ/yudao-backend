@@ -3,6 +3,8 @@ package cn.iocoder.yudao.module.lghjft.service.workflow.wfsqhzjs;
 import cn.hutool.core.collection.CollUtil;
 //import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqhzjf.vo.WfHzPageReqVO;
 import cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils;
 import cn.iocoder.yudao.module.bpm.api.task.BpmProcessInstanceApi;
 import cn.iocoder.yudao.module.bpm.api.task.dto.BpmProcessInstanceCreateReqDTO;
@@ -10,6 +12,7 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqhzjf.vo.WfHz
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqhzjf.vo.WfHzSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqhzjf.vo.WfHzmxRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfsqhzjf.vo.WfHzmxSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.app.workflow.wfsqhzjf.vo.WfHzAppPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.wfsqhzjf.WfHzDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.wfsqhzjf.WfHzmxDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.workflow.wfsqhzjf.WfHzMapper;
@@ -122,6 +125,13 @@ public class WfHzServiceImpl implements WfHzService {
         respVO.setDetailList(mxVOList);
 
         return respVO;
+    }
+
+    @Override
+    public PageResult<WfHzDO> getSelfPage(Long userId, WfHzAppPageReqVO pageReqVO) {
+        return wfHzMapper.selectPage(pageReqVO, new LambdaQueryWrapperX<WfHzDO>()
+                .eq(WfHzDO::getCreator, userId) //  核心：强制只查当前用户创建的数据
+                .orderByDesc(WfHzDO::getId)); // 按创建时间倒序
     }
 
 }

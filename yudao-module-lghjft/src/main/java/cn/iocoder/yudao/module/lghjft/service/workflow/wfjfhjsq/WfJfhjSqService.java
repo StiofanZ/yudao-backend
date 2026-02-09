@@ -2,6 +2,8 @@ package cn.iocoder.yudao.module.lghjft.service.workflow.wfjfhjsq;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfjfhjsq.vo.WfJfhjSqSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.wfjfhjsq.WfJfhjSqDO;
 import jakarta.validation.*;
+import cn.iocoder.yudao.module.lghjft.controller.app.workflow.wfjfhjsq.vo.WfjfhjsqAppPageReqVO;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 
 /**
  * 工会经费缓缴申请 Service 接口
@@ -22,6 +24,8 @@ public interface WfJfhjSqService {
 
 
     WfJfhjSqDO getWfJfhjSq(Long id);
+
+    PageResult<WfJfhjSqDO> getSelfPage(Long userId, WfjfhjsqAppPageReqVO pageReqVO);
 
 
 }

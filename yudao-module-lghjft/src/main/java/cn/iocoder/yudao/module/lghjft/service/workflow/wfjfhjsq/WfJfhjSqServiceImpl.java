@@ -6,6 +6,7 @@ import cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils;
 import cn.iocoder.yudao.module.bpm.api.task.BpmProcessInstanceApi;
 import cn.iocoder.yudao.module.bpm.api.task.dto.BpmProcessInstanceCreateReqDTO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfjfhjsq.vo.WfJfhjSqSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.app.workflow.wfjfhjsq.vo.WfjfhjsqAppPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.wfjfhjsq.WfJfhjSqDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.workflow.wfjfhjsq.WfJfhjSqMapper;
 import cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants;
@@ -14,6 +15,7 @@ import jakarta.annotation.Resource;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
+import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -73,6 +75,14 @@ public class WfJfhjSqServiceImpl implements WfJfhjSqService {
             throw ServiceExceptionUtil.exception(ErrorCodeConstants.WF_JFHJ_SQ_NOT_EXISTS);
         }
         return wfJfhjSq;
+    }
+
+    @Override
+    public PageResult<WfJfhjSqDO> getSelfPage(Long userId, WfjfhjsqAppPageReqVO pageReqVO) {
+
+        return wfJfhjSqMapper.selectPage(pageReqVO, new LambdaQueryWrapperX<WfJfhjSqDO>()
+                .eq(WfJfhjSqDO::getCreator, userId)
+                .orderByDesc(WfJfhjSqDO::getId));
     }
 
 }

@@ -15,6 +15,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
+import cn.iocoder.yudao.module.lghjft.controller.app.workflow.wfjfhjsq.vo.WfjfhjsqAppPageReqVO;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 @Tag(name = "app - 工会经费缓缴申请")
 @RestController
@@ -45,5 +48,17 @@ public class WfJfhjSqAppController {
         return success(respVO);
     }
 
+    @GetMapping("/page")
+    @Operation(summary = "获得经费缓缴申请分页（我的）")
+    public CommonResult<PageResult<WfJfhjSqRespVO>> getWfjfhjsqPage(@Valid WfjfhjsqAppPageReqVO pageReqVO) {
+        // 1. 获取当前登录用户 ID
+        Long loginUserId = getLoginUserId();
+
+        // 2. 调用 Service (注意返回值类型匹配接口定义的 WfJfhjSqDO)
+        PageResult<WfJfhjSqDO> pageResult = wfJfhjSqService.getSelfPage(loginUserId, pageReqVO);
+
+        // 3. 转换并返回 (注意 RespVO 的大写拼写)
+        return success(BeanUtils.toBean(pageResult, WfJfhjSqRespVO.class));
+    }
 
 }

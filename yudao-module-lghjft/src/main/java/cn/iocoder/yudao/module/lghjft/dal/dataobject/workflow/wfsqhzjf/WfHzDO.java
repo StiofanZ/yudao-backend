@@ -143,8 +143,7 @@ public class WfHzDO extends BaseDO {
     private String processInstanceId;
 
 
-    @TableField(exist = false)
-    private String creator;
+
 
     @TableField(exist = false)
     private Boolean deleted;

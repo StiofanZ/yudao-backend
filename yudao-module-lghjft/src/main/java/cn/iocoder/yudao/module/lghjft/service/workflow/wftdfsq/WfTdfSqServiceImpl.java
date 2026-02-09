@@ -1,14 +1,17 @@
 package cn.iocoder.yudao.module.lghjft.service.workflow.wftdfsq;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
+import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils;
 import cn.iocoder.yudao.module.bpm.api.task.BpmProcessInstanceApi;
 import cn.iocoder.yudao.module.bpm.api.task.dto.BpmProcessInstanceCreateReqDTO;
 //import cn.iocoder.yudao.module.lghjft.controller.admin.wftdfsq.vo.WfTdfSqApproveReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wftdfsq.vo.WfTdfSqRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wftdfsq.vo.WfTdfSqSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.app.workflow.wftdfsq.vo.WfTdfSqAppPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.wftdfsq.WfTdfSqAttachmentDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.wftdfsq.WfTdfSqDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.workflow.wftdfsq.WfTdfSqAttachmentMapper;
@@ -118,5 +121,11 @@ public  class WfTdfSqServiceImpl implements WfTdfSqService {
                 .setProcessInstanceId(processInstanceId));
 
         return main.getId();
+    }
+    @Override
+    public PageResult<WfTdfSqDO> getSelfPage(Long userId, WfTdfSqAppPageReqVO pageReqVO) {
+        return wfTdfSqMapper.selectPage(pageReqVO, new LambdaQueryWrapperX<WfTdfSqDO>()
+                .eq(WfTdfSqDO::getCreator, userId)
+                .orderByDesc(WfTdfSqDO::getId));
     }
 }
