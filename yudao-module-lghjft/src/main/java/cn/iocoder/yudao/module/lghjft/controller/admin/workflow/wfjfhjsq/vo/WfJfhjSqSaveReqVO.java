@@ -25,11 +25,11 @@ public class WfJfhjSqSaveReqVO {
     @NotEmpty(message = "缴费单位名称不能为空")
     private String nsrmc;
 
-    @Schema(description = "联系人")
+    @Schema(description = "联系人", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotEmpty(message = "联系人不能为空")
     private String contact;
 
-    @Schema(description = "联系电话")
+    @Schema(description = "联系电话", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotEmpty(message = "联系电话不能为空")
     private String contactPhone;
 
@@ -68,7 +68,6 @@ public class WfJfhjSqSaveReqVO {
     private Integer deferTotalMonth;
 
     @Schema(description = "累计缓缴金额（元）", requiredMode = Schema.RequiredMode.REQUIRED)
-//    @NotNull(message = "累计缓缴金额（元）不能为空")
     @DecimalMin(value = "0.01", message = "累计缓缴金额不能小于0.01元")
     private BigDecimal totalDeferAmount;
 
@@ -78,53 +77,52 @@ public class WfJfhjSqSaveReqVO {
     private String situationDesc;
 
     @Schema(description = "缴费单位-单位负责人", requiredMode = Schema.RequiredMode.REQUIRED)
-//    @NotEmpty(message = "缴费单位负责人不能为空")
+    @NotEmpty(message = "缴费单位负责人不能为空")
     private String unitLeader;
 
     @Schema(description = "缴费单位-经办", requiredMode = Schema.RequiredMode.REQUIRED)
-//    @NotEmpty(message = "缴费单位经办人不能为空")
+    @NotEmpty(message = "缴费单位经办人不能为空")
     private String handler;
 
-    @Schema(description = "缴费单位-日期", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "缴费单位-日期")
     private LocalDate applyDate;
 
-    @Schema(description = "基层工会意见（章）", requiredMode = Schema.RequiredMode.REQUIRED)
-//    @NotEmpty(message = "基层工会意见不能为空")
+    @Schema(description = "基层工会意见（章）")
     private String grassrootsOpinion;
 
-    @Schema(description = "基层工会-工会负责人", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "基层工会-工会负责人")
 //    @NotEmpty(message = "基层工会负责人不能为空")
     private String grassrootsLeader;
 
-    @Schema(description = "基层工会-经办", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "基层工会-经办")
 //    @NotEmpty(message = "基层工会经办不能为空")
     private String grassrootsHandler;
 
-    @Schema(description = "基层工会-盖章日期（年/月/日）", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "基层工会-盖章日期（年/月/日）")
 //    @NotNull(message = "基层工会盖章日期不能为空")
     private LocalDate grassrootsApproveTime;
 
-    @Schema(description = "主管工会审核意见", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "主管工会审核意见")
 //    @NotEmpty(message = "主管工会审核意见不能为空")
     private String managerOpinion;
 
-    @Schema(description = "主管工会-工会负责人", example = "李四", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "主管工会-工会负责人")
 //    @NotEmpty(message = "主管工会负责人不能为空")
     private String managerLeaderName;
 
-    @Schema(description = "主管工会-经办人", example = "芋艿", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "主管工会-经办人", example = "芋艿")
 //    @NotEmpty(message = "主管工会经办人不能为空")
     private String managerHandlerName;
 
-    @Schema(description = "主管工会-日期", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "主管工会-日期")
 //    @NotNull(message = "主管工会审核日期不能为空")
     private LocalDate managerApproveTime;
 
-    @Schema(description = "主管工会-财务负责人", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "主管工会-财务负责人")
 
     private String managerFinanceLeader;
 
-    @Schema(description = "流程实例ID（BPMN）", example = "15431", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "流程实例ID（BPMN）", example = "15431")
     private String processInstanceId;
 
 }

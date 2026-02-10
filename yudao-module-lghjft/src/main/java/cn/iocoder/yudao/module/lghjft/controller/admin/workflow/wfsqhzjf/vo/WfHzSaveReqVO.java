@@ -73,8 +73,7 @@ public class WfHzSaveReqVO {
     @NotEmpty(message = "汇总申报缴纳原因不能为空")
     private String hzbsjygy;
 
-    @Schema(description = "负责人姓名", requiredMode = Schema.RequiredMode.REQUIRED)
-//    @NotEmpty(message = "负责人姓名不能为空")
+    @Schema(description = "负责人姓名")
     private String fzrxm;
 
     @Schema(description = "经办人姓名", requiredMode = Schema.RequiredMode.REQUIRED)
@@ -86,8 +85,7 @@ public class WfHzSaveReqVO {
     private String jbrdh;
 
     @Schema(description = "申请日期")
-//    @NotNull(message = "申请日期不能为空")
-    private LocalDate sqrq;
+     private LocalDate sqrq;
 
     @Schema(description = "分支机构总数", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "分支机构总数不能为空")

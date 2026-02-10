@@ -44,13 +44,13 @@ public class WfTdfSqSaveReqVO {
     @NotEmpty(message = "账号不能为空")
     private String accountNo;
 
-    @Schema(description = "开户行行号")
+    @Schema(description = "开户行行号", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotEmpty(message = "开户行行号不能为空")
     private String bankCode;
 
     // 附件（前端传 fileId 列表）
 
-    @Schema(description = "附件列表")
+    @Schema(description = "附件列表", requiredMode = Schema.RequiredMode.REQUIRED)
     private List<AttachmentItem> attachments;
 
     @Data
