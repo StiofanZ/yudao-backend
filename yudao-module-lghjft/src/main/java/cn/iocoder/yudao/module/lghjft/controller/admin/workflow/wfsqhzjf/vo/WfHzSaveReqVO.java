@@ -85,7 +85,7 @@ public class WfHzSaveReqVO {
     @NotEmpty(message = "经办人联系电话不能为空")
     private String jbrdh;
 
-    @Schema(description = "申请日期", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "申请日期")
 //    @NotNull(message = "申请日期不能为空")
     private LocalDate sqrq;
 
