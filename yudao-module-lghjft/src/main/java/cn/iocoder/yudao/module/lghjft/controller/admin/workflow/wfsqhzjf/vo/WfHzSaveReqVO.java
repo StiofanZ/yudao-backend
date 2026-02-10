@@ -46,8 +46,8 @@ public class WfHzSaveReqVO {
     private Integer ghyhs;
 
     @Schema(description = "工会负责人", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotEmpty(message = "工会负责人不能为空")
     private String ghfzr;
+    @NotEmpty(message = "工会负责人不能为空")
 
     @Schema(description = "联系电话", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotEmpty(message = "联系电话不能为空")
