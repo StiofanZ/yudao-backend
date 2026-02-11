@@ -92,5 +92,12 @@ public class BpmProcessInstanceAppController {
                 processDefinitionMap, categoryMap, taskMap, userMap, deptMap, processDefinitionInfoMap));
     }
 
+    @GetMapping("/get-bpmn-model-view")
+    @Operation(summary = "获取流程实例的 BPMN 模型视图", description = "在【流程详细】界面中，进行调用")
+    @Parameter(name = "id", description = "流程实例的编号", required = true)
+    public CommonResult<BpmProcessInstanceBpmnModelViewRespVO> getProcessInstanceBpmnModelView(
+            @RequestParam(value = "id") String id) {
+        return success(processInstanceService.getProcessInstanceBpmnModelView(id));
+    }
 
 }
