@@ -63,7 +63,7 @@ public class WfHzServiceImpl implements WfHzService {
         AdminUserDO user = userService.getUser(getLoginUserId());
         String nickname = user.getNickname();
         String mobile = user.getMobile();
-        wfHz.setJbrdh(nickname);
+        wfHz.setJbrxm(nickname);
         wfHz.setJbrdh(mobile);
         wfHz.setUpdater(String.valueOf(loginUserId));
         wfHz.setSqrq(LocalDate.now());//        申请时间
