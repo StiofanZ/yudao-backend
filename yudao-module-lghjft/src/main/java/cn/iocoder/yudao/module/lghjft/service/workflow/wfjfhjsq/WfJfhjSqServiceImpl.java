@@ -10,6 +10,9 @@ import cn.iocoder.yudao.module.lghjft.controller.app.workflow.wfjfhjsq.vo.Wfjfhj
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.wfjfhjsq.WfJfhjSqDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.workflow.wfjfhjsq.WfJfhjSqMapper;
 import cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants;
+import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
+import cn.iocoder.yudao.module.system.service.user.AdminUserService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,9 +22,9 @@ import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+
+import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 /**
  * 工会经费缓缴申请 Service 实现类
@@ -32,12 +35,13 @@ import java.util.HashMap;
 @Validated
 
 public class WfJfhjSqServiceImpl implements WfJfhjSqService {
-    public static final String PROCESS_KEY = "WF_SQ_JFHJSQ";
+    public static final String PROCESS_KEY = "HJSQ";
     @Resource
     private WfJfhjSqMapper wfJfhjSqMapper;
     @Resource
     private BpmProcessInstanceApi bpmProcessInstanceApi;
-
+    @Resource
+    private AdminUserService userService;
     @Override
 //    有异常进行回滚
     @Transactional(rollbackFor = Exception.class)
@@ -45,11 +49,22 @@ public class WfJfhjSqServiceImpl implements WfJfhjSqService {
         // 1. 插入主表数据
         WfJfhjSqDO wfJfhjSq = BeanUtils.toBean(createReqVO, WfJfhjSqDO.class);
         Long loginUserId = WebFrameworkUtils.getLoginUserId();
+        //2.获取当前用户信息
+        AdminUserDO user = userService.getUser(getLoginUserId());
+        String nickname = user.getNickname();
+
+//        封装数据数据表中
+        wfJfhjSq.setHandler(nickname);
         wfJfhjSq.setApplyDate(LocalDate.now());
         wfJfhjSq.setUpdater(String.valueOf(loginUserId));
         wfJfhjSq.setCreateTime(LocalDateTime.now()); // 补充创建时间（如果DO里有该字段）
         wfJfhjSq.setUpdateTime(LocalDateTime.now()); // 补充更新时间（如果DO里有该字段）
         wfJfhjSqMapper.insert(wfJfhjSq);
+
+
+
+
+
         // 3. 启动流程
         String processInstanceId = bpmProcessInstanceApi.createProcessInstance(
                 WebFrameworkUtils.getLoginUserId(),
@@ -78,7 +93,7 @@ public class WfJfhjSqServiceImpl implements WfJfhjSqService {
     }
 
     @Override
-    public PageResult<WfJfhjSqDO> getSelfPage(Long userId, WfjfhjsqAppPageReqVO pageReqVO) {
+    public PageResult<WfJfhjSqDO> getSelfPage(Long userId, @Valid WfjfhjsqAppPageReqVO pageReqVO) {
 
         return wfJfhjSqMapper.selectPage(pageReqVO, new LambdaQueryWrapperX<WfJfhjSqDO>()
                 .eq(WfJfhjSqDO::getCreator, userId)

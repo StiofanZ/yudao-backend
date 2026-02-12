@@ -17,6 +17,8 @@ import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.wftdfsq.WfTdfSqDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.workflow.wftdfsq.WfTdfSqAttachmentMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.workflow.wftdfsq.WfTdfSqMapper;
 import cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants;
+import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
+import cn.iocoder.yudao.module.system.service.user.AdminUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
@@ -28,10 +30,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
+
 @Service
 public  class WfTdfSqServiceImpl implements WfTdfSqService {
 
-    public static final String PROCESS_KEY = "WF_SQ_TDFSQ";
+    public static final String PROCESS_KEY = "TDFSQ";
 
     @Resource
     private WfTdfSqMapper wfTdfSqMapper;
@@ -39,13 +43,59 @@ public  class WfTdfSqServiceImpl implements WfTdfSqService {
     private WfTdfSqAttachmentMapper attachmentMapper;
     @Resource
     private BpmProcessInstanceApi bpmProcessInstanceApi;
+    @Resource
+    private AdminUserService userService;
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Long create(@Valid WfTdfSqSaveReqVO req) {
+        //1.获取当前用户信息
+        AdminUserDO user = userService.getUser(getLoginUserId());
+        String nickname = user.getNickname();
+        String mobile = user.getMobile();
+        // 2. 保存主表
+        WfTdfSqDO main = BeanUtils.toBean(req, WfTdfSqDO.class);
+        main.setHandler(nickname);
+        main.setContactPhone(mobile);
+        main.setCreator(String.valueOf(WebFrameworkUtils.getLoginUserId()));
+        main.setApplyDate(LocalDate.now());
+        wfTdfSqMapper.insert(main);
+
+        // 3. 保存附件（仅新增部分）
+        if (CollUtil.isNotEmpty(req.getAttachments())) {
+            List<WfTdfSqAttachmentDO> list = req.getAttachments().stream()
+                    .map(item -> {
+                        WfTdfSqAttachmentDO att = new WfTdfSqAttachmentDO();
+                        att.setApplyId(main.getId());
+                        att.setFileType(item.getType());
+                        att.setFileUrl(item.getFileUrl());
+                        att.setCreator(String.valueOf(WebFrameworkUtils.getLoginUserId()));
+                        return att;
+                    })
+                    .collect(Collectors.toList());
+            attachmentMapper.insertBatch(list);
+        }
+
+        // 3. 启动流程
+        String processInstanceId = bpmProcessInstanceApi.createProcessInstance(
+                WebFrameworkUtils.getLoginUserId(),
+                new BpmProcessInstanceCreateReqDTO()
+                        .setProcessDefinitionKey(PROCESS_KEY)
+                        .setBusinessKey(String.valueOf(main.getId()))
+                        .setVariables(new HashMap<>())
+        );
+
+        // 4. 更新流程实例ID
+        wfTdfSqMapper.updateById(new WfTdfSqDO()
+                .setId(main.getId())
+                .setProcessInstanceId(processInstanceId));
+
+        return main.getId();
+    }
+
     @Override
     public WfTdfSqRespVO getDetail(Long id) {
-        // ========== 新增：打印用户ID完整链路 ==========
-        // 1. 打印工具类获取的原始用户ID（未转换）
-        Long rawLoginUserId = WebFrameworkUtils.getLoginUserId();
-        // 2. 转换为字符串后的结果
-        String creatorStr = String.valueOf(rawLoginUserId);
+
         // 1. 查询主表
         WfTdfSqDO main = wfTdfSqMapper.selectById(id);
         if (main == null) {
@@ -79,46 +129,6 @@ public  class WfTdfSqServiceImpl implements WfTdfSqService {
         return vo;
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Long create(@Valid WfTdfSqSaveReqVO req) {
-        // 1. 保存主表
-        WfTdfSqDO main = BeanUtils.toBean(req, WfTdfSqDO.class);
-        main.setCreator(String.valueOf(WebFrameworkUtils.getLoginUserId()));
-        main.setApplyDate(LocalDate.now());
-        wfTdfSqMapper.insert(main);
-
-        // 2. 保存附件（仅新增部分）
-        if (CollUtil.isNotEmpty(req.getAttachments())) {
-            List<WfTdfSqAttachmentDO> list = req.getAttachments().stream()
-                    .map(item -> {
-                        WfTdfSqAttachmentDO att = new WfTdfSqAttachmentDO();
-                        att.setApplyId(main.getId());
-                        att.setFileType(item.getType());
-                        att.setFileUrl(item.getFileUrl());
-                        att.setCreator(String.valueOf(WebFrameworkUtils.getLoginUserId()));
-                        return att;
-                    })
-                    .collect(Collectors.toList());
-            attachmentMapper.insertBatch(list);
-        }
-
-        // 3. 启动流程
-        String processInstanceId = bpmProcessInstanceApi.createProcessInstance(
-                WebFrameworkUtils.getLoginUserId(),
-                new BpmProcessInstanceCreateReqDTO()
-                        .setProcessDefinitionKey(PROCESS_KEY)
-                        .setBusinessKey(String.valueOf(main.getId()))
-                        .setVariables(new HashMap<>())
-        );
-
-        // 4. 更新流程实例ID
-        wfTdfSqMapper.updateById(new WfTdfSqDO()
-                .setId(main.getId())
-                .setProcessInstanceId(processInstanceId));
-
-        return main.getId();
-    }
     @Override
     public PageResult<WfTdfSqDO> getSelfPage(Long userId, WfTdfSqAppPageReqVO pageReqVO) {
         return wfTdfSqMapper.selectPage(pageReqVO, new LambdaQueryWrapperX<WfTdfSqDO>()

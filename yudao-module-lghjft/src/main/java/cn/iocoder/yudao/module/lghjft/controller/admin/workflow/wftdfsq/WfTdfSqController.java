@@ -32,7 +32,7 @@ public class WfTdfSqController {
 
     @PostMapping("/create")
     @Operation(summary = "提交退还申请")
-    @PreAuthorize("@ss.hasPermission('lghjft:workflow-wftdfsq:create')")
+//    @PreAuthorize("@ss.hasPermission('lghjft:workflow-wftdfsq:create')")
     public CommonResult<Long> create(@Valid @RequestBody WfTdfSqSaveReqVO req) {
         return success(wfTdfSqService.create(req));
     }

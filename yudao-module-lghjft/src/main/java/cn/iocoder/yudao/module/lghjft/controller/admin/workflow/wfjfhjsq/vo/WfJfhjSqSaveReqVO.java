@@ -76,12 +76,10 @@ public class WfJfhjSqSaveReqVO {
     @Size(min = 10, message = "申请缓缴情况说明不能少于10个字符") // 附加：贴合前端，限制最小字数
     private String situationDesc;
 
-    @Schema(description = "缴费单位-单位负责人", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotEmpty(message = "缴费单位负责人不能为空")
+    @Schema(description = "缴费单位-单位负责人")
     private String unitLeader;
 
-    @Schema(description = "缴费单位-经办", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotEmpty(message = "缴费单位经办人不能为空")
+    @Schema(description = "缴费单位-经办")
     private String handler;
 
     @Schema(description = "缴费单位-日期")
@@ -91,37 +89,28 @@ public class WfJfhjSqSaveReqVO {
     private String grassrootsOpinion;
 
     @Schema(description = "基层工会-工会负责人")
-//    @NotEmpty(message = "基层工会负责人不能为空")
     private String grassrootsLeader;
 
     @Schema(description = "基层工会-经办")
-//    @NotEmpty(message = "基层工会经办不能为空")
     private String grassrootsHandler;
 
     @Schema(description = "基层工会-盖章日期（年/月/日）")
-//    @NotNull(message = "基层工会盖章日期不能为空")
     private LocalDate grassrootsApproveTime;
 
     @Schema(description = "主管工会审核意见")
-//    @NotEmpty(message = "主管工会审核意见不能为空")
     private String managerOpinion;
 
     @Schema(description = "主管工会-工会负责人")
-//    @NotEmpty(message = "主管工会负责人不能为空")
     private String managerLeaderName;
 
     @Schema(description = "主管工会-经办人", example = "芋艿")
-//    @NotEmpty(message = "主管工会经办人不能为空")
     private String managerHandlerName;
 
     @Schema(description = "主管工会-日期")
-//    @NotNull(message = "主管工会审核日期不能为空")
     private LocalDate managerApproveTime;
 
     @Schema(description = "主管工会-财务负责人")
-
     private String managerFinanceLeader;
-
     @Schema(description = "流程实例ID（BPMN）", example = "15431")
     private String processInstanceId;
 

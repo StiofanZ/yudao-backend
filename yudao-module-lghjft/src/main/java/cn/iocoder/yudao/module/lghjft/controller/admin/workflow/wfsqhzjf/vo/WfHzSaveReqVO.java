@@ -77,11 +77,9 @@ public class WfHzSaveReqVO {
     private String fzrxm;
 
     @Schema(description = "经办人姓名", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotEmpty(message = "经办人姓名不能为空")
     private String jbrxm;
 
     @Schema(description = "经办人联系电话", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotEmpty(message = "经办人联系电话不能为空")
     private String jbrdh;
 
     @Schema(description = "申请日期")

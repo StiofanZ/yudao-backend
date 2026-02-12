@@ -24,11 +24,9 @@ public class WfTdfSqSaveReqVO {
     private String unitLeader;
 
     @Schema(description = "经办人", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotEmpty(message = "经办人不能为空")
     private String handler;
 
     @Schema(description = "联系电话")
-    @NotEmpty(message = "联系电话不能为空")
     private String contactPhone;
 
     // 账户信息
@@ -59,6 +57,6 @@ public class WfTdfSqSaveReqVO {
         private String fileUrl;
 
         @NotEmpty(message = "文件类型不能为空")
-        private String type; // "voucher", "payroll", "license"
+        private String type;
     }
 }

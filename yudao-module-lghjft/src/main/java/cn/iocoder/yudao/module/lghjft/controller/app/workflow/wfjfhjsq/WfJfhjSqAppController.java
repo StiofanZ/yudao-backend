@@ -4,6 +4,7 @@ import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfjfhjsq.vo.WfJfhjSqRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.wfjfhjsq.vo.WfJfhjSqSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.app.workflow.wfjfhjsq.vo.WfjfhjsqAppPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.wfjfhjsq.WfJfhjSqDO;
 import cn.iocoder.yudao.module.lghjft.service.workflow.wfjfhjsq.WfJfhjSqService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,7 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
-import cn.iocoder.yudao.module.lghjft.controller.app.workflow.wfjfhjsq.vo.WfjfhjsqAppPageReqVO;
+
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
@@ -34,8 +35,6 @@ public class WfJfhjSqAppController {
     public CommonResult<Long> createWfJfhjSq(@Valid @RequestBody WfJfhjSqSaveReqVO createReqVO) {
         return success(wfJfhjSqService.createWfJfhjSq(createReqVO));
     }
-
-
 
     @GetMapping("/get")
     @Operation(summary = "获得工会经费缓缴申请")

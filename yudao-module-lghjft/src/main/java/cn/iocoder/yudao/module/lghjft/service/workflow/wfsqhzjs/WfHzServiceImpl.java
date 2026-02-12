@@ -18,6 +18,8 @@ import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.wfsqhzjf.WfHzmxDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.workflow.wfsqhzjf.WfHzMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.workflow.wfsqhzjf.WfHzmxMapper;
 import cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants;
+import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
+import cn.iocoder.yudao.module.system.service.user.AdminUserService;
 import com.aliyun.oss.ServiceException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
@@ -32,6 +34,8 @@ import java.util.*;
 
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 
+import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
+
 /**
  * 工会经费汇总缴纳申请表（主表） Service 实现类
  *
@@ -40,19 +44,27 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 @Service
 @Validated
 public class WfHzServiceImpl implements WfHzService {
-    public static final String PROCESS_KEY = "WF_SQ_HZJNSQ";
+    public static final String PROCESS_KEY = "HZJNSQ";
     @Resource
     private WfHzmxMapper wfHzmxMapper;
     @Resource
     private WfHzMapper wfHzMapper;
     @Resource
     private BpmProcessInstanceApi bpmProcessInstanceApi;
-
+    @Resource
+    private AdminUserService userService;
     @Override
     public Long createWfHz(WfHzSaveReqVO createReqVO) {
         // 1. 插入主表数据
         WfHzDO wfHz = BeanUtils.toBean(createReqVO, WfHzDO.class);
         Long loginUserId = WebFrameworkUtils.getLoginUserId();
+
+        //2.获取当前用户信息
+        AdminUserDO user = userService.getUser(getLoginUserId());
+        String nickname = user.getNickname();
+        String mobile = user.getMobile();
+        wfHz.setJbrdh(nickname);
+        wfHz.setJbrdh(mobile);
         wfHz.setUpdater(String.valueOf(loginUserId));
         wfHz.setSqrq(LocalDate.now());//        申请时间
         wfHz.setCreateTime(LocalDateTime.now()); // 补充创建时间（如果DO里有该字段）
