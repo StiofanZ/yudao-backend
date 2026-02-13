@@ -30,6 +30,8 @@ public class GhQxSfxxDO extends BaseDO {
 
     private String sqyy;
 
+    private String jjyy;
+
     private String jbyy;
 
     private Long deptId;

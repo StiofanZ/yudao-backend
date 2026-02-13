@@ -3,6 +3,7 @@ package cn.iocoder.yudao.module.lghjft.controller.app.auth;
 import cn.iocoder.yudao.framework.common.enums.UserTypeEnum;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
+import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeLghReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeResVO;
@@ -20,12 +21,15 @@ import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
-@Tag(name = "用户 App - 陇工会经费通认证")
+@Tag(name = "用户 App - 登录认证")
 @RestController
 @RequestMapping("/lghjft")
 @Validated
@@ -75,5 +79,13 @@ public class AuthorizeAppController {
             return success(null);
         }
         return success(accessTokenDO.getUserId());
+    }
+
+    @GetMapping("/auth/get-dwqxsf")
+    @Operation(summary = "获取单位权限身份")
+    @PreAuthorize("isAuthenticated()")
+    public CommonResult<List<AuthorizeAppResVO.DwQxSf>> getDwQxSfList() {
+        Long dlzhId = SecurityFrameworkUtils.getLoginUserId();
+        return success(BeanUtils.toBean(authenticateService.getDwQxSfList(dlzhId), AuthorizeAppResVO.DwQxSf.class));
     }
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.qx.sfxx.GhQxSfxxMapper">
+
+    <select id="selectKbdsfxxList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.KbdsfxxRespVO">
+        select coalesce(b.dwmc, c.nsrmc)              as dwmc,
+               coalesce(b.shxydm, c.shxydm, c.nsrsbh) as shxydm,
+               b.djxh,
+               ryxm,
+               lxdh,
+               sflx,
+               qxlx
+        from (select dwmc,
+                     shxydm,
+                     djxh,
+                     ryxm,
+                     lxdh,
+                     sflx,
+                     qxlx,
+                     row_number() over (partition by coalesce(shxydm, djxh) order by sflx,qxlx) as xh
+              from (select null as dwmc, null as shxydm, djxh, cwfzrxm as ryxm, cwfzryddh as lxdh, '02' as sflx, '01' as qxlx
+                    from dj_nsrxx_kz
+                    where cwfzryddh = #{lxdh}
+                    union
+                    select null as dwmc, null as shxydm, djxh, lxr as ryxm, lxdh as lxdh, '03' as sflx, '01' as qxlx
+                    from gh_hj
+                    where lxdh = #{lxdh}
+                    union
+                    select ghmc     as dwmc,
+                           ghshxydm as shxydm,
+                           djxh     as djxh,
+                           ghjflxr  as ryxm,
+                           ghjflxdh as lxdh,
+                           '04'     as sflx,
+                           '01'     as qxlx
+                    from jhdwyds
+                    where ghjflxdh = #{lxdh}) a) b
+                 left join dj_nsrxx c on b.djxh = c.djxh
+        where b.xh = 1
+          and not exists (select 1
+                          from gh_qx_sfxx sf
+                          where sf.djxh COLLATE utf8mb4_0900_ai_ci = b.djxh COLLATE utf8mb4_0900_ai_ci
+                            and sf.sflx COLLATE utf8mb4_0900_ai_ci = b.sflx COLLATE utf8mb4_0900_ai_ci
+                            and sf.qxlx COLLATE utf8mb4_0900_ai_ci = b.qxlx COLLATE utf8mb4_0900_ai_ci)
+    </select>
+
+</mapper>

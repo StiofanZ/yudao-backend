@@ -21,8 +21,10 @@ public interface GhQxSfxxService {
 
     PageResult<GhQxSfxxDO> getSfxxPage(SfxxPageReqVO pageReqVO);
 
-    void auditSfxx(Long id, Integer status);
+    void auditSfxx(Long id, Integer status, String jjyy);
 
     void unbindSfxx(Long id, String jbyy);
+
+    List<cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.KbdsfxxRespVO> getKbdsfxxList(String lxdh);
 
 }

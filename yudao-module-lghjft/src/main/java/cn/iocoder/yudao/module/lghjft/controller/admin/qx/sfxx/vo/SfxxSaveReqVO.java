@@ -39,13 +39,16 @@ public class SfxxSaveReqVO {
     @Schema(description = "授权原因", example = "0")
     private String sqyy;
 
+    @Schema(description = "拒绝原因", example = "资料不完整")
+    private String jjyy;
+
     @Schema(description = "解绑原因", example = "0")
     private String jbyy;
 
     @Schema(description = "部门编号", example = "100")
     private Long deptId;
 
-    @Schema(description = "状态 0:待审核 1:已审核", example = "0")
+    @Schema(description = "授权状态 0:暂未授权 1:同意授权 2:拒绝授权", example = "0")
     private Integer status;
 
 }

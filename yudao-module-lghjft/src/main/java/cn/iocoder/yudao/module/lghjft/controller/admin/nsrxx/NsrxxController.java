@@ -61,8 +61,8 @@ public class NsrxxController {
     @GetMapping("/list")
     @Operation(summary = "根据社会信用代码或纳税人识别号查询纳税人信息列表")
     @Parameter(name = "code", description = "社会信用代码或纳税人识别号", required = true, example = "91110108551385082Q")
-    public CommonResult<List<NsrxxResVO>> queryNsrxxList(@RequestParam("code") String code) {
-        List<NsrxxDO> list = nsrxxService.getNsrxxList(code);
+    public CommonResult<List<NsrxxResVO>> queryNsrxxList(@RequestParam("code") String shxydm) {
+        List<NsrxxDO> list = nsrxxService.getNsrxxList(shxydm);
         List<NsrxxResVO> respList = BeanUtils.toBean(list, NsrxxResVO.class);
 
         if (respList.isEmpty()) {

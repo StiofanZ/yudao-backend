@@ -2,9 +2,6 @@ package cn.iocoder.yudao.module.lghjft.dal.dataobject.nsrxx;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
-import software.amazon.awssdk.services.s3.endpoints.internal.Value;
-
-import java.math.BigInteger;
 
 /**
  * 纳税人信息 DO

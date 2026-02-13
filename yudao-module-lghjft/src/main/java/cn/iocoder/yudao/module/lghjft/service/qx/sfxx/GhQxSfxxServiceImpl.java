@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.service.qx.sfxx;
 
+import cn.hutool.core.util.StrUtil;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxPageReqVO;
@@ -15,6 +16,7 @@ import java.util.List;
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserDeptId;
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.SFXX_NOT_EXISTS;
+import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.SFXX_REJECT_REASON_REQUIRED;
 
 @Service
 @Validated
@@ -65,11 +67,15 @@ public class GhQxSfxxServiceImpl implements GhQxSfxxService {
     }
 
     @Override
-    public void auditSfxx(Long id, Integer status) {
+    public void auditSfxx(Long id, Integer status, String jjyy) {
         validateSfxxExists(id);
+        if (Integer.valueOf(2).equals(status) && StrUtil.isBlank(jjyy)) {
+            throw exception(SFXX_REJECT_REASON_REQUIRED);
+        }
         GhQxSfxxDO updateObj = new GhQxSfxxDO();
         updateObj.setId(id);
         updateObj.setStatus(status);
+        updateObj.setJjyy(Integer.valueOf(2).equals(status) ? jjyy : null);
         ghQxSfxxMapper.updateById(updateObj);
     }
 
@@ -83,6 +89,11 @@ public class GhQxSfxxServiceImpl implements GhQxSfxxService {
         ghQxSfxxMapper.updateById(updateObj);
         // 逻辑删除
         ghQxSfxxMapper.deleteById(id);
+    }
+
+    @Override
+    public List<cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.KbdsfxxRespVO> getKbdsfxxList(String lxdh) {
+        return ghQxSfxxMapper.selectKbdsfxxList(lxdh);
     }
 
     private void validateSfxxExists(Long id) {

@@ -23,6 +23,7 @@ public interface ErrorCodeConstants {
 
     // My additions (Renumbered)
     ErrorCode SFXX_NOT_EXISTS = new ErrorCode(2_015_000_001, "身份信息不存在");
+    ErrorCode SFXX_REJECT_REASON_REQUIRED = new ErrorCode(2_015_000_002, "拒绝授权时，拒绝原因不能为空");
     
     ErrorCode DLZH_NOT_EXISTS = new ErrorCode(2_016_000_001, "登录账号不存在");
     ErrorCode DLZH_PASSWORD_REQUIRED = new ErrorCode(2_016_000_002, "密码不能为空");
