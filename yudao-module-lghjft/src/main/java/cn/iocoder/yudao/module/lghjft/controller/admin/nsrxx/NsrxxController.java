@@ -48,7 +48,8 @@ public class NsrxxController {
     @Operation(summary = "根据纳税人识别号查询纳税人信息")
     @Parameter(name = "nsrsbh", description = "纳税人识别号", required = true, example = "91110108551385082Q")
     public CommonResult<NsrxxResVO> queryNsrxxByNsrsbh(@RequestParam("nsrsbh") String nsrsbh) {
-        NsrxxDO nsrxx = nsrxxService.getNsrxxByNsrsbh(nsrsbh);
+        List<NsrxxDO> list = nsrxxService.getNsrxxList(nsrsbh);
+        NsrxxDO nsrxx = list.isEmpty() ? null : list.get(0);
         NsrxxResVO respVO = BeanUtils.toBean(nsrxx, NsrxxResVO.class);
         
         if (respVO != null) {

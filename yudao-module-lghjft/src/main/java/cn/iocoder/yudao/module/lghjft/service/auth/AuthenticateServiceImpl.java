@@ -282,7 +282,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
                     dwQxSf.setDjxh(sfxx.getDjxh());
                     dwQxSf.setSflx(sfxx.getSflx());
                     dwQxSf.setQxlx(sfxx.getQxlx());
-                    NsrxxDO nsrxxDO = nsrxxService.getNsrxxByDjxh(sfxx.getDjxh());
+                    NsrxxDO nsrxxDO = nsrxxService.getNsrxx(sfxx.getDjxh());
                     dwQxSf.setRyxm(ghQxDlzhDO.getYhxm());
                     dwQxSf.setDwmc(nsrxxDO.getNsrmc());
                     dwQxSf.setLxdh(ghQxDlzhDO.getLxdh());

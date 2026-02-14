@@ -1,15 +1,14 @@
 package cn.iocoder.yudao.module.lghjft.service.nsrxx;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nsrxx.NsrxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.nsrxx.NsrxxMapper;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.nsrxx.vo.NsrxxQueryParam;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 纳税人信息 Service 实现类
@@ -24,25 +23,18 @@ public class NsrxxServiceImpl implements NsrxxService {
     private NsrxxMapper nsrxxMapper;
 
     @Override
-    public List<NsrxxDO> getNsrxxList(String shxydm) {
-        return nsrxxMapper.selectListByShxydm(shxydm);
+    public List<NsrxxDO> getNsrxxList(String keyword) {
+        return nsrxxMapper.getNsrxxList(new NsrxxQueryParam().setKeyword(keyword));
     }
 
     @Override
-    public NsrxxDO getNsrxxByNsrsbh(String nsrsbh) {
-        return nsrxxMapper.selectOneByShxydm(nsrsbh);
+    public NsrxxDO getNsrxx(String id) {
+        return nsrxxMapper.getNsrxx(id);
     }
 
     @Override
-    public NsrxxDO getNsrxxByDjxh(String djxh) {
-        List<NsrxxDO> nsrxxDOList = getNsrxxListByDjxhs(Set.of(djxh));
-        if (CollUtil.isEmpty(nsrxxDOList)) return null;
-        return nsrxxDOList.get(0);
-    }
-
-    @Override
-    public List<NsrxxDO> getNsrxxListByDjxhs(Collection<String> djxhs) {
-        return nsrxxMapper.selectListByDjxhs(djxhs.stream().toList());
+    public List<NsrxxDO> getNsrxxList(Collection<String> ids) {
+        return nsrxxMapper.getNsrxxList(new NsrxxQueryParam().setDjxhList(ids).setOnlyValid(false));
     }
 
 }

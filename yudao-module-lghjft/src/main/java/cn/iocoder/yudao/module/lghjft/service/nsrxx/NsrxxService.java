@@ -13,23 +13,27 @@ import java.util.List;
 public interface NsrxxService {
 
     /**
-     * 根据社会信用代码或纳税人识别号查询纳税人信息列表
+     * 根据关键字查询纳税人信息列表
      *
-     * @param shxydm 社会信用代码或纳税人识别号
+     * @param keyword 纳税人识别号/名称/社会信用代码
      * @return 纳税人信息列表
      */
-    List<NsrxxDO> getNsrxxList(String shxydm);
+    List<NsrxxDO> getNsrxxList(String keyword);
 
     /**
-     * 根据纳税人识别号查询纳税人信息
+     * 根据登记序号获得纳税人信息
      *
-     * @param nsrsbh 纳税人识别号
+     * @param id 登记序号
      * @return 纳税人信息
      */
-    NsrxxDO getNsrxxByNsrsbh(String nsrsbh);
+    NsrxxDO getNsrxx(String id);
 
-    NsrxxDO getNsrxxByDjxh(String djxh);
-
-    List<NsrxxDO> getNsrxxListByDjxhs(Collection<String> djxhs);
+    /**
+     * 根据登记序号列表获得纳税人信息列表
+     *
+     * @param ids 登记序号列表
+     * @return 纳税人信息列表
+     */
+    List<NsrxxDO> getNsrxxList(Collection<String> ids);
 
 }

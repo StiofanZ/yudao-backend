@@ -139,7 +139,7 @@ public class SfxxController {
         Set<String> djxhs = convertSet(result.getList(), SfxxResVO::getDjxh);
         Map<String, NsrxxDO> nsrxxMap = Collections.emptyMap();
         if (CollUtil.isNotEmpty(djxhs)) {
-            List<NsrxxDO> nsrxxList = nsrxxService.getNsrxxListByDjxhs(djxhs);
+            List<NsrxxDO> nsrxxList = nsrxxService.getNsrxxList(djxhs);
             // Need to handle BigInteger to String for map key, NsrxxDO uses BigInteger for djxh
             nsrxxMap = nsrxxList.stream().collect(Collectors.toMap(
                     item -> String.valueOf(item.getDjxh()),
