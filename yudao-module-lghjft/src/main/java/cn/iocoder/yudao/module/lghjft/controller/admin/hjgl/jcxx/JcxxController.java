@@ -9,7 +9,7 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxUpdateReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.nsrxx.NsrxxQueryReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.nsrxx.NsrxxRespVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.JcxxDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.GhHjJcxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nsrxx.NsrxxDO;
 import cn.iocoder.yudao.module.lghjft.service.hjgl.jcxx.JcxxService;
 import cn.iocoder.yudao.module.lghjft.service.nsrxx.NsrxxService;
@@ -68,7 +68,7 @@ public class JcxxController {
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:hjgl-jcxx:query')")
     public CommonResult<JcxxRespVO> getJcxx(@RequestParam("id") String id) {
-        JcxxDO jcxx = jcxxService.getJcxx(id);
+        GhHjJcxxDO jcxx = jcxxService.getJcxx(id);
         return success(BeanUtils.toBean(jcxx, JcxxRespVO.class));
     }
 
@@ -76,7 +76,7 @@ public class JcxxController {
     @Operation(summary = "获得户籍管理/基础信息分页")
     @PreAuthorize("@ss.hasPermission('lghjft:hjgl-jcxx:query')")
     public CommonResult<PageResult<JcxxRespVO>> getJcxxPage(@Valid JcxxPageReqVO pageReqVO) {
-        PageResult<JcxxDO> pageResult = jcxxService.getJcxxPage(pageReqVO);
+        PageResult<GhHjJcxxDO> pageResult = jcxxService.getJcxxPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, JcxxRespVO.class));
     }
 
@@ -88,7 +88,7 @@ public class JcxxController {
         return success(nsrxxList.stream().map(nsrxx -> {
             NsrxxRespVO respVO = BeanUtils.toBean(nsrxx, NsrxxRespVO.class);
             // Check if exists in local HJ table
-            JcxxDO existingHj = jcxxService.getJcxx(nsrxx.getDjxh());
+            GhHjJcxxDO existingHj = jcxxService.getJcxx(nsrxx.getDjxh());
             if (existingHj != null) {
                 respVO.setExistsInHj(true);
                 // In a real scenario, we might want to fetch dept name, but here we just return ID or skip
@@ -109,7 +109,7 @@ public class JcxxController {
         if (nsrxx == null) {
             return CommonResult.error(404, "未找到对应的税务信息");
         }
-        // Map NsrxxDO to JcxxRespVO (or JcxxDO then to VO)
+        // Map NsrxxDO to JcxxRespVO (or GhHjJcxxDO then to VO)
         JcxxRespVO respVO = BeanUtils.toBean(nsrxx, JcxxRespVO.class);
         return success(respVO);
     }

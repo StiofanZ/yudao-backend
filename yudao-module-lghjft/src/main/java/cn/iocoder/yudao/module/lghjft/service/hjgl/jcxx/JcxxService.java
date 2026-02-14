@@ -4,7 +4,7 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxCreateReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxUpdateReqVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.JcxxDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.GhHjJcxxDO;
 import jakarta.validation.Valid;
 
 /**
@@ -42,7 +42,7 @@ public interface JcxxService {
      * @param id 编号
      * @return 户籍管理/基础信息
      */
-    JcxxDO getJcxx(String id);
+    GhHjJcxxDO getJcxx(String id);
 
     /**
      * 获得户籍管理/基础信息分页
@@ -50,6 +50,6 @@ public interface JcxxService {
      * @param pageReqVO 分页查询
      * @return 户籍管理/基础信息分页
      */
-    PageResult<JcxxDO> getJcxxPage(JcxxPageReqVO pageReqVO);
+    PageResult<GhHjJcxxDO> getJcxxPage(JcxxPageReqVO pageReqVO);
 
 }

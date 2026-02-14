@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.lghjft.controller.admin.hj.ghhj.vo;
+package cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.bqgl.vo;
 
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -11,23 +11,14 @@ import java.time.LocalDateTime;
 
 import static cn.iocoder.yudao.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND;
 
-@Schema(description = "管理后台 - 基层账户空需维护对象分页 Request VO")
+@Schema(description = "管理后台 - 标签分页 Request VO")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class GhHjPageReqVO extends PageParam {
+public class BqglPageReqVO extends PageParam {
 
-    @Schema(description = "工会机构代码")
-    private String deptId;
-
-    @Schema(description = "纳税人名称")
-    private String nsrmc;
-
-    @Schema(description = "社会信用代码")
-    private String shxydm;
-
-    @Schema(description = "纳税人简称")
-    private String nsrjc;
+    @Schema(description = "标签归类名称", example = "重点")
+    private String bqMc;
 
     @Schema(description = "创建时间")
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)

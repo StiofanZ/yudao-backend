@@ -1,28 +1,31 @@
-package cn.iocoder.yudao.module.lghjft.dal.dataobject.hj.bqgl;
+package cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.bqgl;
 
 import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
+import java.time.LocalDate;
+
 /**
- * 户籍标签 DO
+ * 工会户籍标签 DO
  *
  * @author 芋道源码
  */
-@TableName("gh_hj_bq")
+@TableName("gh_hj_bqxx")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GhHjBqDO extends BaseDO {
+public class GhHjBqxxDO extends BaseDO {
 
     /**
      * 归类管理代码
      */
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -36,13 +39,13 @@ public class GhHjBqDO extends BaseDO {
     private String djxh;
 
     /**
-     * 有效期起
+     * 有效起期
      */
-    private java.time.LocalDate yxqq;
+    private LocalDate yxqq;
 
     /**
-     * 有效期止
+     * 有效止期
      */
-    private java.time.LocalDate yxqz;
+    private LocalDate yxqz;
 
 }

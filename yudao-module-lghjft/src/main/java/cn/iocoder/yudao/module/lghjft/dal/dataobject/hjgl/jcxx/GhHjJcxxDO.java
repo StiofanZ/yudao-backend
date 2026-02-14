@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.lghjft.dal.dataobject.hj.ghhj;
+package cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx;
 
 import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * 基层账户空需维护对象 DO
+ * 户籍管理/基础信息 DO
  *
  * @author 芋道源码
  */
@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GhHjDO extends BaseDO {
+public class GhHjJcxxDO extends BaseDO {
 
     /**
      * 登记序号
@@ -303,5 +303,10 @@ public class GhHjDO extends BaseDO {
      * 税务数据同步时间
      */
     private LocalDateTime sjtbSj;
+
+    /**
+     * 法定代表人姓名
+     */
+    private String fddbrxm;
 
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.hjgl.bqgl.GhHjBqxxMapper">
+
+    <select id="selectHjxxPage" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.bqgl.vo.BqglHjxxRespVO">
+        SELECT j.djxh,
+        j.nsrmc,
+        j.shxydm,
+        b.bq_id AS bqId,
+        b.yxqq,
+        b.yxqz
+        FROM gh_hj j
+        LEFT JOIN gh_hj_bqxx b
+        ON b.djxh = j.djxh
+        AND b.bq_id = #{reqVO.bqId}
+        AND b.yxqz &gt;= CURDATE()
+        AND b.deleted = 0
+        WHERE j.deleted = 0
+        <if test="reqVO.nsrmc != null and reqVO.nsrmc != ''">
+            AND j.nsrmc LIKE CONCAT('%', #{reqVO.nsrmc}, '%')
+        </if>
+        ORDER BY CASE WHEN b.bq_id IS NULL THEN 1 ELSE 0 END ASC,
+        j.djxh DESC
+    </select>
+
+</mapper>

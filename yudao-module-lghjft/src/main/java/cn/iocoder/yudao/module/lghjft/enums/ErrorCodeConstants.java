@@ -5,6 +5,8 @@ import cn.iocoder.yudao.framework.common.exception.ErrorCode;
 public interface ErrorCodeConstants {
     ErrorCode WF_SQ_TFSQ_NOT_EXISTS = new ErrorCode(2_000_000_000, "申请-退费申请不存在");
     ErrorCode BQ_HAS_VALID_DATA = new ErrorCode(2_000_000_001, "该标签下存在有效数据，禁止作废");
+    ErrorCode BQGL_BQ_EXISTS = new ErrorCode(2_000_000_002, "标签名称已存在");
+    ErrorCode BQGL_BQ_NOT_EXISTS = new ErrorCode(2_000_000_003, "标签不存在");
 
     ErrorCode FPBL_COPY_NOT_EXISTS = new ErrorCode(2_004_000_001, "分配比例不存在");
     ErrorCode YHWD_NOT_EXISTS = new ErrorCode(2_001_000_001, "银行网点不存在");
@@ -32,7 +34,7 @@ public interface ErrorCodeConstants {
     ErrorCode DLZH_YHYX_EXISTS = new ErrorCode(2_016_000_005, "用户邮箱已存在");
     ErrorCode DLZH_SHXYDM_EXISTS = new ErrorCode(2_016_000_006, "社会信用代码已存在");
 
-    ErrorCode GH_HJ_NOT_EXISTS = new ErrorCode(2_017_000_001, "基层账户空需维护对象不存在");
-    ErrorCode GH_HJ_DJXH_EXISTS = new ErrorCode(2_017_000_002, "登记序号已存在");
+    ErrorCode GH_HJ_JCXX_NOT_EXISTS = new ErrorCode(2_017_000_001, "户籍基础信息不存在");
+    ErrorCode GH_HJ_JCXX_DJXH_EXISTS = new ErrorCode(2_017_000_002, "户籍基础信息登记序号已存在");
     ErrorCode GH_JF_NOT_EXISTS = new ErrorCode(2_018_000_001, "税务入库不存在");
 }
