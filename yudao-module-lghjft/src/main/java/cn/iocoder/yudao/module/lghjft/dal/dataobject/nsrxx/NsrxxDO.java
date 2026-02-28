@@ -40,9 +40,9 @@ public class NsrxxDO {
      * 法定代表人姓名 (用于匹配身份类型)
      */
     private String fddbrxm;
-
+//主管税务局代码
+    private  String zgswjDm;
     // Added fields
-    private String zgswjDm;
     private String zgswskfjDm;
     private String ssglyDm;
     private String zzjgDm;

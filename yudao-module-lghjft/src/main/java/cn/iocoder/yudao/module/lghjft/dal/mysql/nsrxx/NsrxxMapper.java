@@ -2,9 +2,11 @@ package cn.iocoder.yudao.module.lghjft.dal.mysql.nsrxx;
 
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nsrxx.vo.NsrxxPayFormResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nsrxx.NsrxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.nsrxx.vo.NsrxxQueryParam;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -55,4 +57,8 @@ public interface NsrxxMapper extends BaseMapperX<NsrxxDO> {
     }
 
 
+    NsrxxPayFormResVO getNsrdwxxWithAll(@Param("shxydm") String shxydm);
+
+    // 字典查询方法（必须加@Param注解）
+    String getDictLabel(@Param("dictType") String dictType, @Param("dictValue") String dictValue);
 }

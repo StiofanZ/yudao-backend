@@ -5,7 +5,9 @@ import cn.iocoder.yudao.module.lghjft.dal.dataobject.nsrxx.NsrxxDO;
 import java.util.Collection;
 import java.util.List;
 
-/**
+import cn.iocoder.yudao.module.lghjft.controller.admin.nsrxx.vo.NsrxxPayFormResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nsrxx.vo.NsrxxResVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.nsrxx.NsrxxDO;/**
  * 纳税人信息 Service 接口
  *
  * @author 芋道源码
@@ -36,4 +38,5 @@ public interface NsrxxService {
      */
     List<NsrxxDO> getNsrxxList(Collection<String> ids);
 
+    NsrxxPayFormResVO getNsrdwxxByShxydm(String shxydm);
 }

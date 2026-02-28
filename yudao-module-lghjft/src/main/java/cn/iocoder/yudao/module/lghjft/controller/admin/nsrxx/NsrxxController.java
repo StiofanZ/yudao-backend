@@ -2,6 +2,7 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.nsrxx;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nsrxx.vo.NsrxxPayFormResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nsrxx.vo.NsrxxResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jf.ghjf.GhJfDO;
@@ -43,6 +44,13 @@ public class NsrxxController {
     private GhQxSfxxMapper ghQxSfxxMapper;
     @Resource
     private GhJfMapper ghJfMapper;
+//查询纳税人单位信息
+    @GetMapping("/getByDw")
+    public CommonResult<NsrxxPayFormResVO> getByShxydm(@RequestParam("shxydm") String shxydm) {
+        // 2. 调用Service查询并直接返回数据（不封装多余信息）
+        NsrxxPayFormResVO nsrxxPayFormResVO =  nsrxxService.getNsrdwxxByShxydm(shxydm);
+        return success(nsrxxPayFormResVO);
+    }
 
     @GetMapping("/query")
     @Operation(summary = "根据纳税人识别号查询纳税人信息")
@@ -58,7 +66,6 @@ public class NsrxxController {
         
         return success(respVO);
     }
-
     @GetMapping("/list")
     @Operation(summary = "根据社会信用代码或纳税人识别号查询纳税人信息列表")
     @Parameter(name = "code", description = "社会信用代码或纳税人识别号", required = true, example = "91110108551385082Q")

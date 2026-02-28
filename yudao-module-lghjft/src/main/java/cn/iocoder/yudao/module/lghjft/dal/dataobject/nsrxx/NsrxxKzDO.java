@@ -66,7 +66,7 @@ public class NsrxxKzDO {
 
     @TableField("HSFS_DM")
     private String hsfsDm;
-
+//职工总人数
     @TableField("CYRS")
     private BigDecimal cyrs;
 

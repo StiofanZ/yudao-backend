@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.nsrxx.NsrxxMapper">
+
+    <!-- 表单所需字段的结果映射 -->
+    <resultMap id="NsrxxPayFormResultMap" type="cn.iocoder.yudao.module.lghjft.controller.admin.nsrxx.vo.NsrxxPayFormResVO">
+        <result column="SHXYDM"        jdbcType="VARCHAR" property="shxydm"/>        <!-- 社会信用代码 -->
+        <result column="NSRMC"         jdbcType="VARCHAR" property="nsrmc"/>         <!-- 申请汇总缴费单位全称 -->
+        <result column="ZGSWJMC"       jdbcType="VARCHAR" property="zgswjmc"/>       <!-- 主管税务部门（需关联字典表，这里先返回代码，后续转换） -->
+        <result column="ZCDZ"          jdbcType="VARCHAR" property="zcdz"/>          <!-- 缴费单位地址（注册地址） -->
+        <result column="JCGHDM"        jdbcType="VARCHAR" property="jcghdm"/>        <!-- 工会法人登记证件号码（无数据，返回NULL） -->
+        <result column="JCGHMC"        jdbcType="VARCHAR" property="jcghmc"/>        <!-- 缴费单位工会全称（无数据，返回NULL） -->
+        <result column="ZGRS"          jdbcType="DECIMAL" property="zgrs"/>          <!-- 职工总人数（从业人数） -->
+        <result column="GHHYTS"        jdbcType="DECIMAL" property="ghhyts"/>        <!-- 工会会员数（无数据，返回NULL） -->
+        <result column="GHFZR"         jdbcType="VARCHAR" property="ghfzr"/>         <!-- 工会负责人（无数据，返回NULL） -->
+        <result column="CWFZRXM"        jdbcType="VARCHAR" property="lxr"/>          <!-- 财务负责人（无数据，返回NULL） -->
+        <result column="LXDH"          jdbcType="VARCHAR" property="lxdh"/>          <!-- 联系电话（法定代表人移动电话/注册地电话） -->
+        <result column="JCGHZH"        jdbcType="VARCHAR" property="jcghzh"/>        <!-- 工会账户账号（银行账号） -->
+        <result column="JCGHYH"        jdbcType="VARCHAR" property="jcghyh"/>        <!-- 开户银行名称（银行行别代码，后续转换） -->
+        <result column="JCGHHM"        jdbcType="VARCHAR" property="jcghhm"/>        <!-- 工会账户户名（账户名称） -->
+        <result column="JCGHHH"        jdbcType="VARCHAR" property="jcghhh"/>        <!-- 开户银行网点代码（银行营业网点代码） -->
+        <result column="NSRSBH"        jdbcType="VARCHAR" property="nsrsbh"/>        <!-- 纳税人识别号（备用字段） -->
+    </resultMap>
+
+    <!-- 关联三张表查询表单所需数据 -->
+    <select id="getNsrdwxxWithAll" resultMap="NsrxxPayFormResultMap">
+        SELECT
+        NSR.SHXYDM,                          <!-- 社会信用代码 -->
+        NSR.NSRMC,                           <!-- 申请汇总缴费单位全称 -->
+        NSR.ZGSWJ_DM AS ZGSWJMC,             <!-- 主管税务部门（先返回代码，需关联字典表转全称） -->
+        COALESCE(NSR.ZCDZ, NSR.SCJYDZ) AS ZCDZ,  <!-- 缴费单位地址：优先注册地址，无则用生产经营地址 -->
+        NULL AS JCGHDM,                      <!-- 工会法人登记证件号码（无此字段） -->
+        NULL AS JCGHMC,                      <!-- 缴费单位工会全称（无此字段） -->
+        NSR_EXT.CYRS AS ZGRS,                <!-- 职工总人数（从业人数） -->
+        NULL AS GHHYTS,                      <!-- 工会会员数（无此字段） -->
+        NULL AS GHFZR,                       <!-- 工会负责人（无此字段） -->
+        NSR_EXT.CWFZRXM AS CWFZRXM,          <!-- 财务负责人姓名（新增） -->
+        -- 联系电话：优先法定代表人移动电话 → 财务负责人移动电话 → 注册地联系电话（优化核心）
+        COALESCE(NSR_EXT.CWFZRGDDH, NSR_EXT.CWFZRYDDH, NSR_EXT.ZCDLXDH) AS LXDH, <!-- 联系电话：优先法定代表人手机号，无则用注册地电话 -->
+        ACC.YHZH AS JCGHZH,                  <!-- 工会账户账号（银行账号） -->
+        ACC.YHHB_DM AS JCGHYH,               <!-- 开户银行名称（先返回行别代码，需关联字典表转全称） -->
+        ACC.ZHMC AS JCGHHM,                  <!-- 工会账户户名（账户名称） -->
+        ACC.YHYYWD_DM AS JCGHHH,             <!-- 开户银行网点代码（银行营业网点代码） -->
+        NSR.NSRSBH                           <!-- 纳税人识别号 -->
+        FROM
+        dj_nsrxx NSR                         <!-- 纳税人基础信息表 -->
+        LEFT JOIN dj_nsrxx_kz NSR_EXT ON NSR.DJXH = NSR_EXT.DJXH  <!-- 纳税人扩展信息表 -->
+        LEFT JOIN dj_nsrckzhzhxx ACC ON NSR.DJXH = ACC.DJXH                <!-- 存款账户信息表 -->
+        WHERE
+        NSR.YXBZ = 'Y'                       <!-- 有效标志为有效 -->
+        AND NSR.SHXYDM = #{shxydm,jdbcType=VARCHAR}  <!-- 按社会信用代码查询 -->
+        LIMIT 1;
+            </select>
+            <!-- 新增：通用字典查询方法（适配银行、税务局等所有字典） -->
+    <select id="getDictLabel" resultType="java.lang.String">
+        SELECT label
+        FROM system_dict_data
+        WHERE dict_type = #{dictType}
+          AND value = #{dictValue}
+          AND status = '0'
+          AND deleted = 0
+            LIMIT 1;
+    </select>
+</mapper>
