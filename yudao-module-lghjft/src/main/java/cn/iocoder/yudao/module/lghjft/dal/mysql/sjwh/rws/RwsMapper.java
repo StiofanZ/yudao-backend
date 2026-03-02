@@ -1,13 +1,15 @@
-package cn.iocoder.yudao.module.lghjft.dal.mysql.rws;
+package cn.iocoder.yudao.module.lghjft.dal.mysql.sjwh.rws;
 
 import java.util.*;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.rws.RwsDO;
+
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.rws.vo.RwsPageReqVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.rws.RwsDO;
 import org.apache.ibatis.annotations.Mapper;
-import cn.iocoder.yudao.module.lghjft.controller.admin.rws.vo.*;
+
 
 /**
  * 年度任务 Mapper
@@ -25,7 +27,7 @@ public interface RwsMapper extends BaseMapperX<RwsDO> {
                 .eqIfPresent(RwsDO::getDwmc, reqVO.getDwmc())
                 .eqIfPresent(RwsDO::getRws, reqVO.getRws())
                 .eqIfPresent(RwsDO::getWcs, reqVO.getWcs())
-                .orderByDesc(RwsDO::getRwid));
+                .orderByAsc(RwsDO::getRwid));
     }
 
 }

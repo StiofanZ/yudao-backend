@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.lghjft.controller.admin.rws.vo;
+package cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.rws.vo;
 
 import lombok.*;
 import java.util.*;

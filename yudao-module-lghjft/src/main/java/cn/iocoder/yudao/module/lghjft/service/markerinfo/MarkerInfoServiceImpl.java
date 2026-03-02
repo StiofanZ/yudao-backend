@@ -80,12 +80,13 @@ public class MarkerInfoServiceImpl implements MarkerInfoService {
     public MarkerInfoDO getMarkerInfo(Long id) {
         return markerInfoMapper.selectById(id);
     }
-
+//工会列表
     @Override
     public PageResult<MarkerInfoDO> getMarkerInfoPage(MarkerInfoPageReqVO pageReqVO) {
 
         return markerInfoMapper.selectPage(pageReqVO);
     }
+//    标记点周围的工会数据
     @Override
     public List<MarkerInfoDO> getCountyData(Integer xzqhDm) {
         if (xzqhDm == null || xzqhDm <= 0) {

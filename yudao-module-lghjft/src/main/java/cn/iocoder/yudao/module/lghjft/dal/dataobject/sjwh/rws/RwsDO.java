@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.lghjft.dal.dataobject.rws;
+package cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.rws;
 
 import lombok.*;
 
@@ -28,9 +28,17 @@ public class RwsDO extends BaseDO {
      */
     @TableId
     private Integer rwid;
-
+    /**
+     * 任务类型	
+     *
+     * 枚举 {@link TODO sys_rwlx 对应的类}
+     */
     private String rwlx;
-
+    /**
+     * 年度
+     *
+     * 枚举 {@link TODO sys_nd 对应的类}
+     */
     private String nd;
     /**
      * 单位代码
@@ -48,8 +56,6 @@ public class RwsDO extends BaseDO {
      * 完成数
      */
     private String wcs;
-
-
     @TableField(exist = false)  // 告诉MyBatis这个字段不在表中
     private LocalDateTime createTime;
 
@@ -64,4 +70,5 @@ public class RwsDO extends BaseDO {
 
     @TableField(exist = false)
     private Boolean deleted;
+
 }
