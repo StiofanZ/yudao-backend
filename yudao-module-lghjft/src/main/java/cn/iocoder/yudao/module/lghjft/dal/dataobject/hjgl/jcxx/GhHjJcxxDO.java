@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  *
  * @author 芋道源码
  */
-@TableName("gh_hj")
+@TableName("gh_hj_jcxx")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
@@ -292,6 +292,7 @@ public class GhHjJcxxDO extends BaseDO {
     /**
      * 文件地址
      */
+
     private String fileUrl;
 
     /**
@@ -304,9 +305,9 @@ public class GhHjJcxxDO extends BaseDO {
      */
     private LocalDateTime sjtbSj;
 
-    /**
-     * 法定代表人姓名
-     */
-    private String fddbrxm;
+//    /**
+//     * 法定代表人姓名
+//     */
+//    private String fddbrxm;
 
 }
