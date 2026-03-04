@@ -61,4 +61,7 @@ public class JcxxPageReqVO extends PageParam {
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private LocalDateTime endClghrq;
 
+    @Schema(description = "联系电话")
+    private String lxdh;
+
 }

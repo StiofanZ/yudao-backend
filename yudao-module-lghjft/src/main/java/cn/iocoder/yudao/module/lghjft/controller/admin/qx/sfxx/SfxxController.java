@@ -12,7 +12,9 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nsrxx.NsrxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.dlzh.GhQxDlzhDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.sfxx.GhQxSfxxDO;
+import cn.iocoder.yudao.module.lghjft.service.hjgl.jcxx.JcxxService;
 import cn.iocoder.yudao.module.lghjft.service.nsrxx.NsrxxService;
+import cn.iocoder.yudao.module.lghjft.service.qx.SfxxService;
 import cn.iocoder.yudao.module.lghjft.service.qx.dlzh.GhQxDlzhService;
 import cn.iocoder.yudao.module.lghjft.service.qx.sfxx.GhQxSfxxService;
 import cn.iocoder.yudao.module.system.api.dept.DeptApi;
@@ -23,7 +25,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,6 @@ import java.util.stream.Collectors;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertMap;
 import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertSet;
-import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 @Tag(name = "管理后台 - 身份信息")
 @RestController
@@ -47,7 +47,6 @@ public class SfxxController {
 
     @Resource
     private GhQxSfxxService ghQxSfxxService;
-    @Autowired
     @Resource
     private GhQxDlzhService ghQxDlzhService;
     @Resource
@@ -56,6 +55,10 @@ public class SfxxController {
     private DeptApi deptApi;
     @Resource
     private AdminUserApi adminUserApi;
+    @Resource
+    private JcxxService jcxxService;
+    @Resource
+    private SfxxService sfxxService;
 
     @PostMapping("/create")
     @Operation(summary = "创建身份信息")
@@ -93,12 +96,8 @@ public class SfxxController {
     @GetMapping("/get-kbdsfxx")
     @Operation(summary = "获得可绑定身份信息")
     @PreAuthorize("@ss.hasPermission('lghjft:qx-sfxx:query')")
-    public CommonResult<List<KbdsfxxRespVO>> getKbdsfxx() {
-        GhQxDlzhDO ghQxDlzhDO = ghQxDlzhService.getDlzh(getLoginUserId());
-        if (ghQxDlzhDO == null || StrUtil.isBlank(ghQxDlzhDO.getLxdh())) {
-            return success(Collections.emptyList());
-        }
-        return success(ghQxSfxxService.getKbdsfxxList(ghQxDlzhDO.getLxdh()));
+    public CommonResult<PageResult<KbdsfxxRespVO>> getKbdsfxx(@Valid SfxxPageReqVO pageReqVO) {
+        return success(sfxxService.getKbdsfxx(pageReqVO));
     }
 
     @GetMapping("/get")

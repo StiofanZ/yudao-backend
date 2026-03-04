@@ -1,10 +1,12 @@
 package cn.iocoder.yudao.module.lghjft.controller.app.qx.sfxx;
 
-import cn.hutool.core.util.StrUtil;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.KbdsfxxRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.app.qx.sfxx.vo.SfxxAppPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.qx.sfxx.vo.SfxxAppSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.dlzh.GhQxDlzhDO;
+import cn.iocoder.yudao.module.lghjft.service.hjgl.jcxx.JcxxService;
+import cn.iocoder.yudao.module.lghjft.service.qx.SfxxService;
 import cn.iocoder.yudao.module.lghjft.service.qx.dlzh.GhQxDlzhService;
 import cn.iocoder.yudao.module.lghjft.service.qx.sfxx.GhQxSfxxService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,11 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.List;
-
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
-import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 @Tag(name = "用户 App - 身份信息")
 @RestController
@@ -30,6 +28,10 @@ public class SfxxAppController {
     private GhQxSfxxService ghQxSfxxService;
     @Resource
     private GhQxDlzhService ghQxDlzhService;
+    @Resource
+    private JcxxService jcxxService;
+    @Resource
+    private SfxxService sfxxService;
 
     @PostMapping("/create")
     @Operation(summary = "创建身份信息")
@@ -56,15 +58,11 @@ public class SfxxAppController {
         return success(true);
     }
 
-    @GetMapping("/get-kbdsfxx")
+    @PostMapping("/get-kbdsfxx")
     @Operation(summary = "获得可绑定身份信息")
     @PreAuthorize("isAuthenticated()")
-    public CommonResult<List<KbdsfxxRespVO>> getKbdsfxx() {
-        GhQxDlzhDO ghQxDlzhDO = ghQxDlzhService.getDlzh(getLoginUserId());
-        if (ghQxDlzhDO == null || StrUtil.isBlank(ghQxDlzhDO.getLxdh())) {
-            return success(Collections.emptyList());
-        }
-        return success(ghQxSfxxService.getKbdsfxxList(ghQxDlzhDO.getLxdh()));
+    public CommonResult<PageResult<KbdsfxxRespVO>> getKbdsfxx(@Valid @RequestBody SfxxAppPageReqVO pageReqVO) {
+        return success(sfxxService.getKbdsfxx(pageReqVO));
     }
 
 }

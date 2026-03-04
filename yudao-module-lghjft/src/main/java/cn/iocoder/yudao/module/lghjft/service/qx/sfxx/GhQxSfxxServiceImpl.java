@@ -62,6 +62,11 @@ public class GhQxSfxxServiceImpl implements GhQxSfxxService {
     }
 
     @Override
+    public GhQxSfxxDO getSfxx(Long dlzhId, String djxh) {
+        return ghQxSfxxMapper.selectOne(GhQxSfxxDO::getDlzhId, dlzhId, GhQxSfxxDO::getDjxh, djxh);
+    }
+
+    @Override
     public PageResult<GhQxSfxxDO> getSfxxPage(SfxxPageReqVO pageReqVO) {
         return ghQxSfxxMapper.selectPage(pageReqVO);
     }
@@ -89,11 +94,6 @@ public class GhQxSfxxServiceImpl implements GhQxSfxxService {
         ghQxSfxxMapper.updateById(updateObj);
         // 逻辑删除
         ghQxSfxxMapper.deleteById(id);
-    }
-
-    @Override
-    public List<cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.KbdsfxxRespVO> getKbdsfxxList(String lxdh) {
-        return ghQxSfxxMapper.selectKbdsfxxList(lxdh);
     }
 
     private void validateSfxxExists(Long id) {

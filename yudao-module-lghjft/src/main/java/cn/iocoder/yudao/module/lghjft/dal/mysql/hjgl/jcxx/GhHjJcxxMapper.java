@@ -28,6 +28,7 @@ public interface GhHjJcxxMapper extends BaseMapperX<GhHjJcxxDO> {
                 .eqIfPresent(GhHjJcxxDO::getGhlbDm, reqVO.getGhlbDm())
                 .eqIfPresent(GhHjJcxxDO::getXtlbDm, reqVO.getXtlbDm())
                 .eqIfPresent(GhHjJcxxDO::getClghbj, reqVO.getClghbj())
+                .eqIfPresent(GhHjJcxxDO::getLxdh, reqVO.getLxdh())
                 .betweenIfPresent(GhHjJcxxDO::getClghrq, reqVO.getBeginClghrq(), reqVO.getEndClghrq())
                 .orderByDesc(GhHjJcxxDO::getUpdateTime));
     }
