@@ -41,7 +41,7 @@ public class JcxxAppController {
     @GetMapping("/get")
     @Operation(summary = "获得户籍管理/基础信息")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:hjgl-jcxx:query')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<JcxxRespVO> getJcxx(@RequestParam("id") String id) {
         GhHjJcxxDO jcxx = jcxxService.getJcxx(id);
         return success(BeanUtils.toBean(jcxx, JcxxRespVO.class));
@@ -50,7 +50,7 @@ public class JcxxAppController {
 
     @GetMapping("/query-nsrxx")
     @Operation(summary = "查询纳税人信息")
-    @PreAuthorize("@ss.hasPermission('lghjft:hjgl-jcxx:query')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<List<NsrxxRespVO>> queryNsrxx(@Valid NsrxxQueryReqVO queryReqVO) {
         List<NsrxxDO> nsrxxList = nsrxxService.getNsrxxList(queryReqVO.getKeyword());
         return success(nsrxxList.stream().map(nsrxx -> {

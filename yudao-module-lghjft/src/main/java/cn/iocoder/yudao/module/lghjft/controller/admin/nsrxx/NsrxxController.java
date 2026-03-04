@@ -44,7 +44,8 @@ public class NsrxxController {
     private GhQxSfxxMapper ghQxSfxxMapper;
     @Resource
     private GhJfMapper ghJfMapper;
-//查询纳税人单位信息
+
+    //查询纳税人单位信息
     @GetMapping("/getByDw")
     public CommonResult<NsrxxPayFormResVO> getByShxydm(@RequestParam("shxydm") String shxydm) {
         // 2. 调用Service查询并直接返回数据（不封装多余信息）

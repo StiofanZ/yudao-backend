@@ -1298,4 +1298,120 @@ CREATE TABLE `gh_hj_jcxx`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci COMMENT ='基层账户空需维护对象'
 
+CREATE VIEW `v_system_dept` AS
+with recursive `dept` as (select `system_dept`.`id`             AS `id`,
+                                 `system_dept`.`name`           AS `name`,
+                                 `system_dept`.`parent_id`      AS `parent_id`,
+                                 `system_dept`.`sort`           AS `sort`,
+                                 `system_dept`.`leader_user_id` AS `leader_user_id`,
+                                 `system_dept`.`phone`          AS `phone`,
+                                 `system_dept`.`email`          AS `email`,
+                                 `system_dept`.`status`         AS `status`,
+                                 `system_dept`.`creator`        AS `creator`,
+                                 `system_dept`.`create_time`    AS `create_time`,
+                                 `system_dept`.`updater`        AS `updater`,
+                                 `system_dept`.`update_time`    AS `update_time`,
+                                 `system_dept`.`deleted`        AS `deleted`,
+                                 `system_dept`.`tenant_id`      AS `tenant_id`,
+                                 `system_dept`.`id`             AS `root_id`,
+                                 1                              AS `level`,
+                                 0                              AS `is_leaf`
+                          from `system_dept`
+                          union all
+                          select `d`.`id`             AS `id`,
+                                 `d`.`name`           AS `name`,
+                                 `d`.`parent_id`      AS `parent_id`,
+                                 `d`.`sort`           AS `sort`,
+                                 `d`.`leader_user_id` AS `leader_user_id`,
+                                 `d`.`phone`          AS `phone`,
+                                 `d`.`email`          AS `email`,
+                                 `d`.`status`         AS `status`,
+                                 `d`.`creator`        AS `creator`,
+                                 `d`.`create_time`    AS `create_time`,
+                                 `d`.`updater`        AS `updater`,
+                                 `d`.`update_time`    AS `update_time`,
+                                 `d`.`deleted`        AS `deleted`,
+                                 `d`.`tenant_id`      AS `tenant_id`,
+                                 `t`.`root_id`        AS `root_id`,
+                                 (`t`.`level` + 1)    AS `t.level + 1`,
+                                 1                    AS `is_leaf`
+                          from (`system_dept` `d` join `dept` `t` on ((`d`.`parent_id` = `t`.`id`))))
+select `dept`.`id`             AS `id`,
+       `dept`.`name`           AS `name`,
+       `dept`.`parent_id`      AS `parent_id`,
+       `dept`.`sort`           AS `sort`,
+       `dept`.`leader_user_id` AS `leader_user_id`,
+       `dept`.`phone`          AS `phone`,
+       `dept`.`email`          AS `email`,
+       `dept`.`status`         AS `status`,
+       `dept`.`creator`        AS `creator`,
+       `dept`.`create_time`    AS `create_time`,
+       `dept`.`updater`        AS `updater`,
+       `dept`.`update_time`    AS `update_time`,
+       `dept`.`deleted`        AS `deleted`,
+       `dept`.`tenant_id`      AS `tenant_id`,
+       `dept`.`root_id`        AS `root_id`,
+       `dept`.`level`          AS `level`,
+       `dept`.`is_leaf`        AS `is_leaf`
+from `dept`
+
+CREATE VIEW `v_system_dept_reverse` AS
+with recursive `dept` as (select `system_dept`.`id`             AS `id`,
+                                 `system_dept`.`name`           AS `name`,
+                                 `system_dept`.`parent_id`      AS `parent_id`,
+                                 `system_dept`.`sort`           AS `sort`,
+                                 `system_dept`.`leader_user_id` AS `leader_user_id`,
+                                 `system_dept`.`phone`          AS `phone`,
+                                 `system_dept`.`email`          AS `email`,
+                                 `system_dept`.`status`         AS `status`,
+                                 `system_dept`.`creator`        AS `creator`,
+                                 `system_dept`.`create_time`    AS `create_time`,
+                                 `system_dept`.`updater`        AS `updater`,
+                                 `system_dept`.`update_time`    AS `update_time`,
+                                 `system_dept`.`deleted`        AS `deleted`,
+                                 `system_dept`.`tenant_id`      AS `tenant_id`,
+                                 `system_dept`.`id`             AS `root_id`,
+                                 1                              AS `level`,
+                                 0                              AS `is_leaf`
+                          from `system_dept`
+                          union all
+                          select `d`.`id`             AS `id`,
+                                 `d`.`name`           AS `name`,
+                                 `d`.`parent_id`      AS `parent_id`,
+                                 `d`.`sort`           AS `sort`,
+                                 `d`.`leader_user_id` AS `leader_user_id`,
+                                 `d`.`phone`          AS `phone`,
+                                 `d`.`email`          AS `email`,
+                                 `d`.`status`         AS `status`,
+                                 `d`.`creator`        AS `creator`,
+                                 `d`.`create_time`    AS `create_time`,
+                                 `d`.`updater`        AS `updater`,
+                                 `d`.`update_time`    AS `update_time`,
+                                 `d`.`deleted`        AS `deleted`,
+                                 `d`.`tenant_id`      AS `tenant_id`,
+                                 `t`.`root_id`        AS `root_id`,
+                                 (`t`.`level` + 1)    AS `t.level + 1`,
+                                 1                    AS `is_leaf`
+                          from (`system_dept` `d` join `dept` `t` on ((`d`.`id` = `t`.`parent_id`))))
+select `dept`.`id`             AS `id`,
+       `dept`.`name`           AS `name`,
+       `dept`.`parent_id`      AS `parent_id`,
+       `dept`.`sort`           AS `sort`,
+       `dept`.`leader_user_id` AS `leader_user_id`,
+       `dept`.`phone`          AS `phone`,
+       `dept`.`email`          AS `email`,
+       `dept`.`status`         AS `status`,
+       `dept`.`creator`        AS `creator`,
+       `dept`.`create_time`    AS `create_time`,
+       `dept`.`updater`        AS `updater`,
+       `dept`.`update_time`    AS `update_time`,
+       `dept`.`deleted`        AS `deleted`,
+       `dept`.`tenant_id`      AS `tenant_id`,
+       `dept`.`root_id`        AS `root_id`,
+       `dept`.`level`          AS `level`,
+       `dept`.`is_leaf`        AS `is_leaf`
+from `dept`
+
+
+
 
