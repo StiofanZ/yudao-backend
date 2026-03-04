@@ -49,7 +49,6 @@ import cn.iocoder.yudao.module.system.service.user.AdminUserService;
 import cn.iocoder.yudao.module.system.service.user.AdminUserServiceImpl;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -108,24 +107,8 @@ public class AuthenticateServiceImpl implements AuthenticateService {
     public AuthorizeResVO login(AuthorizeReqVO reqVO) {
         AuthorizeResVO resVO = new AuthorizeResVO();
         resVO.setYhlx(reqVO.getYhlx());
-        GhQxDlzhDO userDO = null;
-        // 1.账号、手机、邮箱、社会信用代码采用新逻辑登录
-        if (StringUtils.isNotBlank(reqVO.getYhzh())) {
-            userDO = ghQxDlzhMapper.selectByYhzh(reqVO.getYhzh());
-            resVO.setDlzh(reqVO.getYhzh());
-            resVO.setDlfs(LoginTypeEnum.LOGIN_USERNAME.getType());
-        } else if (StringUtils.isNotBlank(reqVO.getLxdh())) {
-            userDO = ghQxDlzhMapper.selectByLxdh(reqVO.getLxdh());
-            resVO.setDlfs(LoginTypeEnum.LOGIN_MOBILE.getType());
-        } else if (StringUtils.isNotBlank(reqVO.getYhyx())) {
-            userDO = ghQxDlzhMapper.selectByYhyx(reqVO.getYhyx());
-            resVO.setDlzh(reqVO.getYhyx());
-            resVO.setDlfs(LoginTypeEnum.LOGIN_EMAIL.getType());
-        } else if (StringUtils.isNotBlank(reqVO.getShxydm())) {
-            userDO = ghQxDlzhMapper.selectByShxydm(reqVO.getShxydm());
-            resVO.setDlzh(reqVO.getShxydm());
-            resVO.setDlfs(LoginTypeEnum.LOGIN_SHXYDM.getType());
-        }
+        GhQxDlzhDO userDO = ghQxDlzhMapper.selectOne(reqVO.getLxdh(), reqVO.getYhzh(), reqVO.getShxydm(), reqVO.getYhyx());
+
         if (Objects.isNull(userDO)) {
             // 使用账号密码，兼容原系统登录
             AdminUserDO user = adminAuthService.authenticate(reqVO.getYhzh(), reqVO.getPassword());
@@ -153,6 +136,23 @@ public class AuthenticateServiceImpl implements AuthenticateService {
             if (Objects.equals(userDO.getStatus(), 1)) { // 1 是停用
                 throw exception(AUTH_LOGIN_USER_DISABLED);
             }
+
+            if (Objects.nonNull(userDO.getYhzh()) && userDO.getYhzh().equals(reqVO.getYhzh())) {
+                resVO.setDlfs(LoginTypeEnum.LOGIN_USERNAME.getType());
+                resVO.setDlzh(reqVO.getYhzh());
+            } else if (Objects.nonNull(userDO.getLxdh()) && userDO.getLxdh().equals(reqVO.getLxdh())) {
+                resVO.setDlfs(LoginTypeEnum.LOGIN_MOBILE.getType());
+                resVO.setDlzh(reqVO.getLxdh());
+            } else if (Objects.nonNull(userDO.getYhyx()) && userDO.getYhyx().equals(reqVO.getYhyx())) {
+                resVO.setDlfs(LoginTypeEnum.LOGIN_EMAIL.getType());
+                resVO.setDlzh(reqVO.getYhyx());
+            } else if (Objects.nonNull(userDO.getShxydm()) && userDO.getShxydm().equals(reqVO.getShxydm())) {
+                resVO.setDlfs(LoginTypeEnum.LOGIN_SHXYDM.getType());
+                resVO.setDlzh(reqVO.getShxydm());
+            } else {
+                throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
+            }
+
             // 3.3 更新登录信息到业务表（最后登录时间/IP）
             userDO.setLoginIp(ServletUtils.getClientIP());
             userDO.setLoginDate(LocalDateTime.now());
@@ -250,7 +250,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
         }
 
         // 7. 获取新表用户信息
-        GhQxDlzhDO userDO = ghQxDlzhMapper.selectByYhzh(user.getUsername());
+        GhQxDlzhDO userDO = ghQxDlzhMapper.selectOne(GhQxDlzhDO::getYhzh, user.getUsername());
         if (userDO == null) {
             throw exception(USER_NOT_EXISTS);
         }
@@ -290,8 +290,10 @@ public class AuthenticateServiceImpl implements AuthenticateService {
                     dwQxSf.setZgghId(deptDO.getId());
                     dwQxSf.setZgghMc(deptDO.getName());
                     DeptDO sjDeptDO = deptMapper.selectById(deptDO.getParentId());
-                    dwQxSf.setSjZgghId(sjDeptDO.getId());
-                    dwQxSf.setSjZgghMc(sjDeptDO.getName());
+                    if (sjDeptDO != null) {
+                        dwQxSf.setSjZgghId(sjDeptDO.getId());
+                        dwQxSf.setSjZgghMc(sjDeptDO.getName());
+                    }
                     dwQxSf.setSfxxId(sfxx.getId());
                     return dwQxSf;
                 }).toList();

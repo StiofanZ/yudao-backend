@@ -104,7 +104,7 @@ public class GhQxDlzhServiceImpl implements GhQxDlzhService {
 
     private void validateUnique(Long id, DlzhSaveReqVO reqVO) {
         if (StringUtils.isNotBlank(reqVO.getYhzh())) {
-            GhQxDlzhDO exist = ghQxDlzhMapper.selectByYhzh(reqVO.getYhzh());
+            GhQxDlzhDO exist = ghQxDlzhMapper.selectOne(GhQxDlzhDO::getYhzh, reqVO.getYhzh());
             if (exist != null && !Objects.equals(exist.getId(), id)) {
                 throw exception(DLZH_YHZH_EXISTS);
             }
@@ -114,19 +114,19 @@ public class GhQxDlzhServiceImpl implements GhQxDlzhService {
             }
         }
         if (StringUtils.isNotBlank(reqVO.getLxdh())) {
-            GhQxDlzhDO exist = ghQxDlzhMapper.selectByLxdh(reqVO.getLxdh());
+            GhQxDlzhDO exist = ghQxDlzhMapper.selectOne(GhQxDlzhDO::getLxdh, reqVO.getLxdh());
             if (exist != null && !Objects.equals(exist.getId(), id)) {
                 throw exception(DLZH_LXDH_EXISTS);
             }
         }
         if (StringUtils.isNotBlank(reqVO.getYhyx())) {
-            GhQxDlzhDO exist = ghQxDlzhMapper.selectByYhyx(reqVO.getYhyx());
+            GhQxDlzhDO exist = ghQxDlzhMapper.selectOne(GhQxDlzhDO::getYhyx, reqVO.getYhyx());
             if (exist != null && !Objects.equals(exist.getId(), id)) {
                 throw exception(DLZH_YHYX_EXISTS);
             }
         }
         if (StringUtils.isNotBlank(reqVO.getShxydm())) {
-            GhQxDlzhDO exist = ghQxDlzhMapper.selectByShxydm(reqVO.getShxydm());
+            GhQxDlzhDO exist = ghQxDlzhMapper.selectOne(GhQxDlzhDO::getShxydm, reqVO.getShxydm());
             if (exist != null && !Objects.equals(exist.getId(), id)) {
                 throw exception(DLZH_SHXYDM_EXISTS);
             }

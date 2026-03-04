@@ -47,7 +47,12 @@ public class AuthorizeAppController {
     @PermitAll
     @Operation(summary = "授权登录")
     public CommonResult<AuthorizeAppResVO> login(@RequestBody @Valid AuthorizeAppReqVO appReqVO) {
-        AuthorizeReqVO reqVO=BeanUtils.toBean(appReqVO, AuthorizeReqVO.class);
+        AuthorizeReqVO reqVO = new AuthorizeReqVO();
+        reqVO.setYhzh(appReqVO.getDlzh());
+        reqVO.setYhyx(appReqVO.getDlzh());
+        reqVO.setShxydm(appReqVO.getDlzh());
+        reqVO.setLxdh(appReqVO.getDlzh());
+        reqVO.setPassword(appReqVO.getPassword());
         reqVO.setYhlx(UserTypeEnum.MEMBER.getValue());
         AuthorizeResVO resVO = authenticateService.login(reqVO);
         return success(BeanUtils.toBean(resVO, AuthorizeAppResVO.class));

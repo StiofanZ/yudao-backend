@@ -20,7 +20,6 @@ import cn.iocoder.yudao.module.lghjft.dal.mysql.auth.GhCsSsoMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.dlzh.GhQxDlzhMapper;
 import cn.iocoder.yudao.module.lghjft.framework.auth.config.LghJftAppAuthProperties;
 import cn.iocoder.yudao.module.lghjft.service.auth.AuthenticateService;
-import cn.iocoder.yudao.module.lghjft.service.auth.AuthenticateServiceImpl;
 import cn.iocoder.yudao.module.system.api.logger.dto.LoginLogCreateReqDTO;
 import cn.iocoder.yudao.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
@@ -158,7 +157,7 @@ public class AppAuthenticateServiceImpl implements  AppAuthenticateService{
         }
 
         // 8. 获取新表用户信息
-        GhQxDlzhDO userDO = ghQxDlzhMapper.selectByYhzh(user.getUsername());
+        GhQxDlzhDO userDO = ghQxDlzhMapper.selectOne(GhQxDlzhDO::getYhzh, user.getUsername());
         if (userDO == null) {
             throw exception(USER_NOT_EXISTS);
         }

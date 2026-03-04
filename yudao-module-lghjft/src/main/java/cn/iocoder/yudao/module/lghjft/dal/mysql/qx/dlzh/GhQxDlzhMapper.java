@@ -12,30 +12,37 @@ public interface GhQxDlzhMapper extends BaseMapperX<GhQxDlzhDO> {
 
     default PageResult<GhQxDlzhDO> selectPage(DlzhReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<GhQxDlzhDO>()
-                .likeIfPresent(GhQxDlzhDO::getYhzh, reqVO.getYhzh())
-                .likeIfPresent(GhQxDlzhDO::getYhxm, reqVO.getYhxm())
-                .likeIfPresent(GhQxDlzhDO::getLxdh, reqVO.getLxdh())
-                .likeIfPresent(GhQxDlzhDO::getYhyx, reqVO.getYhyx())
-                .likeIfPresent(GhQxDlzhDO::getShxydm, reqVO.getShxydm())
+                .eqIfPresent(GhQxDlzhDO::getYhzh, reqVO.getYhzh())
+                .eqIfPresent(GhQxDlzhDO::getYhxm, reqVO.getYhxm())
+                .eqIfPresent(GhQxDlzhDO::getLxdh, reqVO.getLxdh())
+                .eqIfPresent(GhQxDlzhDO::getYhyx, reqVO.getYhyx())
+                .eqIfPresent(GhQxDlzhDO::getShxydm, reqVO.getShxydm())
                 .eqIfPresent(GhQxDlzhDO::getStatus, reqVO.getStatus())
                 .betweenIfPresent(GhQxDlzhDO::getCreateTime, reqVO.getCreateTime())
                 .orderByDesc(GhQxDlzhDO::getId));
     }
 
-    default GhQxDlzhDO selectByYhzh(String yhzh) {
-        return selectOne(GhQxDlzhDO::getYhzh, yhzh);
+    default GhQxDlzhDO selectOne(DlzhReqVO reqVO) {
+        return selectOne(new LambdaQueryWrapperX<GhQxDlzhDO>()
+                .eq(GhQxDlzhDO::getYhzh, reqVO.getYhzh())
+                .or()
+                .eq(GhQxDlzhDO::getYhyx, reqVO.getYhyx())
+                .or()
+                .eq(GhQxDlzhDO::getShxydm, reqVO.getShxydm())
+                .or()
+                .eq(GhQxDlzhDO::getLxdh, reqVO.getLxdh()));
     }
 
-    default GhQxDlzhDO selectByLxdh(String lxdh) {
-        return selectOne(GhQxDlzhDO::getLxdh, lxdh);
+    default GhQxDlzhDO selectOne(String lxdh, String yhzh, String shxydm, String yhyx) {
+        return selectOne(new LambdaQueryWrapperX<GhQxDlzhDO>()
+                .eq(GhQxDlzhDO::getDeleted, 0)
+                .and(w -> w.eq(GhQxDlzhDO::getLxdh, lxdh)
+                        .or()
+                        .eq(GhQxDlzhDO::getYhzh, yhzh)
+                        .or()
+                        .eq(GhQxDlzhDO::getShxydm, shxydm)
+                        .or()
+                        .eq(GhQxDlzhDO::getYhyx, yhyx))
+        );
     }
-
-    default GhQxDlzhDO selectByYhyx(String yhyx) {
-        return selectOne(GhQxDlzhDO::getYhyx, yhyx);
-    }
-
-    default GhQxDlzhDO selectByShxydm(String shxydm) {
-        return selectOne(GhQxDlzhDO::getShxydm, shxydm);
-    }
-
 }
