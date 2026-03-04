@@ -105,7 +105,7 @@ public class HkxxPageReqVO extends PageParam {
     @Schema(description = "结束划款批次号")
     private String endHkpch;
 
-    @Schema(description = "开始确认日期")
+    @Schema(description = "确认确认日期")
     @org.springframework.format.annotation.DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private Date beginQrrq;
 
