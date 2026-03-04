@@ -8,7 +8,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@TableName("gh_qx_dlzh")
+    @TableName("gh_qx_dlzh")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)

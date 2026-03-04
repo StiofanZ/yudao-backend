@@ -1,0 +1,120 @@
+package cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jfmx;
+
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxRespVO;
+import org.apache.poi.ss.formula.functions.T;
+import org.springframework.web.bind.annotation.*;
+import jakarta.annotation.Resource;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.security.access.prepost.PreAuthorize;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Operation;
+
+import jakarta.validation.constraints.*;
+import jakarta.validation.*;
+import jakarta.servlet.http.*;
+import java.util.*;
+import java.io.IOException;
+
+import cn.iocoder.yudao.framework.common.pojo.PageParam;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
+import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
+
+import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
+
+import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
+import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.*;
+
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jfmx.vo.*;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jfmx.JfDO;
+import cn.iocoder.yudao.module.lghjft.service.hbzz.jfmx.JfService;
+
+@Tag(name = "管理后台 -  经费明细对象")
+@RestController
+@RequestMapping("/lghjft/jf")
+@Validated
+public class JfController {
+
+    @Resource
+    private JfService jfService;
+
+
+    /**
+     * 查询经费明细列表
+     */
+    @GetMapping("/listmx")
+    @Operation(summary = "获得 经费明细对象明细")
+//    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+    public CommonResult<PageResult<JfRespVO>> list(@Valid JfPageReqVO jfmx) {
+        PageResult<JfRespVO> pageResult = jfService.selectJftzmxList(jfmx);
+        return success(BeanUtils.toBean(pageResult, JfRespVO.class));
+    }
+
+
+
+//    @PostMapping("/create")
+//    @Operation(summary = "创建 经费明细对象")
+//    @PreAuthorize("@ss.hasPermission('lghjft:jf:create')")
+//    public CommonResult<Integer> createJf(@Valid @RequestBody JfSaveReqVO createReqVO) {
+//        return success(jfService.createJf(createReqVO));
+//    }
+//
+//    @PutMapping("/update")
+//    @Operation(summary = "更新 经费明细对象")
+//    @PreAuthorize("@ss.hasPermission('lghjft:jf:update')")
+//    public CommonResult<Boolean> updateJf(@Valid @RequestBody JfSaveReqVO updateReqVO) {
+//        jfService.updateJf(updateReqVO);
+//        return success(true);
+//    }
+//
+//    @DeleteMapping("/delete")
+//    @Operation(summary = "删除 经费明细对象")
+//    @Parameter(name = "id", description = "编号", required = true)
+//    @PreAuthorize("@ss.hasPermission('lghjft:jf:delete')")
+//    public CommonResult<Boolean> deleteJf(@RequestParam("id") Integer id) {
+//        jfService.deleteJf(id);
+//        return success(true);
+//    }
+//
+//    @DeleteMapping("/delete-list")
+//    @Parameter(name = "ids", description = "编号", required = true)
+//    @Operation(summary = "批量删除 经费明细对象")
+//                @PreAuthorize("@ss.hasPermission('lghjft:jf:delete')")
+//    public CommonResult<Boolean> deleteJfList(@RequestParam("ids") List<Integer> ids) {
+//        jfService.deleteJfListByIds(ids);
+//        return success(true);
+//    }
+//
+//    @GetMapping("/get")
+//    @Operation(summary = "获得 经费明细对象")
+//    @Parameter(name = "id", description = "编号", required = true, example = "1024")
+//    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+//    public CommonResult<JfRespVO> getJf(@RequestParam("id") Integer id) {
+//        JfDO jf = jfService.getJf(id);
+//        return success(BeanUtils.toBean(jf, JfRespVO.class));
+//    }
+//
+//    @GetMapping("/page")
+//    @Operation(summary = "获得 经费明细对象分页")
+//    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+//    public CommonResult<PageResult<JfRespVO>> getJfPage(@Valid JfPageReqVO pageReqVO) {
+//        PageResult<JfDO> pageResult = jfService.getJfPage(pageReqVO);
+//        return success(BeanUtils.toBean(pageResult, JfRespVO.class));
+//    }
+//
+    @GetMapping("/export-excel")
+    @Operation(summary = "导出 经费明细对象 Excel")
+    @PreAuthorize("@ss.hasPermission('lghjft:jf:export')")
+    @ApiAccessLog(operateType = EXPORT)
+    public void exportJfExcel(@Valid JfPageReqVO pageReqVO,
+              HttpServletResponse response) throws IOException {
+        pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
+        List<JfRespVO> list = jfService.selectJftzmxList(pageReqVO).getList();
+        // 导出 Excel
+        ExcelUtils.write(response, " 经费明细对象.xls", "数据", JfRespVO.class,
+                        BeanUtils.toBean(list, JfRespVO.class));
+    }
+
+}

@@ -16,7 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface YhwdMapper extends BaseMapperX<YhwdDO> {
 
-    default PageResult<YhwdDO> selectPage(YhwdPageReqVO reqVO) {
+        default PageResult<YhwdDO> selectPage(YhwdPageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<YhwdDO>()
                 .eqIfPresent(YhwdDO::getYhhbDm, reqVO.getYhhbDm())
                 .eqIfPresent(YhwdDO::getYhwdDm, reqVO.getYhwdDm())
@@ -28,8 +28,8 @@ public interface YhwdMapper extends BaseMapperX<YhwdDO> {
                 .eqIfPresent(YhwdDO::getSxh, reqVO.getSxh())
                 .eqIfPresent(YhwdDO::getYxqz, reqVO.getYxqz())
                 .eqIfPresent(YhwdDO::getWddz, reqVO.getWddz())
-                .eqIfPresent(YhwdDO::getWddh, reqVO.getWddh())
-                .orderByDesc(YhwdDO::getYhhbId));
+                .eqIfPresent(YhwdDO::getWddh, reqVO.getWddh()));
+
     }
 
 }

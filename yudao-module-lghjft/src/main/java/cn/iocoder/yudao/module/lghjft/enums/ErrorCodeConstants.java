@@ -37,4 +37,8 @@ public interface ErrorCodeConstants {
     ErrorCode GH_HJ_JCXX_NOT_EXISTS = new ErrorCode(2_017_000_001, "户籍基础信息不存在");
     ErrorCode GH_HJ_JCXX_DJXH_EXISTS = new ErrorCode(2_017_000_002, "户籍基础信息登记序号已存在");
     ErrorCode GH_JF_NOT_EXISTS = new ErrorCode(2_018_000_001, "税务入库不存在");
+    ErrorCode JHDWYDS_NOT_EXISTS = new ErrorCode(2_018_000_002 , "应代收单位不存在");
+
+    ErrorCode HKXX_NOT_EXISTS = new ErrorCode(2_019_000_001, "基层经费到账对象不存在");
+    ErrorCode JF_NOT_EXISTS = new ErrorCode(2_019_000_002, " 经费明细对象不存在");
 }

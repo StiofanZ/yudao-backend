@@ -14,7 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface GhHjJcxxMapper extends BaseMapperX<GhHjJcxxDO> {
-
     default PageResult<GhHjJcxxDO> selectPage(JcxxPageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<GhHjJcxxDO>()
                 .eqIfPresent(GhHjJcxxDO::getDeptId, reqVO.getDeptId())

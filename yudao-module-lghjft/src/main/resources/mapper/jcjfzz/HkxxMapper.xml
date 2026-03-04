@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.hbzz.jcjfzz.HkxxMapper">
+
+    <!-- 主表映射 -->
+    <resultMap id="HkxxBaseMap" type="cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jcjfzz.HkxxDO">
+        <result property="hkxxId" column="HKXX_ID"/>
+        <result property="hkpch" column="HKPCH"/>
+        <result property="xh" column="XH"/>
+        <result property="lx" column="LX"/>
+        <result property="zh" column="ZH"/>
+        <result property="hm" column="HM"/>
+        <result property="hh" column="HH"/>
+        <result property="xzh" column="XZH"/>
+        <result property="xhm" column="XHM"/>
+        <result property="xhh" column="XHH"/>
+        <result property="je" column="JE"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="dz" column="DZ"/>
+        <result property="fy" column="FY"/>
+        <result property="jym" column="JYM"/>
+        <result property="thbj" column="THBJ"/>
+        <result property="thrq" column="THRQ"/>
+        <result property="thyy" column="THYY"/>
+        <result property="xgbj" column="XGBJ"/>
+        <result property="schkpch" column="SCHKPCH"/>
+        <result property="bz" column="BZ"/>
+        <result property="scbz" column="SCBZ"/>
+        <result property="xgr" column="xgr"/>
+        <result property="xgsj" column="xgsj"/>
+        <result property="createBy" column="CREATE_BY"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateBy" column="UPDATE_BY"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+    </resultMap>
+
+    <!-- 子表映射 -->
+    <resultMap id="HkxxQrszMap" type="cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jcjfzz.HkxxQrszDO">
+        <result property="hkxxId" column="sub_HKXX_ID"/>
+        <result property="ghHkxxJym" column="sub_GH_HKXX_JYM"/>
+        <result property="dzbj" column="sub_DZBJ"/>
+        <result property="qrrq" column="sub_QRRQ"/>
+        <result property="yhhdh" column="sub_YHHDH"/>
+        <result property="bz" column="sub_BZ"/>
+        <result property="createBy" column="sub_CREATE_BY"/>
+        <result property="createTime" column="sub_CREATE_TIME"/>
+        <result property="updateBy" column="sub_UPDATE_BY"/>
+        <result property="updateTime" column="sub_UPDATE_TIME"/>
+    </resultMap>
+
+    <!-- 主表 + 子表集合（详情用） -->
+    <resultMap id="HkxxResultMap" type="cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jcjfzz.HkxxDO" extends="HkxxBaseMap">
+        <result property="qrrq" column="QRRQ"/>
+        <result property="dzbj" column="DZBJ"/>
+        <result property="yhhdh" column="YHHDH"/>
+        <!-- 去掉 notNullColumn，只保留这行 -->
+        <collection property="jcjfdzList" javaType="java.util.ArrayList" resultMap="HkxxQrszMap"/>
+    </resultMap>
+
+    <!-- 详情查询SQL -->
+    <sql id="selectJcjfzzDetailVo">
+        select a.*,
+        b.HKXX_ID      as sub_HKXX_ID,
+        b.GH_HKXX_JYM  as sub_GH_HKXX_JYM,
+        b.DZBJ         as sub_DZBJ,
+        b.QRRQ         as sub_QRRQ,
+        b.YHHDH        as sub_YHHDH,
+        b.BZ           as sub_BZ,
+        b.CREATE_BY    as sub_CREATE_BY,
+        b.CREATE_TIME  as sub_CREATE_TIME,
+        b.UPDATE_BY    as sub_UPDATE_BY,
+        b.UPDATE_TIME  as sub_UPDATE_TIME
+        from gh_hkxx a
+        left join gh_hkxx_qrsz b on b.HKXX_ID = a.HKXX_ID
+    </sql>
+
+    <sql id="selectJcjfzzVo">
+        select a.HKXX_ID, HKPCH, XH, LX, ZH, a.HM, a.HH, a.xzh,a.xhm,a.xhh,JE, a.dept_id, DZ, FY, a.JYM, THBJ, THRQ, THYY, SCHKPCH,a.xgbj, a.xgr,a.xgsj,a.CREATE_BY, a.CREATE_TIME, a.UPDATE_BY, a.UPDATE_TIME,
+        b.QRRQ , b.DZBJ , b.YHHDH , b.BZ,b.CREATE_BY as sub_CREATE_BY, b.CREATE_TIME as sub_CREATE_TIME, b.UPDATE_BY as sub_UPDATE_BY, b.UPDATE_TIME as sub_UPDATE_TIME
+        from gh_hkxx a
+        left join gh_hkxx_qrsz b on b.HKXX_ID = a.HKXX_ID
+    </sql>
+
+    <select id="selectJcjfzzList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxRespVO">
+        <include refid="selectJcjfzzVo"/>
+        <where>
+            (instr(a.fy,'工会费') > 0
+            or
+            instr(a.fy,'工会经费') > 0 ) and a.fy
+            like '%返还基层%'
+            and a.yxbj='Y'
+
+            <if test="query.hkpch != null and query.hkpch != ''"> and a.HKPCH = #{query.hkpch}</if>
+            <if test="query.beginHkpch != null and query.beginHkpch != '' and query.endHkpch != null and query.endHkpch != ''">
+                and MID(a.HKPCH,1,8) between #{query.beginHkpch} and #{query.endHkpch}</if>
+
+            <if test="query.xh != null"> and a.XH = #{query.xh}</if>
+
+            <!-- 👇 时间类型 已修复 -->
+            <if test="query.beginQrrq != null and query.endQrrq != null">
+                and b.QRRQ between #{query.beginQrrq} and #{query.endQrrq}</if>
+
+            <if test="query.dzbj != null"> and b.DZBJ = #{query.dzbj}</if>
+            <if test="query.lx != null and query.lx != ''"> and a.LX = #{query.lx}</if>
+            <if test="query.zh != null and query.zh != ''"> and a.ZH = #{query.zh}</if>
+            <if test="query.hm != null and query.hm != ''"> and a.HM like concat('%', #{query.hm}, '%')</if>
+            <if test="query.hh != null and query.hh != ''"> and a.HH = #{query.hh}</if>
+            <if test="query.je != null"> and a.JE = #{query.je}</if>
+            <if test="query.deptId != null and query.deptId != ''"> and a.dept_id = #{query.deptId}</if>
+            <if test="query.dz != null and query.dz != ''"> and a.DZ like concat('%', #{query.dz}, '%')</if>
+            <if test="query.fy != null and query.fy != ''"> and a.FY like concat('%', #{query.fy}, '%')</if>
+            <if test="query.jym != null and query.jym != ''"> and a.JYM = #{query.jym}</if>
+            <if test="query.thbj != null and query.thbj != ''"> and a.THBJ = #{query.thbj}</if>
+
+            <!-- 👇 时间类型 已修复 -->
+            <if test="query.beginThrq != null and query.endThrq != null">
+                and a.THRQ between #{query.beginThrq} and #{query.endThrq}</if>
+
+            <if test="query.thyy != null and query.thyy != ''"> and a.THYY = #{query.thyy}</if>
+            <if test="query.schkpch != null and query.schkpch != ''"> and a.SCHKPCH = #{query.schkpch}</if>
+            <if test="query.bz != null and query.bz != ''"> and b.BZ like concat('%', #{query.bz}, '%')</if>
+            <if test="query.scbz != null and query.scbz != ''"> and a.SCBZ = #{query.scbz}</if>
+            <if test="query.createBy != null and query.createBy != ''">
+                and a.CREATE_BY = #{query.createBy}</if>
+
+            <!-- 👇 时间类型 已修复 -->
+            <if test="query.beginCreateTime != null and query.endCreateTime != null"> and a.CREATE_TIME between #{query.beginCreateTime} and #{query.endCreateTime}</if>
+
+            <if test="query.updateBy != null and query.updateBy != ''"> and a.UPDATE_BY = #{query.updateBy}</if>
+
+            <!-- 👇 时间类型 已修复 -->
+            <if test="query.beginUpdateTime != null and query.endUpdateTime != null"> and a.UPDATE_TIME between #{query.beginUpdateTime} and #{query.endUpdateTime}</if>
+        </where>
+        order by a.hkpch desc
+    </select>
+
+    <!-- ===================== 2. 单条详情（带子表） ===================== -->
+    <select id="selectJcjfzzByHkxxId" resultMap="HkxxResultMap">
+        <include refid="selectJcjfzzDetailVo"/>
+        where a.HKXX_ID = #{hkxxId}
+    </select>
+
+    <!-- ===================== 3. 新增主表 ===================== -->
+    <insert id="insertJcjfzz" parameterType="cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jcjfzz.HkxxDO">
+        insert into gh_hkxx
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hkpch != null">HKPCH,</if>
+            <if test="xh != null">XH,</if>
+            <if test="lx != null">LX,</if>
+            <if test="zh != null">ZH,</if>
+            <if test="hm != null">HM,</if>
+            <if test="hh != null">HH,</if>
+            <if test="xzh != null">XZH,</if>
+            <if test="xhm != null">XHM,</if>
+            <if test="xhh != null">XHH,</if>
+            <if test="je != null">JE,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="dz != null">DZ,</if>
+            <if test="fy != null">FY,</if>
+            <if test="jym != null">JYM,</if>
+            <if test="thbj != null">THBJ,</if>
+            <if test="thrq != null">THRQ,</if>
+            <if test="thyy != null">THYY,</if>
+            <if test="xgbj != null">XGBJ,</if>
+            <if test="schkpch != null">SCHKPCH,</if>
+            <if test="bz != null">BZ,</if>
+            <if test="scbz != null">SCBZ,</if>
+            <if test="xgr != null">xgr,</if>
+            <if test="xgsj != null">xgsj,</if>
+            <if test="yxbj != null">yxbj,</if>
+            <if test="createBy != null">CREATE_BY,</if>
+            <if test="createTime != null">CREATE_TIME,</if>
+            <if test="updateBy != null">UPDATE_BY,</if>
+            <if test="updateTime != null">UPDATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hkpch != null">#{hkpch},</if>
+            <if test="xh != null">#{xh},</if>
+            <if test="lx != null">#{lx},</if>
+            <if test="zh != null">#{zh},</if>
+            <if test="hm != null">#{hm},</if>
+            <if test="hh != null">#{hh},</if>
+            <if test="xzh != null">#{xzh},</if>
+            <if test="xhm != null">#{xhm},</if>
+            <if test="xhh != null">#{xhh},</if>
+            <if test="je != null">#{je},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="dz != null">#{dz},</if>
+            <if test="fy != null">#{fy},</if>
+            <if test="jym != null">#{jym},</if>
+            <if test="thbj != null">#{thbj},</if>
+            <if test="thrq != null">#{thrq},</if>
+            <if test="thyy != null">#{thyy},</if>
+            <if test="xgbj != null">#{xgbj},</if>
+            <if test="schkpch != null">#{schkpch},</if>
+            <if test="bz != null">#{bz},</if>
+            <if test="scbz != null">#{scbz},</if>
+            <if test="xgr != null">#{xgr},</if>
+            <if test="xgsj != null">#{xgsj},</if>
+            <if test="yxbj != null">#{yxbj},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <!-- ===================== 4. 修改主表 ===================== -->
+    <update id="updateJcjfzz" parameterType="cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jcjfzz.HkxxDO">
+        update gh_hkxx
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hkpch != null">HKPCH = #{hkpch},</if>
+            <if test="xh != null">XH = #{xh},</if>
+            <if test="lx != null">LX = #{lx},</if>
+            <if test="zh != null">ZH = #{query.zh},</if>
+            <if test="hm != null">HM = #{hm},</if>
+            <if test="hh != null">HH = #{hh},</if>
+            <if test="xzh != null">XZH = #{xzh},</if>
+            <if test="xhm != null">XHM = #{xhm},</if>
+            <if test="xhh != null">XHH = #{xhh},</if>
+            <if test="je != null">JE = #{je},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="dz != null">DZ = #{dz},</if>
+            <if test="fy != null">FY = #{fy},</if>
+            <if test="jym != null">JYM = #{jym},</if>
+            <if test="thbj != null">THBJ = #{thbj},</if>
+            <if test="thrq != null">THRQ = #{thrq},</if>
+            <if test="thyy != null">THYY = #{thyy},</if>
+            <if test="xgbj != null">XGBJ = #{xgbj},</if>
+            <if test="schkpch != null">SCHKPCH = #{schkpch},</if>
+            <if test="bz != null">BZ = #{bz},</if>
+            <if test="scbz != null">SCBZ = #{scbz},</if>
+            <if test="xgr != null">xgr = #{xgr},</if>
+            <if test="xgsj != null">xgsj = #{xgsj},</if>
+            <if test="yxbj != null">yxbj = #{yxbj},</if>
+            <if test="createBy != null">CREATE_BY = #{createBy},</if>
+            <if test="createTime != null">CREATE_TIME = #{createTime},</if>
+            <if test="updateBy != null">UPDATE_BY = #{updateBy},</if>
+            <if test="updateTime != null">UPDATE_TIME = #{updateTime},</if>
+        </trim>
+        where HKXX_ID = #{hkxxId}
+    </update>
+
+    <!-- ===================== 5. 删除主表 ===================== -->
+    <delete id="deleteJcjfzzByHkxxId">
+        delete from gh_hkxx where HKXX_ID = #{hkxxId}
+    </delete>
+
+    <delete id="deleteJcjfzzByHkxxIds">
+        delete from gh_hkxx where HKXX_ID in
+        <foreach item="hkxxId" collection="array" open="(" separator="," close=")">
+            #{hkxxId}
+        </foreach>
+    </delete>
+
+    <!-- ===================== 6. 删除子表 ===================== -->
+    <delete id="deleteJcjfdzByHkxxId">
+        delete from gh_hkxx_qrsz where HKXX_ID = #{hkxxId}
+    </delete>
+
+    <delete id="deleteJcjfdzByHkxxIds">
+        delete from gh_hkxx_qrsz where HKXX_ID in
+        <foreach item="hkxxId" collection="array" open="(" separator="," close=")">
+            #{hkxxId}
+        </foreach>
+    </delete>
+
+    <!-- ===================== 7. 批量插入子表 ===================== -->
+    <insert id="batchJcjfdz">
+        insert into gh_hkxx_qrsz (HKXX_ID, GH_HKXX_JYM, DZBJ, QRRQ, YHHDH, BZ, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME)
+        values
+        <foreach item="item" collection="list" separator=",">
+            (#{item.hkxxId}, #{item.ghHkxxJym}, #{item.dzbj}, #{item.qrrq}, #{item.yhhdh}, #{item.bz}, #{item.createBy}, sysdate(), #{item.updateBy}, sysdate())
+        </foreach>
+    </insert>
+
+</mapper>
