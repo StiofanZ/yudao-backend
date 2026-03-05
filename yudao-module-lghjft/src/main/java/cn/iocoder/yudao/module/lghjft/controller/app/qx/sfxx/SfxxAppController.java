@@ -62,8 +62,13 @@ public class SfxxAppController {
     @PostMapping("/get-kbdsfxx")
     @Operation(summary = "获得可绑定身份信息")
     @PreAuthorize("isAuthenticated()")
-    public CommonResult<List<KbdsfxxRespVO>> getKbdsfxx(@Valid @RequestBody SfxxAppReqVO pageReqVO) {
-        return success(sfxxService.getKbdsfxx(pageReqVO));
+    public CommonResult<List<KbdsfxxRespVO>> getKbdsfxx(@Valid @RequestBody SfxxAppReqVO reqVO) {
+        List<KbdsfxxRespVO> kbdsfxxRespVOList = sfxxService.getKbdsfxx(reqVO);
+        kbdsfxxRespVOList.removeIf(kbdsfxxRespVO -> !(kbdsfxxRespVO.getDwmc().contains(reqVO.getKeywords())
+                && kbdsfxxRespVO.getShxydm().contains(reqVO.getKeywords())
+                && kbdsfxxRespVO.getLxdh().contains(reqVO.getKeywords())
+                && kbdsfxxRespVO.getRyxm().contains(reqVO.getKeywords())));
+        return success(kbdsfxxRespVOList);
     }
 
 }

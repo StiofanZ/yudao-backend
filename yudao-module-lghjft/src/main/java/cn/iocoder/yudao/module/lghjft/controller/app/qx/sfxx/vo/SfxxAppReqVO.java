@@ -7,4 +7,6 @@ import lombok.Data;
 @Schema(description = "用户 App - 身份信息 Request VO")
 @Data
 public class SfxxAppReqVO extends SfxxReqVO {
+    @Schema(description = "关键词")
+    private String keywords;
 }
