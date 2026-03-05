@@ -1,9 +1,8 @@
 package cn.iocoder.yudao.module.lghjft.controller.app.qx.sfxx;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.KbdsfxxRespVO;
-import cn.iocoder.yudao.module.lghjft.controller.app.qx.sfxx.vo.SfxxAppPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.app.qx.sfxx.vo.SfxxAppReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.qx.sfxx.vo.SfxxAppSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.service.hjgl.jcxx.JcxxService;
 import cn.iocoder.yudao.module.lghjft.service.qx.SfxxService;
@@ -16,6 +15,8 @@ import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
@@ -61,7 +62,7 @@ public class SfxxAppController {
     @PostMapping("/get-kbdsfxx")
     @Operation(summary = "获得可绑定身份信息")
     @PreAuthorize("isAuthenticated()")
-    public CommonResult<PageResult<KbdsfxxRespVO>> getKbdsfxx(@Valid @RequestBody SfxxAppPageReqVO pageReqVO) {
+    public CommonResult<List<KbdsfxxRespVO>> getKbdsfxx(@Valid @RequestBody SfxxAppReqVO pageReqVO) {
         return success(sfxxService.getKbdsfxx(pageReqVO));
     }
 

@@ -5,10 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.KbdsfxxRespVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxResVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.*;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nsrxx.NsrxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.dlzh.GhQxDlzhDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.sfxx.GhQxSfxxDO;
@@ -96,8 +93,8 @@ public class SfxxController {
     @GetMapping("/get-kbdsfxx")
     @Operation(summary = "获得可绑定身份信息")
     @PreAuthorize("@ss.hasPermission('lghjft:qx-sfxx:query')")
-    public CommonResult<PageResult<KbdsfxxRespVO>> getKbdsfxx(@Valid SfxxPageReqVO pageReqVO) {
-        return success(sfxxService.getKbdsfxx(pageReqVO));
+    public CommonResult<List<KbdsfxxRespVO>> getKbdsfxx(@Valid SfxxReqVO reqVO) {
+        return success(sfxxService.getKbdsfxx(reqVO));
     }
 
     @GetMapping("/get")

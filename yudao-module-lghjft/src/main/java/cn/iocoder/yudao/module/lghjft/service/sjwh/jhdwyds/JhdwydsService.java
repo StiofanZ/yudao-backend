@@ -1,11 +1,13 @@
 package cn.iocoder.yudao.module.lghjft.service.sjwh.jhdwyds;
 
-import java.util.*;
-import jakarta.validation.*;
-import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.jhdwyds.vo.*;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.jhdwyds.JhdwydsDO;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.pojo.PageParam;
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.jhdwyds.vo.JhdwydsPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.jhdwyds.vo.JhdwydsReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.jhdwyds.vo.JhdwydsSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.jhdwyds.JhdwydsDO;
+import jakarta.validation.Valid;
+
+import java.util.List;
 
 /**
  * 应代收单位 Service 接口
@@ -58,5 +60,7 @@ public interface JhdwydsService {
      * @return 应代收单位分页
      */
     PageResult<JhdwydsDO> getJhdwydsPage(JhdwydsPageReqVO pageReqVO);
+
+    List<JhdwydsDO> getJhdwydsList(JhdwydsReqVO pageReqVO);
 
 }

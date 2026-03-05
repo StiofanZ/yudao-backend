@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.sfxx.GhQxSfxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.sfxx.GhQxSfxxMapper;
@@ -69,6 +70,11 @@ public class GhQxSfxxServiceImpl implements GhQxSfxxService {
     @Override
     public PageResult<GhQxSfxxDO> getSfxxPage(SfxxPageReqVO pageReqVO) {
         return ghQxSfxxMapper.selectPage(pageReqVO);
+    }
+
+    @Override
+    public List<GhQxSfxxDO> getSfxxList(SfxxReqVO sfxxReqVO) {
+        return ghQxSfxxMapper.selectList(sfxxReqVO);
     }
 
     @Override

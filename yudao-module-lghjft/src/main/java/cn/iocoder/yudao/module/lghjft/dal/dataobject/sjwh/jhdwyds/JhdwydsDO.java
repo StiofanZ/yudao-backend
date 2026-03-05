@@ -1,9 +1,9 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.jhdwyds;
 
-import lombok.*;
-import java.util.*;
 import com.baomidou.mybatisplus.annotation.*;
-import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 /**
  * 应代收单位 DO
@@ -13,12 +13,11 @@ import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
 @TableName("jhdwyds_dr")
 @KeySequence("jhdwyds_dr_seq") // 用于 Oracle、PostgreSQL、Kingbase、DB2、H2 数据库的主键自增。如果是 MySQL 等数据库，可不写。
 @Data
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class JhdwydsDO extends BaseDO {
+public class JhdwydsDO {
 
     /**
      * 建会单位代收ID
@@ -77,6 +76,17 @@ public class JhdwydsDO extends BaseDO {
      * 修改人
      */
     private String updateBy;
+
+    /**
+     * 创建时间
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
+    /**
+     * 最后更新时间
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateTime;
 
 
 }

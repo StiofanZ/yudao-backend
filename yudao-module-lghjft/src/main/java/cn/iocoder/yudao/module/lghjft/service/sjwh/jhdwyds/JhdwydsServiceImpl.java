@@ -1,24 +1,20 @@
 package cn.iocoder.yudao.module.lghjft.service.sjwh.jhdwyds;
 
-import cn.hutool.core.collection.CollUtil;
-import org.springframework.stereotype.Service;
-import jakarta.annotation.Resource;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.*;
-import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.jhdwyds.vo.*;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.jhdwyds.JhdwydsDO;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.jhdwyds.vo.JhdwydsPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.jhdwyds.vo.JhdwydsReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.jhdwyds.vo.JhdwydsSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.jhdwyds.JhdwydsDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.sjwh.jhdwyds.JhdwydsMapper;
+import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+
+import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertList;
-import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.diffList;
-import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.*;
+import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.JHDWYDS_NOT_EXISTS;
 
 /**
  * 应代收单位 Service 实现类
@@ -80,6 +76,11 @@ public class JhdwydsServiceImpl implements JhdwydsService {
     @Override
     public PageResult<JhdwydsDO> getJhdwydsPage(JhdwydsPageReqVO pageReqVO) {
         return jhdwydsMapper.selectPage(pageReqVO);
+    }
+
+    @Override
+    public List<JhdwydsDO> getJhdwydsList(JhdwydsReqVO reqVO) {
+        return jhdwydsMapper.selectList(reqVO);
     }
 
 }

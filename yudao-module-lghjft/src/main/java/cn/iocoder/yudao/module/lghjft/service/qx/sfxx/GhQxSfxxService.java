@@ -2,6 +2,7 @@ package cn.iocoder.yudao.module.lghjft.service.qx.sfxx;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.sfxx.GhQxSfxxDO;
 
@@ -22,6 +23,8 @@ public interface GhQxSfxxService {
     GhQxSfxxDO getSfxx(Long dlzhId, String djxh);
 
     PageResult<GhQxSfxxDO> getSfxxPage(SfxxPageReqVO pageReqVO);
+
+    List<GhQxSfxxDO> getSfxxList(SfxxReqVO sfxxReqVO);
 
     void auditSfxx(Long id, Integer status, String jjyy);
 

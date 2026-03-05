@@ -7,6 +7,8 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxUpdateRe
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.GhHjJcxxDO;
 import jakarta.validation.Valid;
 
+import java.util.List;
+
 /**
  * 户籍管理/基础信息 Service 接口
  *
@@ -51,5 +53,7 @@ public interface JcxxService {
      * @return 户籍管理/基础信息分页
      */
     PageResult<GhHjJcxxDO> getJcxxPage(JcxxPageReqVO pageReqVO);
+
+    List<GhHjJcxxDO> getJcxxList(String lxdh);
 
 }

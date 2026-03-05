@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
@@ -154,6 +155,12 @@ public class JcxxServiceImpl implements JcxxService {
     @Override
     public PageResult<GhHjJcxxDO> getJcxxPage(JcxxPageReqVO pageReqVO) {
         return jcxxMapper.selectPage(pageReqVO);
+    }
+
+    @Override
+    public List<GhHjJcxxDO> getJcxxList(String lxdh) {
+        return jcxxMapper.selectList(new LambdaQueryWrapperX<GhHjJcxxDO>()
+                .eqIfPresent(GhHjJcxxDO::getLxdh, lxdh));
     }
 
 }
