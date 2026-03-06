@@ -48,6 +48,15 @@ public class ZcjdResVO {
     @Schema(description = "关联政策ID", example = "1024")
     private Long glzcId;
 
+    @Schema(description = "关联政策标题")
+    private String glzcTitle;
+
+    @Schema(description = "关联政策版本号")
+    private String glzcVersionNo;
+
+    @Schema(description = "关联政策附件")
+    private String glzcAttachmentUrls;
+
     @Schema(description = "阅读量", example = "100")
     private Integer readCount;
 
@@ -72,4 +81,3 @@ public class ZcjdResVO {
     @Schema(description = "部门名称")
     private String deptName;
 }
-

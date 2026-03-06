@@ -9,6 +9,7 @@ import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxSummaryRespVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jcjfzz.HkxxDO;
 import cn.iocoder.yudao.module.lghjft.service.hbzz.jcjfzz.HkxxService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,6 +42,13 @@ public class HkxxAppController {
     public CommonResult<PageResult<HkxxRespVO>> getHkxxPage(@Valid HkxxPageReqVO pageReqVO) {
         PageResult<HkxxRespVO> pageResult = hkxxService.getHkxxPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, HkxxRespVO.class));
+    }
+
+    @GetMapping("/summary")
+    @Operation(summary = "获得返拨概况")
+    @PreAuthorize("@ss.hasPermission('lghjft:hkxx:query')")
+    public CommonResult<HkxxSummaryRespVO> getHkxxSummary(@Valid HkxxPageReqVO pageReqVO) {
+        return success(hkxxService.getHkxxSummary(pageReqVO));
     }
 
 //获取详情

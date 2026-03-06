@@ -79,11 +79,24 @@ public class FileTypeUtils {
      * @param content  附件内容
      */
     public static void writeAttachment(HttpServletResponse response, String filename, byte[] content) throws IOException {
+        writeAttachment(response, filename, content, false);
+    }
+
+    /**
+     * 返回附件或在线预览内容
+     *
+     * @param response 响应
+     * @param filename 文件名
+     * @param content  内容
+     * @param preview  是否以预览模式输出
+     */
+    public static void writeAttachment(HttpServletResponse response, String filename, byte[] content, boolean preview)
+            throws IOException {
         // 设置 header 和 contentType
         String mineType = getMineType(content, filename);
         response.setContentType(mineType);
         // 设置内容显示、下载文件名：https://www.cnblogs.com/wq-9/articles/12165056.html
-        if (isImage(mineType)) {
+        if (preview || isImage(mineType)) {
             // 参见 https://github.com/YunaiV/ruoyi-vue-pro/issues/692 讨论
             response.setHeader("Content-Disposition", "inline;filename=" + HttpUtils.encodeUtf8(filename));
         } else {

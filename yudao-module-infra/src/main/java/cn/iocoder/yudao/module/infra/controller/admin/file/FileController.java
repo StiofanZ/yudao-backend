@@ -105,7 +105,8 @@ public class FileController {
     @Parameter(name = "configId", description = "配置编号", required = true)
     public void getFileContent(HttpServletRequest request,
                                HttpServletResponse response,
-                               @PathVariable("configId") Long configId) throws Exception {
+                               @PathVariable("configId") Long configId,
+                               @RequestParam(value = "preview", required = false, defaultValue = "false") Boolean preview) throws Exception {
         // 获取请求的路径
         String path = StrUtil.subAfter(request.getRequestURI(), "/get/", false);
         if (StrUtil.isEmpty(path)) {
@@ -123,7 +124,7 @@ public class FileController {
             response.setStatus(HttpStatus.NOT_FOUND.value());
             return;
         }
-        writeAttachment(response, path, content);
+        writeAttachment(response, path, content, Boolean.TRUE.equals(preview));
     }
 
     @GetMapping("/page")

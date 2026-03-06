@@ -81,8 +81,7 @@
         left join gh_hkxx_qrsz b on b.HKXX_ID = a.HKXX_ID
     </sql>
 
-    <select id="selectJcjfzzList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxRespVO">
-        <include refid="selectJcjfzzVo"/>
+    <sql id="selectJcjfzzWhere">
         <where>
             (instr(a.fy,'工会费') > 0
             or
@@ -96,7 +95,6 @@
 
             <if test="query.xh != null"> and a.XH = #{query.xh}</if>
 
-            <!-- 👇 时间类型 已修复 -->
             <if test="query.beginQrrq != null and query.endQrrq != null">
                 and b.QRRQ between #{query.beginQrrq} and #{query.endQrrq}</if>
 
@@ -112,7 +110,6 @@
             <if test="query.jym != null and query.jym != ''"> and a.JYM = #{query.jym}</if>
             <if test="query.thbj != null and query.thbj != ''"> and a.THBJ = #{query.thbj}</if>
 
-            <!-- 👇 时间类型 已修复 -->
             <if test="query.beginThrq != null and query.endThrq != null">
                 and a.THRQ between #{query.beginThrq} and #{query.endThrq}</if>
 
@@ -124,15 +121,37 @@
             <if test="query.createBy != null and query.createBy != ''">
                 and a.CREATE_BY = #{query.createBy}</if>
 
-            <!-- 👇 时间类型 已修复 -->
             <if test="query.beginCreateTime != null and query.endCreateTime != null"> and a.CREATE_TIME between #{query.beginCreateTime} and #{query.endCreateTime}</if>
 
             <if test="query.updateBy != null and query.updateBy != ''"> and a.UPDATE_BY = #{query.updateBy}</if>
 
-            <!-- 👇 时间类型 已修复 -->
             <if test="query.beginUpdateTime != null and query.endUpdateTime != null"> and a.UPDATE_TIME between #{query.beginUpdateTime} and #{query.endUpdateTime}</if>
         </where>
+    </sql>
+
+    <select id="selectJcjfzzList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxRespVO">
+        <include refid="selectJcjfzzVo"/>
+        <include refid="selectJcjfzzWhere"/>
         order by a.hkpch desc
+    </select>
+
+    <select id="selectJcjfzzSummary" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxSummaryRespVO">
+        select count(1) as totalCount,
+        ifnull(sum(t.je), 0) as totalAmount,
+        ifnull(sum(t.confirmedFlag), 0) as confirmedCount,
+        ifnull(sum(case when t.confirmedFlag = 1 then t.je else 0 end), 0) as confirmedAmount,
+        ifnull(sum(t.returnedFlag), 0) as returnedCount,
+        ifnull(sum(case when t.returnedFlag = 1 then t.je else 0 end), 0) as returnedAmount
+        from (
+        select a.HKXX_ID,
+        max(a.JE) as je,
+        max(case when ifnull(trim(b.DZBJ), '') not in ('', '0', 'N') then 1 else 0 end) as confirmedFlag,
+        max(case when ifnull(trim(a.THBJ), '') not in ('', '0', 'N') then 1 else 0 end) as returnedFlag
+        from gh_hkxx a
+        left join gh_hkxx_qrsz b on b.HKXX_ID = a.HKXX_ID
+        <include refid="selectJcjfzzWhere"/>
+        group by a.HKXX_ID
+        ) t
     </select>
 
     <!-- ===================== 2. 单条详情（带子表） ===================== -->
@@ -213,7 +232,7 @@
             <if test="hkpch != null">HKPCH = #{hkpch},</if>
             <if test="xh != null">XH = #{xh},</if>
             <if test="lx != null">LX = #{lx},</if>
-            <if test="zh != null">ZH = #{query.zh},</if>
+            <if test="zh != null">ZH = #{zh},</if>
             <if test="hm != null">HM = #{hm},</if>
             <if test="hh != null">HH = #{hh},</if>
             <if test="xzh != null">XZH = #{xzh},</if>

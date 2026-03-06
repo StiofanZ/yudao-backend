@@ -41,7 +41,7 @@ public class JfAppController {
      */
     @GetMapping("/listmx")
     @Operation(summary = "获得 经费明细对象明细")
-//    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
     public CommonResult<PageResult<JfRespVO>> list(@Valid JfPageReqVO jfmx) {
         PageResult<JfRespVO> pageResult = jfService.selectJftzmxList(jfmx);
         return success(BeanUtils.toBean(pageResult, JfRespVO.class));

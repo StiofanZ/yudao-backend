@@ -1,14 +1,12 @@
 package cn.iocoder.yudao.module.lghjft.service.hbzz.jcjfzz;
 
-import java.util.*;
-
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jfmx.JfDO;
-import jakarta.validation.*;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.*;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jcjfzz.HkxxDO;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.pojo.PageParam;
-import org.springframework.transaction.annotation.Transactional;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxSummaryRespVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jcjfzz.HkxxDO;
+import jakarta.validation.Valid;
 
 /**
  * 基层经费到账对象 Service 接口
@@ -62,5 +60,12 @@ public interface HkxxService {
      */
     PageResult<HkxxRespVO> getHkxxPage(HkxxPageReqVO pageReqVO);
 
+    /**
+     * 获得返拨概况
+     *
+     * @param pageReqVO 查询条件
+     * @return 汇总数据
+     */
+    HkxxSummaryRespVO getHkxxSummary(HkxxPageReqVO pageReqVO);
 
 }

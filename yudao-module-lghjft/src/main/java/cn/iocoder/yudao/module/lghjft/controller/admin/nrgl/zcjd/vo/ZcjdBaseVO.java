@@ -47,7 +47,8 @@ public class ZcjdBaseVO {
     @org.springframework.format.annotation.DateTimeFormat(pattern = "yyyy-MM-dd")
     private java.time.LocalDate fbrq;
 
-    @Schema(description = "关联政策ID", example = "100")
+    @Schema(description = "关联政策ID", requiredMode = Schema.RequiredMode.REQUIRED, example = "100")
+    @NotNull(message = "关联政策文件不能为空")
     private Long glzcId;
 
 }

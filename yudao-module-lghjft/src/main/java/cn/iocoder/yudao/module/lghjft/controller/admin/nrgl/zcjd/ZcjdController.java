@@ -7,8 +7,13 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdCreateRe
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdUpdateReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcwj.vo.ZcwjReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcwj.vo.ZcwjResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.zcjd.ZcjdDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.zcwj.ZcwjDO;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.nrgl.zcwj.ZcwjMapper;
 import cn.iocoder.yudao.module.lghjft.service.nrgl.zcjd.ZcjdService;
+import cn.iocoder.yudao.module.lghjft.service.nrgl.zcwj.ZcwjService;
 import cn.iocoder.yudao.module.system.api.dept.DeptApi;
 import cn.iocoder.yudao.module.system.api.dept.dto.DeptRespDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,9 +27,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
+import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertMap;
 import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertSet;
+
 @Tag(name = "管理后台 - 政策解读")
 @RestController
 @RequestMapping("/lghjft/nrgl/zcjd")
@@ -36,6 +44,12 @@ public class ZcjdController {
 
     @Resource
     private DeptApi deptApi;
+
+    @Resource
+    private ZcwjService zcwjService;
+
+    @Resource
+    private ZcwjMapper zcwjMapper;
 
     @PostMapping("/create")
     @Operation(summary = "创建政策解读")
@@ -67,7 +81,12 @@ public class ZcjdController {
     @PreAuthorize("@ss.hasPermission('lghjft:nrgl-zcjd:query')")
     public CommonResult<ZcjdResVO> getZcjd(@RequestParam("id") Long id) {
         ZcjdDO zcjd = zcjdService.getZcjd(id);
-        return success(BeanUtils.toBean(zcjd, ZcjdResVO.class));
+        ZcjdResVO result = BeanUtils.toBean(zcjd, ZcjdResVO.class);
+        if (result != null) {
+            fillDeptName(List.of(result));
+            fillLinkedPolicyInfo(List.of(result));
+        }
+        return success(result);
     }
 
 
@@ -77,19 +96,19 @@ public class ZcjdController {
     public CommonResult<PageResult<ZcjdResVO>> getZcjdPage(@Validated ZcjdReqVO pageReqVO) {
         PageResult<ZcjdDO> pageResult = zcjdService.getZcjdPage(pageReqVO);
         PageResult<ZcjdResVO> result = BeanUtils.toBean(pageResult, ZcjdResVO.class);
-        
-        // 填充部门名称
-        if (!result.getList().isEmpty()) {
-            Map<Long, DeptRespDTO> deptMap = deptApi.getDeptMap(convertSet(result.getList(), ZcjdResVO::getDeptId));
-            result.getList().forEach(item -> {
-                DeptRespDTO dept = deptMap.get(item.getDeptId());
-                if (dept != null) {
-                    item.setDeptName(dept.getName());
-                }
-            });
-        }
-
+        fillDeptName(result.getList());
+        fillLinkedPolicyInfo(result.getList());
         return success(result);
+    }
+
+    @GetMapping("/published-policy-options")
+    @Operation(summary = "获得已发布政策文件选项")
+    @PreAuthorize("@ss.hasPermission('lghjft:nrgl-zcjd:query')")
+    public CommonResult<List<ZcwjResVO>> getPublishedPolicyOptions(
+            @RequestParam(value = "keyword", required = false) String keyword) {
+        ZcwjReqVO reqVO = new ZcwjReqVO();
+        reqVO.setKeyword(keyword);
+        return success(BeanUtils.toBean(zcwjService.getPublishedList(reqVO), ZcwjResVO.class));
     }
 
     @PutMapping("/publish")
@@ -115,6 +134,39 @@ public class ZcjdController {
     public CommonResult<Boolean> auditZcjd(@RequestParam("id") Long id, @RequestParam("status") Integer status) {
         zcjdService.auditZcjd(id, status);
         return success(true);
+    }
+
+    private void fillDeptName(List<ZcjdResVO> list) {
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+        Map<Long, DeptRespDTO> deptMap = deptApi.getDeptMap(convertSet(list, ZcjdResVO::getDeptId));
+        list.forEach(item -> {
+            DeptRespDTO dept = deptMap.get(item.getDeptId());
+            if (dept != null) {
+                item.setDeptName(dept.getName());
+            }
+        });
+    }
+
+    private void fillLinkedPolicyInfo(List<ZcjdResVO> list) {
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+        Set<Long> policyIds = convertSet(list, ZcjdResVO::getGlzcId);
+        policyIds.remove(null);
+        if (policyIds.isEmpty()) {
+            return;
+        }
+        Map<Long, ZcwjDO> policyMap = convertMap(zcwjMapper.selectBatchIds(policyIds), ZcwjDO::getId);
+        list.forEach(item -> {
+            ZcwjDO policy = policyMap.get(item.getGlzcId());
+            if (policy != null) {
+                item.setGlzcTitle(policy.getTitle());
+                item.setGlzcVersionNo(policy.getVersionNo());
+                item.setGlzcAttachmentUrls(policy.getAttachmentUrls());
+            }
+        });
     }
 
 }

@@ -1,14 +1,18 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.jhdwyds.vo;
 
+import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
+import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
-import java.util.*;
-import cn.idev.excel.annotation.*;
+import lombok.Data;
 
 @Schema(description = "管理后台 - 应代收单位 Response VO")
 @Data
 @ExcelIgnoreUnannotated
 public class JhdwydsRespVO {
+
+    @Schema(description = "建会单位代收ID", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+    @ExcelProperty("建会单位代收ID")
+    private Integer jhdwId;
 
     @Schema(description = "工会机构", requiredMode = Schema.RequiredMode.REQUIRED, example = "31326")
     @ExcelProperty("工会机构")

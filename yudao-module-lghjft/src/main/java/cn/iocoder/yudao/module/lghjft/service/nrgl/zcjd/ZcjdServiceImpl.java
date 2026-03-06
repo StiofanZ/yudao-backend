@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.service.nrgl.zcjd;
 
+import cn.iocoder.yudao.framework.common.exception.ErrorCode;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.mybatis.core.util.MyBatisUtils;
@@ -7,7 +8,9 @@ import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdCreateReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.zcjd.ZcjdDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.zcwj.ZcwjDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.nrgl.zcjd.ZcjdMapper;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.nrgl.zcwj.ZcwjMapper;
 import cn.iocoder.yudao.module.system.api.dept.DeptApi;
 import cn.iocoder.yudao.module.system.api.dept.dto.DeptRespDTO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -35,14 +38,19 @@ public class ZcjdServiceImpl implements ZcjdService {
     @Resource
     private DeptApi deptApi;
 
+    @Resource
+    private ZcwjMapper zcwjMapper;
+
     @Override
     public Long createZcjd(ZcjdCreateReqVO createReqVO) {
         // 校验上级内容的可见性
         validateParentKjfw(createReqVO.getParentId(), createReqVO.getKjfw());
+        validateLinkedPolicy(createReqVO.getGlzcId());
         
         ZcjdDO zcjd = BeanUtils.toBean(createReqVO, ZcjdDO.class);
         // 设置当前登录用户的部门ID
         zcjd.setDeptId(SecurityFrameworkUtils.getLoginUserDeptId());
+        zcjd.setFbbm(resolvePublishDeptIfAbsent(zcjd.getFbbm(), zcjd.getDeptId()));
         // 默认状态为草稿 (0)
         zcjd.setStatus(0);
         // 默认阅读量 0
@@ -63,8 +71,8 @@ public class ZcjdServiceImpl implements ZcjdService {
         }
 
         // 校验状态：已发布内容不允许修改
-        if (oldZcjd.getStatus() == 1) {
-            throw exception(new cn.iocoder.yudao.framework.common.exception.ErrorCode(400, "已发布内容不允许修改"));
+        if (oldZcjd.getStatus() == 2) {
+            throw exception(new ErrorCode(400, "已发布内容不允许修改"));
         }
         
         // 校验上级内容的可见性
@@ -74,11 +82,14 @@ public class ZcjdServiceImpl implements ZcjdService {
         if (!oldZcjd.getKjfw().equals(updateReqVO.getKjfw())) {
             validateChildrenKjfw(updateReqVO.getId(), updateReqVO.getKjfw());
         }
+        validateLinkedPolicy(updateReqVO.getGlzcId());
 
         // 更新
         ZcjdDO updateObj = BeanUtils.toBean(updateReqVO, ZcjdDO.class);
         // 不允许修改发布部门
-        updateObj.setDeptId(null); 
+        updateObj.setDeptId(null);
+        updateObj.setFbbm(resolvePublishDeptIfAbsent(
+                updateObj.getFbbm() != null ? updateObj.getFbbm() : oldZcjd.getFbbm(), oldZcjd.getDeptId()));
         zcjdMapper.updateById(updateObj);
     }
 
@@ -120,14 +131,14 @@ public class ZcjdServiceImpl implements ZcjdService {
         // 如果上级是下级可见(2)，下级只能是 2 或 3
         if (pVis == 2) {
             if (kjfw == 1) {
-                throw exception(new cn.iocoder.yudao.framework.common.exception.ErrorCode(400, "上级内容为'下级可见'，本内容不能设置为'完全可见'"));
+                throw exception(new ErrorCode(400, "上级内容为'下级可见'，本内容不能设置为'完全可见'"));
             }
         }
         
         // 如果上级是本级可见(3)，下级只能是 3
         if (pVis == 3) {
             if (kjfw != 3) {
-                throw exception(new cn.iocoder.yudao.framework.common.exception.ErrorCode(400, "上级内容为'本级可见'，本内容只能设置为'本级可见'"));
+                throw exception(new ErrorCode(400, "上级内容为'本级可见'，本内容只能设置为'本级可见'"));
             }
         }
     }
@@ -148,7 +159,7 @@ public class ZcjdServiceImpl implements ZcjdService {
             if (newKjfw == 2) {
                 // 子内容如果是 完全可见(1)，则冲突
                 if (cVis == 1) {
-                     throw exception(new cn.iocoder.yudao.framework.common.exception.ErrorCode(400, "存在子内容可见性为'完全可见'，无法将本内容修改为'下级可见'或更小范围"));
+                    throw exception(new ErrorCode(400, "存在子内容可见性为'完全可见'，无法将本内容修改为'下级可见'或更小范围"));
                 }
             }
             
@@ -156,7 +167,7 @@ public class ZcjdServiceImpl implements ZcjdService {
             if (newKjfw == 3) {
                 // 子内容如果是 1 或 2，则冲突
                 if (cVis == 1 || cVis == 2) {
-                    throw exception(new cn.iocoder.yudao.framework.common.exception.ErrorCode(400, "存在子内容可见性范围更大，无法将本内容修改为'本级可见'"));
+                    throw exception(new ErrorCode(400, "存在子内容可见性范围更大，无法将本内容修改为'本级可见'"));
                 }
             }
             
@@ -168,9 +179,50 @@ public class ZcjdServiceImpl implements ZcjdService {
     private ZcjdDO validateZcjdExists(Long id) {
         ZcjdDO zcjd = zcjdMapper.selectById(id);
         if (zcjd == null) {
-            throw exception(new cn.iocoder.yudao.framework.common.exception.ErrorCode(404, "内容不存在"));
+            throw exception(new ErrorCode(404, "内容不存在"));
         }
         return zcjd;
+    }
+
+    private ZcwjDO validateLinkedPolicy(Long glzcId) {
+        if (glzcId == null) {
+            throw exception(new ErrorCode(400, "关联政策文件不能为空"));
+        }
+        ZcwjDO zcwj = zcwjMapper.selectById(glzcId);
+        if (zcwj == null) {
+            throw exception(new ErrorCode(404, "关联政策文件不存在"));
+        }
+        if (!Objects.equals(zcwj.getStatus(), 2)) {
+            throw exception(new ErrorCode(400, "只能关联已发布的政策文件"));
+        }
+        return zcwj;
+    }
+
+    private Integer resolvePublishDeptIfAbsent(Integer fbbm, Long deptId) {
+        if (fbbm != null) {
+            return fbbm;
+        }
+        return resolvePublishDeptByDeptId(deptId);
+    }
+
+    private Integer resolvePublishDeptByDeptId(Long deptId) {
+        if (deptId == null || deptId == 0L) {
+            return 0;
+        }
+        Long currentId = deptId;
+        int depth = 0;
+        while (currentId != null && currentId != 0L && depth < 20) {
+            if (Objects.equals(currentId, 620000L)) {
+                return depth == 0 ? 1 : 2;
+            }
+            DeptRespDTO dept = deptApi.getDept(currentId);
+            if (dept == null || Objects.equals(dept.getParentId(), currentId)) {
+                break;
+            }
+            currentId = dept.getParentId();
+            depth++;
+        }
+        return 0;
     }
 
     @Override
@@ -233,6 +285,7 @@ public class ZcjdServiceImpl implements ZcjdService {
     @Override
     public void publishZcjd(Long id) {
         ZcjdDO zcjd = validateZcjdExists(id);
+        validateLinkedPolicy(zcjd.getGlzcId());
         
         // 校验权限
         Long loginDeptId = SecurityFrameworkUtils.getLoginUserDeptId();
@@ -249,7 +302,7 @@ public class ZcjdServiceImpl implements ZcjdService {
 
         // 其他部门，必须是 已审核(1) 才能发布
         if (zcjd.getStatus() != 1) {
-             throw exception(new cn.iocoder.yudao.framework.common.exception.ErrorCode(400, "该内容未审核，无法发布"));
+            throw exception(new ErrorCode(400, "该内容未审核，无法发布"));
         }
 
         // 更新状态为发布 (2)

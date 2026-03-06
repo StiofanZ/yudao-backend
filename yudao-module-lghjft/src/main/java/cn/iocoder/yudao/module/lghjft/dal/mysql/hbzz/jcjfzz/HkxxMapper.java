@@ -1,11 +1,13 @@
 package cn.iocoder.yudao.module.lghjft.dal.mysql.hbzz.jcjfzz;
 
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxSummaryRespVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jcjfzz.HkxxDO;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.*;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -24,5 +26,7 @@ Integer insertJcjfdz(HkxxSaveReqVO updateReqVO);
     HkxxDO selectJcjfzzByHkxxId(Integer hkxxId);
 //    查询经费到账列表
     IPage<HkxxRespVO> selectJcjfzzList(Page<HkxxRespVO> page, @Param("query") HkxxPageReqVO query);
+
+    HkxxSummaryRespVO selectJcjfzzSummary(@Param("query") HkxxPageReqVO query);
 
 }

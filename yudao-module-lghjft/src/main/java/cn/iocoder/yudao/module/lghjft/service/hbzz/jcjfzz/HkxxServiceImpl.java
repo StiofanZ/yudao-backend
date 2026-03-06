@@ -1,25 +1,22 @@
 package cn.iocoder.yudao.module.lghjft.service.hbzz.jcjfzz;
 
 import cn.idev.excel.util.StringUtils;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.file.utils.DateUtils;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jfmx.JfDO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxSummaryRespVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jcjfzz.HkxxDO;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.hbzz.jcjfzz.HkxxMapper;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
 import cn.iocoder.yudao.module.system.service.user.AdminUserService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.*;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.*;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jcjfzz.HkxxDO;
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-
-
-import cn.iocoder.yudao.module.lghjft.dal.mysql.hbzz.jcjfzz.HkxxMapper;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils.getLoginUserId;
@@ -94,26 +91,28 @@ public class HkxxServiceImpl implements HkxxService {
     public HkxxDO getHkxx(Integer id) {
         return hkxxMapper.selectJcjfzzByHkxxId(id);
     }
-@Override
-public PageResult<HkxxRespVO> getHkxxPage(HkxxPageReqVO pageReqVO) {
-    // 1. 没传部门 → 自动用当前用户部门
-    if (StringUtils.isEmpty(pageReqVO.getDeptId())) {
-        AdminUserDO user = userService.getUser(getLoginUserId());
-        pageReqVO.setDeptId(user.getDeptId().toString());
+
+    @Override
+    public PageResult<HkxxRespVO> getHkxxPage(HkxxPageReqVO pageReqVO) {
+        applyDeptScope(pageReqVO);
+        Page<HkxxRespVO> page = new Page<>(pageReqVO.getPageNo(), pageReqVO.getPageSize());
+        IPage<HkxxRespVO> ipage = hkxxMapper.selectJcjfzzList(page, pageReqVO);
+        return new PageResult<>(ipage.getRecords(), ipage.getTotal());
     }
 
-    // 2. 传 100000 → 查全部
-    if ("100000".equals(pageReqVO.getDeptId())) {
-        pageReqVO.setDeptId(null);
+    @Override
+    public HkxxSummaryRespVO getHkxxSummary(HkxxPageReqVO pageReqVO) {
+        applyDeptScope(pageReqVO);
+        return hkxxMapper.selectJcjfzzSummary(pageReqVO);
     }
-    // 1. 构建分页（固定写法）
-    Page<HkxxRespVO> page = new Page<>(pageReqVO.getPageNo(), pageReqVO.getPageSize());
 
-    // 2. 调用你的XML联表查询
-    IPage<HkxxRespVO> ipage = hkxxMapper.selectJcjfzzList(page, pageReqVO);
-
-    // 3. 转成框架需要的格式
-    return new PageResult<>(ipage.getRecords(), ipage.getTotal());
-}
-
+    private void applyDeptScope(HkxxPageReqVO pageReqVO) {
+        if (StringUtils.isEmpty(pageReqVO.getDeptId())) {
+            AdminUserDO user = userService.getUser(getLoginUserId());
+            pageReqVO.setDeptId(user.getDeptId().toString());
+        }
+        if ("100000".equals(pageReqVO.getDeptId())) {
+            pageReqVO.setDeptId(null);
+        }
+    }
 }
