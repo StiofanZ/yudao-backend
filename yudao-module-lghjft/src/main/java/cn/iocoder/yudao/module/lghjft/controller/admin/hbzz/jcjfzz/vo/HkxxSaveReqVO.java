@@ -106,13 +106,14 @@ public class HkxxSaveReqVO {
     private String dzbj;
 
     @Schema(description = "确认日期")
-    @NotNull(message = "到账日期不能为空")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date qrrq;
 
     @Schema(description = "银行回单号")
     private String yhhdh;
 
+    @Schema(description = "校验码")
+    private String ghHkxxJym;
     // ==================== 内嵌子表：到账确认列表 ====================
     @Schema(description = "到账确认列表（子表）")
     private List<JcjfdzItem> jcjfdzList;
@@ -124,6 +125,9 @@ public class HkxxSaveReqVO {
 
         @Schema(description = "主键ID")
         private Integer id;
+
+        @Schema(description = "校验码")
+        private String ghHkxxJym;
 
         @Schema(description = "划款信息ID", requiredMode = Schema.RequiredMode.REQUIRED)
         private Integer hkxxId;

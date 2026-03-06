@@ -118,7 +118,8 @@
 
             <if test="query.thyy != null and query.thyy != ''"> and a.THYY = #{query.thyy}</if>
             <if test="query.schkpch != null and query.schkpch != ''"> and a.SCHKPCH = #{query.schkpch}</if>
-            <if test="query.bz != null and query.bz != ''"> and b.BZ like concat('%', #{query.bz}, '%')</if>
+            <if test="query.bz != null and query.bz != ''">
+                and b.BZ like concat('%', #{query.bz}, '%')</if>
             <if test="query.scbz != null and query.scbz != ''"> and a.SCBZ = #{query.scbz}</if>
             <if test="query.createBy != null and query.createBy != ''">
                 and a.CREATE_BY = #{query.createBy}</if>
@@ -240,7 +241,28 @@
         </trim>
         where HKXX_ID = #{hkxxId}
     </update>
-
+<!--修改子表-->
+    <update id="updateJcjfdz" parameterType="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxRespVO">
+        UPDATE gh_hkxx_qrsz
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="qrrq != null">
+                QRRQ = #{qrrq},
+            </if>
+            <if test="dzbj != null and dzbj != ''">
+                DZBJ = #{dzbj},
+            </if>
+            <if test="bz != null and bz != ''">
+                BZ = #{bz},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                UPDATE_BY = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime}
+            </if>
+        </trim>
+        WHERE HKXX_ID = #{hkxxId}
+    </update>
     <!-- ===================== 5. 删除主表 ===================== -->
     <delete id="deleteJcjfzzByHkxxId">
         delete from gh_hkxx where HKXX_ID = #{hkxxId}
@@ -273,5 +295,17 @@
             (#{item.hkxxId}, #{item.ghHkxxJym}, #{item.dzbj}, #{item.qrrq}, #{item.yhhdh}, #{item.bz}, #{item.createBy}, sysdate(), #{item.updateBy}, sysdate())
         </foreach>
     </insert>
+    <!-- 统计子表是否存在 -->
+    <select id="countJcjfdzByHkxxId" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM gh_hkxx_qrsz WHERE HKXX_ID = #{hkxxId}
+    </select>
 
+    <!-- 子表单条插入：无数据时用 -->
+    <insert id="insertJcjfdz" parameterType="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxSaveReqVO">
+        INSERT INTO gh_hkxx_qrsz (
+        HKXX_ID, QRRQ, DZBJ,GH_HKXX_JYM, BZ, UPDATE_BY, UPDATE_TIME
+        ) VALUES (
+        #{hkxxId}, #{qrrq},#{dzbj},#{ghHkxxJym} , #{bz}, #{updateBy}, #{updateTime}
+        )
+    </insert>
 </mapper>

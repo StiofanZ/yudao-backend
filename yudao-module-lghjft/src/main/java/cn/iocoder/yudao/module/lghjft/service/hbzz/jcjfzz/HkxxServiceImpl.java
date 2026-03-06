@@ -1,8 +1,9 @@
 package cn.iocoder.yudao.module.lghjft.service.hbzz.jcjfzz;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.idev.excel.util.StringUtils;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
+import cn.iocoder.yudao.module.file.utils.DateUtils;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jfmx.JfDO;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
 import cn.iocoder.yudao.module.system.service.user.AdminUserService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -38,14 +39,34 @@ public class HkxxServiceImpl implements HkxxService {
     private HkxxMapper hkxxMapper;
     @Resource
     private AdminUserService userService;
-
     @Override
     public void updateHkxx(HkxxSaveReqVO updateReqVO) {
-        // 校验存在
+        AdminUserDO user = userService.getUser(getLoginUserId());
+        String nickname = user.getNickname();
+
+        // 1. 更新主表（不动）
         validateHkxxExists(updateReqVO.getHkxxId());
-        // 更新
-        HkxxDO updateObj = BeanUtils.toBean(updateReqVO, HkxxDO.class);
-        hkxxMapper.updateJcjfzz(updateObj);
+        HkxxDO mainDO = BeanUtils.toBean(updateReqVO, HkxxDO.class);
+        mainDO.setUpdateTime(DateUtils.getNowDate());
+        hkxxMapper.updateJcjfzz(mainDO);
+
+        // ==============================================
+        // 子表：一对一 · 有则更新、无则插入（不使用list）
+        // ==============================================
+        updateReqVO.setUpdateBy(nickname);
+        updateReqVO.setUpdateTime(new Date());
+
+        // 尝试更新 → 返回影响行数
+        int rows = hkxxMapper.updateJcjfdz(updateReqVO);
+
+        // 更新 0 行 → 说明没有数据 → 直接插入单条
+        if (rows == 0) {
+            updateReqVO.setUpdateBy(nickname);
+            updateReqVO.setUpdateTime(new Date());
+            updateReqVO.setDzbj("Y");
+            hkxxMapper.insertJcjfdz(updateReqVO); // 单条插入！无list！
+        }
+
     }
 //
 //    @Override
@@ -94,4 +115,5 @@ public PageResult<HkxxRespVO> getHkxxPage(HkxxPageReqVO pageReqVO) {
     // 3. 转成框架需要的格式
     return new PageResult<>(ipage.getRecords(), ipage.getTotal());
 }
+
 }

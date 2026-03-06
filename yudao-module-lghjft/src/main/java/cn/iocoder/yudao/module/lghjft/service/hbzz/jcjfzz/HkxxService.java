@@ -1,11 +1,14 @@
 package cn.iocoder.yudao.module.lghjft.service.hbzz.jcjfzz;
 
 import java.util.*;
+
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jfmx.JfDO;
 import jakarta.validation.*;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.*;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jcjfzz.HkxxDO;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 基层经费到账对象 Service 接口
@@ -58,5 +61,6 @@ public interface HkxxService {
      * @return 基层经费到账对象分页
      */
     PageResult<HkxxRespVO> getHkxxPage(HkxxPageReqVO pageReqVO);
+
 
 }

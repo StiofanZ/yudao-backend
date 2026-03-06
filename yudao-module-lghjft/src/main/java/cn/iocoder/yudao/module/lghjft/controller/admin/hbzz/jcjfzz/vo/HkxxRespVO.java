@@ -117,6 +117,7 @@ private Integer hkxxId;
     private String dzbj;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
+
     @ExcelProperty("确认日期")
     @Schema(description = "确认日期")
     private Date  qrrq;

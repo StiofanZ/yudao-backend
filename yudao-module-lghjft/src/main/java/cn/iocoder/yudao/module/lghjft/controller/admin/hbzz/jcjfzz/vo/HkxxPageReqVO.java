@@ -3,8 +3,9 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import static cn.iocoder.yudao.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND;
@@ -60,7 +61,7 @@ public class HkxxPageReqVO extends PageParam {
     private String thbj;
 
     @Schema(description = "退回日期")
-    @org.springframework.format.annotation.DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private Date thrq;
 
     @Schema(description = "退回原因")
@@ -76,7 +77,7 @@ public class HkxxPageReqVO extends PageParam {
     private String xgr;
 
     @Schema(description = "修改时间")
-    @org.springframework.format.annotation.DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private Date xgsj;
 
     @Schema(description = "系统生成标志")
@@ -105,35 +106,39 @@ public class HkxxPageReqVO extends PageParam {
     @Schema(description = "结束划款批次号")
     private String endHkpch;
 
-    @Schema(description = "确认确认日期")
-    @org.springframework.format.annotation.DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    // ===================== 【修复 1】到账日期 =====================
+    @Schema(description = "开始确认日期")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date beginQrrq;
 
     @Schema(description = "结束确认日期")
-    @org.springframework.format.annotation.DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private Date  endQrrq;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date endQrrq;
 
+    // ===================== 【修复 2】退回日期 =====================
     @Schema(description = "开始退回日期")
-    @org.springframework.format.annotation.DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private Date  beginThrq;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date beginThrq;
 
     @Schema(description = "结束退回日期")
-    @org.springframework.format.annotation.DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private Date  endThrq;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date endThrq;
 
+    // ===================== 【修复 3】创建时间 =====================
     @Schema(description = "开始创建时间")
-    @org.springframework.format.annotation.DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private Date  beginCreateTime;
+    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    private Date beginCreateTime;
 
     @Schema(description = "结束创建时间")
-    @org.springframework.format.annotation.DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private Date  endCreateTime;
+    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    private Date endCreateTime;
 
+    // ===================== 【修复 4】更新时间 =====================
     @Schema(description = "开始修改时间")
-    @org.springframework.format.annotation.DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private Date  beginUpdateTime;
+    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    private Date beginUpdateTime;
 
     @Schema(description = "结束修改时间")
-    @org.springframework.format.annotation.DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private Date  endUpdateTime;
+    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    private Date endUpdateTime;
 }

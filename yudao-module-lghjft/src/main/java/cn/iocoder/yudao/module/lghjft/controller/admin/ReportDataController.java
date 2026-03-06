@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin;
 
+import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.util.json.JsonUtils;
 import cn.iocoder.yudao.framework.security.core.LoginUser;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
@@ -33,39 +34,52 @@ public class ReportDataController {
 
     @RequestMapping("/get-dept-tree")
     @Operation(summary = "获取部门树", description = "根据部门信息获取部门树，如果部门信息为空则获取全量树", method = "GET")
-    public List<TreeModel> getDeptTree(@RequestParam(name = "params", required = false) String params) { // params、body 按照需要去接收，这里仅仅是示例
+    public CommonResult<List<TreeModel>> getDeptTree(@RequestParam(name = "params", required = false) String params) {
         Set<Long> parents = ConcurrentHashMap.newKeySet();
         List<DeptDO> depts = new CopyOnWriteArrayList<>(new ArrayList<>());
         LoginUser loginUser = SecurityFrameworkUtils.getLoginUser();
+
         if (loginUser != null) {
             AdminUserDO user = userService.getUser(loginUser.getId());
+
             if (Objects.isNull(params)) {
                 DeptDO dept = deptService.getDept(user.getDeptId());
                 parents.add(dept.getParentId());
-                depts.add(dept);// 取 本级
+                depts.add(dept);
             } else {
-                Map<String, Object> map = JsonUtils.parseObject(params, new TypeReference<>() {
-                });
+                Map<String, Object> map = JsonUtils.parseObject(params, new TypeReference<Map<String, Object>>() {});
                 if (map.containsKey("pid")) {
-                    String parentId = String.valueOf(map.get("pid"));// 取选中下级
+                    String parentId = String.valueOf(map.get("pid"));
                     deptService.getChildDeptList(Long.parseLong(parentId)).parallelStream()
                             .filter(d -> Boolean.FALSE.equals(d.getDeleted()))
                             .forEach(d -> {
                                 parents.add(d.getParentId());
-                                if (parentId.equals(d.getParentId().toString())) { //只取 下一级
+                                if (parentId.equals(d.getParentId().toString())) {
                                     depts.add(d);
                                 }
                             });
                 }
             }
-            return depts.stream().sorted(Comparator.comparing(DeptDO::getId)).map(dept -> {
-                int isLeaf = 1;
-                if (parents.contains(dept.getId()) || "0".equals(dept.getParentId().toString())) {
-                    isLeaf = 0;
-                }
-                return new TreeModel(dept.getId().toString(), dept.getParentId().toString(), dept.getId().toString(), dept.getName(), isLeaf);
-            }).toList();
+
+            // 组装树结构
+            List<TreeModel> treeList = depts.stream()
+                    .sorted(Comparator.comparing(DeptDO::getId))
+                    .map(dept -> {
+                        int isLeaf = parents.contains(dept.getId()) || "0".equals(dept.getParentId().toString()) ? 0 : 1;
+                        return new TreeModel(
+                                dept.getId().toString(),
+                                dept.getParentId().toString(),
+                                dept.getId().toString(),
+                                dept.getName(),
+                                isLeaf
+                        );
+                    }).toList();
+
+            // 用 CommonResult 包裹
+            return CommonResult.success(treeList);
         }
-        return List.of();
+
+        // 未登录也返回标准格式
+        return CommonResult.success(List.of());
     }
 }

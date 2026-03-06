@@ -42,7 +42,7 @@ import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.
 import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 import static cn.iocoder.yudao.module.bpm.enums.ErrorCodeConstants.PROCESS_INSTANCE_NOT_EXISTS;
 
-@Tag(name = "管理后台 - 流程实例") // 流程实例，通过流程定义创建的一次“申请”
+@Tag(name = "app - 流程实例") // 流程实例，通过流程定义创建的一次“申请”
 @RestController
 @RequestMapping("/bpmApp/process-instance")
 @Validated

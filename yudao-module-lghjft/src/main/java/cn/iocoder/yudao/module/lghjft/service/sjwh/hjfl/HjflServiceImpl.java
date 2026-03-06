@@ -45,7 +45,7 @@ public class HjflServiceImpl implements HjflService {
     @Override
     public void updateHjfl(HjflSaveReqVO updateReqVO) {
         // 校验存在
-        validateHjflExists(updateReqVO.getHjflid());
+            validateHjflExists(updateReqVO.getHjflid());
         // 更新
         HjflDO updateObj = BeanUtils.toBean(updateReqVO, HjflDO.class);
         hjflMapper.updateById(updateObj);

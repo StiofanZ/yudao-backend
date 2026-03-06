@@ -15,9 +15,11 @@ import org.apache.ibatis.annotations.Param;
  */
 @Mapper
 public interface HkxxMapper extends BaseMapperX<HkxxDO> {
+    Integer updateJcjfzz(HkxxDO  hkxxDO);
 //    添加经费到账
-    Integer updateJcjfzz(HkxxDO hkxxDO);
-
+    Integer updateJcjfdz(HkxxSaveReqVO updateReqVO);
+//添加经费到账信息
+Integer insertJcjfdz(HkxxSaveReqVO updateReqVO);
 //    确认经费到账信息
     HkxxDO selectJcjfzzByHkxxId(Integer hkxxId);
 //    查询经费到账列表
