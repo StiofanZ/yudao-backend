@@ -1298,7 +1298,40 @@ CREATE TABLE `gh_marker_info`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci comment ='高德地图标注点信息表'
 
-drop table if exists `gh_hj_jcxx`
+CREATE TABLE `gh_dm_hj_bq`
+(
+    `id`          varchar(20) NOT NULL COMMENT '归类管理代码',
+    `bq_mc`       varchar(20)          DEFAULT NULL COMMENT '标签归类名称',
+    `dept_id`     bigint               DEFAULT NULL COMMENT '部门ID',
+    `deleted`     bit(1)               DEFAULT b'0',
+    `creator`     varchar(64)          DEFAULT NULL COMMENT '创建者',
+    `create_time` datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updater`     varchar(64)          DEFAULT NULL COMMENT '更新者',
+    `update_time` datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci COMMENT ='标签代码'
+
+CREATE TABLE `gh_hj_bqxx`
+(
+    `id`          bigint   NOT NULL AUTO_INCREMENT COMMENT '归类管理代码',
+    `bq_id`       varchar(20)       DEFAULT NULL COMMENT '标签ID',
+    `djxh`        varchar(20)       DEFAULT NULL COMMENT '登记序号',
+    `yxqq`        date              DEFAULT NULL,
+    `yxqz`        date              DEFAULT NULL,
+    `deleted`     bit(1)            DEFAULT b'0',
+    `creator`     varchar(64)       DEFAULT NULL COMMENT '创建者',
+    `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updater`     varchar(64)       DEFAULT NULL COMMENT '更新者',
+    `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 66
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci COMMENT ='户籍标签'
+
+
 
 CREATE TABLE `gh_hj_jcxx`
 (

@@ -2,6 +2,7 @@ package cn.iocoder.yudao.module.lghjft.service.hjgl.bqgl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
@@ -9,21 +10,22 @@ import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.bqgl.vo.*;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.bqgl.GhDmHjBqDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.bqgl.GhHjBqxxDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.GhHjJcxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.hjgl.bqgl.GhDmHjBqMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.hjgl.bqgl.GhHjBqxxMapper;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.hjgl.jcxx.GhHjJcxxMapper;
 import cn.iocoder.yudao.module.system.api.dept.DeptApi;
 import cn.iocoder.yudao.module.system.api.dept.dto.DeptRespDTO;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
@@ -43,6 +45,9 @@ public class BqglServiceImpl implements BqglService {
 
     @Resource
     private GhHjBqxxMapper ghHjBqxxMapper;
+
+    @Resource
+    private GhHjJcxxMapper ghHjJcxxMapper;
 
     @Resource
     private DeptApi deptApi;
@@ -149,7 +154,46 @@ public class BqglServiceImpl implements BqglService {
 
     @Override
     public PageResult<BqglHjxxRespVO> listHjxx(BqglHjxxPageReqVO pageReqVO, Long deptId) {
-        return ghHjBqxxMapper.getHjxxPage(pageReqVO, deptId);
+        if (StrUtil.isBlank(pageReqVO.getBqId())) {
+            PageResult<GhHjJcxxDO> pageResult = ghHjJcxxMapper.selectPage(pageReqVO,
+                    buildHjxxQueryWrapper(pageReqVO).orderByDesc(GhHjJcxxDO::getDjxh));
+            List<BqglHjxxRespVO> records = pageResult.getList().stream()
+                    .map(jcxx -> buildHjxxResp(jcxx, null))
+                    .toList();
+            return new PageResult<>(records, pageResult.getTotal());
+        }
+
+        Map<String, GhHjBqxxDO> activeTagMap = getActiveTagMap(pageReqVO.getBqId());
+        List<String> taggedDjxhList = new ArrayList<>(activeTagMap.keySet());
+        long total = ghHjJcxxMapper.selectCount(buildHjxxQueryWrapper(pageReqVO));
+        if (total == 0) {
+            return new PageResult<>(List.of(), 0L);
+        }
+        long taggedTotal = countTaggedHjxx(pageReqVO, taggedDjxhList);
+
+        int pageSize = pageReqVO.getPageSize();
+        long pageStart = Math.max((long) (pageReqVO.getPageNo() - 1) * pageSize, 0L);
+        if (pageStart >= total) {
+            return new PageResult<>(List.of(), total);
+        }
+
+        List<BqglHjxxRespVO> pageRecords = new ArrayList<>(pageSize);
+        if (pageStart < taggedTotal) {
+            int taggedNeed = (int) Math.min(pageSize, taggedTotal - pageStart);
+            List<GhHjJcxxDO> taggedPage = getHjxxSegment(pageReqVO, taggedDjxhList, true, pageStart, taggedNeed);
+            taggedPage.forEach(jcxx -> pageRecords.add(buildHjxxResp(jcxx, activeTagMap.get(jcxx.getDjxh()))));
+
+            int remaining = pageSize - pageRecords.size();
+            if (remaining > 0) {
+                List<GhHjJcxxDO> untaggedPage = getHjxxSegment(pageReqVO, taggedDjxhList, false, 0L, remaining);
+                untaggedPage.forEach(jcxx -> pageRecords.add(buildHjxxResp(jcxx, null)));
+            }
+        } else {
+            long untaggedOffset = pageStart - taggedTotal;
+            List<GhHjJcxxDO> untaggedPage = getHjxxSegment(pageReqVO, taggedDjxhList, false, untaggedOffset, pageSize);
+            untaggedPage.forEach(jcxx -> pageRecords.add(buildHjxxResp(jcxx, null)));
+        }
+        return new PageResult<>(pageRecords, total);
     }
 
     @Override
@@ -207,6 +251,90 @@ public class BqglServiceImpl implements BqglService {
     @Override
     public List<GhHjBqxxDO> getHjxx(String djxh) {
         return ghHjBqxxMapper.selectList(GhHjBqxxDO::getDjxh, djxh);
+    }
+
+    private LambdaQueryWrapperX<GhHjJcxxDO> buildHjxxQueryWrapper(BqglHjxxPageReqVO pageReqVO) {
+        return new LambdaQueryWrapperX<GhHjJcxxDO>()
+                .likeIfPresent(GhHjJcxxDO::getNsrmc, pageReqVO.getNsrmc());
+    }
+
+    private long countTaggedHjxx(BqglHjxxPageReqVO pageReqVO, List<String> taggedDjxhList) {
+        if (CollUtil.isEmpty(taggedDjxhList)) {
+            return 0L;
+        }
+        return ghHjJcxxMapper.selectCount(buildHjxxQueryWrapper(pageReqVO)
+                .in(GhHjJcxxDO::getDjxh, taggedDjxhList));
+    }
+
+    private List<GhHjJcxxDO> getHjxxSegment(BqglHjxxPageReqVO pageReqVO, List<String> taggedDjxhList,
+                                            boolean tagged, long offset, int limit) {
+        if (limit <= 0 || offset < 0) {
+            return List.of();
+        }
+        if (tagged && CollUtil.isEmpty(taggedDjxhList)) {
+            return List.of();
+        }
+        int sourcePageSize = pageReqVO.getPageSize();
+        long firstPageNo = offset / sourcePageSize + 1;
+        int skip = (int) (offset % sourcePageSize);
+        List<GhHjJcxxDO> records = new ArrayList<>(limit);
+
+        List<GhHjJcxxDO> firstBatch = selectHjxxPageSegment(pageReqVO, taggedDjxhList, tagged, firstPageNo, sourcePageSize);
+        appendSegmentRecords(records, firstBatch, skip, limit);
+        if (records.size() >= limit) {
+            return records;
+        }
+
+        if (skip > 0 || firstBatch.size() == sourcePageSize) {
+            List<GhHjJcxxDO> secondBatch = selectHjxxPageSegment(pageReqVO, taggedDjxhList, tagged, firstPageNo + 1, sourcePageSize);
+            appendSegmentRecords(records, secondBatch, 0, limit);
+        }
+        return records;
+    }
+
+    private List<GhHjJcxxDO> selectHjxxPageSegment(BqglHjxxPageReqVO pageReqVO, List<String> taggedDjxhList,
+                                                   boolean tagged, long pageNo, int pageSize) {
+        LambdaQueryWrapperX<GhHjJcxxDO> queryWrapper = buildHjxxQueryWrapper(pageReqVO)
+                .orderByDesc(GhHjJcxxDO::getDjxh);
+        if (tagged) {
+            queryWrapper.in(GhHjJcxxDO::getDjxh, taggedDjxhList);
+        } else if (CollUtil.isNotEmpty(taggedDjxhList)) {
+            queryWrapper.notIn(GhHjJcxxDO::getDjxh, taggedDjxhList);
+        }
+        Page<GhHjJcxxDO> page = new Page<>(pageNo, pageSize, false);
+        ghHjJcxxMapper.selectPage(page, queryWrapper);
+        return page.getRecords();
+    }
+
+    private void appendSegmentRecords(List<GhHjJcxxDO> target, List<GhHjJcxxDO> source, int skip, int limit) {
+        if (CollUtil.isEmpty(source) || skip >= source.size() || target.size() >= limit) {
+            return;
+        }
+        int endIndex = Math.min(source.size(), skip + limit - target.size());
+        target.addAll(source.subList(skip, endIndex));
+    }
+
+    private Map<String, GhHjBqxxDO> getActiveTagMap(String bqId) {
+        if (StrUtil.isBlank(bqId)) {
+            return Map.of();
+        }
+        return ghHjBqxxMapper.selectList(new LambdaQueryWrapperX<GhHjBqxxDO>()
+                        .eq(GhHjBqxxDO::getBqId, bqId)
+                        .ge(GhHjBqxxDO::getYxqz, LocalDate.now())
+                        .orderByDesc(GhHjBqxxDO::getYxqz)
+                        .orderByDesc(GhHjBqxxDO::getId))
+                .stream()
+                .collect(Collectors.toMap(GhHjBqxxDO::getDjxh, Function.identity(), (left, right) -> left, LinkedHashMap::new));
+    }
+
+    private BqglHjxxRespVO buildHjxxResp(GhHjJcxxDO jcxx, GhHjBqxxDO tag) {
+        BqglHjxxRespVO respVO = BeanUtils.toBean(jcxx, BqglHjxxRespVO.class);
+        if (tag != null) {
+            respVO.setBqId(tag.getBqId());
+            respVO.setYxqq(tag.getYxqq());
+            respVO.setYxqz(tag.getYxqz());
+        }
+        return respVO;
     }
 
     private GhDmHjBqDO validateBqglExists(String id) {
