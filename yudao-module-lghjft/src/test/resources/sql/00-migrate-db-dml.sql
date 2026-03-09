@@ -1135,7 +1135,7 @@ VALUES (213538, '汇总缴费申请', '', 2, 0, 213468, 'jfhzjnsq', '', 'lghjft/
         '2026-02-11 17:21:04', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213544, '分支机构明细管理', '', 2, 0, 213468, 'jfhzjnsqmx', '', 'lghjft/workflow/jfhzjnsq/BranchDetail', 'LghjftWorkflowJfhzjnsqBranchDetail', 1, true, true, true, '',
+VALUES (213544, '分支机构明细管理', '', 2, 0, 213468, 'jfhzjnsqmx', '', 'lghjft/workflow/jfhzjnsq/fzjgxxDetail', 'LghjftWorkflowJfhzjnsqFzjgxxDetail', 1, true, true, true, '',
         '2026-01-27 11:45:08', '1',
         '2026-02-03 10:24:39', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
