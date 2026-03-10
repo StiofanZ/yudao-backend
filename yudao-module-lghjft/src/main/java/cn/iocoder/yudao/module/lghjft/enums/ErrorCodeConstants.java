@@ -49,4 +49,7 @@ public interface ErrorCodeConstants {
     ErrorCode AQZX_VERIFY_MOBILE_NOT_EXISTS = new ErrorCode(2_021_000_001, "当前账号未配置可校验手机号");
 
     ErrorCode DWXXSP_BUSINESS_TYPE_NOT_SUPPORT = new ErrorCode(2_022_000_001, "暂不支持的审批业务类型");
+
+    ErrorCode BBBM_NOT_SUPPORT = new ErrorCode(2_023_000_001, "报表编码不支持");
+    ErrorCode BB_ZX_FAIL = new ErrorCode(2_023_000_002, "报表执行失败：{}");
 }
