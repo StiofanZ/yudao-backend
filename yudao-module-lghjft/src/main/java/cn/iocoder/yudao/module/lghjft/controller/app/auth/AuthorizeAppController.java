@@ -4,9 +4,7 @@ import cn.iocoder.yudao.framework.common.enums.UserTypeEnum;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
-import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeLghReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.*;
 import cn.iocoder.yudao.module.lghjft.controller.app.auth.vo.AuthorizeAppReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.auth.vo.AuthorizeAppResVO;
 import cn.iocoder.yudao.module.lghjft.service.auth.AuthenticateService;
@@ -56,6 +54,22 @@ public class AuthorizeAppController {
         reqVO.setYhlx(UserTypeEnum.MEMBER.getValue());
         AuthorizeResVO resVO = authenticateService.login(reqVO);
         return success(BeanUtils.toBean(resVO, AuthorizeAppResVO.class));
+    }
+
+    @PostMapping("/auth/send-sms-code")
+    @PermitAll
+    @Operation(summary = "发送短信验证码")
+    public CommonResult<Boolean> sendSmsCode(@RequestBody @Valid DxfsReqVO reqVO) {
+        authenticateService.sendSmsCode(reqVO.getLxdh(), UserTypeEnum.MEMBER.getValue());
+        return success(true);
+    }
+
+    @PostMapping("/auth/sms-login")
+    @PermitAll
+    @Operation(summary = "短信登录")
+    public CommonResult<AuthorizeAppResVO> smsLogin(@RequestBody @Valid DxdlReqVO reqVO) {
+        reqVO.setYhlx(UserTypeEnum.MEMBER.getValue());
+        return success(BeanUtils.toBean(authenticateService.smsLogin(reqVO), AuthorizeAppResVO.class));
     }
 
 

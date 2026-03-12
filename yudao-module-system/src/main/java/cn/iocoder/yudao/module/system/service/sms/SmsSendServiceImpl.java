@@ -8,21 +8,21 @@ import cn.iocoder.yudao.framework.common.core.KeyValue;
 import cn.iocoder.yudao.framework.common.enums.CommonStatusEnum;
 import cn.iocoder.yudao.framework.common.enums.UserTypeEnum;
 import cn.iocoder.yudao.framework.datapermission.core.annotation.DataPermission;
-import cn.iocoder.yudao.module.system.framework.sms.core.client.SmsClient;
-import cn.iocoder.yudao.module.system.framework.sms.core.client.dto.SmsReceiveRespDTO;
-import cn.iocoder.yudao.module.system.framework.sms.core.client.dto.SmsSendRespDTO;
 import cn.iocoder.yudao.module.system.dal.dataobject.sms.SmsChannelDO;
 import cn.iocoder.yudao.module.system.dal.dataobject.sms.SmsTemplateDO;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
+import cn.iocoder.yudao.module.system.framework.sms.core.client.SmsClient;
+import cn.iocoder.yudao.module.system.framework.sms.core.client.dto.SmsReceiveRespDTO;
+import cn.iocoder.yudao.module.system.framework.sms.core.client.dto.SmsSendRespDTO;
 import cn.iocoder.yudao.module.system.mq.message.sms.SmsSendMessage;
 import cn.iocoder.yudao.module.system.mq.producer.sms.SmsProducer;
 import cn.iocoder.yudao.module.system.service.member.MemberService;
 import cn.iocoder.yudao.module.system.service.user.AdminUserService;
 import com.google.common.annotations.VisibleForTesting;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -99,7 +99,7 @@ public class SmsSendServiceImpl implements SmsSendService {
         // 发送 MQ 消息，异步执行发送短信
         if (isSend) {
             smsProducer.sendSmsSendMessage(sendLogId, mobile, template.getChannelId(),
-                    template.getApiTemplateId(), newTemplateParams);
+                    template.getApiTemplateId(), content, newTemplateParams);
         }
         return sendLogId;
     }
@@ -162,7 +162,7 @@ public class SmsSendServiceImpl implements SmsSendService {
         // 发送短信
         try {
             SmsSendRespDTO sendResponse = smsClient.sendSms(message.getLogId(), message.getMobile(),
-                    message.getApiTemplateId(), message.getTemplateParams());
+                    message.getApiTemplateId(), message.getTemplateContent(), message.getTemplateParams());
             smsLogService.updateSmsSendResult(message.getLogId(), sendResponse.getSuccess(),
                     sendResponse.getApiCode(), sendResponse.getApiMsg(),
                     sendResponse.getApiRequestId(), sendResponse.getSerialNo());

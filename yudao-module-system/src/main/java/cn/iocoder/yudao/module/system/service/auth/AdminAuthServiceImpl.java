@@ -53,6 +53,28 @@ import static cn.iocoder.yudao.module.system.enums.ErrorCodeConstants.*;
 @Slf4j
 public class AdminAuthServiceImpl implements AdminAuthService {
 
+    @Override
+    public AdminUserDO authenticate(String username, String password) {
+        LoginTarget loginTarget = resolveLoginTarget(username);
+        final LoginLogTypeEnum logTypeEnum = loginTarget.logType();
+        // 校验账号是否存在
+        AdminUserDO user = loginTarget.user();
+        if (user == null) {
+            createLoginLog(null, username, logTypeEnum, LoginResultEnum.BAD_CREDENTIALS);
+            throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
+        }
+        if (!userService.isPasswordMatch(password, user.getPassword())) {
+            createLoginLog(user.getId(), username, logTypeEnum, LoginResultEnum.BAD_CREDENTIALS);
+            throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
+        }
+        // 校验是否禁用
+        if (CommonStatusEnum.isDisable(user.getStatus())) {
+            createLoginLog(user.getId(), username, logTypeEnum, LoginResultEnum.USER_DISABLED);
+            throw exception(AUTH_LOGIN_USER_DISABLED);
+        }
+        return user;
+    }
+
     @Resource
     private AdminUserService userService;
     @Resource
@@ -78,33 +100,13 @@ public class AdminAuthServiceImpl implements AdminAuthService {
     private Boolean captchaEnable;
 
     @Override
-    public AdminUserDO authenticate(String username, String password) {
-        final LoginLogTypeEnum logTypeEnum = LoginLogTypeEnum.LOGIN_USERNAME;
-        // 校验账号是否存在
-        AdminUserDO user = userService.getUserByUsername(username);
-        if (user == null) {
-            createLoginLog(null, username, logTypeEnum, LoginResultEnum.BAD_CREDENTIALS);
-            throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
-        }
-        if (!userService.isPasswordMatch(password, user.getPassword())) {
-            createLoginLog(user.getId(), username, logTypeEnum, LoginResultEnum.BAD_CREDENTIALS);
-            throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
-        }
-        // 校验是否禁用
-        if (CommonStatusEnum.isDisable(user.getStatus())) {
-            createLoginLog(user.getId(), username, logTypeEnum, LoginResultEnum.USER_DISABLED);
-            throw exception(AUTH_LOGIN_USER_DISABLED);
-        }
-        return user;
-    }
-
-    @Override
     @DataPermission(enable = false)
     public AuthLoginRespVO login(AuthLoginReqVO reqVO) {
         // 校验验证码
         validateCaptcha(reqVO);
 
         // 使用账号密码，进行登录
+        LoginTarget loginTarget = resolveLoginTarget(reqVO.getUsername());
         AdminUserDO user = authenticate(reqVO.getUsername(), reqVO.getPassword());
 
         // 如果 socialType 非空，说明需要绑定社交用户
@@ -113,7 +115,19 @@ public class AdminAuthServiceImpl implements AdminAuthService {
                     reqVO.getSocialType(), reqVO.getSocialCode(), reqVO.getSocialState()));
         }
         // 创建 Token 令牌，记录登录日志
-        return createTokenAfterLoginSuccess(user.getId(), reqVO.getUsername(), LoginLogTypeEnum.LOGIN_USERNAME);
+        return createTokenAfterLoginSuccess(user.getId(), reqVO.getUsername(), loginTarget.logType());
+    }
+
+    @VisibleForTesting
+    void validateCaptcha(AuthLoginReqVO reqVO) {
+        ResponseModel response = doValidateCaptcha(reqVO);
+        // 校验验证码
+        if (!response.isSuccess()) {
+            // 创建登录失败日志（验证码不正确)
+            createLoginLog(null, reqVO.getUsername(), resolveLoginTarget(reqVO.getUsername()).logType(),
+                    LoginResultEnum.CAPTCHA_CODE_ERROR);
+            throw exception(AUTH_LOGIN_CAPTCHA_CODE_ERROR, response.getRepMsg());
+        }
     }
 
     @Override
@@ -187,15 +201,19 @@ public class AdminAuthServiceImpl implements AdminAuthService {
         return createTokenAfterLoginSuccess(user.getId(), user.getUsername(), LoginLogTypeEnum.LOGIN_SOCIAL);
     }
 
-    @VisibleForTesting
-    void validateCaptcha(AuthLoginReqVO reqVO) {
-        ResponseModel response = doValidateCaptcha(reqVO);
-        // 校验验证码
-        if (!response.isSuccess()) {
-            // 创建登录失败日志（验证码不正确)
-            createLoginLog(null, reqVO.getUsername(), LoginLogTypeEnum.LOGIN_USERNAME, LoginResultEnum.CAPTCHA_CODE_ERROR);
-            throw exception(AUTH_LOGIN_CAPTCHA_CODE_ERROR, response.getRepMsg());
+    private LoginTarget resolveLoginTarget(String username) {
+        AdminUserDO user = userService.getUserByUsername(username);
+        if (user != null) {
+            return new LoginTarget(user, LoginLogTypeEnum.LOGIN_USERNAME);
         }
+        user = userService.getUserByMobile(username);
+        if (user != null) {
+            return new LoginTarget(user, LoginLogTypeEnum.LOGIN_MOBILE);
+        }
+        return new LoginTarget(null, LoginLogTypeEnum.LOGIN_USERNAME);
+    }
+
+    private record LoginTarget(AdminUserDO user, LoginLogTypeEnum logType) {
     }
 
     private ResponseModel doValidateCaptcha(CaptchaVerificationReqVO reqVO) {

@@ -1,10 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.service.xxzx.xxtx;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessagePageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessageRespVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessageSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessageSendReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.*;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.xxzx.xxtx.XxtxMessageDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.xxzx.xxtx.XxtxMessageReceiverDO;
 
@@ -64,7 +61,7 @@ public interface XxtxService {
      * @param reqVO 分页条件
      * @return 消息分页列表
      */
-    PageResult<XxtxMessageDO> getMessagePage(XxtxMessagePageReqVO reqVO);
+    PageResult<XxtxMessageRespVO> getMessagePage(XxtxMessagePageReqVO reqVO);
 
     /**
      * 获取消息详情（包含部门和用户名称）
@@ -97,5 +94,7 @@ public interface XxtxService {
      * @return 消息接收列表
      */
     PageResult<XxtxMessageReceiverDO> getMessageReceiverPage(XxtxMessagePageReqVO reqVO);
+
+    List<XxtxReceiverRespVO> getMessageReceiverList(Long messageId);
 
 }

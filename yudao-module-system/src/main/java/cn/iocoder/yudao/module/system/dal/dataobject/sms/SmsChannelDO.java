@@ -5,10 +5,14 @@ import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
 import cn.iocoder.yudao.framework.tenant.core.aop.TenantIgnore;
 import cn.iocoder.yudao.module.system.framework.sms.core.enums.SmsChannelEnum;
 import com.baomidou.mybatisplus.annotation.KeySequence;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+
+import java.util.Map;
 
 /**
  * 短信渠道 DO
@@ -60,5 +64,10 @@ public class SmsChannelDO extends BaseDO {
      * 短信发送回调 URL
      */
     private String callbackUrl;
+    /**
+     * 扩展参数
+     */
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private Map<String, Object> kzcs;
 
 }

@@ -2,12 +2,7 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessagePageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessageRespVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessageSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessageSendReqVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.xxzx.xxtx.XxtxMessageDO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.*;
 import cn.iocoder.yudao.module.lghjft.service.xxzx.xxtx.XxtxService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -86,8 +81,7 @@ public class XxtxController {
     @Operation(summary = "获取消息分页列表")
     @PreAuthorize("@ss.hasPermission('lghjft:xxzx-xxtx:query')")
     public CommonResult<PageResult<XxtxMessageRespVO>> getMessagePage(@Validated XxtxMessagePageReqVO pageReqVO) {
-        PageResult<XxtxMessageDO> pageResult = xxtxService.getMessagePage(pageReqVO);
-        return success(BeanUtils.toBean(pageResult, XxtxMessageRespVO.class));
+        return success(xxtxService.getMessagePage(pageReqVO));
     }
 
     @GetMapping("/get")
@@ -96,6 +90,14 @@ public class XxtxController {
     @PreAuthorize("@ss.hasPermission('lghjft:xxzx-xxtx:query')")
     public CommonResult<XxtxMessageRespVO> getMessage(@RequestParam("id") Long id) {
         return success(xxtxService.getMessageDetail(id));
+    }
+
+    @GetMapping("/receiver-list")
+    @Operation(summary = "获取消息接收明细")
+    @Parameter(name = "messageId", description = "消息ID", required = true, example = "1024")
+    @PreAuthorize("@ss.hasPermission('lghjft:xxzx-xxtx:query')")
+    public CommonResult<List<XxtxReceiverRespVO>> getReceiverList(@RequestParam("messageId") Long messageId) {
+        return success(xxtxService.getMessageReceiverList(messageId));
     }
 
     @PutMapping("/mark-read")

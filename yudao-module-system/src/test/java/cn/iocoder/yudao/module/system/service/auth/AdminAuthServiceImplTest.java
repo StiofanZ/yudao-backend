@@ -89,6 +89,21 @@ public class AdminAuthServiceImplTest extends BaseDbUnitTest {
     }
 
     @Test
+    public void testAuthenticate_successByMobile() {
+        String mobile = "15593111014";
+        String password = randomString();
+        AdminUserDO user = randomPojo(AdminUserDO.class, o -> o.setUsername("admin")
+                .setMobile(mobile).setPassword(password).setStatus(CommonStatusEnum.ENABLE.getStatus()));
+        when(userService.getUserByUsername(eq(mobile))).thenReturn(null);
+        when(userService.getUserByMobile(eq(mobile))).thenReturn(user);
+        when(userService.isPasswordMatch(eq(password), eq(user.getPassword()))).thenReturn(true);
+
+        AdminUserDO loginUser = authService.authenticate(mobile, password);
+
+        assertPojoEquals(user, loginUser);
+    }
+
+    @Test
     public void testAuthenticate_userNotFound() {
         // 准备参数
         String username = randomString();
@@ -179,6 +194,34 @@ public class AdminAuthServiceImplTest extends BaseDbUnitTest {
         verify(socialUserService).bindSocialUser(eq(new SocialUserBindReqDTO(
                 user.getId(), UserTypeEnum.ADMIN.getValue(),
                 reqVO.getSocialType(), reqVO.getSocialCode(), reqVO.getSocialState())));
+    }
+
+    @Test
+    public void testLogin_successByMobile() {
+        String mobile = "15593111014";
+        String password = "admin123";
+        AuthLoginReqVO reqVO = randomPojo(AuthLoginReqVO.class, o -> o.setUsername(mobile).setPassword(password)
+                .setSocialType(null));
+
+        authService.setCaptchaEnable(false);
+        AdminUserDO user = randomPojo(AdminUserDO.class, o -> o.setId(1L).setUsername("admin").setMobile(mobile)
+                .setPassword(password).setStatus(CommonStatusEnum.ENABLE.getStatus()));
+        when(userService.getUserByUsername(eq(mobile))).thenReturn(null);
+        when(userService.getUserByMobile(eq(mobile))).thenReturn(user);
+        when(userService.isPasswordMatch(eq(password), eq(user.getPassword()))).thenReturn(true);
+        OAuth2AccessTokenDO accessTokenDO = randomPojo(OAuth2AccessTokenDO.class, o -> o.setUserId(1L)
+                .setUserType(UserTypeEnum.ADMIN.getValue()));
+        when(oauth2TokenService.createAccessToken(eq(1L), eq(UserTypeEnum.ADMIN.getValue()), eq("default"), isNull()))
+                .thenReturn(accessTokenDO);
+
+        AuthLoginRespVO loginRespVO = authService.login(reqVO);
+
+        assertPojoEquals(accessTokenDO, loginRespVO);
+        verify(loginLogService).createLoginLog(
+                argThat(o -> o.getLogType().equals(LoginLogTypeEnum.LOGIN_MOBILE.getType())
+                        && o.getResult().equals(LoginResultEnum.SUCCESS.getResult())
+                        && o.getUserId().equals(user.getId()))
+        );
     }
 
     @Test

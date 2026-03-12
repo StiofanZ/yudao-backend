@@ -74,7 +74,7 @@ public class HuaweiSmsClient extends AbstractSmsClient {
     }
 
     @Override
-    public SmsSendRespDTO sendSms(Long sendLogId, String mobile, String apiTemplateId,
+    public SmsSendRespDTO sendSms(Long sendLogId, String mobile, String apiTemplateId, String templateContent,
                                   List<KeyValue<String, Object>> templateParams) throws Throwable {
         StringBuilder requestBody = new StringBuilder();
         appendToBody(requestBody, "from=", getSender());

@@ -1,21 +1,23 @@
 package cn.iocoder.yudao.module.lghjft.service.xxzx.xxtx;
 
+import cn.iocoder.yudao.framework.common.enums.UserTypeEnum;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
-import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessagePageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessageRespVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessageSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessageSendReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.*;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.xxzx.xxtx.XxtxMessageDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.xxzx.xxtx.XxtxMessageReceiverDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.xxzx.xxtx.XxtxMessageMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.xxzx.xxtx.XxtxMessageReceiverMapper;
+import cn.iocoder.yudao.module.lghjft.service.dx.DxfwService;
 import cn.iocoder.yudao.module.system.dal.dataobject.dept.DeptDO;
+import cn.iocoder.yudao.module.system.dal.dataobject.sms.SmsLogDO;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
 import cn.iocoder.yudao.module.system.dal.mysql.dept.DeptMapper;
 import cn.iocoder.yudao.module.system.dal.mysql.user.AdminUserMapper;
+import cn.iocoder.yudao.module.system.enums.sms.SmsSendStatusEnum;
+import cn.iocoder.yudao.module.system.service.sms.SmsLogService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import jakarta.annotation.Resource;
@@ -25,10 +27,10 @@ import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
+import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.CONTENT_NOT_EXISTS;
 
 /**
  * 消息提醒 Service 实现类
@@ -45,15 +47,26 @@ public class XxtxServiceImpl implements XxtxService {
     private AdminUserMapper userMapper;
     @Resource
     private DeptMapper deptMapper;
+    @Resource
+    private DxfwService dxfwService;
+    @Resource
+    private SmsLogService smsLogService;
 
     @Override
     public Long createMessage(XxtxMessageSaveReqVO createReqVO) {
+        yzfsxx(createReqVO);
         XxtxMessageDO message = BeanUtils.toBean(createReqVO, XxtxMessageDO.class);
         // 设置发送者信息
         message.setSenderId(SecurityFrameworkUtils.getLoginUserId());
         message.setSenderName(SecurityFrameworkUtils.getLoginUserNickname());
         // 设置状态为草稿
         message.setStatus(0);
+        if (message.getSfznx() == null) {
+            message.setSfznx(1);
+        }
+        if (message.getSfdx() == null) {
+            message.setSfdx(0);
+        }
         messageMapper.insert(message);
         return message.getId();
     }
@@ -62,6 +75,7 @@ public class XxtxServiceImpl implements XxtxService {
     public void updateMessage(XxtxMessageSaveReqVO updateReqVO) {
         // 校验消息是否存在
         validateMessageExists(updateReqVO.getId());
+        yzfsxx(updateReqVO);
         XxtxMessageDO message = BeanUtils.toBean(updateReqVO, XxtxMessageDO.class);
         messageMapper.updateById(message);
     }
@@ -120,21 +134,33 @@ public class XxtxServiceImpl implements XxtxService {
                 // 获取部门下的所有用户
                 List<AdminUserDO> users = userMapper.selectList(new LambdaQueryWrapper<AdminUserDO>()
                         .eq(AdminUserDO::getDeptId, deptId)
-                        .eq(AdminUserDO::getStatus, 1)); // 只发送给启用状态的用户
+                        .eq(AdminUserDO::getStatus, 0)); // 只发送给启用状态的用户
                 users.forEach(user -> userIds.add(user.getId()));
             }
         }
 
         // 3.3 保存用户接收记录（实际消息接收者）
         for (Long userId : userIds) {
-            // 检查是否已经存在接收记录（防止已读用户被重置为未读）
-            Long count = messageReceiverMapper.selectCount(new LambdaQueryWrapper<XxtxMessageReceiverDO>()
-                    .eq(XxtxMessageReceiverDO::getMessageId, message.getId())
-                    .eq(XxtxMessageReceiverDO::getReceiverId, userId)
-                    .eq(XxtxMessageReceiverDO::getReceiverType, 1));
-
-            if (count == 0) {
-                saveReceiver(message.getId(), 1, userId);
+            XxtxMessageReceiverDO receiver = getOrCreateReceiver(message.getId(), userId);
+            if (Integer.valueOf(1).equals(message.getSfdx())) {
+                AdminUserDO user = userMapper.selectById(userId);
+                try {
+                    Long dxrzid = dxfwService.fstzdx(user != null ? user.getMobile() : null, userId,
+                            UserTypeEnum.ADMIN.getValue(), message.getDxnr());
+                    messageReceiverMapper.updateById(XxtxMessageReceiverDO.builder()
+                            .id(receiver.getId())
+                            .dxrzid(dxrzid)
+                            .dxzt(SmsSendStatusEnum.INIT.getStatus())
+                            .dxbz("已提交发送")
+                            .build());
+                    tbDxjg(receiver.getId(), dxrzid);
+                } catch (Exception ex) {
+                    messageReceiverMapper.updateById(XxtxMessageReceiverDO.builder()
+                            .id(receiver.getId())
+                            .dxzt(SmsSendStatusEnum.FAILURE.getStatus())
+                            .dxbz(ex.getMessage())
+                            .build());
+                }
             }
         }
     }
@@ -149,38 +175,21 @@ public class XxtxServiceImpl implements XxtxService {
     }
 
     @Override
-    public PageResult<XxtxMessageDO> getMessagePage(XxtxMessagePageReqVO reqVO) {
-        return messageMapper.selectPage(reqVO, new LambdaQueryWrapperX<XxtxMessageDO>()
+    public PageResult<XxtxMessageRespVO> getMessagePage(XxtxMessagePageReqVO reqVO) {
+        PageResult<XxtxMessageDO> pageResult = messageMapper.selectPage(reqVO, new LambdaQueryWrapperX<XxtxMessageDO>()
                 .likeIfPresent(XxtxMessageDO::getTitle, reqVO.getTitle())
                 .eqIfPresent(XxtxMessageDO::getMessageType, reqVO.getMessageType())
                 .eqIfPresent(XxtxMessageDO::getStatus, reqVO.getStatus())
                 .eqIfPresent(XxtxMessageDO::getSenderId, reqVO.getSenderId())
                 .betweenIfPresent(XxtxMessageDO::getSendTime, reqVO.getSendTimeBegin(), reqVO.getSendTimeEnd())
                 .orderByDesc(XxtxMessageDO::getId));
+        List<XxtxMessageRespVO> list = pageResult.getList().stream().map(this::buildMessageRespVO).toList();
+        return new PageResult<>(list, pageResult.getTotal());
     }
 
     @Override
     public XxtxMessageRespVO getMessageDetail(Long id) {
-        XxtxMessageDO message = validateMessageExists(id);
-        XxtxMessageRespVO respVO = BeanUtils.toBean(message, XxtxMessageRespVO.class);
-
-        // 填充部门名称
-        if (message.getDeptIds() != null && !message.getDeptIds().isEmpty()) {
-            List<DeptDO> depts = deptMapper.selectBatchIds(message.getDeptIds());
-            List<String> deptNames = new ArrayList<>();
-            depts.forEach(dept -> deptNames.add(dept.getName()));
-            respVO.setDeptNames(deptNames);
-        }
-
-        // 填充用户名称
-        if (message.getUserIds() != null && !message.getUserIds().isEmpty()) {
-            List<AdminUserDO> users = userMapper.selectBatchIds(message.getUserIds());
-            List<String> userNames = new ArrayList<>();
-            users.forEach(user -> userNames.add(user.getNickname()));
-            respVO.setUserNames(userNames);
-        }
-
-        return respVO;
+        return buildMessageRespVO(validateMessageExists(id));
     }
 
     @Override
@@ -200,10 +209,30 @@ public class XxtxServiceImpl implements XxtxService {
 
     @Override
     public PageResult<XxtxMessageReceiverDO> getMessageReceiverPage(XxtxMessagePageReqVO reqVO) {
-        return messageReceiverMapper.selectPage(reqVO, new LambdaQueryWrapperX<XxtxMessageReceiverDO>()
+        List<XxtxMessageReceiverDO> allList = messageReceiverMapper.selectList(new LambdaQueryWrapperX<XxtxMessageReceiverDO>()
                 .eq(XxtxMessageReceiverDO::getReceiverId, reqVO.getReceiverId())
                 .eq(XxtxMessageReceiverDO::getDeleted, 0)
-                .in(XxtxMessageReceiverDO::getReadStatus, ObjectUtils.isEmpty(reqVO.getReadStatus()) ? List.of(0, 1).toArray() : new Object[]{reqVO.getReadStatus()}));
+                .in(XxtxMessageReceiverDO::getReadStatus, ObjectUtils.isEmpty(reqVO.getReadStatus()) ? List.of(0, 1).toArray() : new Object[]{reqVO.getReadStatus()})
+                .orderByDesc(XxtxMessageReceiverDO::getId));
+        List<XxtxMessageReceiverDO> filterList = allList.stream().filter(receiverDO -> {
+            XxtxMessageDO messageDO = messageMapper.selectById(receiverDO.getMessageId());
+            return messageDO != null && Integer.valueOf(1).equals(messageDO.getSfznx()) && Integer.valueOf(1).equals(messageDO.getStatus());
+        }).toList();
+        return toPageResult(filterList, reqVO.getPageNo(), reqVO.getPageSize());
+    }
+
+    @Override
+    public List<XxtxReceiverRespVO> getMessageReceiverList(Long messageId) {
+        validateMessageExists(messageId);
+        List<XxtxMessageReceiverDO> receiverList = messageReceiverMapper.selectList(new LambdaQueryWrapperX<XxtxMessageReceiverDO>()
+                .eq(XxtxMessageReceiverDO::getMessageId, messageId)
+                .eq(XxtxMessageReceiverDO::getDeleted, 0)
+                .orderByDesc(XxtxMessageReceiverDO::getId));
+        if (receiverList.isEmpty()) {
+            return Collections.emptyList();
+        }
+        Map<Long, AdminUserDO> userMap = hqYhMap(receiverList.stream().map(XxtxMessageReceiverDO::getReceiverId).toList());
+        return receiverList.stream().map(receiver -> buildReceiverRespVO(receiver, userMap.get(receiver.getReceiverId()))).toList();
     }
 
     /**
@@ -218,15 +247,156 @@ public class XxtxServiceImpl implements XxtxService {
         messageReceiverMapper.insert(receiver);
     }
 
+    private XxtxMessageReceiverDO getOrCreateReceiver(Long messageId, Long receiverId) {
+        XxtxMessageReceiverDO receiver = messageReceiverMapper.selectOne(new LambdaQueryWrapper<XxtxMessageReceiverDO>()
+                .eq(XxtxMessageReceiverDO::getMessageId, messageId)
+                .eq(XxtxMessageReceiverDO::getReceiverId, receiverId)
+                .eq(XxtxMessageReceiverDO::getReceiverType, 1));
+        if (receiver != null) {
+            return receiver;
+        }
+        saveReceiver(messageId, 1, receiverId);
+        return messageReceiverMapper.selectOne(new LambdaQueryWrapper<XxtxMessageReceiverDO>()
+                .eq(XxtxMessageReceiverDO::getMessageId, messageId)
+                .eq(XxtxMessageReceiverDO::getReceiverId, receiverId)
+                .eq(XxtxMessageReceiverDO::getReceiverType, 1));
+    }
+
     /**
      * 校验消息是否存在
      */
     private XxtxMessageDO validateMessageExists(Long id) {
         XxtxMessageDO message = messageMapper.selectById(id);
         if (message == null) {
-            throw new RuntimeException("消息不存在");
+            throw exception(CONTENT_NOT_EXISTS);
         }
         return message;
+    }
+
+    private void yzfsxx(XxtxMessageSaveReqVO reqVO) {
+        int sfznx = reqVO.getSfznx() == null ? 1 : reqVO.getSfznx();
+        int sfdx = reqVO.getSfdx() == null ? 0 : reqVO.getSfdx();
+        if (sfznx != 1 && sfdx != 1) {
+            throw new IllegalArgumentException("站内信和短信至少选择一种发送方式");
+        }
+        if (sfznx == 1 && ObjectUtils.isEmpty(reqVO.getContent())) {
+            throw new IllegalArgumentException("发送站内信时，消息内容不能为空");
+        }
+        if (sfdx == 1 && ObjectUtils.isEmpty(reqVO.getDxnr())) {
+            throw new IllegalArgumentException("发送短信时，短信内容不能为空");
+        }
+    }
+
+    private XxtxMessageRespVO buildMessageRespVO(XxtxMessageDO message) {
+        XxtxMessageRespVO respVO = BeanUtils.toBean(message, XxtxMessageRespVO.class);
+        if (message.getDeptIds() != null && !message.getDeptIds().isEmpty()) {
+            List<DeptDO> depts = deptMapper.selectBatchIds(message.getDeptIds());
+            List<String> deptNames = new ArrayList<>();
+            depts.forEach(dept -> deptNames.add(dept.getName()));
+            respVO.setDeptNames(deptNames);
+        }
+        if (message.getUserIds() != null && !message.getUserIds().isEmpty()) {
+            List<AdminUserDO> users = userMapper.selectBatchIds(message.getUserIds());
+            List<String> userNames = new ArrayList<>();
+            users.forEach(user -> userNames.add(user.getNickname()));
+            respVO.setUserNames(userNames);
+        }
+        List<XxtxMessageReceiverDO> receiverList = messageReceiverMapper.selectList(new LambdaQueryWrapperX<XxtxMessageReceiverDO>()
+                .eq(XxtxMessageReceiverDO::getMessageId, message.getId())
+                .eq(XxtxMessageReceiverDO::getDeleted, 0));
+        respVO.setDxdsl(Integer.valueOf(1).equals(message.getSfdx()) ? receiverList.size() : 0);
+        int dxcgsl = 0;
+        int dxsbsl = 0;
+        for (XxtxMessageReceiverDO receiver : receiverList) {
+            sxDxjg(receiver);
+            Integer dxzt = receiver.getDxzt();
+            if (SmsSendStatusEnum.SUCCESS.getStatus() == dxzt) {
+                dxcgsl++;
+            } else if (SmsSendStatusEnum.FAILURE.getStatus() == dxzt) {
+                dxsbsl++;
+            }
+        }
+        respVO.setDxcgsl(dxcgsl);
+        respVO.setDxsbsl(dxsbsl);
+        return respVO;
+    }
+
+    private XxtxReceiverRespVO buildReceiverRespVO(XxtxMessageReceiverDO receiver, AdminUserDO userDO) {
+        XxtxReceiverRespVO respVO = BeanUtils.toBean(receiver, XxtxReceiverRespVO.class);
+        if (userDO != null) {
+            respVO.setReceiverName(userDO.getNickname());
+            respVO.setLxdh(userDO.getMobile());
+        }
+        sxDxjg(receiver);
+        respVO.setDxzt(receiver.getDxzt());
+        respVO.setDxbz(receiver.getDxbz());
+        return respVO;
+    }
+
+    private void sxDxjg(XxtxMessageReceiverDO receiver) {
+        if (receiver.getDxrzid() == null) {
+            return;
+        }
+        SmsLogDO smsLogDO = smsLogService.getSmsLog(receiver.getDxrzid());
+        if (smsLogDO == null) {
+            return;
+        }
+        Integer dxzt = smsLogDO.getSendStatus();
+        String dxbz = dxzt.equals(SmsSendStatusEnum.SUCCESS.getStatus()) ? "发送成功"
+                : org.apache.commons.lang3.StringUtils.defaultIfBlank(smsLogDO.getApiSendMsg(), receiver.getDxbz());
+        if (!Objects.equals(receiver.getDxzt(), dxzt)
+                || !org.apache.commons.lang3.StringUtils.equals(receiver.getDxbz(), dxbz)) {
+            messageReceiverMapper.updateById(XxtxMessageReceiverDO.builder()
+                    .id(receiver.getId())
+                    .dxzt(dxzt)
+                    .dxbz(dxbz)
+                    .build());
+            receiver.setDxzt(dxzt);
+            receiver.setDxbz(dxbz);
+        }
+    }
+
+    private void tbDxjg(Long jsrId, Long dxrzid) {
+        for (int i = 0; i < 5; i++) {
+            SmsLogDO smsLogDO = smsLogService.getSmsLog(dxrzid);
+            if (smsLogDO != null && SmsSendStatusEnum.INIT.getStatus() != smsLogDO.getSendStatus()) {
+                messageReceiverMapper.updateById(XxtxMessageReceiverDO.builder()
+                        .id(jsrId)
+                        .dxzt(smsLogDO.getSendStatus())
+                        .dxbz(smsLogDO.getSendStatus() == SmsSendStatusEnum.SUCCESS.getStatus()
+                                ? "发送成功"
+                                : org.apache.commons.lang3.StringUtils.defaultIfBlank(smsLogDO.getApiSendMsg(), "发送失败"))
+                        .build());
+                return;
+            }
+            try {
+                Thread.sleep(100L);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
+    }
+
+    private Map<Long, AdminUserDO> hqYhMap(List<Long> userIds) {
+        if (userIds == null || userIds.isEmpty()) {
+            return Collections.emptyMap();
+        }
+        List<AdminUserDO> users = userMapper.selectBatchIds(userIds);
+        Map<Long, AdminUserDO> userMap = new HashMap<>();
+        users.forEach(user -> userMap.put(user.getId(), user));
+        return userMap;
+    }
+
+    private PageResult<XxtxMessageReceiverDO> toPageResult(List<XxtxMessageReceiverDO> list, Integer pageNo, Integer pageSize) {
+        List<XxtxMessageReceiverDO> sortList = new ArrayList<>(list);
+        sortList.sort(Comparator.comparing(XxtxMessageReceiverDO::getId).reversed());
+        int fromIndex = Math.max((pageNo - 1) * pageSize, 0);
+        if (fromIndex >= sortList.size()) {
+            return new PageResult<>(Collections.emptyList(), (long) sortList.size());
+        }
+        int toIndex = Math.min(fromIndex + pageSize, sortList.size());
+        return new PageResult<>(sortList.subList(fromIndex, toIndex), (long) sortList.size());
     }
 
 }

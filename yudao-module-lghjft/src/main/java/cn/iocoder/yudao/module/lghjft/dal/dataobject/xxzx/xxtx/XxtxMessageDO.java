@@ -35,6 +35,18 @@ public class XxtxMessageDO extends BaseDO {
      * 消息内容
      */
     private String content;
+    /**
+     * 是否发送站内信
+     */
+    private Integer sfznx;
+    /**
+     * 是否发送短信
+     */
+    private Integer sfdx;
+    /**
+     * 短信内容
+     */
+    private String dxnr;
     
     /**
      * 消息类型（0：系统消息，1：业务消息）

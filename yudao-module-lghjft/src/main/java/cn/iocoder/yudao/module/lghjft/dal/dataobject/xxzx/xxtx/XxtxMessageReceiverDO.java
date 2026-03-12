@@ -3,8 +3,7 @@ package cn.iocoder.yudao.module.lghjft.dal.dataobject.xxzx.xxtx;
 import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 /**
  * 消息接收表
@@ -14,6 +13,9 @@ import lombok.EqualsAndHashCode;
 @TableName("gh_xxzx_xxtx_message_receiver")
 @KeySequence("gh_xxzx_xxtx_message_receiver_seq")
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class XxtxMessageReceiverDO extends BaseDO {
 
@@ -46,5 +48,17 @@ public class XxtxMessageReceiverDO extends BaseDO {
      * 阅读时间
      */
     private String readTime;
+    /**
+     * 短信日志ID
+     */
+    private Long dxrzid;
+    /**
+     * 短信状态
+     */
+    private Integer dxzt;
+    /**
+     * 短信备注
+     */
+    private String dxbz;
     
 }

@@ -446,11 +446,12 @@ CREATE TABLE `system_sms_channel`
     `id`           bigint                                  NOT NULL AUTO_INCREMENT COMMENT '编号',
     `signature`    varchar(12) COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '短信签名',
     `code`         varchar(63) COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '渠道编码',
-    `zt` tinyint NOT NULL COMMENT '开启状态',
+    `status`  tinyint NOT NULL COMMENT '开启状态',
     `remark`       varchar(255) COLLATE utf8mb4_unicode_ci          DEFAULT NULL COMMENT '备注',
-    `api_key`      varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '短信 API 的账号',
+    `api_key` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '短信 API 的账号',
     `api_secret`   varchar(128) COLLATE utf8mb4_unicode_ci          DEFAULT NULL COMMENT '短信 API 的秘钥',
     `callback_url` varchar(255) COLLATE utf8mb4_unicode_ci          DEFAULT NULL COMMENT '短信发送回调 URL',
+    `kzcs`    json                                    DEFAULT NULL COMMENT '扩展参数',
     `creator`      varchar(64) COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '创建者',
     `create_time`  datetime                                NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updater`      varchar(64) COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '更新者',
@@ -1232,14 +1233,17 @@ CREATE TABLE `gh_xxzx_xxtx_message`
 (
     `id`           bigint                                                        NOT NULL AUTO_INCREMENT COMMENT '消息主键',
     `title`        varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '消息标题',
-    `nr` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '消息内容',
+    `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci         DEFAULT NULL COMMENT '消息内容',
+    `sfznx`   tinyint NOT NULL                                              DEFAULT '1' COMMENT '是否发送站内信',
+    `sfdx`    tinyint NOT NULL                                              DEFAULT '0' COMMENT '是否发送短信',
+    `dxnr`    varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '短信内容',
     `message_type` tinyint                                                       NOT NULL DEFAULT '0' COMMENT '消息类型（0：系统消息，1：业务消息）',
     `sender_id`    bigint                                                        NOT NULL COMMENT '发送者ID',
     `sender_name`  varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '发送者姓名',
     `dept_ids`     json                                                                   DEFAULT NULL COMMENT '部门ID列表',
     `user_ids`     json                                                                   DEFAULT NULL COMMENT '用户ID列表',
     `send_time`    datetime                                                               DEFAULT NULL COMMENT '发送时间',
-    `zt` tinyint                                               NOT NULL DEFAULT '0' COMMENT '消息状态（0：草稿，1：已发送，2：已撤回）',
+    `status`  tinyint NOT NULL                                              DEFAULT '0' COMMENT '消息状态（0：草稿，1：已发送，2：已撤回）',
     `creator`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '创建者',
     `create_time`  datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updater`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '更新者',
@@ -1248,7 +1252,7 @@ CREATE TABLE `gh_xxzx_xxtx_message`
     `tenant_id`    bigint                                                        NOT NULL DEFAULT '0' COMMENT '租户编号',
     PRIMARY KEY (`id`) USING BTREE,
     KEY `idx_send_time` (`send_time`) USING BTREE,
-    KEY `idx_status` (`zt`) USING BTREE
+    KEY `idx_status` (`status`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8mb4
@@ -1262,6 +1266,9 @@ CREATE TABLE `gh_xxzx_xxtx_message_receiver`
     `receiver_id`   bigint   NOT NULL COMMENT '接收者ID（部门ID或用户ID）',
     `read_status`   tinyint  NOT NULL                                            DEFAULT '0' COMMENT '阅读状态（0：未读，1：已读）',
     `read_time`     datetime                                                     DEFAULT NULL COMMENT '阅读时间',
+    `dxrzid` bigint                                                        DEFAULT NULL COMMENT '短信日志ID',
+    `dxzt`   tinyint                                                       DEFAULT NULL COMMENT '短信状态',
+    `dxbz`   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '短信备注',
     `creator`       varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '创建者',
     `create_time`   datetime NOT NULL                                            DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updater`       varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '更新者',

@@ -41,7 +41,7 @@ public class QiniuSmsClient extends AbstractSmsClient {
         Assert.notEmpty(properties.getApiSecret(), "apiSecret 不能为空");
     }
 
-    public SmsSendRespDTO sendSms(Long sendLogId, String mobile, String apiTemplateId,
+    public SmsSendRespDTO sendSms(Long sendLogId, String mobile, String apiTemplateId, String templateContent,
                                   List<KeyValue<String, Object>> templateParams) throws Throwable {
         // 1. 执行请求
         // 参考链接 https://developer.qiniu.com/sms/5824/through-the-api-send-text-messages

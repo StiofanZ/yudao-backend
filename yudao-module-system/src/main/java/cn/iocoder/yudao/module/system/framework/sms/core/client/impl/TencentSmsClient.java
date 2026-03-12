@@ -83,7 +83,8 @@ public class TencentSmsClient extends AbstractSmsClient {
 
     @Override
     public SmsSendRespDTO sendSms(Long sendLogId, String mobile,
-                                  String apiTemplateId, List<KeyValue<String, Object>> templateParams) throws Throwable {
+                                  String apiTemplateId, String templateContent,
+                                  List<KeyValue<String, Object>> templateParams) throws Throwable {
         // 1. 执行请求
         // 参考链接 https://cloud.tencent.com/document/product/382/55981
         TreeMap<String, Object> body = new TreeMap<>();

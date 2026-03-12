@@ -2,9 +2,7 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.auth;
 
 import cn.iocoder.yudao.framework.common.enums.UserTypeEnum;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
-import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeLghReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.*;
 import cn.iocoder.yudao.module.lghjft.service.auth.AuthenticateService;
 import cn.iocoder.yudao.module.lghjft.service.auth.app.AppAuthenticateService;
 import cn.iocoder.yudao.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
@@ -41,6 +39,22 @@ public class AuthorizeController {
     public CommonResult<AuthorizeResVO> login(@RequestBody @Valid AuthorizeReqVO reqVO) {
         reqVO.setYhlx(UserTypeEnum.ADMIN.getValue());
         return success(authenticateService.login(reqVO));
+    }
+
+    @PostMapping("/send-sms-code")
+    @PermitAll
+    @Operation(summary = "发送短信验证码")
+    public CommonResult<Boolean> sendSmsCode(@RequestBody @Valid DxfsReqVO reqVO) {
+        authenticateService.sendSmsCode(reqVO.getLxdh(), UserTypeEnum.ADMIN.getValue());
+        return success(true);
+    }
+
+    @PostMapping("/sms-login")
+    @PermitAll
+    @Operation(summary = "短信登录")
+    public CommonResult<AuthorizeResVO> smsLogin(@RequestBody @Valid DxdlReqVO reqVO) {
+        reqVO.setYhlx(UserTypeEnum.ADMIN.getValue());
+        return success(authenticateService.smsLogin(reqVO));
     }
 
 

@@ -19,6 +19,7 @@ public enum SmsChannelEnum {
     TENCENT("TENCENT", "腾讯云"),
     HUAWEI("HUAWEI", "华为云"),
     QINIU("QINIU", "七牛云"),
+    LONGGONGHUI("LONGGONGHUI", "陇工惠"),
     ;
 
     /**
@@ -35,4 +36,3 @@ public enum SmsChannelEnum {
     }
 
 }
-

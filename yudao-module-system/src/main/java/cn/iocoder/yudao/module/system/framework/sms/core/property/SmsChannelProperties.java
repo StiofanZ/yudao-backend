@@ -1,11 +1,12 @@
 package cn.iocoder.yudao.module.system.framework.sms.core.property;
 
 import cn.iocoder.yudao.module.system.framework.sms.core.enums.SmsChannelEnum;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import java.util.Map;
 
 /**
  * 短信渠道配置类
@@ -37,16 +38,19 @@ public class SmsChannelProperties {
     /**
      * 短信 API 的账号
      */
-    @NotEmpty(message = "短信 API 的账号不能为空")
     private String apiKey;
     /**
      * 短信 API 的密钥
      */
-    @NotEmpty(message = "短信 API 的密钥不能为空")
     private String apiSecret;
     /**
      * 短信发送回调 URL
      */
     private String callbackUrl;
+
+    /**
+     * 扩展参数
+     */
+    private Map<String, Object> kzcs;
 
 }

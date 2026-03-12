@@ -18,6 +18,7 @@ import cn.iocoder.yudao.framework.tenant.core.context.TenantContextHolder;
 import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeLghReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.DxdlReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.auth.GhCsSsoDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nsrxx.NsrxxDO;
@@ -28,6 +29,7 @@ import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.dlzh.GhQxDlzhMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.sfxx.GhQxSfxxMapper;
 import cn.iocoder.yudao.module.lghjft.enums.logger.LoginTypeEnum;
 import cn.iocoder.yudao.module.lghjft.framework.auth.config.LghJftAuthProperties;
+import cn.iocoder.yudao.module.lghjft.service.dx.DxfwService;
 import cn.iocoder.yudao.module.lghjft.service.nsrxx.NsrxxService;
 import cn.iocoder.yudao.module.system.api.logger.dto.LoginLogCreateReqDTO;
 import cn.iocoder.yudao.module.system.dal.dataobject.dept.DeptDO;
@@ -38,6 +40,7 @@ import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
 import cn.iocoder.yudao.module.system.dal.mysql.dept.DeptMapper;
 import cn.iocoder.yudao.module.system.dal.mysql.oauth2.OAuth2AccessTokenMapper;
 import cn.iocoder.yudao.module.system.dal.mysql.oauth2.OAuth2RefreshTokenMapper;
+import cn.iocoder.yudao.module.system.dal.mysql.user.AdminUserMapper;
 import cn.iocoder.yudao.module.system.dal.redis.oauth2.OAuth2AccessTokenRedisDAO;
 import cn.iocoder.yudao.module.system.enums.logger.LoginResultEnum;
 import cn.iocoder.yudao.module.system.enums.oauth2.OAuth2ClientConstants;
@@ -94,6 +97,10 @@ public class AuthenticateServiceImpl implements AuthenticateService {
     private GhQxSfxxMapper ghQxSfxxMapper;
     @Resource
     private NsrxxService nsrxxService;
+    @Resource
+    private DxfwService dxfwService;
+    @Resource
+    private AdminUserMapper adminUserMapper;
 
     private static String generateAccessToken() {
         return IdUtil.fastSimpleUUID();
@@ -113,22 +120,8 @@ public class AuthenticateServiceImpl implements AuthenticateService {
             // 使用账号密码，兼容原系统登录
             AdminUserDO user = adminAuthService.authenticate(reqVO.getYhzh(), reqVO.getPassword());
             adminUserService.updateUserLogin(user.getId(), ServletUtils.getClientIP());
-            resVO.setUserId(user.getId());
-            resVO.setYhzh(user.getUsername());
-            resVO.setYhyx(user.getEmail());
-            resVO.setYhnc(user.getNickname());
-            resVO.setTxdz(user.getAvatar());
-            resVO.setDlfs(LoginTypeEnum.LOGIN_USERNAME.getType());
-            resVO.setDlzh(reqVO.getYhzh());
-            DeptDO deptDO = deptService.getDept(user.getDeptId());
-            resVO.setQxbmId(deptDO.getId());
-            resVO.setQxbmMc(deptDO.getName());
-            DeptDO sjDeptDO = deptService.getDept(user.getDeptId());
-            resVO.setSjQxbmId(sjDeptDO.getId());
-            resVO.setSjQxbmMc(sjDeptDO.getName());
+            resVO = buildAdminUserResVO(user, hqAdminDlfs(reqVO.getYhzh(), user), reqVO.getYhzh(), reqVO.getYhlx());
         } else {
-            resVO.setUserId(userDO.getId());
-
             if (!userService.isPasswordMatch(reqVO.getPassword(), userDO.getPassword())) {
                 throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
             }
@@ -138,35 +131,49 @@ public class AuthenticateServiceImpl implements AuthenticateService {
             }
 
             if (Objects.nonNull(userDO.getYhzh()) && userDO.getYhzh().equals(reqVO.getYhzh())) {
-                resVO.setDlfs(LoginTypeEnum.LOGIN_USERNAME.getType());
-                resVO.setDlzh(reqVO.getYhzh());
+                resVO = buildDlzhResVO(userDO, LoginTypeEnum.LOGIN_USERNAME.getType(), reqVO.getYhzh(), reqVO.getYhlx());
             } else if (Objects.nonNull(userDO.getLxdh()) && userDO.getLxdh().equals(reqVO.getLxdh())) {
-                resVO.setDlfs(LoginTypeEnum.LOGIN_MOBILE.getType());
-                resVO.setDlzh(reqVO.getLxdh());
+                resVO = buildDlzhResVO(userDO, LoginTypeEnum.LOGIN_MOBILE.getType(), reqVO.getLxdh(), reqVO.getYhlx());
             } else if (Objects.nonNull(userDO.getYhyx()) && userDO.getYhyx().equals(reqVO.getYhyx())) {
-                resVO.setDlfs(LoginTypeEnum.LOGIN_EMAIL.getType());
-                resVO.setDlzh(reqVO.getYhyx());
+                resVO = buildDlzhResVO(userDO, LoginTypeEnum.LOGIN_EMAIL.getType(), reqVO.getYhyx(), reqVO.getYhlx());
             } else if (Objects.nonNull(userDO.getShxydm()) && userDO.getShxydm().equals(reqVO.getShxydm())) {
-                resVO.setDlfs(LoginTypeEnum.LOGIN_SHXYDM.getType());
-                resVO.setDlzh(reqVO.getShxydm());
+                resVO = buildDlzhResVO(userDO, LoginTypeEnum.LOGIN_SHXYDM.getType(), reqVO.getShxydm(), reqVO.getYhlx());
             } else {
                 throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
             }
-
-            // 3.3 更新登录信息到业务表（最后登录时间/IP）
-            userDO.setLoginIp(ServletUtils.getClientIP());
-            userDO.setLoginDate(LocalDateTime.now());
-            resVO.setYhnc(userDO.getYhxm());
-            resVO.setYhyx(userDO.getYhyx());
-            resVO.setTxdz(userDO.getTxdz());
-            resVO.setUserId(userDO.getId());
-            BeanUtils.copyProperties(userDO, resVO);
-            // 获取单位权限身份列表
-            resVO.setDwQxSf(getDwQxSfList(resVO.getUserId()));
         }
         createTokenAfterLoginSuccess(resVO);
 
         return resVO;
+    }
+
+    @Override
+    public void sendSmsCode(String lxdh, Integer yhlx) {
+        dxfwService.fsdlyzm(lxdh, yhlx);
+    }
+
+    @Override
+    public AuthorizeResVO smsLogin(DxdlReqVO reqVO) {
+        dxfwService.jydlyzm(reqVO.getLxdh(), reqVO.getYzm(), reqVO.getYhlx());
+        GhQxDlzhDO userDO = ghQxDlzhMapper.selectOne(reqVO.getLxdh(), null, null, null);
+        AuthorizeResVO resVO;
+        if (userDO != null) {
+            if (Objects.equals(userDO.getStatus(), 1)) {
+                throw exception(AUTH_LOGIN_USER_DISABLED);
+            }
+            resVO = buildDlzhResVO(userDO, LoginTypeEnum.LOGIN_SMS.getType(), reqVO.getLxdh(), reqVO.getYhlx());
+        } else {
+            AdminUserDO adminUserDO = adminUserMapper.selectByMobile(reqVO.getLxdh());
+            if (adminUserDO == null) {
+                throw exception(USER_NOT_EXISTS);
+            }
+            if (Objects.equals(adminUserDO.getStatus(), 1)) {
+                throw exception(AUTH_LOGIN_USER_DISABLED);
+            }
+            adminUserService.updateUserLogin(adminUserDO.getId(), ServletUtils.getClientIP());
+            resVO = buildAdminUserResVO(adminUserDO, LoginTypeEnum.LOGIN_SMS.getType(), reqVO.getLxdh(), reqVO.getYhlx());
+        }
+        return createTokenAfterLoginSuccess(resVO);
     }
 
     @Override
@@ -307,6 +314,50 @@ public class AuthenticateServiceImpl implements AuthenticateService {
                 OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);
         // 构建返回结果
         BeanUtils.copyProperties(accessTokenDO, resVO);
+        return resVO;
+    }
+
+    private AuthorizeResVO buildAdminUserResVO(AdminUserDO user, Integer dlfs, String dlzh, Integer yhlx) {
+        AuthorizeResVO resVO = new AuthorizeResVO();
+        resVO.setUserId(user.getId());
+        resVO.setYhzh(user.getUsername());
+        resVO.setYhyx(user.getEmail());
+        resVO.setYhnc(user.getNickname());
+        resVO.setTxdz(user.getAvatar());
+        resVO.setDlfs(dlfs);
+        resVO.setDlzh(dlzh);
+        resVO.setYhlx(yhlx);
+        DeptDO deptDO = deptService.getDept(user.getDeptId());
+        if (deptDO != null) {
+            resVO.setQxbmId(deptDO.getId());
+            resVO.setQxbmMc(deptDO.getName());
+            DeptDO sjDeptDO = deptService.getDept(deptDO.getParentId());
+            if (sjDeptDO != null) {
+                resVO.setSjQxbmId(sjDeptDO.getId());
+                resVO.setSjQxbmMc(sjDeptDO.getName());
+            }
+        }
+        return resVO;
+    }
+
+    private Integer hqAdminDlfs(String dlzh, AdminUserDO user) {
+        if (user != null && Objects.equals(dlzh, user.getMobile())) {
+            return LoginTypeEnum.LOGIN_MOBILE.getType();
+        }
+        return LoginTypeEnum.LOGIN_USERNAME.getType();
+    }
+
+    private AuthorizeResVO buildDlzhResVO(GhQxDlzhDO userDO, Integer dlfs, String dlzh, Integer yhlx) {
+        AuthorizeResVO resVO = new AuthorizeResVO();
+        BeanUtils.copyProperties(userDO, resVO);
+        resVO.setYhnc(userDO.getYhxm());
+        resVO.setYhyx(userDO.getYhyx());
+        resVO.setTxdz(userDO.getTxdz());
+        resVO.setUserId(userDO.getId());
+        resVO.setDlfs(dlfs);
+        resVO.setDlzh(dlzh);
+        resVO.setYhlx(yhlx);
+        resVO.setDwQxSf(getDwQxSfList(resVO.getUserId()));
         return resVO;
     }
 

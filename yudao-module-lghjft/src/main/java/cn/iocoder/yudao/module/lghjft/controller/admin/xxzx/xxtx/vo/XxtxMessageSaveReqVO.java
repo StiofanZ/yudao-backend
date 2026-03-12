@@ -20,8 +20,16 @@ public class XxtxMessageSaveReqVO {
     private String title;
 
     @Schema(description = "消息内容", requiredMode = Schema.RequiredMode.REQUIRED, example = "这是一条系统消息")
-    @NotBlank(message = "消息内容不能为空")
     private String content;
+
+    @Schema(description = "是否发送站内信", example = "1")
+    private Integer sfznx;
+
+    @Schema(description = "是否发送短信", example = "0")
+    private Integer sfdx;
+
+    @Schema(description = "短信内容", example = "您有一条新的通知")
+    private String dxnr;
 
     @Schema(description = "消息类型（0：系统消息，1：业务消息）", example = "0")
     private Integer messageType;

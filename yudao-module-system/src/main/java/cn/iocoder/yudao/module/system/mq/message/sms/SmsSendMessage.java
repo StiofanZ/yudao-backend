@@ -1,9 +1,9 @@
 package cn.iocoder.yudao.module.system.mq.message.sms;
 
 import cn.iocoder.yudao.framework.common.core.KeyValue;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -34,6 +34,10 @@ public class SmsSendMessage {
      */
     @NotNull(message = "短信 API 的模板编号不能为空")
     private String apiTemplateId;
+    /**
+     * 短信内容
+     */
+    private String templateContent;
     /**
      * 短信模板参数
      */

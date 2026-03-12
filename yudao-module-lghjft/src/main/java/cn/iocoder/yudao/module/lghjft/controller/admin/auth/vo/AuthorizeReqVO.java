@@ -1,6 +1,5 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo;
 
-import cn.iocoder.yudao.module.lghjft.enums.logger.LoginTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -14,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class AuthorizeReqVO {
-    @Schema(description = "用户账号", example = "admin")
+    @Schema(description = "用户账号或手机号", example = "admin")
     private String yhzh;
     @Schema(description = "密码", requiredMode = Schema.RequiredMode.REQUIRED, example = "Abcd1234")
     @NotEmpty(message = "密码不能为空")

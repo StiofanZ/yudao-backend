@@ -1,10 +1,11 @@
 package cn.iocoder.yudao.module.system.controller.admin.sms.vo.channel;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
-import jakarta.validation.constraints.NotNull;
+import java.util.Map;
 
 @Schema(description = "管理后台 - 短信渠道创建/修改 Request VO")
 @Data
@@ -28,8 +29,7 @@ public class SmsChannelSaveReqVO {
     @Schema(description = "备注", example = "好吃！")
     private String remark;
 
-    @Schema(description = "短信 API 的账号", requiredMode = Schema.RequiredMode.REQUIRED, example = "yudao")
-    @NotNull(message = "短信 API 的账号不能为空")
+    @Schema(description = "短信 API 的账号", example = "yudao")
     private String apiKey;
 
     @Schema(description = "短信 API 的密钥", example = "yuanma")
@@ -38,5 +38,8 @@ public class SmsChannelSaveReqVO {
     @Schema(description = "短信发送回调 URL", example = "http://www.iocoder.cn")
     @URL(message = "回调 URL 格式不正确")
     private String callbackUrl;
+
+    @Schema(description = "扩展参数")
+    private Map<String, Object> kzcs;
 
 }

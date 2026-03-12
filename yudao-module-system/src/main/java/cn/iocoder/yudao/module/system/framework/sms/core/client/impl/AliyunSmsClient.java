@@ -49,7 +49,7 @@ public class AliyunSmsClient extends AbstractSmsClient {
     }
 
     @Override
-    public SmsSendRespDTO sendSms(Long sendLogId, String mobile, String apiTemplateId,
+    public SmsSendRespDTO sendSms(Long sendLogId, String mobile, String apiTemplateId, String templateContent,
                                   List<KeyValue<String, Object>> templateParams) throws Throwable {
         Assert.notBlank(properties.getSignature(), "短信签名不能为空");
         // 1. 执行请求
