@@ -22,4 +22,7 @@ public class GhWfTdfsqFjDO extends BaseDO {
     private Long tdfsqId;
     private String fjlx;
     private String wjlj;
+    private String wjmc;
+    private  String ywjmc;
+
 }

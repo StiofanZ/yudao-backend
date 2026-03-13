@@ -45,6 +45,8 @@ public interface ErrorCodeConstants {
     ErrorCode ZHWH_NOT_EXISTS = new ErrorCode(2_020_000_001, "账户维护申请不存在");
     ErrorCode ZHWH_STATUS_NOT_PENDING = new ErrorCode(2_020_000_002, "当前申请不是待审核状态，不能继续处理");
     ErrorCode ZHWH_REJECT_REASON_REQUIRED = new ErrorCode(2_020_000_003, "驳回账户维护申请时，审核意见不能为空");
+    ErrorCode WF_DBSQ_NOT_EXISTS = new ErrorCode(2_023_000_003, "该单位今天已提交过申请，不可重复提交！");
+    ErrorCode  WF_DBSQ_NOT_STATUS = new ErrorCode(2_023_000_004, "工会已停用，无法提交申请");
 
     ErrorCode AQZX_VERIFY_MOBILE_NOT_EXISTS = new ErrorCode(2_021_000_001, "当前账号未配置可校验手机号");
 
