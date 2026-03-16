@@ -88,7 +88,13 @@
             instr(a.fy,'工会经费') > 0 ) and a.fy
             like '%返还基层%'
             and a.yxbj='Y'
-
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (
+                a.zh LIKE CONCAT('%', #{query.keyword}, '%')
+                OR a.hm LIKE CONCAT('%', #{query.keyword}, '%')
+                OR a.je LIKE CONCAT('%', #{query.keyword}, '%')
+                )
+            </if>
             <if test="query.hkpch != null and query.hkpch != ''"> and a.HKPCH = #{query.hkpch}</if>
             <if test="query.beginHkpch != null and query.beginHkpch != '' and query.endHkpch != null and query.endHkpch != ''">
                 and MID(a.HKPCH,1,8) between #{query.beginHkpch} and #{query.endHkpch}</if>
