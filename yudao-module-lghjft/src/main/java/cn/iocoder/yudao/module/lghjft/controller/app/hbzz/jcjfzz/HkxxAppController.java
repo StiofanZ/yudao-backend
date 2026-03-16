@@ -38,7 +38,6 @@ public class HkxxAppController {
     private HkxxService hkxxService;
     @GetMapping("/page")
     @Operation(summary = "获得基层经费到账分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:hkxx:query')")
     public CommonResult<PageResult<HkxxRespVO>> getHkxxPage(@Valid HkxxPageReqVO pageReqVO) {
         PageResult<HkxxRespVO> pageResult = hkxxService.getHkxxPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, HkxxRespVO.class));
@@ -46,7 +45,6 @@ public class HkxxAppController {
 
     @GetMapping("/summary")
     @Operation(summary = "获得返拨概况")
-    @PreAuthorize("@ss.hasPermission('lghjft:hkxx:query')")
     public CommonResult<HkxxSummaryRespVO> getHkxxSummary(@Valid HkxxPageReqVO pageReqVO) {
         return success(hkxxService.getHkxxSummary(pageReqVO));
     }
@@ -56,7 +54,6 @@ public class HkxxAppController {
     @GetMapping("/get")
     @Operation(summary = "获得基层经费到账对象")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:hkxx:query')")
     public CommonResult<HkxxRespVO> getHkxx(@RequestParam("id") Integer id) {
         HkxxDO hkxx = hkxxService.getHkxx(id);
         return success(BeanUtils.toBean(hkxx, HkxxRespVO.class));
@@ -64,7 +61,6 @@ public class HkxxAppController {
 //修改
     @PutMapping("/update")
     @Operation(summary = "更新基层经费到账对象")
-    @PreAuthorize("@ss.hasPermission('lghjft:hkxx:update')")
     public CommonResult<Boolean> updateHkxx(@Valid @RequestBody HkxxSaveReqVO updateReqVO) {
         hkxxService.updateHkxx(updateReqVO);
         return success(true);
@@ -73,7 +69,6 @@ public class HkxxAppController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出基层经费到账对象 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:hkxx:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportHkxxExcel(@Valid HkxxPageReqVO pageReqVO,
                                 HttpServletResponse response) throws IOException {
