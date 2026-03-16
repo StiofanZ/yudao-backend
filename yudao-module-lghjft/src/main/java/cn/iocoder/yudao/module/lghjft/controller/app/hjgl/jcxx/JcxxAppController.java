@@ -30,6 +30,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 @RestController
 @RequestMapping("/lghjft/hjgl/jcxx")
 @Validated
+
 public class JcxxAppController {
 
     @Resource

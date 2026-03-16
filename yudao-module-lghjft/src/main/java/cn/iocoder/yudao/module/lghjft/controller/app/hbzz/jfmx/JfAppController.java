@@ -41,67 +41,15 @@ public class JfAppController {
      */
     @GetMapping("/listmx")
     @Operation(summary = "获得 经费明细对象明细")
-    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+//    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
     public CommonResult<PageResult<JfRespVO>> list(@Valid JfPageReqVO jfmx) {
         PageResult<JfRespVO> pageResult = jfService.selectJftzmxList(jfmx);
         return success(BeanUtils.toBean(pageResult, JfRespVO.class));
     }
 
 
-
-//    @PostMapping("/create")
-//    @Operation(summary = "创建 经费明细对象")
-//    @PreAuthorize("@ss.hasPermission('lghjft:jf:create')")
-//    public CommonResult<Integer> createJf(@Valid @RequestBody JfSaveReqVO createReqVO) {
-//        return success(jfService.createJf(createReqVO));
-//    }
-//
-//    @PutMapping("/update")
-//    @Operation(summary = "更新 经费明细对象")
-//    @PreAuthorize("@ss.hasPermission('lghjft:jf:update')")
-//    public CommonResult<Boolean> updateJf(@Valid @RequestBody JfSaveReqVO updateReqVO) {
-//        jfService.updateJf(updateReqVO);
-//        return success(true);
-//    }
-//
-//    @DeleteMapping("/delete")
-//    @Operation(summary = "删除 经费明细对象")
-//    @Parameter(name = "id", description = "编号", required = true)
-//    @PreAuthorize("@ss.hasPermission('lghjft:jf:delete')")
-//    public CommonResult<Boolean> deleteJf(@RequestParam("id") Integer id) {
-//        jfService.deleteJf(id);
-//        return success(true);
-//    }
-//
-//    @DeleteMapping("/delete-list")
-//    @Parameter(name = "ids", description = "编号", required = true)
-//    @Operation(summary = "批量删除 经费明细对象")
-//                @PreAuthorize("@ss.hasPermission('lghjft:jf:delete')")
-//    public CommonResult<Boolean> deleteJfList(@RequestParam("ids") List<Integer> ids) {
-//        jfService.deleteJfListByIds(ids);
-//        return success(true);
-//    }
-//
-//    @GetMapping("/get")
-//    @Operation(summary = "获得 经费明细对象")
-//    @Parameter(name = "id", description = "编号", required = true, example = "1024")
-//    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
-//    public CommonResult<JfRespVO> getJf(@RequestParam("id") Integer id) {
-//        JfDO jf = jfService.getJf(id);
-//        return success(BeanUtils.toBean(jf, JfRespVO.class));
-//    }
-//
-//    @GetMapping("/page")
-//    @Operation(summary = "获得 经费明细对象分页")
-//    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
-//    public CommonResult<PageResult<JfRespVO>> getJfPage(@Valid JfPageReqVO pageReqVO) {
-//        PageResult<JfDO> pageResult = jfService.getJfPage(pageReqVO);
-//        return success(BeanUtils.toBean(pageResult, JfRespVO.class));
-//    }
-//
     @GetMapping("/export-excel")
-    @Operation(summary = "导出 经费明细对象 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:jf:export')")
+//    @PreAuthorize("@ss.hasPermi('lghjft:jf:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportJfExcel(@Valid JfPageReqVO pageReqVO,
               HttpServletResponse response) throws IOException {
