@@ -37,9 +37,22 @@ public class JfServiceImpl implements JfService {
     }
 
     private void clBmId(JfPageReqVO jfmx) {
+        // 只有前端没传deptId时，才尝试自动获取登录用户部门
         if (StringUtils.isEmpty(jfmx.getDeptId())) {
-            AdminUserDO user = userService.getUser(getLoginUserId());
-            jfmx.setDeptId(user.getDeptId().toString());
+            try {
+                // 获取当前登录用户
+                AdminUserDO user = userService.getUser(getLoginUserId());
+                // 关键：用户存在 并且 部门ID不为空 才设置
+                if (user != null && user.getDeptId() != null) {
+                    jfmx.setDeptId(user.getDeptId().toString());
+                } else {
+                    // 没有部门
+                    jfmx.setDeptId(null);
+                }
+            } catch (Exception e) {
+                // 获取用户/部门失败 → 不设置，避免报错
+                jfmx.setDeptId(null);
+            }
         }
         if ("100000".equals(jfmx.getDeptId())) {
             jfmx.setDeptId(null);
