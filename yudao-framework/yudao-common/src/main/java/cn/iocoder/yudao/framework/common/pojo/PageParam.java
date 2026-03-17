@@ -33,4 +33,7 @@ public class PageParam implements Serializable {
     @Max(value = 200, message = "每页条数最大值为 200")
     private Integer pageSize = PAGE_SIZE;
 
+    @Schema(description = "搜索关键字")
+    private String keyword;
+
 }
