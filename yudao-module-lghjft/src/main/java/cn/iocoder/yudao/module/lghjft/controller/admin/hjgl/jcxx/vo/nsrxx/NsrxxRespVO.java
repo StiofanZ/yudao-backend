@@ -30,4 +30,7 @@ public class NsrxxRespVO {
 
     @Schema(description = "维护部门")
     private String deptName;
+
+    @Schema(description = "部门id")
+    private String deptId;
 }

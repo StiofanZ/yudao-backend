@@ -4,15 +4,17 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.KbdsfxxRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.jhdwyds.vo.JhdwydsReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.ydsdw.vo.ydsdwSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.GhHjJcxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.dlzh.GhQxDlzhDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.sfxx.GhQxSfxxDO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.jhdwyds.JhdwydsDO;
+
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.ydsdw.ydsdwDO;
 import cn.iocoder.yudao.module.lghjft.service.hjgl.jcxx.JcxxService;
 import cn.iocoder.yudao.module.lghjft.service.qx.dlzh.GhQxDlzhService;
 import cn.iocoder.yudao.module.lghjft.service.qx.sfxx.GhQxSfxxService;
-import cn.iocoder.yudao.module.lghjft.service.sjwh.jhdwyds.JhdwydsService;
+
+import cn.iocoder.yudao.module.lghjft.service.sjwh.ydsdw.ydsdwService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -31,7 +33,7 @@ public class SfxxServiceImpl implements SfxxService {
     @Resource
     private JcxxService jcxxService;
     @Resource
-    private JhdwydsService jhdwydsService;
+    private ydsdwService ydsdwService;
 
     @Override
     public List<KbdsfxxRespVO> getKbdsfxx(SfxxReqVO pageReqVO) {
@@ -59,12 +61,12 @@ public class SfxxServiceImpl implements SfxxService {
                     GhQxSfxxDO ghQxSfxxDO = ghQxSfxxService.getSfxx(ghQxDlzhDO.getId(), respVO.getDjxh());
                     BeanUtils.copyProperties(ghQxSfxxDO, respVO);
                 });
-                JhdwydsReqVO jhdwydsReqVO = new JhdwydsReqVO();
-                jhdwydsReqVO.setGhlxdh(ghQxDlzhDO.getLxdh());
-                for (JhdwydsDO jhdwydsDO : jhdwydsService.getJhdwydsList(jhdwydsReqVO)) {
+                ydsdwSaveReqVO jhdwydsReqVO = new ydsdwSaveReqVO();
+                jhdwydsReqVO.setDwcwlxdh(ghQxDlzhDO.getLxdh());
+                for (ydsdwDO jhdwydsDO : ydsdwService.getJhdwydsList(jhdwydsReqVO)) {
                     KbdsfxxRespVO respVO = new KbdsfxxRespVO();
                     respVO.setShxydm(jhdwydsDO.getGhshxydm());
-                    respVO.setLxdh(jhdwydsDO.getGhlxdh());
+                    respVO.setLxdh(jhdwydsDO.getDwcwlxdh());
                     respVO.setDwmc(jhdwydsDO.getGhmc());
                     respVO.setDjxh(jhdwydsDO.getGhshxydm());
                     respVO.setGhlx("01");

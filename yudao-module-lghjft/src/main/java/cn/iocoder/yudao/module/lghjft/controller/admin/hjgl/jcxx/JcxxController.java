@@ -92,7 +92,7 @@ public class JcxxController {
             if (existingHj != null) {
                 respVO.setExistsInHj(true);
                 // In a real scenario, we might want to fetch dept name, but here we just return ID or skip
-                // respVO.setDeptName(existingHj.getDeptId()); 
+                 respVO.setDeptId(existingHj.getDeptId());
             } else {
                 respVO.setExistsInHj(false);
             }

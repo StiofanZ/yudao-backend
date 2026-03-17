@@ -49,6 +49,6 @@ public class NsrxxPayFormResVO {
 
     @Schema(description = "开户银行网点代码/行号（联行号）", example = "102100002010")
     private String jcghhh;
-
+    @Schema(description = "纳税人识别号")
     private String nsrsbh;
 }

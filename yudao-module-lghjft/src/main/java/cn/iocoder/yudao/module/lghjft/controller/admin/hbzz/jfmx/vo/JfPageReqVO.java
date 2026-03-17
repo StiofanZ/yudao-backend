@@ -421,4 +421,8 @@ public class JfPageReqVO extends PageParam {
 
     @Schema(description = "年度")
     private String nd;
+
+//    搜索条件
+@Schema(description = "关键词：账号(精确)、户名(模糊)、金额(精确)")
+private String keyword;
 }

@@ -54,4 +54,15 @@ public interface ErrorCodeConstants {
 
     ErrorCode BBBM_NOT_SUPPORT = new ErrorCode(2_023_000_001, "报表编码不支持");
     ErrorCode BB_ZX_FAIL = new ErrorCode(2_023_000_002, "报表执行失败：{}");
+
+    ErrorCode YHBFMX_NOT_EXISTS = new ErrorCode(2_023_000_003, "银行拨付明细不存在");
+
+    ErrorCode YHBFHZ_NOT_EXISTS = new ErrorCode(2_023_000_004, "银行拨付汇总不存在");
+    // 银行拨付
+ ErrorCode YHBFMX_PARAM_ERROR = new ErrorCode(2_023_000_005, "参数不能为空！");
+ ErrorCode YHBFMX_NO_DATA = new ErrorCode(2_023_000_006, "未查询到可处理的数据！");
+ ErrorCode YHBFMX_HAS_GENERATED = new ErrorCode(2_023_000_007, "已生成汇总，不可重复生成！");
+    ErrorCode YHBFMX_BEGIN_ERROR = new ErrorCode(2_023_000_008, "开始时间和结束时间不能为空！");
+    ErrorCode YHBFMX_THCB_DATA = new ErrorCode(2_023_000_009, "未查询到可退回重拨数据！");
+
 }

@@ -9,6 +9,7 @@ import cn.iocoder.yudao.module.bpm.api.task.dto.BpmProcessInstanceCreateReqDTO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.app.workflow.dwdbsq.vo.WfDbsqAppPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.dwdbsq.WfDbsqDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.dwdbsq.WfDbsqfjDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.workflow.dwdbsq.WfDbsqMapper;
@@ -91,6 +92,7 @@ public class WfDbsqServiceImpl implements WfDbsqService {
         }
         if (main.getSqrq() == null) {
             main.setSqrq(LocalDate.now());
+            main.setYzghgzrq(LocalDate.now());
         }
         main.setCreator(String.valueOf(WebFrameworkUtils.getLoginUserId()));
         wfDbsqMapper.insert(main); //  这里执行完，main.getId() 才有值！
@@ -150,7 +152,7 @@ public class WfDbsqServiceImpl implements WfDbsqService {
     }
 
     @Override
-    public PageResult<WfDbsqDO> getSelfPage(Long userId, WfDbsqPageReqVO pageReqVO) {
+    public PageResult<WfDbsqDO> getSelfPage(Long userId, WfDbsqAppPageReqVO pageReqVO) {
         return wfDbsqMapper.selectPage(pageReqVO, new LambdaQueryWrapperX<WfDbsqDO>()
                 .eq(WfDbsqDO::getCreator, userId == null ? null : String.valueOf(userId))
                 .orderByDesc(WfDbsqDO::getId));

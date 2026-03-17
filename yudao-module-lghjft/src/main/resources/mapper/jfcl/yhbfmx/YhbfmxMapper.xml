@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.yhbfmx.YhbfmxMapper">
+    <!-- 结果映射 -->
+    <resultMap id="YhbfmxResultMap" type="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfmx.YhbfmxDO">
+        <result property="bfid"        column="bfid"/>
+        <result property="hkxxId"      column="hkxx_id"/>
+        <result property="zh"          column="zh"/>
+        <result property="hm"          column="hm"/>
+        <result property="yhmc"        column="yhmc"/>
+        <result property="sflhh"       column="sflhh"/>
+        <result property="skrkhd"      column="skrkhd"/>
+        <result property="sfyjdz"      column="sfyjdz"/>
+        <result property="sfyddh"      column="sfyddh"/>
+        <result property="rmb"         column="rmb"/>
+        <result property="fkfh"        column="fkfh"/>
+        <result property="jsfs"        column="jsfs"/>
+        <result property="ywzl"        column="ywzl"/>
+        <result property="ffzh"        column="ffzh"/>
+        <result property="ffjzzdy"     column="ffjzzdy"/>
+        <result property="qwr"         column="qwr"/>
+        <result property="qwsj"        column="qwsj"/>
+        <result property="yt"          column="yt"/>
+        <result property="je"          column="je"/>
+        <result property="deptId"      column="dept_id"/>
+        <result property="fy"          column="fy"/>
+        <result property="hkpch"       column="hkpch"/>
+        <result property="bfhzpch"     column="bfhzpch"/>
+        <result property="bfpch"       column="bfpch"/>
+        <result property="fclx"        column="fclx"/>
+        <result property="xh"          column="xh"/>
+        <result property="uuid"        column="UUID"/>
+        <result property="bflx"        column="bflx"/>
+        <result property="bfzt"       column="bfzt"/>
+        <result property="bfjg"       column="bfjg"/>
+        <result property="thrq"        column="thrq"/>
+        <result property="bz"          column="bz"/>
+        <result property="schzxx"     column="schzxx"/>
+        <result property="yxbj"        column="YXBJ"/>
+        <result property="ysthbj"     column="ysthbj"/>
+        <result property="ysthrq"     column="ysthrq"/>
+        <result property="ysthyy"     column="ysthyy"/>
+        <result property="yscjr"       column="yscjr"/>
+        <result property="yscjsj"     column="yscjsj"/>
+        <result property="ysxgr"       column="ysxgr"/>
+        <result property="ysxgsj"     column="ysxgsj"/>
+        <result property="createBy"    column="CREATE_BY"/>
+        <result property="createTime"  column="CREATE_TIME"/>
+        <result property="updateBy"    column="UPDATE_BY"/>
+        <result property="updateTime"  column="UPDATE_TIME"/>
+    </resultMap>
+
+    <!-- 基础查询SQL -->
+    <sql id="selectYhbfmxVo">
+        select bfid, hkxx_id, zh, hm, yhmc, sflhh, skrkhd, sfyjdz, sfyddh, rmb, fkfh, jsfs, ywzl, ffzh, ffjzzdy,
+               qwr, qwsj, yt, je, dept_id, fy, hkpch, bfhzpch, bfpch, fclx, xh, UUID, bflx, bfzt, bfjg,
+               thrq, bz, schzxx, YXBJ, ysthbj, ysthrq, ysthyy, yscjr, yscjsj, ysxgr, ysxgsj,
+               CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
+        from gh_hkxx_yhbfmx
+    </sql>
+
+    <!-- 通用查询条件 -->
+    <sql id="selectYhbfmxWhere">
+        <where>
+            <if test="req.hkxxId != null">and hkxx_id = #{req.hkxxId}</if>
+            <if test="req.zh != null and req.zh != ''">
+                and zh in
+                <foreach collection="req.zh.split(',')" item="item" open="(" separator="," close=")">#{item}</foreach>
+            </if>
+            <if test="req.hm != null and req.hm != ''">
+                and (
+                <foreach item="item" collection="req.hm.split(',')" separator=" or ">hm like concat('%', #{item}, '%')</foreach>
+                )
+            </if>
+            <if test="req.yhmc != null and req.yhmc != ''">and yhmc like concat('%', #{req.yhmc}, '%')</if>
+            <if test="req.skrkhd != null and req.skrkhd != ''">and skrkhd = #{req.skrkhd}</if>
+            <if test="req.sfyjdz != null and req.sfyjdz != ''">and sfyjdz = #{req.sfyjdz}</if>
+            <if test="req.sfyddh != null and req.sfyddh != ''">and sfyddh = #{req.sfyddh}</if>
+            <if test="req.rmb != null and req.rmb != ''">and rmb = #{req.rmb}</if>
+            <if test="req.fkfh != null and req.fkfh != ''">and fkfh = #{req.fkfh}</if>
+            <if test="req.jsfs != null and req.jsfs != ''">and jsfs = #{req.jsfs}</if>
+            <if test="req.ywzl != null and req.ywzl != ''">and ywzl = #{req.ywzl}</if>
+            <if test="req.ffzh != null and req.ffzh != ''">and ffzh = #{req.ffzh}</if>
+            <if test="req.ffjzzdy != null and req.ffjzzdy != ''">and ffjzzdy = #{req.ffjzzdy}</if>
+            <if test="req.qwr != null and req.qwr != ''">and qwr = #{req.qwr}</if>
+            <if test="req.qwsj != null and req.qwsj != ''">and qwsj = #{req.qwsj}</if>
+            <if test="req.yt != null and req.yt != ''">
+                and (
+                <foreach item="item" collection="req.yt.split(',')" separator=" or ">yt like concat('%', #{item}, '%')</foreach>
+                )
+            </if>
+            <if test="req.je != null">and je = #{req.je}</if>
+            <if test="req.sflhh != null and req.sflhh != ''">and sflhh = #{req.sflhh}</if>
+            <if test="req.deptId != null and req.deptId != ''">and dept_id = #{req.deptId}</if>
+            <if test="req.fy != null and req.fy != ''">
+                and (
+                <foreach item="item" collection="req.fy.split(',')" separator=" or ">fy like concat('%', #{item}, '%')</foreach>
+                )
+            </if>
+            <if test="req.hkpch != null and req.hkpch != ''">and hkpch = #{req.hkpch}</if>
+            <if test="req.bfhzpch != null and req.bfhzpch != ''">and bfhzpch = #{req.bfhzpch}</if>
+            <if test="req.bfpch != null and req.bfpch != ''">and bfpch = #{req.bfpch}</if>
+            <if test="req.fclx != null and req.fclx != ''">and fclx = #{req.fclx}</if>
+            <if test="req.xh != null">and xh = #{req.xh}</if>
+            <if test="req.uuid != null and req.uuid != ''">and UUID = #{req.uuid}</if>
+            <if test="req.bflx != null and req.bflx != ''">and bflx = #{req.bflx}</if>
+            <if test="req.bfzt != null and req.bfzt != ''">and bfzt = #{req.bfzt}</if>
+            <if test="req.bfjg != null and req.bfjg != ''">and bfjg = #{req.bfjg}</if>
+            <if test="req.beginThrq != null and req.beginThrq != '' and req.endThrq != null and req.endThrq != ''">
+                and thrq between #{req.beginThrq} and #{req.endThrq}
+            </if>
+            <if test="req.bz != null and req.bz != ''">and bz = #{req.bz}</if>
+            <if test="req.schzxx != null and req.schzxx != ''">and schzxx = #{req.schzxx}</if>
+            <if test="req.yxbj != null and req.yxbj != ''">and YXBJ = #{req.yxbj}</if>
+            <if test="req.ysthbj != null and req.ysthbj != ''">and ysthbj = #{req.ysthbj}</if>
+            <!-- 2. 原始退回日期 -->
+            <if test="req.beginYsthrq != null and req.beginYsthrq != '' and req.endYsthrq != null and req.endYsthrq != ''">
+                and ysthrq between #{req.beginYsthrq} and #{req.endYsthrq}
+            </if>
+            <if test="req.ysthyy != null and req.ysthyy != ''">and ysthyy = #{req.ysthyy}</if>
+            <if test="req.yscjr != null and req.yscjr != ''">and yscjr = #{req.yscjr}</if>
+            <!-- 3. 原始创建时间 -->
+            <if test="req.beginYscjsj != null and req.beginYscjsj != '' and req.endYscjsj != null and req.endYscjsj != ''">
+                and yscjsj between #{req.beginYscjsj} and #{req.endYscjsj}
+            </if>
+
+            <if test="req.ysxgr != null and req.ysxgr != ''">and ysxgr = #{req.ysxgr}</if>
+            <!-- 4. 原始修改时间 -->
+            <if test="req.beginYsxgsj != null and req.beginYsxgsj != '' and req.endYsxgsj != null and req.endYsxgsj != ''">
+                and ysxgsj between #{req.beginYsxgsj} and #{req.endYsxgsj}
+            </if>
+
+            <if test="req.createBy != null and req.createBy != ''">and CREATE_BY = #{req.createBy}</if>
+            <if test="req.beginCreateTime != null and req.beginCreateTime != '' and req.endCreateTime != null and req.endCreateTime != ''">
+                and CREATE_TIME between #{req.beginCreateTime} and #{req.endCreateTime}
+            </if>
+            <if test="req.updateBy != null and req.updateBy != ''">and UPDATE_BY = #{req.updateBy}</if>
+            <if test="req.beginUpdateTime != null and req.beginUpdateTime != '' and req.endUpdateTime != null and req.endUpdateTime != ''">
+                and UPDATE_TIME between #{req.beginUpdateTime} and #{req.endUpdateTime}
+            </if>
+        </where>
+    </sql>
+
+    <!-- ==================== 1. 列表查询（分页/导出） ==================== -->
+    <select id="selectPage" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfmx.vo.YhbfmxPageReqVO">
+        <include refid="selectYhbfmxVo"/>
+        <include refid="selectYhbfmxWhere"/>
+        order by bfid desc
+    </select>
+
+    <!-- ==================== 2. 单条查询 ==================== -->
+    <select id="selectById" parameterType="java.lang.Long" resultMap="YhbfmxResultMap">
+        <include refid="selectYhbfmxVo"/>
+        where bfid = #{bfid}
+    </select>
+
+    <!-- ==================== 3. 新增 ==================== -->
+    <insert id="insert" parameterType="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfmx.YhbfmxDO" useGeneratedKeys="true" keyProperty="bfid">
+        insert into gh_hkxx_yhbfmx
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hkxxId != null">hkxx_id,</if>
+            <if test="zh != null and zh != ''">zh,</if>
+            <if test="hm != null and hm != ''">hm,</if>
+            <if test="yhmc != null">yhmc,</if>
+            <if test="sflhh != null">sflhh,</if>
+            <if test="skrkhd != null">skrkhd,</if>
+            <if test="sfyjdz != null">sfyjdz,</if>
+            <if test="sfyddh != null">sfyddh,</if>
+            <if test="rmb != null">rmb,</if>
+            <if test="fkfh != null">fkfh,</if>
+            <if test="jsfs != null">jsfs,</if>
+            <if test="ywzl != null">ywzl,</if>
+            <if test="ffzh != null and ffzh != ''">ffzh,</if>
+            <if test="ffjzzdy != null">ffjzzdy,</if>
+            <if test="qwr != null">qwr,</if>
+            <if test="qwsj != null">qwsj,</if>
+            <if test="yt != null">yt,</if>
+            <if test="je != null">je,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="fy != null">fy,</if>
+            <if test="hkpch != null">hkpch,</if>
+            <if test="bfhzpch != null">bfhzpch,</if>
+            <if test="bfpch != null">bfpch,</if>
+            <if test="fclx != null">fclx,</if>
+            <if test="xh != null">xh,</if>
+            <if test="uuid != null">UUID,</if>
+            <if test="bflx != null and bflx != ''">bflx,</if>
+            <if test="bfzt != null and bfzt != ''">bfzt,</if>
+            <if test="bfjg != null">bfjg,</if>
+            <if test="thrq != null">thrq,</if>
+            <if test="bz != null">bz,</if>
+            <if test="schzxx != null">schzxx,</if>
+            <if test="yxbj != null and yxbj != ''">YXBJ,</if>
+            <if test="ysthbj != null">ysthbj,</if>
+            <if test="ysthrq != null">ysthrq,</if>
+            <if test="ysthyy != null">ysthyy,</if>
+            <if test="yscjr != null">yscjr,</if>
+            <if test="yscjsj != null">yscjsj,</if>
+            <if test="ysxgr != null">ysxgr,</if>
+            <if test="ysxgsj != null">ysxgsj,</if>
+            <if test="createBy != null">CREATE_BY,</if>
+            <if test="createTime != null">CREATE_TIME,</if>
+            <if test="updateBy != null">UPDATE_BY,</if>
+            <if test="updateTime != null">UPDATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hkxxId != null">#{hkxxId},</if>
+            <if test="zh != null and zh != ''">#{zh},</if>
+            <if test="hm != null and hm != ''">#{hm},</if>
+            <if test="yhmc != null">#{yhmc},</if>
+            <if test="sflhh != null">#{sflhh},</if>
+            <if test="skrkhd != null">#{skrkhd},</if>
+            <if test="sfyjdz != null">#{sfyjdz},</if>
+            <if test="sfyddh != null">#{sfyddh},</if>
+            <if test="rmb != null">#{rmb},</if>
+            <if test="fkfh != null">#{fkfh},</if>
+            <if test="jsfs != null">#{jsfs},</if>
+            <if test="ywzl != null">#{ywzl},</if>
+            <if test="ffzh != null and ffzh != ''">#{ffzh},</if>
+            <if test="ffjzzdy != null">#{ffjzzdy},</if>
+            <if test="qwr != null">#{qwr},</if>
+            <if test="qwsj != null">#{qwsj},</if>
+            <if test="yt != null">#{yt},</if>
+            <if test="je != null">#{je},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="fy != null">#{fy},</if>
+            <if test="hkpch != null">#{hkpch},</if>
+            <if test="bfhzpch != null">#{bfhzpch},</if>
+            <if test="bfpch != null">#{bfpch},</if>
+            <if test="fclx != null">#{fclx},</if>
+            <if test="xh != null">#{xh},</if>
+            <if test="uuid != null">#{uuid},</if>
+            <if test="bflx != null and bflx != ''">#{bflx},</if>
+            <if test="bfzt != null and bfzt != ''">#{bfzt},</if>
+            <if test="bfjg != null">#{bfjg},</if>
+            <if test="thrq != null">#{thrq},</if>
+            <if test="bz != null">#{bz},</if>
+            <if test="schzxx != null">#{schzxx},</if>
+            <if test="yxbj != null and yxbj != ''">#{yxbj},</if>
+            <if test="ysthbj != null">#{ysthbj},</if>
+            <if test="ysthrq != null">#{ysthrq},</if>
+            <if test="ysthyy != null">#{ysthyy},</if>
+            <if test="yscjr != null">#{yscjr},</if>
+            <if test="yscjsj != null">#{yscjsj},</if>
+            <if test="ysxgr != null">#{ysxgr},</if>
+            <if test="ysxgsj != null">#{ysxgsj},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <!-- ==================== 4. 修改 ==================== -->
+    <update id="updateById" parameterType="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfmx.YhbfmxDO">
+        update gh_hkxx_yhbfmx
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hkxxId != null">hkxx_id = #{hkxxId},</if>
+            <if test="zh != null and zh != ''">zh = #{zh},</if>
+            <if test="hm != null and hm != ''">hm = #{hm},</if>
+            <if test="yhmc != null">yhmc = #{yhmc},</if>
+            <if test="sflhh != null">sflhh = #{sflhh},</if>
+            <if test="skrkhd != null">skrkhd = #{skrkhd},</if>
+            <if test="sfyjdz != null">sfyjdz = #{sfyjdz},</if>
+            <if test="sfyddh != null">sfyddh = #{sfyddh},</if>
+            <if test="rmb != null">rmb = #{rmb},</if>
+            <if test="fkfh != null">fkfh = #{fkfh},</if>
+            <if test="jsfs != null">jsfs = #{jsfs},</if>
+            <if test="ywzl != null">ywzl = #{ywzl},</if>
+            <if test="ffzh != null and ffzh != ''">ffzh = #{ffzh},</if>
+            <if test="ffjzzdy != null">ffjzzdy = #{ffjzzdy},</if>
+            <if test="qwr != null">qwr = #{qwr},</if>
+            <if test="qwsj != null">qwsj = #{qwsj},</if>
+            <if test="yt != null">yt = #{yt},</if>
+            <if test="je != null">je = #{je},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="fy != null">fy = #{fy},</if>
+            <if test="hkpch != null">hkpch = #{hkpch},</if>
+            <if test="bfhzpch != null">bfhzpch = #{bfhzpch},</if>
+            <if test="bfpch != null">bfpch = #{bfpch},</if>
+            <if test="fclx != null">fclx = #{fclx},</if>
+            <if test="xh != null">xh = #{xh},</if>
+            <if test="uuid != null">UUID = #{uuid},</if>
+            <if test="bflx != null and bflx != ''">bflx = #{bflx},</if>
+            <if test="bfzt != null and bfzt != ''">bfzt = #{bfzt},</if>
+            <if test="bfjg != null">bfjg = #{bfjg},</if>
+            <if test="thrq != null">thrq = #{thrq},</if>
+            <if test="bz != null">bz = #{bz},</if>
+            <if test="schzxx != null">schzxx = #{schzxx},</if>
+            <if test="yxbj != null and yxbj != ''">YXBJ = #{yxbj},</if>
+            <if test="ysthbj != null">ysthbj = #{ysthbj},</if>
+            <if test="ysthrq != null">ysthrq = #{ysthrq},</if>
+            <if test="ysthyy != null">ysthyy = #{ysthyy},</if>
+            <if test="yscjr != null">yscjr = #{yscjr},</if>
+            <if test="yscjsj != null">yscjsj = #{yscjsj},</if>
+            <if test="ysxgr != null">ysxgr = #{ysxgr},</if>
+            <if test="ysxgsj != null">ysxgsj = #{ysxgsj},</if>
+            <if test="createBy != null">CREATE_BY = #{createBy},</if>
+            <if test="createTime != null">CREATE_TIME = #{createTime},</if>
+            <if test="updateBy != null">UPDATE_BY = #{updateBy},</if>
+            <if test="updateTime != null">UPDATE_TIME = #{updateTime},</if>
+        </trim>
+        where bfid = #{bfid}
+    </update>
+
+    <!-- ==================== 5. 删除 ==================== -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from gh_hkxx_yhbfmx where bfid = #{bfid}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from gh_hkxx_yhbfmx where bfid in
+        <foreach item="bfid" collection="list" open="(" separator="," close=")">#{bfid}</foreach>
+    </delete>
+
+    <!-- ==================== 6. 业务专用方法 ==================== -->
+    <select id="getGhyhbfmxJs" resultMap="YhbfmxResultMap">
+        SELECT
+            t.hkxx_id,
+            t.zh,
+            t.hm,
+            ( SELECT MAX( wd.YHWDMC ) FROM dm_yhwd wd WHERE wd.WDHH = t.hh ) yhmc,
+            t.hh AS sflhh,
+            NULL AS skrkhd,
+            NULL AS sfyjdz,
+            NULL AS sfyddh,
+            '人民币' AS rmb,
+            NULL AS fkfh,
+            '普通' AS jsfs,
+            NULL AS ywzl,
+            '841180069910001' AS ffzh,
+            '00001' AS ffjzzdy,
+            NULL AS qwr,
+            NULL AS qwsj,
+            t.FY AS yt,
+            t.je AS je,
+            t.dept_id as dept_id,
+            CONCAT( t.DZ, T.FY ) AS FY,
+            t.hkpch,
+            NULL AS bfhzpch,
+            concat(( curdate() + 0 ), '00001' ) AS bfpch,
+            t.LX AS fclx,
+            ROW_NUMBER () OVER () AS xh,
+            UUID() UUID,
+            '1' AS bflx,
+            'N' AS bfzt,
+            NULL AS thrq,
+            NULL AS bz,
+            'N' AS schzxx,
+            'Y' AS YXBJ,
+            t.THBJ AS ysthbj,
+            t.THRQ AS ysthrq,
+            t.THYY ysthyy,
+            t.CREATE_BY AS yscjr,
+            CREATE_TIME AS yscjsj,
+            t.UPDATE_BY ysxgr,
+            t.UPDATE_TIME ysxgsj,
+            'SYSTEM' AS CREATE_BY,
+            NOW() AS CREATE_TIME,
+            'SYSTEM' AS UPDATE_BY,
+            NOW() AS UPDATE_TIME
+        FROM gh_hkxx t WHERE t.HKPCH = #{hkpch}
+    </select>
+
+    <select id="getGhyhbfmxBjs" resultMap="YhbfmxResultMap">
+        SELECT
+            t.hkxx_id,
+            t.zh,
+            t.hm,
+            (SELECT MAX(wd.YHWDMC) FROM dm_yhwd wd WHERE wd.WDHH = t.hh) yhmc,
+            t.hh AS sflhh,
+            NULL AS skrkhd,
+            NULL AS sfyjdz,
+            NULL AS sfyddh,
+            '人民币' AS rmb,
+            NULL AS fkfh,
+            '普通' AS jsfs,
+            NULL AS ywzl,
+            '841180069910001' AS ffzh,
+            '00001' AS ffjzzdy,
+            NULL AS qwr,
+            NULL AS qwsj,
+            t.FY AS yt,
+            t.je AS je,
+            t.dept_id as dept_id,
+            CONCAT(t.DZ, T.FY) AS FY,
+            t.hkpch,
+            NULL AS bfhzpch,
+            concat((curdate() + 0), '00001') AS bfpch,
+            t.LX as fclx,
+            ROW_NUMBER () OVER () AS xh,
+            UUID() UUID,
+            '2' AS bflx,
+            'N' AS bfzt,
+            NULL AS thrq,
+            NULL AS bz,
+            'N' AS schzxx,
+            'Y' AS YXBJ,
+            t.THBJ AS ysthbj,
+            t.THRQ AS ysthrq,
+            t.THYY ysthyy,
+            t.CREATE_BY AS yscjr,
+            CREATE_TIME AS yscjsj,
+            t.UPDATE_BY ysxgr,
+            t.UPDATE_TIME ysxgsj,
+            'SYSTEM' AS CREATE_BY,
+            NOW() AS CREATE_TIME,
+            'SYSTEM' AS UPDATE_BY,
+            NOW() AS UPDATE_TIME
+        FROM gh_hkxx t WHERE t.HKPCH = #{hkpch}
+    </select>
+
+    <select id="getGhyhbfmxSbthcb" resultMap="YhbfmxResultMap">
+        SELECT
+            t.hkxx_id,
+            t.xzh AS zh,
+            t.xhm AS hm,
+            (SELECT MAX(wd.YHWDMC) FROM dm_yhwd wd WHERE wd.WDHH = t.xhh) yhmc,
+            t.xhh AS sflhh,
+            NULL AS skrkhd,
+            NULL AS sfyjdz,
+            NULL AS sfyddh,
+            '人民币' AS rmb,
+            NULL AS fkfh,
+            '普通' AS jsfs,
+            NULL AS ywzl,
+            '841180069910001' AS ffzh,
+            '00001' AS ffjzzdy,
+            NULL AS qwr,
+            NULL AS qwsj,
+            t.FY AS yt,
+            t.je AS je,
+            t.dept_id dept_id,
+            CONCAT(t.DZ, T.FY) AS FY,
+            t.hkpch,
+            NULL AS bfhzpch,
+            concat((curdate() + 0), '00001') AS bfpch,
+            t.LX as fclx,
+            ROW_NUMBER () OVER () AS xh,
+            UUID() UUID,
+            '3' AS bflx,
+            'N' AS bfzt,
+            NULL AS thrq,
+            NULL AS bz,
+            'N' AS schzxx,
+            'Y' AS YXBJ,
+            t.THBJ AS ysthbj,
+            t.THRQ AS ysthrq,
+            t.THYY ysthyy,
+            t.CREATE_BY AS yscjr,
+            t.CREATE_TIME AS yscjsj,
+            t.xgr ysxgr,
+            t.xgsj ysxgsj,
+            'SYSTEM' AS CREATE_BY,
+            NOW() AS CREATE_TIME,
+            'SYSTEM' AS UPDATE_BY,
+            NOW() AS UPDATE_TIME
+        FROM gh_hkxx t
+        WHERE t.THBJ = 'Y' AND T.XGBJ = 'Y' AND T.xgsj BETWEEN #{beginUpdateTime} AND #{endUpdateTime}
+          AND t.HKXX_ID NOT IN ('277432','293175','297499','305858','310245','524757','528379')
+        UNION ALL
+        SELECT
+            t.hkxx_id,
+            t.xzh AS zh,
+            t.xhm AS hm,
+            (SELECT MAX(wd.YHWDMC) FROM dm_yhwd wd WHERE wd.WDHH = t.xhh) yhmc,
+            t.xhh AS sflhh,
+            NULL AS skrkhd,
+            NULL AS sfyjdz,
+            NULL AS sfyddh,
+            '人民币' AS rmb,
+            NULL AS fkfh,
+            '普通' AS jsfs,
+            NULL AS ywzl,
+            '841180069910001' AS ffzh,
+            '00001' AS ffjzzdy,
+            NULL AS qwr,
+            NULL AS qwsj,
+            t.FY AS yt,
+            t.je AS je,
+            t.dept_id dept_id,
+            CONCAT(t.DZ, T.FY) AS FY,
+            t.hkpch,
+            NULL AS bfhzpch,
+            concat((curdate() + 0), '00001') AS bfpch,
+            t.LX as fclx,
+            ROW_NUMBER () OVER () AS xh,
+            UUID() UUID,
+            '3' AS bflx,
+            'N' AS bfzt,
+            NULL AS thrq,
+            NULL AS bz,
+            'N' AS schzxx,
+            'Y' AS YXBJ,
+            t.THBJ AS ysthbj,
+            t.THRQ AS ysthrq,
+            t.THYY ysthyy,
+            t.CREATE_BY AS yscjr,
+            t.CREATE_TIME AS yscjsj,
+            t.xgr ysxgr,
+            t.xgsj ysxgsj,
+            'SYSTEM' AS CREATE_BY,
+            NOW() AS CREATE_TIME,
+            'SYSTEM' AS UPDATE_BY,
+            NOW() AS UPDATE_TIME
+        FROM gh_hkxxxejf t
+        WHERE t.THBJ = 'Y' AND T.XGBJ = 'Y' AND T.XGSJ BETWEEN #{beginUpdateTime} AND #{endUpdateTime}
+    </select>
+
+    <select id="getGhHkxxYhbfmx" resultMap="YhbfmxResultMap">
+        SELECT * FROM gh_hkxx_yhbfmx WHERE bfzt='N'
+        <if test="zh != null and zh != ''">
+            and zh in
+            <foreach collection="zh.split(',')" item="item" open="(" separator="," close=")">#{item}</foreach>
+        </if>
+        <if test="hm != null and hm != ''">
+            and (
+            <foreach item="item" collection="hm.split(',')" separator=" or ">
+                hm like concat('%', #{item}, '%')
+            </foreach>
+            )
+        </if>
+        <if test="yt != null and yt != ''">
+            and (
+            <foreach item="item" collection="yt.split(',')" separator=" or ">
+                yt like concat('%', #{item}, '%')
+            </foreach>
+            )
+        </if>
+        <if test="fy != null and fy != ''">
+            and (
+            <foreach item="item" collection="fy.split(',')" separator=" or ">
+                fy like concat('%', #{item}, '%')
+            </foreach>
+            )
+        </if>
+        <if test="bfpch != null and '' != bfpch">and bfpch = #{bfpch}</if>
+        <if test="bflx != null and '' != bflx">and bflx = #{bflx}</if>
+        <if test="fclx != null and '' != fclx">and fclx = #{fclx}</if>
+        <if test="deptId != null and deptId != ''">and dept_id = #{deptId}</if>
+    </select>
+
+    <select id="selectListByBfidStr" resultMap="YhbfmxResultMap">
+        <include refid="selectYhbfmxVo"/>
+        where bfid in
+        <foreach item="bfid" collection="array" open="(" separator="," close=")">#{bfid}</foreach>
+        order by bfid asc
+    </select>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO gh_hkxx_yhbfmx (
+        hkxx_id, zh, hm, yhmc, sflhh, skrkhd, sfyjdz, sfyddh, rmb, fkfh, jsfs, ywzl, ffzh, ffjzzdy,
+        qwr, qwsj, yt, je, dept_id, fy, hkpch, bfhzpch, bfpch, fclx, xh, UUID, bflx, bfzt, bfjg,
+        thrq, bz, schzxx, YXBJ, ysthbj, ysthrq, ysthyy, yscjr, yscjsj, ysxgr, ysxgsj, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
+        ) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.hkxxId},#{item.zh},#{item.hm},#{item.yhmc},#{item.sflhh},#{item.skrkhd},#{item.sfyjdz},
+            #{item.sfyddh},#{item.rmb},#{item.fkfh},#{item.jsfs},#{item.ywzl},#{item.ffzh},#{item.ffjzzdy},
+            #{item.qwr},#{item.qwsj},#{item.yt},#{item.je},#{item.deptId},#{item.fy},#{item.hkpch},#{item.bfhzpch},
+            #{item.bfpch},#{item.fclx},#{item.xh},#{item.uuid},#{item.bflx},#{item.bfzt},#{item.bfjg},#{item.thrq},
+            #{item.bz},#{item.schzxx},#{item.yxbj},#{item.ysthbj},#{item.ysthrq},#{item.ysthyy},#{item.yscjr},
+            #{item.yscjsj},#{item.ysxgr},#{item.ysxgsj},#{item.createBy},#{item.createTime},#{item.updateBy},#{item.updateTime})
+        </foreach>
+    </insert>
+
+    <update id="updateBatchGhHkxxYhbfmx" parameterType="java.util.List">
+        UPDATE gh_hkxx_yhbfmx
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="bfhzpch =case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.bfhzpch != null">when bfid=#{item.bfid} then #{item.bfhzpch}</if>
+                </foreach>
+            </trim>
+            <trim prefix="bfzt =case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.bfzt != null">when bfid=#{item.bfid} then #{item.bfzt}</if>
+                </foreach>
+            </trim>
+            <trim prefix="bfjg =case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.bfjg != null">when bfid=#{item.bfid} then #{item.bfjg}</if>
+                </foreach>
+            </trim>
+            <trim prefix="UPDATE_BY =case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.updateBy != null">when bfid=#{item.bfid} then #{item.updateBy}</if>
+                </foreach>
+            </trim>
+            <trim prefix="UPDATE_TIME =case" suffix="end,">
+                <foreach collection="list" item="item">
+                    when bfid=#{item.bfid} then NOW()
+                </foreach>
+            </trim>
+        </trim>
+        WHERE bfid IN
+        <foreach collection="list" item="item" open="(" separator="," close=")">#{item.bfid}</foreach>
+    </update>
+
+    <update id="updateYxbjByHkpch">
+        UPDATE gh_hkxx_yhbfmx
+        SET YXBJ = #{yxbj}, UPDATE_BY = #{updateBy}, UPDATE_TIME = NOW()
+        WHERE YXBJ = 'Y'
+        <if test="hkpch != null">and hkpch = #{hkpch}</if>
+    </update>
+
+</mapper>

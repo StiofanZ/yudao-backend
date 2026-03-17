@@ -25,15 +25,6 @@ public class DbsqAuditListener implements TaskListener {
 
     @Override
     public void notify(DelegateTask delegateTask) {
-        System.out.println("==================== 监听器执行了 ====================");
-        System.out.println("==================== 监听器执行了 ===================="); // 👈 加
-        System.out.println("==================== 监听器执行了 ===================="); // 👈 加
-        System.out.println("==================== 监听器执行了 ===================="); // 👈 加
-        System.out.println("==================== 监听器执行了 ===================="); // 👈 加
-        System.out.println("==================== 监听器执行了 ===================="); // 👈 加
-        System.out.println("==================== 监听器执行了 ===================="); // 👈 加
-        System.out.println("==================== 监听器执行了 ===================="); // 👈 加
-        System.out.println("==================== 监听器执行了 ===================="); // 👈 加
 
         try {
             String processId = delegateTask.getProcessInstanceId();
@@ -50,29 +41,16 @@ public class DbsqAuditListener implements TaskListener {
             if ("Activity_yzgghfzr".equals(taskKey)) {
                 data.setYzghfzr(nickname);
 //                data.setSqrq(LocalDate.now());
-                data.setYzghyj((String) localVars.get("Activity_yzghfzryj"));
-                System.out.println("==================== 监听器执行了 ===================="); // 👈 加
-                System.out.println("==================== 监听器执行了 ===================="); // 👈 加
-                System.out.println("==================== 监听器执行了 ===================="); // 👈 加
-                System.out.println("==================== 监听器执行了 ===================="); // 👈 加
-                System.out.println("==================== 监听器执行了 ===================="); // 👈 加
-                System.out.println("==================== 监听器执行了 ===================="); // 👈 加
-                System.out.println("==================== 监听器执行了 ===================="); // 👈 加
+
                 System.out.println( data.setYzghfzr(nickname));
                 System.out.println(data.setYzghyj((String) localVars.get("Activity_yzghfzryj")));
-            }        System.out.println("==================== 监听器执行了 ===================="); // 👈 加
-            System.out.println("==================== 监听器执行了 ===================="); // 👈 加
-            System.out.println("==================== 监听器执行了 ===================="); // 👈 加
-            System.out.println("==================== 监听器执行了 ===================="); // 👈 加
-            System.out.println("==================== 监听器执行了 ===================="); // 👈 加
-            System.out.println("==================== 监听器执行了 ===================="); // 👈 加
-            System.out.println("==================== 监听器执行了 ===================="); // 👈 加
+            }
             if ("Activity_xzgghjbr".equals(taskKey)) {
                 data.setXzgghjbr(nickname);
                 data.setXzgghsprq(LocalDate.now());
             }
             if ("Activity_xzgghfzr".equals(taskKey)) {
-                data.setXzgghspyj((String) localVars.get("Activity_xzgghfzryj"));
+                data.setXzgghspyj((String) localVars.get("Activity_xzghfzryj"));
                 data.setXzgghfzr(nickname);
             }
             if ("Activity_szgghjbr".equals(taskKey)) {
@@ -80,7 +58,7 @@ public class DbsqAuditListener implements TaskListener {
                 data.setSghsprq(LocalDate.now());
             }
             if ("Activity_szgghfzr".equals(taskKey)) {
-                data.setSghspyj((String) localVars.get("Activity_szgghfzryj"));
+                data.setSghspyj((String) localVars.get("Activity_szghfzryj"));
                 data.setSghfzr(nickname);
             }
             System.out.println(data);

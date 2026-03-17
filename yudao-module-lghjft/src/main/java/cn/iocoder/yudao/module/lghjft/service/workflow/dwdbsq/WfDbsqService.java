@@ -3,6 +3,7 @@ package cn.iocoder.yudao.module.lghjft.service.workflow.dwdbsq;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.app.workflow.dwdbsq.vo.WfDbsqAppPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.dwdbsq.WfDbsqDO;
 import jakarta.validation.*;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
@@ -38,5 +39,5 @@ public interface WfDbsqService {
      * @return 工会隶属关系调拨申请分页
      */
 
-    PageResult<WfDbsqDO> getSelfPage(Long userId, WfDbsqPageReqVO pageReqVO);
+    PageResult<WfDbsqDO> getSelfPage(Long userId, WfDbsqAppPageReqVO pageReqVO);
 }

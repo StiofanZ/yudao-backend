@@ -49,10 +49,7 @@ public class HkxxServiceImpl implements HkxxService {
         HkxxDO mainDO = BeanUtils.toBean(updateReqVO, HkxxDO.class);
         mainDO.setUpdateTime(DateUtils.getNowDate());
         hkxxMapper.updateJcjfzz(mainDO);
-
-        // ==============================================
         // 子表：一对一 · 有则更新、无则插入（不使用list）
-        // ==============================================
         updateReqVO.setUpdateBy(nickname);
         updateReqVO.setUpdateTime(new Date());
 
