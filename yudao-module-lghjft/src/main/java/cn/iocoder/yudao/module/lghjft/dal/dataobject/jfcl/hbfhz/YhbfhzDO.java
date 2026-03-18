@@ -107,6 +107,11 @@ public class YhbfhzDO extends BaseDO {
      * 全部业务参考号
      */
     private String bfidStr;
+    // 新增：时间查询条件（非数据库字段）
+    @TableField(exist = false)
+    private String beginCreateTime;
 
+    @TableField(exist = false)
+    private String endCreateTime;
 
 }

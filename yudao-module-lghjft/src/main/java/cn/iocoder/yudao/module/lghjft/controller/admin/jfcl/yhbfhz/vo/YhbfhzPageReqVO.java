@@ -1,7 +1,6 @@
-package cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.hbfhz.vo;
+package cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfhz.vo;
 
 import lombok.*;
-import java.util.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import java.math.BigDecimal;
@@ -75,7 +74,20 @@ public class YhbfhzPageReqVO extends PageParam {
     @Schema(description = "全部业务参考号")
     private String bfidStr;
 
-//    日期选择
-    private  String endCreateTime;
-    private  String beginCreateTime;
+    // ===================== 以下是补齐的字段（解决XML报错） =====================
+    @Schema(description = "创建时间-开始")
+    private String beginCreateTime;
+
+    @Schema(description = "创建时间-结束")
+    private String endCreateTime;
+
+    @Schema(description = "更新时间-开始")
+    private String beginUpdateTime;
+
+    @Schema(description = "更新时间-结束")
+    private String endUpdateTime;
+
+    @Schema(description = "更新时间")
+    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    private LocalDateTime updateTime;
 }

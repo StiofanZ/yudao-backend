@@ -129,7 +129,8 @@
 
             <if test="query.beginCreateTime != null and query.endCreateTime != null"> and a.CREATE_TIME between #{query.beginCreateTime} and #{query.endCreateTime}</if>
 
-            <if test="query.updateBy != null and query.updateBy != ''"> and a.UPDATE_BY = #{query.updateBy}</if>
+            <if test="query.updateBy != null and query.updateBy != ''">
+                and a.UPDATE_BY = #{query.updateBy}</if>
 
             <if test="query.beginUpdateTime != null and query.endUpdateTime != null"> and a.UPDATE_TIME between #{query.beginUpdateTime} and #{query.endUpdateTime}</if>
         </where>

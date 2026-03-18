@@ -79,6 +79,7 @@ public PageResult<YhbfmxDO> getYhbfmxPage(YhbfmxPageReqVO reqVO) {
         reqVO.setDeptId(null);
     }
     Page<YhbfmxDO> page = new Page<>(reqVO.getPageNo(), reqVO.getPageSize());
+
     IPage<YhbfmxDO> ipage = yhbfmxMapper.selectPage(page, reqVO); // 关键！
     return new PageResult<>(ipage.getRecords(), ipage.getTotal());
 }

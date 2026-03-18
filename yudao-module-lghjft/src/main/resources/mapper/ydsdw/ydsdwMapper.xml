@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.sjwh.ydsdw.JhdwydsMapper">
+
+<!--    &lt;!&ndash; 公共字段片段 &ndash;&gt;-->
+<!--    <sql id="baseColumns">-->
+<!--        t.JHDW_ID,-->
+<!--        t.DEPT_ID,-->
+<!--        t.DJXH,-->
+<!--        t.SHXYDM,-->
+<!--        t.NSRMC,-->
+<!--        t.ZGSWJ_DM,-->
+<!--        t.ZGSWSKFJ_DM,-->
+<!--        t.ZGSWSKFJMC,-->
+<!--        t.JDXZ_DM,-->
+<!--        t.DZ,-->
+<!--        t.DWCWLXR,-->
+<!--        t.DWCWLXDH,-->
+<!--        t.NSRZT_DM,-->
+<!--        t.ZGRS,-->
+<!--        t.GHZGRS,-->
+<!--        t.GHSHXYDM,-->
+<!--        t.GHMC,-->
+<!--        t.GHLX_DM,-->
+<!--        t.GHJFLXR,-->
+<!--        t.GHJFLXDH,-->
+<!--        t.GHZX,-->
+<!--        t.ZXLXDH,-->
+<!--        t.CLGHBJ,-->
+<!--        t.CLGHRQ,-->
+<!--        t.GHZT_DM,-->
+<!--        t.SJGHMC,-->
+<!--        t.JCGHZH,-->
+<!--        t.JCGHHM,-->
+<!--        t.JCGHHH,-->
+<!--        t.JCGHYH,-->
+<!--        t.SJTB_SJ,-->
+<!--        t.BZ,-->
+<!--        t.CREATE_BY,-->
+<!--        t.CREATE_TIME,-->
+<!--        t.UPDATE_BY,-->
+<!--        t.UPDATE_TIME-->
+<!--    </sql>-->
+
+<!--    &lt;!&ndash; 分页查询 &ndash;&gt;-->
+<!--    <select id="selectPage" resultType="cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.ydsdw.JhdwydsDO">-->
+<!--        SELECT <include refid="baseColumns"/>-->
+<!--        FROM jhdwyds t-->
+<!--        WHERE t.deleted = 0-->
+<!--        <if test="reqVO.deptId != null and reqVO.deptId != ''">-->
+<!--            AND t.DEPT_ID = #{reqVO.deptId}-->
+<!--        </if>-->
+<!--        <if test="reqVO.shxydm != null and reqVO.shxydm != ''">-->
+<!--            AND t.SHXYDM = #{reqVO.shxydm}-->
+<!--        </if>-->
+<!--        <if test="reqVO.nsrmc != null and reqVO.nsrmc != ''">-->
+<!--            AND t.NSRMC LIKE CONCAT('%', #{reqVO.nsrmc}, '%')-->
+<!--        </if>-->
+<!--        <if test="reqVO.jdxzDm != null and reqVO.jdxzDm != ''">-->
+<!--            AND t.JDXZ_DM = #{reqVO.jdxzDm}-->
+<!--        </if>-->
+<!--        <if test="reqVO.nsrztDm != null and reqVO.nsrztDm != ''">-->
+<!--            AND t.NSRZT_DM = #{reqVO.nsrztDm}-->
+<!--        </if>-->
+<!--        <if test="reqVO.ghshxydm != null and reqVO.ghshxydm != ''">-->
+<!--            AND t.GHSHXYDM = #{reqVO.ghshxydm}-->
+<!--        </if>-->
+<!--        <if test="reqVO.ghmc != null and reqVO.ghmc != ''">-->
+<!--            AND t.GHMC LIKE CONCAT('%', #{reqVO.ghmc}, '%')-->
+<!--        </if>-->
+<!--        <if test="reqVO.ghlxDm != null and reqVO.ghlxDm != ''">-->
+<!--            AND t.GHLX_DM = #{reqVO.ghlxDm}-->
+<!--        </if>-->
+<!--        <if test="reqVO.ghjflxr != null and reqVO.ghjflxr != ''">-->
+<!--            AND t.GHJFLXR = #{reqVO.ghjflxr}-->
+<!--        </if>-->
+<!--        <if test="reqVO.ghjflxdh != null and reqVO.ghjflxdh != ''">-->
+<!--            AND t.GHJFLXDH = #{reqVO.ghjflxdh}-->
+<!--        </if>-->
+<!--        <if test="reqVO.clghbj != null and reqVO.clghbj != ''">-->
+<!--            AND t.CLGHBJ = #{reqVO.clghbj}-->
+<!--        </if>-->
+<!--        ORDER BY t.CREATE_TIME DESC-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 根据 ID 查询 &ndash;&gt;-->
+<!--    <select id="selectById" resultType="cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.ydsdw.JhdwydsDO">-->
+<!--        SELECT <include refid="baseColumns"/>-->
+<!--        FROM jhdwyds t-->
+<!--        WHERE t.JHDW_ID = #{id} AND t.deleted = 0-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 新增 &ndash;&gt;-->
+<!--    <insert id="insert" parameterType="cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.ydsdw.JhdwydsDO">-->
+<!--        INSERT INTO jhdwyds (-->
+<!--            DEPT_ID,-->
+<!--            DJXH,-->
+<!--            SHXYDM,-->
+<!--            NSRMC,-->
+<!--            ZGSWJ_DM,-->
+<!--            ZGSWSKFJ_DM,-->
+<!--            ZGSWSKFJMC,-->
+<!--            JDXZ_DM,-->
+<!--            DZ,-->
+<!--            DWCWLXR,-->
+<!--            DWCWLXDH,-->
+<!--            NSRZT_DM,-->
+<!--            ZGRS,-->
+<!--            GHZGRS,-->
+<!--            GHSHXYDM,-->
+<!--            GHMC,-->
+<!--            GHLX_DM,-->
+<!--            GHJFLXR,-->
+<!--            GHJFLXDH,-->
+<!--            GHZX,-->
+<!--            ZXLXDH,-->
+<!--            CLGHBJ,-->
+<!--            CLGHRQ,-->
+<!--            GHZT_DM,-->
+<!--            SJGHMC,-->
+<!--            JCGHZH,-->
+<!--            JCGHHM,-->
+<!--            JCGHHH,-->
+<!--            JCGHYH,-->
+<!--            SJTB_SJ,-->
+<!--            BZ,-->
+<!--            CREATE_BY,-->
+<!--            CREATE_TIME,-->
+<!--            UPDATE_BY,-->
+<!--            UPDATE_TIME,-->
+<!--            DELETED-->
+<!--        ) VALUES (-->
+<!--                     #{deptId},-->
+<!--                     #{djxh},-->
+<!--                     #{shxydm},-->
+<!--                     #{nsrmc},-->
+<!--                     #{zgswjDm},-->
+<!--                     #{zgswskfjDm},-->
+<!--                     #{zgswskfjmc},-->
+<!--                     #{jdxzDm},-->
+<!--                     #{dz},-->
+<!--                     #{dwcwlxr},-->
+<!--                     #{dwcwlxdh},-->
+<!--                     #{nsrztDm},-->
+<!--                     #{zgrs},-->
+<!--                     #{ghzgrs},-->
+<!--                     #{ghshxydm},-->
+<!--                     #{ghmc},-->
+<!--                     #{ghlxDm},-->
+<!--                     #{ghjflxr},-->
+<!--                     #{ghjflxdh},-->
+<!--                     #{ghzx},-->
+<!--                     #{zxlxdh},-->
+<!--                     #{clghbj},-->
+<!--                     #{clghrq},-->
+<!--                     #{ghztDm},-->
+<!--                     #{sjghmc},-->
+<!--                     #{jcghzh},-->
+<!--                     #{jcghhm},-->
+<!--                     #{jcghhh},-->
+<!--                     #{jcghyh},-->
+<!--                     #{sjtbSj},-->
+<!--                     #{bz},-->
+<!--                     #{createBy},-->
+<!--                     #{createTime},-->
+<!--                     #{updateBy},-->
+<!--                     #{updateTime},-->
+<!--                     0-->
+<!--                 )-->
+<!--    </insert>-->
+
+<!--    &lt;!&ndash; 修改 &ndash;&gt;-->
+<!--    <update id="updateById" parameterType="cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.ydsdw.JhdwydsDO">-->
+<!--        UPDATE jhdwyds-->
+<!--        <set>-->
+<!--            <if test="deptId != null">DEPT_ID = #{deptId},</if>-->
+<!--            <if test="djxh != null">DJXH = #{djxh},</if>-->
+<!--            <if test="shxydm != null">SHXYDM = #{shxydm},</if>-->
+<!--            <if test="nsrmc != null">NSRMC = #{nsrmc},</if>-->
+<!--            <if test="zgswjDm != null">ZGSWJ_DM = #{zgswjDm},</if>-->
+<!--            <if test="zgswskfjDm != null">ZGSWSKFJ_DM = #{zgswskfjDm},</if>-->
+<!--            <if test="zgswskfjmc != null">ZGSWSKFJMC = #{zgswskfjmc},</if>-->
+<!--            <if test="jdxzDm != null">JDXZ_DM = #{jdxzDm},</if>-->
+<!--            <if test="dz != null">DZ = #{dz},</if>-->
+<!--            <if test="dwcwlxr != null">DWCWLXR = #{dwcwlxr},</if>-->
+<!--            <if test="dwcwlxdh != null">DWCWLXDH = #{dwcwlxdh},</if>-->
+<!--            <if test="nsrztDm != null">NSRZT_DM = #{nsrztDm},</if>-->
+<!--            <if test="zgrs != null">ZGRS = #{zgrs},</if>-->
+<!--            <if test="ghzgrs != null">GHZGRS = #{ghzgrs},</if>-->
+<!--            <if test="ghshxydm != null">GHSHXYDM = #{ghshxydm},</if>-->
+<!--            <if test="ghmc != null">GHMC = #{ghmc},</if>-->
+<!--            <if test="ghlxDm != null">GHLX_DM = #{ghlxDm},</if>-->
+<!--            <if test="ghjflxr != null">GHJFLXR = #{ghjflxr},</if>-->
+<!--            <if test="ghjflxdh != null">GHJFLXDH = #{ghjflxdh},</if>-->
+<!--            <if test="ghzx != null">GHZX = #{ghzx},</if>-->
+<!--            <if test="zxlxdh != null">ZXLXDH = #{zxlxdh},</if>-->
+<!--            <if test="clghbj != null">CLGHBJ = #{clghbj},</if>-->
+<!--            <if test="clghrq != null">CLGHRQ = #{clghrq},</if>-->
+<!--            <if test="ghztDm != null">GHZT_DM = #{ghztDm},</if>-->
+<!--            <if test="sjghmc != null">SJGHMC = #{sjghmc},</if>-->
+<!--            <if test="jcghzh != null">JCGHZH = #{jcghzh},</if>-->
+<!--            <if test="jcghhm != null">JCGHHM = #{jcghhm},</if>-->
+<!--            <if test="jcghhh != null">JCGHHH = #{jcghhh},</if>-->
+<!--            <if test="jcghyh != null">JCGHYH = #{jcghyh},</if>-->
+<!--            <if test="sjtbSj != null">SJTB_SJ = #{sjtbSj},</if>-->
+<!--            <if test="bz != null">BZ = #{bz},</if>-->
+<!--            <if test="updateBy != null">UPDATE_BY = #{updateBy},</if>-->
+<!--            <if test="updateTime != null">UPDATE_TIME = #{updateTime},</if>-->
+<!--        </set>-->
+<!--        WHERE JHDW_ID = #{jhdwId} AND deleted = 0-->
+<!--    </update>-->
+
+<!--    &lt;!&ndash; 单个删除（逻辑） &ndash;&gt;-->
+<!--    <update id="deleteById">-->
+<!--        UPDATE jhdwyds SET deleted = 1 WHERE JHDW_ID = #{id}-->
+<!--    </update>-->
+
+<!--    &lt;!&ndash; 批量删除（逻辑） &ndash;&gt;-->
+<!--    <update id="deleteByIds">-->
+<!--        UPDATE jhdwyds SET deleted = 1-->
+<!--        WHERE JHDW_ID IN-->
+<!--        <foreach collection="ids" item="id" open="(" separator="," close=")">-->
+<!--            #{id}-->
+<!--        </foreach>-->
+<!--    </update>-->
+
+</mapper>

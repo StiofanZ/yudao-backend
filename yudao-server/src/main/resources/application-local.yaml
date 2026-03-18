@@ -305,3 +305,37 @@ justauth:
     type: REDIS
     prefix: 'social_auth_state:' # 缓存前缀，目前只对 Redis 缓存生效，默认 JUSTAUTH::STATE::
     timeout: 24h # 超时时长，目前只对 Redis 缓存生效，默认 3 分钟
+
+# 招商接口信息
+zsyh:
+  api:
+    uid: B000830012 #U005589295 #企业网银用户号UID U005589286、U005589295  N0456687  U005589295  sc B000830012
+    url: https://cdc.cmbchina.com/cdcserver/api/v2  # 测试地址http://cdctest.cmburl.cn/cdcserver/api/v2   https://cdc.cmbchina.com/cdcserver/api/v2
+    publicKey: BEynMEZOjNpwZIiD9jXtZSGr3Ecpwn7r+m+wtafXHb6VIZTnugfuxhcKASq3hX+KX9JlHODDl9/RDKQv4XLOFak= #银行测试公钥BNsIe9U0x8IeSe4h/dxUzVEz9pie0hDSfMRINRXc7s1UIXfkExnYECF4QqJ2SnHxLv3z/99gsfDQrQ6dzN5lZj0=  sc  BEynMEZOjNpwZIiD9jXtZSGr3Ecpwn7r+m+wtafXHb6VIZTnugfuxhcKASq3hX+KX9JlHODDl9/RDKQv4XLOFak=
+    privateKey: JF5O1mO6Qye/UoH/3/5kZepB9XWY4sY225ZRYZNcpPU= #客户测试私钥NBtl7WnuUtA2v5FaebEkU0/Jj1IodLGT6lQqwkzmd2E=   sc  JF5O1mO6Qye/UoH/3/5kZepB9XWY4sY225ZRYZNcpPU=
+    symKey: tfDFiT3H67jvkC8u #对称测试密钥  VuAzSWQhsoNqzn0K  sc  tfDFiT3H67jvkC8u
+  di:
+    ipAddr: 172.16.27.209 #出口IP(可为空)27.227.164.231
+    macAddr: 0050569E6E91 #MAC地址6CB1588FCBC0
+    cpuId: 50060000FFFB8B1F #CPU-ID  BFEBFBFF000A0655
+    computerName: gsszghdb1 #计算机名  liwenjun
+    mainBoardId: 220403715900258 #主板ID  220403715900258
+    mainBoardName: 华硕 EX-B560M-V5 #主板厂商  华硕 EX-B560M-V5
+  fc:
+    yqzfpljb:
+      mc: BB1PAYBH #企银支付批量经办
+      bb1bmdbhx1:
+        busMod: S4002 # 业务模式（模式编号）  cs  S2013 sc S4002
+        busCod: N02030 # 业务类型（业务代码） busCod
+      bb1paybhx1:
+        dbtAcc: 841180069910001 #转出帐号  655907655610004  655907655610003  sc 841180069910001
+        ccyNbr: 10 #币种 ccyNb
+        rcvChk: 1 #行内收方账号户名校验 rcvChk
+    qyzfmxcx:
+      mc: BB1QRYBD #企银批量支付明细查询
+    qyplzfpccx:
+      mc: BB1QRYBT #企银批量支付批次查询
+    zpthmxcx:
+      mc: BB1PAYQB #支付退票明细查询
+    tprqcxtpjl:
+      mc: BB1QRYOB #根据退票日期查询退票记录

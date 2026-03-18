@@ -46,7 +46,7 @@ public interface YhbfmxService {
     /**
      * 获得银行拨付明细
      *
-     * @param 编号
+     * @param
      * @return 银行拨付明细
      */
     YhbfmxDO getYhbfmx(Integer bfid);

@@ -1,6 +1,5 @@
 package cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.yhbfmx;
 
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfmx.vo.YhbfmxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfmx.YhbfmxDO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -25,8 +24,9 @@ public interface YhbfmxMapper {
     int deleteByIds(@Param("ids") List<Integer> ids);
 
     // ==================== 分页 & 列表 ====================
-    IPage<YhbfmxDO> selectPage(Page<YhbfmxDO> page,
-                               @Param("req") YhbfmxPageReqVO reqVO);    // ==================== 业务方法（和你 Service 严格对应） ====================
+    IPage<YhbfmxDO> selectPage(Page<YhbfmxDO> page, @Param("req") YhbfmxPageReqVO reqVO);
+
+    // ==================== 业务方法 ====================
     List<YhbfmxDO> getGhyhbfmxJs(@Param("hkpch") String hkpch);
 
     List<YhbfmxDO> getGhyhbfmxBjs(@Param("hkpch") String hkpch);
@@ -39,6 +39,17 @@ public interface YhbfmxMapper {
 
     int insertBatch(@Param("list") List<YhbfmxDO> list);
 
-//    int updateBatchBfhzpch(@Param("list") List<YhbfmxDO> list, @Param("bfpch") String bfpch);
-   int  updateBatchGhHkxxYhbfmx(List<YhbfmxDO> yhbfmxs);
+    int updateBatchGhHkxxYhbfmx(List<YhbfmxDO> yhbfmxs);
+
+    List<YhbfmxDO> selectListByBfidStr(String[] bfids);
+
+    // ==================== 从老系统补齐的 4 个方法 ====================
+//    YhbfmxDO selectGhHkxxYhbfmxByBfid(String bfid);
+//
+//    int insertBatchGhyhbfmxJs(@Param("list") List<YhbfmxDO> list);
+//
+//    int updateYxbjByGhHkxxYhbfmx(YhbfmxDO ghHkxxYhbfmx);
+//
+//    List<YhbfmxDO> selectGhHkxxYhbfmxList(YhbfmxDO ghHkxxYhbfmx);
+
 }

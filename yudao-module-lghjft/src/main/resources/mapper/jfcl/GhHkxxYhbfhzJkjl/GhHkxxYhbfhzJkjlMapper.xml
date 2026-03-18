@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.GhHkxxYhbfhzJkjl.GhHkxxYhbfhzJkjlMapper">
+
+    <resultMap type="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.hkxxyhbfhzjkjl.GhHkxxYhbfhzJkjl" id="GhHkxxYhbfhzJkjlResult">
+        <result property="yhbfhzJkjlId" column="yhbfhz_jkjl_id"/>
+        <result property="jkmc" column="jkmc"/>
+        <result property="fkId" column="fk_id"/>
+        <result property="qqbw" column="qqbw"/>
+        <result property="xybw" column="xybw"/>
+        <result property="qqzt" column="qqzt"/>
+        <result property="qqjgxx" column="qqjgxx"/>
+        <result property="createBy" column="CREATE_BY"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateBy" column="UPDATE_BY"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+    </resultMap>
+
+    <sql id="selectGhHkxxYhbfhzJkjlVo">
+        select yhbfhz_jkjl_id, jkmc, fk_id, qqbw, xybw, qqzt, qqjgxx,
+               CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
+        from gh_hkxx_yhbfhz_jkjl
+    </sql>
+
+    <!-- ===================== 模板标准写法：全部 req. 格式 ===================== -->
+    <select id="selectGhHkxxYhbfhzJkjlList" resultMap="GhHkxxYhbfhzJkjlResult">
+        <include refid="selectGhHkxxYhbfhzJkjlVo"/>
+        <where>
+            <if test="req.jkmc != null and req.jkmc != ''"> and jkmc = #{req.jkmc}</if>
+            <if test="req.fkId != null"> and fk_id = #{req.fkId}</if>
+            <if test="req.qqbw != null and req.qqbw != ''"> and qqbw = #{req.qqbw}</if>
+            <if test="req.xybw != null and req.xybw != ''"> and xybw = #{req.xybw}</if>
+            <if test="req.qqzt != null and req.qqzt != ''"> and qqzt = #{req.qqzt}</if>
+            <if test="req.qqjgxx != null and req.qqjgxx != ''"> and qqjgxx = #{req.qqjgxx}</if>
+            <if test="req.createBy != null and req.createBy != ''"> and CREATE_BY = #{req.createBy}</if>
+
+            <!-- 时间范围：模板标准格式 -->
+            <if test="req.beginCreateTime != null and req.endCreateTime != null">
+                and CREATE_TIME between #{req.beginCreateTime} and #{req.endCreateTime}
+            </if>
+
+            <if test="req.updateBy != null and req.updateBy != ''"> and UPDATE_BY = #{req.updateBy}</if>
+            <if test="req.updateTime != null"> and UPDATE_TIME = #{req.updateTime}</if>
+        </where>
+        order by CREATE_TIME desc
+    </select>
+
+    <!-- 以下原有SQL全部保持不变 -->
+    <select id="selectGhHkxxYhbfhzJkjlByYhbfhzJkjlId" parameterType="Long" resultMap="GhHkxxYhbfhzJkjlResult">
+        <include refid="selectGhHkxxYhbfhzJkjlVo"/>
+        where yhbfhz_jkjl_id = #{yhbfhzJkjlId}
+    </select>
+
+    <insert id="insertGhHkxxYhbfhzJkjl" parameterType="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.hkxxyhbfhzjkjl.GhHkxxYhbfhzJkjl" useGeneratedKeys="true" keyProperty="yhbfhzJkjlId">
+        insert into gh_hkxx_yhbfhz_jkjl
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="jkmc != null">jkmc,</if>
+            <if test="fkId != null">fk_id,</if>
+            <if test="qqbw != null">qqbw,</if>
+            <if test="xybw != null">xybw,</if>
+            <if test="qqzt != null">qqzt,</if>
+            <if test="qqjgxx != null">qqjgxx,</if>
+            <if test="createBy != null and createBy != ''">CREATE_BY,</if>
+            <if test="createTime != null">CREATE_TIME,</if>
+            <if test="updateBy != null and updateBy != ''">UPDATE_BY,</if>
+            <if test="updateTime != null">UPDATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="jkmc != null">#{jkmc},</if>
+            <if test="fkId != null">#{fkId},</if>
+            <if test="qqbw != null">#{qqbw},</if>
+            <if test="xybw != null">#{xybw},</if>
+            <if test="qqzt != null">#{qqzt},</if>
+            <if test="qqjgxx != null">#{qqjgxx},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateGhHkxxYhbfhzJkjl" parameterType="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.hkxxyhbfhzjkjl.GhHkxxYhbfhzJkjl">
+        update gh_hkxx_yhbfhz_jkjl
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="jkmc != null">jkmc = #{jkmc},</if>
+            <if test="fkId != null">fk_id = #{fkId},</if>
+            <if test="qqbw != null">qqbw = #{qqbw},</if>
+            <if test="xybw != null">xybw = #{xybw},</if>
+            <if test="qqzt != null">qqzt = #{qqzt},</if>
+            <if test="qqjgxx != null">qqjgxx = #{qqjgxx},</if>
+            <if test="createBy != null and createBy != ''">CREATE_BY = #{createBy},</if>
+            <if test="createTime != null">CREATE_TIME = #{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">UPDATE_BY = #{updateBy},</if>
+            <if test="updateTime != null">UPDATE_TIME = #{updateTime},</if>
+        </trim>
+        where yhbfhz_jkjl_id = #{yhbfhzJkjlId}
+    </update>
+
+    <delete id="deleteGhHkxxYhbfhzJkjlByYhbfhzJkjlId" parameterType="Long">
+        delete from gh_hkxx_yhbfhz_jkjl where yhbfhz_jkjl_id = #{yhbfhzJkjlId}
+    </delete>
+
+    <delete id="deleteGhHkxxYhbfhzJkjlByYhbfhzJkjlIds" parameterType="String">
+        delete from gh_hkxx_yhbfhz_jkjl where yhbfhz_jkjl_id in
+        <foreach item="yhbfhzJkjlId" collection="array" open="(" separator="," close=")">
+            #{yhbfhzJkjlId}
+        </foreach>
+    </delete>
+</mapper>

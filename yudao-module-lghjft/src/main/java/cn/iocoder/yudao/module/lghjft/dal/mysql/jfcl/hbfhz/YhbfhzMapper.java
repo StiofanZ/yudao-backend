@@ -2,12 +2,13 @@ package cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.hbfhz;
 
 import java.util.*;
 
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
+import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfhz.vo.YhbfhzPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.hbfhz.YhbfhzDO;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
-import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.hbfhz.vo.*;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 银行拨付汇总 Mapper
@@ -17,29 +18,69 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.hbfhz.vo.*;
 @Mapper
 public interface YhbfhzMapper extends BaseMapperX<YhbfhzDO> {
 
-    default PageResult<YhbfhzDO> selectPage(YhbfhzPageReqVO reqVO) {
-        return selectPage(reqVO, new LambdaQueryWrapperX<YhbfhzDO>()
-                .eqIfPresent(YhbfhzDO::getBfhzpch, reqVO.getBfhzpch())
-                .eqIfPresent(YhbfhzDO::getBfidq, reqVO.getBfidq())
-                .eqIfPresent(YhbfhzDO::getBfidz, reqVO.getBfidz())
-                .eqIfPresent(YhbfhzDO::getBfbmc, reqVO.getBfbmc())
-                .eqIfPresent(YhbfhzDO::getBs, reqVO.getBs())
-                .eqIfPresent(YhbfhzDO::getHzje, reqVO.getHzje())
-                .eqIfPresent(YhbfhzDO::getThbs, reqVO.getThbs())
-                .eqIfPresent(YhbfhzDO::getThje, reqVO.getThje())
-                .eqIfPresent(YhbfhzDO::getSbbs, reqVO.getSbbs())
-                .eqIfPresent(YhbfhzDO::getSbje, reqVO.getSbje())
-                .eqIfPresent(YhbfhzDO::getCgbs, reqVO.getCgbs())
-                .eqIfPresent(YhbfhzDO::getCgje, reqVO.getCgje())
-                .eqIfPresent(YhbfhzDO::getUuid, reqVO.getUuid())
-                .eqIfPresent(YhbfhzDO::getBfzt, reqVO.getBfzt())
-                .eqIfPresent(YhbfhzDO::getBfjg, reqVO.getBfjg())
-                .eqIfPresent(YhbfhzDO::getThrq, reqVO.getThrq())
-                .eqIfPresent(YhbfhzDO::getCreateBy, reqVO.getCreateBy())
-                .betweenIfPresent(YhbfhzDO::getCreateTime, reqVO.getCreateTime())
-                .eqIfPresent(YhbfhzDO::getUpdateBy, reqVO.getUpdateBy())
-                .eqIfPresent(YhbfhzDO::getBfidStr, reqVO.getBfidStr())
-                .orderByDesc(YhbfhzDO::getBfhzid));
-    }
+
+    /**
+     * 查询银行拨付汇总
+     *
+     * @param bfhzid 银行拨付汇总主键
+     * @return 银行拨付汇总
+     */
+    YhbfhzDO selectGhHkxxYhbfhzByBfhzid(String bfhzid);
+
+    /**
+     * 查询银行拨付汇总列表
+     *
+     *
+     * @return 银行拨付汇总集合
+     */
+//    List<YhbfhzDO> selectGhHkxxYhbfhzList(YhbfhzDO ghHkxxYhbfhz);
+//    IPage<YhbfhzDO> selectGhHkxxYhbfhzList(Page<YhbfhzDO> page, YhbfhzPageReqVO reqVO);
+    IPage<YhbfhzDO> selectGhHkxxYhbfhzList(Page<YhbfhzDO> page, @Param("req") YhbfhzPageReqVO reqVO);
+    /**
+     * 新增银行拨付汇总
+     *
+     * @param ghHkxxYhbfhz 银行拨付汇总
+     * @return 结果
+     */
+    int insertGhHkxxYhbfhz(YhbfhzDO ghHkxxYhbfhz);
+
+    /**
+     * 修改银行拨付汇总
+     *
+     * @param ghHkxxYhbfhz 银行拨付汇总
+     * @return 结果
+     */
+    int updateGhHkxxYhbfhz(YhbfhzDO ghHkxxYhbfhz);
+
+    /**
+     * 删除银行拨付汇总
+     *
+     * @param bfhzid 银行拨付汇总主键
+     * @return 结果
+     */
+    int deleteGhHkxxYhbfhzByBfhzid(String bfhzid);
+
+    /**
+     * 批量删除银行拨付汇总
+     *
+     * @param bfhzids 需要删除的数据主键集合
+     * @return 结果
+     */
+    int deleteGhHkxxYhbfhzByBfhzids(String[] bfhzids);
+
+    /**
+     * 写入银行拨付汇总
+     * @param ghhkxxyhbfhzs
+     * @return
+     */
+    int insertBatchGhhkxxyhbfhzs(List<YhbfhzDO> ghhkxxyhbfhzs);
+
+    /**
+     * 拨付汇总批次号
+     * @param dqrq
+     * @return
+     */
+    String selectBfhzpch(String dqrq);
+
 
 }

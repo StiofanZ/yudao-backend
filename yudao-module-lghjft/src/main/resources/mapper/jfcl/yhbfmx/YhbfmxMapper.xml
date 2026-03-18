@@ -142,7 +142,7 @@
     </sql>
 
     <!-- ==================== 1. 列表查询（分页/导出） ==================== -->
-    <select id="selectPage" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfmx.vo.YhbfmxPageReqVO">
+    <select id="selectPage" resultType="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfmx.YhbfmxDO">
         <include refid="selectYhbfmxVo"/>
         <include refid="selectYhbfmxWhere"/>
         order by bfid desc

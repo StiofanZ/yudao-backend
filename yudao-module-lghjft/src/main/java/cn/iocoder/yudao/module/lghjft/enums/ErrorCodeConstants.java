@@ -64,5 +64,5 @@ public interface ErrorCodeConstants {
  ErrorCode YHBFMX_HAS_GENERATED = new ErrorCode(2_023_000_007, "已生成汇总，不可重复生成！");
     ErrorCode YHBFMX_BEGIN_ERROR = new ErrorCode(2_023_000_008, "开始时间和结束时间不能为空！");
     ErrorCode YHBFMX_THCB_DATA = new ErrorCode(2_023_000_009, "未查询到可退回重拨数据！");
-
+    ErrorCode YHBFJGCX_NOT_EXISTS = new ErrorCode(2_023_000_010, "银行拨付结果查询不存在");
 }
