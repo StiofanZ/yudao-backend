@@ -39,14 +39,12 @@ public class YhbfmxController {
 
     @PostMapping("/create")
     @Operation(summary = "创建银行拨付明细")
-    @PreAuthorize("@ss.hasPermission('gh:yhbfmx:create')")
     public CommonResult<Integer> createYhbfmx(@Valid @RequestBody YhbfmxSaveReqVO createReqVO) {
         return success(yhbfmxService.createYhbfmx(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新银行拨付明细")
-    @PreAuthorize("@ss.hasPermission('gh:yhbfmx:update')")
     public CommonResult<Boolean> updateYhbfmx(@Valid @RequestBody YhbfmxSaveReqVO updateReqVO) {
         yhbfmxService.updateYhbfmx(updateReqVO);
         return success(true);
@@ -55,7 +53,6 @@ public class YhbfmxController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除银行拨付明细")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('gh:yhbfmx:delete')")
     public CommonResult<Boolean> deleteYhbfmx(@RequestParam("id") Integer id) {
         yhbfmxService.deleteYhbfmx(id);
         return success(true);
@@ -64,7 +61,6 @@ public class YhbfmxController {
     @DeleteMapping("/delete-list")
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除银行拨付明细")
-    @PreAuthorize("@ss.hasPermission('gh:yhbfmx:delete')")
     public CommonResult<Boolean> deleteYhbfmxList(@RequestParam("ids") List<Integer> ids) {
         yhbfmxService.deleteYhbfmxListByIds(ids);
         return success(true);
@@ -73,7 +69,6 @@ public class YhbfmxController {
     @GetMapping("/get")
     @Operation(summary = "获得银行拨付明细")
     @Parameter(name = "bfid", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('gh:yhbfmx:query')")
     public CommonResult<YhbfmxRespVO> getYhbfmx(@RequestParam("bfid") Integer bfid) {
         YhbfmxDO yhbfmx = yhbfmxService.getYhbfmx(bfid);
         return success(BeanUtils.toBean(yhbfmx, YhbfmxRespVO.class));
@@ -81,7 +76,6 @@ public class YhbfmxController {
 
     @GetMapping("/page")
     @Operation(summary = "获得银行拨付明细分页")
-    @PreAuthorize("@ss.hasPermission('gh:yhbfmx:query')")
     public CommonResult<PageResult<YhbfmxRespVO>> getYhbfmxPage(@Valid YhbfmxPageReqVO pageReqVO) {
         PageResult<YhbfmxDO> pageResult = yhbfmxService.getYhbfmxPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, YhbfmxRespVO.class));
@@ -89,7 +83,6 @@ public class YhbfmxController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出银行拨付明细 Excel")
-    @PreAuthorize("@ss.hasPermission('gh:yhbfmx:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportYhbfmxExcel(@Valid YhbfmxPageReqVO pageReqVO,
                                   HttpServletResponse response) throws IOException {
@@ -106,7 +99,6 @@ public class YhbfmxController {
      */
     @PostMapping("/js")
     @Operation(summary = "结算文件生成银行拨付数据")
-    @PreAuthorize("@ss.hasPermission('gh:yhbfmx:js')")
     @ApiAccessLog(operateType = UPDATE)
     public CommonResult<Boolean> js(@RequestBody YhbfmxSaveReqVO reqVO) {
         yhbfmxService.updateGhyhbfmxJs(reqVO);
@@ -118,7 +110,6 @@ public class YhbfmxController {
      */
     @PostMapping("/bjs")
     @Operation(summary = "补结算文件生成银行拨付数据")
-    @PreAuthorize("@ss.hasPermission('gh:yhbfmx:bjs')")
     @ApiAccessLog(operateType = UPDATE)
     public CommonResult<Boolean> bjs(@RequestBody YhbfmxSaveReqVO reqVO) {
         yhbfmxService.updateGhyhbfmxBjs(reqVO);
@@ -130,7 +121,6 @@ public class YhbfmxController {
      */
     @PostMapping("/sbthcb")
     @Operation(summary = "失败退回重拨数据生成银行拨付数据")
-    @PreAuthorize("@ss.hasPermission('gh:yhbfmx:sbthcb')")
     @ApiAccessLog(operateType = UPDATE)
     public CommonResult<Boolean> sbthcb(@RequestBody YhbfmxSaveReqVO reqVO) {
         yhbfmxService.updateGhyhbfmxSbthcb(reqVO);
@@ -142,7 +132,6 @@ public class YhbfmxController {
      */
     @PostMapping("/yhbfhz")
     @Operation(summary = "生成银行拨付汇总")
-    @PreAuthorize("@ss.hasPermission('gh:yhbfmx:yhbfhz')")
     @ApiAccessLog(operateType = UPDATE)
     public CommonResult<Boolean> updateGhHkxxYhbfhz(@RequestBody YhbfmxSaveReqVO reqVO) {
         yhbfmxService.updateGhHkxxYhbfhz(reqVO);
