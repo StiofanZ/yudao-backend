@@ -7,6 +7,7 @@ import cn.iocoder.yudao.module.lghjft.controller.app.workflow.dwdbsq.vo.WfDbsqAp
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.dwdbsq.WfDbsqDO;
 import jakarta.validation.*;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import org.flowable.engine.delegate.DelegateExecution;
 
 /**
  * 工会隶属关系调拨申请 Service 接口
@@ -40,4 +41,5 @@ public interface WfDbsqService {
      */
 
     PageResult<WfDbsqDO> getSelfPage(Long userId, WfDbsqAppPageReqVO pageReqVO);
+
 }

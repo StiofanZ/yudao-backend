@@ -15,18 +15,15 @@ public class ydsdwSaveReqVO {
     private Integer jhdwId;
 
     @Schema(description = "工会机构", requiredMode = Schema.RequiredMode.REQUIRED, example = "7269")
-    @NotEmpty(message = "工会机构不能为空")
     private String deptId;
 
     @Schema(description = "登记序号", requiredMode = Schema.RequiredMode.REQUIRED)
     private String djxh;
 
     @Schema(description = "社会信用代码", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotEmpty(message = "社会信用代码不能为空")
     private String shxydm;
 
     @Schema(description = "纳税人名称", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotEmpty(message = "纳税人名称不能为空")
     private String nsrmc;
 
     @Schema(description = "主管税务机关代码")

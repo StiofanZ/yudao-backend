@@ -1,6 +1,8 @@
 package cn.iocoder.yudao.module.lghjft.service.hjgl.jcxx;
 
+import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxBaseVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxCreateReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxUpdateReqVO;
@@ -55,5 +57,10 @@ public interface JcxxService {
     PageResult<GhHjJcxxDO> getJcxxPage(JcxxPageReqVO pageReqVO);
 
     List<GhHjJcxxDO> getJcxxList(String lxdh);
-
+    /**
+     * 户籍调拨
+     * @param baseVO 调拨参数
+     * @return 成功返回 true，失败抛出业务异常
+     */
+    boolean allocationJcxx(JcxxBaseVO baseVO);
 }

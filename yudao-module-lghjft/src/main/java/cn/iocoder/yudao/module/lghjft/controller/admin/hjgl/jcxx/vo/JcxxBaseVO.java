@@ -1,11 +1,13 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND;
 
@@ -24,6 +26,12 @@ public class JcxxBaseVO {
 
     @Schema(description = "社会信用代码")
     private String shxydm;
+
+    @Schema(description = "登记序号", requiredMode = Schema.RequiredMode.REQUIRED)
+    private String djxh;
+
+    @Schema(description = "登记序号数组", requiredMode = Schema.RequiredMode.REQUIRED)
+    private List<String> djxhs;
 
     @Schema(description = "纳税人名称")
     private String nsrmc;

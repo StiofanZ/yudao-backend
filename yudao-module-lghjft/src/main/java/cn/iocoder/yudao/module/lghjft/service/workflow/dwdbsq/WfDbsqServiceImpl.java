@@ -6,6 +6,7 @@ import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils;
 import cn.iocoder.yudao.module.bpm.api.task.BpmProcessInstanceApi;
 import cn.iocoder.yudao.module.bpm.api.task.dto.BpmProcessInstanceCreateReqDTO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxBaseVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqSaveReqVO;
@@ -15,6 +16,7 @@ import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.dwdbsq.WfDbsqfjDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.workflow.dwdbsq.WfDbsqMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.workflow.dwdbsq.WfDbsqfjMapper;
 import cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants;
+import cn.iocoder.yudao.module.lghjft.service.hjgl.jcxx.JcxxService;
 import cn.iocoder.yudao.module.system.dal.dataobject.dept.DeptDO;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
 import cn.iocoder.yudao.module.system.service.dept.DeptService;
@@ -22,6 +24,7 @@ import cn.iocoder.yudao.module.system.service.user.AdminUserService;
 import com.aliyun.oss.ServiceException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import jakarta.validation.Valid;
+import org.flowable.engine.delegate.DelegateExecution;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -59,6 +62,8 @@ public class WfDbsqServiceImpl implements WfDbsqService {
     private BpmProcessInstanceApi bpmProcessInstanceApi;
     @Resource
     private DeptService deptService;
+    @Resource
+    private JcxxService jcxxService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -70,6 +75,7 @@ public class WfDbsqServiceImpl implements WfDbsqService {
         if (wfDbsqMapper.selectCount(checkQuery) > 0) {
             throw exception(WF_DBSQ_NOT_EXISTS);
         }
+
         // ======================
         //工会状态校验
         // ======================
@@ -97,13 +103,20 @@ public class WfDbsqServiceImpl implements WfDbsqService {
         main.setCreator(String.valueOf(WebFrameworkUtils.getLoginUserId()));
         wfDbsqMapper.insert(main); //  这里执行完，main.getId() 才有值！
 
-        // 再创建流程
+        // 【关键】构建流程变量，存入调拨所需参数
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("newDeptId", req.getNewDeptId());           // 目标工会ID
+        variables.put("djxh", req.getDjxh());                   // 登记序号
+        variables.put("hyghbz", String.valueOf(req.getHyghbz())); // 行业工会标志
+        variables.put("businessId", main.getId());              // 业务ID
+
+        // 再创建流程（带上变量）
         String lcslId = bpmProcessInstanceApi.createProcessInstance(
                 WebFrameworkUtils.getLoginUserId(),
                 new BpmProcessInstanceCreateReqDTO()
                         .setProcessDefinitionKey(PROCESS_KEY)
                         .setBusinessKey(String.valueOf(main.getId()))
-                        .setVariables(new HashMap<>())
+                        .setVariables(variables)  // ← 传入变量，不是空HashMap
         );
 
         // ：最后更新 lcslId
@@ -111,7 +124,6 @@ public class WfDbsqServiceImpl implements WfDbsqService {
         updateObj.setId(main.getId());
         updateObj.setLcslId(lcslId);
         wfDbsqMapper.updateById(updateObj);
-
         // 插入附件
         if (CollUtil.isNotEmpty(req.getFjList())) {
             Collection<WfDbsqfjDO> list = req.getFjList().stream()
@@ -166,5 +178,6 @@ public class WfDbsqServiceImpl implements WfDbsqService {
         int index = cleanPath.lastIndexOf('/');
         return index >= 0 ? cleanPath.substring(index + 1) : cleanPath;
     }
+
 
 }

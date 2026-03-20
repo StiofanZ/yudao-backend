@@ -1,12 +1,10 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx;
 
+import cn.idev.excel.util.StringUtils;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxCreateReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxRespVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxUpdateReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.*;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.nsrxx.NsrxxQueryReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.nsrxx.NsrxxRespVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.GhHjJcxxDO;
@@ -113,5 +111,20 @@ public class JcxxController {
         JcxxRespVO respVO = BeanUtils.toBean(nsrxx, JcxxRespVO.class);
         return success(respVO);
     }
+//
+//    @PostMapping("/allocation")
+//    @Operation(summary = "户籍调拨（单个）")
+//    @PreAuthorize("@ss.hasPermission('lghjft:hjgl-jcxx:update')")
+//    public CommonResult<Boolean> allocationJcxx(@Valid @RequestBody JcxxBaseVO baseVO) {
+//        jcxxService.allocationJcxx(baseVO);
+//        return success(true);
+//    }
 
+    @PostMapping("/allocation")
+    @Operation(summary = "户籍调拨（单个）")
+    @PreAuthorize("@ss.hasPermission('lghjft:hjgl-jcxx:update')")
+    public CommonResult<String> allocationJcxx(@Valid @RequestBody JcxxBaseVO baseVO) {
+        jcxxService.allocationJcxx(baseVO);
+        return CommonResult.success("户籍调拨成功");
+    }
 }

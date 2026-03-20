@@ -39,4 +39,7 @@ public interface NsrxxService {
     List<NsrxxDO> getNsrxxList(Collection<String> ids);
 
     NsrxxPayFormResVO getNsrdwxxByShxydm(String shxydm);
+
+
+
 }

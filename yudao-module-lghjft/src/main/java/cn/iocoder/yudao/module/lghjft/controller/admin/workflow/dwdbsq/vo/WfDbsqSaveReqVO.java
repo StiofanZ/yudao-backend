@@ -85,6 +85,11 @@ public class WfDbsqSaveReqVO {
     private long oldDeptId ;
     @Schema(description = "现在的部门id")
     private long newDeptId ;
+    @Schema(description = "登记序号")
+    private String djxh;
+    @Schema(description = "行业工会标志")
+    private String hyghbz;
+
 //    存放文件的子表
 @Data
 @Schema(description = "附件项")

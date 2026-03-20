@@ -40,14 +40,14 @@ public class yhbfjgcxController {
 
     @PostMapping("/create")
     @Operation(summary = "创建银行拨付结果查询")
-    @PreAuthorize("@ss.hasPermission('jfcl:yhbfjgcx:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:yhbfjgcx:create')")
     public CommonResult<String> createyhbfjgcx(@Valid @RequestBody yhbfjgcxSaveReqVO createReqVO) {
         return success(yhbfjgcxService.createyhbfjgcx(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新银行拨付结果查询")
-    @PreAuthorize("@ss.hasPermission('jfcl:yhbfjgcx:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:yhbfjgcx:update')")
     public CommonResult<Boolean> updateyhbfjgcx(@Valid @RequestBody yhbfjgcxSaveReqVO updateReqVO) {
         yhbfjgcxService.updateyhbfjgcx(updateReqVO);
         return success(true);
@@ -56,7 +56,7 @@ public class yhbfjgcxController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除银行拨付结果查询")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('jfcl:yhbfjgcx:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:yhbfjgcx:delete')")
     public CommonResult<Boolean> deleteyhbfjgcx(@RequestParam("id") String id) {
         yhbfjgcxService.deleteyhbfjgcx(id);
         return success(true);
@@ -65,7 +65,7 @@ public class yhbfjgcxController {
     @DeleteMapping("/delete-list")
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除银行拨付结果查询")
-                @PreAuthorize("@ss.hasPermission('jfcl:yhbfjgcx:delete')")
+                @PreAuthorize("@ss.hasPermission('lghjft:yhbfjgcx:delete')")
     public CommonResult<Boolean> deleteyhbfjgcxList(@RequestParam("ids") List<String> ids) {
         yhbfjgcxService.deleteyhbfjgcxListByIds(ids);
         return success(true);
@@ -74,7 +74,7 @@ public class yhbfjgcxController {
     @GetMapping("/get")
     @Operation(summary = "获得银行拨付结果查询")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('jfcl:yhbfjgcx:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:yhbfjgcx:query')")
     public CommonResult<yhbfjgcxRespVO> getyhbfjgcx(@RequestParam("id") String id) {
         yhbfjgcxDO yhbfjgcx = yhbfjgcxService.getyhbfjgcx(id);
         return success(BeanUtils.toBean(yhbfjgcx, yhbfjgcxRespVO.class));
@@ -82,7 +82,7 @@ public class yhbfjgcxController {
 
     @GetMapping("/page")
     @Operation(summary = "获得银行拨付结果查询分页")
-    @PreAuthorize("@ss.hasPermission('jfcl:yhbfjgcx:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:yhbfjgcx:query')")
     public CommonResult<PageResult<yhbfjgcxRespVO>> getyhbfjgcxPage(@Valid yhbfjgcxPageReqVO pageReqVO) {
         PageResult<yhbfjgcxDO> pageResult = yhbfjgcxService.getyhbfjgcxPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, yhbfjgcxRespVO.class));
@@ -90,7 +90,7 @@ public class yhbfjgcxController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出银行拨付结果查询 Excel")
-    @PreAuthorize("@ss.hasPermission('jfcl:yhbfjgcx:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:yhbfjgcx:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportyhbfjgcxExcel(@Valid yhbfjgcxPageReqVO pageReqVO,
               HttpServletResponse response) throws IOException {

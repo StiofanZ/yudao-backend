@@ -3,6 +3,7 @@ package cn.iocoder.yudao.module.lghjft.dal.mysql.hjgl.jcxx;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxBaseVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.GhHjJcxxDO;
 import org.apache.ibatis.annotations.Mapper;
@@ -32,5 +33,9 @@ public interface GhHjJcxxMapper extends BaseMapperX<GhHjJcxxDO> {
                 .betweenIfPresent(GhHjJcxxDO::getClghrq, reqVO.getBeginClghrq(), reqVO.getEndClghrq())
                 .orderByDesc(GhHjJcxxDO::getUpdateTime));
     }
+    /**
+     * 户籍调拨（单个）
+     */
+    int updateAllocationJcxx(JcxxBaseVO baseVO);
 
 }

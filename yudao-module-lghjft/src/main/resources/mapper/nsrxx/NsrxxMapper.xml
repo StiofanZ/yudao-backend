@@ -19,7 +19,12 @@
         <result column="JCGHYH"        jdbcType="VARCHAR" property="jcghyh"/>        <!-- 开户银行名称（银行行别代码，后续转换） -->
         <result column="JCGHHM"        jdbcType="VARCHAR" property="jcghhm"/>        <!-- 工会账户户名（账户名称） -->
         <result column="JCGHHH"        jdbcType="VARCHAR" property="jcghhh"/>        <!-- 开户银行网点代码（银行营业网点代码） -->
-        <result column="NSRSBH"        jdbcType="VARCHAR" property="nsrsbh"/>        <!-- 纳税人识别号（备用字段） -->
+        <result column="NSRSBH"        jdbcType="VARCHAR" property="nsrsbh"/>
+        <result column="DJXH"        jdbcType="VARCHAR" property="djxh"/>        <!-- 纳税人识别号（备用字段） -->
+        <result column="NSRZTDM"        jdbcType="VARCHAR" property="nsrztDm"/>        <!-- 纳税人识别号（备用字段） -->
+        <result column="JdXZDm"        jdbcType="VARCHAR" property="jdxzDm"/>        <!-- 纳税人识别号（备用字段） -->
+        <result column="ZGSWSKFJDM"        jdbcType="VARCHAR" property="zgswskfjDm"/>        <!-- 纳税人识别号（备用字段） -->
+        <!-- 纳税人识别号（备用字段） -->
     </resultMap>
 
     <!-- 关联三张表查询表单所需数据 -->
@@ -35,22 +40,28 @@
         NULL AS GHHYTS,                      <!-- 工会会员数（无此字段） -->
         NULL AS GHFZR,                       <!-- 工会负责人（无此字段） -->
         NSR_EXT.CWFZRXM AS CWFZRXM,          <!-- 财务负责人姓名（新增） -->
-        -- 联系电话：优先法定代表人移动电话 → 财务负责人移动电话 → 注册地联系电话（优化核心）
-        COALESCE(NSR_EXT.CWFZRGDDH, NSR_EXT.CWFZRYDDH, NSR_EXT.ZCDLXDH) AS LXDH, <!-- 联系电话：优先法定代表人手机号，无则用注册地电话 -->
+        COALESCE(NSR_EXT.CWFZRGDDH, NSR_EXT.CWFZRYDDH, NSR_EXT.ZCDLXDH) AS LXDH, <!-- 联系电话 -->
         ACC.YHZH AS JCGHZH,                  <!-- 工会账户账号（银行账号） -->
-        ACC.YHHB_DM AS JCGHYH,               <!-- 开户银行名称（先返回行别代码，需关联字典表转全称） -->
+        ACC.YHHB_DM AS JCGHYH,               <!-- 开户银行名称 -->
         ACC.ZHMC AS JCGHHM,                  <!-- 工会账户户名（账户名称） -->
-        ACC.YHYYWD_DM AS JCGHHH,             <!-- 开户银行网点代码（银行营业网点代码） -->
-        NSR.NSRSBH                           <!-- 纳税人识别号 -->
+        ACC.YHYYWD_DM AS JCGHHH,             <!-- 开户银行网点代码 -->
+        NSR.NSRSBH,                          <!-- 纳税人识别号 -->
+
+        <!-- 👇 下面这 4 个是我给你新加的字段 👇 -->
+        NSR.DJXH,                             <!-- 登记序号 -->
+        NSR.NSRZT_DM AS NSRZTDM,            <!-- 纳税人状态代码 -->
+        NSR.JDXZ_DM AS JdXZDm,                <!-- 街道乡镇代码 -->
+        NSR.ZGSWSKFJ_DM AS ZGSWSKFJDM             <!-- 科所分局税务局代码 -->
+
         FROM
-        dj_nsrxx NSR                         <!-- 纳税人基础信息表 -->
-        LEFT JOIN dj_nsrxx_kz NSR_EXT ON NSR.DJXH = NSR_EXT.DJXH  <!-- 纳税人扩展信息表 -->
-        LEFT JOIN dj_nsrckzhzhxx ACC ON NSR.DJXH = ACC.DJXH                <!-- 存款账户信息表 -->
+        dj_nsrxx NSR
+        LEFT JOIN dj_nsrxx_kz NSR_EXT ON NSR.DJXH = NSR_EXT.DJXH
+        LEFT JOIN dj_nsrckzhzhxx ACC ON NSR.DJXH = ACC.DJXH
         WHERE
-        NSR.YXBZ = 'Y'                       <!-- 有效标志为有效 -->
-        AND NSR.SHXYDM = #{shxydm,jdbcType=VARCHAR}  <!-- 按社会信用代码查询 -->
+        NSR.YXBZ = 'Y'
+        AND NSR.SHXYDM = #{shxydm,jdbcType=VARCHAR}
         LIMIT 1;
-            </select>
+    </select>
             <!-- 新增：通用字典查询方法（适配银行、税务局等所有字典） -->
     <select id="getDictLabel" resultType="java.lang.String">
         SELECT label

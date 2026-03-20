@@ -1,8 +1,11 @@
 package cn.iocoder.yudao.module.lghjft.service.hjgl.jcxx;
 
+import cn.hutool.core.lang.Assert;
+import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxBaseVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxCreateReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxUpdateReqVO;
@@ -11,7 +14,9 @@ import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.GhHjJcxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.hj.ghhjyhxx.GhHjYhxxMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.hjgl.jcxx.GhHjJcxxMapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import jakarta.annotation.Resource;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -163,4 +168,23 @@ public class JcxxServiceImpl implements JcxxService {
                 .eqIfPresent(GhHjJcxxDO::getLxdh, lxdh));
     }
 
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean allocationJcxx(JcxxBaseVO baseVO) {
+        // 参数校验
+        if (baseVO == null || StringUtils.isBlank(baseVO.getDeptId())
+                || CollectionUtils.isEmpty(baseVO.getDjxhs())) {
+            throw new IllegalArgumentException("参数为空，无法调拨");
+        }
+
+        // 执行调拨
+        int update = jcxxMapper.updateAllocationJcxx(baseVO);
+        if (update == 0) {
+            throw new IllegalArgumentException("户籍调拨失败");
+        }
+        return true;
+    }
 }
+
+

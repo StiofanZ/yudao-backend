@@ -1,7 +1,11 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.nsrxx.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+
+import java.math.BigInteger;
 
 @Data
 @Schema(description = "工会汇总缴费申请表单查询返回数据")
@@ -9,6 +13,18 @@ public class NsrxxPayFormResVO {
 
     @Schema(description = "社会信用代码", example = "91620104712797011F", requiredMode = Schema.RequiredMode.REQUIRED)
     private String shxydm;
+
+    @Schema(description = "登记序号")
+    private BigInteger djxh;
+
+    @Schema(description = "纳税人状态代码")
+    private String nsrztDm;
+
+    @Schema(description = "街道乡镇代码")
+    private String jdxzDm;
+
+    @Schema(description = "科所分局税务局代码")
+    private String zgswskfjDm;
 
     @Schema(description = "缴费单位全称（与公章一致）", example = "华能兰州西固热电有限公司", requiredMode = Schema.RequiredMode.REQUIRED)
     private String nsrmc;
@@ -40,7 +56,6 @@ public class NsrxxPayFormResVO {
 
     @Schema(description = "工会账户账号（工会专用银行账户账号）", example = "62001380013050359262")
     private String jcghzh;
-
     @Schema(description = "开户银行名称（工会账户开户银行全称）", example = "中国工商银行股份有限公司兰州西固支行")
     private String jcghyh;
 
