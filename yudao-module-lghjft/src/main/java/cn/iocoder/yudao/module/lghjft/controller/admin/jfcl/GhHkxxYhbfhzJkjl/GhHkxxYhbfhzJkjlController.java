@@ -31,7 +31,7 @@ import static javax.swing.DropMode.INSERT;
 
 @Tag(name = "管理后台 - 银行拨付汇总监控记录")
 @RestController
-@RequestMapping("/gh/jkjl")
+@RequestMapping("/jfcl/jkjl")
 @Validated
 public class GhHkxxYhbfhzJkjlController {
 

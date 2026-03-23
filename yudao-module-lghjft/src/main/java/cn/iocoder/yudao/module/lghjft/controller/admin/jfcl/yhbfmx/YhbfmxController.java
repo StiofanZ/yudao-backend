@@ -31,7 +31,7 @@ import cn.iocoder.yudao.module.lghjft.service.jfcl.yhbfmx.YhbfmxService;
 
 @Tag(name = "管理后台 - 银行拨付明细")
 @RestController
-@RequestMapping("/gh/yhbfmx")
+@RequestMapping("/jfcl/yhbfmx")
 @Validated
 public class YhbfmxController {
 

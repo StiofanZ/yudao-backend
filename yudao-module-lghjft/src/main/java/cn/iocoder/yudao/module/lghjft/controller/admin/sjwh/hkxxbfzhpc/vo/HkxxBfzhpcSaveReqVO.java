@@ -6,6 +6,7 @@ import lombok.Data;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Schema(description = "管理后台 - 拨付信息创建/更新 Request VO")
 @Data
@@ -31,7 +32,6 @@ public class HkxxBfzhpcSaveReqVO {
     private String hh;
 
     @Schema(description = "状态", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
-    @NotNull(message = "状态不能为空")
     private String zt;
 
     @Schema(description = "备注", example = "测试备注")
@@ -76,4 +76,42 @@ public class HkxxBfzhpcSaveReqVO {
 
     @Schema(description = "税款所属期止", example = "2024-01-31")
     private String skssqz;
+    // ========== 子表列表 ==========
+    @Schema(description = "账户排除解除列表")
+    private List<GhHkxxBfzhpcItem> ghHkxxBfzhpcList;
+
+    @Data
+    public static class GhHkxxBfzhpcItem {
+        @Schema(description = "账号配出id")
+        private Integer zhpcid;
+        @Schema(description = "登记序号")
+        private String djxh;
+
+        @Schema(description = "账号")
+        private String zh;
+
+        @Schema(description = "户名")
+        private String hm;
+
+        @Schema(description = "行号")
+        private String hh;
+
+        @Schema(description = "状态", requiredMode = Schema.RequiredMode.REQUIRED)
+        private String zt;
+
+        @Schema(description = "备注")
+        private String bz;
+
+        @Schema(description = "创建人")
+        private String createBy;
+
+        @Schema(description = "创建时间")
+        private String createTime;
+
+        @Schema(description = "修改人")
+        private String updateBy;
+
+        @Schema(description = "修改时间")
+        private String updateTime;
+    }
 }

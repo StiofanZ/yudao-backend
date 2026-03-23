@@ -68,4 +68,13 @@ public class HkxxBfzhpcPageReqVO extends PageParam {
 
     @Schema(description = "查询类型（1-账户排除 2-单位排除 3-经费排除）", example = "1")
     private Integer queryType;
+
+    private  String skssqq;
+
+    private  String skssqz;
+
+    private  String beginRkrq;
+
+    private  String endRkrq;
+
 }

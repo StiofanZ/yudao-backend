@@ -17,9 +17,32 @@ public class HkxxBfzhpcRespVO {
 
     @Schema(description = "登记序号", example = "123456")
     private String djxh;
+    @Schema(description = "部门ID", example = "100")
+    private String deptId;
+
+    @Schema(description = "统一社会信用代码", example = "91110108772551611Y")
+    private String shxydm;
+
+    @Schema(description = "纳税人名称", example = "北京某某公司")
+    private String nsrmc;
+
+    @Schema(description = "基本存款账户账号", example = "622202123456789")
+    private String jcghzh;
+
+    @Schema(description = "基本存款账户户名", example = "张三")
+    private String jcghhm;
+
+    @Schema(description = "基本存款账户行号", example = "102100099996")
+    private String jcghhh;
+
+    @Schema(description = "基本存款账户银行", example = "中国工商银行")
+    private String jcghyh;
+
+    @Schema(description = "校验码", example = "123456")
+    private String jym;
 
     @Schema(description = "账户", example = "622202123456789")
-    private String zh;
+    private String  zh;
 
     @Schema(description = "户名", example = "张三")
     private String hm;
@@ -47,29 +70,7 @@ public class HkxxBfzhpcRespVO {
 
     // ========== 扩展展示字段 ==========
 
-    @Schema(description = "部门ID", example = "100")
-    private String deptId;
 
-    @Schema(description = "统一社会信用代码", example = "91110108772551611Y")
-    private String shxydm;
-
-    @Schema(description = "纳税人名称", example = "北京某某公司")
-    private String nsrmc;
-
-    @Schema(description = "基本存款账户账号", example = "622202123456789")
-    private String jcghzh;
-
-    @Schema(description = "基本存款账户户名", example = "张三")
-    private String jcghhm;
-
-    @Schema(description = "基本存款账户行号", example = "102100099996")
-    private String jcghhh;
-
-    @Schema(description = "基本存款账户银行", example = "中国工商银行")
-    private String jcghyh;
-
-    @Schema(description = "校验码", example = "123456")
-    private String jym;
 
     // ========== 经费相关字段 ==========
 

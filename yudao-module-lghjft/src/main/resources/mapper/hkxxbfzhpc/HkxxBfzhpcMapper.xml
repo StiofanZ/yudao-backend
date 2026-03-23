@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.sjwh.hkxxbfzhpc.HkxxBfzhpcMapper">
+
+    <!-- 经费排除结果映射 -->
+    <resultMap type="cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.hkxxbfzhpc.vo.HkxxBfzhpcRespVO"
+               id="BfjfpcResult">
+        <result property="spuuid"     column="SPUUID"/>
+        <result property="djxh"       column="DJXH"/>
+        <result property="deptId"     column="DEPT_ID"/>
+        <result property="shxydm"     column="SHXYDM"/>
+        <result property="nsrmc"      column="NSRMC"/>
+        <result property="jcghzh"     column="JCGHZH"/>
+        <result property="jcghhm"     column="JCGHHM"/>
+        <result property="jcghhh"     column="JCGHHH"/>
+        <result property="jcghyh"     column="JCGHYH"/>
+        <result property="jym"        column="JYM"/>
+        <result property="rkrq"       column="RKRQ"/>
+        <result property="ybtse"      column="YBTSE"/>
+        <result property="skssqq"     column="SKSSQQ"/>
+        <result property="skssqz"     column="SKSSQZ"/>
+        <result property="zhpcid"     column="ZHPCID"/>
+        <result property="zh"         column="ZH"/>
+        <result property="hm"         column="HM"/>
+        <result property="hh"         column="HH"/>
+        <!-- ZT 改为 String 类型，避免类型转换错误 -->
+        <result property="zt"         column="ZT" javaType="java.lang.String"/>
+        <result property="bz"         column="BZ"/>
+        <result property="createBy"   column="CREATE_BY"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateBy"   column="UPDATE_BY"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+    </resultMap>
+
+    <!-- 经费排除查询SQL片段 -->
+    <sql id="selectBfjfpcVo">
+        select  a.spuuid,a.rkrq,a.ybtse,a.skssqq,a.skssqz,
+                a.DJXH, DEPT_ID, SHXYDM, NSRMC,JCGHZH, JCGHHM,
+                JCGHHH,  B.ZHPCID, b.zt,b.BZ, b.CREATE_TIME,
+                b.CREATE_BY , b.UPDATE_TIME,b.UPDATE_BY  from gh_jf a
+                    left join gh_hkxx_bfzhpc b on b.spuuid=a.spuuid
+    </sql>
+
+
+    <!-- 经费排除分页查询（使用 IPage，参数用 query.xxx） -->
+    <select id="selectBfjfpcPage" resultMap="BfjfpcResult">
+        <include refid="selectBfjfpcVo"/>
+        <where>
+            1=1 and a.CBJTHBJ IN ('N', 'T') AND a.jcghzh IS NOT NULL
+            <!-- 注意：参数前面要加 query. -->
+            <if test="query.deptId != null and query.deptId != ''">
+            AND a.DEPT_ID = #{query.deptId}
+            </if>
+            <if test="query.djxh != null and query.djxh != ''">AND a.DJXH = #{query.djxh}</if>
+            <if test="query.spuuid != null and query.spuuid != ''">AND a.SPUUID = #{query.spuuid}</if>
+            <if test="query.shxydm != null and query.shxydm != ''">AND a.SHXYDM = #{query.shxydm}</if>
+            <if test="query.nsrmc != null and query.nsrmc != ''">AND a.NSRMC LIKE CONCAT('%', #{query.nsrmc}, '%')</if>
+            <if test="query.jcghzh != null and query.jcghzh != ''">AND a.JCGHZH = #{query.jcghzh}</if>
+            <if test="query.jcghhm != null and query.jcghhm != ''">AND a.JCGHHM LIKE CONCAT('%', #{query.jcghhm}, '%')</if>
+            <if test="query.jcghhh != null and query.jcghhh != ''">AND a.JCGHHH = #{query.jcghhh}</if>
+            <if test="query.jcghyh != null and query.jcghyh != ''">AND c.JCGHYH = #{query.jcghyh}</if>
+            <if test="query.jym != null and query.jym != ''">AND a.JYM = #{query.jym}</if>
+            <if test="query.zt != null">AND b.ZT = #{query.zt}</if>
+
+            <if test="query.skssqq != null and query.skssqq != ''">
+                and a.skssqq = #{query.skssqq}</if>
+
+            <if test="query.skssqz != null and query.skssqz != ''">
+                and a.skssqz = #{query.skssqz}</if>
+        </where>
+    </select>
+
+    <!--查看详情-->
+    <select id="selectByspuuid" parameterType="String" resultMap="BfjfpcResult">
+        select a.spuuid,a.rkrq,a.ybtse,a.skssqq,a.skssqz,a.DEPT_ID, a.djxh, a.shxydm, a.nsrmc,JCGHZH, JCGHHM, JCGHHH, B.ZHPCID,
+               b.DJXH as sub_DJXH, b.ZH , b.HM , b.HH , b.ZT , b.CREATE_BY , b.CREATE_TIME, b.UPDATE_BY, b.UPDATE_TIME
+        from gh_jf a
+                 left join gh_hkxx_bfzhpc b on a.spuuid=b.spuuid
+        where a.SPUUID = #{spuuid}
+    </select>
+    <!-- 根据审批UUID查询经费排除信息 -->
+    <select id="selectBfjfpcBySpuuid" parameterType="String" resultMap="BfjfpcResult">
+        SELECT a.spuuid, a.rkrq, a.ybtse, a.skssqq, a.skssqz,
+               a.DEPT_ID, a.djxh, a.shxydm, a.nsrmc,
+               a.JCGHZH, a.JCGHHM, a.JCGHHH,
+               c.JCGHYH,
+               b.ZHPCID, b.DJXH as sub_DJXH, b.ZH, b.HM, b.HH, b.ZT,
+               b.CREATE_BY, b.CREATE_TIME, b.UPDATE_BY, b.UPDATE_TIME
+        FROM gh_jf a
+                 LEFT JOIN gh_hkxx_bfzhpc b ON a.spuuid = b.spuuid
+                 LEFT JOIN bfzhpc c ON c.djxh = a.djxh
+        WHERE a.SPUUID = #{spuuid}
+    </select>
+
+    <!-- 更新经费排除信息 -->
+<!--    <update id="updateBfjfpc">-->
+<!--        UPDATE gh_jf-->
+<!--        SET UPDATE_TIME = NOW()-->
+<!--        WHERE SPUUID = #{spuuid}-->
+<!--    </update>-->
+<!--    <update id="updateGhHkxxBfzhpc"  parameterType="cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.hkxxbfzhpc.HkxxBfzhpcDO">-->
+<!--        UPDATE gh_hkxx_bfzhpc-->
+<!--        <trim prefix="SET" suffixOverrides=",">-->
+<!--            <if test="zt != null">ZT = #{zt},</if>-->
+<!--            <if test="bz != null">BZ = #{bz},</if>-->
+<!--            <if test="updateBy != null">UPDATE_BY = #{updateBy},</if>-->
+<!--            UPDATE_TIME = sysdate()-->
+<!--        </trim>-->
+<!--        WHERE spuuid = #{spuuid}-->
+<!--    </update>-->
+    <!-- 批量插入或更新子表（完全复制旧 SQL） -->
+    <insert id="batchGhHkxxBfzhpc">
+        INSERT INTO gh_hkxx_bfzhpc(
+        ZHPCID, SPUUID, DJXH, ZH, HM, HH, ZT, BZ,
+        CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
+        ) VALUES
+        <foreach item="item" collection="list" separator=",">
+            (
+            #{item.zhpcid}, #{item.spuuid}, #{item.djxh},
+            #{item.zh}, #{item.hm}, #{item.hh},
+            #{item.zt}, #{item.bz},
+            #{item.createBy}, NOW(), #{item.updateBy}, NOW()
+            )
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        ZHPCID = VALUES(zhpcid),
+        SPUUID = VALUES(spuuid),
+        DJXH = VALUES(djxh),
+        ZH = VALUES(zh),
+        HM = VALUES(hm),
+        HH = VALUES(hh),
+        ZT = VALUES(zt),
+        BZ = VALUES(bz),
+        UPDATE_BY = VALUES(update_by),
+        UPDATE_TIME = VALUES(update_time)
+    </insert>
+
+    <!-- 更新主表 gh_jf（只更新时间，和旧代码一致） -->
+    <update id="updateBfjfpc">
+        UPDATE gh_jf
+        SET UPDATE_TIME = NOW()
+        WHERE SPUUID = #{spuuid}
+    </update>
+
+</mapper>
