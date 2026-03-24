@@ -924,6 +924,10 @@ VALUES (205009, '仪表盘设计器', '', 2, 1, 201281, 'jimu-bi', 'fa:y-combina
         '2025-05-03 10:02:05', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
+VALUES (214690, '报表快照', '', 2, 3, 201281, 'bbhc', 'ep:files', 'report/bbhc/index', 'ReportBbhc', 0, true, true, true, '1', '2026-03-24 08:00:00', '1',
+        '2026-03-24 08:00:00', false);
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
 VALUES (202154, '创建项目', 'report:go-view-project:create', 3, 1, 202153, '', '', '', null, 0, true, true, true, '1', '2023-02-07 19:25:14', '1', '2023-02-07 19:25:14', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
@@ -942,6 +946,15 @@ VALUES (202158, '使用 HTTP 查询数据', 'report:go-view-data:get-by-http', 3
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
 VALUES (202755, '删除项目', 'report:go-view-project:delete', 3, 2, 202153, '', '', '', '', 0, true, true, true, '1', '2024-04-24 20:01:37', '1', '2024-04-24 20:01:37', false);
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214691, '报表快照查询', 'report:bbhc:query', 3, 1, 214690, '', '', '', null, 0, true, true, true, '1', '2026-03-24 08:00:00', '1', '2026-03-24 08:00:00', false);
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214692, '报表快照重生成', 'report:bbhc:update', 3, 2, 214690, '', '', '', null, 0, true, true, true, '1', '2026-03-24 08:00:00', '1', '2026-03-24 08:00:00', false);
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214693, '报表快照清理', 'report:bbhc:delete', 3, 3, 214690, '', '', '', null, 0, true, true, true, '1', '2026-03-24 08:00:00', '1', '2026-03-24 08:00:00', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
 VALUES (205047, '数据维护', '', 1, 1, 0, '/sjwh', 'fa:table', null, null, 0, true, true, true, '', '2026-01-13 11:15:51', '1', '2026-01-13 14:51:22', false);

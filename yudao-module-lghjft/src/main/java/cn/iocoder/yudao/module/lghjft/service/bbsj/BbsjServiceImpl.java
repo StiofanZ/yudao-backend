@@ -5,6 +5,8 @@ import cn.iocoder.yudao.framework.common.util.json.JsonUtils;
 import cn.iocoder.yudao.module.lghjft.controller.app.bbsj.vo.BbsjRespVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.bbsj.JmBbDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.bbsj.JmBbMapper;
+import cn.iocoder.yudao.module.report.dal.dataobject.bbhc.GhBbsjHcDO;
+import cn.iocoder.yudao.module.report.framework.jmreport.core.web.BbhcRequestHolder;
 import jakarta.annotation.Resource;
 import org.jeecg.modules.jmreport.common.vo.Result;
 import org.jeecg.modules.jmreport.desreport.entity.JimuReport;
@@ -35,17 +37,27 @@ public class BbsjServiceImpl implements BbsjService {
         }
 
         Map<String, Object> sjcxcs = cxcs == null ? new LinkedHashMap<>() : new LinkedHashMap<>(cxcs);
-        Result<JimuReport> zxjg = jimuReportService.show(bb.getId(), JsonUtils.toJsonString(sjcxcs), List.of());
-        if (zxjg == null || !zxjg.isSuccess() || zxjg.getResult() == null) {
-            throw exception(BB_ZX_FAIL, StrUtil.blankToDefault(zxjg == null ? null : zxjg.getMessage(), "积木报表执行失败"));
-        }
+        try {
+            Result<JimuReport> zxjg = jimuReportService.show(bb.getId(), JsonUtils.toJsonString(sjcxcs), List.of());
+            if (zxjg == null || !zxjg.isSuccess() || zxjg.getResult() == null) {
+                throw exception(BB_ZX_FAIL, StrUtil.blankToDefault(zxjg == null ? null : zxjg.getMessage(), "积木报表执行失败"));
+            }
 
-        JimuReport jmBb = zxjg.getResult();
-        BbsjRespVO respVO = new BbsjRespVO();
-        respVO.setBbbm(bb.getCode());
-        respVO.setBbmc(StrUtil.blankToDefault(jmBb.getName(), bb.getName()));
-        respVO.setCxcs(sjcxcs);
-        respVO.setSj(jmBb.getDataList() == null ? new LinkedHashMap<>() : new LinkedHashMap<>(jmBb.getDataList()));
-        return respVO;
+            JimuReport jmBb = zxjg.getResult();
+            BbsjRespVO respVO = new BbsjRespVO();
+            respVO.setBbbm(bb.getCode());
+            respVO.setBbmc(StrUtil.blankToDefault(jmBb.getName(), bb.getName()));
+            respVO.setCxcs(sjcxcs);
+            respVO.setSj(jmBb.getDataList() == null ? new LinkedHashMap<>() : new LinkedHashMap<>(jmBb.getDataList()));
+            GhBbsjHcDO hc = BbhcRequestHolder.get();
+            if (hc != null) {
+                respVO.setPcbh(hc.getPcbh());
+                respVO.setYwrq(hc.getYwrq());
+                respVO.setScsj(hc.getScsj());
+            }
+            return respVO;
+        } finally {
+            BbhcRequestHolder.clear();
+        }
     }
 }

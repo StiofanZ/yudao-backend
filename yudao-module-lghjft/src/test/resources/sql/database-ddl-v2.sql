@@ -1732,3 +1732,63 @@ select `dept`.`id`             AS `id`,
        `dept`.`level`          AS `level`,
        `dept`.`is_leaf`        AS `is_leaf`
 from `dept`
+
+CREATE TABLE `gh_bbsj_hc`
+(
+    `id`          bigint                                  NOT NULL AUTO_INCREMENT COMMENT '编号',
+    `tenant_id`   bigint                                  NOT NULL DEFAULT '0' COMMENT '租户编号',
+    `bbid`        varchar(64) COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '报表ID',
+    `bbbm`        varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '报表编码',
+    `bbmc`        varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '报表名称',
+    `zxlx`        varchar(32) COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '执行类型',
+    `ywrq`        date                                    NOT NULL COMMENT '业务日期',
+    `cxcs_json`   longtext COLLATE utf8mb4_unicode_ci     NOT NULL COMMENT '查询参数JSON',
+    `cszy`        varchar(32) COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '参数摘要',
+    `pcbh`        varchar(64) COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '批次编号',
+    `bbgxbs`      varchar(64) COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '报表更新标识',
+    `jg_json`     longtext COLLATE utf8mb4_unicode_ci     NOT NULL COMMENT '结果JSON',
+    `scsj`        datetime                                NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '生成时间',
+    `scr`         varchar(64) COLLATE utf8mb4_unicode_ci  NOT NULL DEFAULT '' COMMENT '生成人',
+    `creator`     varchar(64) COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '创建者',
+    `create_time` datetime                                NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updater`     varchar(64) COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '更新者',
+    `update_time` datetime                                NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `deleted`     bit(1)                                  NOT NULL DEFAULT b'0' COMMENT '是否删除',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_gh_bbsj_hc` (`tenant_id`, `bbid`, `zxlx`, `ywrq`, `cszy`, `deleted`),
+    UNIQUE KEY `uk_gh_bbsj_hc_pcbh` (`tenant_id`, `pcbh`, `deleted`),
+    KEY `idx_gh_bbsj_hc_bb` (`tenant_id`, `bbbm`, `ywrq`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci COMMENT ='报表数据当前快照表'
+
+CREATE TABLE `gh_bbsj_hc_ls`
+(
+    `id`          bigint                                  NOT NULL AUTO_INCREMENT COMMENT '编号',
+    `hc_id`       bigint                                           DEFAULT NULL COMMENT '当前快照编号',
+    `tenant_id`   bigint                                  NOT NULL DEFAULT '0' COMMENT '租户编号',
+    `bbid`        varchar(64) COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '报表ID',
+    `bbbm`        varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '报表编码',
+    `bbmc`        varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '报表名称',
+    `zxlx`        varchar(32) COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '执行类型',
+    `ywrq`        date                                    NOT NULL COMMENT '业务日期',
+    `cxcs_json`   longtext COLLATE utf8mb4_unicode_ci     NOT NULL COMMENT '查询参数JSON',
+    `cszy`        varchar(32) COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '参数摘要',
+    `pcbh`        varchar(64) COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '批次编号',
+    `bbgxbs`      varchar(64) COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '报表更新标识',
+    `jg_json`     longtext COLLATE utf8mb4_unicode_ci     NOT NULL COMMENT '结果JSON',
+    `scsj`        datetime                                NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '生成时间',
+    `scr`         varchar(64) COLLATE utf8mb4_unicode_ci  NOT NULL DEFAULT '' COMMENT '生成人',
+    `gdsj`        datetime                                NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '归档时间',
+    `creator`     varchar(64) COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '创建者',
+    `create_time` datetime                                NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updater`     varchar(64) COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '更新者',
+    `update_time` datetime                                NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `deleted`     bit(1)                                  NOT NULL DEFAULT b'0' COMMENT '是否删除',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_gh_bbsj_hc_ls_pcbh` (`tenant_id`, `pcbh`, `deleted`),
+    KEY `idx_gh_bbsj_hc_ls_bb` (`tenant_id`, `bbbm`, `ywrq`),
+    KEY `idx_gh_bbsj_hc_ls_hc_id` (`hc_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci COMMENT ='报表数据历史快照表'
