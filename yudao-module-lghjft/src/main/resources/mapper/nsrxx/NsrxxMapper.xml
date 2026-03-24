@@ -13,7 +13,7 @@
         <result column="ZGRS"          jdbcType="DECIMAL" property="zgrs"/>          <!-- 职工总人数（从业人数） -->
         <result column="GHHYTS"        jdbcType="DECIMAL" property="ghhyts"/>        <!-- 工会会员数（无数据，返回NULL） -->
         <result column="GHFZR"         jdbcType="VARCHAR" property="ghfzr"/>         <!-- 工会负责人（无数据，返回NULL） -->
-        <result column="CWFZRXM"        jdbcType="VARCHAR" property="lxr"/>          <!-- 财务负责人（无数据，返回NULL） -->
+<!--        <result column="CWFZRXM"        jdbcType="VARCHAR" property="lxr"/>          &lt;!&ndash; 财务负责人（无数据，返回NULL） &ndash;&gt;-->
         <result column="LXDH"          jdbcType="VARCHAR" property="lxdh"/>          <!-- 联系电话（法定代表人移动电话/注册地电话） -->
         <result column="JCGHZH"        jdbcType="VARCHAR" property="jcghzh"/>        <!-- 工会账户账号（银行账号） -->
         <result column="JCGHYH"        jdbcType="VARCHAR" property="jcghyh"/>        <!-- 开户银行名称（银行行别代码，后续转换） -->
@@ -24,42 +24,75 @@
         <result column="NSRZTDM"        jdbcType="VARCHAR" property="nsrztDm"/>        <!-- 纳税人识别号（备用字段） -->
         <result column="JdXZDm"        jdbcType="VARCHAR" property="jdxzDm"/>        <!-- 纳税人识别号（备用字段） -->
         <result column="ZGSWSKFJDM"        jdbcType="VARCHAR" property="zgswskfjDm"/>        <!-- 纳税人识别号（备用字段） -->
+        <result column="DEPT_ID"        jdbcType="VARCHAR" property="deptId"/>        <!-- 纳税人识别号（备用字段） -->
+
         <!-- 纳税人识别号（备用字段） -->
     </resultMap>
 
     <!-- 关联三张表查询表单所需数据 -->
+<!--    <select id="getNsrdwxxWithAll" resultMap="NsrxxPayFormResultMap">-->
+<!--        SELECT-->
+<!--        NSR.SHXYDM,                          &lt;!&ndash; 社会信用代码 &ndash;&gt;-->
+<!--        NSR.NSRMC,                           &lt;!&ndash; 申请汇总缴费单位全称 &ndash;&gt;-->
+<!--        NSR.ZGSWJ_DM AS ZGSWJMC,             &lt;!&ndash; 主管税务部门（先返回代码，需关联字典表转全称） &ndash;&gt;-->
+<!--        COALESCE(NSR.ZCDZ, NSR.SCJYDZ) AS ZCDZ,  &lt;!&ndash; 缴费单位地址：优先注册地址，无则用生产经营地址 &ndash;&gt;-->
+<!--        NULL AS JCGHDM,                      &lt;!&ndash; 工会法人登记证件号码（无此字段） &ndash;&gt;-->
+<!--        NULL AS JCGHMC,                      &lt;!&ndash; 缴费单位工会全称（无此字段） &ndash;&gt;-->
+<!--        NSR_EXT.CYRS AS ZGRS,                &lt;!&ndash; 职工总人数（从业人数） &ndash;&gt;-->
+<!--        NULL AS GHHYTS,                      &lt;!&ndash; 工会会员数（无此字段） &ndash;&gt;-->
+<!--        NULL AS GHFZR,                       &lt;!&ndash; 工会负责人（无此字段） &ndash;&gt;-->
+<!--        NSR_EXT.CWFZRXM AS CWFZRXM,          &lt;!&ndash; 财务负责人姓名（新增） &ndash;&gt;-->
+<!--        COALESCE(NSR_EXT.CWFZRGDDH, NSR_EXT.CWFZRYDDH, NSR_EXT.ZCDLXDH) AS LXDH, &lt;!&ndash; 联系电话 &ndash;&gt;-->
+<!--        ACC.YHZH AS JCGHZH,                  &lt;!&ndash; 工会账户账号（银行账号） &ndash;&gt;-->
+<!--        ACC.YHHB_DM AS JCGHYH,               &lt;!&ndash; 开户银行名称 &ndash;&gt;-->
+<!--        ACC.ZHMC AS JCGHHM,                  &lt;!&ndash; 工会账户户名（账户名称） &ndash;&gt;-->
+<!--        ACC.YHYYWD_DM AS JCGHHH,             &lt;!&ndash; 开户银行网点代码 &ndash;&gt;-->
+<!--        NSR.NSRSBH,                          &lt;!&ndash; 纳税人识别号 &ndash;&gt;-->
+
+<!--        &lt;!&ndash; 下面这 4 个是我给你新加的字段 &ndash;&gt;-->
+<!--        NSR.DJXH,                             &lt;!&ndash; 登记序号 &ndash;&gt;-->
+<!--        NSR.NSRZT_DM AS NSRZTDM,            &lt;!&ndash; 纳税人状态代码 &ndash;&gt;-->
+<!--        NSR.JDXZ_DM AS JdXZDm,                &lt;!&ndash; 街道乡镇代码 &ndash;&gt;-->
+<!--        NSR.ZGSWSKFJ_DM AS ZGSWSKFJDM             &lt;!&ndash; 科所分局税务局代码 &ndash;&gt;-->
+<!--        FROM-->
+<!--        dj_nsrxx NSR-->
+<!--        LEFT JOIN dj_nsrxx_kz NSR_EXT ON NSR.DJXH = NSR_EXT.DJXH-->
+<!--        LEFT JOIN dj_nsrckzhzhxx ACC ON NSR.DJXH = ACC.DJXH-->
+<!--        WHERE-->
+<!--        NSR.YXBZ = 'Y'-->
+<!--        AND NSR.SHXYDM = #{shxydm,jdbcType=VARCHAR}-->
+<!--        LIMIT 1;-->
+<!--    </select>-->
     <select id="getNsrdwxxWithAll" resultMap="NsrxxPayFormResultMap">
         SELECT
-        NSR.SHXYDM,                          <!-- 社会信用代码 -->
-        NSR.NSRMC,                           <!-- 申请汇总缴费单位全称 -->
-        NSR.ZGSWJ_DM AS ZGSWJMC,             <!-- 主管税务部门（先返回代码，需关联字典表转全称） -->
-        COALESCE(NSR.ZCDZ, NSR.SCJYDZ) AS ZCDZ,  <!-- 缴费单位地址：优先注册地址，无则用生产经营地址 -->
-        NULL AS JCGHDM,                      <!-- 工会法人登记证件号码（无此字段） -->
-        NULL AS JCGHMC,                      <!-- 缴费单位工会全称（无此字段） -->
-        NSR_EXT.CYRS AS ZGRS,                <!-- 职工总人数（从业人数） -->
-        NULL AS GHHYTS,                      <!-- 工会会员数（无此字段） -->
-        NULL AS GHFZR,                       <!-- 工会负责人（无此字段） -->
-        NSR_EXT.CWFZRXM AS CWFZRXM,          <!-- 财务负责人姓名（新增） -->
-        COALESCE(NSR_EXT.CWFZRGDDH, NSR_EXT.CWFZRYDDH, NSR_EXT.ZCDLXDH) AS LXDH, <!-- 联系电话 -->
-        ACC.YHZH AS JCGHZH,                  <!-- 工会账户账号（银行账号） -->
-        ACC.YHHB_DM AS JCGHYH,               <!-- 开户银行名称 -->
-        ACC.ZHMC AS JCGHHM,                  <!-- 工会账户户名（账户名称） -->
-        ACC.YHYYWD_DM AS JCGHHH,             <!-- 开户银行网点代码 -->
-        NSR.NSRSBH,                          <!-- 纳税人识别号 -->
+        HJ.DEPT_ID,
+        HJ.SHXYDM,                          <!-- 社会信用代码 -->
+        HJ.NSRMC,                           <!-- 申请汇总缴费单位全称 -->
+--         HJ.ZGSWJ_DM AS ZGSWJMC,             <!-- 主管税务部门代码 -->
+        HJ.ZCDZ,                            <!-- 注册地址 -->
+        HJ.JCGHDM,                          <!-- 工会法人登记证件号码 -->
+        HJ.JCGHMC,                          <!-- 缴费单位工会全称 -->
+        HJ.ZGRS,                            <!-- 职工总人数 -->
+        NULL AS GHHYTS,                     <!-- 工会会员数（无） -->
+        HJ.LXR AS GHFZR,                      <!-- 工会负责人（无） -->
+        HJ.ZGSWJMC,
+        NULL AS CWFZRXM,                    <!-- 财务负责人（户籍表无，可留空） -->
+        HJ.LXDH,                            <!-- 联系电话 -->
+        HJ.JCGHZH AS JCGHZH,                <!-- 工会账户账号 -->
+        HJ.JCGHYH AS JCGHYH,                <!-- 开户银行名称 -->
+        HJ.JCGHHM AS JCGHHM,                <!-- 账户户名 -->
+        HJ.JCGHHH AS JCGHHH,                <!-- 银行网点代码 -->
+        HJ.NSRSBH,                          <!-- 纳税人识别号 -->
 
-        <!-- 👇 下面这 4 个是我给你新加的字段 👇 -->
-        NSR.DJXH,                             <!-- 登记序号 -->
-        NSR.NSRZT_DM AS NSRZTDM,            <!-- 纳税人状态代码 -->
-        NSR.JDXZ_DM AS JdXZDm,                <!-- 街道乡镇代码 -->
-        NSR.ZGSWSKFJ_DM AS ZGSWSKFJDM             <!-- 科所分局税务局代码 -->
+        HJ.DJXH,                            <!-- 登记序号 -->
+        HJ.NSRZT_DM AS NSRZTDM,             <!-- 纳税人状态代码 -->
+        HJ.JDXZ_DM AS JdXZDm,               <!-- 街道乡镇代码 -->
+        HJ.ZGSWSKFJ_DM AS ZGSWSKFJDM        <!-- 科所分局代码 -->
 
         FROM
-        dj_nsrxx NSR
-        LEFT JOIN dj_nsrxx_kz NSR_EXT ON NSR.DJXH = NSR_EXT.DJXH
-        LEFT JOIN dj_nsrckzhzhxx ACC ON NSR.DJXH = ACC.DJXH
+        gh_hj HJ  <!-- 直接从工会户籍表查询！！！ -->
         WHERE
-        NSR.YXBZ = 'Y'
-        AND NSR.SHXYDM = #{shxydm,jdbcType=VARCHAR}
+        HJ.SHXYDM = #{shxydm,jdbcType=VARCHAR}
         LIMIT 1;
     </select>
             <!-- 新增：通用字典查询方法（适配银行、税务局等所有字典） -->

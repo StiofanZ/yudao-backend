@@ -41,4 +41,7 @@ public class GhWfTdfsqDO extends BaseDO {
     private String sghjbr;
     private LocalDate sghsprq;
     private Integer thfs;
+
+    // ====================== 新增：退费类型（1-当期 2-往期） ======================
+    private Integer sqtflxDm;
 }

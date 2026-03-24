@@ -11,11 +11,14 @@ import java.math.BigInteger;
 @Schema(description = "工会汇总缴费申请表单查询返回数据")
 public class NsrxxPayFormResVO {
 
+    @Schema(description = "部门id")
+    private String deptId;
+
     @Schema(description = "社会信用代码", example = "91620104712797011F", requiredMode = Schema.RequiredMode.REQUIRED)
     private String shxydm;
 
     @Schema(description = "登记序号")
-    private BigInteger djxh;
+    private String djxh;
 
     @Schema(description = "纳税人状态代码")
     private String nsrztDm;
@@ -49,8 +52,10 @@ public class NsrxxPayFormResVO {
 
     @Schema(description = "工会负责人（工会主席/负责人姓名）", example = "张三")
     private String ghfzr;
-    @Schema(description = "财务负责人", example = "张三")
-    private  String lxr;
+//
+//    @Schema(description = "财务负责人", example = "张三")
+//    private  String lxr;
+//
     @Schema(description = "联系电话（手机/座机）", example = "13919376655")
     private String lxdh;
 

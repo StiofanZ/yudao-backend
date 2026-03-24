@@ -26,6 +26,7 @@ import org.springframework.validation.annotation.Validated;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
@@ -46,6 +47,47 @@ public class GhWfJfhzjnsqServiceImpl implements GhWfJfhzjnsqService {
 
     @Override
     public Long createGhWfJfhzjnsq(GhWfJfhzjnsqSaveReqVO createReqVO) {
+        // 1. 获取汇总单位的登记序号 → 查 gh_hj 获得 deptid
+        String mainDeptId = jfhzjnsqmxMapper.selectDeptIdByDjxh(createReqVO.getDjxh());
+
+// 2. 汇总单位工会ID不能为空
+        if (mainDeptId == null || mainDeptId.isBlank()) {
+            throw ServiceExceptionUtil.exception(ErrorCodeConstants.WF_HZJF_MAIN_DEPTID_EMPTY);
+        }
+
+// 3. 遍历下属单位，逐个校验工会是否一致
+        for (var mx : createReqVO.getFzjgmxList()) {
+            // 子单位登记序号
+            String subDjxh = mx.getDjxh();
+
+            // 根据子单位登记序号查工会ID
+            String subDeptId = jfhzjnsqmxMapper.selectDeptIdByDjxh(subDjxh);
+
+            // 子单位工会ID不能为空
+            if (subDeptId == null || subDeptId.isBlank()) {
+                throw ServiceExceptionUtil.exception(ErrorCodeConstants.WF_HZJF_SUB_DEPTID_EMPTY, mx.getDwmc());
+            }
+
+            // ====================== 关键判断：工会不一致则拦截 ======================
+            if (!Objects.equals(mainDeptId, subDeptId)) {
+                throw ServiceExceptionUtil.exception(
+                        ErrorCodeConstants.WF_HZJF_NOT_SAME_DEPT,
+                        mx.getDwmc(), subDeptId, mainDeptId
+                );
+            }
+        }
+        // 1. 判断汇总单位是否欠缴费
+        if (!checkUnitHasNoArrears(createReqVO.getDjxh())) {
+            throw ServiceExceptionUtil.exception(ErrorCodeConstants.WF_HZJF_UNIT_ARREARS, createReqVO.getDwmc());
+        }
+
+        // 2. 判断所有下属单位是否欠缴费
+        for (var mx : createReqVO.getFzjgmxList()) {
+            if (!checkUnitHasNoArrears(mx.getDjxh())) {
+                throw ServiceExceptionUtil.exception(ErrorCodeConstants.WF_HZJF_SUB_UNIT_ARREARS, mx.getDwmc());
+            }
+        }
+
         GhWfJfhzjnsqDO main = BeanUtils.toBean(createReqVO, GhWfJfhzjnsqDO.class);
         Long loginUserId = WebFrameworkUtils.getLoginUserId();
         AdminUserDO user = userService.getUser(getLoginUserId());
@@ -82,9 +124,10 @@ public class GhWfJfhzjnsqServiceImpl implements GhWfJfhzjnsqService {
         jfhzjnsqMapper.updateById(updateObj);
         return main.getId();
     }
-
+//查看详情
     @Override
     public GhWfJfhzjnsqRespVO getDetail(Long id) {
+
         GhWfJfhzjnsqDO main = jfhzjnsqMapper.selectById(id);
         if (main == null) {
             throw ServiceExceptionUtil.exception(ErrorCodeConstants.WF_HZJF_SQ_NOT_EXISTS);
@@ -96,11 +139,17 @@ public class GhWfJfhzjnsqServiceImpl implements GhWfJfhzjnsqService {
         respVO.setFzjgmxList(BeanUtils.toBean(detailList, GhWfJfhzjnsqmxRespVO.class));
         return respVO;
     }
-
+//获取分页
     @Override
     public PageResult<GhWfJfhzjnsqDO> getSelfPage(Long userId, GhWfJfhzjnsqAppPageReqVO pageReqVO) {
         return jfhzjnsqMapper.selectPage(pageReqVO, new LambdaQueryWrapperX<GhWfJfhzjnsqDO>()
                 .eq(GhWfJfhzjnsqDO::getCreator, userId == null ? null : String.valueOf(userId))
                 .orderByDesc(GhWfJfhzjnsqDO::getId));
+    }
+
+    // 欠缴判断
+        private boolean checkUnitHasNoArrears(String djxh) {
+        Integer count = jfhzjnsqmxMapper.selectArrearsCountByDjxh(djxh);
+        return count == null || count <= 0;
     }
 }

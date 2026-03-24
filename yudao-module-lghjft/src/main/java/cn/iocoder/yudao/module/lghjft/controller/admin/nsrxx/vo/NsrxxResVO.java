@@ -18,7 +18,7 @@ public class NsrxxResVO {
 
     @Schema(description = "登记序号", requiredMode = Schema.RequiredMode.REQUIRED, example = "1001")
     @JsonSerialize(using = ToStringSerializer.class)
-    private BigInteger djxh;
+    private String djxh;
 
    @Schema(description = "纳税人名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "某某公司")
     private String nsrmc;

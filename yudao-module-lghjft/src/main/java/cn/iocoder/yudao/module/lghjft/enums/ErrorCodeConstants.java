@@ -66,6 +66,10 @@ public interface ErrorCodeConstants {
     ErrorCode YHBFMX_THCB_DATA = new ErrorCode(2_023_000_009, "未查询到可退回重拨数据！");
     ErrorCode YHBFJGCX_NOT_EXISTS = new ErrorCode(2_023_000_010, "银行拨付结果查询不存在");
 
-
+    ErrorCode WF_HZJF_UNIT_ARREARS = new ErrorCode(1000900, "汇总单位【{}】存在欠缴，请先结清");
+    ErrorCode WF_HZJF_SUB_UNIT_ARREARS = new ErrorCode(1000901, "下属单位【{}】存在欠缴，请先结清");
+    ErrorCode WF_HZJF_MAIN_DEPTID_EMPTY = new ErrorCode(1000908, "汇总单位【{}】未查询到主管工会");
+    ErrorCode WF_HZJF_SUB_DEPTID_EMPTY = new ErrorCode(1000909, "下属单位【{}】未查询到主管工会");
+    ErrorCode WF_HZJF_NOT_SAME_DEPT = new ErrorCode(1000910, "下属单位【{}】所属工会({})与汇总单位工会({})不一致，不允许提交");
     ErrorCode HKXX_BFZHPC_NOT_EXISTS = new ErrorCode(2_023_000_011, "拨付信息不存在");
 }

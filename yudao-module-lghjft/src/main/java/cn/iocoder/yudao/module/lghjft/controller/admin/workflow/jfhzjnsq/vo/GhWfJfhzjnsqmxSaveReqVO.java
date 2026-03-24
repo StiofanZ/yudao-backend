@@ -17,6 +17,7 @@ public class GhWfJfhzjnsqmxSaveReqVO {
     @Schema(description = "关联汇总表主键ID（外键），新增时无需传", hidden = true)
     private Long jfhzjnsqId;
 
+
     @Schema(description = "分支机构社会信用代码", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotEmpty(message = "分支机构社会信用代码不能为空")
     private String shxydm;
@@ -36,5 +37,10 @@ public class GhWfJfhzjnsqmxSaveReqVO {
     @Schema(description = "分支机构月工资总额", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "分支机构月工资总额不能为空")
     private BigDecimal ygzze;
+
+
+    @Schema(description = "登记序号", requiredMode = Schema.RequiredMode.REQUIRED)
+    private  String djxh;
+
 
 }

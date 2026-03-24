@@ -3,8 +3,10 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.workflow.tdfsq.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -74,5 +76,28 @@ public class GhWfTdfsqSaveReqVO {
 
         @Schema(description = "原始文件名")
         private String ywjmc;
+    }
+
+
+    // ====================== 新增：退费类型（1-当期 2-往期） ======================
+    @Schema(description = "退费类型 1-当期 2-往期", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotNull(message = "退费类型不能为空")
+    private Integer sqtflxDm;
+
+    // ====================== 新增：退费明细列表 ======================
+    @Schema(description = "退费明细列表")
+    private List<TdfsqMxItem> mxList;
+
+    // ====================== 新增：退费明细项 ======================
+    @Data
+    @Schema(description = "退费明细项")
+    public static class TdfsqMxItem {
+        private String spuuid;
+        private BigDecimal rkje;
+        private BigDecimal tfsqJe;
+        private String shxydm;
+        private String nsrmc;
+        private LocalDate skssqq;
+        private LocalDate skssqz;
     }
 }

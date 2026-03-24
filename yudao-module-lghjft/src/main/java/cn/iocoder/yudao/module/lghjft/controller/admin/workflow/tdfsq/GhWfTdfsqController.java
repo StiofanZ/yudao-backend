@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.workflow.tdfsq;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.tdfsq.vo.GhWfTdfsqKtfxxRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.tdfsq.vo.GhWfTdfsqRespVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.tdfsq.vo.GhWfTdfsqSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.service.workflow.tdfsq.GhWfTdfsqService;
@@ -11,6 +12,8 @@ import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
@@ -35,5 +38,12 @@ public class GhWfTdfsqController {
     @PreAuthorize("@ss.hasPermission('lghjft:workflow-tdfsq:create')")
     public CommonResult<Long> create(@Valid @RequestBody GhWfTdfsqSaveReqVO req) {
         return success(tdfsqService.create(req));
+    }
+    // ====================== 新增：查询可退费明细（当期/往期） ======================
+    @PostMapping("/getKtfxxList")
+    @Operation(summary = "查询可退费明细")
+    @PreAuthorize("@ss.hasPermission('lghjft:workflow-tdfsq:query')")
+    public CommonResult<List<GhWfTdfsqKtfxxRespVO>> getKtfxxList(@RequestParam String djxh, @RequestParam Integer sqtflxDm) {
+        return success(tdfsqService.getKtfxxList(djxh, sqtflxDm));
     }
 }

@@ -44,6 +44,7 @@ public class NsrxxServiceImpl implements NsrxxService {
         return nsrxxMapper.getNsrxxList(new NsrxxQueryParam().setDjxhList(ids).setOnlyValid(false));
     }
 
+    @Override
     public NsrxxPayFormResVO getNsrdwxxByShxydm(String shxydm) {
         if (shxydm == null) {
             return null;

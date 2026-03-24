@@ -18,6 +18,9 @@ public class GhWfJfhzjnsqSaveReqVO {
     @NotEmpty(message = "申请汇总缴费单位社会信用代码不能为空")
     private String shxydm;
 
+    @Schema(description = "登记序号", requiredMode = Schema.RequiredMode.REQUIRED)
+    private  String djxh;
+
     @Schema(description = "申请汇总缴费单位全称", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotEmpty(message = "申请汇总缴费单位全称不能为空")
     private String dwmc;
