@@ -68,6 +68,7 @@ public class WfDbsqServiceImpl implements WfDbsqService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Long create(@Valid WfDbsqSaveReqVO req) {
+
         // 重复提交校验
         LambdaQueryWrapper<WfDbsqDO> checkQuery = new LambdaQueryWrapper<>();
         checkQuery.eq(WfDbsqDO::getShxydm, req.getShxydm());
@@ -75,10 +76,11 @@ public class WfDbsqServiceImpl implements WfDbsqService {
         if (wfDbsqMapper.selectCount(checkQuery) > 0) {
             throw exception(WF_DBSQ_NOT_EXISTS);
         }
-
-        // ======================
+        // 判断汇总单位是否欠缴费
+        if (!checkUnitHasNoArrears(req.getDjxh())) {
+            throw ServiceExceptionUtil.exception(ErrorCodeConstants.WF_HZJF_UNIT_ARREARS, req.getDwmc());
+        }
         //工会状态校验
-        // ======================
         DeptDO oldDept = deptService.getDept(req.getOldDeptId());
         DeptDO newDept = deptService.getDept(req.getNewDeptId());
         if (oldDept.getStatus() == 1 || newDept.getStatus() == 1) {
@@ -179,5 +181,9 @@ public class WfDbsqServiceImpl implements WfDbsqService {
         return index >= 0 ? cleanPath.substring(index + 1) : cleanPath;
     }
 
-
+    // 欠缴判断
+    private boolean checkUnitHasNoArrears(String djxh) {
+        Integer count = wfDbsqMapper.selectArrearsCountByDjxh(djxh);
+        return count == null || count <= 0;
+    }
 }

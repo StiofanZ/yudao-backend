@@ -1,11 +1,13 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhjsq.vo;
 
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqRespVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Schema(description = "管理后台 - 经费缓缴申请新增/修改 Request VO")
 @Data
@@ -109,4 +111,24 @@ public class GhWfJfhjsqSaveReqVO {
 
     @Schema(description = "流程实例ID")
     private String lcslId;
+    @Schema(description = "附件列表")
+    private List<FjItem> fjList;
+
+    //    存放文件的子表
+    @Data
+    @Schema(description = "附件项")
+    public static class FjItem {
+        private String wjmc;
+        /**
+         * 文件访问地址
+         */
+        private String wjlj;
+        /**
+         * 文件类型（pdf/png/jpg/docx）
+         */
+        private String fjlx;
+
+        private  String ywjmc;
+
+    }
 }

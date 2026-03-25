@@ -38,7 +38,7 @@ public class GhWfJfhjsqController {
     @Parameter(name = "id", description = "编号", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:workflow-jfhjsq:query')")
     public CommonResult<GhWfJfhjsqRespVO> getGhWfJfhjsq(@RequestParam("id") Long id) {
-        GhWfJfhjsqDO data = jfhjsqService.getGhWfJfhjsq(id);
+        GhWfJfhjsqRespVO data = jfhjsqService.getGhWfJfhjsq(id);
         return success(BeanUtils.toBean(data, GhWfJfhjsqRespVO.class));
     }
 }

@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhzjnsq.vo;
 
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqRespVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -99,4 +100,25 @@ public class GhWfJfhzjnsqRespVO {
     // ========== 核心：嵌套分支机构明细表列表 ==========
     @Schema(description = "分支机构明细列表")
     private List<GhWfJfhzjnsqmxRespVO> fzjgmxList;
+    @Schema(description = "附件列表")
+
+    private List<FjItem> fjList;
+
+    //    存放文件的子表
+    @Data
+    @Schema(description = "附件项")
+    public static class FjItem {
+        private String wjmc;
+        /**
+         * 文件访问地址
+         */
+        private String wjlj;
+        /**
+         * 文件类型（pdf/png/jpg/docx）
+         */
+        private String fjlx;
+
+        private  String ywjmc;
+
+    }
 }

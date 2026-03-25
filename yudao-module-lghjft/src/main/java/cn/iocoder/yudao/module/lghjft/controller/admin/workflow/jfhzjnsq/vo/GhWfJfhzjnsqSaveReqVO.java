@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhzjnsq.vo;
 
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqRespVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -129,4 +130,24 @@ public class GhWfJfhzjnsqSaveReqVO {
     @Schema(description = "分支机构明细列表", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotEmpty(message = "分支机构明细不能为空")
     private List<GhWfJfhzjnsqmxSaveReqVO> fzjgmxList;
+    @Schema(description = "附件列表")
+    private List<FjItem> fjList;
+
+    //    存放文件的子表
+    @Data
+    @Schema(description = "附件项")
+    public static class FjItem {
+        private String wjmc;
+        /**
+         * 文件访问地址
+         */
+        private String wjlj;
+        /**
+         * 文件类型（pdf/png/jpg/docx）
+         */
+        private String fjlx;
+
+        private  String ywjmc;
+
+    }
 }
