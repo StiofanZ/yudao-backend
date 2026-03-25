@@ -2,10 +2,7 @@ package cn.iocoder.yudao.module.lghjft.service.hjgl.jcxx;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxBaseVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxCreateReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxUpdateReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.*;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.GhHjJcxxDO;
 import jakarta.validation.Valid;
 
@@ -63,4 +60,8 @@ public interface JcxxService {
      * @return 成功返回 true，失败抛出业务异常
      */
     boolean allocationJcxx(JcxxBaseVO baseVO);
+    /**
+     * 获取前置户籍管理详细信息（编辑前归属权校验）
+     */
+    JcxxRespVO getDjNsrxxInfoForUpdateHj(JcxxBaseVO djNsrxxDto);
 }

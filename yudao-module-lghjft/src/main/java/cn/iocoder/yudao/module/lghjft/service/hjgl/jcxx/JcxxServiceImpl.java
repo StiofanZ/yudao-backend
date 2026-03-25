@@ -1,18 +1,22 @@
 package cn.iocoder.yudao.module.lghjft.service.hjgl.jcxx;
 
 import cn.hutool.core.lang.Assert;
+import cn.iocoder.yudao.framework.common.exception.ServiceException;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxBaseVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxCreateReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxUpdateReqVO;
+import cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.*;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hj.ghhjyhxx.GhHjYhxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.GhHjJcxxDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.nsrxx.NsrxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.hj.ghhjyhxx.GhHjYhxxMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.hjgl.jcxx.GhHjJcxxMapper;
+import cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants;
+import cn.iocoder.yudao.module.lghjft.service.nsrxx.NsrxxService;
+import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
+import cn.iocoder.yudao.module.system.service.user.AdminUserService;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import jakarta.annotation.Resource;
@@ -23,6 +27,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
@@ -40,9 +45,12 @@ public class JcxxServiceImpl implements JcxxService {
 
     @Resource
     private GhHjJcxxMapper jcxxMapper;
-
     @Resource
     private GhHjYhxxMapper ghHjYhxxMapper;
+    @Resource
+    private AdminUserService userService;
+    @Resource
+    private NsrxxService nsrxxService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -184,6 +192,43 @@ public class JcxxServiceImpl implements JcxxService {
             throw new IllegalArgumentException("户籍调拨失败");
         }
         return true;
+    }
+
+    @Override
+    public JcxxRespVO getDjNsrxxInfoForUpdateHj(JcxxBaseVO djNsrxxDto) {
+        // 1. 参数校验
+        String djxh = djNsrxxDto.getDjxh();
+        String shxydm = djNsrxxDto.getShxydm();
+        if (StringUtils.isBlank(djxh) && StringUtils.isBlank(shxydm)) {
+            throw new ServiceException(400,"参数为空，无法查询");
+        }
+
+        // 2. 获取当前登录用户部门
+        Long loginUserId = WebFrameworkUtils.getLoginUserId();
+        AdminUserDO user = userService.getUser(loginUserId);
+        Assert.notNull(user, "登录用户不存在");
+        Long currentUserDeptId = user.getDeptId();
+
+        // ===================== 旧版逻辑：查 gh_hj + jhdwyds =====================
+        List<Map<String, Object>> hjList = jcxxMapper.getListByDjNsrxxDto(djNsrxxDto);
+        if (!CollectionUtils.isEmpty(hjList)) {
+            Map<String, Object> firstHj = hjList.get(0);
+            String deptId = (String) firstHj.get("dept_id");
+            String deptName = (String) firstHj.get("deptName");
+
+            if (!deptId.equals(currentUserDeptId.toString())) {
+                //  关键：用 BusinessException，只返回提示消息，不打印异常栈
+                throw new ServiceException(400, shxydm + "已被" + deptName + "维护，如有问题请联系该机构核实调拨！");
+            }
+        }
+
+        // 3. 查询税务最新信息
+        NsrxxDO nsrxx = nsrxxService.getNsrxx(djxh);
+        if (nsrxx == null) {
+            throw new ServiceException(400,"未查询到对应的税务信息");
+        }
+
+        return BeanUtils.toBean(nsrxx, JcxxRespVO.class);
     }
 }
 

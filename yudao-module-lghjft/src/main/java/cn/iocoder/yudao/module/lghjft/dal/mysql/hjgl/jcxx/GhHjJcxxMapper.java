@@ -7,6 +7,10 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxBaseVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.GhHjJcxxDO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 户籍管理/基础信息 Mapper
@@ -38,4 +42,5 @@ public interface GhHjJcxxMapper extends BaseMapperX<GhHjJcxxDO> {
      */
     int updateAllocationJcxx(JcxxBaseVO baseVO);
 
+    List<Map<String, Object>> getListByDjNsrxxDto(JcxxBaseVO dto);
 }

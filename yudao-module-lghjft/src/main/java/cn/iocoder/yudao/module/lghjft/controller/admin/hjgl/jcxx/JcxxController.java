@@ -111,20 +111,21 @@ public class JcxxController {
         JcxxRespVO respVO = BeanUtils.toBean(nsrxx, JcxxRespVO.class);
         return success(respVO);
     }
-//
-//    @PostMapping("/allocation")
-//    @Operation(summary = "户籍调拨（单个）")
-//    @PreAuthorize("@ss.hasPermission('lghjft:hjgl-jcxx:update')")
-//    public CommonResult<Boolean> allocationJcxx(@Valid @RequestBody JcxxBaseVO baseVO) {
-//        jcxxService.allocationJcxx(baseVO);
-//        return success(true);
-//    }
+
 
     @PostMapping("/allocation")
-    @Operation(summary = "户籍调拨（单个）")
+    @Operation(summary = "户籍调拨")
     @PreAuthorize("@ss.hasPermission('lghjft:hjgl-jcxx:update')")
     public CommonResult<String> allocationJcxx(@Valid @RequestBody JcxxBaseVO baseVO) {
         jcxxService.allocationJcxx(baseVO);
         return CommonResult.success("户籍调拨成功");
+    }
+
+
+    @GetMapping("/getDjNsrxxInfoForUpdateHj")
+    @Operation(summary = "获取前置户籍管理详细信息")
+    @PreAuthorize("@ss.hasPermission('lghjft:hjgl-jcxx:query')")
+    public CommonResult<JcxxRespVO> getDjNsrxxInfoForUpdateHj(JcxxBaseVO djNsrxxDto) {
+        return success(jcxxService.getDjNsrxxInfoForUpdateHj(djNsrxxDto));
     }
 }

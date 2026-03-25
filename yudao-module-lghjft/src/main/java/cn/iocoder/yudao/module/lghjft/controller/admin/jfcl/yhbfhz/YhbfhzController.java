@@ -40,7 +40,7 @@ public class YhbfhzController {
      */
     @GetMapping("/page")
     @Operation(summary = "查询银行拨付汇总分页")
-@PreAuthorize("@ss.hasPermission('lghjft:yhbfhz:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:yhbfhz:query')")
     public CommonResult<PageResult<YhbfhzRespVO>> getYhbfhzPage(@Valid YhbfhzPageReqVO pageReqVO) {
         PageResult<YhbfhzDO> pageResult = yhbfhzService.selectGhHkxxYhbfhzList(pageReqVO);
         return success(BeanUtils.toBean(pageResult, YhbfhzRespVO.class));
@@ -51,7 +51,7 @@ public class YhbfhzController {
      */
     @PostMapping("/export")
     @Operation(summary = "导出银行拨付汇总列表")
- @PreAuthorize("@ss.hasPermission('lghjft:yhbfhz:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:yhbfhz:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void export(HttpServletResponse response, @Valid YhbfhzPageReqVO pageReqVO) throws IOException {
         // 直接用 pageReqVO 传入，不用转 DO！
