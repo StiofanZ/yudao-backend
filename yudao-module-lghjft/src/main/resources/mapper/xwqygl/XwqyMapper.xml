@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.xwqygl.XwqyglMapper">
+
+    <!-- ResultMap 映射到 VO -->
+    <resultMap id="XwqyglRespVOResultMap" type="cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglRespVO">
+        <id column="DJXH" property="djxh"/>
+        <result column="DEPT_ID" property="deptId"/>
+        <result column="HYGHBZ" property="hyghbz"/>
+        <result column="SHXYDM" property="shxydm"/>
+        <result column="NSRMC" property="nsrmc"/>
+        <result column="NSRJC" property="nsrjc"/>
+        <result column="ZGSWJ_DM" property="zgswjDm"/>
+        <result column="ZGSWJMC" property="zgswjmc"/>
+        <result column="ZGSWSKFJ_DM" property="zgswskfjDm"/>
+        <result column="ZGSWSKFJMC" property="zgswskfjmc"/>
+        <result column="SSGLY_DM" property="ssglyDm"/>
+        <result column="SSGLYXM" property="ssglyxm"/>
+        <result column="ZZJGLX_DM" property="zzjglxDm"/>
+        <result column="ZZJGLXMC" property="zzjglxmc"/>
+        <result column="HY_DM" property="hyDm"/>
+        <result column="HYMC" property="hymc"/>
+        <result column="DJZCLX_DM" property="djzclxDm"/>
+        <result column="DJZCLXMC" property="djzclxmc"/>
+        <result column="DWLSGX_DM" property="dwlsgxDm"/>
+        <result column="DWLSGXMC" property="dwlsgxmc"/>
+        <result column="ZGRS" property="zgrs"/>
+        <result column="NSRZT_DM" property="nsrztDm"/>
+        <result column="NSRZTMC" property="nsrztmc"/>
+        <result column="FZCRQ" property="fzcrq"/>
+        <result column="ZXRQ" property="zxrq"/>
+        <result column="ZCDZ" property="zcdz"/>
+        <result column="YZBM" property="yzbm"/>
+        <result column="LXR" property="lxr"/>
+        <result column="LXDH" property="lxdh"/>
+        <result column="GHLB_DM" property="ghlbDm"/>
+        <result column="XTLB_DM" property="xtlbDm"/>
+        <result column="HJFL1_DM" property="hjfl1Dm"/>
+        <result column="HJFL2_DM" property="hjfl2Dm"/>
+        <result column="HJFL3_DM" property="hjfl3Dm"/>
+        <result column="HJFL4_DM" property="hjfl4Dm"/>
+        <result column="HJFL5_DM" property="hjfl5Dm"/>
+        <result column="HJFL6_DM" property="hjfl6Dm"/>
+        <result column="HJFL7_DM" property="hjfl7Dm"/>
+        <result column="HJFL8_DM" property="hjfl8Dm"/>
+        <result column="HJFL9_DM" property="hjfl9Dm"/>
+        <result column="SDGHJG_DM" property="sdghjgDm"/>
+        <result column="CLGHBJ" property="clghbj"/>
+        <result column="CLGHRQ" property="clghrq"/>
+        <result column="JCGHDM" property="jcghdm"/>
+        <result column="JCGHMC" property="jcghmc"/>
+        <result column="JCGHZH" property="jcghzh"/>
+        <result column="JCGHHM" property="jcghhm"/>
+        <result column="JCGHHH" property="jcghhh"/>
+        <result column="JCGHYH" property="jcghyh"/>
+        <result column="BZ" property="bz"/>
+        <result column="JYM" property="jym"/>
+        <result column="NSRSBH" property="nsrsbh"/>
+        <result column="CREATE_BY" property="createBy"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="UPDATE_BY" property="updateBy"/>
+        <result column="UPDATE_TIME" property="updateTime"/>
+        <result column="fileUrl" property="fileUrl"/>
+        <result column="JDXZ_DM" property="jdxzDm"/>
+        <result column="SJTB_SJ" property="sjtbSj"/>
+    </resultMap>
+
+    <!-- 基础查询字段 -->
+    <sql id="selectXwqyglColumns">
+        DEPT_ID, HYGHBZ, DJXH, SHXYDM, NSRMC, NSRJC,
+        ZGSWJ_DM, ZGSWJMC, ZGSWSKFJ_DM, ZGSWSKFJMC,
+        SSGLY_DM, SSGLYXM, ZZJGLX_DM, ZZJGLXMC,
+        HY_DM, HYMC, DJZCLX_DM, DJZCLXMC, DWLSGX_DM, DWLSGXMC,
+        ZGRS, NSRZT_DM, NSRZTMC, FZCRQ, ZXRQ, ZCDZ, YZBM, LXR, LXDH,
+        GHLB_DM, XTLB_DM,
+        HJFL1_DM, HJFL2_DM, HJFL3_DM, HJFL4_DM, HJFL5_DM, HJFL6_DM, HJFL7_DM,
+        HJFL8_DM, HJFL9_DM,
+        SDGHJG_DM, CLGHBJ, CLGHRQ, JCGHDM, JCGHMC, JCGHZH, JCGHHM, JCGHHH, JCGHYH,
+        BZ, JYM, NSRSBH, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
+    </sql>
+
+    <!-- 分页列表查询 -->
+    <select id="selectXwqyglList" parameterType="cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglQuery" resultMap="XwqyglRespVOResultMap">
+        select <include refid="selectXwqyglColumns"/>
+        from gh_hj
+        <where>
+            <if test="deptId != null and deptId != ''">AND DEPT_ID = #{deptId}</if>
+            <if test="hyghbz != null and hyghbz != ''">AND HYGHBZ = #{hyghbz}</if>
+            <if test="shxydm != null and shxydm != ''">AND SHXYDM = #{shxydm}</if>
+            <if test="nsrmc != null and nsrmc != ''">AND NSRMC LIKE concat('%', #{nsrmc}, '%')</if>
+            <if test="nsrjc != null and nsrjc != ''">AND NSRJC LIKE concat('%', #{nsrjc}, '%')</if>
+            <if test="zgswjDm != null and zgswjDm != ''">AND ZGSWJ_DM = #{zgswjDm}</if>
+            <if test="zgswjmc != null and zgswjmc != ''">AND ZGSWJMC LIKE concat('%', #{zgswjmc}, '%')</if>
+            <if test="zgswskfjDm != null and zgswskfjDm != ''">AND ZGSWSKFJ_DM = #{zgswskfjDm}</if>
+            <if test="zgswskfjmc != null and zgswskfjmc != ''">AND ZGSWSKFJMC LIKE concat('%', #{zgswskfjmc}, '%')</if>
+            <if test="ssglyDm != null and ssglyDm != ''">AND SSGLY_DM = #{ssglyDm}</if>
+            <if test="ssglyxm != null and ssglyxm != ''">AND SSGLYXM = #{ssglyxm}</if>
+            <if test="zzjglxDm != null and zzjglxDm != ''">AND ZZJGLX_DM = #{zzjglxDm}</if>
+            <if test="zzjglxmc != null and zzjglxmc != ''">AND ZZJGLXMC = #{zzjglxmc}</if>
+            <if test="hyDm != null and hyDm != ''">AND HY_DM = #{hyDm}</if>
+            <if test="hymc != null and hymc != ''">AND HYMC = #{hymc}</if>
+            <if test="djzclxDm != null and djzclxDm != ''">AND DJZCLX_DM = #{djzclxDm}</if>
+            <if test="djzclxmc != null and djzclxmc != ''">AND DJZCLXMC = #{djzclxmc}</if>
+            <if test="dwlsgxDm != null and dwlsgxDm != ''">AND DWLSGX_DM = #{dwlsgxDm}</if>
+            <if test="dwlsgxmc != null and dwlsgxmc != ''">AND DWLSGXMC = #{dwlsgxmc}</if>
+            <if test="zgrs != null">AND ZGRS = #{zgrs}</if>
+            <if test="nsrztDm != null and nsrztDm != ''">AND NSRZT_DM = #{nsrztDm}</if>
+            <if test="nsrztmc != null and nsrztmc != ''">AND NSRZTMC = #{nsrztmc}</if>
+            <if test="fzcrq != null">AND FZCRQ = #{fzcrq}</if>
+            <if test="zxrq != null">AND ZXRQ = #{zxrq}</if>
+            <if test="zcdz != null and zcdz != ''">AND ZCDZ LIKE concat('%', #{zcdz}, '%')</if>
+            <if test="yzbm != null and yzbm != ''">AND YZBM = #{yzbm}</if>
+            <if test="lxr != null and lxr != ''">AND LXR = #{lxr}</if>
+            <if test="lxdh != null and lxdh != ''">AND LXDH = #{lxdh}</if>
+            <if test="ghlbDm != null and ghlbDm != ''">AND GHLB_DM = #{ghlbDm}</if>
+            <if test="xtlbDm != null and xtlbDm != ''">AND XTLB_DM = #{xtlbDm}</if>
+            <if test="hjfl1Dm != null and hjfl1Dm != ''">AND HJFL1_DM = #{hjfl1Dm}</if>
+            <if test="hjfl2Dm != null and hjfl2Dm != ''">AND HJFL2_DM = #{hjfl2Dm}</if>
+            <if test="hjfl3Dm != null and hjfl3Dm != ''">AND HJFL3_DM = #{hjfl3Dm}</if>
+            <if test="hjfl4Dm != null and hjfl4Dm != ''">AND HJFL4_DM = #{hjfl4Dm}</if>
+            <if test="hjfl5Dm != null and hjfl5Dm != ''">AND HJFL5_DM = #{hjfl5Dm}</if>
+            <if test="hjfl6Dm != null and hjfl6Dm != ''">AND HJFL6_DM = #{hjfl6Dm}</if>
+            <if test="hjfl7Dm != null and hjfl7Dm != ''">AND HJFL7_DM = #{hjfl7Dm}</if>
+            <if test="dclghbj != null and dclghbj != ''">AND HJFL8_DM = #{dclghbj}</if>
+            <if test="hjfl9Dm != null and hjfl9Dm != ''">AND HJFL9_DM = #{hjfl9Dm}</if>
+            <if test="sdghjgDm != null and sdghjgDm != ''">AND SDGHJG_DM = #{sdghjgDm}</if>
+            <if test="clghbj != null and clghbj != ''">AND CLGHBJ = #{clghbj}</if>
+            <if test="beginClghrq != null and endClghrq != null">
+                AND CLGHRQ BETWEEN #{beginClghrq} AND #{endClghrq}
+            </if>
+            <if test="jcghdm != null and jcghdm != ''">AND JCGHDM = #{jcghdm}</if>
+            <if test="jcghmc != null and jcghmc != ''">AND JCGHMC LIKE concat('%', #{jcghmc}, '%')</if>
+            <if test="jcghzh != null and jcghzh != ''">AND JCGHZH = #{jcghzh}</if>
+            <if test="jcghhm != null and jcghhm != ''">AND JCGHHM LIKE concat('%', #{jcghhm}, '%')</if>
+            <if test="jcghhh != null and jcghhh != ''">AND JCGHHH = #{jcghhh}</if>
+            <if test="jcghyh != null and jcghyh != ''">AND JCGHYH = #{jcghyh}</if>
+            <if test="bz != null and bz != ''">AND BZ = #{bz}</if>
+            <if test="jym != null and jym != ''">AND JYM = #{jym}</if>
+            <if test="nsrsbh != null and nsrsbh != ''">AND NSRSBH = #{nsrsbh}</if>
+            <if test="createBy != null and createBy != ''">AND CREATE_BY = #{createBy}</if>
+            <if test="createTime != null">AND CREATE_TIME = #{createTime}</if>
+            <if test="updateBy != null and updateBy != ''">AND UPDATE_BY = #{updateBy}</if>
+            <if test="updateTime != null">AND UPDATE_TIME = #{updateTime}</if>
+        </where>
+        ORDER BY CREATE_TIME DESC
+        <if test="offset != null and limit != null">
+            LIMIT #{offset}, #{limit}
+        </if>
+    </select>
+
+    <!-- 总数查询 -->
+    <select id="selectXwqyglCount" parameterType="cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglQuery" resultType="java.lang.Long">
+        select count(*)
+        from gh_hj
+        <where>
+            <if test="deptId != null and deptId != ''">AND DEPT_ID = #{deptId}</if>
+            <if test="hyghbz != null and hyghbz != ''">AND HYGHBZ = #{hyghbz}</if>
+            <if test="shxydm != null and shxydm != ''">AND SHXYDM = #{shxydm}</if>
+            <if test="nsrmc != null and nsrmc != ''">AND NSRMC LIKE concat('%', #{nsrmc}, '%')</if>
+            <if test="nsrjc != null and nsrjc != ''">AND NSRJC LIKE concat('%', #{nsrjc}, '%')</if>
+            <if test="zgswjDm != null and zgswjDm != ''">AND ZGSWJ_DM = #{zgswjDm}</if>
+            <if test="zgswjmc != null and zgswjmc != ''">AND ZGSWJMC LIKE concat('%', #{zgswjmc}, '%')</if>
+            <if test="zgswskfjDm != null and zgswskfjDm != ''">AND ZGSWSKFJ_DM = #{zgswskfjDm}</if>
+            <if test="zgswskfjmc != null and zgswskfjmc != ''">AND ZGSWSKFJMC LIKE concat('%', #{zgswskfjmc}, '%')</if>
+            <if test="ssglyDm != null and ssglyDm != ''">AND SSGLY_DM = #{ssglyDm}</if>
+            <if test="ssglyxm != null and ssglyxm != ''">AND SSGLYXM = #{ssglyxm}</if>
+            <if test="zzjglxDm != null and zzjglxDm != ''">AND ZZJGLX_DM = #{zzjglxDm}</if>
+            <if test="zzjglxmc != null and zzjglxmc != ''">AND ZZJGLXMC = #{zzjglxmc}</if>
+            <if test="hyDm != null and hyDm != ''">AND HY_DM = #{hyDm}</if>
+            <if test="hymc != null and hymc != ''">AND HYMC = #{hymc}</if>
+            <if test="djzclxDm != null and djzclxDm != ''">AND DJZCLX_DM = #{djzclxDm}</if>
+            <if test="djzclxmc != null and djzclxmc != ''">AND DJZCLXMC = #{djzclxmc}</if>
+            <if test="dwlsgxDm != null and dwlsgxDm != ''">AND DWLSGX_DM = #{dwlsgxDm}</if>
+            <if test="dwlsgxmc != null and dwlsgxmc != ''">AND DWLSGXMC = #{dwlsgxmc}</if>
+            <if test="zgrs != null">AND ZGRS = #{zgrs}</if>
+            <if test="nsrztDm != null and nsrztDm != ''">AND NSRZT_DM = #{nsrztDm}</if>
+            <if test="nsrztmc != null and nsrztmc != ''">AND NSRZTMC = #{nsrztmc}</if>
+            <if test="fzcrq != null">AND FZCRQ = #{fzcrq}</if>
+            <if test="zxrq != null">AND ZXRQ = #{zxrq}</if>
+            <if test="zcdz != null and zcdz != ''">AND ZCDZ LIKE concat('%', #{zcdz}, '%')</if>
+            <if test="yzbm != null and yzbm != ''">AND YZBM = #{yzbm}</if>
+            <if test="lxr != null and lxr != ''">AND LXR = #{lxr}</if>
+            <if test="lxdh != null and lxdh != ''">AND LXDH = #{lxdh}</if>
+            <if test="ghlbDm != null and ghlbDm != ''">AND GHLB_DM = #{ghlbDm}</if>
+            <if test="xtlbDm != null and xtlbDm != ''">AND XTLB_DM = #{xtlbDm}</if>
+            <if test="hjfl1Dm != null and hjfl1Dm != ''">AND HJFL1_DM = #{hjfl1Dm}</if>
+            <if test="hjfl2Dm != null and hjfl2Dm != ''">AND HJFL2_DM = #{hjfl2Dm}</if>
+            <if test="hjfl3Dm != null and hjfl3Dm != ''">AND HJFL3_DM = #{hjfl3Dm}</if>
+            <if test="hjfl4Dm != null and hjfl4Dm != ''">AND HJFL4_DM = #{hjfl4Dm}</if>
+            <if test="hjfl5Dm != null and hjfl5Dm != ''">AND HJFL5_DM = #{hjfl5Dm}</if>
+            <if test="hjfl6Dm != null and hjfl6Dm != ''">AND HJFL6_DM = #{hjfl6Dm}</if>
+            <if test="hjfl7Dm != null and hjfl7Dm != ''">AND HJFL7_DM = #{hjfl7Dm}</if>
+            <if test="dclghbj != null and dclghbj != ''">AND HJFL8_DM = #{dclghbj}</if>
+            <if test="hjfl9Dm != null and hjfl9Dm != ''">AND HJFL9_DM = #{hjfl9Dm}</if>
+            <if test="sdghjgDm != null and sdghjgDm != ''">AND SDGHJG_DM = #{sdghjgDm}</if>
+            <if test="clghbj != null and clghbj != ''">AND CLGHBJ = #{clghbj}</if>
+            <if test="beginClghrq != null and endClghrq != null">
+                AND CLGHRQ BETWEEN #{beginClghrq} AND #{endClghrq}
+            </if>
+            <if test="jcghdm != null and jcghdm != ''">AND JCGHDM = #{jcghdm}</if>
+            <if test="jcghmc != null and jcghmc != ''">AND JCGHMC LIKE concat('%', #{jcghmc}, '%')</if>
+            <if test="jcghzh != null and jcghzh != ''">AND JCGHZH = #{jcghzh}</if>
+            <if test="jcghhm != null and jcghhm != ''">AND JCGHHM LIKE concat('%', #{jcghhm}, '%')</if>
+            <if test="jcghhh != null and jcghhh != ''">AND JCGHHH = #{jcghhh}</if>
+            <if test="jcghyh != null and jcghyh != ''">AND JCGHYH = #{jcghyh}</if>
+            <if test="bz != null and bz != ''">AND BZ = #{bz}</if>
+            <if test="jym != null and jym != ''">AND JYM = #{jym}</if>
+            <if test="nsrsbh != null and nsrsbh != ''">AND NSRSBH = #{nsrsbh}</if>
+            <if test="createBy != null and createBy != ''">AND CREATE_BY = #{createBy}</if>
+            <if test="createTime != null">AND CREATE_TIME = #{createTime}</if>
+            <if test="updateBy != null and updateBy != ''">AND UPDATE_BY = #{updateBy}</if>
+            <if test="updateTime != null">AND UPDATE_TIME = #{updateTime}</if>
+        </where>
+    </select>
+
+</mapper>

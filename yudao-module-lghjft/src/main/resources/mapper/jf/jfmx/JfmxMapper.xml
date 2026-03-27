@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.jf.jfmx.JfmxMapper">
+
+    <resultMap id="JfmxResult" type="cn.iocoder.yudao.module.lghjft.controller.admin.jf.jfmx.vo.Jfmx">
+        <result property="spuuid" column="SPUUID" />
+        <result property="djxh" column="DJXH" />
+        <result property="ghjgmc" column="GHJGMC" />
+        <result property="shxydm" column="SHXYDM" />
+        <result property="nsrmc" column="NSRMC" />
+        <result property="nsrjc" column="NSRJC" />
+        <result property="deptId" column="dept_id" />
+        <result property="ghjgxzjb" column="GHJGXZJB" />
+        <result property="clghbj" column="CLGHBJ" />
+        <result property="hyghbz" column="HYGHBZ" />
+        <result property="sdghjgDm" column="SDGHJG_DM" />
+        <result property="sdghjgxzjb" column="SDGHJGXZJB" />
+        <result property="zgswjDm" column="ZGSWJ_DM" />
+        <result property="zgswskfjDm" column="ZGSWSKFJ_DM" />
+        <result property="ssglyDm" column="SSGLY_DM" />
+        <result property="ghlbDm" column="GHLB_DM" />
+        <result property="xtlbDm" column="XTLB_DM" />
+        <result property="xwlx" column="XWLX" />
+        <result property="xelx23" column="XELX23" />
+        <result property="xelx24" column="XELX24" />
+        <result property="xelx25" column="XELX25" />
+        <result property="zzjglxDm" column="ZZJGLX_DM" />
+        <result property="hyDm" column="HY_DM" />
+        <result property="djzclxDm" column="DJZCLX_DM" />
+        <result property="dwlsgxDm" column="DWLSGX_DM" />
+        <result property="sblbDm" column="SBLB_DM" />
+        <result property="nssbrq" column="NSSBRQ" />
+        <result property="pzxh" column="PZXH" />
+        <result property="pzmxxh" column="PZMXXH" />
+        <result property="skssqq" column="SKSSQQ" />
+        <result property="skssqz" column="SKSSQZ" />
+        <result property="zsswjgDm" column="ZSSWJG_DM" />
+        <result property="skssswjgDm" column="SKSSSWJG_DM" />
+        <result property="skgkDm" column="SKGK_DM" />
+        <result property="dzsphm" column="DZSPHM" />
+        <result property="pzzlDm" column="PZZL_DM" />
+        <result property="pzzgDm" column="PZZG_DM" />
+        <result property="pzhm" column="PZHM" />
+        <result property="kpyDm" column="KPY_DM" />
+        <result property="kpyXm" column="KPY_XM" />
+        <result property="zspmDm" column="ZSPM_DM" />
+        <result property="zszmDm" column="ZSZM_DM" />
+        <result property="yskmDm" column="YSKM_DM" />
+        <result property="gzze" column="GZZE" />
+        <result property="sl" column="SL" />
+        <result property="ynse" column="YNSE" />
+        <result property="jmse" column="JMSE" />
+        <result property="yjse" column="YJSE" />
+        <result property="ybtse" column="YBTSE" />
+        <result property="jkfsDm" column="JKFS_DM" />
+        <result property="jfhb" column="JFHB" />
+        <result property="jfzh" column="JFZH" />
+        <result property="jfhm" column="JFHM" />
+        <result property="jfhh" column="JFHH" />
+        <result property="jfyh" column="JFYH" />
+        <result property="rkrq" column="RKRQ" />
+        <result property="jsbj" column="JSBJ"  />
+        <result property="jsrq" column="JSRQ" />
+        <result property="jsczy" column="JSCZY" />
+        <result property="jcghzh" column="JCGHZH" />
+        <result property="jcghhm" column="JCGHHM" />
+        <result property="jcghhh" column="JCGHHH" />
+        <result property="jcghbl" column="JCGHBL" />
+        <result property="jcghje" column="JCGHJE" />
+        <result property="cbjzh" column="CBJZH" />
+        <result property="cbjhm" column="CBJHM" />
+        <result property="cbjhh" column="CBJHH" />
+        <result property="cbjbl" column="CBJBL" />
+        <result property="cbjje" column="CBJJE" />
+        <result property="hyghzh" column="HYGHZH" />
+        <result property="hyghhm" column="HYGHHM" />
+        <result property="hyghhh" column="HYGHHH" />
+        <result property="hyghbl" column="HYGHBL" />
+        <result property="hyghje" column="HYGHJE" />
+        <result property="xjghzh" column="XJGHZH" />
+        <result property="xjghhm" column="XJGHHM" />
+        <result property="xjghhh" column="XJGHHH" />
+        <result property="xjghbl" column="XJGHBL" />
+        <result property="xjghje" column="XJGHJE" />
+        <result property="sjghzh" column="SJGHZH" />
+        <result property="sjghhm" column="SJGHHM" />
+        <result property="sjghhh" column="SJGHHH" />
+        <result property="sjghbl" column="SJGHBL" />
+        <result property="sjghje" column="SJGHJE" />
+        <result property="szghzh" column="SZGHZH" />
+        <result property="szghhm" column="SZGHHM" />
+        <result property="szghhh" column="SZGHHH" />
+        <result property="szghbl" column="SZGHBL" />
+        <result property="szghje" column="SZGHJE" />
+        <result property="qgghzh" column="QGGHZH" />
+        <result property="qgghhm" column="QGGHHM" />
+        <result property="qgghhh" column="QGGHHH" />
+        <result property="qgghbl" column="QGGHBL" />
+        <result property="qgghje" column="QGGHJE" />
+        <result property="sdszh" column="SDSZH" />
+        <result property="sdshm" column="SDSHM" />
+        <result property="sdshh" column="SDSHH" />
+        <result property="sdsbl" column="SDSBL" />
+        <result property="sdsje" column="SDSJE" />
+        <result property="swjgzh" column="SWJGZH" />
+        <result property="swjghm" column="SWJGHM" />
+        <result property="swjghh" column="SWJGHH" />
+        <result property="swjgbl" column="SWJGBL" />
+        <result property="swjgje" column="SWJGJE" />
+        <result property="cbjthbj" column="CBJTHBJ" />
+        <result property="cbjthrq" column="CBJTHRQ" />
+        <result property="cbjthczy" column="CBJTHCZY" />
+        <result property="jym" column="JYM" />
+        <result property="hkpch" column="HKPCH" />
+        <result property="bz" column="BZ" />
+        <result property="bluuid" column="BLUUID" />
+        <result property="sdghzh" column="SDGHZH" />
+        <result property="sdghhm" column="SDGHHM" />
+        <result property="sdghhh" column="SDGHHH" />
+        <result property="sdghbl" column="SDGHBL" />
+        <result property="sdghje" column="SDGHJE" />
+    </resultMap>
+
+    <sql id="selectJfmxVo">
+        select JF.SPUUID, JF.DJXH, JF.SHXYDM, JF.NSRMC, JF.NSRJC, JF.dept_id, JF.GHJGXZJB, JF.CLGHBJ, JF.HYGHBZ, JF.SDGHJG_DM, JF.SDGHJGXZJB, JF.ZGSWJ_DM, JF.ZGSWSKFJ_DM, JF.SSGLY_DM, JF.GHLB_DM, JF.XTLB_DM, JF.ZZJGLX_DM, JF.HY_DM, JF.DJZCLX_DM, JF.DWLSGX_DM, JF.SBLB_DM, JF.NSSBRQ, JF.PZXH, JF.PZMXXH, JF.SKSSQQ, JF.SKSSQZ, JF.ZSSWJG_DM, JF.SKSSSWJG_DM, JF.SKGK_DM, JF.DZSPHM, JF.PZZL_DM, JF.PZZG_DM, JF.PZHM, JF.KPY_DM, JF.KPY_XM, JF.ZSPM_DM, JF.ZSZM_DM, JF.YSKM_DM, JF.GZZE, JF.SL, JF.YNSE, JF.JMSE, JF.YJSE, JF.YBTSE, JF.JKFS_DM, JF.JFHB, JF.JFZH, JF.JFHM, JF.JFHH, JF.JFYH, JF.RKRQ, JF.JSBJ, JF.JSRQ, JF.JSCZY, JF.JCGHZH, JF.JCGHHM, JF.JCGHHH, JF.JCGHBL, JF.JCGHJE, JF.CBJZH, JF.CBJHM, JF.CBJHH, JF.CBJBL, JF.CBJJE, JF.HYGHZH, JF.HYGHHM, JF.HYGHHH, JF.HYGHBL, JF.HYGHJE, JF.XJGHZH, JF.XJGHHM, JF.XJGHHH, JF.XJGHBL, JF.XJGHJE, JF.SJGHZH, JF.SJGHHM, JF.SJGHHH, JF.SJGHBL, JF.SJGHJE, JF.SZGHZH, JF.SZGHHM, JF.SZGHHH, JF.SZGHBL, JF.SZGHJE, JF.QGGHZH, JF.QGGHHM, JF.QGGHHH, JF.QGGHBL, JF.QGGHJE, JF.JCJZH, JF.JCJHM, JF.JCJHH, JF.JCJBL, JF.JCJJE, JF.JCWSH, JF.SDSZH, JF.SDSHM, JF.SDSHH, JF.SDSBL, JF.SDSJE, JF.SWJGZH, JF.SWJGHM, JF.SWJGHH, JF.SWJGBL, JF.SWJGJE, JF.CBJTHBJ, JF.CBJTHRQ, JF.CBJTHCZY, JF.JYM, JF.HKPCH, JF.BZ, JF.BLUUID, JF.SDGHZH, JF.SDGHHM, JF.SDGHHH, JF.SDGHBL, JF.SDGHJE, JF.CREATE_BY, JF.CREATE_TIME, JF.UPDATE_BY, JF.UPDATE_TIME, hj.hjfl9_dm as xwlx, hj.hjfl4_dm AS xelx24, hj.hjfl10_dm AS xelx25, hj.hjfl6_dm AS xelx23 from gh_jf jf left join gh_hj hj on jf.djxh=hj.djxh
+    </sql>
+
+    <select id="selectJfmxList" parameterType="cn.iocoder.yudao.module.lghjft.controller.admin.jf.jfmx.vo.JfmxQuery" resultMap="JfmxResult">
+        <include refid="selectJfmxVo"/>
+        <where>
+            <if test="djxh != null  and djxh != ''"> and JF.DJXH = #{djxh}</if>
+            <if test="shxydm != null  and shxydm != ''"> and JF.SHXYDM = #{shxydm}</if>
+            <if test="nsrmc != null  and nsrmc != ''"> and JF.NSRMC like concat('%', #{nsrmc}, '%')</if>
+            <if test="nsrjc != null  and nsrjc != ''"> and JF.NSRJC like concat('%', #{nsrjc}, '%')</if>
+            <if test="deptId != null  and deptId != ''"> and (JF.dept_id = #{deptId} or (JF.SDGHJG_DM = #{deptId} and jf.sdghje!='0') )</if>
+            <if test="ghjgxzjb != null  and ghjgxzjb != ''"> and JF.GHJGXZJB = #{ghjgxzjb}</if>
+            <if test="clghbj != null  and clghbj != ''"> and JF.CLGHBJ = #{clghbj}</if>
+            <if test="hyghbz != null  and hyghbz != ''"> and JF.HYGHBZ = #{hyghbz}</if>
+            <if test="sdghjgxzjb != null  and sdghjgxzjb != ''"> and JF.SDGHJGXZJB = #{sdghjgxzjb}</if>
+            <if test="zgswjDm != null  and zgswjDm != ''"> and JF.ZGSWJ_DM = #{zgswjDm}</if>
+            <if test="zgswskfjDm != null  and zgswskfjDm != ''"> and JF.ZGSWSKFJ_DM = #{zgswskfjDm}</if>
+            <if test="ssglyDm != null  and ssglyDm != ''"> and JF.SSGLY_DM = #{ssglyDm}</if>
+            <if test="ghlbDm != null  and ghlbDm != ''"> and JF.GHLB_DM = #{ghlbDm}</if>
+            <if test="xtlbDm != null  and xtlbDm != ''"> and JF.XTLB_DM = #{xtlbDm}</if>
+            <if test="zzjglxDm != null  and zzjglxDm != ''"> and JF.ZZJGLX_DM = #{zzjglxDm}</if>
+            <if test="hyDm != null  and hyDm != ''"> and JF.HY_DM = #{hyDm}</if>
+            <if test="djzclxDm != null  and djzclxDm != ''"> and JF.DJZCLX_DM = #{djzclxDm}</if>
+            <if test="dwlsgxDm != null  and dwlsgxDm != ''"> and JF.DWLSGX_DM = #{dwlsgxDm}</if>
+            <if test="sblbDm != null  and sblbDm != ''"> and JF.SBLB_DM = #{sblbDm}</if>
+            <if test="nssbrq != null"> and JF.NSSBRQ = #{nssbrq}</if>
+            <if test="pzxh != null  and pzxh != ''"> and JF.PZXH = #{pzxh}</if>
+            <if test="pzmxxh != null"> and JF.PZMXXH = #{pzmxxh}</if>
+            <if test="skssqq != null"> and JF.SKSSQQ &gt;= #{skssqq}</if>
+            <if test="skssqz != null"> and JF.SKSSQZ &lt;= #{skssqz}</if>
+            <if test="zsswjgDm != null  and zsswjgDm != ''"> and JF.ZSSWJG_DM = #{zsswjgDm}</if>
+            <if test="skssswjgDm != null  and skssswjgDm != ''"> and JF.SKSSSWJG_DM = #{skssswjgDm}</if>
+            <if test="skgkDm != null  and skgkDm != ''"> and JF.SKGK_DM = #{skgkDm}</if>
+            <if test="dzsphm != null  and dzsphm != ''"> and JF.DZSPHM = #{dzsphm}</if>
+            <if test="pzzlDm != null  and pzzlDm != ''"> and JF.PZZL_DM = #{pzzlDm}</if>
+            <if test="pzzgDm != null  and pzzgDm != ''"> and JF.PZZG_DM = #{pzzgDm}</if>
+            <if test="pzhm != null  and pzhm != ''"> and JF.PZHM = #{pzhm}</if>
+            <if test="kpyDm != null  and kpyDm != ''"> and JF.KPY_DM = #{kpyDm}</if>
+            <if test="kpyXm != null  and kpyXm != ''"> and JF.KPY_XM = #{kpyXm}</if>
+            <if test="zspmDm != null  and zspmDm != ''"> and JF.ZSPM_DM = #{zspmDm}</if>
+            <if test="zszmDm != null  and zszmDm != ''"> and JF.ZSZM_DM = #{zszmDm}</if>
+            <if test="yskmDm != null  and yskmDm != ''"> and JF.YSKM_DM = #{yskmDm}</if>
+            <if test="gzze != null"> and JF.GZZE = #{gzze}</if>
+            <if test="sl != null"> and JF.SL = #{sl}</if>
+            <if test="ynse != null"> and JF.YNSE = #{ynse}</if>
+            <if test="jmse != null"> and JF.JMSE = #{jmse}</if>
+            <if test="yjse != null"> and JF.YJSE = #{yjse}</if>
+            <if test="ybtse != null"> and JF.YBTSE = #{ybtse}</if>
+            <if test="jkfsDm != null  and jkfsDm != ''"> and JF.JKFS_DM = #{jkfsDm}</if>
+            <if test="jfhb != null  and jfhb != ''"> and JF.JFHB = #{jfhb}</if>
+            <if test="jfzh != null  and jfzh != ''"> and JF.JFZH = #{jfzh}</if>
+            <if test="jfhm != null  and jfhm != ''"> and JF.JFHM = #{jfhm}</if>
+            <if test="jfhh != null  and jfhh != ''"> and JF.JFHH = #{jfhh}</if>
+            <if test="jfyh != null  and jfyh != ''"> and JF.JFYH = #{jfyh}</if>
+            <if test="rkrq != null"> and JF.RKRQ like concat(MID(#{rkrq}, 1, 4), '%')</if>
+            <if test="jsbj != null  and jsbj != ''"> and jf.jsbj = #{jsbj}</if>
+            <if test="jsrq != null  and jsrq != ''"> and JF.JSRQ = #{jsrq}</if>
+            <if test="jsczy != null  and jsczy != ''"> and JF.JSCZY = #{jsczy}</if>
+            <if test="jcghzh != null  and jcghzh != ''"> and JF.JCGHZH = #{jcghzh}</if>
+            <if test="jcghhm != null  and jcghhm != ''"> and JF.JCGHHM like concat('%', #{jcghhm}, '%')</if>
+            <if test="jcghhh != null  and jcghhh != ''"> and JF.JCGHHH = #{jcghhh}</if>
+            <if test="jcghbl != null"> and JF.JCGHBL = #{jcghbl}</if>
+            <if test="jcghje != null"> and JF.JCGHJE = #{jcghje}</if>
+            <if test="cbjzh != null  and cbjzh != ''"> and JF.CBJZH = #{cbjzh}</if>
+            <if test="cbjhm != null  and cbjhm != ''"> and JF.CBJHM like concat('%', #{cbjhm}, '%')</if>
+            <if test="cbjhh != null  and cbjhh != ''"> and JF.CBJHH = #{cbjhh}</if>
+            <if test="cbjbl != null"> and JF.CBJBL = #{cbjbl}</if>
+            <if test="cbjje != null"> and JF.CBJJE = #{cbjje}</if>
+            <if test="hyghzh != null  and hyghzh != ''"> and JF.HYGHZH = #{hyghzh}</if>
+            <if test="hyghhm != null  and hyghhm != ''"> and JF.HYGHHM like concat('%', #{hyghhm}, '%')</if>
+            <if test="hyghhh != null  and hyghhh != ''"> and JF.HYGHHH = #{hyghhh}</if>
+            <if test="hyghbl != null"> and JF.HYGHBL = #{hyghbl}</if>
+            <if test="hyghje != null"> and JF.HYGHJE = #{hyghje}</if>
+            <if test="xjghzh != null  and xjghzh != ''"> and JF.XJGHZH = #{xjghzh}</if>
+            <if test="xjghhm != null  and xjghhm != ''"> and JF.XJGHHM like concat('%', #{xjghhm}, '%')</if>
+            <if test="xjghhh != null  and xjghhh != ''"> and JF.XJGHHH = #{xjghhh}</if>
+            <if test="xjghbl != null"> and JF.XJGHBL = #{xjghbl}</if>
+            <if test="xjghje != null"> and JF.XJGHJE = #{xjghje}</if>
+            <if test="sjghzh != null  and sjghzh != ''"> and JF.SJGHZH = #{sjghzh}</if>
+            <if test="sjghhm != null  and sjghhm != ''"> and JF.SJGHHM like concat('%', #{sjghhm}, '%')</if>
+            <if test="sjghhh != null  and sjghhh != ''"> and JF.SJGHHH = #{sjghhh}</if>
+            <if test="sjghbl != null"> and JF.SJGHBL = #{sjghbl}</if>
+            <if test="sjghje != null"> and JF.SJGHJE = #{sjghje}</if>
+            <if test="szghzh != null  and szghzh != ''"> and JF.SZGHZH = #{szghzh}</if>
+            <if test="szghhm != null  and szghhm != ''"> and JF.SZGHHM like concat('%', #{szghhm}, '%')</if>
+            <if test="szghhh != null  and szghhh != ''"> and JF.SZGHHH = #{szghhh}</if>
+            <if test="szghbl != null"> and JF.SZGHBL = #{szghbl}</if>
+            <if test="szghje != null"> and JF.SZGHJE = #{szghje}</if>
+            <if test="qgghzh != null  and qgghzh != ''"> and JF.QGGHZH = #{qgghzh}</if>
+            <if test="qgghhm != null  and qgghhm != ''"> and JF.QGGHHM like concat('%', #{qgghhm}, '%')</if>
+            <if test="qgghhh != null  and qgghhh != ''"> and JF.QGGHHH = #{qgghhh}</if>
+            <if test="qgghbl != null"> and JF.QGGHBL = #{qgghbl}</if>
+            <if test="qgghje != null"> and JF.QGGHJE = #{qgghje}</if>
+            <if test="jcjzh != null  and jcjzh != ''"> and JF.JCJZH = #{jcjzh}</if>
+            <if test="jcjhm != null  and jcjhm != ''"> and JF.JCJHM = #{jcjhm}</if>
+            <if test="jcjhh != null  and jcjhh != ''"> and JF.JCJHH = #{jcjhh}</if>
+            <if test="jcjbl != null"> and JF.JCJBL = #{jcjbl}</if>
+            <if test="jcjje != null"> and JF.JCJJE = #{jcjje}</if>
+            <if test="jcwsh != null  and jcwsh != ''"> and JF.JCWSH = #{jcwsh}</if>
+            <if test="sdszh != null  and sdszh != ''"> and JF.SDSZH = #{sdszh}</if>
+            <if test="sdshm != null  and sdshm != ''"> and JF.SDSHM like concat('%', #{sdshm}, '%')</if>
+            <if test="sdshh != null  and sdshh != ''"> and JF.SDSHH = #{sdshh}</if>
+            <if test="sdsbl != null"> and JF.SDSBL = #{sdsbl}</if>
+            <if test="sdsje != null"> and JF.SDSJE = #{sdsje}</if>
+            <if test="swjgzh != null  and swjgzh != ''"> and JF.SWJGZH = #{swjgzh}</if>
+            <if test="swjghm != null  and swjghm != ''"> and JF.SWJGHM like concat('%', #{swjghm}, '%')</if>
+            <if test="swjghh != null  and swjghh != ''"> and JF.SWJGHH = #{swjghh}</if>
+            <if test="swjgbl != null"> and JF.SWJGBL = #{swjgbl}</if>
+            <if test="swjgje != null"> and JF.SWJGJE = #{swjgje}</if>
+            <if test="cbjthbj != null  and cbjthbj != ''"> and JF.CBJTHBJ = #{cbjthbj}</if>
+            <if test="cbjthrq != null"> and JF.CBJTHRQ = #{cbjthrq}</if>
+            <if test="cbjthczy != null  and cbjthczy != ''"> and JF.CBJTHCZY = #{cbjthczy}</if>
+            <if test="jym != null  and jym != ''"> and JF.JYM = #{jym}</if>
+            <if test="hkpch != null  and hkpch != ''"> and JF.HKPCH = #{hkpch}</if>
+            <if test="bz != null  and bz != ''"> and JF.BZ = #{bz}</if>
+            <if test="bluuid != null  and bluuid != ''"> and JF.BLUUID = #{bluuid}</if>
+            <if test="sdghzh != null  and sdghzh != ''"> and JF.SDGHZH = #{sdghzh}</if>
+            <if test="sdghhm != null  and sdghhm != ''"> and JF.SDGHHM like concat('%', #{sdghhm}, '%')</if>
+            <if test="sdghhh != null  and sdghhh != ''"> and JF.SDGHHH = #{sdghhh}</if>
+            <if test="sdghbl != null"> and JF.SDGHBL = #{sdghbl}</if>
+            <if test="sdghje != null"> and JF.SDGHJE = #{sdghje}</if>
+            <if test="createBy != null  and createBy != ''"> and JF.CREATE_BY = #{createBy}</if>
+            <if test="createTime != null"> and JF.CREATE_TIME = #{createTime}</if>
+            <if test="updateBy != null  and updateBy != ''"> and JF.UPDATE_BY = #{updateBy}</if>
+            <if test="updateTime != null"> and JF.UPDATE_TIME = #{updateTime}</if>
+            <if test="xwlx != null"> and hj.hjfl9_dm = #{xwlx}</if>
+            <if test="xelx23 != null  and xelx23 != ''"> and hj.hjfl6_dm = #{xelx23}</if>
+            <if test="xelx24 != null  and xelx24 != ''"> and hj.hjfl4_dm = #{xelx24}</if>
+            <if test="xelx25 != null  and xelx25 != ''"> and hj.hjfl10_dm = #{xelx25}</if>
+        </where>
+        order by rkrq desc
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="selectJfmxCount" parameterType="cn.iocoder.yudao.module.lghjft.controller.admin.jf.jfmx.vo.JfmxQuery" resultType="java.lang.Integer">
+        select count(*)
+        from gh_jf jf left join gh_hj hj on jf.djxh=hj.djxh
+        <where>
+            <if test="djxh != null  and djxh != ''"> and JF.DJXH = #{djxh}</if>
+            <if test="shxydm != null  and shxydm != ''"> and JF.SHXYDM = #{shxydm}</if>
+            <if test="nsrmc != null  and nsrmc != ''"> and JF.NSRMC like concat('%', #{nsrmc}, '%')</if>
+            <if test="nsrjc != null  and nsrjc != ''"> and JF.NSRJC like concat('%', #{nsrjc}, '%')</if>
+            <if test="deptId != null  and deptId != ''"> and (JF.dept_id = #{deptId} or (JF.SDGHJG_DM = #{deptId} and jf.sdghje!='0') )</if>
+            <if test="ghjgxzjb != null  and ghjgxzjb != ''"> and JF.GHJGXZJB = #{ghjgxzjb}</if>
+            <if test="clghbj != null  and clghbj != ''"> and JF.CLGHBJ = #{clghbj}</if>
+            <if test="hyghbz != null  and hyghbz != ''"> and JF.HYGHBZ = #{hyghbz}</if>
+            <if test="sdghjgxzjb != null  and sdghjgxzjb != ''"> and JF.SDGHJGXZJB = #{sdghjgxzjb}</if>
+            <if test="zgswjDm != null  and zgswjDm != ''"> and JF.ZGSWJ_DM = #{zgswjDm}</if>
+            <if test="zgswskfjDm != null  and zgswskfjDm != ''"> and JF.ZGSWSKFJ_DM = #{zgswskfjDm}</if>
+            <if test="ssglyDm != null  and ssglyDm != ''"> and JF.SSGLY_DM = #{ssglyDm}</if>
+            <if test="ghlbDm != null  and ghlbDm != ''"> and JF.GHLB_DM = #{ghlbDm}</if>
+            <if test="xtlbDm != null  and xtlbDm != ''"> and JF.XTLB_DM = #{xtlbDm}</if>
+            <if test="zzjglxDm != null  and zzjglxDm != ''"> and JF.ZZJGLX_DM = #{zzjglxDm}</if>
+            <if test="hyDm != null  and hyDm != ''"> and JF.HY_DM = #{hyDm}</if>
+            <if test="djzclxDm != null  and djzclxDm != ''"> and JF.DJZCLX_DM = #{djzclxDm}</if>
+            <if test="dwlsgxDm != null  and dwlsgxDm != ''"> and JF.DWLSGX_DM = #{dwlsgxDm}</if>
+            <if test="sblbDm != null  and sblbDm != ''"> and JF.SBLB_DM = #{sblbDm}</if>
+            <if test="nssbrq != null"> and JF.NSSBRQ = #{nssbrq}</if>
+            <if test="pzxh != null  and pzxh != ''"> and JF.PZXH = #{pzxh}</if>
+            <if test="pzmxxh != null"> and JF.PZMXXH = #{pzmxxh}</if>
+            <if test="skssqq != null"> and JF.SKSSQQ &gt;= #{skssqq}</if>
+            <if test="skssqz != null"> and JF.SKSSQZ &lt;= #{skssqz}</if>
+            <if test="zsswjgDm != null  and zsswjgDm != ''"> and JF.ZSSWJG_DM = #{zsswjgDm}</if>
+            <if test="skssswjgDm != null  and skssswjgDm != ''"> and JF.SKSSSWJG_DM = #{skssswjgDm}</if>
+            <if test="skgkDm != null  and skgkDm != ''"> and JF.SKGK_DM = #{skgkDm}</if>
+            <if test="dzsphm != null  and dzsphm != ''"> and JF.DZSPHM = #{dzsphm}</if>
+            <if test="pzzlDm != null  and pzzlDm != ''"> and JF.PZZL_DM = #{pzzlDm}</if>
+            <if test="pzzgDm != null  and pzzgDm != ''"> and JF.PZZG_DM = #{pzzgDm}</if>
+            <if test="pzhm != null  and pzhm != ''"> and JF.PZHM = #{pzhm}</if>
+            <if test="kpyDm != null  and kpyDm != ''"> and JF.KPY_DM = #{kpyDm}</if>
+            <if test="kpyXm != null  and kpyXm != ''"> and JF.KPY_XM = #{kpyXm}</if>
+            <if test="zspmDm != null  and zspmDm != ''"> and JF.ZSPM_DM = #{zspmDm}</if>
+            <if test="zszmDm != null  and zszmDm != ''"> and JF.ZSZM_DM = #{zszmDm}</if>
+            <if test="yskmDm != null  and yskmDm != ''"> and JF.YSKM_DM = #{yskmDm}</if>
+            <if test="gzze != null"> and JF.GZZE = #{gzze}</if>
+            <if test="sl != null"> and JF.SL = #{sl}</if>
+            <if test="ynse != null"> and JF.YNSE = #{ynse}</if>
+            <if test="jmse != null"> and JF.JMSE = #{jmse}</if>
+            <if test="yjse != null"> and JF.YJSE = #{yjse}</if>
+            <if test="ybtse != null"> and JF.YBTSE = #{ybtse}</if>
+            <if test="jkfsDm != null  and jkfsDm != ''"> and JF.JKFS_DM = #{jkfsDm}</if>
+            <if test="jfhb != null  and jfhb != ''"> and JF.JFHB = #{jfhb}</if>
+            <if test="jfzh != null  and jfzh != ''"> and JF.JFZH = #{jfzh}</if>
+            <if test="jfhm != null  and jfhm != ''"> and JF.JFHM = #{jfhm}</if>
+            <if test="jfhh != null  and jfhh != ''"> and JF.JFHH = #{jfhh}</if>
+            <if test="jfyh != null  and jfyh != ''"> and JF.JFYH = #{jfyh}</if>
+            <if test="rkrq != null"> and JF.RKRQ like concat(MID(#{rkrq}, 1, 4), '%')</if>
+            <if test="jsbj != null  and jsbj != ''"> and jf.jsbj = #{jsbj}</if>
+            <if test="jsrq != null  and jsrq != ''"> and JF.JSRQ = #{jsrq}</if>
+            <if test="jsczy != null  and jsczy != ''"> and JF.JSCZY = #{jsczy}</if>
+            <if test="jcghzh != null  and jcghzh != ''"> and JF.JCGHZH = #{jcghzh}</if>
+            <if test="jcghhm != null  and jcghhm != ''"> and JF.JCGHHM like concat('%', #{jcghhm}, '%')</if>
+            <if test="jcghhh != null  and jcghhh != ''"> and JF.JCGHHH = #{jcghhh}</if>
+            <if test="jcghbl != null"> and JF.JCGHBL = #{jcghbl}</if>
+            <if test="jcghje != null"> and JF.JCGHJE = #{jcghje}</if>
+            <if test="cbjzh != null  and cbjzh != ''"> and JF.CBJZH = #{cbjzh}</if>
+            <if test="cbjhm != null  and cbjhm != ''"> and JF.CBJHM like concat('%', #{cbjhm}, '%')</if>
+            <if test="cbjhh != null  and cbjhh != ''"> and JF.CBJHH = #{cbjhh}</if>
+            <if test="cbjbl != null"> and JF.CBJBL = #{cbjbl}</if>
+            <if test="cbjje != null"> and JF.CBJJE = #{cbjje}</if>
+            <if test="hyghzh != null  and hyghzh != ''"> and JF.HYGHZH = #{hyghzh}</if>
+            <if test="hyghhm != null  and hyghhm != ''"> and JF.HYGHHM like concat('%', #{hyghhm}, '%')</if>
+            <if test="hyghhh != null  and hyghhh != ''"> and JF.HYGHHH = #{hyghhh}</if>
+            <if test="hyghbl != null"> and JF.HYGHBL = #{hyghbl}</if>
+            <if test="hyghje != null"> and JF.HYGHJE = #{hyghje}</if>
+            <if test="xjghzh != null  and xjghzh != ''"> and JF.XJGHZH = #{xjghzh}</if>
+            <if test="xjghhm != null  and xjghhm != ''"> and JF.XJGHHM like concat('%', #{xjghhm}, '%')</if>
+            <if test="xjghhh != null  and xjghhh != ''"> and JF.XJGHHH = #{xjghhh}</if>
+            <if test="xjghbl != null"> and JF.XJGHBL = #{xjghbl}</if>
+            <if test="xjghje != null"> and JF.XJGHJE = #{xjghje}</if>
+            <if test="sjghzh != null  and sjghzh != ''"> and JF.SJGHZH = #{sjghzh}</if>
+            <if test="sjghhm != null  and sjghhm != ''"> and JF.SJGHHM like concat('%', #{sjghhm}, '%')</if>
+            <if test="sjghhh != null  and sjghhh != ''"> and JF.SJGHHH = #{sjghhh}</if>
+            <if test="sjghbl != null"> and JF.SJGHBL = #{sjghbl}</if>
+            <if test="sjghje != null"> and JF.SJGHJE = #{sjghje}</if>
+            <if test="szghzh != null  and szghzh != ''"> and JF.SZGHZH = #{szghzh}</if>
+            <if test="szghhm != null  and szghhm != ''"> and JF.SZGHHM like concat('%', #{szghhm}, '%')</if>
+            <if test="szghhh != null  and szghhh != ''"> and JF.SZGHHH = #{szghhh}</if>
+            <if test="szghbl != null"> and JF.SZGHBL = #{szghbl}</if>
+            <if test="szghje != null"> and JF.SZGHJE = #{szghje}</if>
+            <if test="qgghzh != null  and qgghzh != ''"> and JF.QGGHZH = #{qgghzh}</if>
+            <if test="qgghhm != null  and qgghhm != ''"> and JF.QGGHHM like concat('%', #{qgghhm}, '%')</if>
+            <if test="qgghhh != null  and qgghhh != ''"> and JF.QGGHHH = #{qgghhh}</if>
+            <if test="qgghbl != null"> and JF.QGGHBL = #{qgghbl}</if>
+            <if test="qgghje != null"> and JF.QGGHJE = #{qgghje}</if>
+            <if test="jcjzh != null  and jcjzh != ''"> and JF.JCJZH = #{jcjzh}</if>
+            <if test="jcjhm != null  and jcjhm != ''"> and JF.JCJHM = #{jcjhm}</if>
+            <if test="jcjhh != null  and jcjhh != ''"> and JF.JCJHH = #{jcjhh}</if>
+            <if test="jcjbl != null"> and JF.JCJBL = #{jcjbl}</if>
+            <if test="jcjje != null"> and JF.JCJJE = #{jcjje}</if>
+            <if test="jcwsh != null  and jcwsh != ''"> and JF.JCWSH = #{jcwsh}</if>
+            <if test="sdszh != null  and sdszh != ''"> and JF.SDSZH = #{sdszh}</if>
+            <if test="sdshm != null  and sdshm != ''"> and JF.SDSHM like concat('%', #{sdshm}, '%')</if>
+            <if test="sdshh != null  and sdshh != ''"> and JF.SDSHH = #{sdshh}</if>
+            <if test="sdsbl != null"> and JF.SDSBL = #{sdsbl}</if>
+            <if test="sdsje != null"> and JF.SDSJE = #{sdsje}</if>
+            <if test="swjgzh != null  and swjgzh != ''"> and JF.SWJGZH = #{swjgzh}</if>
+            <if test="swjghm != null  and swjghm != ''"> and JF.SWJGHM like concat('%', #{swjghm}, '%')</if>
+            <if test="swjghh != null  and swjghh != ''"> and JF.SWJGHH = #{swjghh}</if>
+            <if test="swjgbl != null"> and JF.SWJGBL = #{swjgbl}</if>
+            <if test="swjgje != null"> and JF.SWJGJE = #{swjgje}</if>
+            <if test="cbjthbj != null  and cbjthbj != ''"> and JF.CBJTHBJ = #{cbjthbj}</if>
+            <if test="cbjthrq != null"> and JF.CBJTHRQ = #{cbjthrq}</if>
+            <if test="cbjthczy != null  and cbjthczy != ''"> and JF.CBJTHCZY = #{cbjthczy}</if>
+            <if test="jym != null  and jym != ''"> and JF.JYM = #{jym}</if>
+            <if test="hkpch != null  and hkpch != ''"> and JF.HKPCH = #{hkpch}</if>
+            <if test="bz != null  and bz != ''"> and JF.BZ = #{bz}</if>
+            <if test="bluuid != null  and bluuid != ''"> and JF.BLUUID = #{bluuid}</if>
+            <if test="sdghzh != null  and sdghzh != ''"> and JF.SDGHZH = #{sdghzh}</if>
+            <if test="sdghhm != null  and sdghhm != ''"> and JF.SDGHHM like concat('%', #{sdghhm}, '%')</if>
+            <if test="sdghhh != null  and sdghhh != ''"> and JF.SDGHHH = #{sdghhh}</if>
+            <if test="sdghbl != null"> and JF.SDGHBL = #{sdghbl}</if>
+            <if test="sdghje != null"> and JF.SDGHJE = #{sdghje}</if>
+            <if test="createBy != null  and createBy != ''"> and JF.CREATE_BY = #{createBy}</if>
+            <if test="createTime != null"> and JF.CREATE_TIME = #{createTime}</if>
+            <if test="updateBy != null  and updateBy != ''"> and JF.UPDATE_BY = #{updateBy}</if>
+            <if test="updateTime != null"> and JF.UPDATE_TIME = #{updateTime}</if>
+            <if test="xwlx != null"> and hj.hjfl9_dm = #{xwlx}</if>
+            <if test="xelx23 != null  and xelx23 != ''"> and hj.hjfl6_dm = #{xelx23}</if>
+            <if test="xelx24 != null  and xelx24 != ''"> and hj.hjfl4_dm = #{xelx24}</if>
+            <if test="xelx25 != null  and xelx25 != ''"> and hj.hjfl10_dm = #{xelx25}</if>
+        </where>
+    </select>
+
+</mapper>

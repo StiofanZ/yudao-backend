@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.hj.ghhj.GhhjMapper">
+
+    <resultMap id="GhHjVOMap" type="cn.iocoder.yudao.module.lghjft.controller.admin.hj.ghhj.vo.GhHjVO">
+        <result column="djxh" property="djxh" />
+        <result column="dept_id" property="deptId" />
+        <result column="hyghbz" property="hyghbz" />
+        <result column="shxydm" property="shxydm" />
+        <result column="nsrmc" property="nsrmc" />
+        <result column="nsrjc" property="nsrjc" />
+        <result column="zgswj_dm" property="zgswjDm" />
+        <result column="jdxz_dm" property="jdxzDm" />
+        <result column="zgswjmc" property="zgswjmc" />
+        <result column="zgswskfj_dm" property="zgswskfjDm" />
+        <result column="zgswskfjmc" property="zgswskfjmc" />
+        <result column="ssgly_dm" property="ssglyDm" />
+        <result column="ssglyxm" property="ssglyxm" />
+        <result column="zzjglx_dm" property="zzjglxDm" />
+        <result column="zzjglxmc" property="zzjglxmc" />
+        <result column="hy_dm" property="hyDm" />
+        <result column="hymc" property="hymc" />
+        <result column="djzclx_dm" property="djzclxDm" />
+        <result column="djzclxmc" property="djzclxmc" />
+        <result column="dwlsgx_dm" property="dwlsgxDm" />
+        <result column="dwlsgxmc" property="dwlsgxmc" />
+        <result column="zgrs" property="zgrs" />
+        <result column="nsrzt_dm" property="nsrztDm" />
+        <result column="nsrztmc" property="nsrztmc" />
+        <result column="zcdz" property="zcdz" />
+        <result column="yzbm" property="yzbm" />
+        <result column="lxr" property="lxr" />
+        <result column="lxdh" property="lxdh" />
+        <result column="ghlb_dm" property="ghlbDm" />
+        <result column="xtlb_dm" property="xtlbDm" />
+        <result column="hjfl8_dm" property="hjfl8Dm" />
+        <result column="clghbj" property="clghbj" />
+        <result column="clghrq" property="clghrq" />
+        <result column="jcghdm" property="jcghdm" />
+        <result column="jcghmc" property="jcghmc" />
+        <result column="jcghzh" property="jcghzh" />
+        <result column="jcghhm" property="jcghhm" />
+        <result column="jcghhh" property="jcghhh" />
+        <result column="jcghyh" property="jcghyh" />
+        <result column="sjtb_sj" property="sjtbSj" />
+        <result column="bz" property="bz" />
+        <result column="nsrsbh" property="nsrsbh" />
+    </resultMap>
+
+    <select id="selectGhHjBydjxh" parameterType="string" resultMap="GhHjVOMap">
+        select
+            djxh,
+            dept_id,
+            hyghbz,
+            shxydm,
+            nsrmc,
+            nsrjc,
+            zgswj_dm,
+            jdxz_dm,
+            zgswjmc,
+            zgswskfj_dm,
+            zgswskfjmc,
+            ssgly_dm,
+            ssglyxm,
+            zzjglx_dm,
+            zzjglxmc,
+            hy_dm,
+            hymc,
+            djzclx_dm,
+            djzclxmc,
+            dwlsgx_dm,
+            dwlsgxmc,
+            zgrs,
+            nsrzt_dm,
+            nsrztmc,
+            zcdz,
+            yzbm,
+            lxr,
+            lxdh,
+            ghlb_dm,
+            xtlb_dm,
+            hjfl8_dm,
+            clghbj,
+            clghrq,
+            jcghdm,
+            jcghmc,
+            jcghzh,
+            jcghhm,
+            jcghhh,
+            jcghyh,
+            sjtb_sj,
+            bz,
+            nsrsbh
+        from gh_hj
+        where djxh = #{djxh}
+    </select>
+
+</mapper>
