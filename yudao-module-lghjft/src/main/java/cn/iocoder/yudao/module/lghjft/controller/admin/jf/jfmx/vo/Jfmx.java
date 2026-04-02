@@ -3,7 +3,6 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.jf.jfmx.vo;
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
 import cn.idev.excel.annotation.format.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -51,13 +50,6 @@ public class Jfmx {
 
     @ExcelProperty("系统类别")
     private String xtlbDm;
-
-    @ExcelProperty("小微类型")
-    private String xwlx;
-
-    private String xelx23;
-    private String xelx24;
-    private String xelx25;
 
     private String zzjglxDm;
     private String hyDm;
@@ -310,6 +302,12 @@ public class Jfmx {
     private Date createTime;
     private String updateBy;
     private Date updateTime;
+
+    // gh_hj 关联字段（LEFT JOIN）
+    private String xwlx;
+    private String xelx23;
+    private String xelx24;
+    private String xelx25;
 
     // 分页字段
     private Integer pageNo;

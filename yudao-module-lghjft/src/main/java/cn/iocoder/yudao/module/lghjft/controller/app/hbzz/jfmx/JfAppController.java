@@ -7,7 +7,7 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jfmx.vo.JfPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jfmx.vo.JfRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jfmx.vo.JfResVO;
 import cn.iocoder.yudao.module.lghjft.service.hbzz.jfmx.JfService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -41,23 +41,23 @@ public class JfAppController {
      */
     @GetMapping("/listmx")
     @Operation(summary = "获得 经费明细对象明细")
-//    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
-    public CommonResult<PageResult<JfRespVO>> list(@Valid JfPageReqVO jfmx) {
-        PageResult<JfRespVO> pageResult = jfService.selectJftzmxList(jfmx);
-        return success(BeanUtils.toBean(pageResult, JfRespVO.class));
+    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+    public CommonResult<PageResult<JfResVO>> list(@Valid JfPageReqVO jfmx) {
+        PageResult<JfResVO> pageResult = jfService.selectJftzmxList(jfmx);
+        return success(BeanUtils.toBean(pageResult, JfResVO.class));
     }
 
 
     @GetMapping("/export-excel")
-//    @PreAuthorize("@ss.hasPermi('lghjft:jf:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:jf:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportJfExcel(@Valid JfPageReqVO pageReqVO,
               HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
-        List<JfRespVO> list = jfService.selectJftzmxList(pageReqVO).getList();
+        List<JfResVO> list = jfService.selectJftzmxList(pageReqVO).getList();
         // 导出 Excel
-        ExcelUtils.write(response, " 经费明细对象.xls", "数据", JfRespVO.class,
-                        BeanUtils.toBean(list, JfRespVO.class));
+        ExcelUtils.write(response, " 经费明细对象.xls", "数据", JfResVO.class,
+                BeanUtils.toBean(list, JfResVO.class));
     }
 
 }

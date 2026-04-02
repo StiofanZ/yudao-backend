@@ -2,9 +2,8 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhjsq;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhjsq.vo.GhWfJfhjsqRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhjsq.vo.GhWfJfhjsqResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhjsq.vo.GhWfJfhjsqSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.jfhjsq.GhWfJfhjsqDO;
 import cn.iocoder.yudao.module.lghjft.service.workflow.jfhjsq.GhWfJfhjsqService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -37,8 +36,8 @@ public class GhWfJfhjsqController {
     @Operation(summary = "获得经费缓缴申请详情")
     @Parameter(name = "id", description = "编号", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:workflow-jfhjsq:query')")
-    public CommonResult<GhWfJfhjsqRespVO> getGhWfJfhjsq(@RequestParam("id") Long id) {
-        GhWfJfhjsqRespVO data = jfhjsqService.getGhWfJfhjsq(id);
-        return success(BeanUtils.toBean(data, GhWfJfhjsqRespVO.class));
+    public CommonResult<GhWfJfhjsqResVO> getGhWfJfhjsq(@RequestParam("id") Long id) {
+        GhWfJfhjsqResVO data = jfhjsqService.getGhWfJfhjsq(id);
+        return success(BeanUtils.toBean(data, GhWfJfhjsqResVO.class));
     }
 }

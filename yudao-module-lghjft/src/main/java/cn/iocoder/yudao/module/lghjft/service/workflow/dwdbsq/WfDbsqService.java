@@ -1,13 +1,11 @@
 package cn.iocoder.yudao.module.lghjft.service.workflow.dwdbsq;
 
-import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqRespVO;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.workflow.dwdbsq.vo.WfDbsqAppPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.dwdbsq.WfDbsqDO;
-import jakarta.validation.*;
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import org.flowable.engine.delegate.DelegateExecution;
+import jakarta.validation.Valid;
 
 /**
  * 工会隶属关系调拨申请 Service 接口
@@ -31,7 +29,7 @@ public interface WfDbsqService {
      * @param id 编号
      * @return 工会隶属关系调拨申请
      */
-    WfDbsqRespVO getDetail(Long id);
+    WfDbsqResVO getDetail(Long id);
 
     /**
      * 获得工会隶属关系调拨申请分页

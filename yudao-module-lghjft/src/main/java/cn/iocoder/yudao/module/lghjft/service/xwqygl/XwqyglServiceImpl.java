@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglQuery;
-import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglResVO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.xwqygl.XwqyglMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class XwqyglServiceImpl implements XwqyglService {
     private XwqyglMapper xwqyglMapper;
 
     @Override
-    public PageResult<XwqyglRespVO> getXwqyglPage(XwqyglQuery query) {
+    public PageResult<XwqyglResVO> getXwqyglPage(XwqyglQuery query) {
 
         // 如果没有传 deptId，就用当前登录用户部门
         if (query.getDeptId() == null || query.getDeptId().isEmpty()) {
@@ -37,7 +37,7 @@ public class XwqyglServiceImpl implements XwqyglService {
         query.setLimit(query.getPageSize());
 
         // 查询列表
-        List<XwqyglRespVO> list = xwqyglMapper.selectXwqyglList(query);
+        List<XwqyglResVO> list = xwqyglMapper.selectXwqyglList(query);
         // 查询总数
         long total = xwqyglMapper.selectXwqyglCount(query);
 
@@ -46,7 +46,7 @@ public class XwqyglServiceImpl implements XwqyglService {
     }
 
     @Override
-    public List<XwqyglRespVO> getXwqyglList(XwqyglQuery query) {
+    public List<XwqyglResVO> getXwqyglList(XwqyglQuery query) {
         if (StrUtil.isEmpty(query.getDeptId())) {
             Long deptId = SecurityFrameworkUtils.getLoginUserDeptId();
             if (deptId != null) {

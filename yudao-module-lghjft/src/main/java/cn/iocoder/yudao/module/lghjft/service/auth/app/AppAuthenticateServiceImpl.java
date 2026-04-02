@@ -31,6 +31,7 @@ import cn.iocoder.yudao.module.system.service.user.AdminUserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -62,6 +63,7 @@ public class AppAuthenticateServiceImpl implements  AppAuthenticateService{
     private AuthenticateService authenticateService;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public AuthorizeResVO appLoginAuthCode(AuthorizeLghReqVO reqVO) {
         // 1. 解密 authCode
         String token;

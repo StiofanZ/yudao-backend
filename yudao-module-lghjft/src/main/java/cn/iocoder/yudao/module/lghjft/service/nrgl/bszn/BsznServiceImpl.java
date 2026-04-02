@@ -15,6 +15,7 @@ import cn.iocoder.yudao.module.system.api.dept.dto.DeptRespDTO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class BsznServiceImpl implements BsznService {
     private DeptApi deptApi;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Long createBszn(BsznCreateReqVO createReqVO) {
         // ... (保持不变)
         // 校验上级内容的可见性
@@ -59,6 +61,7 @@ public class BsznServiceImpl implements BsznService {
     // ... (updateBszn, deleteBszn, validateParentKjfw, validateChildrenKjfw 保持不变)
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateBszn(BsznUpdateReqVO updateReqVO) {
         // 校验存在
         BsznDO oldBszn = validateBsznExists(updateReqVO.getId());
@@ -151,6 +154,7 @@ public class BsznServiceImpl implements BsznService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteBszn(Long id) {
         // 校验存在
         BsznDO oldBszn = validateBsznExists(id);

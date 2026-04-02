@@ -1,22 +1,19 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jcjfzz;
 
-import com.baomidou.mybatisplus.annotation.*;
-import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 @TableName("gh_hkxx")
 @Data
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class HkxxDO extends BaseDO {
+public class HkxxDO {
 
     /**
      * 主键ID
@@ -150,39 +147,5 @@ public class HkxxDO extends BaseDO {
     private LocalDateTime updateTime;
     //修改人
     private String updateBy;
-
-
-//    子表字段
-    /**
-     * 到账标记
-     */
-    @TableField(exist = false)
-    private String dzbj;
-    /**
-     * 确认日期
-     */
-    @TableField(exist = false)
-    private LocalDateTime qrrq;
-    /**
-     * 银行回单号
-     */
-    @TableField(exist = false)
-    private String yhhdh;
-
-    // ========== 一对多关联：到账确认列表 ==========
-    @TableField(exist = false)
-    private List<HkxxQrszDO> jcjfdzList;
-
-
-//    不存在字段
-    @TableField(exist = false)
-    private String creator;
-
-    @TableField(exist = false)
-    private String updater;
-
-    @TableField(exist = false)
-    private Boolean deleted;
-
 
 }

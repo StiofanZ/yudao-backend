@@ -11,6 +11,7 @@ import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.zcwj.ZcwjDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.nrgl.zcwj.ZcwjMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
@@ -27,6 +28,7 @@ public class ZcwjServiceImpl implements ZcwjService {
     @Resource
     private ZcwjMapper zcwjMapper;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Long createZcwj(ZcwjCreateReqVO createReqVO) {
         ZcwjDO zcwj = BeanUtils.toBean(createReqVO, ZcwjDO.class);
@@ -37,6 +39,7 @@ public class ZcwjServiceImpl implements ZcwjService {
         return zcwj.getId();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateZcwj(ZcwjUpdateReqVO updateReqVO) {
         ZcwjDO oldZcwj = validateZcwjExists(updateReqVO.getId());
@@ -49,6 +52,7 @@ public class ZcwjServiceImpl implements ZcwjService {
         zcwjMapper.updateById(updateObj);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteZcwj(Long id) {
         ZcwjDO oldZcwj = validateZcwjExists(id);

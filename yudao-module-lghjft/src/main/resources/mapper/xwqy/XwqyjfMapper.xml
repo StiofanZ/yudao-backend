@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.xwqy.xwqyjf.XwqyjfMapper">
+
+    <!-- 小微企业经费60%明细 -->
+    <select id="selectPageYf" resultType="cn.iocoder.yudao.module.lghjft.dal.dataobject.xwqy.xwqyjf.XwqyjfDO">
+        SELECT * FROM gh_jf
+        <where>
+            FBBJ = 'Y'
+            <if test="req.deptId != null and req.deptId != ''">AND dept_id = #{req.deptId}</if>
+            <if test="req.djxh != null and req.djxh != ''">AND DJXH = #{req.djxh}</if>
+            <if test="req.shxydm != null and req.shxydm != ''">AND SHXYDM = #{req.shxydm}</if>
+            <if test="req.nsrmc != null and req.nsrmc != ''">AND NSRMC LIKE CONCAT('%', #{req.nsrmc}, '%')</if>
+        </where>
+        ORDER BY ghjf_id DESC
+    </select>
+
+</mapper>

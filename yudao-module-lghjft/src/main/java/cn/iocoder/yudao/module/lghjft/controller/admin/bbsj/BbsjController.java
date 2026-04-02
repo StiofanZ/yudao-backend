@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.jeecg.modules.drag.vo.TreeModel;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +39,7 @@ public class BbsjController {
 
     @GetMapping("/get-dept-tree")
     @Operation(summary = "获取部门树")
+    @PreAuthorize("@ss.hasPermission('lghjft:report:query')")
     public CommonResult<List<TreeModel>> getDeptTree(@RequestParam(name = "params", required = false) String params) {
         Set<Long> parents = ConcurrentHashMap.newKeySet();
         List<DeptDO> depts = new CopyOnWriteArrayList<>(new ArrayList<>());

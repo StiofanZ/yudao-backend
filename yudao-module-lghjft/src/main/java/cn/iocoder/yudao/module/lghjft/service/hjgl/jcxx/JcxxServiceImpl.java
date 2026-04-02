@@ -2,7 +2,6 @@ package cn.iocoder.yudao.module.lghjft.service.hjgl.jcxx;
 
 import cn.hutool.core.lang.Assert;
 import cn.iocoder.yudao.framework.common.exception.ServiceException;
-import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
@@ -13,7 +12,6 @@ import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.GhHjJcxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nsrxx.NsrxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.hj.ghhjyhxx.GhHjYhxxMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.hjgl.jcxx.GhHjJcxxMapper;
-import cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants;
 import cn.iocoder.yudao.module.lghjft.service.nsrxx.NsrxxService;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
 import cn.iocoder.yudao.module.system.service.user.AdminUserService;
@@ -103,6 +101,7 @@ public class JcxxServiceImpl implements JcxxService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteJcxx(String id) {
         // 校验存在
@@ -195,7 +194,7 @@ public class JcxxServiceImpl implements JcxxService {
     }
 
     @Override
-    public JcxxRespVO getDjNsrxxInfoForUpdateHj(JcxxBaseVO djNsrxxDto) {
+    public JcxxResVO getDjNsrxxInfoForUpdateHj(JcxxBaseVO djNsrxxDto) {
         // 1. 参数校验
         String djxh = djNsrxxDto.getDjxh();
         String shxydm = djNsrxxDto.getShxydm();
@@ -228,7 +227,7 @@ public class JcxxServiceImpl implements JcxxService {
             throw new ServiceException(400,"未查询到对应的税务信息");
         }
 
-        return BeanUtils.toBean(nsrxx, JcxxRespVO.class);
+        return BeanUtils.toBean(nsrxx, JcxxResVO.class);
     }
 }
 

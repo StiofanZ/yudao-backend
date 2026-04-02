@@ -1,12 +1,12 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfhz;
 
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
-import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfhz.vo.YhbfhzPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfhz.vo.YhbfhzRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfhz.vo.YhbfhzResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfhz.vo.YhbfhzSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.hbfhz.YhbfhzDO;
 import cn.iocoder.yudao.module.lghjft.service.jfcl.hbfhz.YhbfhzService;
@@ -28,7 +28,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
 @Tag(name = "管理后台 - 银行拨付汇总")
 @RestController
-@RequestMapping("/jfcl/yhbfhz")
+@RequestMapping("/lghjft/jfcl/yhbfhz")
 @Validated
 public class YhbfhzController {
 
@@ -41,9 +41,9 @@ public class YhbfhzController {
     @GetMapping("/page")
     @Operation(summary = "查询银行拨付汇总分页")
     @PreAuthorize("@ss.hasPermission('lghjft:yhbfhz:query')")
-    public CommonResult<PageResult<YhbfhzRespVO>> getYhbfhzPage(@Valid YhbfhzPageReqVO pageReqVO) {
+    public CommonResult<PageResult<YhbfhzResVO>> getYhbfhzPage(@Valid YhbfhzPageReqVO pageReqVO) {
         PageResult<YhbfhzDO> pageResult = yhbfhzService.selectGhHkxxYhbfhzList(pageReqVO);
-        return success(BeanUtils.toBean(pageResult, YhbfhzRespVO.class));
+        return success(BeanUtils.toBean(pageResult, YhbfhzResVO.class));
     }
 
     /**
@@ -57,7 +57,7 @@ public class YhbfhzController {
         // 直接用 pageReqVO 传入，不用转 DO！
         List<YhbfhzDO> list = yhbfhzService.selectGhHkxxYhbfhzList(pageReqVO).getList();
         ExcelUtils.write(response, "银行拨付汇总数据.xls", "数据",
-                YhbfhzRespVO.class, BeanUtils.toBean(list, YhbfhzRespVO.class));
+                YhbfhzResVO.class, BeanUtils.toBean(list, YhbfhzResVO.class));
     }
 
     /**
@@ -67,9 +67,9 @@ public class YhbfhzController {
     @Operation(summary = "获取银行拨付汇总详细信息")
     @Parameter(name = "bfhzid", description = "银行拨付汇总主键", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:yhbfhz:query')")
-    public CommonResult<YhbfhzRespVO> getInfo(@PathVariable("bfhzid") String bfhzid) {
+    public CommonResult<YhbfhzResVO> getInfo(@PathVariable("bfhzid") String bfhzid) {
         YhbfhzDO yhbfhzDO = yhbfhzService.selectGhHkxxYhbfhzByBfhzid(bfhzid);
-        return success(BeanUtils.toBean(yhbfhzDO, YhbfhzRespVO.class));
+        return success(BeanUtils.toBean(yhbfhzDO, YhbfhzResVO.class));
     }
 
     /**

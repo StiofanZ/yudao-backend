@@ -34,6 +34,7 @@ public class JfmxController {
      * 获取经费明细列表
      */
     @GetMapping("/list")
+    @PreAuthorize("@ss.hasPermission('lghjft:jf-jfmx:query')")
     public CommonResult<List<Jfmx>> list(@Valid JfmxQuery query) {
         List<Jfmx> list = jfmxService.selectJfmxList(query);
         return CommonResult.success(list);
@@ -43,6 +44,7 @@ public class JfmxController {
      * 获取经费明细分页列表
      */
     @GetMapping("/page")
+    @PreAuthorize("@ss.hasPermission('lghjft:jf-jfmx:query')")
     public CommonResult<PageResult<Jfmx>> page(@Valid JfmxQuery query) {
         PageResult<Jfmx> pageResult = jfmxService.selectJfmxPage(query);
         return CommonResult.success(pageResult);
@@ -52,6 +54,7 @@ public class JfmxController {
      * 导出经费明细
      */
     @GetMapping("/export")
+    @PreAuthorize("@ss.hasPermission('lghjft:jf-jfmx:export')")
     public void export(HttpServletResponse response, @Valid JfmxQuery query) {
         try {
             List<JfmxExportVO> list = jfmxService.selectJfmxExportList(query);

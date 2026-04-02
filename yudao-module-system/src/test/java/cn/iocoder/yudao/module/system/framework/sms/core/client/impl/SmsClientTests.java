@@ -48,7 +48,7 @@ public class SmsClientTests {
         String mobile = "15601691323";
         String apiTemplateId = "SMS_207945135";
         // 调用
-        SmsSendRespDTO sendRespDTO = client.sendSms(sendLogId, mobile, apiTemplateId, ListUtil.of(new KeyValue<>("code", "1024")));
+        SmsSendRespDTO sendRespDTO = client.sendSms(sendLogId, mobile, apiTemplateId, "", ListUtil.of(new KeyValue<>("code", "1024")));
         // 打印结果
         System.out.println(sendRespDTO);
     }
@@ -69,7 +69,7 @@ public class SmsClientTests {
         String mobile = "15601691323";
         String apiTemplateId = "358212";
         // 调用
-        SmsSendRespDTO sendRespDTO = client.sendSms(sendLogId, mobile, apiTemplateId, ListUtil.of(new KeyValue<>("code", "1024")));
+        SmsSendRespDTO sendRespDTO = client.sendSms(sendLogId, mobile, apiTemplateId, "", ListUtil.of(new KeyValue<>("code", "1024")));
         // 打印结果
         System.out.println(sendRespDTO);
     }
@@ -108,7 +108,7 @@ public class SmsClientTests {
         String apiTemplateId = "3644cdab863546a3b718d488659a99ef";
         List<KeyValue<String, Object>> templateParams = ListUtil.of(new KeyValue<>("code", "1024"));
         // 调用
-        SmsSendRespDTO smsSendRespDTO = client.sendSms(sendLogId, mobile, apiTemplateId, templateParams);
+        SmsSendRespDTO smsSendRespDTO = client.sendSms(sendLogId, mobile, apiTemplateId, "", templateParams);
         // 打印结果
         System.out.println(smsSendRespDTO);
     }
@@ -128,7 +128,7 @@ public class SmsClientTests {
         String apiTemplateId = "3644cdab863546a3b718d488659a99ef";
         List<KeyValue<String, Object>> templateParams = ListUtil.of(new KeyValue<>("code", "1122"));
         // 调用
-        SmsSendRespDTO smsSendRespDTO = client.sendSms(sendLogId, mobile, apiTemplateId, templateParams);
+        SmsSendRespDTO smsSendRespDTO = client.sendSms(sendLogId, mobile, apiTemplateId, "", templateParams);
         // 打印结果
         System.out.println(smsSendRespDTO);
     }

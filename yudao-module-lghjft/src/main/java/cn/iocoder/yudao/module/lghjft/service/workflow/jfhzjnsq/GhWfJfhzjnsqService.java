@@ -1,7 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.service.workflow.jfhzjnsq;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhzjnsq.vo.GhWfJfhzjnsqRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhzjnsq.vo.GhWfJfhzjnsqResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhzjnsq.vo.GhWfJfhzjnsqSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.workflow.jfhzjnsq.vo.GhWfJfhzjnsqAppPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.jfhzjnsq.GhWfJfhzjnsqDO;
@@ -29,7 +29,7 @@ public interface GhWfJfhzjnsqService {
      * @param id 编号
      * @return 工会经费汇总缴纳申请表（主表）
      */
-    GhWfJfhzjnsqRespVO getDetail(Long id);
+    GhWfJfhzjnsqResVO getDetail(Long id);
 
     /**
      * 获得工会经费汇总缴纳申请分页（只查询自己的）

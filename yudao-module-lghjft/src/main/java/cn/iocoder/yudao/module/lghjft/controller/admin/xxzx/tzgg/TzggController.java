@@ -7,7 +7,7 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.infra.api.websocket.WebSocketSenderApi;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.tzgg.vo.TzggPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.tzgg.vo.TzggRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.tzgg.vo.TzggResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.tzgg.vo.TzggSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.xxzx.tzgg.TzggDO;
 import cn.iocoder.yudao.module.lghjft.service.xxzx.tzgg.TzggService;
@@ -73,18 +73,18 @@ public class TzggController {
     @GetMapping("/page")
     @Operation(summary = "获得通知公告分页")
     @PreAuthorize("@ss.hasPermission('lghjft:xxzx-tzgg:query')")
-    public CommonResult<PageResult<TzggRespVO>> getTzggPage(@Validated TzggPageReqVO pageReqVO) {
+    public CommonResult<PageResult<TzggResVO>> getTzggPage(@Validated TzggPageReqVO pageReqVO) {
         PageResult<TzggDO> pageResult = tzggService.getTzggPage(pageReqVO);
-        return success(BeanUtils.toBean(pageResult, TzggRespVO.class));
+        return success(BeanUtils.toBean(pageResult, TzggResVO.class));
     }
 
     @GetMapping("/get")
     @Operation(summary = "获得通知公告")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:xxzx-tzgg:query')")
-    public CommonResult<TzggRespVO> getTzgg(@RequestParam("id") Long id) {
+    public CommonResult<TzggResVO> getTzgg(@RequestParam("id") Long id) {
         TzggDO tzgg = tzggService.getTzgg(id);
-        return success(BeanUtils.toBean(tzgg, TzggRespVO.class));
+        return success(BeanUtils.toBean(tzgg, TzggResVO.class));
     }
 
     @PostMapping("/push")

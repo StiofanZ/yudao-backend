@@ -89,10 +89,6 @@ public class HkxxPageReqVO extends PageParam {
     @Schema(description = "备注")
     private String bz;
 
-    // ===================== 子表查询字段 =====================
-    @Schema(description = "到账标记")
-    private String dzbj;
-
     @Schema(description = "创建人")
     private String createBy;
 

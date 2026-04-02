@@ -61,7 +61,7 @@ public interface XxtxService {
      * @param reqVO 分页条件
      * @return 消息分页列表
      */
-    PageResult<XxtxMessageRespVO> getMessagePage(XxtxMessagePageReqVO reqVO);
+    PageResult<XxtxMessageResVO> getMessagePage(XxtxMessagePageReqVO reqVO);
 
     /**
      * 获取消息详情（包含部门和用户名称）
@@ -69,7 +69,7 @@ public interface XxtxService {
      * @param id 消息ID
      * @return 消息详情
      */
-    XxtxMessageRespVO getMessageDetail(Long id);
+    XxtxMessageResVO getMessageDetail(Long id);
 
     /**
      * 获取消息详情
@@ -95,6 +95,6 @@ public interface XxtxService {
      */
     PageResult<XxtxMessageReceiverDO> getMessageReceiverPage(XxtxMessagePageReqVO reqVO);
 
-    List<XxtxReceiverRespVO> getMessageReceiverList(Long messageId);
+    List<XxtxReceiverResVO> getMessageReceiverList(Long messageId);
 
 }

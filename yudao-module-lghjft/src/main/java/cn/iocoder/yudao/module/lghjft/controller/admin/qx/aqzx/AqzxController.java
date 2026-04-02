@@ -1,7 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.qx.aqzx;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
-import cn.iocoder.yudao.module.lghjft.controller.admin.qx.aqzx.vo.AqzxProfileRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.qx.aqzx.vo.AqzxProfileResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.aqzx.vo.AqzxSendSmsReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.aqzx.vo.AqzxUpdateNoticeMobileReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.aqzx.vo.AqzxUpdatePasswordReqVO;
@@ -28,7 +28,7 @@ public class AqzxController {
     @GetMapping("/profile")
     @Operation(summary = "获得当前账号安全信息")
     @PreAuthorize("isAuthenticated()")
-    public CommonResult<AqzxProfileRespVO> getProfile() {
+    public CommonResult<AqzxProfileResVO> getProfile() {
         return success(aqzxService.getCurrentProfile());
     }
 

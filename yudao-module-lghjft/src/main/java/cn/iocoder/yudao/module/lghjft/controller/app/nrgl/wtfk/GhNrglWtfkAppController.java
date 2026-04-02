@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,28 +32,32 @@ public class GhNrglWtfkAppController {
 
     @PutMapping("/handle-process")
     @Operation(summary = "处理问题反馈")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<Boolean> handleProcess(@Valid @RequestBody GhNrglWtfkClReqVO handleReqVO) {
-        wtfkService.handleProcess(handleReqVO);
+        wtfkService.handleProcessWithOwnerCheck(handleReqVO);
         return success(true);
     }
 
     @GetMapping("/log/list")
     @Operation(summary = "获得问题反馈处理明细列表")
     @Parameter(name = "wtfkId", description = "问题反馈ID", required = true)
-    public CommonResult<List<GhNrglWtfkClmxRespVO>> getGhNrglWtfkClmxList(@RequestParam("wtfkId") Long wtfkId) {
+    @PreAuthorize("isAuthenticated()")
+    public CommonResult<List<GhNrglWtfkClmxResVO>> getGhNrglWtfkClmxList(@RequestParam("wtfkId") Long wtfkId) {
         return success(wtfkService.getGhNrglWtfkClmxList(wtfkId));
     }
 
     @PostMapping("/create")
     @Operation(summary = "创建问题反馈")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<Long> createGhNrglWtfk(@Valid @RequestBody GhNrglWtfkSaveReqVO createReqVO) {
         return success(wtfkService.createGhNrglWtfk(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新问题反馈")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<Boolean> updateGhNrglWtfk(@Valid @RequestBody GhNrglWtfkSaveReqVO updateReqVO) {
-        wtfkService.updateGhNrglWtfk(updateReqVO);
+        wtfkService.updateGhNrglWtfkWithOwnerCheck(updateReqVO);
         return success(true);
     }
 
@@ -62,6 +67,7 @@ public class GhNrglWtfkAppController {
             @Parameter(name = "id", description = "编号", required = true),
             @Parameter(name = "isAdminView", description = "是否管理端视图")
     })
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<Boolean> deleteGhNrglWtfk(@RequestParam("id") Long id,
                                                   @RequestParam(value = "isAdminView", defaultValue = "false") Boolean isAdminView) {
         wtfkService.deleteGhNrglWtfk(id, isAdminView);
@@ -70,6 +76,7 @@ public class GhNrglWtfkAppController {
 
     @DeleteMapping("/delete-list")
     @Operation(summary = "批量删除问题反馈")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<Boolean> deleteGhNrglWtfkList(@RequestParam("ids") List<Long> ids,
                                                       @RequestParam(value = "isAdminView", defaultValue = "false") Boolean isAdminView) {
         wtfkService.deleteGhNrglWtfkListByIds(ids, isAdminView);
@@ -79,16 +86,18 @@ public class GhNrglWtfkAppController {
     @GetMapping("/get")
     @Operation(summary = "获得问题反馈详情")
     @Parameter(name = "id", description = "编号", required = true)
-    public CommonResult<GhNrglWtfkRespVO> getGhNrglWtfk(@RequestParam("id") Long id) {
+    @PreAuthorize("isAuthenticated()")
+    public CommonResult<GhNrglWtfkResVO> getGhNrglWtfk(@RequestParam("id") Long id) {
         return success(wtfkService.getGhNrglWtfkDetail(id));
     }
 
     @GetMapping("/page")
     @Operation(summary = "获得问题反馈分页")
-    public CommonResult<PageResult<GhNrglWtfkRespVO>> getGhNrglWtfkPage(@Valid GhNrglWtfkPageReqVO pageReqVO) {
+    @PreAuthorize("isAuthenticated()")
+    public CommonResult<PageResult<GhNrglWtfkResVO>> getGhNrglWtfkPage(@Valid GhNrglWtfkPageReqVO pageReqVO) {
         pageReqVO.setYhId(SecurityFrameworkUtils.getLoginUserId());
         pageReqVO.setIsAdminView(false);
         PageResult<GhNrglWtfkDO> pageResult = wtfkService.getGhNrglWtfkPage(pageReqVO);
-        return success(BeanUtils.toBean(pageResult, GhNrglWtfkRespVO.class));
+        return success(BeanUtils.toBean(pageResult, GhNrglWtfkResVO.class));
     }
 }

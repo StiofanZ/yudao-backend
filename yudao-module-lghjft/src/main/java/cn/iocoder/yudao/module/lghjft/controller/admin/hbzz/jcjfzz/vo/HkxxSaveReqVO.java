@@ -1,14 +1,9 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 
 @Schema(description = "管理后台 - 基层经费到账对象新增/修改 Request VO")
 @Data
@@ -102,47 +97,6 @@ public class HkxxSaveReqVO {
     @Schema(description = "修改时间")
     private Date updateTime;
 
-    @Schema(description = "到账标记")
-    private String dzbj;
-
-    @Schema(description = "确认日期")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date qrrq;
-
-    @Schema(description = "银行回单号")
-    private String yhhdh;
-
     @Schema(description = "校验码")
     private String ghHkxxJym;
-    // ==================== 内嵌子表：到账确认列表 ====================
-    @Schema(description = "到账确认列表（子表）")
-    private List<JcjfdzItem> jcjfdzList;
-
-    // ==================== 子表 VO（内部类） ====================
-    @Data
-    @Schema(description = "基层经费到账确认子表")
-    public static class JcjfdzItem {
-
-        @Schema(description = "主键ID")
-        private Integer id;
-
-        @Schema(description = "校验码")
-        private String ghHkxxJym;
-
-        @Schema(description = "划款信息ID", requiredMode = Schema.RequiredMode.REQUIRED)
-        private Integer hkxxId;
-
-        @Schema(description = "到账标记")
-        private String dzbj;
-
-        @Schema(description = "确认日期")
-        @JsonFormat(pattern = "yyyy-MM-dd")
-        private Date qrrq;
-
-        @Schema(description = "银行回单号")
-        private String yhhdh;
-
-        @Schema(description = "备注")
-        private String bz;
-    }
 }

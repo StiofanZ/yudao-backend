@@ -57,24 +57,24 @@ public class BqglController {
     @Operation(summary = "获得标签")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:hjgl-bqgl:query')")
-    public CommonResult<BqglRespVO> getBqdm(@RequestParam("id") String id) {
+    public CommonResult<BqglResVO> getBqdm(@RequestParam("id") String id) {
         GhDmHjBqDO bqgl = bqglService.getBqdm(id);
-        return success(BeanUtils.toBean(bqgl, BqglRespVO.class));
+        return success(BeanUtils.toBean(bqgl, BqglResVO.class));
     }
 
     @GetMapping("/list-bqdm")
     @Operation(summary = "获得标签列表")
     @PreAuthorize("@ss.hasPermission('lghjft:hjgl-bqgl:query')")
-    public CommonResult<PageResult<BqglRespVO>> listBqdm(@Valid BqglPageReqVO pageReqVO) {
-        PageResult<BqglRespVO> pageResult = bqglService.listBqdm(pageReqVO);
+    public CommonResult<PageResult<BqglResVO>> listBqdm(@Valid BqglPageReqVO pageReqVO) {
+        PageResult<BqglResVO> pageResult = bqglService.listBqdm(pageReqVO);
         return success(pageResult);
     }
 
     @GetMapping("/list-hjxx")
     @Operation(summary = "获得户籍信息分页")
     @PreAuthorize("@ss.hasPermission('lghjft:hjgl-bqgl:query')")
-    public CommonResult<PageResult<BqglHjxxRespVO>> listHjxx(@Valid BqglHjxxPageReqVO pageReqVO) {
-        PageResult<BqglHjxxRespVO> pageResult = bqglService.listHjxx(pageReqVO, null);
+    public CommonResult<PageResult<BqglHjxxResVO>> listHjxx(@Valid BqglHjxxPageReqVO pageReqVO) {
+        PageResult<BqglHjxxResVO> pageResult = bqglService.listHjxx(pageReqVO, null);
         return success(pageResult);
     }
 

@@ -4,13 +4,13 @@ import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.wtfk.vo.GhNrglWtfkClReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.wtfk.vo.GhNrglWtfkClmxRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.wtfk.vo.GhNrglWtfkClmxResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.wtfk.vo.GhNrglWtfkPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.wtfk.vo.GhNrglWtfkRespVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zxzx.vo.ZxzxFaqRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.wtfk.vo.GhNrglWtfkResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zxzx.vo.ZxzxFaqResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zxzx.vo.ZxzxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zxzx.vo.ZxzxProcessReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zxzx.vo.ZxzxRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zxzx.vo.ZxzxResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.cjwt.CjwtDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.wtfk.GhNrglWtfkDO;
 import cn.iocoder.yudao.module.lghjft.service.nrgl.cjwt.CjwtService;
@@ -45,7 +45,7 @@ public class ZxzxController {
     @GetMapping("/page")
     @Operation(summary = "获得在线咨询分页")
     @PreAuthorize("@ss.hasPermission('lghjft:nrgl-zxzx:query')")
-    public CommonResult<PageResult<ZxzxRespVO>> getPage(@Valid ZxzxPageReqVO reqVO) {
+    public CommonResult<PageResult<ZxzxResVO>> getPage(@Valid ZxzxPageReqVO reqVO) {
         PageResult<GhNrglWtfkDO> pageResult = wtfkService.getGhNrglWtfkPage(buildPageReq(reqVO, true));
         return success(convertPage(pageResult));
     }
@@ -54,7 +54,7 @@ public class ZxzxController {
     @Operation(summary = "获得在线咨询详情")
     @Parameter(name = "id", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:nrgl-zxzx:query')")
-    public CommonResult<ZxzxRespVO> get(@RequestParam("id") Long id) {
+    public CommonResult<ZxzxResVO> get(@RequestParam("id") Long id) {
         return success(convertResp(validateConsult(id)));
     }
 
@@ -62,7 +62,7 @@ public class ZxzxController {
     @Operation(summary = "获得在线咨询处理日志")
     @Parameter(name = "id", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:nrgl-zxzx:query')")
-    public CommonResult<List<GhNrglWtfkClmxRespVO>> getLogList(@RequestParam("id") Long id) {
+    public CommonResult<List<GhNrglWtfkClmxResVO>> getLogList(@RequestParam("id") Long id) {
         validateConsult(id);
         return success(wtfkService.getGhNrglWtfkClmxList(id));
     }
@@ -83,7 +83,7 @@ public class ZxzxController {
     @GetMapping("/faq-suggestions")
     @Operation(summary = "获得 FAQ 建议")
     @PreAuthorize("@ss.hasPermission('lghjft:nrgl-zxzx:query')")
-    public CommonResult<List<ZxzxFaqRespVO>> getFaqSuggestions(@RequestParam("keyword") String keyword,
+    public CommonResult<List<ZxzxFaqResVO>> getFaqSuggestions(@RequestParam("keyword") String keyword,
                                                                @RequestParam(value = "deptId", required = false) Long deptId) {
         List<CjwtDO> list = cjwtService.getPublicCjwtList(deptId).stream()
                 .filter(item -> !StringUtils.hasText(keyword)
@@ -91,7 +91,7 @@ public class ZxzxController {
                         || (item.getContent() != null && item.getContent().contains(keyword)))
                 .limit(5)
                 .toList();
-        return success(BeanUtils.toBean(list, ZxzxFaqRespVO.class));
+        return success(BeanUtils.toBean(list, ZxzxFaqResVO.class));
     }
 
     private GhNrglWtfkPageReqVO buildPageReq(ZxzxPageReqVO reqVO, boolean adminView) {
@@ -108,19 +108,19 @@ public class ZxzxController {
         return pageReqVO;
     }
 
-    private PageResult<ZxzxRespVO> convertPage(PageResult<GhNrglWtfkDO> pageResult) {
-        PageResult<GhNrglWtfkRespVO> converted = BeanUtils.toBean(pageResult, GhNrglWtfkRespVO.class);
-        List<ZxzxRespVO> list = converted.getList().stream().map(this::convertResp).toList();
+    private PageResult<ZxzxResVO> convertPage(PageResult<GhNrglWtfkDO> pageResult) {
+        PageResult<GhNrglWtfkResVO> converted = BeanUtils.toBean(pageResult, GhNrglWtfkResVO.class);
+        List<ZxzxResVO> list = converted.getList().stream().map(this::convertResp).toList();
         return new PageResult<>(list, converted.getTotal());
     }
 
-    private ZxzxRespVO convertResp(GhNrglWtfkRespVO respVO) {
-        ZxzxRespVO result = BeanUtils.toBean(respVO, ZxzxRespVO.class);
+    private ZxzxResVO convertResp(GhNrglWtfkResVO respVO) {
+        ZxzxResVO result = BeanUtils.toBean(respVO, ZxzxResVO.class);
         result.setConsultNo(respVO.getFkbh());
         return result;
     }
 
-    private GhNrglWtfkRespVO validateConsult(Long id) {
+    private GhNrglWtfkResVO validateConsult(Long id) {
         GhNrglWtfkDO wtfk = wtfkService.getGhNrglWtfk(id);
         if (wtfk == null || !CONSULT_TYPE.equals(wtfk.getLx())) {
             throw new IllegalArgumentException("在线咨询记录不存在");

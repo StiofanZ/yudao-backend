@@ -93,7 +93,7 @@ public class SfxxController {
     @GetMapping("/get-kbdsfxx")
     @Operation(summary = "获得可绑定身份信息")
     @PreAuthorize("@ss.hasPermission('lghjft:qx-sfxx:query')")
-    public CommonResult<List<KbdsfxxRespVO>> getKbdsfxx(@Valid SfxxReqVO reqVO) {
+    public CommonResult<List<KbdsfxxResVO>> getKbdsfxx(@Valid SfxxReqVO reqVO) {
         return success(sfxxService.getKbdsfxx(reqVO));
     }
 

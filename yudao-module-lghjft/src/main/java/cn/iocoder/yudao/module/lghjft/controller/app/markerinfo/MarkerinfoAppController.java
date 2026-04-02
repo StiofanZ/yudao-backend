@@ -5,7 +5,7 @@ import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.markerinfo.vo.MarkerInfoPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.app.markerinfo.vo.MarkerInfoAppRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.app.markerinfo.vo.MarkerInfoAppResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.markerinfo.MarkerInfoDO;
 import cn.iocoder.yudao.module.lghjft.service.markerinfo.MarkerInfoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -52,11 +52,11 @@ public class MarkerinfoAppController {
     @Operation(summary = "获得办事地图标注点信息")
     @PreAuthorize("isAuthenticated()")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    public CommonResult<MarkerInfoAppRespVO> getMarkerInfo(@RequestParam("id") Long id) {
+    public CommonResult<MarkerInfoAppResVO> getMarkerInfo(@RequestParam("id") Long id) {
         // 1. 获取数据
         MarkerInfoDO markerInfo = markerInfoService.getMarkerInfo(id);
         // 2. 转换为 VO
-        MarkerInfoAppRespVO vo = BeanUtils.toBean(markerInfo, MarkerInfoAppRespVO.class);
+        MarkerInfoAppResVO vo = BeanUtils.toBean(markerInfo, MarkerInfoAppResVO.class);
         // 3. 设置 gradeText（注意：markerInfo.getGrade() 返回的是 String）
         String grade = markerInfo.getGrade();
         String gradeText = getGradeText(grade);
@@ -67,17 +67,17 @@ public class MarkerinfoAppController {
     @GetMapping("/list-page")
     @Operation(summary = "获得办事地图标注点信息分页")
     @PreAuthorize("isAuthenticated()")
-    public CommonResult<PageResult<MarkerInfoAppRespVO>> getMarkerInfoPage(@Valid MarkerInfoPageReqVO pageReqVO) {
+    public CommonResult<PageResult<MarkerInfoAppResVO>> getMarkerInfoPage(@Valid MarkerInfoPageReqVO pageReqVO) {
         // 1. 获取分页数据
         PageResult<MarkerInfoDO> pageResult = markerInfoService.getMarkerInfoPage(pageReqVO);
 
         // 2. 创建一个列表来存放转换后的数据
-        List<MarkerInfoAppRespVO> voList = new ArrayList<>();
+        List<MarkerInfoAppResVO> voList = new ArrayList<>();
 
         // 3. 遍历转换
         for (MarkerInfoDO markerInfo : pageResult.getList()) {
             // 3.1 转换为 VO
-            MarkerInfoAppRespVO vo = BeanUtils.toBean(markerInfo, MarkerInfoAppRespVO.class);
+            MarkerInfoAppResVO vo = BeanUtils.toBean(markerInfo, MarkerInfoAppResVO.class);
 
             // 3.2 设置 gradeText
             String grade = markerInfo.getGrade();
@@ -89,21 +89,21 @@ public class MarkerinfoAppController {
         }
 
         // 4. 创建新的分页结果
-        PageResult<MarkerInfoAppRespVO> result = new PageResult<>(voList, pageResult.getTotal());
+        PageResult<MarkerInfoAppResVO> result = new PageResult<>(voList, pageResult.getTotal());
 
         return success(result);
     }
 
     @Operation(summary = "标注点周边工会信息")
     @GetMapping("/getCounty")
-    public CommonResult<List<MarkerInfoAppRespVO>> getCounty(@RequestParam Integer xzqhDm) {
+    public CommonResult<List<MarkerInfoAppResVO>> getCounty(@RequestParam Integer xzqhDm) {
         // 1. 调用服务获取原始 DO 列表
         List<MarkerInfoDO> doList = markerInfoService.getCountyData(xzqhDm);
 
         // 2. 转换为 VO 列表（带 gradeText）
-        List<MarkerInfoAppRespVO> voList = new ArrayList<>();
+        List<MarkerInfoAppResVO> voList = new ArrayList<>();
         for (MarkerInfoDO markerInfo : doList) {
-            MarkerInfoAppRespVO vo = BeanUtils.toBean(markerInfo, MarkerInfoAppRespVO.class);
+            MarkerInfoAppResVO vo = BeanUtils.toBean(markerInfo, MarkerInfoAppResVO.class);
             vo.setGradeText(getGradeText(markerInfo.getGrade()));
             voList.add(vo);
         }

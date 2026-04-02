@@ -1,7 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.dal.mysql.workflow.tdfsq;
 
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
-import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.tdfsq.vo.GhWfTdfsqKtfxxRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.tdfsq.vo.GhWfTdfsqKtfxxResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.tdfsq.GhWfTdfsqDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.tdfsq.GhWfTdfsqmxDO;
 import org.apache.ibatis.annotations.Insert;
@@ -40,7 +40,7 @@ public interface GhWfTdfsqMapper extends BaseMapperX<GhWfTdfsqDO> {
             "<if test='skssqz != null'>and jf.skssqz &lt;= #{skssqz} </if>" +
             "order by jf.skssqz desc" +
             "</script>")
-    List<GhWfTdfsqKtfxxRespVO> getKtfxxList(
+    List<GhWfTdfsqKtfxxResVO> getKtfxxList(
             @Param("djxh") String djxh,
             @Param("skssqq") LocalDate skssqq,
             @Param("skssqz") LocalDate skssqz);

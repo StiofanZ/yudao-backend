@@ -20,7 +20,7 @@ public interface BqglService {
      * @param rootId 根节点ID
      * @return 标签列表
      */
-    List<BqglRespVO> getBqxx(Long rootId);
+    List<BqglResVO> getBqxx(Long rootId);
 
     /**
      * 创建标签
@@ -73,7 +73,7 @@ public interface BqglService {
      * @param pageReqVO 分页查询
      * @return 标签分页
      */
-    PageResult<BqglRespVO> listBqdm(BqglPageReqVO pageReqVO);
+    PageResult<BqglResVO> listBqdm(BqglPageReqVO pageReqVO);
 
     /**
      * 获得户籍信息分页
@@ -82,7 +82,7 @@ public interface BqglService {
      * @param deptId    部门ID
      * @return 户籍信息分页
      */
-    PageResult<BqglHjxxRespVO> listHjxx(BqglHjxxPageReqVO pageReqVO, Long deptId);
+    PageResult<BqglHjxxResVO> listHjxx(BqglHjxxPageReqVO pageReqVO, Long deptId);
 
     /**
      * 保存户籍标签

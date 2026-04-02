@@ -55,7 +55,7 @@ public class GhNrglWtfkController {
     @Operation(summary = "获得问题反馈处理明细列表")
     @Parameter(name = "wtfkId", description = "问题反馈ID", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:nrgl-wtfk:query')")
-    public CommonResult<List<GhNrglWtfkClmxRespVO>> getGhNrglWtfkClmxList(@RequestParam("wtfkId") Long wtfkId) {
+    public CommonResult<List<GhNrglWtfkClmxResVO>> getGhNrglWtfkClmxList(@RequestParam("wtfkId") Long wtfkId) {
         return success(wtfkService.getGhNrglWtfkClmxList(wtfkId));
     }
 
@@ -100,16 +100,16 @@ public class GhNrglWtfkController {
     @Operation(summary = "获得问题反馈详情")
     @Parameter(name = "id", description = "编号", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:nrgl-wtfk:query')")
-    public CommonResult<GhNrglWtfkRespVO> getGhNrglWtfk(@RequestParam("id") Long id) {
+    public CommonResult<GhNrglWtfkResVO> getGhNrglWtfk(@RequestParam("id") Long id) {
         return success(wtfkService.getGhNrglWtfkDetail(id));
     }
 
     @GetMapping("/page")
     @Operation(summary = "获得问题反馈分页")
     @PreAuthorize("@ss.hasPermission('lghjft:nrgl-wtfk:query')")
-    public CommonResult<PageResult<GhNrglWtfkRespVO>> getGhNrglWtfkPage(@Valid GhNrglWtfkPageReqVO pageReqVO) {
+    public CommonResult<PageResult<GhNrglWtfkResVO>> getGhNrglWtfkPage(@Valid GhNrglWtfkPageReqVO pageReqVO) {
         PageResult<GhNrglWtfkDO> pageResult = wtfkService.getGhNrglWtfkPage(pageReqVO);
-        PageResult<GhNrglWtfkRespVO> result = BeanUtils.toBean(pageResult, GhNrglWtfkRespVO.class);
+        PageResult<GhNrglWtfkResVO> result = BeanUtils.toBean(pageResult, GhNrglWtfkResVO.class);
         fillClrmc(result.getList());
         return success(result);
     }
@@ -120,16 +120,16 @@ public class GhNrglWtfkController {
     @ApiAccessLog(operateType = EXPORT)
     public void exportGhNrglWtfkExcel(@Valid GhNrglWtfkPageReqVO pageReqVO, HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
-        List<GhNrglWtfkRespVO> list = BeanUtils.toBean(wtfkService.getGhNrglWtfkPage(pageReqVO).getList(), GhNrglWtfkRespVO.class);
+        List<GhNrglWtfkResVO> list = BeanUtils.toBean(wtfkService.getGhNrglWtfkPage(pageReqVO).getList(), GhNrglWtfkResVO.class);
         fillClrmc(list);
-        ExcelUtils.write(response, "问题反馈.xls", "数据", GhNrglWtfkRespVO.class, list);
+        ExcelUtils.write(response, "问题反馈.xls", "数据", GhNrglWtfkResVO.class, list);
     }
 
-    private void fillClrmc(List<GhNrglWtfkRespVO> list) {
+    private void fillClrmc(List<GhNrglWtfkResVO> list) {
         if (list == null || list.isEmpty()) {
             return;
         }
-        Set<Long> clrIds = list.stream().map(GhNrglWtfkRespVO::getClrId).filter(Objects::nonNull).collect(Collectors.toSet());
+        Set<Long> clrIds = list.stream().map(GhNrglWtfkResVO::getClrId).filter(Objects::nonNull).collect(Collectors.toSet());
         if (clrIds.isEmpty()) {
             return;
         }

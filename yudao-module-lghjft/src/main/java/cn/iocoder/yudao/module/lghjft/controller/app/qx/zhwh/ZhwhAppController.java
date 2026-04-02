@@ -6,7 +6,7 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.zhwh.vo.ZhwhCreateReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.zhwh.vo.ZhwhPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.qx.zhwh.vo.ZhwhRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.qx.zhwh.vo.ZhwhResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.zhwh.vo.ZhwhUpdateReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.zhwh.GhQxZhwhDO;
 import cn.iocoder.yudao.module.lghjft.service.qx.zhwh.ZhwhService;
@@ -52,7 +52,7 @@ public class ZhwhAppController {
     @Parameter(name = "id", required = true)
     @PreAuthorize("isAuthenticated()")
     public CommonResult<Boolean> cancelZhwh(@RequestParam("id") Long id) {
-        zhwhService.cancelZhwh(id);
+        zhwhService.cancelZhwhWithOwnerCheck(id);
         return success(true);
     }
 
@@ -60,17 +60,17 @@ public class ZhwhAppController {
     @Operation(summary = "获得账户维护申请")
     @Parameter(name = "id", required = true)
     @PreAuthorize("isAuthenticated()")
-    public CommonResult<ZhwhRespVO> getZhwh(@RequestParam("id") Long id) {
-        GhQxZhwhDO zhwh = zhwhService.getZhwh(id);
-        return success(BeanUtils.toBean(zhwh, ZhwhRespVO.class));
+    public CommonResult<ZhwhResVO> getZhwh(@RequestParam("id") Long id) {
+        GhQxZhwhDO zhwh = zhwhService.getZhwhWithOwnerCheck(id);
+        return success(BeanUtils.toBean(zhwh, ZhwhResVO.class));
     }
 
     @GetMapping("/page")
     @Operation(summary = "获得账户维护申请分页")
     @PreAuthorize("isAuthenticated()")
-    public CommonResult<PageResult<ZhwhRespVO>> getZhwhPage(@Valid ZhwhPageReqVO reqVO) {
+    public CommonResult<PageResult<ZhwhResVO>> getZhwhPage(@Valid ZhwhPageReqVO reqVO) {
         reqVO.setDlzhId(SecurityFrameworkUtils.getLoginUserId());
         PageResult<GhQxZhwhDO> pageResult = zhwhService.getZhwhPage(reqVO);
-        return success(BeanUtils.toBean(pageResult, ZhwhRespVO.class));
+        return success(BeanUtils.toBean(pageResult, ZhwhResVO.class));
     }
 }

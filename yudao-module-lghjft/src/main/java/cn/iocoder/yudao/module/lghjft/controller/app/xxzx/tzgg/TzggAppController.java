@@ -4,7 +4,7 @@ import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.tzgg.vo.TzggPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.tzgg.vo.TzggRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.tzgg.vo.TzggResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.xxzx.tzgg.TzggDO;
 import cn.iocoder.yudao.module.lghjft.service.xxzx.tzgg.TzggService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,18 +32,18 @@ public class TzggAppController {
     @GetMapping("/list-page")
     @Operation(summary = "获取通知公告列表")
     @PreAuthorize("isAuthenticated()")
-    public CommonResult<PageResult<TzggRespVO>> getTzggList(@Validated TzggPageReqVO pageReqVO) {
+    public CommonResult<PageResult<TzggResVO>> getTzggList(@Validated TzggPageReqVO pageReqVO) {
         PageResult<TzggDO> pageResult = tzggService.getTzggPage(pageReqVO);
-        return success(BeanUtils.toBean(pageResult, TzggRespVO.class));
+        return success(BeanUtils.toBean(pageResult, TzggResVO.class));
     }
 
     @GetMapping("/get")
     @Operation(summary = "获得通知公告")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("isAuthenticated()")
-    public CommonResult<TzggRespVO> getTzgg(@RequestParam("id") Long id) {
+    public CommonResult<TzggResVO> getTzgg(@RequestParam("id") Long id) {
         TzggDO tzgg = tzggService.getTzgg(id);
-        return success(BeanUtils.toBean(tzgg, TzggRespVO.class));
+        return success(BeanUtils.toBean(tzgg, TzggResVO.class));
     }
 
 }

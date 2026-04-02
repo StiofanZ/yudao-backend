@@ -1,12 +1,13 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jfmx.vo;
 
-import lombok.*;
-import java.util.*;
-import io.swagger.v3.oas.annotations.media.Schema;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
-import java.math.BigDecimal;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND;
 
@@ -407,22 +408,19 @@ public class JfPageReqVO extends PageParam {
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private LocalDateTime updateTime;
 
-    @Schema(description = "业务类型 xwlx")
-    private String xwlx;
-
-    @Schema(description = "项目类型23")
-    private List<String> xelx23;
-
-    @Schema(description = "项目类型24")
-    private List<String> xelx24;
-
-    @Schema(description = "项目类型25")
-    private List<String> xelx25;
-
     @Schema(description = "年度")
     private String nd;
 
 //    搜索条件
 @Schema(description = "关键词：账号(精确)、户名(模糊)、金额(精确)")
 private String keyword;
+
+    @Schema(description = "小微类型")
+    private String xwlx;
+
+    @Schema(description = "划款批次-开始")
+    private String beginHkpch;
+
+    @Schema(description = "划款批次-结束")
+    private String endHkpch;
 }

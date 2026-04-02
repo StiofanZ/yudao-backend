@@ -8,7 +8,7 @@ import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils;
 import cn.iocoder.yudao.module.bpm.api.task.BpmProcessInstanceApi;
 import cn.iocoder.yudao.module.bpm.api.task.dto.BpmProcessInstanceCreateReqDTO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhjsq.vo.GhWfJfhjsqRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhjsq.vo.GhWfJfhjsqResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhjsq.vo.GhWfJfhjsqSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.workflow.jfhjsq.vo.GhWfJfhjsqAppPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.jfhjsq.GhWfJfhjsqDO;
@@ -28,7 +28,11 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
+import java.util.Objects;
+
+import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
+import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.OPERATION_NOT_PERMITTED;
 
 @Service
 @Validated
@@ -106,7 +110,7 @@ public class GhWfJfhjsqServiceImpl implements GhWfJfhjsqService {
 
     // ====================== 【完善】详情接口（带附件） ======================
     @Override
-    public GhWfJfhjsqRespVO getGhWfJfhjsq(Long id) {
+    public GhWfJfhjsqResVO getGhWfJfhjsq(Long id) {
         GhWfJfhjsqDO data = jfhjsqMapper.selectById(id);
         if (data == null) {
             throw ServiceExceptionUtil.exception(ErrorCodeConstants.WF_JFHJ_SQ_NOT_EXISTS);
@@ -116,11 +120,11 @@ public class GhWfJfhjsqServiceImpl implements GhWfJfhjsqService {
         List<HjsqfjDO> fjList = getAttachmentList(id);
 
         // 转换VO
-        GhWfJfhjsqRespVO respVO = BeanUtils.toBean(data, GhWfJfhjsqRespVO.class);
+        GhWfJfhjsqResVO respVO = BeanUtils.toBean(data, GhWfJfhjsqResVO.class);
 
         // 手动赋值附件 → 无类型冲突
-        List<GhWfJfhjsqRespVO.FjItem> respFjList = fjList.stream().map(fj -> {
-            GhWfJfhjsqRespVO.FjItem item = new GhWfJfhjsqRespVO.FjItem();
+        List<GhWfJfhjsqResVO.FjItem> respFjList = fjList.stream().map(fj -> {
+            GhWfJfhjsqResVO.FjItem item = new GhWfJfhjsqResVO.FjItem();
             item.setFjlx(fj.getFjlx());
             item.setWjlj(fj.getWjlj());
             item.setWjmc(fj.getWjmc());
@@ -140,6 +144,19 @@ public class GhWfJfhjsqServiceImpl implements GhWfJfhjsqService {
 //        }
 //        return data;
 //    }
+
+    @Override
+    public GhWfJfhjsqResVO getGhWfJfhjsqWithOwnerCheck(Long id) {
+        GhWfJfhjsqDO data = jfhjsqMapper.selectById(id);
+        if (data == null) {
+            throw ServiceExceptionUtil.exception(ErrorCodeConstants.WF_JFHJ_SQ_NOT_EXISTS);
+        }
+        Long loginUserId = getLoginUserId();
+        if (!Objects.equals(data.getCreator(), loginUserId == null ? null : String.valueOf(loginUserId))) {
+            throw exception(OPERATION_NOT_PERMITTED);
+        }
+        return getGhWfJfhjsq(id);
+    }
 
     @Override
     public PageResult<GhWfJfhjsqDO> getSelfPage(Long userId, @Valid GhWfJfhjsqAppPageReqVO pageReqVO) {

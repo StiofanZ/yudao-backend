@@ -2,9 +2,9 @@ package cn.iocoder.yudao.module.lghjft.controller.app.hjgl.jcxx;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.nsrxx.NsrxxQueryReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.nsrxx.NsrxxRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.nsrxx.NsrxxResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.GhHjJcxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nsrxx.NsrxxDO;
 import cn.iocoder.yudao.module.lghjft.service.hjgl.jcxx.JcxxService;
@@ -43,19 +43,19 @@ public class JcxxAppController {
     @Operation(summary = "获得户籍管理/基础信息")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("isAuthenticated()")
-    public CommonResult<JcxxRespVO> getJcxx(@RequestParam("id") String id) {
+    public CommonResult<JcxxResVO> getJcxx(@RequestParam("id") String id) {
         GhHjJcxxDO jcxx = jcxxService.getJcxx(id);
-        return success(BeanUtils.toBean(jcxx, JcxxRespVO.class));
+        return success(BeanUtils.toBean(jcxx, JcxxResVO.class));
     }
 
 
     @GetMapping("/query-nsrxx")
     @Operation(summary = "查询纳税人信息")
     @PreAuthorize("isAuthenticated()")
-    public CommonResult<List<NsrxxRespVO>> queryNsrxx(@Valid NsrxxQueryReqVO queryReqVO) {
+    public CommonResult<List<NsrxxResVO>> queryNsrxx(@Valid NsrxxQueryReqVO queryReqVO) {
         List<NsrxxDO> nsrxxList = nsrxxService.getNsrxxList(queryReqVO.getKeyword());
         return success(nsrxxList.stream().map(nsrxx -> {
-            NsrxxRespVO respVO = BeanUtils.toBean(nsrxx, NsrxxRespVO.class);
+            NsrxxResVO respVO = BeanUtils.toBean(nsrxx, NsrxxResVO.class);
             // Check if exists in local HJ table
             GhHjJcxxDO existingHj = jcxxService.getJcxx(nsrxx.getDjxh());
             if (existingHj != null) {

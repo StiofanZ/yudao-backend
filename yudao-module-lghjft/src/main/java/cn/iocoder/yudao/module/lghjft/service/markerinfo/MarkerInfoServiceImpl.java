@@ -1,29 +1,23 @@
 package cn.iocoder.yudao.module.lghjft.service.markerinfo;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.mybatis.logging.Logger;
-import org.mybatis.logging.LoggerFactory;
-import org.springframework.stereotype.Service;
-import jakarta.annotation.Resource;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.*;
-import cn.iocoder.yudao.module.lghjft.controller.admin.markerinfo.vo.*;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.markerinfo.MarkerInfoDO;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-
+import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
+import cn.iocoder.yudao.module.lghjft.controller.admin.markerinfo.vo.MarkerInfoPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.markerinfo.vo.MarkerInfoSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.markerinfo.MarkerInfoDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.markerinfo.MarkerInfoMapper;
+import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertList;
-import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.diffList;
-import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.*;
+import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.MARKER_INFO_NOT_EXISTS;
 
 /**
  * 高德地图标注点信息 Service 实现类
@@ -37,6 +31,8 @@ public class MarkerInfoServiceImpl implements MarkerInfoService {
     private static final Integer LANZHOU_CITY_CODE = 620100;
     @Resource
     private MarkerInfoMapper markerInfoMapper;
+
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Long createMarkerInfo(MarkerInfoSaveReqVO createReqVO) {
         // 插入
@@ -46,6 +42,7 @@ public class MarkerInfoServiceImpl implements MarkerInfoService {
         return markerInfo.getId();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateMarkerInfo(MarkerInfoSaveReqVO updateReqVO) {
         // 校验存在

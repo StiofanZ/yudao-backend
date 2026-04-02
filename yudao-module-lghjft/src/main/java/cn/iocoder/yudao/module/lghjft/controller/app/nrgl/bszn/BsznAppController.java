@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +42,7 @@ public class BsznAppController {
     @GetMapping("/get")
     @Operation(summary = "获得办事指南")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<BsznResVO> getBszn(@RequestParam("id") Long id) {
         BsznDO bszn = bsznService.getBszn(id);
         return success(BeanUtils.toBean(bszn, BsznResVO.class));
@@ -48,6 +50,7 @@ public class BsznAppController {
 
     @GetMapping("/list-page")
     @Operation(summary = "获得办事指南列表")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<PageResult<BsznResVO>> getBsznPage(@Valid BsznPageAppReqVO listReqVO) {
         PageResult<BsznDO> list = bsznService.getBsznPage(listReqVO);
         list.getList().removeIf(zcjdDO -> !List.of(2, 3).contains(zcjdDO.getStatus())); //only 2,3

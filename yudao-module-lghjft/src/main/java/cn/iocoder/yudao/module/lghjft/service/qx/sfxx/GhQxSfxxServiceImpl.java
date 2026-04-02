@@ -10,14 +10,19 @@ import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.sfxx.GhQxSfxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.sfxx.GhQxSfxxMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
+import java.util.Objects;
+
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserDeptId;
-import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.SFXX_NOT_EXISTS;
-import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.SFXX_REJECT_REASON_REQUIRED;
+import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
+import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.*;
+
+
 
 @Service
 @Validated
@@ -26,6 +31,7 @@ public class GhQxSfxxServiceImpl implements GhQxSfxxService {
     @Resource
     private GhQxSfxxMapper ghQxSfxxMapper;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Long createSfxx(SfxxSaveReqVO createReqVO) {
         GhQxSfxxDO sfxx = BeanUtils.toBean(createReqVO, GhQxSfxxDO.class);
@@ -39,6 +45,7 @@ public class GhQxSfxxServiceImpl implements GhQxSfxxService {
         return sfxx.getId();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateSfxx(SfxxSaveReqVO updateReqVO) {
         validateSfxxExists(updateReqVO.getId());
@@ -46,12 +53,14 @@ public class GhQxSfxxServiceImpl implements GhQxSfxxService {
         ghQxSfxxMapper.updateById(updateObj);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteSfxx(Long id) {
         validateSfxxExists(id);
         ghQxSfxxMapper.deleteById(id);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteSfxxListByIds(List<Long> ids) {
         ghQxSfxxMapper.deleteByIds(ids);
@@ -91,6 +100,13 @@ public class GhQxSfxxServiceImpl implements GhQxSfxxService {
     }
 
     @Override
+    public void auditSfxxWithOwnerCheck(Long id, Integer status, String jjyy) {
+        GhQxSfxxDO sfxx = validateSfxxExistsAndReturn(id);
+        validateSfxxOwner(sfxx);
+        auditSfxx(id, status, jjyy);
+    }
+
+    @Override
     public void unbindSfxx(Long id, String jbyy) {
         validateSfxxExists(id);
         // 更新解绑原因
@@ -102,9 +118,31 @@ public class GhQxSfxxServiceImpl implements GhQxSfxxService {
         ghQxSfxxMapper.deleteById(id);
     }
 
+    @Override
+    public void unbindSfxxWithOwnerCheck(Long id, String jbyy) {
+        GhQxSfxxDO sfxx = validateSfxxExistsAndReturn(id);
+        validateSfxxOwner(sfxx);
+        unbindSfxx(id, jbyy);
+    }
+
     private void validateSfxxExists(Long id) {
         if (id == null || ghQxSfxxMapper.selectById(id) == null) {
             throw exception(SFXX_NOT_EXISTS);
+        }
+    }
+
+    private GhQxSfxxDO validateSfxxExistsAndReturn(Long id) {
+        GhQxSfxxDO sfxx = ghQxSfxxMapper.selectById(id);
+        if (id == null || sfxx == null) {
+            throw exception(SFXX_NOT_EXISTS);
+        }
+        return sfxx;
+    }
+
+    private void validateSfxxOwner(GhQxSfxxDO sfxx) {
+        Long loginUserId = getLoginUserId();
+        if (!Objects.equals(sfxx.getDlzhId(), loginUserId)) {
+            throw exception(OPERATION_NOT_PERMITTED);
         }
     }
 

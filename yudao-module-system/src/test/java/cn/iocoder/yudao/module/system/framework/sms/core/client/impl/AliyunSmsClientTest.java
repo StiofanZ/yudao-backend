@@ -56,7 +56,7 @@ public class AliyunSmsClientTest extends BaseMockitoUnitTest {
 
             // 调用
             SmsSendRespDTO result = smsClient.sendSms(sendLogId, mobile,
-                    apiTemplateId, templateParams);
+                    apiTemplateId, "", templateParams);
             // 断言
             assertTrue(result.getSuccess());
             assertEquals("30067CE9-3710-5984-8881-909B21D8DB28", result.getApiRequestId());
@@ -82,7 +82,7 @@ public class AliyunSmsClientTest extends BaseMockitoUnitTest {
                     .then((Answer<String>) invocationOnMock -> (String) invocationOnMock.getArguments()[0]);
 
             // 调用
-            SmsSendRespDTO result = smsClient.sendSms(sendLogId, mobile, apiTemplateId, templateParams);
+            SmsSendRespDTO result = smsClient.sendSms(sendLogId, mobile, apiTemplateId, "", templateParams);
             // 断言
             assertFalse(result.getSuccess());
             assertEquals("B7700B8E-227E-5886-9564-26036172F01F", result.getApiRequestId());

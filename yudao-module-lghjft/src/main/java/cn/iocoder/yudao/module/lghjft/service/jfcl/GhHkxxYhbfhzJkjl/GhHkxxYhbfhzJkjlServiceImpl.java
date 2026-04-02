@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,27 +36,32 @@ public class GhHkxxYhbfhzJkjlServiceImpl implements IGhHkxxYhbfhzJkjlService {
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int insertGhHkxxYhbfhzJkjl(GhHkxxYhbfhzJkjl ghHkxxYhbfhzJkjl) {
         return ghHkxxYhbfhzJkjlMapper.insertGhHkxxYhbfhzJkjl(ghHkxxYhbfhzJkjl);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int updateGhHkxxYhbfhzJkjl(GhHkxxYhbfhzJkjl ghHkxxYhbfhzJkjl) {
         return ghHkxxYhbfhzJkjlMapper.updateGhHkxxYhbfhzJkjl(ghHkxxYhbfhzJkjl);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteGhHkxxYhbfhzJkjlByYhbfhzJkjlIds(Long[] yhbfhzJkjlIds) {
         return ghHkxxYhbfhzJkjlMapper.deleteGhHkxxYhbfhzJkjlByYhbfhzJkjlIds(yhbfhzJkjlIds);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteGhHkxxYhbfhzJkjlByYhbfhzJkjlId(Long yhbfhzJkjlId) {
         return ghHkxxYhbfhzJkjlMapper.deleteGhHkxxYhbfhzJkjlByYhbfhzJkjlId(yhbfhzJkjlId);
     }
 
     // ===================== 只增加适配VO的方法（不影响旧功能） =====================
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Long insertGhHkxxYhbfhzJkjl(GhHkxxYhbfhzJkjlSaveReqVO createReqVO) {
         GhHkxxYhbfhzJkjl entity = BeanUtils.toBean(createReqVO, GhHkxxYhbfhzJkjl.class);
         insertGhHkxxYhbfhzJkjl(entity);
@@ -63,12 +69,14 @@ public class GhHkxxYhbfhzJkjlServiceImpl implements IGhHkxxYhbfhzJkjlService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateGhHkxxYhbfhzJkjl(GhHkxxYhbfhzJkjlSaveReqVO updateReqVO) {
         GhHkxxYhbfhzJkjl entity = BeanUtils.toBean(updateReqVO, GhHkxxYhbfhzJkjl.class);
         updateGhHkxxYhbfhzJkjl(entity);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteGhHkxxYhbfhzJkjlByYhbfhzJkjlIds(List<Long> ids) {
         deleteGhHkxxYhbfhzJkjlByYhbfhzJkjlIds(ids.toArray(new Long[0]));
     }

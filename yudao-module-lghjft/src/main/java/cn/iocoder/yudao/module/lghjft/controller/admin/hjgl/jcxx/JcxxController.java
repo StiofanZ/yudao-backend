@@ -1,12 +1,11 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx;
 
-import cn.idev.excel.util.StringUtils;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.*;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.nsrxx.NsrxxQueryReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.nsrxx.NsrxxRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.nsrxx.NsrxxResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.GhHjJcxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nsrxx.NsrxxDO;
 import cn.iocoder.yudao.module.lghjft.service.hjgl.jcxx.JcxxService;
@@ -65,26 +64,26 @@ public class JcxxController {
     @Operation(summary = "获得户籍管理/基础信息")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:hjgl-jcxx:query')")
-    public CommonResult<JcxxRespVO> getJcxx(@RequestParam("id") String id) {
+    public CommonResult<JcxxResVO> getJcxx(@RequestParam("id") String id) {
         GhHjJcxxDO jcxx = jcxxService.getJcxx(id);
-        return success(BeanUtils.toBean(jcxx, JcxxRespVO.class));
+        return success(BeanUtils.toBean(jcxx, JcxxResVO.class));
     }
 
     @GetMapping("/page")
     @Operation(summary = "获得户籍管理/基础信息分页")
     @PreAuthorize("@ss.hasPermission('lghjft:hjgl-jcxx:query')")
-    public CommonResult<PageResult<JcxxRespVO>> getJcxxPage(@Valid JcxxPageReqVO pageReqVO) {
+    public CommonResult<PageResult<JcxxResVO>> getJcxxPage(@Valid JcxxPageReqVO pageReqVO) {
         PageResult<GhHjJcxxDO> pageResult = jcxxService.getJcxxPage(pageReqVO);
-        return success(BeanUtils.toBean(pageResult, JcxxRespVO.class));
+        return success(BeanUtils.toBean(pageResult, JcxxResVO.class));
     }
 
     @GetMapping("/query-nsrxx")
     @Operation(summary = "查询纳税人信息")
     @PreAuthorize("@ss.hasPermission('lghjft:hjgl-jcxx:query')")
-    public CommonResult<List<NsrxxRespVO>> queryNsrxx(@Valid NsrxxQueryReqVO queryReqVO) {
+    public CommonResult<List<NsrxxResVO>> queryNsrxx(@Valid NsrxxQueryReqVO queryReqVO) {
         List<NsrxxDO> nsrxxList = nsrxxService.getNsrxxList(queryReqVO.getKeyword());
         return success(nsrxxList.stream().map(nsrxx -> {
-            NsrxxRespVO respVO = BeanUtils.toBean(nsrxx, NsrxxRespVO.class);
+            NsrxxResVO respVO = BeanUtils.toBean(nsrxx, NsrxxResVO.class);
             // Check if exists in local HJ table
             GhHjJcxxDO existingHj = jcxxService.getJcxx(nsrxx.getDjxh());
             if (existingHj != null) {
@@ -102,13 +101,13 @@ public class JcxxController {
     @Operation(summary = "从税务机关获取最新户籍信息")
     @Parameter(name = "djxh", description = "登记序号", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:hjgl-jcxx:update')")
-    public CommonResult<JcxxRespVO> getTaxInfo(@RequestParam("djxh") String djxh) {
+    public CommonResult<JcxxResVO> getTaxInfo(@RequestParam("djxh") String djxh) {
         NsrxxDO nsrxx = nsrxxService.getNsrxx(djxh);
         if (nsrxx == null) {
             return CommonResult.error(404, "未找到对应的税务信息");
         }
-        // Map NsrxxDO to JcxxRespVO (or GhHjJcxxDO then to VO)
-        JcxxRespVO respVO = BeanUtils.toBean(nsrxx, JcxxRespVO.class);
+        // Map NsrxxDO to JcxxResVO (or GhHjJcxxDO then to VO)
+        JcxxResVO respVO = BeanUtils.toBean(nsrxx, JcxxResVO.class);
         return success(respVO);
     }
 
@@ -125,7 +124,7 @@ public class JcxxController {
     @GetMapping("/getDjNsrxxInfoForUpdateHj")
     @Operation(summary = "获取前置户籍管理详细信息")
     @PreAuthorize("@ss.hasPermission('lghjft:hjgl-jcxx:query')")
-    public CommonResult<JcxxRespVO> getDjNsrxxInfoForUpdateHj(JcxxBaseVO djNsrxxDto) {
+    public CommonResult<JcxxResVO> getDjNsrxxInfoForUpdateHj(JcxxBaseVO djNsrxxDto) {
         return success(jcxxService.getDjNsrxxInfoForUpdateHj(djNsrxxDto));
     }
 }

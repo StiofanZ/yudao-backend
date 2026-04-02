@@ -31,6 +31,7 @@ import java.util.*;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.CONTENT_NOT_EXISTS;
+import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.OPERATION_NOT_PERMITTED;
 
 /**
  * 消息提醒 Service 实现类
@@ -175,7 +176,7 @@ public class XxtxServiceImpl implements XxtxService {
     }
 
     @Override
-    public PageResult<XxtxMessageRespVO> getMessagePage(XxtxMessagePageReqVO reqVO) {
+    public PageResult<XxtxMessageResVO> getMessagePage(XxtxMessagePageReqVO reqVO) {
         PageResult<XxtxMessageDO> pageResult = messageMapper.selectPage(reqVO, new LambdaQueryWrapperX<XxtxMessageDO>()
                 .likeIfPresent(XxtxMessageDO::getTitle, reqVO.getTitle())
                 .eqIfPresent(XxtxMessageDO::getMessageType, reqVO.getMessageType())
@@ -183,13 +184,26 @@ public class XxtxServiceImpl implements XxtxService {
                 .eqIfPresent(XxtxMessageDO::getSenderId, reqVO.getSenderId())
                 .betweenIfPresent(XxtxMessageDO::getSendTime, reqVO.getSendTimeBegin(), reqVO.getSendTimeEnd())
                 .orderByDesc(XxtxMessageDO::getId));
-        List<XxtxMessageRespVO> list = pageResult.getList().stream().map(this::buildMessageRespVO).toList();
+        List<XxtxMessageResVO> list = pageResult.getList().stream().map(this::buildMessageResVO).toList();
         return new PageResult<>(list, pageResult.getTotal());
     }
 
     @Override
-    public XxtxMessageRespVO getMessageDetail(Long id) {
-        return buildMessageRespVO(validateMessageExists(id));
+    public XxtxMessageResVO getMessageDetail(Long id) {
+        XxtxMessageDO message = validateMessageExists(id);
+        // IDOR check: verify the current user is a receiver of this message
+        Long loginUserId = SecurityFrameworkUtils.getLoginUserId();
+        if (loginUserId != null) {
+            XxtxMessageReceiverDO receiver = messageReceiverMapper.selectOne(new LambdaQueryWrapper<XxtxMessageReceiverDO>()
+                    .eq(XxtxMessageReceiverDO::getMessageId, id)
+                    .eq(XxtxMessageReceiverDO::getReceiverId, loginUserId)
+                    .eq(XxtxMessageReceiverDO::getReceiverType, 1));
+            // Also allow the sender to view the message
+            if (receiver == null && !loginUserId.equals(message.getSenderId())) {
+                throw exception(OPERATION_NOT_PERMITTED);
+            }
+        }
+        return buildMessageResVO(message);
     }
 
     @Override
@@ -222,7 +236,7 @@ public class XxtxServiceImpl implements XxtxService {
     }
 
     @Override
-    public List<XxtxReceiverRespVO> getMessageReceiverList(Long messageId) {
+    public List<XxtxReceiverResVO> getMessageReceiverList(Long messageId) {
         validateMessageExists(messageId);
         List<XxtxMessageReceiverDO> receiverList = messageReceiverMapper.selectList(new LambdaQueryWrapperX<XxtxMessageReceiverDO>()
                 .eq(XxtxMessageReceiverDO::getMessageId, messageId)
@@ -232,7 +246,7 @@ public class XxtxServiceImpl implements XxtxService {
             return Collections.emptyList();
         }
         Map<Long, AdminUserDO> userMap = hqYhMap(receiverList.stream().map(XxtxMessageReceiverDO::getReceiverId).toList());
-        return receiverList.stream().map(receiver -> buildReceiverRespVO(receiver, userMap.get(receiver.getReceiverId()))).toList();
+        return receiverList.stream().map(receiver -> buildReceiverResVO(receiver, userMap.get(receiver.getReceiverId()))).toList();
     }
 
     /**
@@ -287,8 +301,8 @@ public class XxtxServiceImpl implements XxtxService {
         }
     }
 
-    private XxtxMessageRespVO buildMessageRespVO(XxtxMessageDO message) {
-        XxtxMessageRespVO respVO = BeanUtils.toBean(message, XxtxMessageRespVO.class);
+    private XxtxMessageResVO buildMessageResVO(XxtxMessageDO message) {
+        XxtxMessageResVO respVO = BeanUtils.toBean(message, XxtxMessageResVO.class);
         if (message.getDeptIds() != null && !message.getDeptIds().isEmpty()) {
             List<DeptDO> depts = deptMapper.selectBatchIds(message.getDeptIds());
             List<String> deptNames = new ArrayList<>();
@@ -321,8 +335,8 @@ public class XxtxServiceImpl implements XxtxService {
         return respVO;
     }
 
-    private XxtxReceiverRespVO buildReceiverRespVO(XxtxMessageReceiverDO receiver, AdminUserDO userDO) {
-        XxtxReceiverRespVO respVO = BeanUtils.toBean(receiver, XxtxReceiverRespVO.class);
+    private XxtxReceiverResVO buildReceiverResVO(XxtxMessageReceiverDO receiver, AdminUserDO userDO) {
+        XxtxReceiverResVO respVO = BeanUtils.toBean(receiver, XxtxReceiverResVO.class);
         if (userDO != null) {
             respVO.setReceiverName(userDO.getNickname());
             respVO.setLxdh(userDO.getMobile());

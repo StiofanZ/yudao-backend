@@ -22,6 +22,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.OPERATION_NOT_PERMITTED;
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.WTFK_NOT_EXISTS;
 
 @Service
@@ -69,10 +70,25 @@ public class GhNrglWtfkServiceImpl implements GhNrglWtfkService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    public void updateGhNrglWtfkWithOwnerCheck(GhNrglWtfkSaveReqVO updateReqVO) {
+        GhNrglWtfkDO wtfk = wtfkMapper.selectById(updateReqVO.getId());
+        if (wtfk == null) {
+            throw exception(WTFK_NOT_EXISTS);
+        }
+        validateWtfkOwner(wtfk);
+        updateGhNrglWtfk(updateReqVO);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteGhNrglWtfk(Long id, Boolean isAdminView) {
         GhNrglWtfkDO wtfk = wtfkMapper.selectById(id);
         if (wtfk == null) {
             throw exception(WTFK_NOT_EXISTS);
+        }
+        // IDOR check: only the owner can delete from App (non-admin) view
+        if (!Boolean.TRUE.equals(isAdminView)) {
+            validateWtfkOwner(wtfk);
         }
         int currentStatus = Objects.requireNonNullElse(wtfk.getZt(), 1);
         int nextStatus = Boolean.TRUE.equals(isAdminView)
@@ -131,6 +147,17 @@ public class GhNrglWtfkServiceImpl implements GhNrglWtfkService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    public void handleProcessWithOwnerCheck(@Valid GhNrglWtfkClReqVO reqVO) {
+        GhNrglWtfkDO wtfk = wtfkMapper.selectById(reqVO.getId());
+        if (wtfk == null) {
+            throw exception(WTFK_NOT_EXISTS);
+        }
+        validateWtfkOwner(wtfk);
+        handleProcess(reqVO);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void handleProcess(@Valid GhNrglWtfkClReqVO reqVO) {
         GhNrglWtfkDO wtfk = wtfkMapper.selectById(reqVO.getId());
         if (wtfk == null) {
@@ -161,7 +188,7 @@ public class GhNrglWtfkServiceImpl implements GhNrglWtfkService {
     }
 
     @Override
-    public List<GhNrglWtfkClmxRespVO> getGhNrglWtfkClmxList(Long wtfkId) {
+    public List<GhNrglWtfkClmxResVO> getGhNrglWtfkClmxList(Long wtfkId) {
         List<GhNrglWtfkClmxDO> list = wtfkClmxMapper.selectListByWtfkId(wtfkId);
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyList();
@@ -171,9 +198,9 @@ public class GhNrglWtfkServiceImpl implements GhNrglWtfkService {
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
         Map<Long, AdminUserRespDTO> userMap = clrIds.isEmpty() ? Collections.emptyMap() : adminUserApi.getUserMap(clrIds);
-        List<GhNrglWtfkClmxRespVO> result = new ArrayList<>(list.size());
+        List<GhNrglWtfkClmxResVO> result = new ArrayList<>(list.size());
         for (GhNrglWtfkClmxDO item : list) {
-            GhNrglWtfkClmxRespVO respVO = BeanUtils.toBean(item, GhNrglWtfkClmxRespVO.class);
+            GhNrglWtfkClmxResVO respVO = BeanUtils.toBean(item, GhNrglWtfkClmxResVO.class);
             if (respVO.getClrmc() == null && item.getClrId() != null) {
                 AdminUserRespDTO user = userMap.get(item.getClrId());
                 if (user != null) {
@@ -186,12 +213,12 @@ public class GhNrglWtfkServiceImpl implements GhNrglWtfkService {
     }
 
     @Override
-    public GhNrglWtfkRespVO getGhNrglWtfkDetail(Long id) {
+    public GhNrglWtfkResVO getGhNrglWtfkDetail(Long id) {
         GhNrglWtfkDO wtfk = wtfkMapper.selectById(id);
         if (wtfk == null) {
             throw exception(WTFK_NOT_EXISTS);
         }
-        GhNrglWtfkRespVO respVO = BeanUtils.toBean(wtfk, GhNrglWtfkRespVO.class);
+        GhNrglWtfkResVO respVO = BeanUtils.toBean(wtfk, GhNrglWtfkResVO.class);
         if (wtfk.getClrId() != null) {
             AdminUserRespDTO user = adminUserApi.getUser(wtfk.getClrId());
             if (user != null) {
@@ -204,6 +231,13 @@ public class GhNrglWtfkServiceImpl implements GhNrglWtfkService {
     private void validateGhNrglWtfkExists(Long id) {
         if (wtfkMapper.selectById(id) == null) {
             throw exception(WTFK_NOT_EXISTS);
+        }
+    }
+
+    private void validateWtfkOwner(GhNrglWtfkDO wtfk) {
+        Long loginUserId = SecurityFrameworkUtils.getLoginUserId();
+        if (!Objects.equals(wtfk.getYhId(), loginUserId)) {
+            throw exception(OPERATION_NOT_PERMITTED);
         }
     }
 }

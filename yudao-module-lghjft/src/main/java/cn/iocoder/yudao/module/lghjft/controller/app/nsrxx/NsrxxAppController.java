@@ -5,6 +5,7 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.nsrxx.vo.NsrxxPayFormResV
 import cn.iocoder.yudao.module.lghjft.service.nsrxx.NsrxxService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class NsrxxAppController {
 
 //查询纳税人单位信息
     @GetMapping("/getByDw")
+    @PreAuthorize("@ss.hasPermission('lghjft:nsrxx:query')")
     public CommonResult<NsrxxPayFormResVO> getByShxydm(@RequestParam("shxydm") String shxydm) {
         // 2. 调用Service查询并直接返回数据（不封装多余信息）
         NsrxxPayFormResVO nsrxxPayFormResVO =  nsrxxService.getNsrdwxxByShxydm(shxydm);

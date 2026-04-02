@@ -5,8 +5,8 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessagePageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessageRespVO;
-import cn.iocoder.yudao.module.lghjft.controller.app.xxzx.xxtx.vo.XxtxMessageAppRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xxzx.xxtx.vo.XxtxMessageResVO;
+import cn.iocoder.yudao.module.lghjft.controller.app.xxzx.xxtx.vo.XxtxMessageAppResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.xxzx.xxtx.XxtxMessageDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.xxzx.xxtx.XxtxMessageReceiverDO;
 import cn.iocoder.yudao.module.lghjft.service.xxzx.xxtx.XxtxService;
@@ -33,27 +33,27 @@ public class XxtxAppController {
     @GetMapping("/list-page")
     @Operation(summary = "获取消息分页列表")
     @PreAuthorize("isAuthenticated()")
-    public CommonResult<PageResult<XxtxMessageAppRespVO>> getMessagePage(@Validated XxtxMessagePageReqVO pageReqVO) {
+    public CommonResult<PageResult<XxtxMessageAppResVO>> getMessagePage(@Validated XxtxMessagePageReqVO pageReqVO) {
         pageReqVO.setReceiverId(SecurityFrameworkUtils.getLoginUserId());
         PageResult<XxtxMessageReceiverDO> receiverDOPageResult = xxtxService.getMessageReceiverPage(pageReqVO);
-        PageResult<XxtxMessageAppRespVO> appRespVOPageResult = new PageResult<>();
-        appRespVOPageResult.setTotal(receiverDOPageResult.getTotal());
-        appRespVOPageResult.setList(receiverDOPageResult.getList().stream().map(receiverDO -> {
-            XxtxMessageAppRespVO respVO = new XxtxMessageAppRespVO();
+        PageResult<XxtxMessageAppResVO> appResVOPageResult = new PageResult<>();
+        appResVOPageResult.setTotal(receiverDOPageResult.getTotal());
+        appResVOPageResult.setList(receiverDOPageResult.getList().stream().map(receiverDO -> {
+            XxtxMessageAppResVO respVO = new XxtxMessageAppResVO();
             BeanUtils.copyProperties(receiverDO, respVO);
             XxtxMessageDO messageDO = xxtxService.getMessage(receiverDO.getMessageId());
             BeanUtils.copyProperties(messageDO, respVO);
             respVO.setReadStatus(respVO.getReadStatus());
             return respVO;
         }).toList());
-        return success(BeanUtils.toBean(appRespVOPageResult, XxtxMessageAppRespVO.class));
+        return success(BeanUtils.toBean(appResVOPageResult, XxtxMessageAppResVO.class));
     }
 
     @GetMapping("/get")
     @Operation(summary = "获取消息详情")
     @Parameter(name = "id", description = "消息ID", required = true, example = "1024")
     @PreAuthorize("isAuthenticated()")
-    public CommonResult<XxtxMessageRespVO> getMessage(@RequestParam("id") Long id) {
+    public CommonResult<XxtxMessageResVO> getMessage(@RequestParam("id") Long id) {
         return success(xxtxService.getMessageDetail(id));
     }
 

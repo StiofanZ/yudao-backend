@@ -2,9 +2,9 @@ package cn.iocoder.yudao.module.lghjft.dal.mysql.hbzz.jcjfzz;
 
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxSummaryRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxSummaryResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jcjfzz.HkxxDO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -30,8 +30,8 @@ public interface HkxxMapper extends BaseMapperX<HkxxDO> {
     HkxxDO selectJcjfzzByHkxxId(Integer hkxxId);
 
     //    查询经费到账列表
-    IPage<HkxxRespVO> selectJcjfzzList(Page<HkxxRespVO> page, @Param("query") HkxxPageReqVO query);
+    IPage<HkxxResVO> selectJcjfzzList(Page<HkxxResVO> page, @Param("query") HkxxPageReqVO query);
 
-    HkxxSummaryRespVO selectJcjfzzSummary(@Param("query") HkxxPageReqVO query);
+    HkxxSummaryResVO selectJcjfzzSummary(@Param("query") HkxxPageReqVO query);
 
 }

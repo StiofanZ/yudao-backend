@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.annotations.VisibleForTesting;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -37,6 +38,7 @@ public class TzggServiceImpl implements TzggService {
     @Resource
     private DeptMapper deptMapper;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Long createTzgg(TzggSaveReqVO createReqVO) {
         TzggDO notice = BeanUtils.toBean(createReqVO, TzggDO.class);
@@ -48,6 +50,7 @@ public class TzggServiceImpl implements TzggService {
         return notice.getId();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateTzgg(TzggSaveReqVO updateReqVO) {
         // 校验是否存在
@@ -59,6 +62,7 @@ public class TzggServiceImpl implements TzggService {
         tzggMapper.updateById(updateObj);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteTzgg(Long id) {
         // 校验是否存在
@@ -67,6 +71,7 @@ public class TzggServiceImpl implements TzggService {
         tzggMapper.deleteById(id);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteTzggList(List<Long> ids) {
         tzggMapper.deleteByIds(ids);

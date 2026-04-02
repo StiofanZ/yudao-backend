@@ -1,9 +1,12 @@
 package cn.iocoder.yudao.module.lghjft.service.jfcl.hbfhz;
+
 import cn.idev.excel.util.StringUtils;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.file.utils.DateUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfhz.vo.YhbfhzPageReqVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.hbfhz.YhbfhzDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfmx.YhbfmxDO;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.hbfhz.YhbfhzMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.yhbfmx.YhbfmxMapper;
 import cn.iocoder.yudao.module.lghjft.service.jfcl.ZsYh.ZsYhService;
 import com.alibaba.fastjson.JSONArray;
@@ -12,13 +15,16 @@ import com.aliyun.oss.ServiceException;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
-import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+
 import java.math.BigDecimal;
-import java.util.*;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.hbfhz.YhbfhzDO;
-import cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.hbfhz.YhbfhzMapper;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 
 /**
@@ -65,6 +71,7 @@ public class YhbfhzServiceImpl implements YhbfhzService {
      * 新增银行拨付汇总
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int insertGhHkxxYhbfhz(YhbfhzDO ghHkxxYhbfhz) {
         ghHkxxYhbfhz.setCreateTime(DateUtils.getNowDate());
         return yhbfhzMapper.insertGhHkxxYhbfhz(ghHkxxYhbfhz);
@@ -74,6 +81,7 @@ public class YhbfhzServiceImpl implements YhbfhzService {
      * 修改银行拨付汇总
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int updateGhHkxxYhbfhz(YhbfhzDO ghHkxxYhbfhz) {
         ghHkxxYhbfhz.setUpdateTime(DateUtils.getNowDate());
         return yhbfhzMapper.updateGhHkxxYhbfhz(ghHkxxYhbfhz);
@@ -83,6 +91,7 @@ public class YhbfhzServiceImpl implements YhbfhzService {
      * 批量删除银行拨付汇总
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteGhHkxxYhbfhzByBfhzids(String[] bfhzids) {
         return yhbfhzMapper.deleteGhHkxxYhbfhzByBfhzids(bfhzids);
     }
@@ -91,6 +100,7 @@ public class YhbfhzServiceImpl implements YhbfhzService {
      * 删除银行拨付汇总信息
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int deleteGhHkxxYhbfhzByBfhzid(String bfhzid) {
         return yhbfhzMapper.deleteGhHkxxYhbfhzByBfhzid(bfhzid);
     }
@@ -99,6 +109,7 @@ public class YhbfhzServiceImpl implements YhbfhzService {
      * 提交银行审核
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateYhbfhztj(YhbfhzDO ghHkxxYhbfhz) {
         if (Objects.isNull(ghHkxxYhbfhz)) {
             throw new ServiceException("拨付汇总行数据不能为空！");
@@ -171,6 +182,7 @@ public class YhbfhzServiceImpl implements YhbfhzService {
      * 支付明细查询
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateZfmxcx(YhbfhzDO ghHkxxYhbfhz) {
         if (Objects.isNull(ghHkxxYhbfhz)) {
             throw new ServiceException("拨付汇总行数据不能为空！");

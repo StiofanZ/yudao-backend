@@ -42,9 +42,19 @@
         <result column="jcghhm" property="jcghhm" />
         <result column="jcghhh" property="jcghhh" />
         <result column="jcghyh" property="jcghyh" />
+        <result column="hjfl1_dm" property="hjfl1Dm"/>
+        <result column="hjfl2_dm" property="hjfl2Dm"/>
+        <result column="hjfl3_dm" property="hjfl3Dm"/>
+        <result column="hjfl5_dm" property="hjfl5Dm"/>
+        <result column="hjfl7_dm" property="hjfl7Dm"/>
+        <result column="hjfl9_dm" property="hjfl9Dm"/>
+        <result column="sdghjg_dm" property="sdghjgDm"/>
+        <result column="fzcrq" property="fzcrq"/>
+        <result column="zxrq" property="zxrq"/>
         <result column="sjtb_sj" property="sjtbSj" />
         <result column="bz" property="bz" />
         <result column="nsrsbh" property="nsrsbh" />
+        <result column="deptName" property="deptName"/>
     </resultMap>
 
     <select id="selectGhHjBydjxh" parameterType="string" resultMap="GhHjVOMap">
@@ -73,13 +83,22 @@
             zgrs,
             nsrzt_dm,
             nsrztmc,
+            fzcrq,
+            zxrq,
             zcdz,
             yzbm,
             lxr,
             lxdh,
             ghlb_dm,
             xtlb_dm,
+            hjfl1_dm,
+            hjfl2_dm,
+            hjfl3_dm,
+            hjfl5_dm,
+            hjfl7_dm,
             hjfl8_dm,
+            hjfl9_dm,
+            sdghjg_dm,
             clghbj,
             clghrq,
             jcghdm,
@@ -93,6 +112,134 @@
             nsrsbh
         from gh_hj
         where djxh = #{djxh}
+    </select>
+
+    <!-- 批量复审: 根据v1 fushenPlBydjxhs 的SQL，更新HJFL9_DM为'Y' -->
+    <update id="fushenPlBydjxhs">
+        UPDATE gh_hj SET HJFL9_DM = 'Y'
+        WHERE DJXH IN
+        <foreach item="djxh" collection="djxhs" open="(" separator="," close=")">
+            #{djxh}
+        </foreach>
+    </update>
+
+    <!-- 户籍调拨: 更新部门和行业工会标志，清空银行信息 -->
+    <update id="updateAllocationGhHj">
+        UPDATE gh_hj
+        SET DEPT_ID = #{deptId},
+        HYGHBZ = #{hyghbz},
+        JCGHHM = NULL,
+        JCGHZH = NULL,
+        JCGHHH = NULL,
+        JCGHYH = NULL
+        WHERE DJXH IN
+        <foreach item="djxh" collection="djxhs" open="(" separator="," close=")">
+            #{djxh}
+        </foreach>
+    </update>
+
+    <!-- 户籍管理分页查询 -->
+    <select id="selectGhHjPage" resultMap="GhHjVOMap">
+        select h.*, d.dept_name as deptName
+        from gh_hj h
+        left join system_dept d on h.dept_id = d.id
+        <where>
+            <if test="query.deptId != null and query.deptId != ''">AND h.dept_id = #{query.deptId}</if>
+            <if test="query.djxh != null and query.djxh != ''">AND h.djxh = #{query.djxh}</if>
+            <if test="query.shxydm != null and query.shxydm != ''">AND h.shxydm = #{query.shxydm}</if>
+            <if test="query.nsrmc != null and query.nsrmc != ''">AND h.nsrmc LIKE CONCAT('%', #{query.nsrmc}, '%')</if>
+            <if test="query.hyghbz != null and query.hyghbz != ''">AND h.hyghbz = #{query.hyghbz}</if>
+            <if test="query.nsrztDm != null and query.nsrztDm != ''">AND h.nsrzt_dm = #{query.nsrztDm}</if>
+            <if test="query.ghlbDm != null and query.ghlbDm != ''">AND h.ghlb_dm = #{query.ghlbDm}</if>
+            <if test="query.xtlbDm != null and query.xtlbDm != ''">AND h.xtlb_dm = #{query.xtlbDm}</if>
+            <if test="query.hjfl9Dm != null and query.hjfl9Dm != ''">AND h.hjfl9_dm = #{query.hjfl9Dm}</if>
+        </where>
+        ORDER BY h.djxh DESC
+    </select>
+
+    <!-- 户籍管理列表查询（导出用） -->
+    <select id="selectGhHjList" resultMap="GhHjVOMap">
+        select h.*, d.dept_name as deptName
+        from gh_hj h
+        left join system_dept d on h.dept_id = d.id
+        <where>
+            <if test="query.deptId != null and query.deptId != ''">AND h.dept_id = #{query.deptId}</if>
+            <if test="query.djxh != null and query.djxh != ''">AND h.djxh = #{query.djxh}</if>
+            <if test="query.shxydm != null and query.shxydm != ''">AND h.shxydm = #{query.shxydm}</if>
+            <if test="query.nsrmc != null and query.nsrmc != ''">AND h.nsrmc LIKE CONCAT('%', #{query.nsrmc}, '%')</if>
+            <if test="query.hyghbz != null and query.hyghbz != ''">AND h.hyghbz = #{query.hyghbz}</if>
+            <if test="query.nsrztDm != null and query.nsrztDm != ''">AND h.nsrzt_dm = #{query.nsrztDm}</if>
+            <if test="query.ghlbDm != null and query.ghlbDm != ''">AND h.ghlb_dm = #{query.ghlbDm}</if>
+            <if test="query.xtlbDm != null and query.xtlbDm != ''">AND h.xtlb_dm = #{query.xtlbDm}</if>
+            <if test="query.hjfl9Dm != null and query.hjfl9Dm != ''">AND h.hjfl9_dm = #{query.hjfl9Dm}</if>
+        </where>
+        ORDER BY h.djxh DESC
+    </select>
+
+    <!-- 新增户籍 -->
+    <insert id="insertGhHj">
+        INSERT INTO gh_hj (djxh, dept_id, hyghbz, shxydm, nsrsbh, nsrmc, nsrjc,
+                           zgswj_dm, jdxz_dm, zgswskfj_dm, ssgly_dm,
+                           zzjglx_dm, hy_dm, djzclx_dm, dwlsgx_dm,
+                           zgrs, nsrzt_dm, zcdz, yzbm, lxr, lxdh,
+                           ghlb_dm, xtlb_dm, hjfl8_dm, clghbj, clghrq,
+                           jcghdm, jcghmc, jcghzh, jcghhm, jcghhh, jcghyh,
+                           hjfl1_dm, hjfl2_dm, hjfl3_dm, hjfl5_dm, hjfl7_dm,
+                           sdghjg_dm, fzcrq, bz,
+                           create_by, create_time, update_by, update_time)
+        VALUES (#{vo.djxh}, #{vo.deptId}, #{vo.hyghbz}, #{vo.shxydm}, #{vo.nsrsbh}, #{vo.nsrmc}, #{vo.nsrjc},
+                #{vo.zgswjDm}, #{vo.jdxzDm}, #{vo.zgswskfjDm}, #{vo.ssglyDm},
+                #{vo.zzjglxDm}, #{vo.hyDm}, #{vo.djzclxDm}, #{vo.dwlsgxDm},
+                #{vo.zgrs}, #{vo.nsrztDm}, #{vo.zcdz}, #{vo.yzbm}, #{vo.lxr}, #{vo.lxdh},
+                #{vo.ghlbDm}, #{vo.xtlbDm}, #{vo.hjfl8Dm}, #{vo.clghbj}, #{vo.clghrq},
+                #{vo.jcghdm}, #{vo.jcghmc}, #{vo.jcghzh}, #{vo.jcghhm}, #{vo.jcghhh}, #{vo.jcghyh},
+                #{vo.hjfl1Dm}, #{vo.hjfl2Dm}, #{vo.hjfl3Dm}, #{vo.hjfl5Dm}, #{vo.hjfl7Dm},
+                #{vo.sdghjgDm}, #{vo.fzcrq}, #{vo.bz},
+                #{vo.createBy}, NOW(), #{vo.updateBy}, NOW())
+    </insert>
+
+    <!-- 批量删除户籍 -->
+    <delete id="deleteGhHjBydjxhs">
+        DELETE FROM gh_hj WHERE djxh IN
+        <foreach item="djxh" collection="djxhs" open="(" separator="," close=")">
+            #{djxh}
+        </foreach>
+    </delete>
+
+    <!-- 根据纳税人关键字查询户籍列表(含部门名称) -->
+    <select id="getListByDjNsrxxDto" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.hj.ghhj.vo.GhHjNsrxxResVO">
+        SELECT hj.dept_id AS deptId, hj.DJXH AS djxh, hj.SHXYDM AS shxydm, hj.NSRMC AS nsrmc,
+        d.dept_name AS deptName
+        FROM gh_hj hj
+        LEFT JOIN system_dept d ON hj.dept_id = d.id
+        WHERE 1 = 1
+        <if test="searchNsrKey != null and searchNsrKey != ''">
+            AND ((hj.nsrsbh = #{searchNsrKey}) OR
+            (hj.NSRMC LIKE CONCAT('%', #{searchNsrKey}, '%')) OR
+            (hj.shxydm = #{searchNsrKey}))
+        </if>
+        <if test="djxh != null and djxh != ''">
+            AND hj.djxh = #{djxh}
+        </if>
+        <if test="shxydm != null and shxydm != ''">
+            AND hj.shxydm = #{shxydm}
+        </if>
+        UNION ALL
+        SELECT ds.dept_id AS deptId, ds.DJXH AS djxh, ds.SHXYDM AS shxydm, ds.NSRMC AS nsrmc,
+        d.dept_name AS deptName
+        FROM jhdwyds ds
+        LEFT JOIN system_dept d ON ds.dept_id = d.id
+        WHERE 1 = 1
+        <if test="searchNsrKey != null and searchNsrKey != ''">
+            AND ((ds.shxydm = #{searchNsrKey}) OR
+            (ds.NSRMC LIKE CONCAT('%', #{searchNsrKey}, '%')))
+        </if>
+        <if test="djxh != null and djxh != ''">
+            AND ds.djxh = #{djxh}
+        </if>
+        <if test="shxydm != null and shxydm != ''">
+            AND ds.shxydm = #{shxydm}
+        </if>
     </select>
 
 </mapper>

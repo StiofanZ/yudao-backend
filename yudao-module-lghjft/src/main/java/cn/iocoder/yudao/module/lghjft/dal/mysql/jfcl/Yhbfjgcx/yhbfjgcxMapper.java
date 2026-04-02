@@ -1,11 +1,8 @@
 package cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.Yhbfjgcx;
 
-import java.util.*;
-
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
-
+import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.Yhbfjgcx.vo.yhbfjgcxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.Yhbfjgcx.yhbfjgcxDO;
 import org.apache.ibatis.annotations.Mapper;
@@ -47,7 +44,6 @@ public interface yhbfjgcxMapper extends BaseMapperX<yhbfjgcxDO> {
                 .eqIfPresent(yhbfjgcxDO::getCxbs, reqVO.getCxbs())
                 .eqIfPresent(yhbfjgcxDO::getCxje, reqVO.getCxje())
                 .eqIfPresent(yhbfjgcxDO::getCreateBy, reqVO.getCreateBy())
-                .betweenIfPresent(yhbfjgcxDO::getCreateTime, reqVO.getCreateTime())
                 .eqIfPresent(yhbfjgcxDO::getUpdateBy, reqVO.getUpdateBy())
                 .eqIfPresent(yhbfjgcxDO::getRemark, reqVO.getRemark())
                 .orderByDesc(yhbfjgcxDO::getBfhzid));

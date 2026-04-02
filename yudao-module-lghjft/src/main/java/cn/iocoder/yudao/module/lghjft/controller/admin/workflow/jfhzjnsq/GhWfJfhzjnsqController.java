@@ -1,7 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhzjnsq;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
-import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhzjnsq.vo.GhWfJfhzjnsqRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhzjnsq.vo.GhWfJfhzjnsqResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhzjnsq.vo.GhWfJfhzjnsqSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.service.workflow.jfhzjnsq.GhWfJfhzjnsqService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,7 +35,7 @@ public class GhWfJfhzjnsqController {
     @Operation(summary = "获得汇总缴纳申请详情")
     @Parameter(name = "id", description = "编号", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:workflow-jfhzjnsq:query')")
-    public CommonResult<GhWfJfhzjnsqRespVO> getGhWfJfhzjnsq(@RequestParam("id") Long id) {
+    public CommonResult<GhWfJfhzjnsqResVO> getGhWfJfhzjnsq(@RequestParam("id") Long id) {
         return success(jfhzjnsqService.getDetail(id));
     }
 }

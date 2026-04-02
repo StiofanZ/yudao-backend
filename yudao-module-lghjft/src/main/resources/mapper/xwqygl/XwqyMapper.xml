@@ -5,7 +5,7 @@
 <mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.xwqygl.XwqyglMapper">
 
     <!-- ResultMap 映射到 VO -->
-    <resultMap id="XwqyglRespVOResultMap" type="cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglRespVO">
+    <resultMap id="XwqyglResVOResultMap" type="cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglResVO">
         <id column="DJXH" property="djxh"/>
         <result column="DEPT_ID" property="deptId"/>
         <result column="HYGHBZ" property="hyghbz"/>
@@ -82,7 +82,7 @@
     </sql>
 
     <!-- 分页列表查询 -->
-    <select id="selectXwqyglList" parameterType="cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglQuery" resultMap="XwqyglRespVOResultMap">
+    <select id="selectXwqyglList" parameterType="cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglQuery" resultMap="XwqyglResVOResultMap">
         select <include refid="selectXwqyglColumns"/>
         from gh_hj
         <where>

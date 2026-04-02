@@ -91,17 +91,17 @@ public class ZhwhController {
     @Operation(summary = "获得账户维护申请")
     @Parameter(name = "id", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:qx-zhwh:query')")
-    public CommonResult<ZhwhRespVO> getZhwh(@RequestParam("id") Long id) {
+    public CommonResult<ZhwhResVO> getZhwh(@RequestParam("id") Long id) {
         GhQxZhwhDO zhwh = zhwhService.getZhwh(id);
-        return success(fillRelatedInfo(BeanUtils.toBean(zhwh, ZhwhRespVO.class)));
+        return success(fillRelatedInfo(BeanUtils.toBean(zhwh, ZhwhResVO.class)));
     }
 
     @GetMapping("/page")
     @Operation(summary = "获得账户维护申请分页")
     @PreAuthorize("@ss.hasPermission('lghjft:qx-zhwh:query')")
-    public CommonResult<PageResult<ZhwhRespVO>> getZhwhPage(@Valid ZhwhPageReqVO reqVO) {
+    public CommonResult<PageResult<ZhwhResVO>> getZhwhPage(@Valid ZhwhPageReqVO reqVO) {
         PageResult<GhQxZhwhDO> pageResult = zhwhService.getZhwhPage(reqVO);
-        PageResult<ZhwhRespVO> result = BeanUtils.toBean(pageResult, ZhwhRespVO.class);
+        PageResult<ZhwhResVO> result = BeanUtils.toBean(pageResult, ZhwhResVO.class);
         if (CollUtil.isEmpty(result.getList())) {
             return success(result);
         }
@@ -109,7 +109,7 @@ public class ZhwhController {
         return success(result);
     }
 
-    private ZhwhRespVO fillRelatedInfo(ZhwhRespVO respVO) {
+    private ZhwhResVO fillRelatedInfo(ZhwhResVO respVO) {
         if (respVO == null) {
             return null;
         }
@@ -117,13 +117,13 @@ public class ZhwhController {
         return respVO;
     }
 
-    private void fillRelatedInfo(List<ZhwhRespVO> list) {
-        Set<Long> dlzhIds = convertSet(list, ZhwhRespVO::getDlzhId);
+    private void fillRelatedInfo(List<ZhwhResVO> list) {
+        Set<Long> dlzhIds = convertSet(list, ZhwhResVO::getDlzhId);
         Map<Long, GhQxDlzhDO> dlzhMap = dlzhIds.isEmpty()
                 ? Collections.emptyMap()
                 : convertMap(ghQxDlzhService.getDlzhList(dlzhIds), GhQxDlzhDO::getId);
-        Map<Long, DeptRespDTO> deptMap = deptApi.getDeptMap(convertSet(list, ZhwhRespVO::getDeptId));
-        Set<Long> auditUserIds = convertSet(list, ZhwhRespVO::getAuditUserId);
+        Map<Long, DeptRespDTO> deptMap = deptApi.getDeptMap(convertSet(list, ZhwhResVO::getDeptId));
+        Set<Long> auditUserIds = convertSet(list, ZhwhResVO::getAuditUserId);
         Map<Long, AdminUserRespDTO> auditUserMap = auditUserIds.isEmpty()
                 ? Collections.emptyMap()
                 : adminUserApi.getUserMap(auditUserIds);

@@ -3,7 +3,7 @@ package cn.iocoder.yudao.module.lghjft.service.qx.aqzx;
 import cn.hutool.core.util.StrUtil;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
-import cn.iocoder.yudao.module.lghjft.controller.admin.qx.aqzx.vo.AqzxProfileRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.qx.aqzx.vo.AqzxProfileResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.aqzx.vo.AqzxUpdateNoticeMobileReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.aqzx.vo.AqzxUpdatePasswordReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.dlzh.GhQxDlzhDO;
@@ -12,6 +12,7 @@ import cn.iocoder.yudao.module.lghjft.service.dx.DxfwService;
 import jakarta.annotation.Resource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
@@ -30,8 +31,8 @@ public class AqzxServiceImpl implements AqzxService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public AqzxProfileRespVO getCurrentProfile() {
-        return BeanUtils.toBean(getCurrentUser(), AqzxProfileRespVO.class);
+    public AqzxProfileResVO getCurrentProfile() {
+        return BeanUtils.toBean(getCurrentUser(), AqzxProfileResVO.class);
     }
 
     @Override
@@ -39,6 +40,7 @@ public class AqzxServiceImpl implements AqzxService {
         dxfwService.fsaqyzm(mobile);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateNoticeMobile(AqzxUpdateNoticeMobileReqVO reqVO) {
         dxfwService.jyaqyzm(reqVO.getMobile(), reqVO.getCode());
@@ -49,6 +51,7 @@ public class AqzxServiceImpl implements AqzxService {
                 .build());
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updatePassword(AqzxUpdatePasswordReqVO reqVO) {
         GhQxDlzhDO currentUser = getCurrentUser();

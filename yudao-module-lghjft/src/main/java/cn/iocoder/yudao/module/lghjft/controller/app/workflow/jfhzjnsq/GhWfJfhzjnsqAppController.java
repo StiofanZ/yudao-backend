@@ -3,7 +3,7 @@ package cn.iocoder.yudao.module.lghjft.controller.app.workflow.jfhzjnsq;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhzjnsq.vo.GhWfJfhzjnsqRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhzjnsq.vo.GhWfJfhzjnsqResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhzjnsq.vo.GhWfJfhzjnsqSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.workflow.jfhzjnsq.vo.GhWfJfhzjnsqAppPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.workflow.jfhzjnsq.vo.GhWfJfhzjnsqSaveAppReqVO;
@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,7 @@ public class GhWfJfhzjnsqAppController {
 
     @PostMapping("/create")
     @Operation(summary = "创建汇总缴纳申请")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<Long> createGhWfJfhzjnsq(@Valid @RequestBody GhWfJfhzjnsqSaveAppReqVO createReqVO) {
         return success(jfhzjnsqService.createGhWfJfhzjnsq(BeanUtils.toBean(createReqVO, GhWfJfhzjnsqSaveReqVO.class)));
     }
@@ -38,14 +40,16 @@ public class GhWfJfhzjnsqAppController {
     @GetMapping("/get")
     @Operation(summary = "获得汇总缴纳申请详情")
     @Parameter(name = "id", description = "编号", required = true)
-    public CommonResult<GhWfJfhzjnsqRespVO> getGhWfJfhzjnsq(@RequestParam("id") Long id) {
+    @PreAuthorize("isAuthenticated()")
+    public CommonResult<GhWfJfhzjnsqResVO> getGhWfJfhzjnsq(@RequestParam("id") Long id) {
         return success(jfhzjnsqService.getDetail(id));
     }
 
     @GetMapping("/page")
     @Operation(summary = "获得汇总缴纳申请分页（我的）")
-    public CommonResult<PageResult<GhWfJfhzjnsqRespVO>> getGhWfJfhzjnsqPage(@Valid GhWfJfhzjnsqAppPageReqVO pageReqVO) {
+    @PreAuthorize("isAuthenticated()")
+    public CommonResult<PageResult<GhWfJfhzjnsqResVO>> getGhWfJfhzjnsqPage(@Valid GhWfJfhzjnsqAppPageReqVO pageReqVO) {
         PageResult<GhWfJfhzjnsqDO> pageResult = jfhzjnsqService.getSelfPage(getLoginUserId(), pageReqVO);
-        return success(BeanUtils.toBean(pageResult, GhWfJfhzjnsqRespVO.class));
+        return success(BeanUtils.toBean(pageResult, GhWfJfhzjnsqResVO.class));
     }
 }

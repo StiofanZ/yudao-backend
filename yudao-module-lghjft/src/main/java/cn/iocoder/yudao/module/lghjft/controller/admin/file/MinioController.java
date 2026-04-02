@@ -6,6 +6,7 @@ import cn.iocoder.yudao.module.file.dal.dataobject.vo.FileInfoVO;
 import cn.iocoder.yudao.module.file.service.IMinioStorageService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +28,7 @@ public class MinioController {
     private IMinioStorageService minioStorageService;
 
     @GetMapping("/createBucket")
+    @PreAuthorize("@ss.hasPermission('lghjft:file:query')")
     public CommonResult<Boolean> createBucket(@RequestParam("bucketName") String bucketName) {
         minioStorageService.createBucket(bucketName);
         return success(Boolean.TRUE);
@@ -39,6 +41,7 @@ public class MinioController {
      * @throws IOException
      */
     @PostMapping("/uploadFile")
+    @PreAuthorize("@ss.hasPermission('lghjft:file:upload')")
     public CommonResult<FileInfoVO> uploadFile(FileInfoInputVO fileInfoInputVO) {
         return success(minioStorageService.uploadFile(fileInfoInputVO));
     }
@@ -51,6 +54,7 @@ public class MinioController {
      * @throws IOException
      */
     @PostMapping("/uploadWatermark")
+    @PreAuthorize("@ss.hasPermission('lghjft:file:upload')")
     public CommonResult<FileInfoVO> uploadWatermark(@RequestParam("file") MultipartFile file) {
         return success(minioStorageService.uploadWatermark(file));
     }
@@ -62,6 +66,7 @@ public class MinioController {
      * @return
      */
     @GetMapping("/removeFile")
+    @PreAuthorize("@ss.hasPermission('lghjft:file:delete')")
     public CommonResult<Boolean> removeFile(@RequestParam("fileId") Long fileId) {
         minioStorageService.removeFile(fileId);
         return success(Boolean.TRUE);
@@ -74,6 +79,7 @@ public class MinioController {
      * @return
      */
     @PostMapping("/downloadFile")
+    @PreAuthorize("@ss.hasPermission('lghjft:file:query')")
     public void downloadFile(@RequestParam("fileId") Long fileId, HttpServletResponse response) throws IOException {
         OutputStream outputStream = null;
         // 获取文件对象

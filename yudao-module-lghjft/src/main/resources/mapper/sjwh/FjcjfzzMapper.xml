@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.sjwh.fjcjfzz.FjcjfzzMapper">
+
+    <resultMap type="cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.fjcjfzz.vo.FjcjfzzResVO" id="FjcjfzzResult">
+        <result property="hkxxId" column="HKXX_ID"/>
+        <result property="hkpch" column="HKPCH"/>
+        <result property="xh" column="XH"/>
+        <result property="lx" column="LX"/>
+        <result property="zh" column="ZH"/>
+        <result property="hm" column="HM"/>
+        <result property="hh" column="HH"/>
+        <result property="xzh" column="XZH"/>
+        <result property="xhm" column="XHM"/>
+        <result property="xhh" column="XHH"/>
+        <result property="je" column="JE"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="dz" column="DZ"/>
+        <result property="fy" column="FY"/>
+        <result property="jym" column="JYM"/>
+        <result property="thbj" column="THBJ"/>
+        <result property="thrq" column="THRQ"/>
+        <result property="thyy" column="THYY"/>
+        <result property="schkpch" column="SCHKPCH"/>
+        <result property="createBy" column="CREATE_BY"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateBy" column="UPDATE_BY"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="qrrq" column="QRRQ"/>
+        <result property="dzbj" column="DZBJ"/>
+        <result property="yhhdh" column="YHHDH"/>
+        <result property="bz" column="BZ"/>
+    </resultMap>
+
+    <!-- v1 selectFjcjfzzVo（完全一致） -->
+    <sql id="selectFjcjfzzVo">
+        select a.HKXX_ID,
+               HKPCH,
+               XH,
+               LX,
+               ZH,
+               a.HM,
+               a.HH,
+               a.XZH,
+               a.XHM,
+               a.XHH,
+               JE,
+               a.dept_id,
+               DZ,
+               FY,
+               a.JYM,
+               THBJ,
+               THRQ,
+               THYY,
+               SCHKPCH,
+               a.CREATE_BY,
+               a.CREATE_TIME,
+               a.UPDATE_BY,
+               a.UPDATE_TIME,
+               b.QRRQ,
+               b.DZBJ,
+               b.YHHDH,
+               b.BZ
+        from gh_hkxx a
+                 left join gh_hkxx_qrsz b on b.HKXX_ID = a.HKXX_ID
+    </sql>
+
+    <!-- v1 selectFjcjfzzList WHERE（完全一致） -->
+    <select id="selectLegacyList" resultMap="FjcjfzzResult">
+        <include refid="selectFjcjfzzVo"/>
+        <where>
+            (instr(a.fy,'工会费') > 0
+            or
+            instr(a.fy,'工会经费') > 0 ) and a.fy
+            like '%返还基层%'
+            and a.yxbj='Y'
+            <if test="req.hkpch != null and req.hkpch != ''">and HKPCH = #{req.hkpch}</if>
+            <if test="req.beginBfwjrq != null and req.beginBfwjrq != '' and req.endBfwjrq != null and req.endBfwjrq != ''">and MID(HKPCH,1,8) between #{req.beginBfwjrq} and
+                #{req.endBfwjrq}
+            </if>
+            <if test="req.xh != null">and XH = #{req.xh}</if>
+            <if test="req.beginQrrq != null and req.beginQrrq != '' and req.endQrrq != null and req.endQrrq != ''">and QRRQ between #{req.beginQrrq} and #{req.endQrrq}</if>
+            <if test="req.dzbj != null">and DZBJ = #{req.dzbj}</if>
+            <if test="req.yhhdh != null">and YHHDH = #{req.yhhdh}</if>
+            <if test="req.lx != null and req.lx != ''">and LX = #{req.lx}</if>
+            <if test="req.zh != null and req.zh != ''">and ( ZH in( #{req.zh},#{req.zh1},#{req.zh2},#{req.zh3}) or XZH in( #{req.zh},#{req.zh1},#{req.zh2},#{req.zh3}) )</if>
+            <if test="req.hm != null and req.hm != ''">and HM like concat('%', #{req.hm}, '%')</if>
+            <if test="req.hh != null and req.hh != ''">and HH = #{req.hh}</if>
+            <if test="req.je != null">and JE = #{req.je}</if>
+            <if test="req.deptId != null and req.deptId != ''">and dept_id = #{req.deptId}</if>
+            <if test="req.dz != null and req.dz != ''">and DZ like concat('%', #{req.dz}, '%')</if>
+            <if test="req.fy != null and req.fy != ''">and FY like concat('%', #{req.fy}, '%')</if>
+            <if test="req.jym != null and req.jym != ''">and JYM = #{req.jym}</if>
+            <if test="req.thbj != null and req.thbj != ''">and THBJ = #{req.thbj}</if>
+            <if test="req.beginThrq != null and req.beginThrq != '' and req.endThrq != null and req.endThrq != ''">and THRQ between #{req.beginThrq} and #{req.endThrq}</if>
+            <if test="req.thyy != null and req.thyy != ''">and THYY = #{req.thyy}</if>
+            <if test="req.schkpch != null and req.schkpch != ''">and SCHKPCH = #{req.schkpch}</if>
+            <if test="req.bz != null and req.bz != ''">and BZ like concat('%', #{req.bz}, '%')</if>
+            <if test="req.createBy != null and req.createBy != ''">and CREATE_BY = #{req.createBy}</if>
+            <if test="req.updateBy != null and req.updateBy != ''">and UPDATE_BY = #{req.updateBy}</if>
+        </where>
+        order by hkpch desc
+    </select>
+
+</mapper>

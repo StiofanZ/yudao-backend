@@ -1,6 +1,5 @@
 package cn.iocoder.yudao.module.lghjft.service.hjgl.jcxx;
 
-import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.*;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.GhHjJcxxDO;
@@ -63,5 +62,5 @@ public interface JcxxService {
     /**
      * 获取前置户籍管理详细信息（编辑前归属权校验）
      */
-    JcxxRespVO getDjNsrxxInfoForUpdateHj(JcxxBaseVO djNsrxxDto);
+    JcxxResVO getDjNsrxxInfoForUpdateHj(JcxxBaseVO djNsrxxDto);
 }

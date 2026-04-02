@@ -28,5 +28,15 @@ public interface GhQxSfxxService {
 
     void auditSfxx(Long id, Integer status, String jjyy);
 
+    /**
+     * App 端身份授权，带 IDOR 校验（只有身份信息所有者才能操作）
+     */
+    void auditSfxxWithOwnerCheck(Long id, Integer status, String jjyy);
+
     void unbindSfxx(Long id, String jbyy);
+
+    /**
+     * App 端解绑身份信息，带 IDOR 校验（只有身份信息所有者才能操作）
+     */
+    void unbindSfxxWithOwnerCheck(Long id, String jbyy);
 }

@@ -1,15 +1,12 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfmx;
 
+import com.baomidou.mybatisplus.annotation.KeySequence;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
-import java.util.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.LocalDateTime;
-import java.time.LocalDateTime;
-import java.time.LocalDateTime;
-import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.*;
-import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
 
 /**
  * 银行拨付明细 DO
@@ -19,12 +16,11 @@ import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
 @TableName("gh_hkxx_yhbfmx")
 @KeySequence("gh_hkxx_yhbfmx_seq") // 用于 Oracle、PostgreSQL、Kingbase、DB2、H2 数据库的主键自增。如果是 MySQL 等数据库，可不写。
 @Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class YhbfmxDO extends BaseDO {
+public class YhbfmxDO {
 
     /**
      * 业务参考号
@@ -196,9 +192,17 @@ public class YhbfmxDO extends BaseDO {
      */
     private String createBy;
     /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
+    /**
      * 修改人
      */
     private String updateBy;
+    /**
+     * 修改时间
+     */
+    private LocalDateTime updateTime;
 
 
 }

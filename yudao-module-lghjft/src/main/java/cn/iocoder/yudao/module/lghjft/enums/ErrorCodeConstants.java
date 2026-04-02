@@ -72,4 +72,30 @@ public interface ErrorCodeConstants {
     ErrorCode WF_HZJF_SUB_DEPTID_EMPTY = new ErrorCode(1000909, "下属单位【{}】未查询到主管工会");
     ErrorCode WF_HZJF_NOT_SAME_DEPT = new ErrorCode(1000910, "下属单位【{}】所属工会({})与汇总单位工会({})不一致，不允许提交");
     ErrorCode HKXX_BFZHPC_NOT_EXISTS = new ErrorCode(2_023_000_011, "拨付信息不存在");
+
+    ErrorCode SYS_TREE_DICT_NOT_EXISTS = new ErrorCode(2_024_000_001, "树形字典不存在");
+    ErrorCode SYS_TREE_DICT_DATA_NOT_EXISTS = new ErrorCode(2_024_000_002, "树形字典数据不存在");
+
+    // XEJF module
+    ErrorCode XEJF24_NOT_EXISTS = new ErrorCode(2_025_000_001, "24年小额确认不存在");
+    ErrorCode XEJFOLD_NOT_EXISTS = new ErrorCode(2_025_000_002, "23年小额确认不存在");
+    ErrorCode HKXXXEJF_NOT_EXISTS = new ErrorCode(2_025_000_003, "小额拨付记账凭证不存在");
+    ErrorCode HKXXXEJFCBJ_NOT_EXISTS = new ErrorCode(2_025_000_004, "小额筹备金做账不存在");
+    ErrorCode HKXXXEJFJCDZ_NOT_EXISTS = new ErrorCode(2_025_000_005, "小额缴费基层到账不存在");
+    ErrorCode XEJF2023_NOT_EXISTS = new ErrorCode(2_025_000_006, "小额缴费明细不存在");
+    ErrorCode XEJFZZGL_NOT_EXISTS = new ErrorCode(2_025_000_007, "小额缴费组织管理不存在");
+    ErrorCode XETZ_NOT_EXISTS = new ErrorCode(2_025_000_008, "小额台账不存在");
+    ErrorCode XEBF_NOT_EXISTS = new ErrorCode(2_025_000_009, "小额缴费拨付台账不存在");
+    ErrorCode XEBFZB_NOT_EXISTS = new ErrorCode(2_025_000_010, "小额拨付占比不存在");
+
+    // JFCL module
+    ErrorCode JFCL_NOT_EXISTS = new ErrorCode(2_026_000_001, "经费处理记录不存在");
+
+    // HJGL module - special operations
+    ErrorCode HJGL_DJXHS_EMPTY = new ErrorCode(2_027_000_001, "登记序号列表不能为空");
+    ErrorCode HJGL_ALLOCATION_PARAM_EMPTY = new ErrorCode(2_027_000_002, "参数为空，无法调拨");
+    ErrorCode HJGL_ALLOCATION_FAILED = new ErrorCode(2_027_000_003, "户籍调拨失败，未找到匹配记录");
+
+    // IDOR protection
+    ErrorCode OPERATION_NOT_PERMITTED = new ErrorCode(2_028_000_001, "无权操作该记录");
 }

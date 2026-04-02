@@ -3,10 +3,8 @@ package cn.iocoder.yudao.module.lghjft.controller.app.nrgl.cjwt;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.cjwt.vo.CjwtCreateReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.cjwt.vo.CjwtReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.cjwt.vo.CjwtResVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.cjwt.vo.CjwtUpdateReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.cjwt.CjwtDO;
 import cn.iocoder.yudao.module.lghjft.service.nrgl.cjwt.CjwtService;
 import cn.iocoder.yudao.module.system.api.dept.DeptApi;
@@ -18,7 +16,10 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class AppCjwtController {
     @GetMapping("/get")
     @Operation(summary = "获得常见问题")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:nrgl-cjwt:query')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<CjwtResVO> getCjwt(@RequestParam("id") Long id) {
         CjwtDO cjwt = cjwtService.getCjwt(id);
         return success(BeanUtils.toBean(cjwt, CjwtResVO.class));
@@ -49,7 +50,7 @@ public class AppCjwtController {
 
     @GetMapping("/list-page")
     @Operation(summary = "获得常见问题分页列表")
-    @PreAuthorize("@ss.hasPermission('lghjft:nrgl-cjwt:query')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<PageResult<CjwtResVO>> getCjwtPage(@Valid CjwtReqVO listReqVO) {
         PageResult<CjwtDO> pageResult = cjwtService.getCjwtPage(listReqVO);
         List<CjwtResVO> result = BeanUtils.toBean(pageResult.getList(), CjwtResVO.class);

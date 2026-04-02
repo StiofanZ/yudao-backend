@@ -1,32 +1,31 @@
 package cn.iocoder.yudao.module.lghjft.service.nrgl.cjwt;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
-import cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants;
-import jakarta.annotation.Resource;
-import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
-
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
+import cn.iocoder.yudao.framework.mybatis.core.util.MyBatisUtils;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.cjwt.vo.CjwtCreateReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.cjwt.vo.CjwtReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.cjwt.vo.CjwtUpdateReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nrgl.cjwt.CjwtDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.nrgl.cjwt.CjwtMapper;
+import cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants;
 import cn.iocoder.yudao.module.system.api.dept.DeptApi;
 import cn.iocoder.yudao.module.system.api.dept.dto.DeptRespDTO;
-
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.mybatis.core.util.MyBatisUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
-import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
 import static cn.iocoder.yudao.framework.common.exception.enums.GlobalErrorCodeConstants.FORBIDDEN;
+import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 
 /**
  * 常见问题 Service 实现类
@@ -43,6 +42,7 @@ public class CjwtServiceImpl implements CjwtService {
     @Resource
     private DeptApi deptApi;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Long createCjwt(CjwtCreateReqVO createReqVO) {
         // 校验上级内容的可见性
@@ -59,6 +59,7 @@ public class CjwtServiceImpl implements CjwtService {
         return cjwt.getId();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateCjwt(CjwtUpdateReqVO updateReqVO) {
         // 校验存在
@@ -158,6 +159,7 @@ public class CjwtServiceImpl implements CjwtService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteCjwt(Long id) {
         // 校验存在

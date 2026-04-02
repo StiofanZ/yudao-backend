@@ -1,7 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.controller.app.qx.sfxx;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
-import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.KbdsfxxRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.KbdsfxxResVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.qx.sfxx.vo.SfxxAppReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.qx.sfxx.vo.SfxxAppSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.service.hjgl.jcxx.JcxxService;
@@ -47,7 +47,7 @@ public class SfxxAppController {
     public CommonResult<Boolean> auditSfxx(@RequestParam("id") Long id,
                                            @RequestParam("status") Integer status,
                                            @RequestParam(value = "jjyy", required = false) String jjyy) {
-        ghQxSfxxService.auditSfxx(id, status, jjyy);
+        ghQxSfxxService.auditSfxxWithOwnerCheck(id, status, jjyy);
         return success(true);
     }
 
@@ -55,20 +55,20 @@ public class SfxxAppController {
     @Operation(summary = "解绑身份信息")
     @PreAuthorize("isAuthenticated()")
     public CommonResult<Boolean> unbindSfxx(@RequestParam("id") Long id, @RequestParam("jbyy") String jbyy) {
-        ghQxSfxxService.unbindSfxx(id, jbyy);
+        ghQxSfxxService.unbindSfxxWithOwnerCheck(id, jbyy);
         return success(true);
     }
 
     @PostMapping("/get-kbdsfxx")
     @Operation(summary = "获得可绑定身份信息")
     @PreAuthorize("isAuthenticated()")
-    public CommonResult<List<KbdsfxxRespVO>> getKbdsfxx(@Valid @RequestBody SfxxAppReqVO reqVO) {
-        List<KbdsfxxRespVO> kbdsfxxRespVOList = sfxxService.getKbdsfxx(reqVO);
-        kbdsfxxRespVOList.removeIf(kbdsfxxRespVO -> !(kbdsfxxRespVO.getDwmc().contains(reqVO.getKeywords())
-                && kbdsfxxRespVO.getShxydm().contains(reqVO.getKeywords())
-                && kbdsfxxRespVO.getLxdh().contains(reqVO.getKeywords())
-                && kbdsfxxRespVO.getRyxm().contains(reqVO.getKeywords())));
-        return success(kbdsfxxRespVOList);
+    public CommonResult<List<KbdsfxxResVO>> getKbdsfxx(@Valid @RequestBody SfxxAppReqVO reqVO) {
+        List<KbdsfxxResVO> kbdsfxxResVOList = sfxxService.getKbdsfxx(reqVO);
+        kbdsfxxResVOList.removeIf(kbdsfxxResVO -> !(kbdsfxxResVO.getDwmc().contains(reqVO.getKeywords())
+                && kbdsfxxResVO.getShxydm().contains(reqVO.getKeywords())
+                && kbdsfxxResVO.getLxdh().contains(reqVO.getKeywords())
+                && kbdsfxxResVO.getRyxm().contains(reqVO.getKeywords())));
+        return success(kbdsfxxResVOList);
     }
 
 }

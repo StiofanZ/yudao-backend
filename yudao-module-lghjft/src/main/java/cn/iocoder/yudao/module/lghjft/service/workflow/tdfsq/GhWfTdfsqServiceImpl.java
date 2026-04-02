@@ -8,8 +8,8 @@ import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils;
 import cn.iocoder.yudao.module.bpm.api.task.BpmProcessInstanceApi;
 import cn.iocoder.yudao.module.bpm.api.task.dto.BpmProcessInstanceCreateReqDTO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.tdfsq.vo.GhWfTdfsqKtfxxRespVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.tdfsq.vo.GhWfTdfsqRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.tdfsq.vo.GhWfTdfsqKtfxxResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.tdfsq.vo.GhWfTdfsqResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.tdfsq.vo.GhWfTdfsqSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.workflow.tdfsq.vo.GhWfTdfsqAppPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.tdfsq.GhWfTdfsqDO;
@@ -29,7 +29,11 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
+import java.util.Objects;
+
+import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
+import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.OPERATION_NOT_PERMITTED;
 
 @Service
 public class GhWfTdfsqServiceImpl implements GhWfTdfsqService {
@@ -114,7 +118,7 @@ public class GhWfTdfsqServiceImpl implements GhWfTdfsqService {
     }
 
 //    @Override
-//    public GhWfTdfsqRespVO getDetail(Long id) {
+//    public GhWfTdfsqResVO getDetail(Long id) {
 //        GhWfTdfsqDO main = tdfsqMapper.selectById(id);
 //        if (main == null) {
 //            throw ServiceExceptionUtil.exception(ErrorCodeConstants.WF_TDF_SQ_NOT_EXISTS);
@@ -122,9 +126,9 @@ public class GhWfTdfsqServiceImpl implements GhWfTdfsqService {
 //        List<GhWfTdfsqFjDO> fjList = tdfsqFjMapper.selectList(new LambdaQueryWrapperX<GhWfTdfsqFjDO>()
 //                .eq(GhWfTdfsqFjDO::getTdfsqId, id)
 //                .orderByAsc(GhWfTdfsqFjDO::getId));
-//        GhWfTdfsqRespVO respVO = BeanUtils.toBean(main, GhWfTdfsqRespVO.class);
+//        GhWfTdfsqResVO respVO = BeanUtils.toBean(main, GhWfTdfsqResVO.class);
 //        respVO.setFjList(fjList.stream().map(item -> {
-//            GhWfTdfsqRespVO.FjItem fjItem = new GhWfTdfsqRespVO.FjItem();
+//            GhWfTdfsqResVO.FjItem fjItem = new GhWfTdfsqResVO.FjItem();
 //            fjItem.setFjlx(item.getFjlx());
 //            fjItem.setWjlj(item.getWjlj());
 //            fjItem.setWjmc(resolveFileName(item.getWjlj()));
@@ -134,7 +138,20 @@ public class GhWfTdfsqServiceImpl implements GhWfTdfsqService {
 //        return respVO;
 //    }
 @Override
-public GhWfTdfsqRespVO getDetail(Long id) {
+public GhWfTdfsqResVO getDetailWithOwnerCheck(Long id) {
+    GhWfTdfsqDO main = tdfsqMapper.selectById(id);
+    if (main == null) {
+        throw ServiceExceptionUtil.exception(ErrorCodeConstants.WF_TDF_SQ_NOT_EXISTS);
+    }
+    Long loginUserId = getLoginUserId();
+    if (!Objects.equals(main.getCreator(), loginUserId == null ? null : String.valueOf(loginUserId))) {
+        throw exception(OPERATION_NOT_PERMITTED);
+    }
+    return getDetail(id);
+}
+
+    @Override
+    public GhWfTdfsqResVO getDetail(Long id) {
     // 1. 查询主表
     GhWfTdfsqDO main = tdfsqMapper.selectById(id);
     if (main == null) {
@@ -149,8 +166,8 @@ public GhWfTdfsqRespVO getDetail(Long id) {
     List<GhWfTdfsqmxDO> mxDOList = tdfsqMapper.selectMxListByTdfsqId(id);
 
     // ====================== 4. DO → VO 转换 ======================
-    List<GhWfTdfsqRespVO.TdfsqMxItem> mxItemList = mxDOList.stream().map(mx -> {
-        GhWfTdfsqRespVO.TdfsqMxItem item = new GhWfTdfsqRespVO.TdfsqMxItem();
+        List<GhWfTdfsqResVO.TdfsqMxItem> mxItemList = mxDOList.stream().map(mx -> {
+            GhWfTdfsqResVO.TdfsqMxItem item = new GhWfTdfsqResVO.TdfsqMxItem();
         item.setId(mx.getId());
         item.setSpuuid(mx.getSpuuid());
         item.setTfsqJe(mx.getTfsqJe());
@@ -162,11 +179,11 @@ public GhWfTdfsqRespVO getDetail(Long id) {
     }).toList();
 
     // 5. 主表 → VO
-    GhWfTdfsqRespVO respVO = BeanUtils.toBean(main, GhWfTdfsqRespVO.class);
+        GhWfTdfsqResVO respVO = BeanUtils.toBean(main, GhWfTdfsqResVO.class);
 
     // 6. 设置附件
     respVO.setFjList(fjList.stream().map(item -> {
-        GhWfTdfsqRespVO.FjItem fjItem = new GhWfTdfsqRespVO.FjItem();
+        GhWfTdfsqResVO.FjItem fjItem = new GhWfTdfsqResVO.FjItem();
         fjItem.setFjlx(item.getFjlx());
         fjItem.setWjlj(item.getWjlj());
         fjItem.setWjmc(resolveFileName(item.getWjlj()));
@@ -197,7 +214,7 @@ public GhWfTdfsqRespVO getDetail(Long id) {
 
     // ====================== 查询可退费明细 ======================
     @Override
-    public List<GhWfTdfsqKtfxxRespVO> getKtfxxList(String djxh, Integer sqtflxDm) {
+    public List<GhWfTdfsqKtfxxResVO> getKtfxxList(String djxh, Integer sqtflxDm) {
         // 1. 获取当前日期
         LocalDate now = LocalDate.now();
 

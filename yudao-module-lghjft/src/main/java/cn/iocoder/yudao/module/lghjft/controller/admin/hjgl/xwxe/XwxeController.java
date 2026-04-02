@@ -4,7 +4,7 @@ import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.xwxe.vo.XwxePageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.xwxe.vo.XwxeRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.xwxe.vo.XwxeResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.GhHjJcxxDO;
 import cn.iocoder.yudao.module.lghjft.service.hjgl.xwxe.XwxeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,8 +31,8 @@ public class XwxeController {
     @GetMapping("/page")
     @Operation(summary = "获得小微小额分页")
     @PreAuthorize("@ss.hasPermission('lghjft:hjgl-xwxe:query')")
-    public CommonResult<PageResult<XwxeRespVO>> getPage(@Valid XwxePageReqVO reqVO) {
+    public CommonResult<PageResult<XwxeResVO>> getPage(@Valid XwxePageReqVO reqVO) {
         PageResult<GhHjJcxxDO> pageResult = xwxeService.getPage(reqVO);
-        return success(BeanUtils.toBean(pageResult, XwxeRespVO.class));
+        return success(BeanUtils.toBean(pageResult, XwxeResVO.class));
     }
 }

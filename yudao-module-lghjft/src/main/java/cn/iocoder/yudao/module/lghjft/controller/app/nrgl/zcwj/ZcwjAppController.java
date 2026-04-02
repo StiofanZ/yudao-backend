@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,7 @@ public class ZcwjAppController {
 
     @GetMapping("/app/list-page")
     @Operation(summary = "获得政策文件列表")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<List<ZcwjResVO>> getPublishedList(@Valid ZcwjPageAppReqVO reqVO) {
         ZcwjReqVO query = BeanUtils.toBean(reqVO, ZcwjReqVO.class);
         List<ZcwjResVO> result = BeanUtils.toBean(zcwjService.getPublishedList(query), ZcwjResVO.class);
@@ -49,6 +51,7 @@ public class ZcwjAppController {
     @GetMapping("/app/get")
     @Operation(summary = "获得政策文件详情")
     @Parameter(name = "id", required = true)
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<ZcwjResVO> getZcwj(@RequestParam("id") Long id) {
         return success(BeanUtils.toBean(zcwjService.getZcwj(id), ZcwjResVO.class));
     }
@@ -56,6 +59,7 @@ public class ZcwjAppController {
     @GetMapping("/app/recommend")
     @Operation(summary = "获得政策文件推荐列表")
     @Parameter(name = "id", required = true)
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<List<ZcwjResVO>> getRecommendList(@RequestParam("id") Long id,
                                                           @RequestParam(value = "limit", required = false) Integer limit) {
         List<ZcwjResVO> result = BeanUtils.toBean(zcwjService.getRecommendList(id, limit), ZcwjResVO.class);

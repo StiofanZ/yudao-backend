@@ -2,7 +2,7 @@ package cn.iocoder.yudao.module.lghjft.service.bbsj;
 
 import cn.hutool.core.util.StrUtil;
 import cn.iocoder.yudao.framework.common.util.json.JsonUtils;
-import cn.iocoder.yudao.module.lghjft.controller.app.bbsj.vo.BbsjRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.app.bbsj.vo.BbsjResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.bbsj.JmBbDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.bbsj.JmBbMapper;
 import cn.iocoder.yudao.module.report.dal.dataobject.bbhc.GhBbsjHcDO;
@@ -30,7 +30,7 @@ public class BbsjServiceImpl implements BbsjService {
     private IJimuReportService jimuReportService;
 
     @Override
-    public BbsjRespVO hqBbsj(String bbbm, Map<String, Object> cxcs) {
+    public BbsjResVO hqBbsj(String bbbm, Map<String, Object> cxcs) {
         JmBbDO bb = jmBbMapper.selectByBbbm(bbbm);
         if (bb == null) {
             throw exception(BBBM_NOT_SUPPORT);
@@ -44,7 +44,7 @@ public class BbsjServiceImpl implements BbsjService {
             }
 
             JimuReport jmBb = zxjg.getResult();
-            BbsjRespVO respVO = new BbsjRespVO();
+            BbsjResVO respVO = new BbsjResVO();
             respVO.setBbbm(bb.getCode());
             respVO.setBbmc(StrUtil.blankToDefault(jmBb.getName(), bb.getName()));
             respVO.setCxcs(sjcxcs);

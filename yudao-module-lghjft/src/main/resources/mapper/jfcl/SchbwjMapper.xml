@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.schbwj.SchbwjMapper">
+
+    <!-- v1 selectGhjfhb：查询待划拨的经费数据 -->
+    <select id="selectGhjfhb" resultType="java.util.Map">
+        SELECT t.SPUUID, t.RKRQ
+        FROM gh_jf t
+        WHERE #{jsrqStart} <![CDATA[<=]]> T.JSRQ
+          AND T.JSRQ <![CDATA[<=]]> #{jsrqEnd}
+          AND t.JSBJ IN ('Y', 'T', 'W', 'V', 'F', 'C')
+          AND HKPCH IS NULL
+    </select>
+
+    <!-- v1 getSchbwjList：从 schbwj VIEW 获取划拨汇总数据 -->
+    <select id="getSchbwjList" resultType="java.util.Map">
+        SELECT *
+        FROM schbwj t
+        WHERE #{jsrqStart} <![CDATA[<=]]> t.JSRQ
+          AND t.JSRQ <![CDATA[<=]]> #{jsrqEnd}
+    </select>
+
+    <!-- v1 selectHkpch：获取当天最大划款批次号 -->
+    <select id="selectHkpch" resultType="java.lang.String">
+        SELECT MAX(t.HKPCH) HKPCH
+        FROM gh_jf t
+        WHERE t.JSBJ IN ('Y', 'T', 'W')
+          AND LEFT (T.HKPCH
+            , 8) = #{dqrq}
+    </select>
+
+    <!-- v1 insertBatchGhHkxx：批量插入 gh_hkxx -->
+    <insert id="insertBatchGhHkxx" parameterType="java.util.List">
+        INSERT INTO gh_hkxx (HKPCH, XH, LX, ZH, HH, JE, DEPT_ID, DZ, FY, JYM, THBJ, SCBZ,
+        CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME, HM, BZ)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.hkpch}, #{item.xh}, #{item.lx}, #{item.zh}, #{item.hh}, #{item.je},
+            #{item.deptId}, #{item.dz}, #{item.fy}, #{item.jym}, #{item.thbj}, #{item.scbz},
+            #{item.createBy}, #{item.createTime}, #{item.updateBy}, #{item.updateTime},
+            #{item.hm}, #{item.bz})
+        </foreach>
+    </insert>
+
+    <!-- v1 updateGhjfhb：批量更新 gh_jf 的 HKPCH -->
+    <update id="updateGhjfhb" parameterType="java.util.List">
+        UPDATE gh_jf
+        <trim prefix="SET" suffixOverrides=",">
+            <trim prefix="HKPCH = CASE" suffix="END,">
+                <foreach collection="list" item="item">
+                    WHEN SPUUID = #{item.spuuid} THEN #{item.hkpch}
+                </foreach>
+            </trim>
+            <trim prefix="UPDATE_BY = CASE" suffix="END,">
+                <foreach collection="list" item="item">
+                    WHEN SPUUID = #{item.spuuid} THEN #{item.updateBy}
+                </foreach>
+            </trim>
+            <trim prefix="UPDATE_TIME = CASE" suffix="END,">
+                <foreach collection="list" item="item">
+                    WHEN SPUUID = #{item.spuuid} THEN #{item.updateTime}
+                </foreach>
+            </trim>
+        </trim>
+        WHERE SPUUID IN
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item.spuuid}
+        </foreach>
+    </update>
+
+    <!-- v1 updateBatchQsjshkrj：更新划拨日志 -->
+    <update id="updateBatchQsjshkrj" parameterType="java.util.List">
+        UPDATE gh_qsjshkrj
+        <trim prefix="SET" suffixOverrides=",">
+            <trim prefix="HKRQ = CASE" suffix="END,">
+                <foreach collection="list" item="item">
+                    WHEN RKRQ = #{item.rkrq} THEN #{item.hkrq}
+                </foreach>
+            </trim>
+            <trim prefix="PCH = CASE" suffix="END,">
+                <foreach collection="list" item="item">
+                    WHEN RKRQ = #{item.rkrq} THEN #{item.pch}
+                </foreach>
+            </trim>
+            <trim prefix="UPDATE_BY = CASE" suffix="END,">
+                <foreach collection="list" item="item">
+                    WHEN RKRQ = #{item.rkrq} THEN #{item.updateBy}
+                </foreach>
+            </trim>
+            <trim prefix="UPDATE_TIME = CASE" suffix="END,">
+                <foreach collection="list" item="item">
+                    WHEN RKRQ = #{item.rkrq} THEN #{item.updateTime}
+                </foreach>
+            </trim>
+        </trim>
+        WHERE RKRQ IN
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item.rkrq}
+        </foreach>
+    </update>
+
+    <!-- v1 deleteGhHkxxByHkpch -->
+    <delete id="deleteGhHkxxByHkpch">
+        DELETE
+        FROM gh_hkxx
+        WHERE HKPCH = #{hkpch}
+    </delete>
+
+    <!-- v1 selectQsjshkrjList -->
+    <select id="selectQsjshkrjList" resultType="java.util.Map">
+        SELECT * FROM gh_qsjshkrj T WHERE T.LX = '1' AND T.RKRQ IN
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>

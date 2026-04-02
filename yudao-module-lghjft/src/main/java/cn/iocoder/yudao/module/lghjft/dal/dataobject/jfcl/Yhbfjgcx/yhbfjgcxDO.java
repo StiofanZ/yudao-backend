@@ -1,18 +1,12 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.Yhbfjgcx;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.KeySequence;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
-import java.util.*;
+
 import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.*;
-import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
 
 /**
  * 银行拨付结果查询 DO
@@ -22,12 +16,11 @@ import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
 @TableName("yhbfjg_cx")
 @KeySequence("yhbfjg_cx_seq") // 用于 Oracle、PostgreSQL、Kingbase、DB2、H2 数据库的主键自增。如果是 MySQL 等数据库，可不写。
 @Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class yhbfjgcxDO extends BaseDO {
+public class yhbfjgcxDO {
 
     /**
      * 拨付批次号
@@ -146,19 +139,5 @@ public class yhbfjgcxDO extends BaseDO {
      * 备注
      */
     private String remark;
-    @TableField(exist = false)  // 告诉MyBatis这个字段不在表中
-    private LocalDateTime createTime;
-
-    @TableField(exist = false)
-    private LocalDateTime updateTime;
-
-    @TableField(exist = false)
-    private String creator;
-
-    @TableField(exist = false)
-    private String updater;
-
-    @TableField(exist = false)
-    private Boolean deleted;
 
 }

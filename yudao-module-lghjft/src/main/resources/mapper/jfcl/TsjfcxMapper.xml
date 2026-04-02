@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.tsjfcx.TsjfcxMapper">
+
+    <!-- v1 selectTsjfcxVo: LEFT JOIN gh_jf_tsjf -->
+    <sql id="selectTsjfcxVo">
+        SELECT a.ghjf_id,
+               a.SPUUID,
+               a.DJXH,
+               a.SHXYDM,
+               a.NSRMC,
+               a.NSRJC,
+               a.dept_id,
+               a.RKRQ,
+               a.JSBJ,
+               a.JSRQ,
+               a.YBTSE,
+               a.SKSSQQ,
+               a.SKSSQZ,
+               a.JCGHJE,
+               a.CBJJE,
+               a.CBJTHBJ,
+               a.HKPCH,
+               a.CREATE_BY,
+               a.CREATE_TIME,
+               a.UPDATE_BY,
+               a.UPDATE_TIME,
+               b.TSJFBJ,
+               b.TSJFSM,
+               b.CLSJ
+        FROM gh_jf a
+                 LEFT JOIN gh_jf_tsjf b ON b.ghjf_id = a.ghjf_id
+    </sql>
+
+    <!-- v1 selectTsjfcxList: b.tsjfbj is not null 硬编码条件 -->
+    <select id="selectTsjfcxPage" resultType="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.tsjfcx.TsjfcxDO">
+        <include refid="selectTsjfcxVo"/>
+        <where>
+            b.tsjfbj is not null
+            <if test="query.deptId != null and query.deptId != ''">AND a.dept_id = #{query.deptId}</if>
+            <if test="query.shxydm != null and query.shxydm != ''">AND a.SHXYDM = #{query.shxydm}</if>
+            <if test="query.nsrmc != null and query.nsrmc != ''">AND a.NSRMC LIKE CONCAT('%', #{query.nsrmc}, '%')</if>
+        </where>
+        ORDER BY b.CLSJ DESC
+    </select>
+
+</mapper>

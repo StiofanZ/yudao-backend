@@ -7,7 +7,8 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jfmx.vo.JfPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jfmx.vo.JfRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jfmx.vo.JfResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jfmx.vo.JfSummaryResVO;
 import cn.iocoder.yudao.module.lghjft.service.hbzz.jfmx.JfService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,14 +38,25 @@ public class JfController {
 
 
     /**
-     * 查询经费明细列表
+     * 经费明细列表（v1 /jftz/jfmx/list）
+     */
+    @GetMapping("/list")
+    @Operation(summary = "获得经费明细分页")
+    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+    public CommonResult<PageResult<JfResVO>> getJfmxList(@Valid JfPageReqVO jfmx) {
+        PageResult<JfResVO> pageResult = jfService.selectJfmxList(jfmx);
+        return success(pageResult);
+    }
+
+    /**
+     * 经费台账明细列表（v1 /jftz/jfmx/listmx）
      */
     @GetMapping("/listmx")
-    @Operation(summary = "获得 经费明细对象明细")
+    @Operation(summary = "获得经费台账明细")
     @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
-    public CommonResult<PageResult<JfRespVO>> list(@Valid JfPageReqVO jfmx) {
-        PageResult<JfRespVO> pageResult = jfService.selectJftzmxList(jfmx);
-        return success(BeanUtils.toBean(pageResult, JfRespVO.class));
+    public CommonResult<PageResult<JfResVO>> getJftzmxList(@Valid JfPageReqVO jfmx) {
+        PageResult<JfResVO> pageResult = jfService.selectJftzmxList(jfmx);
+        return success(pageResult);
     }
 
 
@@ -86,17 +98,62 @@ public class JfController {
 //    @Operation(summary = "获得 经费明细对象")
 //    @Parameter(name = "id", description = "编号", required = true, example = "1024")
 //    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
-//    public CommonResult<JfRespVO> getJf(@RequestParam("id") Integer id) {
+//    public CommonResult<JfResVO> getJf(@RequestParam("id") Integer id) {
 //        JfDO jf = jfService.getJf(id);
-//        return success(BeanUtils.toBean(jf, JfRespVO.class));
+//        return success(BeanUtils.toBean(jf, JfResVO.class));
 //    }
 //
+@GetMapping("/listfymx")
+@Operation(summary = "经费返还月度明细")
+@PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+public CommonResult<PageResult<JfSummaryResVO>> getJffymxList(@Valid JfPageReqVO jfmx) {
+    return success(jfService.selectJffymxList(jfmx));
+}
+
+    @GetMapping("/listfnmx")
+    @Operation(summary = "经费返还年度明细")
+    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+    public CommonResult<PageResult<JfSummaryResVO>> getJffnmxList(@Valid JfPageReqVO jfmx) {
+        return success(jfService.selectJffnmxList(jfmx));
+    }
+
+    @GetMapping("/listfsjzqmx")
+    @Operation(summary = "经费返还汇缴周期明细")
+    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+    public CommonResult<PageResult<JfSummaryResVO>> getJffsjzqmxList(@Valid JfPageReqVO jfmx) {
+        return success(jfService.selectJffsjzqmxList(jfmx));
+    }
+
+    @GetMapping("/listtzfn")
+    @Operation(summary = "经费台账年度汇总")
+    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+    public CommonResult<PageResult<JfSummaryResVO>> getJftzfnList(@Valid JfPageReqVO jfmx) {
+        return success(jfService.selectJftzfnList(jfmx));
+    }
+
+    @GetMapping("/listtzfswjg")
+    @Operation(summary = "经费台账按税务机关汇总")
+    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+    public CommonResult<PageResult<JfSummaryResVO>> getJftzfswjgList(@Valid JfPageReqVO jfmx) {
+        return success(jfService.selectJftzfswjgList(jfmx));
+    }
+
+    @GetMapping("/listszdzdhd")
+    @Operation(summary = "省级对账")
+    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+    public CommonResult<PageResult<JfSummaryResVO>> getSzdzhdList(JfPageReqVO jfmx) {
+        // v1 不分页，强制设置
+        jfmx.setPageNo(1);
+        jfmx.setPageSize(PageParam.PAGE_SIZE_NONE);
+        return success(jfService.selectSzdzhdList(jfmx));
+    }
+
 //    @GetMapping("/page")
 //    @Operation(summary = "获得 经费明细对象分页")
 //    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
-//    public CommonResult<PageResult<JfRespVO>> getJfPage(@Valid JfPageReqVO pageReqVO) {
+//    public CommonResult<PageResult<JfResVO>> getJfPage(@Valid JfPageReqVO pageReqVO) {
 //        PageResult<JfDO> pageResult = jfService.getJfPage(pageReqVO);
-//        return success(BeanUtils.toBean(pageResult, JfRespVO.class));
+//        return success(BeanUtils.toBean(pageResult, JfResVO.class));
 //    }
 //
     @GetMapping("/export-excel")
@@ -106,10 +163,10 @@ public class JfController {
     public void exportJfExcel(@Valid JfPageReqVO pageReqVO,
               HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
-        List<JfRespVO> list = jfService.selectJftzmxList(pageReqVO).getList();
+        List<JfResVO> list = jfService.selectJftzmxList(pageReqVO).getList();
         // 导出 Excel
-        ExcelUtils.write(response, " 经费明细对象.xls", "数据", JfRespVO.class,
-                        BeanUtils.toBean(list, JfRespVO.class));
+        ExcelUtils.write(response, " 经费明细对象.xls", "数据", JfResVO.class,
+                BeanUtils.toBean(list, JfResVO.class));
     }
 
 }

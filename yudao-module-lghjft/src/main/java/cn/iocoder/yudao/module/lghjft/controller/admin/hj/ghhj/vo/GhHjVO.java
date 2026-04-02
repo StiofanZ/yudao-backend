@@ -169,9 +169,62 @@ public class GhHjVO {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date sjtbSj;
 
-    /** 备注 */
+    /**
+     * 户籍分类9 复审标志
+     */
+    private String hjfl9Dm;
+
+    /**
+     * 户籍分类1
+     */
+    private String hjfl1Dm;
+    /**
+     * 户籍分类2
+     */
+    private String hjfl2Dm;
+    /**
+     * 户籍分类3
+     */
+    private String hjfl3Dm;
+    /**
+     * 户籍分类5
+     */
+    private String hjfl5Dm;
+    /**
+     * 户籍分类7
+     */
+    private String hjfl7Dm;
+
+    /**
+     * 所得工会机构代码
+     */
+    private String sdghjgDm;
+
+    /**
+     * 发证成立日期
+     */
+    @DateTimeFormat("yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date fzcrq;
+
+    /**
+     * 注销日期
+     */
+    @DateTimeFormat("yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date zxrq;
+
+    /**
+     * 备注
+     */
     private String bz;
 
     /** 纳税人识别号 */
     private String nsrsbh;
+
+    /**
+     * 部门名称(查询结果用)
+     */
+    @ExcelProperty("部门名称")
+    private String deptName;
 }

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.sjwh.wjgl.WjglMapper">
+
+    <sql id="selectFileVo">
+        SELECT fileId,
+               dept_id,
+               fileName,
+               fileStatus,
+               fileUrl,
+               bz,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        FROM file
+    </sql>
+
+    <resultMap type="cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.wjgl.vo.WjglResVO" id="FileResult">
+        <result property="fileid" column="fileId"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="filename" column="fileName"/>
+        <result property="filestatus" column="fileStatus"/>
+        <result property="fileurl" column="fileUrl"/>
+        <result property="bz" column="bz"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <select id="selectFilePage" resultMap="FileResult">
+        <include refid="selectFileVo"/>
+        <where>
+            <if test="query.deptId != null and query.deptId != ''">AND dept_id = #{query.deptId}</if>
+            <if test="query.filename != null and query.filename != ''">AND fileName LIKE CONCAT('%', #{query.filename}, '%')</if>
+            <if test="query.filestatus != null and query.filestatus != ''">AND fileStatus = #{query.filestatus}</if>
+            <if test="query.fileurl != null and query.fileurl != ''">AND fileUrl = #{query.fileurl}</if>
+            <if test="query.bz != null and query.bz != ''">AND bz = #{query.bz}</if>
+            <if test="query.createBy != null and query.createBy != ''">AND create_by = #{query.createBy}</if>
+            <if test="query.beginCreateTime != null and query.beginCreateTime != '' and query.endCreateTime != null and query.endCreateTime != ''">
+                AND create_time BETWEEN #{query.beginCreateTime} AND #{query.endCreateTime}
+            </if>
+            <if test="query.updateBy != null and query.updateBy != ''">AND update_by = #{query.updateBy}</if>
+            <if test="query.beginUpdateTime != null and query.beginUpdateTime != '' and query.endUpdateTime != null and query.endUpdateTime != ''">
+                AND update_time BETWEEN #{query.beginUpdateTime} AND #{query.endUpdateTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectFileByFileid" resultMap="FileResult">
+        <include refid="selectFileVo"/>
+        WHERE fileId = #{fileid}
+    </select>
+
+    <select id="selectFileList" resultMap="FileResult">
+        <include refid="selectFileVo"/>
+        <where>
+            <if test="query.deptId != null and query.deptId != ''">AND dept_id = #{query.deptId}</if>
+            <if test="query.filename != null and query.filename != ''">AND fileName LIKE CONCAT('%', #{query.filename}, '%')</if>
+            <if test="query.filestatus != null and query.filestatus != ''">AND fileStatus = #{query.filestatus}</if>
+            <if test="query.fileurl != null and query.fileurl != ''">AND fileUrl = #{query.fileurl}</if>
+            <if test="query.bz != null and query.bz != ''">AND bz = #{query.bz}</if>
+            <if test="query.createBy != null and query.createBy != ''">AND create_by = #{query.createBy}</if>
+            <if test="query.beginCreateTime != null and query.beginCreateTime != '' and query.endCreateTime != null and query.endCreateTime != ''">
+                AND create_time BETWEEN #{query.beginCreateTime} AND #{query.endCreateTime}
+            </if>
+            <if test="query.updateBy != null and query.updateBy != ''">AND update_by = #{query.updateBy}</if>
+            <if test="query.beginUpdateTime != null and query.beginUpdateTime != '' and query.endUpdateTime != null and query.endUpdateTime != ''">
+                AND update_time BETWEEN #{query.beginUpdateTime} AND #{query.endUpdateTime}
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.xwqy.xwqyjftj.XwqyjftjMapper">
+
+    <!-- 统计汇总: 按 dwdm, dept_id, jsbj, cbjthbj 分组 -->
+    <select id="selectXwqyjftjList"
+            resultType="cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjftj.vo.XwqyjftjAggVO">
+        SELECT
+        jf.DWDM AS dwdm,
+        jf.dept_id AS deptId,
+        jf.jsbj AS jsbj,
+        jf.cbjthbj AS cbjthbj,
+        COUNT(jf.djxh) AS jfbs,
+        COUNT(DISTINCT jf.djxh) AS jfhs,
+        SUM(jf.YBTSE) AS ybtse,
+        SUM(jf.YFJE) AS yfje,
+        SUM(jf.GKZFJE) AS gkzfje,
+        SUM(jf.GJTHJE) AS gjthje,
+        SUM(jf.jcghje) AS jcghje,
+        SUM(jf.cbjje) AS cbjje,
+        SUM(jf.HYGHJE) AS hyghje,
+        SUM(jf.xjghje) AS xjghje,
+        SUM(jf.SJGHJE) AS sjghje,
+        SUM(jf.SZGHJE) AS szghje,
+        SUM(jf.QGGHJE) AS qgghje,
+        SUM(jf.sdsje) AS sdsje,
+        SUM(jf.swjgje) AS swjgje
+        FROM xwqyjf jf
+        <where>
+            <if test="req.dwdm != null and req.dwdm != ''">
+                AND jf.DWDM = #{req.dwdm}
+            </if>
+            <if test="req.deptId != null and req.deptId != ''">
+                AND jf.dept_id = #{req.deptId}
+            </if>
+            <if test="req.nsrmc != null and req.nsrmc != ''">
+                AND jf.NSRMC LIKE CONCAT('%', #{req.nsrmc}, '%')
+            </if>
+        </where>
+        GROUP BY jf.DWDM, jf.dept_id, jf.jsbj, jf.cbjthbj
+    </select>
+
+    <!-- 统计反馈: 按 dwdm, dept_id, shxydm, nsrmc, jsbj, cbjthbj 分组 -->
+    <select id="selectXwqyjftjfhList"
+            resultType="cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjftj.vo.XwqyjftjfhAggVO">
+        SELECT
+        jf.DWDM AS dwdm,
+        jf.dept_id AS deptId,
+        jf.shxydm AS shxydm,
+        jf.nsrmc AS nsrmc,
+        jf.jsbj AS jsbj,
+        jf.cbjthbj AS cbjthbj,
+        COUNT(jf.djxh) AS jfbs,
+        SUM(jf.YBTSE) AS ybtse,
+        SUM(jf.YFJE) AS yfje,
+        SUM(jf.GKZFJE) AS gkzfje,
+        SUM(jf.GJTHJE) AS gjthje,
+        SUM(jf.jcghje) AS jcghje,
+        SUM(jf.cbjje) AS cbjje,
+        SUM(jf.HYGHJE) AS hyghje,
+        SUM(jf.xjghje) AS xjghje,
+        SUM(jf.SJGHJE) AS sjghje,
+        SUM(jf.SZGHJE) AS szghje,
+        SUM(jf.QGGHJE) AS qgghje,
+        SUM(jf.sdsje) AS sdsje,
+        SUM(jf.swjgje) AS swjgje
+        FROM xwqyjf jf
+        <where>
+            <if test="req.dwdm != null and req.dwdm != ''">
+                AND jf.DWDM = #{req.dwdm}
+            </if>
+            <if test="req.deptId != null and req.deptId != ''">
+                AND jf.dept_id = #{req.deptId}
+            </if>
+            <if test="req.nsrmc != null and req.nsrmc != ''">
+                AND jf.NSRMC LIKE CONCAT('%', #{req.nsrmc}, '%')
+            </if>
+        </where>
+        GROUP BY jf.DWDM, jf.dept_id, jf.shxydm, jf.nsrmc, jf.jsbj, jf.cbjthbj
+    </select>
+
+</mapper>

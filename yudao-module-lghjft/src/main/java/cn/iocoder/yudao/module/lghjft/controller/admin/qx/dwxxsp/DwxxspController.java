@@ -3,9 +3,9 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.qx.dwxxsp;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dwxxsp.vo.DwxxspAuditReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dwxxsp.vo.DwxxspDetailRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dwxxsp.vo.DwxxspDetailResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dwxxsp.vo.DwxxspPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dwxxsp.vo.DwxxspRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dwxxsp.vo.DwxxspResVO;
 import cn.iocoder.yudao.module.lghjft.service.qx.dwxxsp.DwxxspService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -30,7 +30,7 @@ public class DwxxspController {
     @GetMapping("/page")
     @Operation(summary = "获得单位信息审批分页")
     @PreAuthorize("@ss.hasPermission('lghjft:qx-dwxxsp:query')")
-    public CommonResult<PageResult<DwxxspRespVO>> getDwxxspPage(@Valid DwxxspPageReqVO reqVO) {
+    public CommonResult<PageResult<DwxxspResVO>> getDwxxspPage(@Valid DwxxspPageReqVO reqVO) {
         return success(dwxxspService.getDwxxspPage(reqVO));
     }
 
@@ -39,7 +39,7 @@ public class DwxxspController {
     @Parameter(name = "businessType", required = true)
     @Parameter(name = "businessId", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:qx-dwxxsp:query')")
-    public CommonResult<DwxxspDetailRespVO> getDwxxsp(@RequestParam("businessType") String businessType,
+    public CommonResult<DwxxspDetailResVO> getDwxxsp(@RequestParam("businessType") String businessType,
                                                       @RequestParam("businessId") Long businessId) {
         return success(dwxxspService.getDwxxspDetail(businessType, businessId));
     }

@@ -3,7 +3,8 @@ package cn.iocoder.yudao.module.lghjft.service.hbzz.jfmx;
 import cn.idev.excel.util.StringUtils;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jfmx.vo.JfPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jfmx.vo.JfRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jfmx.vo.JfResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jfmx.vo.JfSummaryResVO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.hbzz.jfmx.JfMapper;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
 import cn.iocoder.yudao.module.system.service.user.AdminUserService;
@@ -29,10 +30,74 @@ public class JfServiceImpl implements JfService {
     private AdminUserService userService;
 
     @Override
-    public PageResult<JfRespVO> selectJftzmxList(JfPageReqVO jfmx) {
+    public PageResult<JfResVO> selectJfmxList(JfPageReqVO jfmx) {
         clBmId(jfmx);
-        Page<JfRespVO> page = new Page<>(jfmx.getPageNo(), jfmx.getPageSize());
-        IPage<JfRespVO> ipage = jfMapper.selectJftzmxList(page, jfmx);
+        Page<JfResVO> page = new Page<>(jfmx.getPageNo(), jfmx.getPageSize());
+        page.setOptimizeCountSql(false);
+        IPage<JfResVO> ipage = jfMapper.selectJfmxList(page, jfmx);
+        return new PageResult<>(ipage.getRecords(), ipage.getTotal());
+    }
+
+    @Override
+    public PageResult<JfResVO> selectJftzmxList(JfPageReqVO jfmx) {
+        clBmId(jfmx);
+        Page<JfResVO> page = new Page<>(jfmx.getPageNo(), jfmx.getPageSize());
+        page.setOptimizeCountSql(false);
+        IPage<JfResVO> ipage = jfMapper.selectJftzmxList(page, jfmx);
+        return new PageResult<>(ipage.getRecords(), ipage.getTotal());
+    }
+
+    @Override
+    public PageResult<JfSummaryResVO> selectJffymxList(JfPageReqVO jfmx) {
+        clBmId(jfmx);
+        Page<JfSummaryResVO> page = new Page<>(jfmx.getPageNo(), jfmx.getPageSize());
+        page.setOptimizeCountSql(false);
+        IPage<JfSummaryResVO> ipage = jfMapper.selectJffymxList(page, jfmx);
+        return new PageResult<>(ipage.getRecords(), ipage.getTotal());
+    }
+
+    @Override
+    public PageResult<JfSummaryResVO> selectJffnmxList(JfPageReqVO jfmx) {
+        clBmId(jfmx);
+        Page<JfSummaryResVO> page = new Page<>(jfmx.getPageNo(), jfmx.getPageSize());
+        page.setOptimizeCountSql(false);
+        IPage<JfSummaryResVO> ipage = jfMapper.selectJffnmxList(page, jfmx);
+        return new PageResult<>(ipage.getRecords(), ipage.getTotal());
+    }
+
+    @Override
+    public PageResult<JfSummaryResVO> selectJffsjzqmxList(JfPageReqVO jfmx) {
+        clBmId(jfmx);
+        Page<JfSummaryResVO> page = new Page<>(jfmx.getPageNo(), jfmx.getPageSize());
+        page.setOptimizeCountSql(false);
+        IPage<JfSummaryResVO> ipage = jfMapper.selectJffsjzqmxList(page, jfmx);
+        return new PageResult<>(ipage.getRecords(), ipage.getTotal());
+    }
+
+    @Override
+    public PageResult<JfSummaryResVO> selectJftzfnList(JfPageReqVO jfmx) {
+        clBmId(jfmx);
+        Page<JfSummaryResVO> page = new Page<>(jfmx.getPageNo(), jfmx.getPageSize());
+        page.setOptimizeCountSql(false);
+        IPage<JfSummaryResVO> ipage = jfMapper.selectJftzfnList(page, jfmx);
+        return new PageResult<>(ipage.getRecords(), ipage.getTotal());
+    }
+
+    @Override
+    public PageResult<JfSummaryResVO> selectJftzfswjgList(JfPageReqVO jfmx) {
+        clBmId(jfmx);
+        Page<JfSummaryResVO> page = new Page<>(jfmx.getPageNo(), jfmx.getPageSize());
+        page.setOptimizeCountSql(false);
+        IPage<JfSummaryResVO> ipage = jfMapper.selectJftzfswjgList(page, jfmx);
+        return new PageResult<>(ipage.getRecords(), ipage.getTotal());
+    }
+
+    @Override
+    public PageResult<JfSummaryResVO> selectSzdzhdList(JfPageReqVO jfmx) {
+        clBmId(jfmx);
+        Page<JfSummaryResVO> page = new Page<>(jfmx.getPageNo(), jfmx.getPageSize());
+        page.setOptimizeCountSql(false);
+        IPage<JfSummaryResVO> ipage = jfMapper.selectSzdzhdList(page, jfmx);
         return new PageResult<>(ipage.getRecords(), ipage.getTotal());
     }
 

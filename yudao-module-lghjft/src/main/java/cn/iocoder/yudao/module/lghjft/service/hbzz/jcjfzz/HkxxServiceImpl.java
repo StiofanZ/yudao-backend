@@ -5,9 +5,9 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.file.utils.DateUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxSummaryRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxSummaryResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jcjfzz.HkxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.hbzz.jcjfzz.HkxxMapper;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Date;
@@ -40,6 +41,7 @@ public class HkxxServiceImpl implements HkxxService {
     private AdminUserService userService;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateHkxx(HkxxSaveReqVO updateReqVO) {
         AdminUserDO user = userService.getUser(getLoginUserId());
         String nickname = user.getNickname();
@@ -60,7 +62,6 @@ public class HkxxServiceImpl implements HkxxService {
         if (rows == 0) {
             updateReqVO.setUpdateBy(nickname);
             updateReqVO.setUpdateTime(new Date());
-            updateReqVO.setDzbj("Y");
             hkxxMapper.insertJcjfdz(updateReqVO); // 单条插入！无list！
         }
 
@@ -94,15 +95,15 @@ public class HkxxServiceImpl implements HkxxService {
     }
 
     @Override
-    public PageResult<HkxxRespVO> getHkxxPage(HkxxPageReqVO pageReqVO) {
+    public PageResult<HkxxResVO> getHkxxPage(HkxxPageReqVO pageReqVO) {
         applyDeptScope(pageReqVO);
-        Page<HkxxRespVO> page = new Page<>(pageReqVO.getPageNo(), pageReqVO.getPageSize());
-        IPage<HkxxRespVO> ipage = hkxxMapper.selectJcjfzzList(page, pageReqVO);
+        Page<HkxxResVO> page = new Page<>(pageReqVO.getPageNo(), pageReqVO.getPageSize());
+        IPage<HkxxResVO> ipage = hkxxMapper.selectJcjfzzList(page, pageReqVO);
         return new PageResult<>(ipage.getRecords(), ipage.getTotal());
     }
 
     @Override
-    public HkxxSummaryRespVO getHkxxSummary(HkxxPageReqVO pageReqVO) {
+    public HkxxSummaryResVO getHkxxSummary(HkxxPageReqVO pageReqVO) {
         applyDeptScope(pageReqVO);
         return hkxxMapper.selectJcjfzzSummary(pageReqVO);
     }

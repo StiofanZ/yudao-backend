@@ -4,9 +4,9 @@ import cn.hutool.core.util.StrUtil;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dwxxsp.vo.DwxxspAuditReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dwxxsp.vo.DwxxspDetailRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dwxxsp.vo.DwxxspDetailResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dwxxsp.vo.DwxxspPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dwxxsp.vo.DwxxspRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dwxxsp.vo.DwxxspResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.zhwh.vo.ZhwhAuditReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nsrxx.NsrxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.dlzh.GhQxDlzhDO;
@@ -55,8 +55,8 @@ public class DwxxspServiceImpl implements DwxxspService {
     private GhQxSfxxService ghQxSfxxService;
 
     @Override
-    public PageResult<DwxxspRespVO> getDwxxspPage(DwxxspPageReqVO reqVO) {
-        List<DwxxspRespVO> records = new ArrayList<>();
+    public PageResult<DwxxspResVO> getDwxxspPage(DwxxspPageReqVO reqVO) {
+        List<DwxxspResVO> records = new ArrayList<>();
         if (StrUtil.isBlank(reqVO.getBusinessType()) || BUSINESS_TYPE_ACCOUNT_CHANGE.equals(reqVO.getBusinessType())) {
             records.addAll(buildAccountChangeRecords(reqVO));
         }
@@ -66,7 +66,7 @@ public class DwxxspServiceImpl implements DwxxspService {
 
         records = records.stream()
                 .filter(item -> matchKeyword(item, reqVO.getKeyword()))
-                .sorted(Comparator.comparing(DwxxspRespVO::getCreateTime, Comparator.nullsLast(LocalDateTime::compareTo)).reversed())
+                .sorted(Comparator.comparing(DwxxspResVO::getCreateTime, Comparator.nullsLast(LocalDateTime::compareTo)).reversed())
                 .toList();
         int fromIndex = Math.max((reqVO.getPageNo() - 1) * reqVO.getPageSize(), 0);
         if (fromIndex >= records.size()) {
@@ -77,7 +77,7 @@ public class DwxxspServiceImpl implements DwxxspService {
     }
 
     @Override
-    public DwxxspDetailRespVO getDwxxspDetail(String businessType, Long businessId) {
+    public DwxxspDetailResVO getDwxxspDetail(String businessType, Long businessId) {
         if (BUSINESS_TYPE_ACCOUNT_CHANGE.equals(businessType)) {
             return buildAccountChangeDetail(zhwhService.getZhwh(businessId));
         }
@@ -104,7 +104,7 @@ public class DwxxspServiceImpl implements DwxxspService {
         throw exception(DWXXSP_BUSINESS_TYPE_NOT_SUPPORT);
     }
 
-    private List<DwxxspRespVO> buildAccountChangeRecords(DwxxspPageReqVO reqVO) {
+    private List<DwxxspResVO> buildAccountChangeRecords(DwxxspPageReqVO reqVO) {
         return ghQxZhwhMapper.selectList(new LambdaQueryWrapperX<GhQxZhwhDO>()
                         .eqIfPresent(GhQxZhwhDO::getStatus, reqVO.getStatus())
                         .orderByDesc(GhQxZhwhDO::getCreateTime)
@@ -114,13 +114,13 @@ public class DwxxspServiceImpl implements DwxxspService {
                 .toList();
     }
 
-    private DwxxspRespVO buildAccountChangeRecord(GhQxZhwhDO zhwh) {
+    private DwxxspResVO buildAccountChangeRecord(GhQxZhwhDO zhwh) {
         if (zhwh == null) {
             return null;
         }
         GhQxDlzhDO dlzh = ghQxDlzhService.getDlzh(zhwh.getDlzhId());
         DeptRespDTO dept = zhwh.getDeptId() != null ? deptApi.getDept(zhwh.getDeptId()) : null;
-        DwxxspRespVO respVO = new DwxxspRespVO();
+        DwxxspResVO respVO = new DwxxspResVO();
         respVO.setBusinessType(BUSINESS_TYPE_ACCOUNT_CHANGE);
         respVO.setBusinessId(zhwh.getId());
         respVO.setApplyNo(zhwh.getApplyNo());
@@ -137,7 +137,7 @@ public class DwxxspServiceImpl implements DwxxspService {
         return respVO;
     }
 
-    private List<DwxxspRespVO> buildIdentityRecords(DwxxspPageReqVO reqVO) {
+    private List<DwxxspResVO> buildIdentityRecords(DwxxspPageReqVO reqVO) {
         return ghQxSfxxMapper.selectList(new LambdaQueryWrapperX<GhQxSfxxDO>()
                         .eqIfPresent(GhQxSfxxDO::getStatus, reqVO.getStatus())
                         .orderByDesc(GhQxSfxxDO::getCreateTime)
@@ -147,14 +147,14 @@ public class DwxxspServiceImpl implements DwxxspService {
                 .toList();
     }
 
-    private DwxxspRespVO buildIdentityRecord(GhQxSfxxDO sfxx) {
+    private DwxxspResVO buildIdentityRecord(GhQxSfxxDO sfxx) {
         if (sfxx == null) {
             return null;
         }
         GhQxDlzhDO dlzh = ghQxDlzhService.getDlzh(sfxx.getDlzhId());
         NsrxxDO nsrxx = nsrxxService.getNsrxx(sfxx.getDjxh());
         DeptRespDTO dept = sfxx.getDeptId() != null ? deptApi.getDept(sfxx.getDeptId()) : null;
-        DwxxspRespVO respVO = new DwxxspRespVO();
+        DwxxspResVO respVO = new DwxxspResVO();
         respVO.setBusinessType(BUSINESS_TYPE_IDENTITY);
         respVO.setBusinessId(sfxx.getId());
         respVO.setApplyNo("SFXX-" + sfxx.getId());
@@ -170,13 +170,13 @@ public class DwxxspServiceImpl implements DwxxspService {
         return respVO;
     }
 
-    private DwxxspDetailRespVO buildAccountChangeDetail(GhQxZhwhDO zhwh) {
+    private DwxxspDetailResVO buildAccountChangeDetail(GhQxZhwhDO zhwh) {
         if (zhwh == null) {
             return null;
         }
         GhQxDlzhDO dlzh = ghQxDlzhService.getDlzh(zhwh.getDlzhId());
         DeptRespDTO dept = zhwh.getDeptId() != null ? deptApi.getDept(zhwh.getDeptId()) : null;
-        DwxxspDetailRespVO detail = new DwxxspDetailRespVO();
+        DwxxspDetailResVO detail = new DwxxspDetailResVO();
         detail.setBusinessType(BUSINESS_TYPE_ACCOUNT_CHANGE);
         detail.setBusinessId(zhwh.getId());
         detail.setApplyNo(zhwh.getApplyNo());
@@ -201,14 +201,14 @@ public class DwxxspServiceImpl implements DwxxspService {
         return detail;
     }
 
-    private DwxxspDetailRespVO buildIdentityDetail(GhQxSfxxDO sfxx) {
+    private DwxxspDetailResVO buildIdentityDetail(GhQxSfxxDO sfxx) {
         if (sfxx == null) {
             return null;
         }
         GhQxDlzhDO dlzh = ghQxDlzhService.getDlzh(sfxx.getDlzhId());
         NsrxxDO nsrxx = nsrxxService.getNsrxx(sfxx.getDjxh());
         DeptRespDTO dept = sfxx.getDeptId() != null ? deptApi.getDept(sfxx.getDeptId()) : null;
-        DwxxspDetailRespVO detail = new DwxxspDetailRespVO();
+        DwxxspDetailResVO detail = new DwxxspDetailResVO();
         detail.setBusinessType(BUSINESS_TYPE_IDENTITY);
         detail.setBusinessId(sfxx.getId());
         detail.setApplyNo("SFXX-" + sfxx.getId());
@@ -228,7 +228,7 @@ public class DwxxspServiceImpl implements DwxxspService {
         return detail;
     }
 
-    private boolean matchKeyword(DwxxspRespVO item, String keyword) {
+    private boolean matchKeyword(DwxxspResVO item, String keyword) {
         if (StrUtil.isBlank(keyword)) {
             return true;
         }

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.qx.sfxx.GhQxSfxxMapper">
 
-    <select id="selectKbdsfxxList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.KbdsfxxRespVO">
+    <select id="selectKbdsfxxList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.KbdsfxxResVO">
         select coalesce(b.dwmc, c.nsrmc)              as dwmc,
                coalesce(b.shxydm, c.shxydm, c.nsrsbh) as shxydm,
                b.djxh,

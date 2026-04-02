@@ -2,13 +2,13 @@ package cn.iocoder.yudao.module.lghjft.service.workflow.dwdbsq;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils;
 import cn.iocoder.yudao.module.bpm.api.task.BpmProcessInstanceApi;
 import cn.iocoder.yudao.module.bpm.api.task.dto.BpmProcessInstanceCreateReqDTO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxBaseVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.dwdbsq.vo.WfDbsqSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.workflow.dwdbsq.vo.WfDbsqAppPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.dwdbsq.WfDbsqDO;
@@ -21,23 +21,20 @@ import cn.iocoder.yudao.module.system.dal.dataobject.dept.DeptDO;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
 import cn.iocoder.yudao.module.system.service.dept.DeptService;
 import cn.iocoder.yudao.module.system.service.user.AdminUserService;
-import com.aliyun.oss.ServiceException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import jakarta.validation.Valid;
-import org.flowable.engine.delegate.DelegateExecution;
-import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
-import org.springframework.validation.annotation.Validated;
+import jakarta.validation.Valid;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
-import java.util.*;
-
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertList;
 import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.WF_DBSQ_NOT_EXISTS;
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.WF_DBSQ_NOT_STATUS;
@@ -144,7 +141,7 @@ public class WfDbsqServiceImpl implements WfDbsqService {
     }
 
     @Override
-    public WfDbsqRespVO getDetail(Long id) {
+    public WfDbsqResVO getDetail(Long id) {
         WfDbsqDO main = wfDbsqMapper.selectById(id);
         if (main == null) {
             throw ServiceExceptionUtil.exception(ErrorCodeConstants.WF_TDF_SQ_NOT_EXISTS);
@@ -153,9 +150,9 @@ public class WfDbsqServiceImpl implements WfDbsqService {
                 .eq(WfDbsqfjDO::getDbsqId, id)
                 .orderByAsc(WfDbsqfjDO::getId));
 
-        WfDbsqRespVO respVO = BeanUtils.toBean(main, WfDbsqRespVO.class);
+        WfDbsqResVO respVO = BeanUtils.toBean(main, WfDbsqResVO.class);
         respVO.setFjList(fjList.stream().map(item -> {
-            WfDbsqRespVO.FjItem fjItem = new WfDbsqRespVO.FjItem();
+            WfDbsqResVO.FjItem fjItem = new WfDbsqResVO.FjItem();
             fjItem.setFjlx(item.getFjlx());
             fjItem.setWjlj(item.getWjlj());
             fjItem.setWjmc(resolveFileName(item.getWjlj()));

@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +49,7 @@ public class ZcjdAppController {
     @GetMapping("/list-page")
     @Operation(summary = "获得政策解读列表")
     @Parameter(name = "deptId", description = "部门编号", required = true)
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<List<ZcjdResVO>> getZcjdList(@Valid ZcjdPageAppReqVO reqVO) {
         List<ZcjdDO> list = zcjdService.getZcjdList(reqVO);
         list.removeIf(zcjdDO -> !List.of(2, 3).contains(zcjdDO.getStatus())); //only 2,3
@@ -72,6 +74,7 @@ public class ZcjdAppController {
     @GetMapping("/get")
     @Operation(summary = "获得政策解读")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<ZcjdResVO> getZcjd(@RequestParam("id") Long id) {
         ZcjdDO zcjd = zcjdService.getZcjd(id);
         ZcjdResVO result = BeanUtils.toBean(zcjd, ZcjdResVO.class);

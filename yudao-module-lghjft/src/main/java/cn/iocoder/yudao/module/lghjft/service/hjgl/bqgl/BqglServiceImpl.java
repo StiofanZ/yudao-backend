@@ -53,15 +53,17 @@ public class BqglServiceImpl implements BqglService {
     private DeptApi deptApi;
 
     @Override
-    public List<BqglRespVO> getBqxx(Long rootId) {
+    public List<BqglResVO> getBqxx(Long rootId) {
         return ghDmHjBqMapper.selectBqxxList(rootId);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public String createBqdm(BqglCreateReqVO createReqVO) {
         return createBqxx(createReqVO);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public String createBqxx(BqglCreateReqVO createReqVO) {
         Long deptId = SecurityFrameworkUtils.getLoginUserDeptId();
@@ -81,6 +83,7 @@ public class BqglServiceImpl implements BqglService {
         return id;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateBqdm(BqglUpdateReqVO updateReqVO) {
         // 校验存在
@@ -99,11 +102,13 @@ public class BqglServiceImpl implements BqglService {
         ghDmHjBqMapper.updateById(updateObj);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteBqdm(String id) {
         deleteBqxx(id);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteBqxx(String id) {
         // 校验存在
@@ -131,7 +136,7 @@ public class BqglServiceImpl implements BqglService {
     }
 
     @Override
-    public PageResult<BqglRespVO> listBqdm(BqglPageReqVO pageReqVO) {
+    public PageResult<BqglResVO> listBqdm(BqglPageReqVO pageReqVO) {
         Long deptId = SecurityFrameworkUtils.getLoginUserDeptId();
         Set<Long> deptIds = new HashSet<>();
         deptIds.add(deptId);
@@ -149,15 +154,15 @@ public class BqglServiceImpl implements BqglService {
         }
 
         PageResult<GhDmHjBqDO> pageResult = ghDmHjBqMapper.selectPage(pageReqVO, deptIds);
-        return BeanUtils.toBean(pageResult, BqglRespVO.class);
+        return BeanUtils.toBean(pageResult, BqglResVO.class);
     }
 
     @Override
-    public PageResult<BqglHjxxRespVO> listHjxx(BqglHjxxPageReqVO pageReqVO, Long deptId) {
+    public PageResult<BqglHjxxResVO> listHjxx(BqglHjxxPageReqVO pageReqVO, Long deptId) {
         if (StrUtil.isBlank(pageReqVO.getBqId())) {
             PageResult<GhHjJcxxDO> pageResult = ghHjJcxxMapper.selectPage(pageReqVO,
                     buildHjxxQueryWrapper(pageReqVO).orderByDesc(GhHjJcxxDO::getDjxh));
-            List<BqglHjxxRespVO> records = pageResult.getList().stream()
+            List<BqglHjxxResVO> records = pageResult.getList().stream()
                     .map(jcxx -> buildHjxxResp(jcxx, null))
                     .toList();
             return new PageResult<>(records, pageResult.getTotal());
@@ -177,7 +182,7 @@ public class BqglServiceImpl implements BqglService {
             return new PageResult<>(List.of(), total);
         }
 
-        List<BqglHjxxRespVO> pageRecords = new ArrayList<>(pageSize);
+        List<BqglHjxxResVO> pageRecords = new ArrayList<>(pageSize);
         if (pageStart < taggedTotal) {
             int taggedNeed = (int) Math.min(pageSize, taggedTotal - pageStart);
             List<GhHjJcxxDO> taggedPage = getHjxxSegment(pageReqVO, taggedDjxhList, true, pageStart, taggedNeed);
@@ -327,8 +332,8 @@ public class BqglServiceImpl implements BqglService {
                 .collect(Collectors.toMap(GhHjBqxxDO::getDjxh, Function.identity(), (left, right) -> left, LinkedHashMap::new));
     }
 
-    private BqglHjxxRespVO buildHjxxResp(GhHjJcxxDO jcxx, GhHjBqxxDO tag) {
-        BqglHjxxRespVO respVO = BeanUtils.toBean(jcxx, BqglHjxxRespVO.class);
+    private BqglHjxxResVO buildHjxxResp(GhHjJcxxDO jcxx, GhHjBqxxDO tag) {
+        BqglHjxxResVO respVO = BeanUtils.toBean(jcxx, BqglHjxxResVO.class);
         if (tag != null) {
             respVO.setBqId(tag.getBqId());
             respVO.setYxqq(tag.getYxqq());

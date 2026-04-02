@@ -2,29 +2,26 @@ package cn.iocoder.yudao.module.lghjft.service.sjwh.hkxxbfzhpc;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.idev.excel.util.StringUtils;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.hkxxbfzhpc.vo.HkxxBfzhpcPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.hkxxbfzhpc.vo.HkxxBfzhpcResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.hkxxbfzhpc.vo.HkxxBfzhpcSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.hkxxbfzhpc.HkxxBfzhpcDO;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.sjwh.hkxxbfzhpc.HkxxBfzhpcMapper;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
 import cn.iocoder.yudao.module.system.service.user.AdminUserService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.hkxxbfzhpc.vo.*;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.hkxxbfzhpc.HkxxBfzhpcDO;
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-
-import cn.iocoder.yudao.module.lghjft.dal.mysql.sjwh.hkxxbfzhpc.HkxxBfzhpcMapper;
-
-import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertList;
 import static cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils.getLoginUserId;
-import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.*;
 
 /**
  * 拨付信息 Service 实现类
@@ -40,25 +37,138 @@ public class HkxxBfzhpcServiceImpl implements HkxxBfzhpcService {
     @Resource
     private AdminUserService userService;
 
+    // ========== deptId 自动填充（与 v1 Service 逻辑一致） ==========
 
-    //    @Override
-//    public void updateHkxxBfzhpc(HkxxBfzhpcSaveReqVO updateReqVO) {
-//        // 校验存在
-//        validateHkxxBfzhpcExists(Math.toIntExact(updateReqVO.getZhpcid()));
-//        // 更新
-//        HkxxBfzhpcDO updateObj = BeanUtils.toBean(updateReqVO, HkxxBfzhpcDO.class);
-//        hkxxBfzhpcMapper.updateById(updateObj);
-//    }
-//
+    private void fillDeptId(HkxxBfzhpcPageReqVO pageReqVO) {
+        if (StringUtils.isEmpty(pageReqVO.getDeptId())) {
+            AdminUserDO user = userService.getUser(getLoginUserId());
+            pageReqVO.setDeptId(user.getDeptId().toString());
+        }
+        // deptId == "100000" 为管理员，查全部
+        if ("100000".equals(pageReqVO.getDeptId())) {
+            pageReqVO.setDeptId(null);
+        }
+    }
+
+    // ========== 账户排除 ==========
+
+    @Override
+    public PageResult<HkxxBfzhpcResVO> getBfzhpcPage(HkxxBfzhpcPageReqVO pageReqVO) {
+        fillDeptId(pageReqVO);
+        Page<HkxxBfzhpcResVO> page = new Page<>(pageReqVO.getPageNo(), pageReqVO.getPageSize());
+        page.setOptimizeCountSql(false);
+        IPage<HkxxBfzhpcResVO> ipage = hkxxBfzhpcMapper.selectBfzhpcPage(page, pageReqVO);
+        return new PageResult<>(ipage.getRecords(), ipage.getTotal());
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void updateBfzhpc(HkxxBfzhpcSaveReqVO updateReqVO) {
+        // 1. 批量插入/更新子表 gh_hkxx_bfzhpc
+        insertGhHkxxBfzhpcList(updateReqVO);
+        // 2. 更新主表 gh_hj（与 v1 updateBfzhpc 一致）
+        hkxxBfzhpcMapper.updateBfzhpcByJcghzh(updateReqVO.getJcghzh());
+    }
+
+    @Override
+    public HkxxBfzhpcResVO getHkxxBfzhpcByJcghzh(String jcghzh) {
+        return hkxxBfzhpcMapper.selectByJcghzh(jcghzh);
+    }
+
+    // ========== 单位排除 ==========
+
+    @Override
+    public PageResult<HkxxBfzhpcResVO> getBfdwPage(HkxxBfzhpcPageReqVO pageReqVO) {
+        fillDeptId(pageReqVO);
+        Page<HkxxBfzhpcResVO> page = new Page<>(pageReqVO.getPageNo(), pageReqVO.getPageSize());
+        page.setOptimizeCountSql(false);
+        IPage<HkxxBfzhpcResVO> ipage = hkxxBfzhpcMapper.selectBfdwPage(page, pageReqVO);
+        return new PageResult<>(ipage.getRecords(), ipage.getTotal());
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void updateBfdwpc(HkxxBfzhpcSaveReqVO updateReqVO) {
+        // 1. 批量插入/更新子表 gh_hkxx_bfzhpc
+        insertGhHkxxBfzhpcList(updateReqVO);
+        // 2. 更新主表 gh_hj（与 v1 updateBfdwpc 一致）
+        hkxxBfzhpcMapper.updateBfdwpcByDjxh(updateReqVO.getDjxh());
+    }
+
+    @Override
+    public HkxxBfzhpcResVO getBfdwpcByDjxh(String djxh) {
+        return hkxxBfzhpcMapper.selectBfdwByDjxh(djxh);
+    }
+
+    // ========== 经费排除 ==========
+
+    @Override
+    public PageResult<HkxxBfzhpcResVO> getBfjfpcPage(HkxxBfzhpcPageReqVO pageReqVO) {
+        fillDeptId(pageReqVO);
+        Page<HkxxBfzhpcResVO> page = new Page<>(pageReqVO.getPageNo(), pageReqVO.getPageSize());
+        page.setOptimizeCountSql(false);
+        IPage<HkxxBfzhpcResVO> ipage = hkxxBfzhpcMapper.selectBfjfpcPage(page, pageReqVO);
+        return new PageResult<>(ipage.getRecords(), ipage.getTotal());
+    }
+
+    @Override
+    public PageResult<HkxxBfzhpcResVO> getBfjfPage(HkxxBfzhpcPageReqVO pageReqVO) {
+        fillDeptId(pageReqVO);
+        Page<HkxxBfzhpcResVO> page = new Page<>(pageReqVO.getPageNo(), pageReqVO.getPageSize());
+        page.setOptimizeCountSql(false);
+        IPage<HkxxBfzhpcResVO> ipage = hkxxBfzhpcMapper.selectBfjfPage(page, pageReqVO);
+        return new PageResult<>(ipage.getRecords(), ipage.getTotal());
+    }
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateHkxxBfzhpc(HkxxBfzhpcSaveReqVO updateReqVO) {
-        // 1. 批量插入或更新子表 gh_hkxx_bfzhpc
+        // 1. 批量插入/更新子表 gh_hkxx_bfzhpc
         insertGhHkxxBfzhpcList(updateReqVO);
-
-        // 2. 更新主表 gh_jf（只更新时间，和旧代码一致）
+        // 2. 更新主表 gh_jf（与 v1 updateBfjfpc 一致）
         hkxxBfzhpcMapper.updateBfjfpc(updateReqVO.getSpuuid());
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void createHkxxBfzhpc(HkxxBfzhpcSaveReqVO createReqVO) {
+        insertGhHkxxBfzhpcList(createReqVO);
+        hkxxBfzhpcMapper.updateBfjfpc(createReqVO.getSpuuid());
+    }
+
+    @Override
+    public HkxxBfzhpcResVO getHkxxBfzhpc(String spuuid) {
+        return hkxxBfzhpcMapper.selectByspuuid(spuuid);
+    }
+
+    // ========== 删除 ==========
+
+    @Override
+    public void deleteHkxxBfzhpcListByIds(List<Integer> ids) {
+        hkxxBfzhpcMapper.deleteByIds(ids);
+    }
+
+    // ========== 导出 ==========
+
+    @Override
+    public List<HkxxBfzhpcResVO> getBfzhpcList(HkxxBfzhpcPageReqVO pageReqVO) {
+        fillDeptId(pageReqVO);
+        return hkxxBfzhpcMapper.selectBfzhpcList(pageReqVO);
+    }
+
+    @Override
+    public List<HkxxBfzhpcResVO> getBfdwList(HkxxBfzhpcPageReqVO pageReqVO) {
+        fillDeptId(pageReqVO);
+        return hkxxBfzhpcMapper.selectBfdwList(pageReqVO);
+    }
+
+    @Override
+    public List<HkxxBfzhpcResVO> getBfjfList(HkxxBfzhpcPageReqVO pageReqVO) {
+        fillDeptId(pageReqVO);
+        return hkxxBfzhpcMapper.selectBfjfList(pageReqVO);
+    }
+
+    // ========== 内部方法 ==========
 
     /**
      * 批量插入或更新子表（复制旧代码逻辑）
@@ -77,22 +187,16 @@ public class HkxxBfzhpcServiceImpl implements HkxxBfzhpcService {
 
         for (HkxxBfzhpcSaveReqVO.GhHkxxBfzhpcItem item : ghHkxxBfzhpcList) {
             HkxxBfzhpcDO ghHkxxBfzhpc = new HkxxBfzhpcDO();
-
-            // 关键：zhpcid 可能为 null（新增）或有值（更新）
             ghHkxxBfzhpc.setZhpcid(item.getZhpcid());
             ghHkxxBfzhpc.setDjxh(djxh);
             ghHkxxBfzhpc.setSpuuid(spuuid);
-            // 从主对象取账号信息（和旧代码一致）
             ghHkxxBfzhpc.setZh(bfzhpc.getJcghzh());
             ghHkxxBfzhpc.setHm(bfzhpc.getJcghhm());
             ghHkxxBfzhpc.setHh(bfzhpc.getJcghhh());
-            // 从子表取 zt 和 bz（关键！）
             ghHkxxBfzhpc.setZt(item.getZt());
             ghHkxxBfzhpc.setBz(item.getBz());
-
             ghHkxxBfzhpc.setCreateBy(user.getUsername());
             ghHkxxBfzhpc.setUpdateBy(user.getUsername());
-
             list.add(ghHkxxBfzhpc);
         }
 
@@ -100,42 +204,4 @@ public class HkxxBfzhpcServiceImpl implements HkxxBfzhpcService {
             hkxxBfzhpcMapper.batchGhHkxxBfzhpc(list);
         }
     }
-
-    @Override
-    public void deleteHkxxBfzhpcListByIds(List<Integer> ids) {
-        // 删除
-        hkxxBfzhpcMapper.deleteByIds(ids);
-    }
-
-
-//    private void validateHkxxBfzhpcExists(Integer id) {
-//        if (hkxxBfzhpcMapper.selectById(id) == null) {
-//            throw exception(HKXX_BFZHPC_NOT_EXISTS);
-//        }
-//    }
-
-    @Override
-    public HkxxBfzhpcRespVO getHkxxBfzhpc(String spuuid) {
-        return hkxxBfzhpcMapper.selectByspuuid(spuuid);
-    }
-
-
-    @Override
-    public PageResult<HkxxBfzhpcRespVO> getBfjfpcPage(HkxxBfzhpcPageReqVO pageReqVO) {
-        if (StringUtils.isEmpty(pageReqVO.getDeptId())) {
-            AdminUserDO user = userService.getUser(getLoginUserId());
-            pageReqVO.setDeptId(user.getDeptId().toString());
-        }
-        if ("100000".equals(pageReqVO.getDeptId())) {
-            pageReqVO.setDeptId(null);
-        }
-        // 创建分页对象
-        Page<HkxxBfzhpcRespVO> page = new Page<>(pageReqVO.getPageNo(), pageReqVO.getPageSize());
-
-        // 执行分页查询
-        IPage<HkxxBfzhpcRespVO> ipage = hkxxBfzhpcMapper.selectBfjfpcPage(page, pageReqVO);
-
-        return new PageResult<>(ipage.getRecords(), ipage.getTotal());
-    }
-
 }

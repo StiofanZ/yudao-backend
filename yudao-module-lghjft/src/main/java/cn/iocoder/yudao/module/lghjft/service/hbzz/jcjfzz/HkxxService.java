@@ -2,9 +2,9 @@ package cn.iocoder.yudao.module.lghjft.service.hbzz.jcjfzz;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxSummaryRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.HkxxSummaryResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jcjfzz.HkxxDO;
 import jakarta.validation.Valid;
 
@@ -58,7 +58,7 @@ public interface HkxxService {
      * @param pageReqVO 分页查询
      * @return 基层经费到账对象分页
      */
-    PageResult<HkxxRespVO> getHkxxPage(HkxxPageReqVO pageReqVO);
+    PageResult<HkxxResVO> getHkxxPage(HkxxPageReqVO pageReqVO);
 
     /**
      * 获得返拨概况
@@ -66,6 +66,6 @@ public interface HkxxService {
      * @param pageReqVO 查询条件
      * @return 汇总数据
      */
-    HkxxSummaryRespVO getHkxxSummary(HkxxPageReqVO pageReqVO);
+    HkxxSummaryResVO getHkxxSummary(HkxxPageReqVO pageReqVO);
 
 }

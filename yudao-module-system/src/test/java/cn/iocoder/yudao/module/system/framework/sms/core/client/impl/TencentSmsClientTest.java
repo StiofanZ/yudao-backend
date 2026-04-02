@@ -9,7 +9,6 @@ import cn.iocoder.yudao.module.system.framework.sms.core.client.dto.SmsTemplateR
 import cn.iocoder.yudao.module.system.framework.sms.core.enums.SmsTemplateAuditStatusEnum;
 import cn.iocoder.yudao.module.system.framework.sms.core.property.SmsChannelProperties;
 import com.google.common.collect.Lists;
-
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockedStatic;
@@ -17,9 +16,10 @@ import org.mockito.MockedStatic;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static cn.iocoder.yudao.framework.test.core.util.RandomUtils.*;
+import static cn.iocoder.yudao.framework.test.core.util.RandomUtils.randomLongId;
+import static cn.iocoder.yudao.framework.test.core.util.RandomUtils.randomString;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mockStatic;
 
@@ -68,7 +68,7 @@ public class TencentSmsClientTest extends BaseMockitoUnitTest {
 
             // 调用
             SmsSendRespDTO result = smsClient.sendSms(sendLogId, mobile,
-                    apiTemplateId, templateParams);
+                    apiTemplateId, "", templateParams);
             // 断言
             assertTrue(result.getSuccess());
             assertEquals("5000:1045710669157053657849499619", result.getSerialNo());
@@ -108,7 +108,7 @@ public class TencentSmsClientTest extends BaseMockitoUnitTest {
 
             // 调用
             SmsSendRespDTO result = smsClient.sendSms(sendLogId, mobile,
-                    apiTemplateId, templateParams);
+                    apiTemplateId, "", templateParams);
             // 断言
             assertFalse(result.getSuccess());
             assertEquals("5000:1045710669157053657849499619", result.getSerialNo());
@@ -133,7 +133,7 @@ public class TencentSmsClientTest extends BaseMockitoUnitTest {
 
             // 调用
             SmsSendRespDTO result = smsClient.sendSms(sendLogId, mobile,
-                    apiTemplateId, templateParams);
+                    apiTemplateId, "", templateParams);
             // 断言
             assertFalse(result.getSuccess());
             assertEquals("2a88f82a-261c-4ac6-9fa9-c7d01aaa486a", result.getApiRequestId());

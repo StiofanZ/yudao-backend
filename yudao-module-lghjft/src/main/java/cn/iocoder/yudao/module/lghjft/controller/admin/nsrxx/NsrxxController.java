@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +48,7 @@ public class NsrxxController {
 
     //查询纳税人单位信息
     @GetMapping("/getByDw")
+    @PreAuthorize("@ss.hasPermission('lghjft:nsrxx:query')")
     public CommonResult<NsrxxPayFormResVO> getByShxydm(@RequestParam("shxydm") String shxydm) {
         // 2. 调用Service查询并直接返回数据（不封装多余信息）
         NsrxxPayFormResVO nsrxxPayFormResVO =  nsrxxService.getNsrdwxxByShxydm(shxydm);
@@ -56,6 +58,7 @@ public class NsrxxController {
     @GetMapping("/query")
     @Operation(summary = "根据纳税人识别号查询纳税人信息")
     @Parameter(name = "nsrsbh", description = "纳税人识别号", required = true, example = "91110108551385082Q")
+    @PreAuthorize("@ss.hasPermission('lghjft:nsrxx:query')")
     public CommonResult<NsrxxResVO> queryNsrxxByNsrsbh(@RequestParam("nsrsbh") String nsrsbh) {
         List<NsrxxDO> list = nsrxxService.getNsrxxList(nsrsbh);
         NsrxxDO nsrxx = list.isEmpty() ? null : list.get(0);
@@ -70,6 +73,7 @@ public class NsrxxController {
     @GetMapping("/list")
     @Operation(summary = "根据社会信用代码或纳税人识别号查询纳税人信息列表")
     @Parameter(name = "code", description = "社会信用代码或纳税人识别号", required = true, example = "91110108551385082Q")
+    @PreAuthorize("@ss.hasPermission('lghjft:nsrxx:query')")
     public CommonResult<List<NsrxxResVO>> queryNsrxxList(@RequestParam("code") String shxydm) {
         List<NsrxxDO> list = nsrxxService.getNsrxxList(shxydm);
         List<NsrxxResVO> respList = BeanUtils.toBean(list, NsrxxResVO.class);

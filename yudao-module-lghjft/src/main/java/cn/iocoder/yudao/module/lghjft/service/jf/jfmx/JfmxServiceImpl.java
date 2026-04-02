@@ -1,15 +1,16 @@
 package cn.iocoder.yudao.module.lghjft.service.jf.jfmx;
 
+import cn.hutool.core.util.StrUtil;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
+import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jf.jfmx.vo.Jfmx;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jf.jfmx.vo.JfmxExportVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jf.jfmx.vo.JfmxQuery;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.jf.jfmx.JfmxMapper;
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
-import cn.hutool.core.util.StrUtil;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,11 +22,14 @@ public class JfmxServiceImpl implements JfmxService {
 
     @Override
     public List<Jfmx> selectJfmxList(JfmxQuery query) {
-        // 如果没有传 deptId，就用当前登录用户部门
-        if (StrUtil.isEmpty(query.getDeptId())) {
-            Long loginDeptId = SecurityFrameworkUtils.getLoginUserDeptId();
-            if (loginDeptId != null) {
-                query.setDeptId(loginDeptId.toString());
+        // 如果传了 djxh（单户台账明细查询），不需要自动添加 deptId 过滤
+        if (StrUtil.isEmpty(query.getDjxh())) {
+            // 如果没有传 deptId，就用当前登录用户部门
+            if (StrUtil.isEmpty(query.getDeptId())) {
+                Long loginDeptId = SecurityFrameworkUtils.getLoginUserDeptId();
+                if (loginDeptId != null) {
+                    query.setDeptId(loginDeptId.toString());
+                }
             }
         }
 
@@ -39,11 +43,14 @@ public class JfmxServiceImpl implements JfmxService {
 
     @Override
     public PageResult<Jfmx> selectJfmxPage(JfmxQuery query) {
-        // 如果没有传 deptId，就用当前登录用户部门
-        if (StrUtil.isEmpty(query.getDeptId())) {
-            Long loginDeptId = SecurityFrameworkUtils.getLoginUserDeptId();
-            if (loginDeptId != null) {
-                query.setDeptId(loginDeptId.toString());
+        // 如果传了 djxh（单户台账明细查询），不需要自动添加 deptId 过滤
+        if (StrUtil.isEmpty(query.getDjxh())) {
+            // 如果没有传 deptId，就用当前登录用户部门
+            if (StrUtil.isEmpty(query.getDeptId())) {
+                Long loginDeptId = SecurityFrameworkUtils.getLoginUserDeptId();
+                if (loginDeptId != null) {
+                    query.setDeptId(loginDeptId.toString());
+                }
             }
         }
 

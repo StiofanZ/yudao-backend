@@ -1,18 +1,18 @@
 package cn.iocoder.yudao.module.lghjft.service.jfcl.Yhbfjgcx;
 
-import cn.hutool.core.collection.CollUtil;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.Yhbfjgcx.vo.yhbfjgcxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.Yhbfjgcx.vo.yhbfjgcxSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.Yhbfjgcx.yhbfjgcxDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.Yhbfjgcx.yhbfjgcxMapper;
-import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.*;
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.pojo.PageParam;
-import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
+import org.springframework.validation.annotation.Validated;
+
+import java.util.List;
+
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.YHBFJGCX_NOT_EXISTS;
 
@@ -29,6 +29,7 @@ public class yhbfjgcxServiceImpl implements yhbfjgcxService {
     @Resource
     private yhbfjgcxMapper yhbfjgcxMapper;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public String createyhbfjgcx(yhbfjgcxSaveReqVO createReqVO) {
         // 插入
@@ -39,6 +40,7 @@ public class yhbfjgcxServiceImpl implements yhbfjgcxService {
         return yhbfjgcx.getBfhzid();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateyhbfjgcx(yhbfjgcxSaveReqVO updateReqVO) {
         // 校验存在
@@ -48,6 +50,7 @@ public class yhbfjgcxServiceImpl implements yhbfjgcxService {
         yhbfjgcxMapper.updateById(updateObj);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteyhbfjgcx(String id) {
         // 校验存在
@@ -56,6 +59,7 @@ public class yhbfjgcxServiceImpl implements yhbfjgcxService {
         yhbfjgcxMapper.deleteById(id);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
         public void deleteyhbfjgcxListByIds(List<String> ids) {
         // 删除

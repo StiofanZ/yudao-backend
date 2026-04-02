@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -30,6 +31,7 @@ public class BbfbServiceImpl implements BbfbService {
     private BbfbMapper bbfbMapper;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Long createBbfb(BbfbCreateReqVO createReqVO) {
         BbfbDO bbfb = BeanUtils.toBean(createReqVO, BbfbDO.class);
         // 默认状态为草稿 (0)
@@ -41,6 +43,7 @@ public class BbfbServiceImpl implements BbfbService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateBbfb(BbfbUpdateReqVO updateReqVO) {
         // 校验存在
         validateBbfbExists(updateReqVO.getId());
@@ -50,6 +53,7 @@ public class BbfbServiceImpl implements BbfbService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteBbfb(Long id) {
         // 校验存在
         validateBbfbExists(id);

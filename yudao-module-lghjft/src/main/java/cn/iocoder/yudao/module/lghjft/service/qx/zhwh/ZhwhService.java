@@ -18,7 +18,14 @@ public interface ZhwhService {
 
     void cancelZhwh(Long id);
 
+    /**
+     * App 端撤回账户维护申请，带 IDOR 校验（只有申请人才能撤回）
+     */
+    void cancelZhwhWithOwnerCheck(Long id);
+
     GhQxZhwhDO getZhwh(Long id);
+
+    GhQxZhwhDO getZhwhWithOwnerCheck(Long id);
 
     PageResult<GhQxZhwhDO> getZhwhPage(ZhwhPageReqVO pageReqVO);
 

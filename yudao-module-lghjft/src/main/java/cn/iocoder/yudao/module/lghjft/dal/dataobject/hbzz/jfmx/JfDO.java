@@ -1,45 +1,12 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jfmx;
 
+import com.baomidou.mybatisplus.annotation.KeySequence;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
-import java.util.*;
-import java.time.LocalDateTime;
-import java.time.LocalDateTime;
-import java.time.LocalDateTime;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.LocalDateTime;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.math.BigDecimal;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.*;
-import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
 
 /**
  *  经费明细对象 DO
@@ -49,12 +16,11 @@ import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
 @TableName("gh_jf")
 @KeySequence("gh_jf_seq") // 用于 Oracle、PostgreSQL、Kingbase、DB2、H2 数据库的主键自增。如果是 MySQL 等数据库，可不写。
 @Data
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class JfDO extends BaseDO {
+public class JfDO {
 
     /**
      * 工会经费ID
@@ -537,24 +503,4 @@ public class JfDO extends BaseDO {
      * 修改人
      */
     private String updateBy;
-    /**
-     * 小微类型
-     */
-    private String xwlx;
-
-    /**
-     * 小额类型23
-     */
-    private String[] xelx23;
-
-    /**
-     * 小额类型24
-     */
-    private String[] xelx24;
-
-    /**
-     * 小额类型25
-     */
-    private String[] xelx25;
-
 }

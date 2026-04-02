@@ -1,37 +1,35 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.Yhbfjgcx;
 
-import org.springframework.web.bind.annotation.*;
-import jakarta.annotation.Resource;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.security.access.prepost.PreAuthorize;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Operation;
-
-import jakarta.validation.constraints.*;
-import jakarta.validation.*;
-import jakarta.servlet.http.*;
-import java.util.*;
-import java.io.IOException;
-
+import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
+import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
-
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
-
-import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
-import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.*;
-
-import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.Yhbfjgcx.vo.*;
+import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.Yhbfjgcx.vo.yhbfjgcxPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.Yhbfjgcx.vo.yhbfjgcxResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.Yhbfjgcx.vo.yhbfjgcxSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.Yhbfjgcx.yhbfjgcxDO;
 import cn.iocoder.yudao.module.lghjft.service.jfcl.Yhbfjgcx.yhbfjgcxService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.util.List;
+
+import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.EXPORT;
+import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
 @Tag(name = "管理后台 - 银行拨付结果查询")
 @RestController
-@RequestMapping("/jfcl/yhbfjgcx")
+@RequestMapping("/lghjft/jfcl/yhbfjgcx")
 @Validated
 public class yhbfjgcxController {
 
@@ -75,17 +73,17 @@ public class yhbfjgcxController {
     @Operation(summary = "获得银行拨付结果查询")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:yhbfjgcx:query')")
-    public CommonResult<yhbfjgcxRespVO> getyhbfjgcx(@RequestParam("id") String id) {
+    public CommonResult<yhbfjgcxResVO> getyhbfjgcx(@RequestParam("id") String id) {
         yhbfjgcxDO yhbfjgcx = yhbfjgcxService.getyhbfjgcx(id);
-        return success(BeanUtils.toBean(yhbfjgcx, yhbfjgcxRespVO.class));
+        return success(BeanUtils.toBean(yhbfjgcx, yhbfjgcxResVO.class));
     }
 
     @GetMapping("/page")
     @Operation(summary = "获得银行拨付结果查询分页")
     @PreAuthorize("@ss.hasPermission('lghjft:yhbfjgcx:query')")
-    public CommonResult<PageResult<yhbfjgcxRespVO>> getyhbfjgcxPage(@Valid yhbfjgcxPageReqVO pageReqVO) {
+    public CommonResult<PageResult<yhbfjgcxResVO>> getyhbfjgcxPage(@Valid yhbfjgcxPageReqVO pageReqVO) {
         PageResult<yhbfjgcxDO> pageResult = yhbfjgcxService.getyhbfjgcxPage(pageReqVO);
-        return success(BeanUtils.toBean(pageResult, yhbfjgcxRespVO.class));
+        return success(BeanUtils.toBean(pageResult, yhbfjgcxResVO.class));
     }
 
     @GetMapping("/export-excel")
@@ -97,8 +95,8 @@ public class yhbfjgcxController {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<yhbfjgcxDO> list = yhbfjgcxService.getyhbfjgcxPage(pageReqVO).getList();
         // 导出 Excel
-        ExcelUtils.write(response, "银行拨付结果查询.xls", "数据", yhbfjgcxRespVO.class,
-                        BeanUtils.toBean(list, yhbfjgcxRespVO.class));
+        ExcelUtils.write(response, "银行拨付结果查询.xls", "数据", yhbfjgcxResVO.class,
+                BeanUtils.toBean(list, yhbfjgcxResVO.class));
     }
 
 }

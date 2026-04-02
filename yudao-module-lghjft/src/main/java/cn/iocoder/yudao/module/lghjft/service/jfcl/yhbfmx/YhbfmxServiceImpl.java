@@ -16,14 +16,17 @@ import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
 import cn.iocoder.yudao.module.system.service.user.AdminUserService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import jakarta.annotation.Resource;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.*;
@@ -43,6 +46,7 @@ public class YhbfmxServiceImpl implements YhbfmxService {
     private AdminUserService userService;
 
     // ==================== 基础方法 ====================
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Integer createYhbfmx(YhbfmxSaveReqVO createReqVO) {
         YhbfmxDO yhbfmx = BeanUtil.toBean(createReqVO, YhbfmxDO.class);
@@ -50,6 +54,7 @@ public class YhbfmxServiceImpl implements YhbfmxService {
         return yhbfmx.getBfid();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateYhbfmx(YhbfmxSaveReqVO updateReqVO) {
         validateYhbfmxExists(updateReqVO.getBfid());
@@ -57,6 +62,7 @@ public class YhbfmxServiceImpl implements YhbfmxService {
         yhbfmxMapper.updateById(updateObj);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteYhbfmx(Integer id) {
         validateYhbfmxExists(id);
@@ -84,6 +90,7 @@ public PageResult<YhbfmxDO> getYhbfmxPage(YhbfmxPageReqVO reqVO) {
     return new PageResult<>(ipage.getRecords(), ipage.getTotal());
 }
 //批量删除
+@Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteYhbfmxListByIds(List<Integer> ids) {
         yhbfmxMapper.deleteByIds(ids);

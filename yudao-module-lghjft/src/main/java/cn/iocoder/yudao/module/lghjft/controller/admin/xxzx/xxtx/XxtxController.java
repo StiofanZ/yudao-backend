@@ -80,7 +80,7 @@ public class XxtxController {
     @GetMapping("/page")
     @Operation(summary = "获取消息分页列表")
     @PreAuthorize("@ss.hasPermission('lghjft:xxzx-xxtx:query')")
-    public CommonResult<PageResult<XxtxMessageRespVO>> getMessagePage(@Validated XxtxMessagePageReqVO pageReqVO) {
+    public CommonResult<PageResult<XxtxMessageResVO>> getMessagePage(@Validated XxtxMessagePageReqVO pageReqVO) {
         return success(xxtxService.getMessagePage(pageReqVO));
     }
 
@@ -88,7 +88,7 @@ public class XxtxController {
     @Operation(summary = "获取消息详情")
     @Parameter(name = "id", description = "消息ID", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:xxzx-xxtx:query')")
-    public CommonResult<XxtxMessageRespVO> getMessage(@RequestParam("id") Long id) {
+    public CommonResult<XxtxMessageResVO> getMessage(@RequestParam("id") Long id) {
         return success(xxtxService.getMessageDetail(id));
     }
 
@@ -96,7 +96,7 @@ public class XxtxController {
     @Operation(summary = "获取消息接收明细")
     @Parameter(name = "messageId", description = "消息ID", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:xxzx-xxtx:query')")
-    public CommonResult<List<XxtxReceiverRespVO>> getReceiverList(@RequestParam("messageId") Long messageId) {
+    public CommonResult<List<XxtxReceiverResVO>> getReceiverList(@RequestParam("messageId") Long messageId) {
         return success(xxtxService.getMessageReceiverList(messageId));
     }
 

@@ -2,10 +2,9 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglQuery;
-import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglResVO;
 import cn.iocoder.yudao.module.lghjft.service.xwqygl.XwqyglService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -52,8 +51,8 @@ public class XwqyglController {
     @GetMapping("/page")
     @Operation(summary = "获得小微企业管理分页")
     @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqygl:query')")
-    public CommonResult<PageResult<XwqyglRespVO>> getXwqyglPage(@Valid XwqyglQuery query) {
-        PageResult<XwqyglRespVO> pageResult = xwqyglService.getXwqyglPage(query);
+    public CommonResult<PageResult<XwqyglResVO>> getXwqyglPage(@Valid XwqyglQuery query) {
+        PageResult<XwqyglResVO> pageResult = xwqyglService.getXwqyglPage(query);
         return success(pageResult);
     }
 
@@ -64,8 +63,8 @@ public class XwqyglController {
     @Operation(summary = "导出小微企业管理 Excel")
     @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqygl:export')")
     public void exportExcel(@Valid XwqyglQuery query, HttpServletResponse response) throws IOException {
-        List<XwqyglRespVO> list = xwqyglService.getXwqyglList(query);
+        List<XwqyglResVO> list = xwqyglService.getXwqyglList(query);
         ExcelUtils.write(response, "小微企业管理.xls", "数据",
-                XwqyglRespVO.class, list);
+                XwqyglResVO.class, list);
     }
 }

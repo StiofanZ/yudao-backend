@@ -4,13 +4,13 @@ import cn.hutool.core.map.MapUtil;
 import cn.iocoder.yudao.framework.common.core.KeyValue;
 import cn.iocoder.yudao.framework.common.enums.CommonStatusEnum;
 import cn.iocoder.yudao.framework.common.enums.UserTypeEnum;
-import cn.iocoder.yudao.module.system.framework.sms.core.client.SmsClient;
-import cn.iocoder.yudao.module.system.framework.sms.core.client.dto.SmsReceiveRespDTO;
-import cn.iocoder.yudao.module.system.framework.sms.core.client.dto.SmsSendRespDTO;
 import cn.iocoder.yudao.framework.test.core.ut.BaseMockitoUnitTest;
 import cn.iocoder.yudao.module.system.dal.dataobject.sms.SmsChannelDO;
 import cn.iocoder.yudao.module.system.dal.dataobject.sms.SmsTemplateDO;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
+import cn.iocoder.yudao.module.system.framework.sms.core.client.SmsClient;
+import cn.iocoder.yudao.module.system.framework.sms.core.client.dto.SmsReceiveRespDTO;
+import cn.iocoder.yudao.module.system.framework.sms.core.client.dto.SmsSendRespDTO;
 import cn.iocoder.yudao.module.system.mq.message.sms.SmsSendMessage;
 import cn.iocoder.yudao.module.system.mq.producer.sms.SmsProducer;
 import cn.iocoder.yudao.module.system.service.member.MemberService;
@@ -86,7 +86,7 @@ public class SmsSendServiceImplTest extends BaseMockitoUnitTest {
         assertEquals(smsLogId, resultSmsLogId);
         // 断言调用
         verify(smsProducer).sendSmsSendMessage(eq(smsLogId), eq(user.getMobile()),
-                eq(template.getChannelId()), eq(template.getApiTemplateId()),
+                eq(template.getChannelId()), eq(template.getApiTemplateId()), eq(content),
                 eq(Lists.newArrayList(new KeyValue<>("code", "1234"), new KeyValue<>("op", "login"))));
     }
 
@@ -125,7 +125,7 @@ public class SmsSendServiceImplTest extends BaseMockitoUnitTest {
         assertEquals(smsLogId, resultSmsLogId);
         // 断言调用
         verify(smsProducer).sendSmsSendMessage(eq(smsLogId), eq(mobile),
-                eq(template.getChannelId()), eq(template.getApiTemplateId()),
+                eq(template.getChannelId()), eq(template.getApiTemplateId()), eq(content),
                 eq(Lists.newArrayList(new KeyValue<>("code", "1234"), new KeyValue<>("op", "login"))));
     }
 
@@ -165,7 +165,7 @@ public class SmsSendServiceImplTest extends BaseMockitoUnitTest {
         assertEquals(smsLogId, resultSmsLogId);
         // 断言调用
         verify(smsProducer).sendSmsSendMessage(eq(smsLogId), eq(mobile),
-                eq(template.getChannelId()), eq(template.getApiTemplateId()),
+                eq(template.getChannelId()), eq(template.getApiTemplateId()), eq(content),
                 eq(Lists.newArrayList(new KeyValue<>("code", "1234"), new KeyValue<>("op", "login"))));
     }
 
@@ -205,7 +205,7 @@ public class SmsSendServiceImplTest extends BaseMockitoUnitTest {
         assertEquals(smsLogId, resultSmsLogId);
         // 断言调用
         verify(smsProducer, times(0)).sendSmsSendMessage(anyLong(), anyString(),
-                anyLong(), any(), anyList());
+                anyLong(), any(), any(), anyList());
     }
 
     @Test
@@ -267,7 +267,7 @@ public class SmsSendServiceImplTest extends BaseMockitoUnitTest {
         // mock SmsClient 的方法
         SmsSendRespDTO sendResult = randomPojo(SmsSendRespDTO.class);
         when(smsClient.sendSms(eq(message.getLogId()), eq(message.getMobile()), eq(message.getApiTemplateId()),
-                eq(message.getTemplateParams()))).thenReturn(sendResult);
+                eq(message.getTemplateContent()), eq(message.getTemplateParams()))).thenReturn(sendResult);
 
         // 调用
         smsSendService.doSendSms(message);

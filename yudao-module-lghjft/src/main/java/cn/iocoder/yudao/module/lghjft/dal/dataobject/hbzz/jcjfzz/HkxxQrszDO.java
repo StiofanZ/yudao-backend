@@ -1,18 +1,18 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jcjfzz;
 
-import com.baomidou.mybatisplus.annotation.*;
-import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
+
 import java.time.LocalDateTime;
 
 @TableName("gh_hkxx_qrsz")
 @Data
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class HkxxQrszDO extends BaseDO {
+public class HkxxQrszDO {
 
     /**
      * 主键（自增）
@@ -56,12 +56,5 @@ public class HkxxQrszDO extends BaseDO {
     private String createBy;
     private LocalDateTime updateTime;
     private String updateBy;
-    @TableField(exist = false)
-    private String creator;
-    @TableField(exist = false)
-    private String updater;
-    @TableField(exist = false)
-    private Boolean deleted;
-
 
 }

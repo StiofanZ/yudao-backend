@@ -2,19 +2,19 @@ package cn.iocoder.yudao.module.lghjft.service.qx;
 
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.jcxx.vo.JcxxPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.KbdsfxxRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.KbdsfxxResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.ydsdw.vo.ydsdwSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.jhdwyds.vo.JhdwydsSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.GhHjJcxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.dlzh.GhQxDlzhDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.sfxx.GhQxSfxxDO;
 
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.ydsdw.ydsdwDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.jhdwyds.JhdwydsDO;
 import cn.iocoder.yudao.module.lghjft.service.hjgl.jcxx.JcxxService;
 import cn.iocoder.yudao.module.lghjft.service.qx.dlzh.GhQxDlzhService;
 import cn.iocoder.yudao.module.lghjft.service.qx.sfxx.GhQxSfxxService;
 
-import cn.iocoder.yudao.module.lghjft.service.sjwh.ydsdw.ydsdwService;
+import cn.iocoder.yudao.module.lghjft.service.sjwh.jhdwyds.JhdwydsService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -33,54 +33,54 @@ public class SfxxServiceImpl implements SfxxService {
     @Resource
     private JcxxService jcxxService;
     @Resource
-    private ydsdwService ydsdwService;
+    private JhdwydsService JhdwydsService;
 
     @Override
-    public List<KbdsfxxRespVO> getKbdsfxx(SfxxReqVO pageReqVO) {
+    public List<KbdsfxxResVO> getKbdsfxx(SfxxReqVO pageReqVO) {
         GhQxDlzhDO ghQxDlzhDO = ghQxDlzhService.getDlzh(pageReqVO.getDlzhId());
-        List<KbdsfxxRespVO> kbdsfxxRespVOList = new ArrayList<>();
+        List<KbdsfxxResVO> kbdsfxxResVOList = new ArrayList<>();
         if (ghQxDlzhDO == null) {
             if (Objects.nonNull(pageReqVO.getDeptId())) {
                 pageReqVO.setDlzhId(null);
-                kbdsfxxRespVOList = BeanUtils.toBean(ghQxSfxxService.getSfxxList(pageReqVO), KbdsfxxRespVO.class);
+                kbdsfxxResVOList = BeanUtils.toBean(ghQxSfxxService.getSfxxList(pageReqVO), KbdsfxxResVO.class);
             }
         } else {
             if (Objects.nonNull(ghQxDlzhDO.getLxdh())) {
                 JcxxPageReqVO jcxxPageReqVO = new JcxxPageReqVO();
                 jcxxPageReqVO.setLxdh(ghQxDlzhDO.getLxdh());
                 for (GhHjJcxxDO jcxxDO : jcxxService.getJcxxList(ghQxDlzhDO.getLxdh())) {
-                    KbdsfxxRespVO respVO = new KbdsfxxRespVO();
+                    KbdsfxxResVO respVO = new KbdsfxxResVO();
                     respVO.setShxydm(jcxxDO.getShxydm() != null ? jcxxDO.getShxydm() : jcxxDO.getNsrsbh());
                     respVO.setLxdh(jcxxDO.getLxdh());
                     respVO.setDwmc(jcxxDO.getNsrmc());
                     respVO.setDjxh(jcxxDO.getDjxh());
                     respVO.setGhlx("02");
-                    kbdsfxxRespVOList.add(respVO);
+                    kbdsfxxResVOList.add(respVO);
                 }
-                kbdsfxxRespVOList.forEach(respVO -> {
+                kbdsfxxResVOList.forEach(respVO -> {
                     GhQxSfxxDO ghQxSfxxDO = ghQxSfxxService.getSfxx(ghQxDlzhDO.getId(), respVO.getDjxh());
                     BeanUtils.copyProperties(ghQxSfxxDO, respVO);
                 });
-                ydsdwSaveReqVO jhdwydsReqVO = new ydsdwSaveReqVO();
+                JhdwydsSaveReqVO jhdwydsReqVO = new JhdwydsSaveReqVO();
                 jhdwydsReqVO.setDwcwlxdh(ghQxDlzhDO.getLxdh());
-                for (ydsdwDO jhdwydsDO : ydsdwService.getJhdwydsList(jhdwydsReqVO)) {
-                    KbdsfxxRespVO respVO = new KbdsfxxRespVO();
+                for (JhdwydsDO jhdwydsDO : JhdwydsService.getJhdwydsList(jhdwydsReqVO)) {
+                    KbdsfxxResVO respVO = new KbdsfxxResVO();
                     respVO.setShxydm(jhdwydsDO.getGhshxydm());
                     respVO.setLxdh(jhdwydsDO.getDwcwlxdh());
                     respVO.setDwmc(jhdwydsDO.getGhmc());
                     respVO.setDjxh(jhdwydsDO.getGhshxydm());
                     respVO.setGhlx("01");
-                    kbdsfxxRespVOList.add(respVO);
+                    kbdsfxxResVOList.add(respVO);
                 }
             }
         }
-        kbdsfxxRespVOList.forEach(kbdsfxxRespVO -> {
-            GhQxDlzhDO dlzhDO = ghQxDlzhService.getDlzh(kbdsfxxRespVO.getDlzhId());
+        kbdsfxxResVOList.forEach(kbdsfxxResVO -> {
+            GhQxDlzhDO dlzhDO = ghQxDlzhService.getDlzh(kbdsfxxResVO.getDlzhId());
             if (Objects.nonNull(dlzhDO)) {
-                kbdsfxxRespVO.setRyxm(dlzhDO.getYhxm());
-                kbdsfxxRespVO.setLxdh(dlzhDO.getLxdh());
+                kbdsfxxResVO.setRyxm(dlzhDO.getYhxm());
+                kbdsfxxResVO.setLxdh(dlzhDO.getLxdh());
             }
         });
-        return kbdsfxxRespVOList;
+        return kbdsfxxResVOList;
     }
 }

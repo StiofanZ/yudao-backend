@@ -1,27 +1,20 @@
 package cn.iocoder.yudao.module.lghjft.service.sjwh.rws;
 
-import cn.hutool.core.collection.CollUtil;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.rws.vo.RwsPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.rws.vo.RwsSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.rws.RwsDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.sjwh.rws.RwsMapper;
-import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
-import java.util.*;
-
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.pojo.PageParam;
-import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-
-
+import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertList;
-import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.diffList;
-import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.*;
+import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.RWS_NOT_EXISTS;
 
 /**
  * 年度任务 Service 实现类
@@ -36,6 +29,7 @@ public class RwsServiceImpl implements RwsService {
     private RwsMapper rwsMapper;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Integer createRws(RwsSaveReqVO createReqVO) {
         // 插入
         RwsDO rws = BeanUtils.toBean(createReqVO, RwsDO.class);
@@ -46,6 +40,7 @@ public class RwsServiceImpl implements RwsService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateRws(RwsSaveReqVO updateReqVO) {
         // 校验存在
         validateRwsExists(updateReqVO.getRwid());
@@ -55,6 +50,7 @@ public class RwsServiceImpl implements RwsService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteRws(Integer id) {
         // 校验存在
         validateRwsExists(id);
@@ -63,6 +59,7 @@ public class RwsServiceImpl implements RwsService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
         public void deleteRwsListByIds(List<Integer> ids) {
         // 删除
         rwsMapper.deleteByIds(ids);

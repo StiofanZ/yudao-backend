@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.sjwh.jfbfmx.JfbfmxMapper">
+
+    <!-- 公共条件片段 -->
+    <sql id="whereCondition">
+        <if test="req.deptId != null and req.deptId != ''">AND dept_id = #{req.deptId}</if>
+        <if test="req.nsrmc != null and req.nsrmc != ''">AND NSRMC LIKE CONCAT('%', #{req.nsrmc}, '%')</if>
+        <if test="req.zgswjDm != null and req.zgswjDm != ''">AND ZGSWJ_DM = #{req.zgswjDm}</if>
+        <if test="req.jsbj != null and req.jsbj != ''">AND JSBJ = #{req.jsbj}</if>
+        <if test="req.zspmDm != null and req.zspmDm != ''">AND ZSPM_DM = #{req.zspmDm}</if>
+    </sql>
+
+    <!-- 公共SUM字段 -->
+    <sql id="sumFields">
+        COUNT(*) AS bs,
+        COUNT(DISTINCT DJXH) AS hs,
+        SUM(YBTSE) AS ybtse,
+        SUM(JCGHJE) AS jcghje,
+        SUM(CBJJE) AS cbjje,
+        SUM(HYGHJE) AS hyghje,
+        SUM(XJGHJE) AS xjghje,
+        SUM(SJGHJE) AS sjghje,
+        SUM(SZGHJE) AS szghje,
+        SUM(QGGHJE) AS qgghje,
+        SUM(SDSJE) AS sdsje,
+        SUM(SWJGJE) AS swjgje
+    </sql>
+
+    <!-- Level 1: 按机构汇总 -->
+    <select id="selectTjByDept" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.jfbfmx.vo.JfbfmxtjResVO">
+        SELECT dept_id AS deptId,
+        <include refid="sumFields"/>
+        FROM gh_jf
+        <where>
+            <include refid="whereCondition"/>
+        </where>
+        GROUP BY dept_id
+    </select>
+
+    <!-- Level 2: 按机构+结算标记 -->
+    <select id="selectTjByJsbj" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.jfbfmx.vo.JfbfmxjsbjResVO">
+        SELECT dept_id AS deptId, JSBJ AS jsbj,
+        <include refid="sumFields"/>
+        FROM gh_jf
+        <where>
+            <include refid="whereCondition"/>
+        </where>
+        GROUP BY dept_id, JSBJ
+    </select>
+
+    <!-- Level 3: 按机构+结算标记+筹备金退回标记 -->
+    <select id="selectTjByCbj" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.jfbfmx.vo.JfbfmxcbjResVO">
+        SELECT dept_id AS deptId, JSBJ AS jsbj, CBJTHBJ AS cbjthbj,
+        <include refid="sumFields"/>
+        FROM gh_jf
+        <where>
+            <include refid="whereCondition"/>
+        </where>
+        GROUP BY dept_id, JSBJ, CBJTHBJ
+    </select>
+
+    <!-- Level 4: 按机构+结算标记+筹备金退回标记+征收品目 -->
+    <select id="selectTjByZspm" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.jfbfmx.vo.JfbfmxzspmResVO">
+        SELECT dept_id AS deptId, JSBJ AS jsbj, CBJTHBJ AS cbjthbj, ZSPM_DM AS zspmDm,
+        <include refid="sumFields"/>
+        FROM gh_jf
+        <where>
+            <include refid="whereCondition"/>
+        </where>
+        GROUP BY dept_id, JSBJ, CBJTHBJ, ZSPM_DM
+    </select>
+
+    <!-- Level 5: 按机构+结算标记+筹备金退回标记+征收品目+汇款批次号 -->
+    <select id="selectTjByHkpch" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.jfbfmx.vo.JfbfmxhkResVO">
+        SELECT dept_id AS deptId, JSBJ AS jsbj, CBJTHBJ AS cbjthbj, ZSPM_DM AS zspmDm, HKPCH AS hkpch,
+        <include refid="sumFields"/>
+        FROM gh_jf
+        <where>
+            <include refid="whereCondition"/>
+        </where>
+        GROUP BY dept_id, JSBJ, CBJTHBJ, ZSPM_DM, HKPCH
+    </select>
+
+    <resultMap id="JfbfmxSummaryResultMap" type="cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.jfbfmx.vo.JfbfmxSummaryResVO">
+        <result property="deptId" column="DWDM"/>
+        <result property="dwmc" column="DWMC"/>
+        <result property="jfbs" column="JFBS"/>
+        <result property="jfje" column="JFJE"/>
+        <result property="szje" column="SZJE"/>
+        <result property="qzje" column="QZJE"/>
+        <result property="hjje" column="HJJE"/>
+        <result property="hkpch" column="HKPCH"/>
+    </resultMap>
+
+    <sql id="selectSzmxLegacySql">
+        select *
+        from (SELECT *
+              FROM (SELECT T.DWDM,
+                           T.DWMC,
+                           T.HKPCH,
+                           COUNT(T.YBTSE)                        JFBS,
+                           COALESCE(SUM(T.YBTSE), 0)             JFJE,
+                           COALESCE(SUM(T.SZGHJE), 0)            SZJE,
+                           COALESCE(SUM(T.QGGHJE), 0)            QZJE,
+                           COALESCE(SUM(T.QGGHJE + T.SZGHJE), 0) HJJE
+                    FROM SJJFCX T
+                    WHERE T.SZGHJE != '0' AND T.ZSPM_DM != '399001910' AND T.jsbj in ('Y', 'S', 'W')
+                    GROUP BY T.DWDM, T.DWMC, T.HKPCH) SJJFCX
+              UNION ALL
+              SELECT *
+              FROM (SELECT T.DWDM,
+                           T.DWMC,
+                           T.HKPCH,
+                           COUNT(T.YBTSE)                        JFBS,
+                           COALESCE(SUM(T.YBTSE), 0)             JFJE,
+                           COALESCE(SUM(T.SZGHJE), 0)            SZJE,
+                           COALESCE(SUM(T.QGGHJE), 0)            QZJE,
+                           COALESCE(SUM(T.QGGHJE + T.SZGHJE), 0) HJJE
+                    FROM HYJFCX T
+                    WHERE T.SZGHJE != '0' AND T.ZSPM_DM != '399001910' AND T.jsbj in ('Y', 'S', 'W')
+                    GROUP BY T.DWDM, T.DWMC, T.HKPCH) HYJFCX
+              UNION ALL
+              SELECT *
+              FROM (SELECT T.DWDM,
+                           T.DWMC,
+                           T.HKPCH,
+                           COUNT(T.YBTSE)                        JFBS,
+                           COALESCE(SUM(T.YBTSE), 0)             JFJE,
+                           COALESCE(SUM(T.SZGHJE), 0)            SZJE,
+                           COALESCE(SUM(T.QGGHJE), 0)            QZJE,
+                           COALESCE(SUM(T.QGGHJE + T.SZGHJE), 0) HJJE
+                    FROM SZDQYJFCX T
+                    WHERE T.SZGHJE != '0' AND T.ZSPM_DM != '399001910' AND T.jsbj in ('Y', 'S', 'W')
+                    GROUP BY T.DWDM, T.DWMC, T.HKPCH) SZDQYJFCX
+              UNION ALL
+              SELECT *
+              FROM (SELECT T.DWDM,
+                           T.DWMC,
+                           T.HKPCH,
+                           COUNT(T.YBTSE)                        JFBS,
+                           COALESCE(SUM(T.YBTSE), 0)             JFJE,
+                           COALESCE(SUM(T.SZGHJE), 0)            SZJE,
+                           COALESCE(SUM(T.QGGHJE), 0)            QZJE,
+                           COALESCE(SUM(T.QGGHJE + T.SZGHJE), 0) HJJE
+                    FROM SZTLJJFCX T
+                    WHERE T.SZGHJE != '0' AND T.ZSPM_DM != '399001910' AND T.jsbj in ('Y', 'S', 'W')
+                    GROUP BY T.DWDM, T.DWMC, T.HKPCH) SZTLJJFCX
+              UNION ALL
+              SELECT *
+              FROM (SELECT T.DWDM,
+                           T.DWMC,
+                           T.HKPCH,
+                           COUNT(T.YBTSE)                        JFBS,
+                           COALESCE(SUM(T.YBTSE), 0)             JFJE,
+                           COALESCE(SUM(T.SZGHJE), 0)            SZJE,
+                           COALESCE(SUM(T.QGGHJE), 0)            QZJE,
+                           COALESCE(SUM(T.QGGHJE + T.SZGHJE), 0) HJJE
+                    FROM SZMHJFCX T
+                    WHERE T.SZGHJE != '0' AND T.ZSPM_DM != '399001910' AND T.jsbj in ('Y', 'S', 'W')
+                    GROUP BY T.DWDM, T.DWMC, T.HKPCH) SZMHJFCX
+              UNION ALL
+              SELECT *
+              FROM (SELECT T.DWDM,
+                           T.DWMC,
+                           T.HKPCH,
+                           COUNT(T.YBTSE)                        JFBS,
+                           COALESCE(SUM(T.YBTSE), 0)             JFJE,
+                           COALESCE(SUM(T.SZGHJE), 0)            SZJE,
+                           COALESCE(SUM(T.QGGHJE), 0)            QZJE,
+                           COALESCE(SUM(T.QGGHJE + T.SZGHJE), 0) HJJE
+                    FROM SZZCJFCX T
+                    WHERE T.SZGHJE != '0' AND T.ZSPM_DM != '399001910' AND T.jsbj in ('Y', 'S', 'W')
+                    GROUP BY T.DWDM, T.DWMC, T.HKPCH) SZZCJFCX
+              UNION ALL
+              SELECT *
+              FROM (SELECT T.DWDM,
+                           T.DWMC,
+                           T.HKPCH,
+                           COUNT(T.YBTSE)                        JFBS,
+                           COALESCE(SUM(T.YBTSE), 0)             JFJE,
+                           COALESCE(SUM(T.SZGHJE), 0)            SZJE,
+                           COALESCE(SUM(T.QGGHJE), 0)            QZJE,
+                           COALESCE(SUM(T.QGGHJE + T.SZGHJE), 0) HJJE
+                    FROM SZYBQYJFCX T
+                    WHERE T.SZGHJE != '0' AND T.ZSPM_DM != '399001910' AND T.jsbj in ('Y', 'S', 'W')
+                    GROUP BY T.DWDM, T.DWMC, T.HKPCH) SZYBQYJFCX) SZQZDZZC
+    </sql>
+
+    <select id="selectSzmxList" resultMap="JfbfmxSummaryResultMap">
+        <include refid="selectSzmxLegacySql"/>
+        <where>
+            <if test="req.hkpch != null and req.hkpch != ''">HKPCH = #{req.hkpch}</if>
+        </where>
+    </select>
+
+    <resultMap id="JfbfmxDetailResultMap" type="cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.jfbfmx.vo.JfbfmxDetailResVO">
+        <result property="hkpch" column="HKPCH"/>
+        <result property="deptId" column="DWDM"/>
+        <result property="dwmc" column="DWMC"/>
+        <result property="shxydm" column="SHXYDM"/>
+        <result property="nsrmc" column="NSRMC"/>
+        <result property="gzze" column="GZZE"/>
+        <result property="sl" column="SL"/>
+        <result property="ybtse" column="YBTSE"/>
+        <result property="jcghhm" column="JCGHHM"/>
+        <result property="jcghbl" column="JCGHBL"/>
+        <result property="jcghje" column="JCGHJE"/>
+        <result property="cbjbl" column="CBJBL"/>
+        <result property="cbjje" column="CBJJE"/>
+        <result property="hyghbl" column="HYGHBL"/>
+        <result property="hyghje" column="HYGHJE"/>
+        <result property="sdghbl" column="SDGHBL"/>
+        <result property="sdghhm" column="SDGHHM"/>
+        <result property="sdghje" column="SDGHJE"/>
+        <result property="xjghbl" column="XJGHBL"/>
+        <result property="xjghje" column="XJGHJE"/>
+        <result property="sjghbl" column="SJGHBL"/>
+        <result property="sjghje" column="SJGHJE"/>
+        <result property="szghbl" column="SZGHBL"/>
+        <result property="szghje" column="SZGHJE"/>
+        <result property="qgghbl" column="QGGHBL"/>
+        <result property="qgghje" column="QGGHJE"/>
+        <result property="sdsbl" column="SDSBL"/>
+        <result property="sdsje" column="SDSJE"/>
+        <result property="swjgbl" column="SWJGBL"/>
+        <result property="swjgje" column="SWJGJE"/>
+        <result property="skssqq" column="SKSSQQ"/>
+        <result property="skssqz" column="SKSSQZ"/>
+        <result property="zspmDm" column="ZSPM_DM"/>
+        <result property="rkrq" column="RKRQ"/>
+        <result property="jsrq" column="JSRQ"/>
+    </resultMap>
+
+    <sql id="detailSelectColumns">
+        SELECT T.HKPCH,
+               T.DWDM,
+               T.DWMC,
+               T.SHXYDM,
+               T.NSRMC,
+               T.GZZE,
+               T.SL,
+               T.YBTSE,
+               T.JCGHBL,
+               T.JCGHJE,
+               T.JCGHHM,
+               T.CBJBL,
+               T.CBJJE,
+               T.HYGHBL,
+               T.HYGHJE,
+               T.SDGHBL,
+               T.SDGHJE,
+               T.SDGHHM,
+               T.XJGHBL,
+               T.XJGHJE,
+               T.SJGHBL,
+               T.SJGHJE,
+               T.SZGHBL,
+               T.SZGHJE,
+               T.QGGHBL,
+               T.QGGHJE,
+               T.SWJGBL,
+               T.SWJGJE,
+               T.SDSBL,
+               T.SDSJE,
+               T.SKSSQQ,
+               T.SKSSQZ,
+               T.ZSPM_DM,
+               T.RKRQ,
+               T.JSRQ
+        FROM ${sourceView} T
+    </sql>
+
+    <select id="selectHymxList" resultMap="JfbfmxDetailResultMap">
+        <bind name="sourceView" value="'HYJFCX'"/>
+        <include refid="detailSelectColumns"/>
+        <where>
+            HYGHJE != '0'
+            and hkpch = #{req.hkpch}
+            and dwdm = #{req.deptId}
+            and jsbj in ('Y', 'S', 'W')
+        </where>
+        ORDER BY DWDM
+    </select>
+
+    <select id="selectXjmxList" resultMap="JfbfmxDetailResultMap">
+        <bind name="sourceView" value="'XJJFCX'"/>
+        <include refid="detailSelectColumns"/>
+        <where>
+            XJGHJE != '0'
+            and hkpch = #{req.hkpch}
+            and dwdm = #{req.deptId}
+            and jsbj in ('Y', 'S', 'W')
+        </where>
+        ORDER BY DWDM
+    </select>
+
+    <select id="selectSjmxList" resultMap="JfbfmxDetailResultMap">
+        <bind name="sourceView" value="'XJJFCX'"/>
+        <include refid="detailSelectColumns"/>
+        <where>
+            SJGHJE != '0'
+            and hkpch = #{req.hkpch}
+            and dwdm = #{req.deptId}
+            and jsbj in ('Y', 'S', 'W')
+        </where>
+        ORDER BY DWDM
+    </select>
+
+    <select id="selectSdmxList" resultMap="JfbfmxDetailResultMap">
+        <bind name="sourceView" value="'HYJFCX'"/>
+        <include refid="detailSelectColumns"/>
+        <where>
+            SDGHJE != '0'
+            and hkpch = #{req.hkpch}
+            and dwdm = #{req.deptId}
+            and sdghzh = #{req.zh}
+            and jsbj in ('Y', 'S', 'W')
+        </where>
+        ORDER BY DWDM
+    </select>
+
+</mapper>

@@ -8,9 +8,9 @@ import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils;
 import cn.iocoder.yudao.module.bpm.api.task.BpmProcessInstanceApi;
 import cn.iocoder.yudao.module.bpm.api.task.dto.BpmProcessInstanceCreateReqDTO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhzjnsq.vo.GhWfJfhzjnsqRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhzjnsq.vo.GhWfJfhzjnsqResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhzjnsq.vo.GhWfJfhzjnsqSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhzjnsq.vo.GhWfJfhzjnsqmxRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.jfhzjnsq.vo.GhWfJfhzjnsqmxResVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.workflow.jfhzjnsq.vo.GhWfJfhzjnsqAppPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.jfhzjnsq.GhWfJfhzjnsqDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.workflow.jfhzjnsq.GhWfJfhzjnsqmxDO;
@@ -168,7 +168,7 @@ public class GhWfJfhzjnsqServiceImpl implements GhWfJfhzjnsqService {
 
     // ====================== 【修复】详情：类型完全匹配 ======================
     @Override
-    public GhWfJfhzjnsqRespVO getDetail(Long id) {
+    public GhWfJfhzjnsqResVO getDetail(Long id) {
         GhWfJfhzjnsqDO main = jfhzjnsqMapper.selectById(id);
         if (main == null) {
             throw ServiceExceptionUtil.exception(ErrorCodeConstants.WF_HZJF_SQ_NOT_EXISTS);
@@ -180,12 +180,12 @@ public class GhWfJfhzjnsqServiceImpl implements GhWfJfhzjnsqService {
         // 查询附件
         List<HzsqFjDO> fjList = getHzsqAttachmentList(id);
 
-        GhWfJfhzjnsqRespVO respVO = BeanUtils.toBean(main, GhWfJfhzjnsqRespVO.class);
-        respVO.setFzjgmxList(BeanUtils.toBean(detailList, GhWfJfhzjnsqmxRespVO.class));
+        GhWfJfhzjnsqResVO respVO = BeanUtils.toBean(main, GhWfJfhzjnsqResVO.class);
+        respVO.setFzjgmxList(BeanUtils.toBean(detailList, GhWfJfhzjnsqmxResVO.class));
 
         // ====================== 【修复】手动构造 → 100% 无类型冲突 ======================
-        List<GhWfJfhzjnsqRespVO.FjItem> respFjList = fjList.stream().map(fjDO -> {
-            GhWfJfhzjnsqRespVO.FjItem item = new GhWfJfhzjnsqRespVO.FjItem();
+        List<GhWfJfhzjnsqResVO.FjItem> respFjList = fjList.stream().map(fjDO -> {
+            GhWfJfhzjnsqResVO.FjItem item = new GhWfJfhzjnsqResVO.FjItem();
             item.setWjmc(fjDO.getWjmc());
             item.setYwjmc(fjDO.getYwjmc());
             item.setWjlj(fjDO.getWjlj());

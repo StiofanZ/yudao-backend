@@ -9,7 +9,6 @@ import cn.iocoder.yudao.module.system.framework.sms.core.client.dto.SmsTemplateR
 import cn.iocoder.yudao.module.system.framework.sms.core.enums.SmsTemplateAuditStatusEnum;
 import cn.iocoder.yudao.module.system.framework.sms.core.property.SmsChannelProperties;
 import com.google.common.collect.Lists;
-
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockedStatic;
@@ -17,9 +16,10 @@ import org.mockito.MockedStatic;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static cn.iocoder.yudao.framework.test.core.util.RandomUtils.*;
+import static cn.iocoder.yudao.framework.test.core.util.RandomUtils.randomLongId;
+import static cn.iocoder.yudao.framework.test.core.util.RandomUtils.randomString;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mockStatic;
 
@@ -52,7 +52,7 @@ public class QiniuSmsClientTest extends BaseMockitoUnitTest {
                     .thenReturn("{\"message_id\":\"17245678901\"}");
             // 调用
             SmsSendRespDTO result = smsClient.sendSms(sendLogId, mobile,
-                    apiTemplateId, templateParams);
+                    apiTemplateId, "", templateParams);
             // 断言
             assertTrue(result.getSuccess());
             assertEquals("17245678901", result.getSerialNo());
@@ -73,7 +73,7 @@ public class QiniuSmsClientTest extends BaseMockitoUnitTest {
                     .thenReturn("{\"error\":\"BadToken\",\"message\":\"Your authorization token is invalid\",\"request_id\":\"etziWcJFo1C8Ne8X\"}");
             // 调用
             SmsSendRespDTO result = smsClient.sendSms(sendLogId, mobile,
-                    apiTemplateId, templateParams);
+                    apiTemplateId, "", templateParams);
             // 断言
             assertFalse(result.getSuccess());
             assertEquals("BadToken", result.getApiCode());

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.cbjmx.CbjmxMapper">
+
+    <!-- 筹备金统计(按机构+年度) -->
+    <select id="selectTjList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.cbjmx.vo.CbjmxtjResVO">
+        SELECT
+        dept_id AS deptId,
+        nd,
+        COUNT(*) AS bs,
+        SUM(QTJE) AS qtje,
+        SUM(JFJE) AS jfje,
+        SUM(CBJJE) AS cbjje,
+        SUM(SFBJE) AS sfbje
+        FROM cbjmx
+        <where>
+            <if test="req.nd != null and req.nd != ''">AND nd = #{req.nd}</if>
+            <if test="req.deptId != null and req.deptId != ''">AND dept_id = #{req.deptId}</if>
+            <if test="req.djxh != null and req.djxh != ''">AND djxh = #{req.djxh}</if>
+            <if test="req.nsrmc != null and req.nsrmc != ''">AND nsrmc LIKE CONCAT('%', #{req.nsrmc}, '%')</if>
+        </where>
+        GROUP BY dept_id, nd
+    </select>
+
+    <!-- 筹备金汇总(按机构+年度+标记) -->
+    <select id="selectHzList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.cbjmx.vo.CbjmxhzResVO">
+        SELECT
+        dept_id AS deptId,
+        nd,
+        jsbj,
+        cbjthbj,
+        fbbj,
+        COUNT(*) AS bs,
+        SUM(QTJE) AS qtje,
+        SUM(JFJE) AS jfje,
+        SUM(CBJJE) AS cbjje,
+        SUM(SFBJE) AS sfbje
+        FROM cbjmx
+        <where>
+            <if test="req.nd != null and req.nd != ''">AND nd = #{req.nd}</if>
+            <if test="req.deptId != null and req.deptId != ''">AND dept_id = #{req.deptId}</if>
+            <if test="req.djxh != null and req.djxh != ''">AND djxh = #{req.djxh}</if>
+            <if test="req.nsrmc != null and req.nsrmc != ''">AND nsrmc LIKE CONCAT('%', #{req.nsrmc}, '%')</if>
+        </where>
+        GROUP BY dept_id, nd, jsbj, cbjthbj, fbbj
+    </select>
+
+</mapper>

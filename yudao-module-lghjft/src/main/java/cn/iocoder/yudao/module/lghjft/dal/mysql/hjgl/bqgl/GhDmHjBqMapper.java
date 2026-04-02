@@ -4,7 +4,7 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.bqgl.vo.BqglPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.bqgl.vo.BqglRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hjgl.bqgl.vo.BqglResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.bqgl.GhDmHjBqDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -17,7 +17,7 @@ import java.util.List;
 public interface GhDmHjBqMapper extends BaseMapperX<GhDmHjBqDO> {
 
     @Select("SELECT id, bq_mc as bqMc FROM gh_dm_hj_bq WHERE deleted = 0 AND (dept_id IS NULL OR dept_id = #{deptId})")
-    List<BqglRespVO> selectBqxxList(@Param("deptId") Long deptId);
+    List<BqglResVO> selectBqxxList(@Param("deptId") Long deptId);
 
     default PageResult<GhDmHjBqDO> selectPage(BqglPageReqVO reqVO, Collection<Long> deptIds) {
         return selectPage(reqVO, new LambdaQueryWrapperX<GhDmHjBqDO>()

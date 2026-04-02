@@ -53,6 +53,7 @@ import cn.iocoder.yudao.module.system.service.user.AdminUserServiceImpl;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -111,6 +112,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public AuthorizeResVO login(AuthorizeReqVO reqVO) {
         AuthorizeResVO resVO = new AuthorizeResVO();
         resVO.setYhlx(reqVO.getYhlx());
@@ -153,6 +155,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public AuthorizeResVO smsLogin(DxdlReqVO reqVO) {
         dxfwService.jydlyzm(reqVO.getLxdh(), reqVO.getYzm(), reqVO.getYhlx());
         GhQxDlzhDO userDO = ghQxDlzhMapper.selectOne(reqVO.getLxdh(), null, null, null);
@@ -177,6 +180,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public AuthorizeResVO loginAuthCode(AuthorizeLghReqVO reqVO) {
         // 1. 解密 authCode
         String token;
@@ -388,6 +392,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public OAuth2AccessTokenDO createAccessToken(AuthorizeResVO resVO, Integer userType, String clientId, List<String> scopes) {
         OAuth2ClientDO clientDO = oauth2ClientService.validOAuthClientFromCache(clientId);
         // 创建刷新令牌

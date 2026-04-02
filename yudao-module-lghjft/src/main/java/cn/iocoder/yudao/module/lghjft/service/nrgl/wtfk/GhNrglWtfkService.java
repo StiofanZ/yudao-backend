@@ -13,6 +13,11 @@ public interface GhNrglWtfkService {
 
     void updateGhNrglWtfk(@Valid GhNrglWtfkSaveReqVO updateReqVO);
 
+    /**
+     * App 端更新问题反馈，带 IDOR 校验（只有反馈提交者才能操作）
+     */
+    void updateGhNrglWtfkWithOwnerCheck(@Valid GhNrglWtfkSaveReqVO updateReqVO);
+
     void deleteGhNrglWtfk(Long id, Boolean isAdminView);
 
     void deleteGhNrglWtfkListByIds(List<Long> ids, Boolean isAdminView);
@@ -23,7 +28,12 @@ public interface GhNrglWtfkService {
 
     void handleProcess(@Valid GhNrglWtfkClReqVO reqVO);
 
-    List<GhNrglWtfkClmxRespVO> getGhNrglWtfkClmxList(Long wtfkId);
+    /**
+     * App 端处理问题反馈，带 IDOR 校验（只有反馈提交者才能操作）
+     */
+    void handleProcessWithOwnerCheck(@Valid GhNrglWtfkClReqVO reqVO);
 
-    GhNrglWtfkRespVO getGhNrglWtfkDetail(Long id);
+    List<GhNrglWtfkClmxResVO> getGhNrglWtfkClmxList(Long wtfkId);
+
+    GhNrglWtfkResVO getGhNrglWtfkDetail(Long id);
 }

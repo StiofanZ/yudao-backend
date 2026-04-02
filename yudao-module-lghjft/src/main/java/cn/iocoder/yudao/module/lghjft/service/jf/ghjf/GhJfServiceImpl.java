@@ -9,6 +9,7 @@ import cn.iocoder.yudao.module.lghjft.dal.dataobject.jf.ghjf.GhJfDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.jf.ghjf.GhJfMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Collection;
@@ -30,6 +31,7 @@ public class GhJfServiceImpl implements GhJfService {
     private GhJfMapper ghJfMapper;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Integer createGhJf(GhJfCreateReqVO createReqVO) {
         GhJfDO ghJf = BeanUtils.toBean(createReqVO, GhJfDO.class);
         ghJfMapper.insert(ghJf);
@@ -37,6 +39,7 @@ public class GhJfServiceImpl implements GhJfService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateGhJf(GhJfUpdateReqVO updateReqVO) {
         // 校验存在
         validateGhJfExists(updateReqVO.getGhjfId());
@@ -46,6 +49,7 @@ public class GhJfServiceImpl implements GhJfService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteGhJf(Integer id) {
         // 校验存在
         validateGhJfExists(id);

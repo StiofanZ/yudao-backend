@@ -6,7 +6,7 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.GhHkxxYhbfhzJkjl.vo.GhHkxxYhbfhzJkjlPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.GhHkxxYhbfhzJkjl.vo.GhHkxxYhbfhzJkjlRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.GhHkxxYhbfhzJkjl.vo.GhHkxxYhbfhzJkjlResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.GhHkxxYhbfhzJkjl.vo.GhHkxxYhbfhzJkjlSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.hkxxyhbfhzjkjl.GhHkxxYhbfhzJkjl;
 import cn.iocoder.yudao.module.lghjft.service.jfcl.GhHkxxYhbfhzJkjl.IGhHkxxYhbfhzJkjlService;
@@ -37,42 +37,42 @@ public class GhHkxxYhbfhzJkjlAppController {
 
     @GetMapping("/page")
     @Operation(summary = "查询银行拨付汇总监控记录列表")
-//    @PreAuthorize("@ss.hasPermission('gh:jkjl:list')")
-    public CommonResult<PageResult<GhHkxxYhbfhzJkjlRespVO>> page(@Valid GhHkxxYhbfhzJkjlPageReqVO pageReqVO) {
+    @PreAuthorize("@ss.hasPermission('lghjft:jkjl:list')")
+    public CommonResult<PageResult<GhHkxxYhbfhzJkjlResVO>> page(@Valid GhHkxxYhbfhzJkjlPageReqVO pageReqVO) {
         PageResult<GhHkxxYhbfhzJkjl> pageResult = ghHkxxYhbfhzJkjlService.selectGhHkxxYhbfhzJkjlPage(pageReqVO);
-        return success(BeanUtils.toBean(pageResult, GhHkxxYhbfhzJkjlRespVO.class));
+        return success(BeanUtils.toBean(pageResult, GhHkxxYhbfhzJkjlResVO.class));
     }
 
     @PostMapping("/export")
     @Operation(summary = "导出银行拨付汇总监控记录列表")
-//    @PreAuthorize("@ss.hasPermission('gh:jkjl:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:jkjl:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportExcel(HttpServletResponse response, @Valid GhHkxxYhbfhzJkjlPageReqVO pageReqVO) throws IOException {
         // 模板写法：直接从分页方法拿list，无需单独写list查询
         List<GhHkxxYhbfhzJkjl> list = ghHkxxYhbfhzJkjlService.selectGhHkxxYhbfhzJkjlPage(pageReqVO).getList();
-        ExcelUtils.write(response, "银行拨付汇总监控记录.xls", "数据", GhHkxxYhbfhzJkjlRespVO.class,
-                BeanUtils.toBean(list, GhHkxxYhbfhzJkjlRespVO.class));
+        ExcelUtils.write(response, "银行拨付汇总监控记录.xls", "数据", GhHkxxYhbfhzJkjlResVO.class,
+                BeanUtils.toBean(list, GhHkxxYhbfhzJkjlResVO.class));
     }
 
     @GetMapping("/get")
     @Operation(summary = "获取银行拨付汇总监控记录详细信息")
     @Parameter(name = "yhbfhzJkjlId", description = "ID", required = true)
-//    @PreAuthorize("@ss.hasPermission('gh:jkjl:query')")
-    public CommonResult<GhHkxxYhbfhzJkjlRespVO> getInfo(@RequestParam("yhbfhzJkjlId") Long yhbfhzJkjlId) {
+    @PreAuthorize("@ss.hasPermission('lghjft:jkjl:query')")
+    public CommonResult<GhHkxxYhbfhzJkjlResVO> getInfo(@RequestParam("yhbfhzJkjlId") Long yhbfhzJkjlId) {
         GhHkxxYhbfhzJkjl info = ghHkxxYhbfhzJkjlService.selectGhHkxxYhbfhzJkjlByYhbfhzJkjlId(yhbfhzJkjlId);
-        return success(BeanUtils.toBean(info, GhHkxxYhbfhzJkjlRespVO.class));
+        return success(BeanUtils.toBean(info, GhHkxxYhbfhzJkjlResVO.class));
     }
 
     @PostMapping("/create")
     @Operation(summary = "新增银行拨付汇总监控记录")
-//    @PreAuthorize("@ss.hasPermission('gh:jkjl:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:jkjl:create')")
     public CommonResult<Long> add(@Valid @RequestBody GhHkxxYhbfhzJkjlSaveReqVO createReqVO) {
         return success(ghHkxxYhbfhzJkjlService.insertGhHkxxYhbfhzJkjl(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "修改银行拨付汇总监控记录")
-//    @PreAuthorize("@ss.hasPermission('gh:jkjl:edit')")
+    @PreAuthorize("@ss.hasPermission('lghjft:jkjl:edit')")
     @ApiAccessLog(operateType = UPDATE)
     public CommonResult<Boolean> edit(@Valid @RequestBody GhHkxxYhbfhzJkjlSaveReqVO updateReqVO) {
         ghHkxxYhbfhzJkjlService.updateGhHkxxYhbfhzJkjl(updateReqVO);
@@ -82,7 +82,7 @@ public class GhHkxxYhbfhzJkjlAppController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除银行拨付汇总监控记录")
     @Parameter(name = "ids", description = "编号数组", required = true)
-//    @PreAuthorize("@ss.hasPermission('gh:jkjl:remove')")
+    @PreAuthorize("@ss.hasPermission('lghjft:jkjl:remove')")
     @ApiAccessLog(operateType = DELETE)
     public CommonResult<Boolean> remove(@RequestParam("ids") List<Long> ids) {
         ghHkxxYhbfhzJkjlService.deleteGhHkxxYhbfhzJkjlByYhbfhzJkjlIds(ids);

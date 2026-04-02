@@ -1,8 +1,11 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.hkxxyhbfhzjkjl;
 
+import com.baomidou.mybatisplus.annotation.KeySequence;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
-import com.baomidou.mybatisplus.annotation.*;
-import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
+
+import java.time.LocalDateTime;
 
 /**
  * gh_hkxx_yhbfhz_jkjl DO
@@ -12,12 +15,11 @@ import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
 @TableName("gh_hkxx_yhbfhz_jkjl")
 @KeySequence("gh_hkxx_yhbfhz_jkjl_seq") // 用于 Oracle、PostgreSQL、Kingbase、DB2、H2 数据库的主键自增。如果是 MySQL 等数据库，可不写。
 @Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GhHkxxYhbfhzJkjl extends BaseDO {
+public class GhHkxxYhbfhzJkjl {
 
     /**
      * id
@@ -53,9 +55,17 @@ public class GhHkxxYhbfhzJkjl extends BaseDO {
      */
     private String createBy;
     /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
+    /**
      * 修改人
      */
     private String updateBy;
+    /**
+     * 修改时间
+     */
+    private LocalDateTime updateTime;
 
 
 }

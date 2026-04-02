@@ -97,8 +97,31 @@ public class ZhwhServiceImpl implements ZhwhService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void cancelZhwhWithOwnerCheck(Long id) {
+        GhQxZhwhDO exist = validatePending(id);
+        validateZhwhOwner(exist);
+        ghQxZhwhMapper.updateById(GhQxZhwhDO.builder()
+                .id(exist.getId())
+                .status(3)
+                .syncStatus(0)
+                .syncMessage("申请已撤回")
+                .syncTime(LocalDateTime.now())
+                .build());
+    }
+
+    @Override
     public GhQxZhwhDO getZhwh(Long id) {
         return ghQxZhwhMapper.selectById(id);
+    }
+
+    @Override
+    public GhQxZhwhDO getZhwhWithOwnerCheck(Long id) {
+        GhQxZhwhDO zhwh = ghQxZhwhMapper.selectById(id);
+        if (zhwh != null) {
+            validateZhwhOwner(zhwh);
+        }
+        return zhwh;
     }
 
     @Override
@@ -227,6 +250,13 @@ public class ZhwhServiceImpl implements ZhwhService {
                 .jcghyh(zhwh.getNewJcghyh())
                 .yxqq(LocalDate.now())
                 .build());
+    }
+
+    private void validateZhwhOwner(GhQxZhwhDO zhwh) {
+        Long loginUserId = SecurityFrameworkUtils.getLoginUserId();
+        if (!Objects.equals(zhwh.getDlzhId(), loginUserId)) {
+            throw exception(OPERATION_NOT_PERMITTED);
+        }
     }
 
     private boolean hasBankInfoChanged(GhHjJcxxDO jcxx, GhQxZhwhDO zhwh) {

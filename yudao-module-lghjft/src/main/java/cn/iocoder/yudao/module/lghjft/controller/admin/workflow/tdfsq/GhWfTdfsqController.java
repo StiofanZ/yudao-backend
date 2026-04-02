@@ -1,8 +1,8 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.workflow.tdfsq;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
-import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.tdfsq.vo.GhWfTdfsqKtfxxRespVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.tdfsq.vo.GhWfTdfsqRespVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.tdfsq.vo.GhWfTdfsqKtfxxResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.tdfsq.vo.GhWfTdfsqResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.workflow.tdfsq.vo.GhWfTdfsqSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.service.workflow.tdfsq.GhWfTdfsqService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,7 +29,7 @@ public class GhWfTdfsqController {
     @GetMapping("/get")
     @Operation(summary = "获得退抵费申请详情")
     @PreAuthorize("@ss.hasPermission('lghjft:workflow-tdfsq:query')")
-    public CommonResult<GhWfTdfsqRespVO> get(@RequestParam("id") Long id) {
+    public CommonResult<GhWfTdfsqResVO> get(@RequestParam("id") Long id) {
         return success(tdfsqService.getDetail(id));
     }
 
@@ -43,7 +43,7 @@ public class GhWfTdfsqController {
     @PostMapping("/getKtfxxList")
     @Operation(summary = "查询可退费明细")
     @PreAuthorize("@ss.hasPermission('lghjft:workflow-tdfsq:query')")
-    public CommonResult<List<GhWfTdfsqKtfxxRespVO>> getKtfxxList(@RequestParam String djxh, @RequestParam Integer sqtflxDm) {
+    public CommonResult<List<GhWfTdfsqKtfxxResVO>> getKtfxxList(@RequestParam String djxh, @RequestParam Integer sqtflxDm) {
         return success(tdfsqService.getKtfxxList(djxh, sqtflxDm));
     }
 }

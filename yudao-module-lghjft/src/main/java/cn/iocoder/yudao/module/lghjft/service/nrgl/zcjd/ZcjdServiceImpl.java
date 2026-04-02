@@ -16,6 +16,7 @@ import cn.iocoder.yudao.module.system.api.dept.dto.DeptRespDTO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,7 @@ public class ZcjdServiceImpl implements ZcjdService {
     @Resource
     private ZcwjMapper zcwjMapper;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Long createZcjd(ZcjdCreateReqVO createReqVO) {
         // 校验上级内容的可见性
@@ -59,6 +61,7 @@ public class ZcjdServiceImpl implements ZcjdService {
         return zcjd.getId();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateZcjd(cn.iocoder.yudao.module.lghjft.controller.admin.nrgl.zcjd.vo.ZcjdUpdateReqVO updateReqVO) {
         // 校验存在
@@ -93,6 +96,7 @@ public class ZcjdServiceImpl implements ZcjdService {
         zcjdMapper.updateById(updateObj);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteZcjd(Long id) {
         // 校验存在

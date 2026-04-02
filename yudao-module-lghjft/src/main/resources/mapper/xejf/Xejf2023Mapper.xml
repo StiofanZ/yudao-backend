@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.xejf.xejf2023.Xejf2023Mapper">
+
+    <!-- 小额缴费台账分页 -->
+    <select id="selectPageTz" resultType="cn.iocoder.yudao.module.lghjft.dal.dataobject.xejf.xejf2023.Xejf2023DO">
+        SELECT * FROM gh_jf
+        <where>
+            <if test="req.deptId != null and req.deptId != ''">AND dept_id = #{req.deptId}</if>
+            <if test="req.djxh != null and req.djxh != ''">AND DJXH = #{req.djxh}</if>
+            <if test="req.nsrmc != null and req.nsrmc != ''">AND NSRMC LIKE CONCAT('%', #{req.nsrmc}, '%')</if>
+            <if test="req.shxydm != null and req.shxydm != ''">AND SHXYDM = #{req.shxydm}</if>
+            <if test="req.zspmDm != null and req.zspmDm != ''">AND ZSPM_DM = #{req.zspmDm}</if>
+        </where>
+        ORDER BY ghjf_id DESC
+    </select>
+
+    <!-- 小额缴费统计(聚合) -->
+    <select id="selectXetjList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xejf2023.vo.XejftjResVO">
+        SELECT
+        dept_id AS deptId,
+        JSBJ AS jsbj,
+        CBJTHBJ AS cbjthbj,
+        COUNT(*) AS bs,
+        COUNT(DISTINCT DJXH) AS hs,
+        SUM(YBTSE) AS ybtse,
+        SUM(YFJE) AS yfje,
+        SUM(GKZFJE) AS gkzfje,
+        SUM(GJTHJE) AS gjthje,
+        SUM(JCGHJE) AS jcghje,
+        SUM(CBJJE) AS cbjje,
+        SUM(HYGHJE) AS hyghje,
+        SUM(XJGHJE) AS xjghje,
+        SUM(SJGHJE) AS sjghje,
+        SUM(SZGHJE) AS szghje,
+        SUM(QGGHJE) AS qgghje,
+        SUM(SDSJE) AS sdsje,
+        SUM(SWJGJE) AS swjgje
+        FROM gh_jf
+        <where>
+            <if test="req.deptId != null and req.deptId != ''">AND dept_id = #{req.deptId}</if>
+            <if test="req.djxh != null and req.djxh != ''">AND DJXH = #{req.djxh}</if>
+            <if test="req.nsrmc != null and req.nsrmc != ''">AND NSRMC LIKE CONCAT('%', #{req.nsrmc}, '%')</if>
+            <if test="req.shxydm != null and req.shxydm != ''">AND SHXYDM = #{req.shxydm}</if>
+            <if test="req.zspmDm != null and req.zspmDm != ''">AND ZSPM_DM = #{req.zspmDm}</if>
+        </where>
+        GROUP BY dept_id, JSBJ, CBJTHBJ
+    </select>
+
+</mapper>

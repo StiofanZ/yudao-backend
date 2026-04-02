@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class GhQxDlzhServiceImpl implements GhQxDlzhService {
     @Autowired
     private AdminUserServiceImpl adminUserService;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Long createDlzh(DlzhSaveReqVO createReqVO) {
         if (StringUtils.isBlank(createReqVO.getPassword())) {
@@ -48,6 +50,7 @@ public class GhQxDlzhServiceImpl implements GhQxDlzhService {
         return dlzh.getId();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateDlzh(DlzhSaveReqVO updateReqVO) {
         validateDlzhExists(updateReqVO.getId());
@@ -70,12 +73,14 @@ public class GhQxDlzhServiceImpl implements GhQxDlzhService {
                 .build());
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteDlzh(Long id) {
         validateDlzhExists(id);
         ghQxDlzhMapper.deleteById(id);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteDlzhListByIds(List<Long> ids) {
         ghQxDlzhMapper.deleteByIds(ids);
