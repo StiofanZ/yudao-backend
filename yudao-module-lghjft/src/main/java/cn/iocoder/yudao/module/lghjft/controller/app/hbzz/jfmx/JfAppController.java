@@ -28,7 +28,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
 @Tag(name = "app -  经费明细对象")
 @RestController
-@RequestMapping("/lghjft/jf")
+@RequestMapping("/lghjft/hbzz/jfmx")
 @Validated
 public class JfAppController {
 
@@ -41,7 +41,7 @@ public class JfAppController {
      */
     @GetMapping("/listmx")
     @Operation(summary = "获得 经费明细对象明细")
-    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jfmx:query')")
     public CommonResult<PageResult<JfResVO>> list(@Valid JfPageReqVO jfmx) {
         PageResult<JfResVO> pageResult = jfService.selectJftzmxList(jfmx);
         return success(BeanUtils.toBean(pageResult, JfResVO.class));
@@ -49,7 +49,7 @@ public class JfAppController {
 
 
     @GetMapping("/export-excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:jf:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jfmx:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportJfExcel(@Valid JfPageReqVO pageReqVO,
               HttpServletResponse response) throws IOException {

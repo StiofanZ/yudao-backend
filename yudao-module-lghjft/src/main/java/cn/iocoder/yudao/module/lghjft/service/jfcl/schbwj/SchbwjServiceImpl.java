@@ -94,8 +94,8 @@ public class SchbwjServiceImpl implements SchbwjService {
                 item.put("createTime", now);
                 item.put("updateTime", now);
             }
-            schbwjMapper.deleteGhHkxxByHkpch(hkpch);
-            schbwjMapper.insertBatchGhHkxx(hkxxList);
+            schbwjMapper.deleteHkxxByHkpch(hkpch);
+            schbwjMapper.insertBatchHkxx(hkxxList);
         }
 
         // 4. 更新 gh_jf 的 HKPCH

@@ -1639,6 +1639,66 @@ INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon,
                         update_time, deleted)
 VALUES (202913, '流程清理', 'bpm:model:clean', 3, 7, 201193, '', '', '', '', 0, true, true, true, '1', '2025-01-17 19:32:06', '1', '2025-01-17 19:32:06', false);
 
+-- ===================== 小微台账 xwqy =====================
+-- 一级目录：小微台账（parent_id=0，顶级菜单）
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214700, '小微台账', '', 1, 5, 0, '/xwqy', 'ep:data-board', null, null, 0, true, true, true, '1', '2026-04-03 12:00:00', '1', '2026-04-03 12:00:00', false);
+
+-- 二级页面：企业管理
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214701, '企业管理', '', 2, 1, 214700, 'xwqygl', 'ep:office-building', '/lghjft/xwqygl/index', 'LghjftXwqyXwqygl', 0, true, true, true, '1', '2026-04-03 12:00:00', '1',
+        '2026-04-03 12:00:00', false);
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214702, '企业管理查询', 'lghjft:xwqy-xwqygl:query', 3, 1, 214701, '', '', '', '', 0, true, true, true, '1', '2026-04-03 12:00:00', '1', '2026-04-03 12:00:00', false);
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214703, '企业管理导出', 'lghjft:xwqy-xwqygl:export', 3, 2, 214701, '', '', '', '', 0, true, true, true, '1', '2026-04-03 12:00:00', '1', '2026-04-03 12:00:00', false);
+
+-- 二级页面：筹备金管理
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214704, '筹备金管理', '', 2, 2, 214700, 'xwqyglcbj', 'ep:money', '/lghjft/xwqygl/indexcbj', 'LghjftXwqyXwqyglcbj', 0, true, true, true, '1', '2026-04-03 12:00:00', '1',
+        '2026-04-03 12:00:00', false);
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214705, '筹备金管理查询', 'lghjft:xwqy-xwqygl:query', 3, 1, 214704, '', '', '', '', 0, true, true, true, '1', '2026-04-03 12:00:00', '1', '2026-04-03 12:00:00', false);
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214706, '筹备金管理编辑', 'lghjft:xwqy-xwqygl:update', 3, 2, 214704, '', '', '', '', 0, true, true, true, '1', '2026-04-03 12:00:00', '1', '2026-04-03 12:00:00', false);
+
+-- 二级页面：经费统计
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214707, '经费统计', '', 2, 3, 214700, 'xwqyjftj', 'ep:histogram', '/lghjft/xwqy/xwqyjftj/index', 'LghjftXwqyXwqyjftj', 0, true, true, true, '1', '2026-04-03 12:00:00', '1',
+        '2026-04-03 12:00:00', false);
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214708, '经费统计查询', 'lghjft:xwqyjftj:query', 3, 1, 214707, '', '', '', '', 0, true, true, true, '1', '2026-04-03 12:00:00', '1', '2026-04-03 12:00:00', false);
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214709, '经费统计导出', 'lghjft:xwqyjftj:export', 3, 2, 214707, '', '', '', '', 0, true, true, true, '1', '2026-04-03 12:00:00', '1', '2026-04-03 12:00:00', false);
+
+-- ===================== 查询统计 cxtj =====================
+-- 一级目录（顶级菜单，parent_id=0）
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214710, '查询统计', '', 1, 6, 0, '/cxtj', 'ep:data-analysis', null, null, 0, true, true, true, '1', '2026-04-03 12:00:00', '1', '2026-04-03 12:00:00', false);
+
+-- 二级页面：小微企业经费明细
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214711, '小微企业经费明细', '', 2, 1, 214710, 'xwqyjfmx', 'ep:document', '/lghjft/cxtj/xwqyjfmx/index', 'LghjftCxtjXwqyjfmx', 0, true, true, true, '1',
+        '2026-04-03 12:00:00', '1', '2026-04-03 12:00:00', false);
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214712, '小微经费明细查询', 'lghjft:xwqyjf:query', 3, 1, 214711, '', '', '', '', 0, true, true, true, '1', '2026-04-03 12:00:00', '1', '2026-04-03 12:00:00', false);
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214713, '小微经费明细导出', 'lghjft:xwqyjf:export', 3, 2, 214711, '', '', '', '', 0, true, true, true, '1', '2026-04-03 12:00:00', '1', '2026-04-03 12:00:00', false);
+
 update system_menu
 set visible=1,
     status=0

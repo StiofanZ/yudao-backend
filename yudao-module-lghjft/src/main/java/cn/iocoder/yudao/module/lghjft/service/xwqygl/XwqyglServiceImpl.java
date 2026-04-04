@@ -5,10 +5,12 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglQuery;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.xwqygl.XwqyglMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -59,5 +61,26 @@ public class XwqyglServiceImpl implements XwqyglService {
         }
 
         return xwqyglMapper.selectXwqyglList(query);
+    }
+
+    @Override
+    public XwqyglResVO getXwqyglByDjxh(String djxh) {
+        return xwqyglMapper.selectXwqyglByDjxh(djxh);
+    }
+
+    @Override
+    public void createXwqygl(XwqyglSaveReqVO reqVO) {
+        xwqyglMapper.insertXwqygl(reqVO);
+    }
+
+    @Override
+    public void updateXwqygl(XwqyglSaveReqVO reqVO) {
+        // v1: updateBy = 当前用户昵称, updateTime = sysdate() (在 SQL 中)
+        xwqyglMapper.updateXwqygl(reqVO);
+    }
+
+    @Override
+    public void deleteXwqyglByDjxhs(String[] djxhs) {
+        xwqyglMapper.deleteXwqyglByDjxhs(djxhs);
     }
 }

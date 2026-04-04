@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.yhbfhz.YhbfhzMapper">
+
+    <resultMap type="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfhz.YhbfhzDO" id="YhbfhzResult">
+        <result property="bfhzid" column="bfhzid"/>
+        <result property="bfhzpch" column="bfhzpch"/>
+        <result property="bfidq" column="bfidq"/>
+        <result property="bfidz" column="bfidz"/>
+        <result property="bfidStr" column="bfid_str"/>
+        <result property="bfbmc" column="bfbmc"/>
+        <result property="bs" column="bs"/>
+        <result property="hzje" column="hzje"/>
+        <result property="thbs" column="thbs"/>
+        <result property="thje" column="thje"/>
+        <result property="sbbs" column="sbbs"/>
+        <result property="sbje" column="sbje"/>
+        <result property="cgbs" column="cgbs"/>
+        <result property="cgje" column="cgje"/>
+        <result property="uuid" column="UUID"/>
+        <result property="bfzt" column="bfzt"/>
+        <result property="bfjg" column="bfjg"/>
+        <result property="thrq" column="thrq"/>
+        <result property="createBy" column="CREATE_BY"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateBy" column="UPDATE_BY"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+    </resultMap>
+
+    <sql id="selectYhbfhzVo">
+        select bfhzid,
+               bfhzpch,
+               bfidq,
+               bfidz,
+               bfid_str,
+               bfbmc,
+               bs,
+               hzje,
+               thbs,
+               thje,
+               sbbs,
+               sbje,
+               cgbs,
+               cgje,
+               UUID,
+               bfzt,
+               bfjg,
+               thrq,
+               CREATE_BY,
+               CREATE_TIME,
+               UPDATE_BY,
+               UPDATE_TIME
+        from gh_hkxx_yhbfhz
+    </sql>
+
+    <!-- 你要的风格：全部带 req. -->
+    <select id="selectYhbfhzList" resultMap="YhbfhzResult">
+        <include refid="selectYhbfhzVo"/>
+        <where>
+            <if test="req.bfhzpch != null and req.bfhzpch != ''">and bfhzpch = #{req.bfhzpch}</if>
+            <if test="req.bfidq != null and req.bfidq != ''">and bfidq = #{req.bfidq}</if>
+            <if test="req.bfidz != null and req.bfidz != ''">and bfidz = #{req.bfidz}</if>
+            <if test="req.bfidStr != null and req.bfidStr != ''">and bfid_str = #{req.bfidStr}</if>
+            <if test="req.bfbmc != null and req.bfbmc != ''">and bfbmc = #{req.bfbmc}</if>
+            <if test="req.bs != null">and bs = #{req.bs}</if>
+            <if test="req.hzje != null">and hzje = #{req.hzje}</if>
+            <if test="req.thbs != null and req.thbs != ''">and thbs = #{req.thbs}</if>
+            <if test="req.thje != null">and thje = #{req.thje}</if>
+            <if test="req.sbbs != null and req.sbbs != ''">and sbbs = #{req.sbbs}</if>
+            <if test="req.sbje != null">and sbje = #{req.sbje}</if>
+            <if test="req.cgbs != null and req.cgbs != ''">and cgbs = #{req.cgbs}</if>
+            <if test="req.cgje != null">and cgje = #{req.cgje}</if>
+            <if test="req.uuid != null and req.uuid != ''">and UUID = #{req.uuid}</if>
+            <if test="req.bfzt != null and req.bfzt != ''">and bfzt = #{req.bfzt}</if>
+            <if test="req.bfjg != null and req.bfjg != ''">and bfjg = #{req.bfjg}</if>
+            <if test="req.thrq != null">and thrq = #{req.thrq}</if>
+            <if test="req.createBy != null and req.createBy != ''">and CREATE_BY = #{req.createBy}</if>
+            <if test="req.beginCreateTime != null and req.beginCreateTime != '' and req.endCreateTime != null and req.endCreateTime != ''">
+                and CREATE_TIME between #{req.beginCreateTime} and #{req.endCreateTime}
+            </if>
+            <if test="req.updateBy != null and req.updateBy != ''">and UPDATE_BY = #{req.updateBy}</if>
+            <if test="req.updateTime != null">and UPDATE_TIME = #{req.updateTime}</if>
+        </where>
+        order by bfhzid desc
+    </select>
+
+    <select id="selectYhbfhzByBfhzid" parameterType="String" resultMap="YhbfhzResult">
+        <include refid="selectYhbfhzVo"/>
+        where bfhzid = #{bfhzid}
+    </select>
+
+    <select id="selectBfhzpch" resultType="java.lang.String">
+        SELECT MAX(t.bfhzpch) bfhzpch
+        FROM gh_hkxx_yhbfhz t
+        WHERE LEFT (T.bfhzpch, 8) = #{dqrq}
+    </select>
+
+    <insert id="insertYhbfhz" parameterType="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfhz.YhbfhzDO" useGeneratedKeys="true" keyProperty="bfhzid">
+        insert into gh_hkxx_yhbfhz
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bfhzpch != null">bfhzpch,</if>
+            <if test="bfidq != null and bfidq != ''">bfidq,</if>
+            <if test="bfidz != null and bfidz != ''">bfidz,</if>
+            <if test="bfidStr != null and bfidStr != ''">bfid_str,</if>
+            <if test="bfbmc != null">bfbmc,</if>
+            <if test="bs != null">bs,</if>
+            <if test="hzje != null">hzje,</if>
+            <if test="thbs != null">thbs,</if>
+            <if test="thje != null">thje,</if>
+            <if test="sbbs != null">sbbs,</if>
+            <if test="sbje != null">sbje,</if>
+            <if test="cgbs != null">cgbs,</if>
+            <if test="cgje != null">cgje,</if>
+            <if test="uuid != null">UUID,</if>
+            <if test="bfzt != null and bfzt != ''">bfzt,</if>
+            <if test="bfjg != null and bfjg != ''">bfjg,</if>
+            <if test="thrq != null">thrq,</if>
+            <if test="createBy != null and createBy != ''">CREATE_BY,</if>
+            <if test="createTime != null">CREATE_TIME,</if>
+            <if test="updateBy != null and updateBy != ''">UPDATE_BY,</if>
+            <if test="updateTime != null">UPDATE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bfhzpch != null">#{bfhzpch},</if>
+            <if test="bfidq != null and bfidq != ''">#{bfidq},</if>
+            <if test="bfidz != null and bfidz != ''">#{bfidz},</if>
+            <if test="bfidStr != null and bfidStr != ''">#{bfidStr},</if>
+            <if test="bfbmc != null">#{bfbmc},</if>
+            <if test="bs != null">#{bs},</if>
+            <if test="hzje != null">#{hzje},</if>
+            <if test="thbs != null">#{thbs},</if>
+            <if test="thje != null">#{thje},</if>
+            <if test="sbbs != null">#{sbbs},</if>
+            <if test="sbje != null">#{sbje},</if>
+            <if test="cgbs != null">#{cgbs},</if>
+            <if test="cgje != null">#{cgje},</if>
+            <if test="uuid != null">#{uuid},</if>
+            <if test="bfzt != null and bfzt != ''">#{bfzt},</if>
+            <if test="bfjg != null and bfjg != ''">#{bfjg},</if>
+            <if test="thrq != null">#{thrq},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <insert id="insertBatchYhbfhzs" parameterType="java.util.List">
+        INSERT INTO GH_HKXX_YHBFHZ (
+        BFHZID, BFHZPCH, BFIDQ, BFIDZ, BFID_STR, BFBMC, BS, HZJE, THBS, THJE, SBBS, SBJE, CGBS, CGJE, UUID, BFZT, BFJG, THRQ, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
+        ) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.bfhzid}, #{item.bfhzpch}, #{item.bfidq}, #{item.bfidz}, #{item.bfidStr}, #{item.bfbmc}, #{item.bs}, #{item.hzje}, #{item.thbs}, #{item.thje}, #{item.sbbs},
+            #{item.sbje}, #{item.cgbs}, #{item.cgje}, #{item.uuid}, #{item.bfzt}, #{item.bfjg}, #{item.thrq}, #{item.createBy}, #{item.createTime}, #{item.updateBy},
+            #{item.updateTime})
+        </foreach>
+    </insert>
+
+    <update id="updateYhbfhz" parameterType="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfhz.YhbfhzDO">
+        update gh_hkxx_yhbfhz
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="bfhzpch != null">bfhzpch = #{bfhzpch},</if>
+            <if test="bfidq != null and bfidq != ''">bfidq = #{bfidq},</if>
+            <if test="bfidz != null and bfidz != ''">bfidz = #{bfidz},</if>
+            <if test="bfidStr != null and bfidStr != ''">bfid_str = #{bfidStr},</if>
+            <if test="bfbmc != null">bfbmc = #{bfbmc},</if>
+            <if test="bs != null">bs = #{bs},</if>
+            <if test="hzje != null">hzje = #{hzje},</if>
+            <if test="thbs != null">thbs = #{thbs},</if>
+            <if test="thje != null">thje = #{thje},</if>
+            <if test="sbbs != null">sbbs = #{sbbs},</if>
+            <if test="sbje != null">sbje = #{sbje},</if>
+            <if test="cgbs != null">cgbs = #{cgbs},</if>
+            <if test="cgje != null">cgje = #{cgje},</if>
+            <if test="uuid != null">UUID = #{uuid},</if>
+            <if test="bfzt != null and bfzt != ''">bfzt = #{bfzt},</if>
+            <if test="bfjg != null and bfjg != ''">bfjg = #{bfjg},</if>
+            <if test="thrq != null">thrq = #{thrq},</if>
+            <if test="createBy != null and createBy != ''">CREATE_BY = #{createBy},</if>
+            <if test="createTime != null">CREATE_TIME = #{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">UPDATE_BY = #{updateBy},</if>
+            <if test="updateTime != null">UPDATE_TIME = #{updateTime},</if>
+        </trim>
+        where bfhzid = #{bfhzid}
+    </update>
+
+    <delete id="deleteYhbfhzByBfhzid" parameterType="String">
+        delete
+        from gh_hkxx_yhbfhz
+        where bfhzid = #{bfhzid}
+    </delete>
+
+    <delete id="deleteYhbfhzByBfhzids" parameterType="String">
+        delete from gh_hkxx_yhbfhz where bfhzid in
+        <foreach item="bfhzid" collection="array" open="(" separator="," close=")">
+            #{bfhzid}
+        </foreach>
+    </delete>
+
+</mapper>

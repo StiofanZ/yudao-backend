@@ -1,8 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.dal.mysql.xwqy.xwqyjf;
 
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
-import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjf.vo.XwqyjfPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.xwqy.xwqyjf.XwqyjfDO;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,14 +11,23 @@ import java.util.List;
 @Mapper
 public interface XwqyjfMapper extends BaseMapperX<XwqyjfDO> {
 
-    default PageResult<XwqyjfDO> selectPage(XwqyjfPageReqVO reqVO) {
-        return selectPage(reqVO, new LambdaQueryWrapperX<XwqyjfDO>()
-                .eqIfPresent(XwqyjfDO::getDjxh, reqVO.getDjxh())
-                .eqIfPresent(XwqyjfDO::getShxydm, reqVO.getShxydm())
-                .eqIfPresent(XwqyjfDO::getNsrmc, reqVO.getNsrmc())
-                .eqIfPresent(XwqyjfDO::getDeptId, reqVO.getDeptId())
-                .orderByDesc(XwqyjfDO::getGhjfId));
-    }
+    /**
+     * 95% fund details list (v1: selectXwqyjfList)
+     */
+    List<XwqyjfDO> selectXwqyjfList(@Param("req") XwqyjfPageReqVO req);
 
-    List<XwqyjfDO> selectPageYf(@Param("req") XwqyjfPageReqVO req);
+    /**
+     * 95% fund details count
+     */
+    long selectXwqyjfCount(@Param("req") XwqyjfPageReqVO req);
+
+    /**
+     * 60% fund details list (v1: selectXwqyjfListyf)
+     */
+    List<XwqyjfDO> selectXwqyjfListyf(@Param("req") XwqyjfPageReqVO req);
+
+    /**
+     * 60% fund details count
+     */
+    long selectXwqyjfCountyf(@Param("req") XwqyjfPageReqVO req);
 }

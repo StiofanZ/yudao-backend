@@ -38,13 +38,13 @@ public interface SchbwjMapper extends BaseMapperX<JfclSchbwjDO> {
 
     String selectHkpch(@Param("dqrq") String dqrq);
 
-    void insertBatchGhHkxx(@Param("list") List<Map<String, Object>> list);
+    void insertBatchHkxx(@Param("list") List<Map<String, Object>> list);
 
     void updateGhjfhb(@Param("list") List<Map<String, Object>> list);
 
     void updateBatchQsjshkrj(@Param("list") List<Map<String, Object>> list);
 
-    void deleteGhHkxxByHkpch(@Param("hkpch") String hkpch);
+    void deleteHkxxByHkpch(@Param("hkpch") String hkpch);
 
     List<Map<String, Object>> selectQsjshkrjList(@Param("list") List<Date> list);
 }

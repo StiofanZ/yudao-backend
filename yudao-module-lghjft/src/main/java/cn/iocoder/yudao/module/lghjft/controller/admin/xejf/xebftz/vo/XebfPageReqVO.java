@@ -19,4 +19,33 @@ public class XebfPageReqVO extends PageParam {
     private String nsrmc;
     @Schema(description = "返拨标记")
     private String fbbj;
+    @Schema(description = "社会信用代码")
+    private String shxydm;
+    @Schema(description = "小微类型")
+    private String xwlx;
+
+    // v1: jsbj IN array
+    @Schema(description = "结算标记")
+    private String[] jsbj;
+    // v1: xelx23/24/25 IN array
+    @Schema(description = "小额类型23")
+    private String[] xelx23;
+    @Schema(description = "小额类型24")
+    private String[] xelx24;
+    @Schema(description = "小额类型25")
+    private String[] xelx25;
+
+    // v1 date ranges
+    @Schema(description = "入库日期起始")
+    private String beginRkrq;
+    @Schema(description = "入库日期截止")
+    private String endRkrq;
+    @Schema(description = "结算日期起始")
+    private String beginJsrq;
+    @Schema(description = "结算日期截止")
+    private String endJsrq;
+    @Schema(description = "返拨日期起始")
+    private String beginFbrq;
+    @Schema(description = "返拨日期截止")
+    private String endFbrq;
 }

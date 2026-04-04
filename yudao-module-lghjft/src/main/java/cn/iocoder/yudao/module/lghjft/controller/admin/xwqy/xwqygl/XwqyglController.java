@@ -5,8 +5,10 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglQuery;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.service.xwqygl.XwqyglService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,10 +17,7 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -54,6 +53,52 @@ public class XwqyglController {
     public CommonResult<PageResult<XwqyglResVO>> getXwqyglPage(@Valid XwqyglQuery query) {
         PageResult<XwqyglResVO> pageResult = xwqyglService.getXwqyglPage(query);
         return success(pageResult);
+    }
+
+    /**
+     * 获取小微企业管理详细信息
+     */
+    @GetMapping("/get")
+    @Operation(summary = "获得小微企业管理详情")
+    @Parameter(name = "djxh", description = "登记序号", required = true)
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqygl:query')")
+    public CommonResult<XwqyglResVO> getInfo(@RequestParam("djxh") String djxh) {
+        XwqyglResVO data = xwqyglService.getXwqyglByDjxh(djxh);
+        return success(data);
+    }
+
+    /**
+     * 新增小微企业管理
+     */
+    @PostMapping("/create")
+    @Operation(summary = "新增小微企业管理")
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqygl:create')")
+    public CommonResult<Boolean> create(@Valid @RequestBody XwqyglSaveReqVO reqVO) {
+        xwqyglService.createXwqygl(reqVO);
+        return success(true);
+    }
+
+    /**
+     * 修改小微企业管理
+     */
+    @PutMapping("/update")
+    @Operation(summary = "修改小微企业管理")
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqygl:update')")
+    public CommonResult<Boolean> update(@Valid @RequestBody XwqyglSaveReqVO reqVO) {
+        xwqyglService.updateXwqygl(reqVO);
+        return success(true);
+    }
+
+    /**
+     * 删除小微企业管理
+     */
+    @DeleteMapping("/delete")
+    @Operation(summary = "删除小微企业管理")
+    @Parameter(name = "djxhs", description = "登记序号数组", required = true)
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqygl:delete')")
+    public CommonResult<Boolean> delete(@RequestParam("djxhs") String[] djxhs) {
+        xwqyglService.deleteXwqyglByDjxhs(djxhs);
+        return success(true);
     }
 
     /**

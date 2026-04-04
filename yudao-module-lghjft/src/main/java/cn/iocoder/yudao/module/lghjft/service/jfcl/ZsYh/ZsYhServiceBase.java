@@ -2,10 +2,9 @@ package cn.iocoder.yudao.module.lghjft.service.jfcl.ZsYh;
 
 import cn.hutool.core.map.MapUtil;
 import cn.iocoder.yudao.module.file.utils.DateUtils;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.hkxxyhbfhzjkjl.GhHkxxYhbfhzJkjl;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfhzjkjl.YhbfhzjkjlDO;
 import cn.iocoder.yudao.module.lghjft.enums.constant.BackConstant;
-//import cn.iocoder.yudao.module.lghjft.service.jfcl.IGhHkxxYhbfhzJkjl.IGhHkxxYhbfhzJkjlService;
-import cn.iocoder.yudao.module.lghjft.service.jfcl.GhHkxxYhbfhzJkjl.IGhHkxxYhbfhzJkjlService;
+import cn.iocoder.yudao.module.lghjft.service.jfcl.yhbfhzjkjl.YhbfhzjkjlService;
 import cn.iocoder.yudao.module.lghjft.service.jfcl.cmb.CmbUtil;
 import cn.iocoder.yudao.module.lghjft.service.jfcl.cmb.DcHelper;
 import cn.iocoder.yudao.module.lghjft.service.jfcl.cmb.DeviceInfo;
@@ -34,7 +33,7 @@ public abstract class ZsYhServiceBase {
     private static Logger logger = LoggerFactory.getLogger(ZsYhServiceBase.class);
 
     @Autowired
-    protected IGhHkxxYhbfhzJkjlService ghHkxxYhbfhzJkjlService;
+    protected YhbfhzjkjlService yhbfhzjkjlService;
 
     protected final String QQZT_S = "S";
 
@@ -177,50 +176,50 @@ public abstract class ZsYhServiceBase {
         return resMap;
     }
 
-    protected void updateGhHkxxYhbfhzJkjl(GhHkxxYhbfhzJkjl ghHkxxYhbfhzJkjl, String fkId){
-        if(Objects.isNull(ghHkxxYhbfhzJkjl)){
-            logger.warn("日志对象 ghHkxxYhbfhzJkjl 为空，本次不会写入请求接口信息！");
+    protected void updateYhbfhzjkjl(YhbfhzjkjlDO yhbfhzjkjlDO, String fkId) {
+        if (Objects.isNull(yhbfhzjkjlDO)) {
+            logger.warn("日志对象 yhbfhzjkjlDO 为空，本次不会写入请求接口信息！");
         }
         String userId = BackConstant.USER_SYSTEM_ID;
         if (!Objects.isNull(fkId)) {
-            ghHkxxYhbfhzJkjl.setFkId(Long.parseLong(fkId));
+            yhbfhzjkjlDO.setFkId(Long.parseLong(fkId));
         }
-        ghHkxxYhbfhzJkjl.setCreateBy(userId);
-        ghHkxxYhbfhzJkjl.setCreateTime(DateUtils.getNowDate());
-        ghHkxxYhbfhzJkjl.setUpdateBy(userId);
-        ghHkxxYhbfhzJkjl.setUpdateTime(DateUtils.getNowDate());
-        ghHkxxYhbfhzJkjlService.insertGhHkxxYhbfhzJkjl(ghHkxxYhbfhzJkjl);
+        yhbfhzjkjlDO.setCreateBy(userId);
+        yhbfhzjkjlDO.setCreateTime(DateUtils.getNowDate());
+        yhbfhzjkjlDO.setUpdateBy(userId);
+        yhbfhzjkjlDO.setUpdateTime(DateUtils.getNowDate());
+        yhbfhzjkjlService.insertYhbfhzJkjl(yhbfhzjkjlDO);
     }
 
     protected Map<String, JSONObject> getFcMap(String fc, JSONObject bodyStr, String fkId) {
         Map<String, JSONObject> resMap = Maps.newHashMap();
-        GhHkxxYhbfhzJkjl ghHkxxYhbfhzJkjl = new GhHkxxYhbfhzJkjl();
+        YhbfhzjkjlDO yhbfhzjkjlDO = new YhbfhzjkjlDO();
         try {
-            ghHkxxYhbfhzJkjl.setJkmc(fc);
+            yhbfhzjkjlDO.setJkmc(fc);
             String reqid = CmbUtil.getReqid();
             JSONObject headStr = getHead(fc, uid, reqid);
             logger.debug("headStr:" + headStr);
             logger.debug("bodyStr:" + bodyStr);
             String reqStr = getReqStr(bodyStr, headStr);
-            ghHkxxYhbfhzJkjl.setQqbw(reqStr);
+            yhbfhzjkjlDO.setQqbw(reqStr);
             logger.info("reqStr:" + reqStr);
             DcHelper dchelper = getDcHelper();
             DeviceInfo deviceInfo = getDeviceInfo();
             String resStr = dchelper.sendRequest(reqStr, fc, deviceInfo);
-            ghHkxxYhbfhzJkjl.setXybw(resStr);
+            yhbfhzjkjlDO.setXybw(resStr);
             handleRes(resStr);
             logger.info("resStr:" + resStr);
-            ghHkxxYhbfhzJkjl.setQqzt(QQZT_S);
+            yhbfhzjkjlDO.setQqzt(QQZT_S);
             resMap = handleRes(resStr);
             JSONObject headObj = resMap.get(HEAD_OBJ);
-            ghHkxxYhbfhzJkjl.setQqjgxx(headObj.getString("resultmsg"));
+            yhbfhzjkjlDO.setQqjgxx(headObj.getString("resultmsg"));
         } catch (Exception e) {
-            ghHkxxYhbfhzJkjl.setQqzt(QQZT_E);
-            ghHkxxYhbfhzJkjl.setQqjgxx(e.toString());
+            yhbfhzjkjlDO.setQqzt(QQZT_E);
+            yhbfhzjkjlDO.setQqjgxx(e.toString());
             logger.error(fc + "调用异常：", e);
             throw new ServiceException(fc + "调用异常" + e.getMessage());
         }finally {
-            updateGhHkxxYhbfhzJkjl(ghHkxxYhbfhzJkjl, fkId);
+            updateYhbfhzjkjl(yhbfhzjkjlDO, fkId);
         }
         return resMap;
     }

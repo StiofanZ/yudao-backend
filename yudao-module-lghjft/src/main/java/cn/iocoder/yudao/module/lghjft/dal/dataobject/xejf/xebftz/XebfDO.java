@@ -3,7 +3,7 @@ package cn.iocoder.yudao.module.lghjft.dal.dataobject.xejf.xebftz;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import cn.iocoder.yudao.module.lghjft.dal.typehandler.CommaSeparatedStringArrayTypeHandler;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -40,17 +40,17 @@ public class XebfDO {
     private BigDecimal jmse;
     private BigDecimal yfbje;
     private BigDecimal ybtse;
-    @TableField(typeHandler = JacksonTypeHandler.class)
+    @TableField(typeHandler = CommaSeparatedStringArrayTypeHandler.class)
     private String[] jsbj;
     private String deptId;
     private String djxh;
     private String shxydm;
     private String nsrmc;
-    @TableField(typeHandler = JacksonTypeHandler.class)
+    @TableField(typeHandler = CommaSeparatedStringArrayTypeHandler.class)
     private String[] xelx25;
-    @TableField(typeHandler = JacksonTypeHandler.class)
+    @TableField(typeHandler = CommaSeparatedStringArrayTypeHandler.class)
     private String[] xelx24;
-    @TableField(typeHandler = JacksonTypeHandler.class)
+    @TableField(typeHandler = CommaSeparatedStringArrayTypeHandler.class)
     private String[] xelx23;
     private String xwlx;
     private String djzclxmc;

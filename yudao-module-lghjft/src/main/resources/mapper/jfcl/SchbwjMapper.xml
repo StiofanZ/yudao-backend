@@ -29,8 +29,8 @@
             , 8) = #{dqrq}
     </select>
 
-    <!-- v1 insertBatchGhHkxx：批量插入 gh_hkxx -->
-    <insert id="insertBatchGhHkxx" parameterType="java.util.List">
+    <!-- v1 insertBatchHkxx：批量插入 gh_hkxx -->
+    <insert id="insertBatchHkxx" parameterType="java.util.List">
         INSERT INTO gh_hkxx (HKPCH, XH, LX, ZH, HH, JE, DEPT_ID, DZ, FY, JYM, THBJ, SCBZ,
         CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME, HM, BZ)
         VALUES
@@ -99,8 +99,8 @@
         </foreach>
     </update>
 
-    <!-- v1 deleteGhHkxxByHkpch -->
-    <delete id="deleteGhHkxxByHkpch">
+    <!-- v1 deleteHkxxByHkpch -->
+    <delete id="deleteHkxxByHkpch">
         DELETE
         FROM gh_hkxx
         WHERE HKPCH = #{hkpch}

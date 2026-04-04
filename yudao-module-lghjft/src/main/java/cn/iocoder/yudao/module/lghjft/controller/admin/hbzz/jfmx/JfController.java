@@ -29,7 +29,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
 @Tag(name = "管理后台 -  经费明细对象")
 @RestController
-@RequestMapping("/lghjft/jf")
+@RequestMapping("/lghjft/hbzz/jfmx")
 @Validated
 public class JfController {
 
@@ -42,7 +42,7 @@ public class JfController {
      */
     @GetMapping("/list")
     @Operation(summary = "获得经费明细分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jfmx:query')")
     public CommonResult<PageResult<JfResVO>> getJfmxList(@Valid JfPageReqVO jfmx) {
         PageResult<JfResVO> pageResult = jfService.selectJfmxList(jfmx);
         return success(pageResult);
@@ -53,7 +53,7 @@ public class JfController {
      */
     @GetMapping("/listmx")
     @Operation(summary = "获得经费台账明细")
-    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jfmx:query')")
     public CommonResult<PageResult<JfResVO>> getJftzmxList(@Valid JfPageReqVO jfmx) {
         PageResult<JfResVO> pageResult = jfService.selectJftzmxList(jfmx);
         return success(pageResult);
@@ -63,14 +63,14 @@ public class JfController {
 
 //    @PostMapping("/create")
 //    @Operation(summary = "创建 经费明细对象")
-//    @PreAuthorize("@ss.hasPermission('lghjft:jf:create')")
+//    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jfmx:create')")
 //    public CommonResult<Integer> createJf(@Valid @RequestBody JfSaveReqVO createReqVO) {
 //        return success(jfService.createJf(createReqVO));
 //    }
 //
 //    @PutMapping("/update")
 //    @Operation(summary = "更新 经费明细对象")
-//    @PreAuthorize("@ss.hasPermission('lghjft:jf:update')")
+//    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jfmx:update')")
 //    public CommonResult<Boolean> updateJf(@Valid @RequestBody JfSaveReqVO updateReqVO) {
 //        jfService.updateJf(updateReqVO);
 //        return success(true);
@@ -79,7 +79,7 @@ public class JfController {
 //    @DeleteMapping("/delete")
 //    @Operation(summary = "删除 经费明细对象")
 //    @Parameter(name = "id", description = "编号", required = true)
-//    @PreAuthorize("@ss.hasPermission('lghjft:jf:delete')")
+//    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jfmx:delete')")
 //    public CommonResult<Boolean> deleteJf(@RequestParam("id") Integer id) {
 //        jfService.deleteJf(id);
 //        return success(true);
@@ -88,7 +88,7 @@ public class JfController {
 //    @DeleteMapping("/delete-list")
 //    @Parameter(name = "ids", description = "编号", required = true)
 //    @Operation(summary = "批量删除 经费明细对象")
-//                @PreAuthorize("@ss.hasPermission('lghjft:jf:delete')")
+//                @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jfmx:delete')")
 //    public CommonResult<Boolean> deleteJfList(@RequestParam("ids") List<Integer> ids) {
 //        jfService.deleteJfListByIds(ids);
 //        return success(true);
@@ -97,7 +97,7 @@ public class JfController {
 //    @GetMapping("/get")
 //    @Operation(summary = "获得 经费明细对象")
 //    @Parameter(name = "id", description = "编号", required = true, example = "1024")
-//    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+//    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jfmx:query')")
 //    public CommonResult<JfResVO> getJf(@RequestParam("id") Integer id) {
 //        JfDO jf = jfService.getJf(id);
 //        return success(BeanUtils.toBean(jf, JfResVO.class));
@@ -105,42 +105,42 @@ public class JfController {
 //
 @GetMapping("/listfymx")
 @Operation(summary = "经费返还月度明细")
-@PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+@PreAuthorize("@ss.hasPermission('lghjft:hbzz-jfmx:query')")
 public CommonResult<PageResult<JfSummaryResVO>> getJffymxList(@Valid JfPageReqVO jfmx) {
     return success(jfService.selectJffymxList(jfmx));
 }
 
     @GetMapping("/listfnmx")
     @Operation(summary = "经费返还年度明细")
-    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jfmx:query')")
     public CommonResult<PageResult<JfSummaryResVO>> getJffnmxList(@Valid JfPageReqVO jfmx) {
         return success(jfService.selectJffnmxList(jfmx));
     }
 
     @GetMapping("/listfsjzqmx")
     @Operation(summary = "经费返还汇缴周期明细")
-    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jfmx:query')")
     public CommonResult<PageResult<JfSummaryResVO>> getJffsjzqmxList(@Valid JfPageReqVO jfmx) {
         return success(jfService.selectJffsjzqmxList(jfmx));
     }
 
     @GetMapping("/listtzfn")
     @Operation(summary = "经费台账年度汇总")
-    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jfmx:query')")
     public CommonResult<PageResult<JfSummaryResVO>> getJftzfnList(@Valid JfPageReqVO jfmx) {
         return success(jfService.selectJftzfnList(jfmx));
     }
 
     @GetMapping("/listtzfswjg")
     @Operation(summary = "经费台账按税务机关汇总")
-    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jfmx:query')")
     public CommonResult<PageResult<JfSummaryResVO>> getJftzfswjgList(@Valid JfPageReqVO jfmx) {
         return success(jfService.selectJftzfswjgList(jfmx));
     }
 
     @GetMapping("/listszdzdhd")
     @Operation(summary = "省级对账")
-    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jfmx:query')")
     public CommonResult<PageResult<JfSummaryResVO>> getSzdzhdList(JfPageReqVO jfmx) {
         // v1 不分页，强制设置
         jfmx.setPageNo(1);
@@ -150,7 +150,7 @@ public CommonResult<PageResult<JfSummaryResVO>> getJffymxList(@Valid JfPageReqVO
 
 //    @GetMapping("/page")
 //    @Operation(summary = "获得 经费明细对象分页")
-//    @PreAuthorize("@ss.hasPermission('lghjft:jf:query')")
+//    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jfmx:query')")
 //    public CommonResult<PageResult<JfResVO>> getJfPage(@Valid JfPageReqVO pageReqVO) {
 //        PageResult<JfDO> pageResult = jfService.getJfPage(pageReqVO);
 //        return success(BeanUtils.toBean(pageResult, JfResVO.class));
@@ -158,7 +158,7 @@ public CommonResult<PageResult<JfSummaryResVO>> getJffymxList(@Valid JfPageReqVO
 //
     @GetMapping("/export-excel")
     @Operation(summary = "导出 经费明细对象 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:jf:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jfmx:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportJfExcel(@Valid JfPageReqVO pageReqVO,
               HttpServletResponse response) throws IOException {

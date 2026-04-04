@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.Yhbfjgcx.vo;
+package cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfjgcx.vo;
 
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Schema(description = "管理后台 - 银行拨付结果查询 Response VO")
 @Data
 @ExcelIgnoreUnannotated
-public class yhbfjgcxResVO {
+public class YhbfjgcxResVO {
 
     @Schema(description = "拨付批次号", requiredMode = Schema.RequiredMode.REQUIRED)
     @ExcelProperty("拨付批次号")

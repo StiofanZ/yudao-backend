@@ -314,7 +314,7 @@
     </delete>
 
     <!-- ==================== 6. 业务专用方法 ==================== -->
-    <select id="getGhyhbfmxJs" resultMap="YhbfmxResultMap">
+    <select id="getYhbfmxJs" resultMap="YhbfmxResultMap">
         SELECT
             t.hkxx_id,
             t.zh,
@@ -362,7 +362,7 @@
         FROM gh_hkxx t WHERE t.HKPCH = #{hkpch}
     </select>
 
-    <select id="getGhyhbfmxBjs" resultMap="YhbfmxResultMap">
+    <select id="getYhbfmxBjs" resultMap="YhbfmxResultMap">
         SELECT
             t.hkxx_id,
             t.zh,
@@ -410,7 +410,7 @@
         FROM gh_hkxx t WHERE t.HKPCH = #{hkpch}
     </select>
 
-    <select id="getGhyhbfmxSbthcb" resultMap="YhbfmxResultMap">
+    <select id="getYhbfmxSbthcb" resultMap="YhbfmxResultMap">
         SELECT
             t.hkxx_id,
             t.xzh AS zh,
@@ -507,7 +507,7 @@
         WHERE t.THBJ = 'Y' AND T.XGBJ = 'Y' AND T.XGSJ BETWEEN #{beginUpdateTime} AND #{endUpdateTime}
     </select>
 
-    <select id="getGhHkxxYhbfmx" resultMap="YhbfmxResultMap">
+    <select id="getYhbfmx" resultMap="YhbfmxResultMap">
         SELECT * FROM gh_hkxx_yhbfmx WHERE bfzt='N'
         <if test="zh != null and zh != ''">
             and zh in
@@ -563,7 +563,7 @@
         </foreach>
     </insert>
 
-    <update id="updateBatchGhHkxxYhbfmx" parameterType="java.util.List">
+    <update id="updateBatchYhbfmx" parameterType="java.util.List">
         UPDATE gh_hkxx_yhbfmx
         <trim prefix="set" suffixOverrides=",">
             <trim prefix="bfhzpch =case" suffix="end,">

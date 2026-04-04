@@ -1,11 +1,11 @@
-package cn.iocoder.yudao.module.lghjft.service.jfcl.Yhbfjgcx;
+package cn.iocoder.yudao.module.lghjft.service.jfcl.yhbfjgcx;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
-import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.Yhbfjgcx.vo.yhbfjgcxPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.Yhbfjgcx.vo.yhbfjgcxSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.Yhbfjgcx.yhbfjgcxDO;
-import cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.Yhbfjgcx.yhbfjgcxMapper;
+import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfjgcx.vo.YhbfjgcxPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfjgcx.vo.YhbfjgcxSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfjgcx.YhbfjgcxDO;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.yhbfjgcx.YhbfjgcxMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,16 +24,16 @@ import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.YHBFJGCX_N
  */
 @Service
 @Validated
-public class yhbfjgcxServiceImpl implements yhbfjgcxService {
+public class YhbfjgcxServiceImpl implements YhbfjgcxService {
 
     @Resource
-    private yhbfjgcxMapper yhbfjgcxMapper;
+    private YhbfjgcxMapper yhbfjgcxMapper;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public String createyhbfjgcx(yhbfjgcxSaveReqVO createReqVO) {
+    public String createyhbfjgcx(YhbfjgcxSaveReqVO createReqVO) {
         // 插入
-        yhbfjgcxDO yhbfjgcx = BeanUtils.toBean(createReqVO, yhbfjgcxDO.class);
+        YhbfjgcxDO yhbfjgcx = BeanUtils.toBean(createReqVO, YhbfjgcxDO.class);
         yhbfjgcxMapper.insert(yhbfjgcx);
 
         // 返回
@@ -42,11 +42,11 @@ public class yhbfjgcxServiceImpl implements yhbfjgcxService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void updateyhbfjgcx(yhbfjgcxSaveReqVO updateReqVO) {
+    public void updateyhbfjgcx(YhbfjgcxSaveReqVO updateReqVO) {
         // 校验存在
         validateyhbfjgcxExists(updateReqVO.getBfhzid());
         // 更新
-        yhbfjgcxDO updateObj = BeanUtils.toBean(updateReqVO, yhbfjgcxDO.class);
+        YhbfjgcxDO updateObj = BeanUtils.toBean(updateReqVO, YhbfjgcxDO.class);
         yhbfjgcxMapper.updateById(updateObj);
     }
 
@@ -74,12 +74,12 @@ public class yhbfjgcxServiceImpl implements yhbfjgcxService {
     }
 
     @Override
-    public yhbfjgcxDO getyhbfjgcx(String id) {
+    public YhbfjgcxDO getyhbfjgcx(String id) {
         return yhbfjgcxMapper.selectById(id);
     }
 
     @Override
-    public PageResult<yhbfjgcxDO> getyhbfjgcxPage(yhbfjgcxPageReqVO pageReqVO) {
+    public PageResult<YhbfjgcxDO> getyhbfjgcxPage(YhbfjgcxPageReqVO pageReqVO) {
         return yhbfjgcxMapper.selectPage(pageReqVO);
     }
 

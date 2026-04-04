@@ -3,6 +3,7 @@ package cn.iocoder.yudao.module.lghjft.dal.mysql.xwqy.xwqyjftj;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjftj.vo.XwqyjftjAggVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjftj.vo.XwqyjftjPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjftj.vo.XwqyjftjfhAggVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjftj.vo.XwqyjftjmxResVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,4 +15,6 @@ public interface XwqyjftjMapper {
     List<XwqyjftjAggVO> selectXwqyjftjList(@Param("req") XwqyjftjPageReqVO req);
 
     List<XwqyjftjfhAggVO> selectXwqyjftjfhList(@Param("req") XwqyjftjPageReqVO req);
+
+    List<XwqyjftjmxResVO> selectXwqyjftjmxList(@Param("req") XwqyjftjPageReqVO req);
 }

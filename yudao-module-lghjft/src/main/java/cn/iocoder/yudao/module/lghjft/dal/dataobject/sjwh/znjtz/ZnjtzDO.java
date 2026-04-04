@@ -137,4 +137,8 @@ public class ZnjtzDO {
     private String sdghhh;
     private BigDecimal sdghbl;
     private BigDecimal sdghje;
+    private String createBy;
+    private LocalDateTime createTime;
+    private String updateBy;
+    private LocalDateTime updateTime;
 }

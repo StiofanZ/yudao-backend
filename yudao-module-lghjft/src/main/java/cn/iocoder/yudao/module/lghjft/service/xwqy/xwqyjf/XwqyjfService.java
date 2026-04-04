@@ -19,7 +19,18 @@ public interface XwqyjfService {
 
     XwqyjfDO getXwqyjf(Long id);
 
+    /**
+     * 95% fund details page
+     */
     PageResult<XwqyjfDO> getXwqyjfPage(XwqyjfPageReqVO pageReqVO);
 
-    List<XwqyjfDO> getXwqyjfPageYf(XwqyjfPageReqVO pageReqVO);
+    /**
+     * 60% fund details page
+     */
+    PageResult<XwqyjfDO> getXwqyjfPageYf(XwqyjfPageReqVO pageReqVO);
+
+    /**
+     * 95% fund details full list (for export)
+     */
+    List<XwqyjfDO> getXwqyjfList(XwqyjfPageReqVO pageReqVO);
 }

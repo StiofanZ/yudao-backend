@@ -1,10 +1,10 @@
-package cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.Yhbfjgcx;
+package cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.yhbfjgcx;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
-import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.Yhbfjgcx.vo.yhbfjgcxPageReqVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.Yhbfjgcx.yhbfjgcxDO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfjgcx.vo.YhbfjgcxPageReqVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfjgcx.YhbfjgcxDO;
 import org.apache.ibatis.annotations.Mapper;
 
 
@@ -14,39 +14,39 @@ import org.apache.ibatis.annotations.Mapper;
  * @author 李文军
  */
 @Mapper
-public interface yhbfjgcxMapper extends BaseMapperX<yhbfjgcxDO> {
+public interface YhbfjgcxMapper extends BaseMapperX<YhbfjgcxDO> {
 
-    default PageResult<yhbfjgcxDO> selectPage(yhbfjgcxPageReqVO reqVO) {
-        return selectPage(reqVO, new LambdaQueryWrapperX<yhbfjgcxDO>()
-                .eqIfPresent(yhbfjgcxDO::getBfrq, reqVO.getBfrq())
-                .eqIfPresent(yhbfjgcxDO::getBfhzid, reqVO.getBfhzid())
-                .eqIfPresent(yhbfjgcxDO::getBfbmc, reqVO.getBfbmc())
-                .eqIfPresent(yhbfjgcxDO::getBfhzpch, reqVO.getBfhzpch())
-                .eqIfPresent(yhbfjgcxDO::getBfzt, reqVO.getBfzt())
-                .eqIfPresent(yhbfjgcxDO::getBfzbs, reqVO.getBfzbs())
-                .eqIfPresent(yhbfjgcxDO::getBfzje, reqVO.getBfzje())
-                .eqIfPresent(yhbfjgcxDO::getCgjg, reqVO.getCgjg())
-                .eqIfPresent(yhbfjgcxDO::getCgbs, reqVO.getCgbs())
-                .eqIfPresent(yhbfjgcxDO::getCgje, reqVO.getCgje())
-                .eqIfPresent(yhbfjgcxDO::getSbjg, reqVO.getSbjg())
-                .eqIfPresent(yhbfjgcxDO::getSbbs, reqVO.getSbbs())
-                .eqIfPresent(yhbfjgcxDO::getSbje, reqVO.getSbje())
-                .eqIfPresent(yhbfjgcxDO::getTpjg, reqVO.getTpjg())
-                .eqIfPresent(yhbfjgcxDO::getTpbs, reqVO.getTpbs())
-                .eqIfPresent(yhbfjgcxDO::getTpje, reqVO.getTpje())
-                .eqIfPresent(yhbfjgcxDO::getFjjg, reqVO.getFjjg())
-                .eqIfPresent(yhbfjgcxDO::getFjbs, reqVO.getFjbs())
-                .eqIfPresent(yhbfjgcxDO::getFjje, reqVO.getFjje())
-                .eqIfPresent(yhbfjgcxDO::getGqjg, reqVO.getGqjg())
-                .eqIfPresent(yhbfjgcxDO::getGqbs, reqVO.getGqbs())
-                .eqIfPresent(yhbfjgcxDO::getGqje, reqVO.getGqje())
-                .eqIfPresent(yhbfjgcxDO::getCxjg, reqVO.getCxjg())
-                .eqIfPresent(yhbfjgcxDO::getCxbs, reqVO.getCxbs())
-                .eqIfPresent(yhbfjgcxDO::getCxje, reqVO.getCxje())
-                .eqIfPresent(yhbfjgcxDO::getCreateBy, reqVO.getCreateBy())
-                .eqIfPresent(yhbfjgcxDO::getUpdateBy, reqVO.getUpdateBy())
-                .eqIfPresent(yhbfjgcxDO::getRemark, reqVO.getRemark())
-                .orderByDesc(yhbfjgcxDO::getBfhzid));
+    default PageResult<YhbfjgcxDO> selectPage(YhbfjgcxPageReqVO reqVO) {
+        return selectPage(reqVO, new LambdaQueryWrapperX<YhbfjgcxDO>()
+                .eqIfPresent(YhbfjgcxDO::getBfrq, reqVO.getBfrq())
+                .eqIfPresent(YhbfjgcxDO::getBfhzid, reqVO.getBfhzid())
+                .eqIfPresent(YhbfjgcxDO::getBfbmc, reqVO.getBfbmc())
+                .eqIfPresent(YhbfjgcxDO::getBfhzpch, reqVO.getBfhzpch())
+                .eqIfPresent(YhbfjgcxDO::getBfzt, reqVO.getBfzt())
+                .eqIfPresent(YhbfjgcxDO::getBfzbs, reqVO.getBfzbs())
+                .eqIfPresent(YhbfjgcxDO::getBfzje, reqVO.getBfzje())
+                .eqIfPresent(YhbfjgcxDO::getCgjg, reqVO.getCgjg())
+                .eqIfPresent(YhbfjgcxDO::getCgbs, reqVO.getCgbs())
+                .eqIfPresent(YhbfjgcxDO::getCgje, reqVO.getCgje())
+                .eqIfPresent(YhbfjgcxDO::getSbjg, reqVO.getSbjg())
+                .eqIfPresent(YhbfjgcxDO::getSbbs, reqVO.getSbbs())
+                .eqIfPresent(YhbfjgcxDO::getSbje, reqVO.getSbje())
+                .eqIfPresent(YhbfjgcxDO::getTpjg, reqVO.getTpjg())
+                .eqIfPresent(YhbfjgcxDO::getTpbs, reqVO.getTpbs())
+                .eqIfPresent(YhbfjgcxDO::getTpje, reqVO.getTpje())
+                .eqIfPresent(YhbfjgcxDO::getFjjg, reqVO.getFjjg())
+                .eqIfPresent(YhbfjgcxDO::getFjbs, reqVO.getFjbs())
+                .eqIfPresent(YhbfjgcxDO::getFjje, reqVO.getFjje())
+                .eqIfPresent(YhbfjgcxDO::getGqjg, reqVO.getGqjg())
+                .eqIfPresent(YhbfjgcxDO::getGqbs, reqVO.getGqbs())
+                .eqIfPresent(YhbfjgcxDO::getGqje, reqVO.getGqje())
+                .eqIfPresent(YhbfjgcxDO::getCxjg, reqVO.getCxjg())
+                .eqIfPresent(YhbfjgcxDO::getCxbs, reqVO.getCxbs())
+                .eqIfPresent(YhbfjgcxDO::getCxje, reqVO.getCxje())
+                .eqIfPresent(YhbfjgcxDO::getCreateBy, reqVO.getCreateBy())
+                .eqIfPresent(YhbfjgcxDO::getUpdateBy, reqVO.getUpdateBy())
+                .eqIfPresent(YhbfjgcxDO::getRemark, reqVO.getRemark())
+                .orderByDesc(YhbfjgcxDO::getBfhzid));
     }
 
 }

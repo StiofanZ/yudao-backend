@@ -16,8 +16,8 @@ public class DhjftzServiceImpl implements DhjftzService {
     private DhjftzMapper dhjftzMapper;
 
     @Override
-    public DhjftzDO getDhjftz(Long id) {
-        return dhjftzMapper.selectById(id);
+    public DhjftzDO getDhjftz(String djxh) {
+        return dhjftzMapper.selectById(djxh);
     }
 
     @Override

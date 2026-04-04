@@ -8,9 +8,9 @@ import cn.iocoder.yudao.framework.common.exception.ServiceException;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfmx.vo.YhbfmxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfmx.vo.YhbfmxSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.hbfhz.YhbfhzDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfhz.YhbfhzDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfmx.YhbfmxDO;
-import cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.hbfhz.YhbfhzMapper;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.yhbfhz.YhbfhzMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.yhbfmx.YhbfmxMapper;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
 import cn.iocoder.yudao.module.system.service.user.AdminUserService;
@@ -105,11 +105,11 @@ public PageResult<YhbfmxDO> getYhbfmxPage(YhbfmxPageReqVO reqVO) {
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void updateGhyhbfmxJs(YhbfmxSaveReqVO reqVO) {
+    public void updateYhbfmxJs(YhbfmxSaveReqVO reqVO) {
         if (reqVO == null || reqVO.getHkpch() == null || reqVO.getHkpch().isEmpty()) {
             throw new ServiceException(YHBFMX_PARAM_ERROR);
         }
-        List<YhbfmxDO> list = yhbfmxMapper.getGhyhbfmxJs(reqVO.getHkpch());
+        List<YhbfmxDO> list = yhbfmxMapper.getYhbfmxJs(reqVO.getHkpch());
         if (CollUtil.isEmpty(list)) {
             throw new ServiceException();
         }
@@ -124,11 +124,11 @@ public PageResult<YhbfmxDO> getYhbfmxPage(YhbfmxPageReqVO reqVO) {
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void updateGhyhbfmxBjs(YhbfmxSaveReqVO reqVO) {
+    public void updateYhbfmxBjs(YhbfmxSaveReqVO reqVO) {
         if (reqVO == null || reqVO.getHkpch() == null) {
             throw new ServiceException(YHBFMX_PARAM_ERROR);
         }
-        List<YhbfmxDO> list = yhbfmxMapper.getGhyhbfmxBjs(reqVO.getHkpch());
+        List<YhbfmxDO> list = yhbfmxMapper.getYhbfmxBjs(reqVO.getHkpch());
         if (CollUtil.isEmpty(list)) {
             throw new ServiceException(YHBFMX_NO_DATA);
         }
@@ -143,14 +143,14 @@ public PageResult<YhbfmxDO> getYhbfmxPage(YhbfmxPageReqVO reqVO) {
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void updateGhyhbfmxSbthcb(YhbfmxSaveReqVO reqVO) {
+    public void updateYhbfmxSbthcb(YhbfmxSaveReqVO reqVO) {
         if (reqVO == null || reqVO.getBeginUpdateTime() == null || reqVO.getEndUpdateTime() == null) {
             throw new ServiceException(YHBFMX_BEGIN_ERROR);
         }
         YhbfmxPageReqVO query = new YhbfmxPageReqVO();
         query.setBeginUpdateTime(reqVO.getBeginUpdateTime());
         query.setEndUpdateTime(reqVO.getEndUpdateTime());
-        List<YhbfmxDO> list = yhbfmxMapper.getGhyhbfmxSbthcb(query);
+        List<YhbfmxDO> list = yhbfmxMapper.getYhbfmxSbthcb(query);
         if (CollUtil.isEmpty(list)) {
             throw new ServiceException(YHBFMX_THCB_DATA);
         }
@@ -165,7 +165,7 @@ public PageResult<YhbfmxDO> getYhbfmxPage(YhbfmxPageReqVO reqVO) {
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void updateGhHkxxYhbfhz(YhbfmxSaveReqVO reqVO) {
+    public void updateYhbfhz(YhbfmxSaveReqVO reqVO) {
         if (reqVO == null || reqVO.getBfpch() == null) {
             throw exception(YHBFMX_NOT_EXISTS);
         }
@@ -174,7 +174,7 @@ public PageResult<YhbfmxDO> getYhbfmxPage(YhbfmxPageReqVO reqVO) {
         query.setBfpch(reqVO.getBfpch());
         query.setDeptId(reqVO.getDeptId());
 
-        List<YhbfmxDO> list = yhbfmxMapper.getGhHkxxYhbfmx(query);
+        List<YhbfmxDO> list = yhbfmxMapper.getYhbfmx(query);
         if (CollUtil.isEmpty(list)) {
             throw exception(YHBFMX_NOT_EXISTS);
         }
@@ -208,7 +208,7 @@ public PageResult<YhbfmxDO> getYhbfmxPage(YhbfmxPageReqVO reqVO) {
         }
 
         yhbfhzMapper.insertBatch(hzList);
-        yhbfmxMapper.updateBatchGhHkxxYhbfmx(list);
+        yhbfmxMapper.updateBatchYhbfmx(list);
     }
 
     // ==================== 工具方法 ====================

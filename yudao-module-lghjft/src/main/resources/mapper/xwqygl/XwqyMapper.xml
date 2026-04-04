@@ -144,7 +144,6 @@
             <if test="updateBy != null and updateBy != ''">AND UPDATE_BY = #{updateBy}</if>
             <if test="updateTime != null">AND UPDATE_TIME = #{updateTime}</if>
         </where>
-        ORDER BY CREATE_TIME DESC
         <if test="offset != null and limit != null">
             LIMIT #{offset}, #{limit}
         </if>
@@ -214,5 +213,196 @@
             <if test="updateTime != null">AND UPDATE_TIME = #{updateTime}</if>
         </where>
     </select>
+
+    <!-- 按登记序号获取单条 (v1: selectXwqyglByDjxh) -->
+    <select id="selectXwqyglByDjxh" resultMap="XwqyglResVOResultMap">
+        select
+        <include refid="selectXwqyglColumns"/>
+        from gh_hj
+        where DJXH = #{djxh}
+    </select>
+
+    <!-- 新增 (v1: insertXwqygl) -->
+    <insert id="insertXwqygl" parameterType="cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglSaveReqVO">
+        insert into gh_hj
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deptId != null and deptId != ''">DEPT_ID,</if>
+            <if test="hyghbz != null and hyghbz != ''">HYGHBZ,</if>
+            <if test="djxh != null">DJXH,</if>
+            <if test="shxydm != null and shxydm != ''">SHXYDM,</if>
+            <if test="nsrmc != null and nsrmc != ''">NSRMC,</if>
+            <if test="nsrjc != null and nsrjc != ''">NSRJC,</if>
+            <if test="zgswjDm != null and zgswjDm != ''">ZGSWJ_DM,</if>
+            <if test="zgswjmc != null and zgswjmc != ''">ZGSWJMC,</if>
+            <if test="zgswskfjDm != null and zgswskfjDm != ''">ZGSWSKFJ_DM,</if>
+            <if test="zgswskfjmc != null and zgswskfjmc != ''">ZGSWSKFJMC,</if>
+            <if test="ssglyDm != null and ssglyDm != ''">SSGLY_DM,</if>
+            <if test="ssglyxm != null and ssglyxm != ''">SSGLYXM,</if>
+            <if test="zzjglxDm != null and zzjglxDm != ''">ZZJGLX_DM,</if>
+            <if test="zzjglxmc != null and zzjglxmc != ''">ZZJGLXMC,</if>
+            <if test="hyDm != null and hyDm != ''">HY_DM,</if>
+            <if test="hymc != null and hymc != ''">HYMC,</if>
+            <if test="djzclxDm != null and djzclxDm != ''">DJZCLX_DM,</if>
+            <if test="djzclxmc != null and djzclxmc != ''">DJZCLXMC,</if>
+            <if test="dwlsgxDm != null and dwlsgxDm != ''">DWLSGX_DM,</if>
+            <if test="dwlsgxmc != null and dwlsgxmc != ''">DWLSGXMC,</if>
+            <if test="zgrs != null">ZGRS,</if>
+            <if test="nsrztDm != null and nsrztDm != ''">NSRZT_DM,</if>
+            <if test="nsrztmc != null and nsrztmc != ''">NSRZTMC,</if>
+            <if test="fzcrq != null">FZCRQ,</if>
+            <if test="zxrq != null">ZXRQ,</if>
+            <if test="zcdz != null and zcdz != ''">ZCDZ,</if>
+            <if test="yzbm != null and yzbm != ''">YZBM,</if>
+            <if test="lxr != null and lxr != ''">LXR,</if>
+            <if test="lxdh != null and lxdh != ''">LXDH,</if>
+            <if test="ghlbDm != null and ghlbDm != ''">GHLB_DM,</if>
+            <if test="xtlbDm != null and xtlbDm != ''">XTLB_DM,</if>
+            <if test="hjfl1Dm != null and hjfl1Dm != ''">HJFL1_DM,</if>
+            <if test="hjfl2Dm != null">HJFL2_DM,</if>
+            <if test="hjfl3Dm != null">HJFL3_DM,</if>
+            <if test="hjfl4Dm != null">HJFL4_DM,</if>
+            <if test="hjfl5Dm != null">HJFL5_DM,</if>
+            <if test="hjfl6Dm != null">HJFL6_DM,</if>
+            <if test="hjfl7Dm != null">HJFL7_DM,</if>
+            <if test="dclghbj != null">HJFL8_DM,</if>
+            <if test="xwqybj != null">HJFL9_DM,</if>
+            <if test="sdghjgDm != null and sdghjgDm != ''">SDGHJG_DM,</if>
+            <if test="clghbj != null and clghbj != ''">CLGHBJ,</if>
+            <if test="clghrq != null">CLGHRQ,</if>
+            <if test="jcghdm != null and jcghdm != ''">JCGHDM,</if>
+            <if test="jcghmc != null and jcghmc != ''">JCGHMC,</if>
+            <if test="jcghzh != null and jcghzh != ''">JCGHZH,</if>
+            <if test="jcghhm != null and jcghhm != ''">JCGHHM,</if>
+            <if test="jcghhh != null and jcghhh != ''">JCGHHH,</if>
+            <if test="jcghyh != null and jcghyh != ''">JCGHYH,</if>
+            <if test="bz != null and bz != ''">BZ,</if>
+            <if test="jym != null and jym != ''">JYM,</if>
+            <if test="nsrsbh != null and nsrsbh != ''">NSRSBH,</if>
+            CREATE_TIME,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deptId != null and deptId != ''">#{deptId},</if>
+            <if test="hyghbz != null and hyghbz != ''">#{hyghbz},</if>
+            <if test="djxh != null">#{djxh},</if>
+            <if test="shxydm != null and shxydm != ''">#{shxydm},</if>
+            <if test="nsrmc != null and nsrmc != ''">#{nsrmc},</if>
+            <if test="nsrjc != null and nsrjc != ''">#{nsrjc},</if>
+            <if test="zgswjDm != null and zgswjDm != ''">#{zgswjDm},</if>
+            <if test="zgswjmc != null and zgswjmc != ''">#{zgswjmc},</if>
+            <if test="zgswskfjDm != null and zgswskfjDm != ''">#{zgswskfjDm},</if>
+            <if test="zgswskfjmc != null and zgswskfjmc != ''">#{zgswskfjmc},</if>
+            <if test="ssglyDm != null and ssglyDm != ''">#{ssglyDm},</if>
+            <if test="ssglyxm != null and ssglyxm != ''">#{ssglyxm},</if>
+            <if test="zzjglxDm != null and zzjglxDm != ''">#{zzjglxDm},</if>
+            <if test="zzjglxmc != null and zzjglxmc != ''">#{zzjglxmc},</if>
+            <if test="hyDm != null and hyDm != ''">#{hyDm},</if>
+            <if test="hymc != null and hymc != ''">#{hymc},</if>
+            <if test="djzclxDm != null and djzclxDm != ''">#{djzclxDm},</if>
+            <if test="djzclxmc != null and djzclxmc != ''">#{djzclxmc},</if>
+            <if test="dwlsgxDm != null and dwlsgxDm != ''">#{dwlsgxDm},</if>
+            <if test="dwlsgxmc != null and dwlsgxmc != ''">#{dwlsgxmc},</if>
+            <if test="zgrs != null">#{zgrs},</if>
+            <if test="nsrztDm != null and nsrztDm != ''">#{nsrztDm},</if>
+            <if test="nsrztmc != null and nsrztmc != ''">#{nsrztmc},</if>
+            <if test="fzcrq != null">#{fzcrq},</if>
+            <if test="zxrq != null">#{zxrq},</if>
+            <if test="zcdz != null and zcdz != ''">#{zcdz},</if>
+            <if test="yzbm != null and yzbm != ''">#{yzbm},</if>
+            <if test="lxr != null and lxr != ''">#{lxr},</if>
+            <if test="lxdh != null and lxdh != ''">#{lxdh},</if>
+            <if test="ghlbDm != null and ghlbDm != ''">#{ghlbDm},</if>
+            <if test="xtlbDm != null and xtlbDm != ''">#{xtlbDm},</if>
+            <if test="hjfl1Dm != null and hjfl1Dm != ''">#{hjfl1Dm},</if>
+            <if test="hjfl2Dm != null">#{hjfl2Dm},</if>
+            <if test="hjfl3Dm != null">#{hjfl3Dm},</if>
+            <if test="hjfl4Dm != null">#{hjfl4Dm},</if>
+            <if test="hjfl5Dm != null">#{hjfl5Dm},</if>
+            <if test="hjfl6Dm != null">#{hjfl6Dm},</if>
+            <if test="hjfl7Dm != null">#{hjfl7Dm},</if>
+            <if test="dclghbj != null">#{dclghbj},</if>
+            <if test="xwqybj != null">#{xwqybj},</if>
+            <if test="sdghjgDm != null and sdghjgDm != ''">#{sdghjgDm},</if>
+            <if test="clghbj != null and clghbj != ''">#{clghbj},</if>
+            <if test="clghrq != null">#{clghrq},</if>
+            <if test="jcghdm != null and jcghdm != ''">#{jcghdm},</if>
+            <if test="jcghmc != null and jcghmc != ''">#{jcghmc},</if>
+            <if test="jcghzh != null and jcghzh != ''">#{jcghzh},</if>
+            <if test="jcghhm != null and jcghhm != ''">#{jcghhm},</if>
+            <if test="jcghhh != null and jcghhh != ''">#{jcghhh},</if>
+            <if test="jcghyh != null and jcghyh != ''">#{jcghyh},</if>
+            <if test="bz != null and bz != ''">#{bz},</if>
+            <if test="jym != null and jym != ''">#{jym},</if>
+            <if test="nsrsbh != null and nsrsbh != ''">#{nsrsbh},</if>
+            sysdate(),
+        </trim>
+    </insert>
+
+    <!-- 修改 (v1: updateXwqygl) -->
+    <update id="updateXwqygl" parameterType="cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglSaveReqVO">
+        update gh_hj
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deptId != null">DEPT_ID = #{deptId},</if>
+            <if test="hyghbz != null and hyghbz != ''">HYGHBZ = #{hyghbz},</if>
+            <if test="shxydm != null and shxydm != ''">SHXYDM = #{shxydm},</if>
+            <if test="nsrmc != null and nsrmc != ''">NSRMC = #{nsrmc},</if>
+            <if test="nsrjc != null and nsrjc != ''">NSRJC = #{nsrjc},</if>
+            <if test="zgswjDm != null and zgswjDm != ''">ZGSWJ_DM = #{zgswjDm},</if>
+            <if test="zgswjmc != null and zgswjmc != ''">ZGSWJMC = #{zgswjmc},</if>
+            <if test="zgswskfjDm != null and zgswskfjDm != ''">ZGSWSKFJ_DM = #{zgswskfjDm},</if>
+            <if test="zgswskfjmc != null and zgswskfjmc != ''">ZGSWSKFJMC = #{zgswskfjmc},</if>
+            <if test="ssglyDm != null and ssglyDm != ''">SSGLY_DM = #{ssglyDm},</if>
+            <if test="ssglyxm != null and ssglyxm != ''">SSGLYXM = #{ssglyxm},</if>
+            <if test="zzjglxDm != null and zzjglxDm != ''">ZZJGLX_DM = #{zzjglxDm},</if>
+            <if test="zzjglxmc != null and zzjglxmc != ''">ZZJGLXMC = #{zzjglxmc},</if>
+            <if test="hyDm != null and hyDm != ''">HY_DM = #{hyDm},</if>
+            <if test="hymc != null and hymc != ''">HYMC = #{hymc},</if>
+            <if test="djzclxDm != null and djzclxDm != ''">DJZCLX_DM = #{djzclxDm},</if>
+            <if test="djzclxmc != null and djzclxmc != ''">DJZCLXMC = #{djzclxmc},</if>
+            <if test="dwlsgxDm != null and dwlsgxDm != ''">DWLSGX_DM = #{dwlsgxDm},</if>
+            <if test="dwlsgxmc != null and dwlsgxmc != ''">DWLSGXMC = #{dwlsgxmc},</if>
+            <if test="zgrs != null">ZGRS = #{zgrs},</if>
+            <if test="nsrztDm != null and nsrztDm != ''">NSRZT_DM = #{nsrztDm},</if>
+            <if test="nsrztmc != null and nsrztmc != ''">NSRZTMC = #{nsrztmc},</if>
+            <if test="fzcrq != null">FZCRQ = #{fzcrq},</if>
+            <if test="zxrq != null">ZXRQ = #{zxrq},</if>
+            <if test="zcdz != null and zcdz != ''">ZCDZ = #{zcdz},</if>
+            <if test="yzbm != null and yzbm != ''">YZBM = #{yzbm},</if>
+            <if test="lxr != null and lxr != ''">LXR = #{lxr},</if>
+            <if test="lxdh != null and lxdh != ''">LXDH = #{lxdh},</if>
+            <if test="ghlbDm != null and ghlbDm != ''">GHLB_DM = #{ghlbDm},</if>
+            <if test="xtlbDm != null and xtlbDm != ''">XTLB_DM = #{xtlbDm},</if>
+            <if test="hjfl1Dm != null and hjfl1Dm != ''">HJFL1_DM = #{hjfl1Dm},</if>
+            <if test="hjfl2Dm != null">HJFL2_DM = #{hjfl2Dm},</if>
+            <if test="hjfl3Dm != null">HJFL3_DM = #{hjfl3Dm},</if>
+            <if test="hjfl4Dm != null">HJFL4_DM = #{hjfl4Dm},</if>
+            <if test="hjfl5Dm != null">HJFL5_DM = #{hjfl5Dm},</if>
+            <if test="hjfl6Dm != null">HJFL6_DM = #{hjfl6Dm},</if>
+            <if test="hjfl7Dm != null">HJFL7_DM = #{hjfl7Dm},</if>
+            <if test="dclghbj != null">HJFL8_DM = #{dclghbj},</if>
+            <if test="xwqybj != null">HJFL9_DM = #{xwqybj},</if>
+            <if test="sdghjgDm != null and sdghjgDm != ''">SDGHJG_DM = #{sdghjgDm},</if>
+            <if test="clghbj != null and clghbj != ''">CLGHBJ = #{clghbj},</if>
+            <if test="clghrq != null">CLGHRQ = #{clghrq},</if>
+            <if test="jcghdm != null and jcghdm != ''">JCGHDM = #{jcghdm},</if>
+            <if test="jcghmc != null and jcghmc != ''">JCGHMC = #{jcghmc},</if>
+            <if test="jcghzh != null and jcghzh != ''">JCGHZH = #{jcghzh},</if>
+            <if test="jcghhm != null and jcghhm != ''">JCGHHM = #{jcghhm},</if>
+            <if test="jcghhh != null and jcghhh != ''">JCGHHH = #{jcghhh},</if>
+            <if test="jcghyh != null and jcghyh != ''">JCGHYH = #{jcghyh},</if>
+            <if test="bz != null and bz != ''">BZ = #{bz},</if>
+            <if test="jym != null and jym != ''">JYM = #{jym},</if>
+            <if test="nsrsbh != null and nsrsbh != ''">NSRSBH = #{nsrsbh},</if>
+            UPDATE_TIME = sysdate()
+        </trim>
+        where DJXH = #{djxh}
+    </update>
+
+    <!-- 批量删除 (v1: deleteXwqyglByDjxhs) -->
+    <delete id="deleteXwqyglByDjxhs">
+        delete from gh_hj where DJXH in
+        <foreach item="djxh" collection="djxhs" open="(" separator="," close=")">
+            #{djxh}
+        </foreach>
+    </delete>
 
 </mapper>

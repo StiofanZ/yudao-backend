@@ -6,7 +6,7 @@ import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.dhjftz.DhjftzDO;
 
 public interface DhjftzService {
 
-    DhjftzDO getDhjftz(Long id);
+    DhjftzDO getDhjftz(String djxh);
 
     PageResult<DhjftzDO> getDhjftzPage(DhjftzPageReqVO pageReqVO);
 }

@@ -1,12 +1,13 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.xwqy.xwqyjf;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Xwqyjf DO
@@ -25,6 +26,16 @@ public class XwqyjfDO {
     private String djxh;
     private String shxydm;
     private String nsrmc;
+    /**
+     * JOIN 字段：来自 gh_hj.dept_id，小微上报单位代码
+     */
+    @TableField(exist = false)
+    private String xwsbdwdm;
+    /**
+     * JOIN 字段：来自 gh_hj.HJFL7_DM，小微上报日期
+     */
+    @TableField(exist = false)
+    private String xwsbrq;
     private String nsrjc;
     private String deptId;
     private String ghjgxzjb;
@@ -42,11 +53,11 @@ public class XwqyjfDO {
     private String djzclxDm;
     private String dwlsgxDm;
     private String sblbDm;
-    private LocalDateTime nssbrq;
+    private Date nssbrq;
     private String pzxh;
     private Long pzmxxh;
-    private LocalDateTime skssqq;
-    private LocalDateTime skssqz;
+    private Date skssqq;
+    private Date skssqz;
     private String zsswjgDm;
     private String skssswjgDm;
     private String skgkDm;
@@ -71,9 +82,9 @@ public class XwqyjfDO {
     private String jfhm;
     private String jfhh;
     private String jfyh;
-    private LocalDateTime rkrq;
+    private Date rkrq;
     private String jsbj;
-    private LocalDateTime jsrq;
+    private Date jsrq;
     private String jsczy;
     private String jcghzh;
     private String jcghhm;
@@ -110,4 +121,39 @@ public class XwqyjfDO {
     private String qgghhh;
     private BigDecimal qgghbl;
     private BigDecimal qgghje;
+    private String jcjzh;
+    private String jcjhm;
+    private String jcjhh;
+    private BigDecimal jcjbl;
+    private BigDecimal jcjje;
+    private String jcwsh;
+    private String sdszh;
+    private String sdshm;
+    private String sdshh;
+    private BigDecimal sdsbl;
+    private BigDecimal sdsje;
+    private String swjgzh;
+    private String swjghm;
+    private String swjghh;
+    private BigDecimal swjgbl;
+    private BigDecimal swjgje;
+    private String cbjthbj;
+    private java.util.Date cbjthrq;
+    private String cbjthczy;
+    private String jym;
+    private String hkpch;
+    private String bz;
+    private String bluuid;
+    private String sdghzh;
+    private String sdghhm;
+    private String sdghhh;
+    private BigDecimal sdghbl;
+    private BigDecimal sdghje;
+    private BigDecimal yfje;
+    private BigDecimal gkzfje;
+    private BigDecimal gjthje;
+    private String createBy;
+    private java.util.Date createTime;
+    private String updateBy;
+    private java.util.Date updateTime;
 }

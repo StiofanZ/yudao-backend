@@ -38,14 +38,14 @@ public class SchbwjController {
 
     @PostMapping("/create")
     @Operation(summary = "创建实查汇报无结")
-    @PreAuthorize("@ss.hasPermission('lghjft:schbwj:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-schbwj:create')")
     public CommonResult<Long> createSchbwj(@Valid @RequestBody SchbwjSaveReqVO createReqVO) {
         return success(schbwjService.createSchbwj(createReqVO));
     }
 
     @PostMapping("/generate")
     @Operation(summary = "生成划拨数据")
-    @PreAuthorize("@ss.hasPermission('lghjft:schbwj:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-schbwj:create')")
     public CommonResult<String> generateHbData(@RequestBody java.util.Map<String, String> params) {
         String jsrqStart = params.get("jsrqStart");
         String jsrqEnd = params.get("jsrqEnd");
@@ -58,7 +58,7 @@ public class SchbwjController {
 
     @PutMapping("/update")
     @Operation(summary = "更新实查汇报无结")
-    @PreAuthorize("@ss.hasPermission('lghjft:schbwj:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-schbwj:update')")
     public CommonResult<Boolean> updateSchbwj(@Valid @RequestBody SchbwjSaveReqVO updateReqVO) {
         schbwjService.updateSchbwj(updateReqVO);
         return success(true);
@@ -67,7 +67,7 @@ public class SchbwjController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除实查汇报无结")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:schbwj:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-schbwj:delete')")
     public CommonResult<Boolean> deleteSchbwj(@RequestParam("id") Long id) {
         schbwjService.deleteSchbwj(id);
         return success(true);
@@ -76,7 +76,7 @@ public class SchbwjController {
     @GetMapping("/get")
     @Operation(summary = "获得实查汇报无结")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:schbwj:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-schbwj:query')")
     public CommonResult<SchbwjResVO> getSchbwj(@RequestParam("id") Long id) {
         JfclSchbwjDO data = schbwjService.getSchbwj(id);
         return success(BeanUtils.toBean(data, SchbwjResVO.class));
@@ -84,7 +84,7 @@ public class SchbwjController {
 
     @GetMapping("/page")
     @Operation(summary = "获得实查汇报无结分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:schbwj:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-schbwj:query')")
     public CommonResult<PageResult<JfclSchbwjDO>> getSchbwjPage(@Valid SchbwjPageReqVO pageReqVO) {
         return success(schbwjService.getSchbwjPage(pageReqVO));
     }
@@ -92,7 +92,7 @@ public class SchbwjController {
     @GetMapping("/export-excel")
     @Operation(summary = "导出实查汇报无结 Excel")
     @ApiAccessLog(operateType = EXPORT)
-    @PreAuthorize("@ss.hasPermission('lghjft:schbwj:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-schbwj:export')")
     public void exportSchbwjExcel(@Valid SchbwjPageReqVO pageReqVO,
                                   HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);

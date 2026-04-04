@@ -40,10 +40,10 @@ public class DhjftzController {
 
     @GetMapping("/get")
     @Operation(summary = "获得到户经费台账")
-    @Parameter(name = "id", description = "编号", required = true, example = "1024")
+    @Parameter(name = "djxh", description = "登记序号", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:dhjftz:query')")
-    public CommonResult<DhjftzResVO> getDhjftz(@RequestParam("id") Long id) {
-        DhjftzDO obj = dhjftzService.getDhjftz(id);
+    public CommonResult<DhjftzResVO> getDhjftz(@RequestParam("djxh") String djxh) {
+        DhjftzDO obj = dhjftzService.getDhjftz(djxh);
         return success(BeanUtils.toBean(obj, DhjftzResVO.class));
     }
 

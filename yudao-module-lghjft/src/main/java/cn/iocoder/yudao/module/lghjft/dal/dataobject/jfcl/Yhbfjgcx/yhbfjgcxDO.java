@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.Yhbfjgcx;
+package cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfjgcx;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.KeySequence;
@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class yhbfjgcxDO {
+public class YhbfjgcxDO {
 
     /**
      * 拨付批次号

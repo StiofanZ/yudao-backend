@@ -1,10 +1,10 @@
-package cn.iocoder.yudao.module.lghjft.service.jfcl.Yhbfjgcx;
+package cn.iocoder.yudao.module.lghjft.service.jfcl.yhbfjgcx;
 
 import java.util.*;
 
-import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.Yhbfjgcx.vo.yhbfjgcxPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.Yhbfjgcx.vo.yhbfjgcxSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.Yhbfjgcx.yhbfjgcxDO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfjgcx.vo.YhbfjgcxPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfjgcx.vo.YhbfjgcxSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfjgcx.YhbfjgcxDO;
 import jakarta.validation.*;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
@@ -15,7 +15,7 @@ import cn.iocoder.yudao.framework.common.pojo.PageParam;
  *
  * @author 李文军
  */
-public interface yhbfjgcxService {
+public interface YhbfjgcxService {
 
     /**
      * 创建银行拨付结果查询
@@ -23,14 +23,14 @@ public interface yhbfjgcxService {
      * @param createReqVO 创建信息
      * @return 编号
      */
-    String createyhbfjgcx(@Valid yhbfjgcxSaveReqVO createReqVO);
+    String createyhbfjgcx(@Valid YhbfjgcxSaveReqVO createReqVO);
 
     /**
      * 更新银行拨付结果查询
      *
      * @param updateReqVO 更新信息
      */
-    void updateyhbfjgcx(@Valid yhbfjgcxSaveReqVO updateReqVO);
+    void updateyhbfjgcx(@Valid YhbfjgcxSaveReqVO updateReqVO);
 
     /**
      * 删除银行拨付结果查询
@@ -52,7 +52,7 @@ public interface yhbfjgcxService {
      * @param id 编号
      * @return 银行拨付结果查询
      */
-    yhbfjgcxDO getyhbfjgcx(String id);
+    YhbfjgcxDO getyhbfjgcx(String id);
 
     /**
      * 获得银行拨付结果查询分页
@@ -60,6 +60,6 @@ public interface yhbfjgcxService {
      * @param pageReqVO 分页查询
      * @return 银行拨付结果查询分页
      */
-    PageResult<yhbfjgcxDO> getyhbfjgcxPage(yhbfjgcxPageReqVO pageReqVO);
+    PageResult<YhbfjgcxDO> getyhbfjgcxPage(YhbfjgcxPageReqVO pageReqVO);
 
 }

@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.Yhbfjgcx.vo;
+package cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfjgcx.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 @Schema(description = "管理后台 - 银行拨付结果查询新增/修改 Request VO")
 @Data
-public class yhbfjgcxSaveReqVO {
+public class YhbfjgcxSaveReqVO {
 
     @Schema(description = "拨付批次号", requiredMode = Schema.RequiredMode.REQUIRED)
     private String bfpch;

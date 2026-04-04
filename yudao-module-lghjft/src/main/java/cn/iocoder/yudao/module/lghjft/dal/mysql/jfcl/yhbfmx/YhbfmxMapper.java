@@ -27,19 +27,19 @@ public interface YhbfmxMapper {
     IPage<YhbfmxDO> selectPage(Page<YhbfmxDO> page, @Param("req") YhbfmxPageReqVO reqVO);
 
     // ==================== 业务方法 ====================
-    List<YhbfmxDO> getGhyhbfmxJs(@Param("hkpch") String hkpch);
+    List<YhbfmxDO> getYhbfmxJs(@Param("hkpch") String hkpch);
 
-    List<YhbfmxDO> getGhyhbfmxBjs(@Param("hkpch") String hkpch);
+    List<YhbfmxDO> getYhbfmxBjs(@Param("hkpch") String hkpch);
 
-    List<YhbfmxDO> getGhyhbfmxSbthcb(YhbfmxPageReqVO reqVO);
+    List<YhbfmxDO> getYhbfmxSbthcb(YhbfmxPageReqVO reqVO);
 
-    List<YhbfmxDO> getGhHkxxYhbfmx(YhbfmxPageReqVO reqVO);
+    List<YhbfmxDO> getYhbfmx(YhbfmxPageReqVO reqVO);
 
     int updateYxbjByHkpch(@Param("hkpch") String hkpch, @Param("yxbj") String yxbj);
 
     int insertBatch(@Param("list") List<YhbfmxDO> list);
 
-    int updateBatchGhHkxxYhbfmx(List<YhbfmxDO> yhbfmxs);
+    int updateBatchYhbfmx(List<YhbfmxDO> yhbfmxs);
 
     List<YhbfmxDO> selectListByBfidStr(String[] bfids);
 

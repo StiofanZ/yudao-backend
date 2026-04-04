@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.Yhbfjgcx.vo;
+package cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfjgcx.vo;
 
 import lombok.*;
 import java.util.*;
@@ -12,7 +12,7 @@ import static cn.iocoder.yudao.framework.common.util.date.DateUtils.FORMAT_YEAR_
 
 @Schema(description = "管理后台 - 银行拨付结果查询分页 Request VO")
 @Data
-public class yhbfjgcxPageReqVO extends PageParam {
+public class YhbfjgcxPageReqVO extends PageParam {
 
     @Schema(description = "拨付日期")
     private String bfrq;

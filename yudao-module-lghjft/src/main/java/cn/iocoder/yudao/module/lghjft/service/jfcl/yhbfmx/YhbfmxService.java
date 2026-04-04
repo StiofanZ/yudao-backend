@@ -64,25 +64,25 @@ public interface YhbfmxService {
      * @param ghHkxxYhbfmx
      * @return
      */
-    public void updateGhyhbfmxJs(YhbfmxSaveReqVO ghHkxxYhbfmx);
+    public void updateYhbfmxJs(YhbfmxSaveReqVO ghHkxxYhbfmx);
 
     /**
      * 补结算文件生成银行拨付数据
      * @param ghHkxxYhbfmx
      * @return
      */
-    public void updateGhyhbfmxBjs(YhbfmxSaveReqVO ghHkxxYhbfmx);
+    public void updateYhbfmxBjs(YhbfmxSaveReqVO ghHkxxYhbfmx);
 
     /**
      * 失败退回重拨数据生成银行拨付数据
      * @param ghHkxxYhbfmx
      * @return
      */
-    public void updateGhyhbfmxSbthcb(YhbfmxSaveReqVO ghHkxxYhbfmx);
+    public void updateYhbfmxSbthcb(YhbfmxSaveReqVO ghHkxxYhbfmx);
 
     /**
      * 生成银行拨付汇总
      * @param ghHkxxYhbfmx
      */
-    public void updateGhHkxxYhbfhz(YhbfmxSaveReqVO ghHkxxYhbfmx);
+    public void updateYhbfhz(YhbfmxSaveReqVO ghHkxxYhbfmx);
 }

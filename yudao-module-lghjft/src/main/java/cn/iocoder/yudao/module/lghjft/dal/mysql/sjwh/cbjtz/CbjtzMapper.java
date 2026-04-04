@@ -71,7 +71,7 @@ public interface CbjtzMapper extends BaseMapperX<CbjtzDO> {
                 && reqVO.getEndFbrq() != null && !reqVO.getEndFbrq().isEmpty()) {
             wrapper.between("FBRQ", reqVO.getBeginFbrq(), reqVO.getEndFbrq());
         }
-        wrapper.orderByDesc("ghjf_id");
+        wrapper.orderByDesc("RKRQ");
         return selectPage(reqVO, wrapper);
     }
 
@@ -135,7 +135,7 @@ public interface CbjtzMapper extends BaseMapperX<CbjtzDO> {
                 && reqVO.getEndFbrq() != null && !reqVO.getEndFbrq().isEmpty()) {
             wrapper.between("FBRQ", reqVO.getBeginFbrq(), reqVO.getEndFbrq());
         }
-        wrapper.orderByDesc("ghjf_id");
+        wrapper.orderByDesc("RKRQ");
         return selectPage(reqVO, wrapper);
     }
 }

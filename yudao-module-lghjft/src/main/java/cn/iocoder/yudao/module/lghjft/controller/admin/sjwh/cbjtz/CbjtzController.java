@@ -107,6 +107,18 @@ public class CbjtzController {
                 BeanUtils.toBean(list, CbjtzResVO.class));
     }
 
+    @GetMapping("/export-excel-dgjftz")
+    @Operation(summary = "导出代管经费台账 Excel")
+    @PreAuthorize("@ss.hasPermission('lghjft:cbjtz:export')")
+    @ApiAccessLog(operateType = EXPORT)
+    public void exportDgjftzExcel(@Valid CbjtzPageReqVO pageReqVO,
+                                  HttpServletResponse response) throws IOException {
+        pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
+        List<CbjtzDO> list = cbjtzService.getDgjftzPage(pageReqVO).getList();
+        ExcelUtils.write(response, "代管经费台账.xls", "数据", CbjtzResVO.class,
+                BeanUtils.toBean(list, CbjtzResVO.class));
+    }
+
     @PostMapping("/batch-cbjqrfbpl")
     @Operation(summary = "批量确认返拨")
     @PreAuthorize("@ss.hasPermission('lghjft:cbjtz:update')")

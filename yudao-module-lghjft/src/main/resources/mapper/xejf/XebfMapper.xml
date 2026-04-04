@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.xejf.xebftz.XebfMapper">
+
+    <!-- 小额拨付省总列表 (v1: selectGhHkxxxejfszList, 表 xebfsz) -->
+    <select id="selectGhHkxxxejfszList"
+            resultType="cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xebftz.vo.GhhkxxxejfszResVO">
+        SELECT DWDM  AS deptId,
+               DWMC  AS dwmc,
+               JFBS  AS jfbs,
+               JFJE  AS jfje,
+               SZJE  AS szje,
+               QZJE  AS qzje,
+               HJJE  AS hjje,
+               HKPCH AS hkpch
+        FROM xebfsz
+        WHERE jfqj = #{jfqj}
+    </select>
+
+</mapper>

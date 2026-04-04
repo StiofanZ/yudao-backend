@@ -6,6 +6,7 @@ import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjftj.vo.XwqyjftjAggVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjftj.vo.XwqyjftjPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjftj.vo.XwqyjftjfhAggVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjftj.vo.XwqyjftjmxResVO;
 import cn.iocoder.yudao.module.lghjft.service.xwqy.xwqyjftj.XwqyjftjService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -49,6 +50,14 @@ public class XwqyjftjController {
         return success(list);
     }
 
+    @GetMapping("/list-mx")
+    @Operation(summary = "获得小微经费统计明细列表")
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqyjftj:query')")
+    public CommonResult<List<XwqyjftjmxResVO>> getXwqyjftjmxList(@Valid XwqyjftjPageReqVO reqVO) {
+        List<XwqyjftjmxResVO> list = xwqyjftjService.getXwqyjftjmxList(reqVO);
+        return success(list);
+    }
+
     @GetMapping("/export-excel")
     @Operation(summary = "导出小微经费统计 Excel")
     @PreAuthorize("@ss.hasPermission('lghjft:xwqyjftj:export')")
@@ -67,5 +76,15 @@ public class XwqyjftjController {
                                       HttpServletResponse response) throws IOException {
         List<XwqyjftjfhAggVO> list = xwqyjftjService.getXwqyjftjfhList(reqVO);
         ExcelUtils.write(response, "小微经费统计反馈.xls", "数据", XwqyjftjfhAggVO.class, list);
+    }
+
+    @GetMapping("/export-excel-mx")
+    @Operation(summary = "导出小微经费统计明细 Excel")
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqyjftj:export')")
+    @ApiAccessLog(operateType = EXPORT)
+    public void exportXwqyjftjmxExcel(@Valid XwqyjftjPageReqVO reqVO,
+                                      HttpServletResponse response) throws IOException {
+        List<XwqyjftjmxResVO> list = xwqyjftjService.getXwqyjftjmxList(reqVO);
+        ExcelUtils.write(response, "小微经费统计明细.xls", "数据", XwqyjftjmxResVO.class, list);
     }
 }
