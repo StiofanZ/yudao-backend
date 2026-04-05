@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.xwqy.xwqyjfyfmx.XwqyjfyfmxMapper">
+
+    <sql id="selectXwqyjfVo">
+        SELECT jf.ghjf_id,
+               jf.SPUUID,
+               jf.DJXH,
+               jf.SHXYDM,
+               jf.NSRMC,
+               b.dept_id  xwsbdwdm,
+               b.HJFL7_DM xwsbrq,
+               jf.NSRJC,
+               jf.dept_id,
+               jf.GHJGXZJB,
+               jf.CLGHBJ,
+               jf.HYGHBZ,
+               jf.SDGHJG_DM,
+               jf.SDGHJGXZJB,
+               jf.ZGSWJ_DM,
+               jf.ZGSWSKFJ_DM,
+               jf.SSGLY_DM,
+               jf.GHLB_DM,
+               jf.XTLB_DM,
+               jf.ZZJGLX_DM,
+               jf.HY_DM,
+               jf.DJZCLX_DM,
+               jf.DWLSGX_DM,
+               jf.SBLB_DM,
+               jf.NSSBRQ,
+               jf.PZXH,
+               jf.PZMXXH,
+               jf.SKSSQQ,
+               jf.SKSSQZ,
+               jf.ZSSWJG_DM,
+               jf.SKSSSWJG_DM,
+               jf.SKGK_DM,
+               jf.DZSPHM,
+               jf.PZZL_DM,
+               jf.PZZG_DM,
+               jf.PZHM,
+               jf.KPY_DM,
+               jf.KPY_XM,
+               jf.ZSPM_DM,
+               jf.ZSZM_DM,
+               jf.YSKM_DM,
+               jf.GZZE,
+               jf.SL,
+               jf.YNSE,
+               jf.JMSE,
+               jf.YJSE,
+               jf.YBTSE,
+               jf.JKFS_DM,
+               jf.JFHB,
+               jf.JFZH,
+               jf.JFHM,
+               jf.JFHH,
+               jf.JFYH,
+               jf.RKRQ,
+               jf.JSBJ,
+               jf.JSRQ,
+               jf.JSCZY,
+               jf.JCGHZH,
+               jf.JCGHHM,
+               jf.JCGHHH,
+               jf.JCGHBL,
+               jf.JCGHJE,
+               jf.CBJZH,
+               jf.CBJHM,
+               jf.CBJHH,
+               jf.CBJBL,
+               jf.CBJJE,
+               jf.HYGHZH,
+               jf.HYGHHM,
+               jf.HYGHHH,
+               jf.HYGHBL,
+               jf.HYGHJE,
+               jf.XJGHZH,
+               jf.XJGHHM,
+               jf.XJGHHH,
+               jf.XJGHBL,
+               jf.XJGHJE,
+               jf.SJGHZH,
+               jf.SJGHHM,
+               jf.SJGHHH,
+               jf.SJGHBL,
+               jf.SJGHJE,
+               jf.SZGHZH,
+               jf.SZGHHM,
+               jf.SZGHHH,
+               jf.SZGHBL,
+               jf.SZGHJE,
+               jf.QGGHZH,
+               jf.QGGHHM,
+               jf.QGGHHH,
+               jf.QGGHBL,
+               jf.QGGHJE,
+               jf.JCJZH,
+               jf.JCJHM,
+               jf.JCJHH,
+               jf.JCJBL,
+               jf.JCJJE,
+               jf.JCWSH,
+               jf.SDSZH,
+               jf.SDSHM,
+               jf.SDSHH,
+               jf.SDSBL,
+               jf.SDSJE,
+               jf.SWJGZH,
+               jf.SWJGHM,
+               jf.SWJGHH,
+               jf.SWJGBL,
+               jf.SWJGJE,
+               jf.CBJTHBJ,
+               jf.CBJTHRQ,
+               jf.CBJTHCZY,
+               jf.JYM,
+               jf.HKPCH,
+               jf.BZ,
+               jf.BLUUID,
+               jf.SDGHZH,
+               jf.SDGHHM,
+               jf.SDGHHH,
+               jf.SDGHBL,
+               jf.SDGHJE,
+               jf.CREATE_BY,
+               jf.CREATE_TIME,
+               jf.UPDATE_BY,
+               jf.UPDATE_TIME
+
+        from gh_jf jf
+                 left join gh_hj b on b.djxh = jf.djxh
+    </sql>
+
+    <!-- Dynamic filter conditions shared by ALL queries (95% and 60%) -->
+    <sql id="dynamicFilters">
+        <if test="req.beginNssbrq != null and req.beginNssbrq != '' and req.endNssbrq != null and req.endNssbrq != ''">and b.HJFL7_DM between #{req.beginNssbrq} and
+            #{req.endNssbrq}
+        </if>
+
+        <if test="req.spuuid != null  and req.spuuid != ''">and jf.SPUUID = #{req.spuuid}</if>
+        <if test="req.djxh != null  and req.djxh != ''">and jf.DJXH = #{req.djxh}</if>
+        <if test="req.shxydm != null  and req.shxydm != ''">and jf.SHXYDM = #{req.shxydm}</if>
+        <if test="req.nsrmc != null  and req.nsrmc != ''">and jf.NSRMC like concat('%', #{req.nsrmc}, '%')</if>
+        <if test="req.nsrjc != null  and req.nsrjc != ''">and jf.NSRJC like concat('%', #{req.nsrjc}, '%')</if>
+        <if test="req.deptId != null  and req.deptId != ''">and jf.dept_id = #{req.deptId}</if>
+        <if test="req.ghjgxzjb != null  and req.ghjgxzjb != ''">and jf.GHJGXZJB = #{req.ghjgxzjb}</if>
+        <if test="req.clghbj != null  and req.clghbj != ''">and jf.CLGHBJ = #{req.clghbj}</if>
+        <if test="req.hyghbz != null  and req.hyghbz != ''">and jf.HYGHBZ = #{req.hyghbz}</if>
+        <if test="req.sdghjgDm != null  and req.sdghjgDm != ''">and jf.SDGHJG_DM = #{req.sdghjgDm}</if>
+        <if test="req.sdghjgxzjb != null  and req.sdghjgxzjb != ''">and jf.SDGHJGXZJB = #{req.sdghjgxzjb}</if>
+        <if test="req.zgswjDm != null  and req.zgswjDm != ''">and jf.ZGSWJ_DM = #{req.zgswjDm}</if>
+        <if test="req.zgswskfjDm != null  and req.zgswskfjDm != ''">and jf.ZGSWSKFJ_DM = #{req.zgswskfjDm}</if>
+        <if test="req.ssglyDm != null  and req.ssglyDm != ''">and jf.SSGLY_DM = #{req.ssglyDm}</if>
+        <if test="req.ghlbDm != null  and req.ghlbDm != ''">and jf.GHLB_DM = #{req.ghlbDm}</if>
+        <if test="req.xtlbDm != null  and req.xtlbDm != ''">and jf.XTLB_DM = #{req.xtlbDm}</if>
+        <if test="req.zzjglxDm != null  and req.zzjglxDm != ''">and jf.ZZJGLX_DM = #{req.zzjglxDm}</if>
+        <if test="req.hyDm != null  and req.hyDm != ''">and jf.HY_DM = #{req.hyDm}</if>
+        <if test="req.djzclxDm != null  and req.djzclxDm != ''">and jf.DJZCLX_DM = #{req.djzclxDm}</if>
+        <if test="req.dwlsgxDm != null  and req.dwlsgxDm != ''">and jf.DWLSGX_DM = #{req.dwlsgxDm}</if>
+        <if test="req.sblbDm != null  and req.sblbDm != ''">and jf.SBLB_DM = #{req.sblbDm}</if>
+        <if test="req.pzxh != null  and req.pzxh != ''">and jf.PZXH = #{req.pzxh}</if>
+        <if test="req.pzmxxh != null ">and jf.PZMXXH = #{req.pzmxxh}</if>
+        <if test="req.skssqq != null ">and jf.SKSSQQ &gt;= #{req.skssqq}</if>
+        <if test="req.skssqz != null ">and jf.SKSSQZ &lt;= #{req.skssqz}</if>
+        <if test="req.zsswjgDm != null  and req.zsswjgDm != ''">and jf.ZSSWJG_DM = #{req.zsswjgDm}</if>
+        <if test="req.skssswjgDm != null  and req.skssswjgDm != ''">and jf.SKSSSWJG_DM = #{req.skssswjgDm}</if>
+        <if test="req.skgkDm != null  and req.skgkDm != ''">and jf.SKGK_DM = #{req.skgkDm}</if>
+        <if test="req.dzsphm != null  and req.dzsphm != ''">and jf.DZSPHM = #{req.dzsphm}</if>
+        <if test="req.pzzlDm != null  and req.pzzlDm != ''">and jf.PZZL_DM = #{req.pzzlDm}</if>
+        <if test="req.pzzgDm != null  and req.pzzgDm != ''">and jf.PZZG_DM = #{req.pzzgDm}</if>
+        <if test="req.pzhm != null  and req.pzhm != ''">and jf.PZHM = #{req.pzhm}</if>
+        <if test="req.kpyDm != null  and req.kpyDm != ''">and jf.KPY_DM = #{req.kpyDm}</if>
+        <if test="req.kpyXm != null  and req.kpyXm != ''">and jf.KPY_XM = #{req.kpyXm}</if>
+        <if test="req.zspmDm != null  and req.zspmDm != ''">and jf.ZSPM_DM = #{req.zspmDm}</if>
+        <if test="req.zszmDm != null  and req.zszmDm != ''">and jf.ZSZM_DM = #{req.zszmDm}</if>
+        <if test="req.yskmDm != null  and req.yskmDm != ''">and jf.YSKM_DM = #{req.yskmDm}</if>
+        <if test="req.beginGzze != null and req.beginGzze != '' and req.endGzze != null and req.endGzze != ''">and jf.GZZE between #{req.beginGzze} and #{req.endGzze}</if>
+        <if test="req.sl != null ">and jf.SL = #{req.sl}</if>
+        <if test="req.ynse != null ">and jf.YNSE = #{req.ynse}</if>
+        <if test="req.jmse != null ">and jf.JMSE = #{req.jmse}</if>
+        <if test="req.yjse != null ">and jf.YJSE = #{req.yjse}</if>
+        <if test="req.beginYbtse != null and req.beginYbtse != '' and req.endYbtse != null and req.endYbtse != ''">and jf.YBTSE between #{req.beginYbtse} and #{req.endYbtse}</if>
+        <if test="req.jkfsDm != null  and req.jkfsDm != ''">and jf.JKFS_DM = #{req.jkfsDm}</if>
+        <if test="req.jfhb != null  and req.jfhb != ''">and jf.JFHB = #{req.jfhb}</if>
+        <if test="req.jfzh != null  and req.jfzh != ''">and jf.JFZH = #{req.jfzh}</if>
+        <if test="req.jfhm != null  and req.jfhm != ''">and jf.JFHM = #{req.jfhm}</if>
+        <if test="req.jfhh != null  and req.jfhh != ''">and jf.JFHH = #{req.jfhh}</if>
+        <if test="req.jfyh != null  and req.jfyh != ''">and jf.JFYH = #{req.jfyh}</if>
+        <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">and jf.RKRQ between #{req.beginRkrq} and #{req.endRkrq}</if>
+        <if test="req.jsbj != null  and req.jsbj != ''">and jf.JSBJ = #{req.jsbj}</if>
+        <if test="req.beginJsrq != null and req.beginJsrq != '' and req.endJsrq != null and req.endJsrq != ''">and jf.JSRQ between #{req.beginJsrq} and #{req.endJsrq}</if>
+        <if test="req.jsczy != null  and req.jsczy != ''">and jf.JSCZY = #{req.jsczy}</if>
+        <if test="req.jcghzh != null  and req.jcghzh != ''">and jf.JCGHZH = #{req.jcghzh}</if>
+        <if test="req.jcghhm != null  and req.jcghhm != ''">and jf.JCGHHM like concat('%', #{req.jcghhm}, '%')</if>
+        <if test="req.jcghhh != null  and req.jcghhh != ''">and jf.JCGHHH = #{req.jcghhh}</if>
+        <if test="req.jcghje != null ">and jf.JCGHJE = #{req.jcghje}</if>
+        <if test="req.cbjzh != null  and req.cbjzh != ''">and jf.CBJZH = #{req.cbjzh}</if>
+        <if test="req.cbjhm != null  and req.cbjhm != ''">and jf.CBJHM like concat('%', #{req.cbjhm}, '%')</if>
+        <if test="req.cbjhh != null  and req.cbjhh != ''">and jf.CBJHH = #{req.cbjhh}</if>
+        <if test="req.cbjbl != null ">and jf.CBJBL = #{req.cbjbl}</if>
+        <if test="req.cbjje != null ">and jf.CBJJE = #{req.cbjje}</if>
+        <if test="req.hyghzh != null  and req.hyghzh != ''">and jf.HYGHZH = #{req.hyghzh}</if>
+        <if test="req.hyghhm != null  and req.hyghhm != ''">and jf.HYGHHM like concat('%', #{req.hyghhm}, '%')</if>
+        <if test="req.hyghhh != null  and req.hyghhh != ''">and jf.HYGHHH = #{req.hyghhh}</if>
+        <if test="req.hyghbl != null ">and jf.HYGHBL = #{req.hyghbl}</if>
+        <if test="req.hyghje != null ">and jf.HYGHJE = #{req.hyghje}</if>
+        <if test="req.xjghzh != null  and req.xjghzh != ''">and jf.XJGHZH = #{req.xjghzh}</if>
+        <if test="req.xjghhm != null  and req.xjghhm != ''">and jf.XJGHHM like concat('%', #{req.xjghhm}, '%')</if>
+        <if test="req.xjghhh != null  and req.xjghhh != ''">and jf.XJGHHH = #{req.xjghhh}</if>
+        <if test="req.xjghbl != null ">and jf.XJGHBL = #{req.xjghbl}</if>
+        <if test="req.xjghje != null ">and jf.XJGHJE = #{req.xjghje}</if>
+        <if test="req.sjghzh != null  and req.sjghzh != ''">and jf.SJGHZH = #{req.sjghzh}</if>
+        <if test="req.sjghhm != null  and req.sjghhm != ''">and jf.SJGHHM like concat('%', #{req.sjghhm}, '%')</if>
+        <if test="req.sjghhh != null  and req.sjghhh != ''">and jf.SJGHHH = #{req.sjghhh}</if>
+        <if test="req.sjghbl != null ">and jf.SJGHBL = #{req.sjghbl}</if>
+        <if test="req.sjghje != null ">and jf.SJGHJE = #{req.sjghje}</if>
+        <if test="req.szghzh != null  and req.szghzh != ''">and jf.SZGHZH = #{req.szghzh}</if>
+        <if test="req.szghhm != null  and req.szghhm != ''">and jf.SZGHHM like concat('%', #{req.szghhm}, '%')</if>
+        <if test="req.szghhh != null  and req.szghhh != ''">and jf.SZGHHH = #{req.szghhh}</if>
+        <if test="req.szghbl != null ">and jf.SZGHBL = #{req.szghbl}</if>
+        <if test="req.szghje != null ">and jf.SZGHJE = #{req.szghje}</if>
+        <if test="req.qgghzh != null  and req.qgghzh != ''">and jf.QGGHZH = #{req.qgghzh}</if>
+        <if test="req.qgghhm != null  and req.qgghhm != ''">and jf.QGGHHM like concat('%', #{req.qgghhm}, '%')</if>
+        <if test="req.qgghhh != null  and req.qgghhh != ''">and jf.QGGHHH = #{req.qgghhh}</if>
+        <if test="req.qgghbl != null ">and jf.QGGHBL = #{req.qgghbl}</if>
+        <if test="req.qgghje != null ">and jf.QGGHJE = #{req.qgghje}</if>
+        <if test="req.jcjzh != null  and req.jcjzh != ''">and jf.JCJZH = #{req.jcjzh}</if>
+        <if test="req.jcjhm != null  and req.jcjhm != ''">and jf.JCJHM = #{req.jcjhm}</if>
+        <if test="req.jcjhh != null  and req.jcjhh != ''">and jf.JCJHH = #{req.jcjhh}</if>
+        <if test="req.jcjbl != null ">and jf.JCJBL = #{req.jcjbl}</if>
+        <if test="req.jcjje != null ">and jf.JCJJE = #{req.jcjje}</if>
+        <if test="req.jcwsh != null  and req.jcwsh != ''">and jf.JCWSH = #{req.jcwsh}</if>
+        <if test="req.sdszh != null  and req.sdszh != ''">and jf.SDSZH = #{req.sdszh}</if>
+        <if test="req.sdshm != null  and req.sdshm != ''">and jf.SDSHM like concat('%', #{req.sdshm}, '%')</if>
+        <if test="req.sdshh != null  and req.sdshh != ''">and jf.SDSHH = #{req.sdshh}</if>
+        <if test="req.sdsbl != null ">and jf.SDSBL = #{req.sdsbl}</if>
+        <if test="req.sdsje != null ">and jf.SDSJE = #{req.sdsje}</if>
+        <if test="req.swjgzh != null  and req.swjgzh != ''">and jf.SWJGZH = #{req.swjgzh}</if>
+        <if test="req.swjghm != null  and req.swjghm != ''">and jf.SWJGHM like concat('%', #{req.swjghm}, '%')</if>
+        <if test="req.swjghh != null  and req.swjghh != ''">and jf.SWJGHH = #{req.swjghh}</if>
+        <if test="req.swjgbl != null ">and jf.SWJGBL = #{req.swjgbl}</if>
+        <if test="req.swjgje != null ">and jf.SWJGJE = #{req.swjgje}</if>
+        <if test="req.cbjthbj != null  and req.cbjthbj != ''">and jf.CBJTHBJ = #{req.cbjthbj}</if>
+        <if test="req.beginCbjthrq != null and req.beginCbjthrq != '' and req.endCbjthrq != null and req.endCbjthrq != ''">and jf.CBJTHRQ between #{req.beginCbjthrq} and
+            #{req.endCbjthrq}
+        </if>
+        <if test="req.cbjthczy != null  and req.cbjthczy != ''">and jf.CBJTHCZY = #{req.cbjthczy}</if>
+        <if test="req.jym != null  and req.jym != ''">and jf.JYM = #{req.jym}</if>
+        <if test="req.hkpch != null  and req.hkpch != ''">and jf.HKPCH like concat('%', #{req.hkpch}, '%')</if>
+        <if test="req.bz != null  and req.bz != ''">and jf.BZ like concat('%', #{req.bz}, '%')</if>
+        <if test="req.bluuid != null  and req.bluuid != ''">and jf.BLUUID = #{req.bluuid}</if>
+        <if test="req.sdghzh != null  and req.sdghzh != ''">and jf.SDGHZH = #{req.sdghzh}</if>
+        <if test="req.sdghhm != null  and req.sdghhm != ''">and jf.SDGHHM like concat('%', #{req.sdghhm}, '%')</if>
+        <if test="req.sdghhh != null  and req.sdghhh != ''">and jf.SDGHHH = #{req.sdghhh}</if>
+        <if test="req.sdghbl != null ">and jf.SDGHBL = #{req.sdghbl}</if>
+        <if test="req.sdghje != null ">and jf.SDGHJE = #{req.sdghje}</if>
+        <if test="req.createBy != null  and req.createBy != ''">and jf.CREATE_BY = #{req.createBy}</if>
+        <if test="req.beginCreateTime != null and req.beginCreateTime != '' and req.endCreateTime != null and req.endCreateTime != ''">and jf.CREATE_TIME between
+            #{req.beginCreateTime} and #{req.endCreateTime}
+        </if>
+        <if test="req.updateBy != null  and req.updateBy != ''">and jf.UPDATE_BY = #{req.updateBy}</if>
+        <if test="req.beginUpdateTime != null and req.beginUpdateTime != '' and req.endUpdateTime != null and req.endUpdateTime != ''">and jf.UPDATE_TIME between
+            #{req.beginUpdateTime} and #{req.endUpdateTime}
+        </if>
+    </sql>
+
+    <!-- 60% fund details list (v1: selectXwqyjfyfmxList) -->
+    <select id="selectXwqyjfyfmxList" resultType="cn.iocoder.yudao.module.lghjft.dal.dataobject.xwqy.xwqyjfyfmx.XwqyjfyfmxDO">
+        <include refid="selectXwqyjfVo"/>
+        <where>
+            1=1 and b.HJFL9_DM in ('Y','T')
+            and jf.skssqq>=date'2020-01-01'
+            and jf.skssqz &lt; date'2023-01-01'
+
+            and jf.rkrq>='2020-02-01'
+            and jf.zspm_dm!='399001910'
+
+            and jf.JCGHBL != 0.95 and jf.CBJBL != 0.95
+            and jf.spuuid not in ('46EBF21153A9D1A510ACBB1460698097',
+            'B81CD3BE119759329D41CB93CDADF444',
+            'C2BD2396583508B7EB7BA3D5FA139F54',
+            '7BDBCF4D163701022D1C045EB54E8A35',
+            'CB126E11C515F796553ADD3CF5D8EB86',
+            'EBCEC0A692402AC64D4DEDB7C5BBE756',
+            'FF13384917BEE7F818929FD334D5E725',
+            '24C38916EE8576DA04E7F8AAF6C5EF44',
+            '767EA9B00BC69F7CC14A7EB276D26F91',
+            'B720E231D22E9C65941A7A172EE00B87',
+            'D27C2F576F7BAE563967B09E09431DA2',
+            '9B58D6CCE4D4CF5798CE8368DD8DA872',
+            'BA4D6BB4628BD2CAAD06ED40D4714213',
+            '915F0C5234AC75E37D134DFFEA274EC9',
+            'AE409876531DCDE80EAAB02B57293E90',
+            '80CB1480E761E056056EE6C98F322937',
+            'F1ED6DF07BB7B6BF8ABCA12A29E88CD6',
+            'F45C76EE32F35C7EBCD7CF3BEED615D5',
+            'E567F4201E57D0EAD23879DF268BE793',
+            '06E47CE57197BF02F8C024491D704D89',
+            '426C71C436A5ADF4912A83846CBFEDE6',
+            '88E767D240B8E9673DD0714A241733ED',
+            '77EC24F832BE902D4CCD03EC0D256998',
+            '7AB44BEF3747561514664F3AD0516E89',
+            '9F683701E6233B3C93429B9381425431',
+            '52B156705DD8BEBD5ACA2C3EB73B22A3',
+            '964547B72BCD15F87D8487FC577A47FA',
+            '05C7DF6217F3F75037CB3E322D4468E6',
+            '084147ED4737BF94EDCE3846D1E6B562',
+            '6B8E32E55E4D733F550FDFAABCDA766F',
+            '7E544F5C9DFAD181081F4D9E6E3CDEF9',
+            'DCAEA3E299A4F03E02C7E5AEEAFE936B',
+            'B3167FE5192641A359655F81E4BA7069',
+            'B8B7C85E1C47258457ACF8DC85530F5A',
+            'DF8D1860107590A6978EE1D01654D01A',
+            '152033B6A4FD93E2E9607FD86725CB34',
+            '7EA6FB936DC31F19AB3FEEC5D0AB88C8',
+            'DB44B7D5FD33107330D5C5F4E41A4081',
+            '010DDA324F1126E16F7E78F1D2F47BC3',
+            '7E75551D83675CF68A126429E62C0D14',
+            '80922F7FE8C716B66838653A82194A04',
+            'ED3E9CE2DD98E98E47FF768AB865C053',
+            '605DF8B355AD94116A33CC050A6A44BE',
+            '4EC92FEC5083C321B4B30F8643A808DB',
+            'F5EF722E6B6A1EA30365C11178606C5A',
+            '769B8E9C37023350E0A4DD23923965CE',
+            '317D26B8322507C07A3EEF7F6F460AA3',
+            '8B815507E18539264A6753839139A684',
+            '6CE10DE8BB9A2686C181A9D7114D84C3',
+            '4A690D633FBA7CDF7D62EBA7533D2418',
+            'AB2BB8294B148C0FC33B76D2F0F07D78',
+            'A8787DA44ECF8ABB7DFDBD6A0677D7B3',
+            '72602CF3D1F175F549E1A621760BFA72',
+            '3CFC6EBD3C140A95A7F00808673CB031',
+            '9D27CAEFD3B3EAD6E761DDDD07219E4D',
+            'AE685F0C4EFF18FE09684C465D31C360',
+            '70EC33C8DCB7F26DDA6DA7D6AC3FB76C',
+            'DC3368C048C21AF556C91939B42E3103',
+            '0C0A54654175A7884C387C533993E767',
+            'D8C1BFC1767B39EEE5B00902C07AF584',
+            '3678C28AF7BFF54EB133D5ECECA0AEFC',
+            '2B658DA3FCABF565C6727EF764DFABAF',
+            '8480DD54C767880A312ACD77F641C809',
+            'E7B2BDC0750AC6601715F40DF3E5F2A2',
+            '6F91B1F654FCC88BE1903A7EAE326904',
+            '70895CD9A880561E8B59C6529F6C0129',
+            'BD7173009B82D963C84871C062E36FCB',
+            '493E2B2FD725E6050AAD8E46A70DAE51',
+            'B87736D19D578AAF6722757EE110BEC3',
+            '80CFDC729C9C0C15958A1B73225B06D9',
+            'A3D8F72D5D44472550BBC7FA4082358E',
+            '0173FAFBFEFA270CC4E7E12B430346F5',
+            '128E582470688DA314D97E5B477A3278',
+            'ED9E98B25BC151E706791C416E9A9E45',
+            '6D91C522E372C81B7B562F764A8A7688',
+            'F45A3F2F8FFC2133838B570BF35E97D4',
+            '5D6505EFC164D9CE63696FD3F0B9B0BC',
+            '60DA882CF6BD3A162725D25A2E79A5B6',
+            '3564ADDBA4873191C411A5E2A197A5CE',
+            'EC0A18B8C291511CA3D48F7643627217',
+            '4F107DEDC474BC632EE59B652EF2D820',
+            '5A4DA5F5EC16797957AC8EC1C020A7FD',
+            'D067D2BD23CA66E8B1077DE38EBC1D3B',
+            'F5F232CC2A4867FCB79626D169B90A54',
+            'D11D9F0C785E5680A382F18310AD9A5B',
+            '15E361A29CDDA69EAE668DCF9EA93A81',
+            'A7A54A1776BA01E9F5BB8A2B4D29CF5B',
+            '0C68D201C72B517A5E9093DB1E7DC538',
+            '57B0A01BE51FF5A544BF1C8FD92CC3A5',
+            'C066A723D02520D7CF8497FC2375E588',
+            '5FAEBB4267292C2F019223233E56D26B',
+            'FE7A15A7E419299F7E2D36A65F1FDA5D',
+            'A0B288CF0D7A3F18A8F2F8307EF6E6B6',
+            '4D6B9E4B91F95235FF6824ABA2668B18',
+            '081E56E7E235131E5121F1BA835C7BB4',
+            'FF81509C181012205D74CB2E7D83F0C1',
+            'BDB652CD4BB7A2F2410623560D7501BF',
+            'C5EEAD04D600BED7D27ADB63CD4BAE0B',
+            'E4AB730D279519F783E17CF1C4928E82',
+            '6DD3B35FE0CB4AF14A2B24ED6A1840EA',
+            '71BE3F31E77148F3255B482AF15AB950',
+            'FACC510E831CC9CB556E9709C440FF5F',
+            '9BD76ACA662C251128B9A9BC8FB0093A',
+            'EF2F2E0776EF99BF4B5E2405346D0803',
+            '64BFA5B5076591157FF27AB2D132EFF4',
+            'CFEA75F1651018C2CA29D6E0DBABE070',
+            '8093262BD66B8A07DAB86D7B8DEE766A',
+            'C3221D5FB1E06E0F28ACD51DED37CBB2',
+            '06AE3AFF54F61C0BB6C82268556BF5C4',
+            '6C1890D334FCE28E643AD70D3F31E203',
+            'C99A25151AB378D5F15C3C54432FF370',
+            '5D52D07831D75E62D6ECE6131F110CD6',
+            'F694C33D49916FF2DCA894C746B8AAAF',
+            'A4B9D24A136E1C58855CA6CEE13606D5',
+            '9A1FB842344BC0C33A391BE5A6F8B401',
+            'E4EB9A593BAFC97A98A8272A51818EA8',
+            '13B01437CDE473C61D798DCBB8253206',
+            '6608EB1FE9F73AED68EEB7A88754CC56',
+            'ABEF163236886B90AEBB2A4352DB7BA6',
+            'F39E470911DC22BD5D1AAF56496AF487',
+            '0A27226E62CBB1365EA7A124D0533AB7',
+            'C1BC05CDF1F22FDA0A524E19AB72DC18',
+            '73B2C2AC7FF5738A3AE0575A3B46C2FB',
+            '4A675D2242E27174942B26075E63D35E',
+            'B0A1C554604CDD4F3A990CB260BC138E',
+            '55CE62C42507D802A426EABDCEB88E70',
+            '56C372C8BB6104DF7C8719AA3880635F',
+            'D35E2E17CF58F1E87A8BB9A8E7709D10',
+            'AA0B3878ABF028424F2E811049584854',
+            '92661EA0EAB3B9B11D47399350C8C8F1',
+            'CC536A1C1A4B63018FB56B413B20F5CC',
+            '0C122B6B8F135FF5D78BAAE8977ADFDB',
+            'F97C033CAA3AD54226E1D89EB8883378',
+            '8A3A8AD3C1A24448C86A7E3EB10AF4DF',
+            'AC929B99B8DB4D688EECCB65C7E05A1E',
+            'A64655569F0945A94939AB6779C023EC',
+            '2631D39D653B718B6706602779EB138D',
+            '400E2ECFD81427FA1C554F9A62C33EAA',
+            '0DEB89BF7E845C94BED2923263371D92',
+            'B9578F49F1D974E12044C2B5FBA29074',
+            'A97BAD19307370BEA019FD1F0273AA10',
+            'A4185D9F425BBCE00295765C3CFCD31E',
+            'A087E4B63CD7A4C67A5977BB50BE00ED',
+            '0A3C5E91635E25CC07B2CBA2427226FB',
+            '1F419013A328F8A501DF4B60C03D9AB3',
+            '7D660CEF5FA091D86BFC5C8B570B4A35',
+            '492E935D45C7BEADB8A9BEF4F33A617A',
+            'AEA3FE30D153A685B3D0C3098CE38E40',
+            'EF02E2C671E19286BA3B899512046225',
+            '7EAE37517E4FF5CDB81EE0C33461B404',
+            '5B2271450182547D7D491F98951359C0',
+            'BE1D57EF2B1335E14296697E0AB51B2B',
+            'C3557A84EC1AB7E959E599C5CB0FE7FD',
+            'B520C105B048EBF09611CDA74F86512E',
+            'CA4BF5248C30B898D0F558900A319781',
+            '2EE3BA6E48AA10A560794928CC976CDA',
+            'E7022377252F46684BB53FA9B2351730',
+            '163AEFB561B6A84810F24E07D7970426',
+            'CE1346915209C04245B49AD34B7866A2',
+            'DFC04A06A0927C3BCF87F51E7E11FEB2',
+            '8AD6AFD1BFE652F10DB055208146A54D',
+            '5E20A8CB25AC8B043BF1FFC04CEA87D7',
+            'F9E10420A28ACF08B1779EA014550109',
+            'E34308C36B4D70CA29986076281C8A52',
+            'D21ABCF0BBA8464DBF082C3055813CFA',
+            'FEFCF8B8C66B15B3E3C1C9DC6280AE4F',
+            '4AB5537377BCA0FA010B4BAC49F6C4AE',
+            '23B5E444A44314434CA5768E96DD9E87',
+            '05B6E86A6D30A16A08234B890286E08A',
+            'E7F1B2E22005E17E8E41AE0765794C31',
+            '8259BFFD941BF3CBE4B5B7074ABCB31C',
+            '9886109AABBA3B0E1173C17C6C6667EB',
+            'C26369867E10510081E069F06EAF0683',
+            'FD82A1D44168EC0B69B7450D15A7DA04',
+            'D472045DD19487BCA80609A34843E1CE',
+            'D93E77FACA277B51FEC8A2B0D2AA7263',
+            '416C776E91467510FF51B740B86E9436',
+            '356786C017F577ADAC1EB104E3284331',
+            '04BD814C2D658A67C530F1CC60778DBA')
+
+            <include refid="dynamicFilters"/>
+        </where>
+        ORDER BY b.HJFL7_DM desc
+        <if test="req.offset != null">LIMIT #{req.pageSize} OFFSET #{req.offset}</if>
+    </select>
+
+    <!-- 60% fund details count -->
+    <select id="selectXwqyjfyfmxCount" resultType="long">
+        SELECT count(*)
+        from gh_jf jf left join gh_hj b on b.djxh = jf.djxh
+        <where>
+            1=1 and b.HJFL9_DM in ('Y','T')
+            and jf.skssqq>=date'2020-01-01'
+            and jf.skssqz &lt; date'2023-01-01'
+
+            and jf.rkrq>='2020-02-01'
+            and jf.zspm_dm!='399001910'
+
+            and jf.JCGHBL != 0.95 and jf.CBJBL != 0.95
+            and jf.spuuid not in ('46EBF21153A9D1A510ACBB1460698097',
+            'B81CD3BE119759329D41CB93CDADF444',
+            'C2BD2396583508B7EB7BA3D5FA139F54',
+            '7BDBCF4D163701022D1C045EB54E8A35',
+            'CB126E11C515F796553ADD3CF5D8EB86',
+            'EBCEC0A692402AC64D4DEDB7C5BBE756',
+            'FF13384917BEE7F818929FD334D5E725',
+            '24C38916EE8576DA04E7F8AAF6C5EF44',
+            '767EA9B00BC69F7CC14A7EB276D26F91',
+            'B720E231D22E9C65941A7A172EE00B87',
+            'D27C2F576F7BAE563967B09E09431DA2',
+            '9B58D6CCE4D4CF5798CE8368DD8DA872',
+            'BA4D6BB4628BD2CAAD06ED40D4714213',
+            '915F0C5234AC75E37D134DFFEA274EC9',
+            'AE409876531DCDE80EAAB02B57293E90',
+            '80CB1480E761E056056EE6C98F322937',
+            'F1ED6DF07BB7B6BF8ABCA12A29E88CD6',
+            'F45C76EE32F35C7EBCD7CF3BEED615D5',
+            'E567F4201E57D0EAD23879DF268BE793',
+            '06E47CE57197BF02F8C024491D704D89',
+            '426C71C436A5ADF4912A83846CBFEDE6',
+            '88E767D240B8E9673DD0714A241733ED',
+            '77EC24F832BE902D4CCD03EC0D256998',
+            '7AB44BEF3747561514664F3AD0516E89',
+            '9F683701E6233B3C93429B9381425431',
+            '52B156705DD8BEBD5ACA2C3EB73B22A3',
+            '964547B72BCD15F87D8487FC577A47FA',
+            '05C7DF6217F3F75037CB3E322D4468E6',
+            '084147ED4737BF94EDCE3846D1E6B562',
+            '6B8E32E55E4D733F550FDFAABCDA766F',
+            '7E544F5C9DFAD181081F4D9E6E3CDEF9',
+            'DCAEA3E299A4F03E02C7E5AEEAFE936B',
+            'B3167FE5192641A359655F81E4BA7069',
+            'B8B7C85E1C47258457ACF8DC85530F5A',
+            'DF8D1860107590A6978EE1D01654D01A',
+            '152033B6A4FD93E2E9607FD86725CB34',
+            '7EA6FB936DC31F19AB3FEEC5D0AB88C8',
+            'DB44B7D5FD33107330D5C5F4E41A4081',
+            '010DDA324F1126E16F7E78F1D2F47BC3',
+            '7E75551D83675CF68A126429E62C0D14',
+            '80922F7FE8C716B66838653A82194A04',
+            'ED3E9CE2DD98E98E47FF768AB865C053',
+            '605DF8B355AD94116A33CC050A6A44BE',
+            '4EC92FEC5083C321B4B30F8643A808DB',
+            'F5EF722E6B6A1EA30365C11178606C5A',
+            '769B8E9C37023350E0A4DD23923965CE',
+            '317D26B8322507C07A3EEF7F6F460AA3',
+            '8B815507E18539264A6753839139A684',
+            '6CE10DE8BB9A2686C181A9D7114D84C3',
+            '4A690D633FBA7CDF7D62EBA7533D2418',
+            'AB2BB8294B148C0FC33B76D2F0F07D78',
+            'A8787DA44ECF8ABB7DFDBD6A0677D7B3',
+            '72602CF3D1F175F549E1A621760BFA72',
+            '3CFC6EBD3C140A95A7F00808673CB031',
+            '9D27CAEFD3B3EAD6E761DDDD07219E4D',
+            'AE685F0C4EFF18FE09684C465D31C360',
+            '70EC33C8DCB7F26DDA6DA7D6AC3FB76C',
+            'DC3368C048C21AF556C91939B42E3103',
+            '0C0A54654175A7884C387C533993E767',
+            'D8C1BFC1767B39EEE5B00902C07AF584',
+            '3678C28AF7BFF54EB133D5ECECA0AEFC',
+            '2B658DA3FCABF565C6727EF764DFABAF',
+            '8480DD54C767880A312ACD77F641C809',
+            'E7B2BDC0750AC6601715F40DF3E5F2A2',
+            '6F91B1F654FCC88BE1903A7EAE326904',
+            '70895CD9A880561E8B59C6529F6C0129',
+            'BD7173009B82D963C84871C062E36FCB',
+            '493E2B2FD725E6050AAD8E46A70DAE51',
+            'B87736D19D578AAF6722757EE110BEC3',
+            '80CFDC729C9C0C15958A1B73225B06D9',
+            'A3D8F72D5D44472550BBC7FA4082358E',
+            '0173FAFBFEFA270CC4E7E12B430346F5',
+            '128E582470688DA314D97E5B477A3278',
+            'ED9E98B25BC151E706791C416E9A9E45',
+            '6D91C522E372C81B7B562F764A8A7688',
+            'F45A3F2F8FFC2133838B570BF35E97D4',
+            '5D6505EFC164D9CE63696FD3F0B9B0BC',
+            '60DA882CF6BD3A162725D25A2E79A5B6',
+            '3564ADDBA4873191C411A5E2A197A5CE',
+            'EC0A18B8C291511CA3D48F7643627217',
+            '4F107DEDC474BC632EE59B652EF2D820',
+            '5A4DA5F5EC16797957AC8EC1C020A7FD',
+            'D067D2BD23CA66E8B1077DE38EBC1D3B',
+            'F5F232CC2A4867FCB79626D169B90A54',
+            'D11D9F0C785E5680A382F18310AD9A5B',
+            '15E361A29CDDA69EAE668DCF9EA93A81',
+            'A7A54A1776BA01E9F5BB8A2B4D29CF5B',
+            '0C68D201C72B517A5E9093DB1E7DC538',
+            '57B0A01BE51FF5A544BF1C8FD92CC3A5',
+            'C066A723D02520D7CF8497FC2375E588',
+            '5FAEBB4267292C2F019223233E56D26B',
+            'FE7A15A7E419299F7E2D36A65F1FDA5D',
+            'A0B288CF0D7A3F18A8F2F8307EF6E6B6',
+            '4D6B9E4B91F95235FF6824ABA2668B18',
+            '081E56E7E235131E5121F1BA835C7BB4',
+            'FF81509C181012205D74CB2E7D83F0C1',
+            'BDB652CD4BB7A2F2410623560D7501BF',
+            'C5EEAD04D600BED7D27ADB63CD4BAE0B',
+            'E4AB730D279519F783E17CF1C4928E82',
+            '6DD3B35FE0CB4AF14A2B24ED6A1840EA',
+            '71BE3F31E77148F3255B482AF15AB950',
+            'FACC510E831CC9CB556E9709C440FF5F',
+            '9BD76ACA662C251128B9A9BC8FB0093A',
+            'EF2F2E0776EF99BF4B5E2405346D0803',
+            '64BFA5B5076591157FF27AB2D132EFF4',
+            'CFEA75F1651018C2CA29D6E0DBABE070',
+            '8093262BD66B8A07DAB86D7B8DEE766A',
+            'C3221D5FB1E06E0F28ACD51DED37CBB2',
+            '06AE3AFF54F61C0BB6C82268556BF5C4',
+            '6C1890D334FCE28E643AD70D3F31E203',
+            'C99A25151AB378D5F15C3C54432FF370',
+            '5D52D07831D75E62D6ECE6131F110CD6',
+            'F694C33D49916FF2DCA894C746B8AAAF',
+            'A4B9D24A136E1C58855CA6CEE13606D5',
+            '9A1FB842344BC0C33A391BE5A6F8B401',
+            'E4EB9A593BAFC97A98A8272A51818EA8',
+            '13B01437CDE473C61D798DCBB8253206',
+            '6608EB1FE9F73AED68EEB7A88754CC56',
+            'ABEF163236886B90AEBB2A4352DB7BA6',
+            'F39E470911DC22BD5D1AAF56496AF487',
+            '0A27226E62CBB1365EA7A124D0533AB7',
+            'C1BC05CDF1F22FDA0A524E19AB72DC18',
+            '73B2C2AC7FF5738A3AE0575A3B46C2FB',
+            '4A675D2242E27174942B26075E63D35E',
+            'B0A1C554604CDD4F3A990CB260BC138E',
+            '55CE62C42507D802A426EABDCEB88E70',
+            '56C372C8BB6104DF7C8719AA3880635F',
+            'D35E2E17CF58F1E87A8BB9A8E7709D10',
+            'AA0B3878ABF028424F2E811049584854',
+            '92661EA0EAB3B9B11D47399350C8C8F1',
+            'CC536A1C1A4B63018FB56B413B20F5CC',
+            '0C122B6B8F135FF5D78BAAE8977ADFDB',
+            'F97C033CAA3AD54226E1D89EB8883378',
+            '8A3A8AD3C1A24448C86A7E3EB10AF4DF',
+            'AC929B99B8DB4D688EECCB65C7E05A1E',
+            'A64655569F0945A94939AB6779C023EC',
+            '2631D39D653B718B6706602779EB138D',
+            '400E2ECFD81427FA1C554F9A62C33EAA',
+            '0DEB89BF7E845C94BED2923263371D92',
+            'B9578F49F1D974E12044C2B5FBA29074',
+            'A97BAD19307370BEA019FD1F0273AA10',
+            'A4185D9F425BBCE00295765C3CFCD31E',
+            'A087E4B63CD7A4C67A5977BB50BE00ED',
+            '0A3C5E91635E25CC07B2CBA2427226FB',
+            '1F419013A328F8A501DF4B60C03D9AB3',
+            '7D660CEF5FA091D86BFC5C8B570B4A35',
+            '492E935D45C7BEADB8A9BEF4F33A617A',
+            'AEA3FE30D153A685B3D0C3098CE38E40',
+            'EF02E2C671E19286BA3B899512046225',
+            '7EAE37517E4FF5CDB81EE0C33461B404',
+            '5B2271450182547D7D491F98951359C0',
+            'BE1D57EF2B1335E14296697E0AB51B2B',
+            'C3557A84EC1AB7E959E599C5CB0FE7FD',
+            'B520C105B048EBF09611CDA74F86512E',
+            'CA4BF5248C30B898D0F558900A319781',
+            '2EE3BA6E48AA10A560794928CC976CDA',
+            'E7022377252F46684BB53FA9B2351730',
+            '163AEFB561B6A84810F24E07D7970426',
+            'CE1346915209C04245B49AD34B7866A2',
+            'DFC04A06A0927C3BCF87F51E7E11FEB2',
+            '8AD6AFD1BFE652F10DB055208146A54D',
+            '5E20A8CB25AC8B043BF1FFC04CEA87D7',
+            'F9E10420A28ACF08B1779EA014550109',
+            'E34308C36B4D70CA29986076281C8A52',
+            'D21ABCF0BBA8464DBF082C3055813CFA',
+            'FEFCF8B8C66B15B3E3C1C9DC6280AE4F',
+            '4AB5537377BCA0FA010B4BAC49F6C4AE',
+            '23B5E444A44314434CA5768E96DD9E87',
+            '05B6E86A6D30A16A08234B890286E08A',
+            'E7F1B2E22005E17E8E41AE0765794C31',
+            '8259BFFD941BF3CBE4B5B7074ABCB31C',
+            '9886109AABBA3B0E1173C17C6C6667EB',
+            'C26369867E10510081E069F06EAF0683',
+            'FD82A1D44168EC0B69B7450D15A7DA04',
+            'D472045DD19487BCA80609A34843E1CE',
+            'D93E77FACA277B51FEC8A2B0D2AA7263',
+            '416C776E91467510FF51B740B86E9436',
+            '356786C017F577ADAC1EB104E3284331',
+            '04BD814C2D658A67C530F1CC60778DBA')
+
+            <include refid="dynamicFilters"/>
+        </where>
+    </select>
+
+</mapper>

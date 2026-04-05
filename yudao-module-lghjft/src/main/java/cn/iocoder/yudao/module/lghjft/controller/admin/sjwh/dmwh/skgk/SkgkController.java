@@ -39,14 +39,14 @@ public class SkgkController {
 
     @PostMapping("/create")
     @Operation(summary = "创建收款国库")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-skgk:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-skgk:create')")
     public CommonResult<Integer> createSkgk(@Valid @RequestBody SkgkSaveReqVO createReqVO) {
         return success(skgkService.createSkgk(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新收款国库")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-skgk:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-skgk:update')")
     public CommonResult<Boolean> updateSkgk(@Valid @RequestBody SkgkSaveReqVO updateReqVO) {
         skgkService.updateSkgk(updateReqVO);
         return success(true);
@@ -55,7 +55,7 @@ public class SkgkController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除收款国库")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-skgk:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-skgk:delete')")
     public CommonResult<Boolean> deleteSkgk(@RequestParam("id") Integer id) {
         skgkService.deleteSkgk(id);
         return success(true);
@@ -64,7 +64,7 @@ public class SkgkController {
     @DeleteMapping("/delete-list")
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除收款国库")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-skgk:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-skgk:delete')")
     public CommonResult<Boolean> deleteSkgkList(@RequestParam("ids") List<Integer> ids) {
         skgkService.deleteSkgkListByIds(ids);
         return success(true);
@@ -73,7 +73,7 @@ public class SkgkController {
     @GetMapping("/get")
     @Operation(summary = "获得收款国库")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-skgk:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-skgk:query')")
     public CommonResult<SkgkResVO> getSkgk(@RequestParam("id") Integer id) {
         SkgkDO skgk = skgkService.getSkgk(id);
         return success(BeanUtils.toBean(skgk, SkgkResVO.class));
@@ -81,7 +81,7 @@ public class SkgkController {
 
     @GetMapping("/page")
     @Operation(summary = "获得收款国库分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-skgk:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-skgk:query')")
     public CommonResult<PageResult<SkgkResVO>> getSkgkPage(@Valid SkgkPageReqVO pageReqVO) {
         PageResult<SkgkDO> pageResult = skgkService.getSkgkPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, SkgkResVO.class));
@@ -89,7 +89,7 @@ public class SkgkController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出收款国库 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-skgk:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-skgk:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportSkgkExcel(@Valid SkgkPageReqVO pageReqVO,
                                 HttpServletResponse response) throws IOException {

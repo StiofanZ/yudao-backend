@@ -38,14 +38,14 @@ public class FyfcqkController {
 
     @PostMapping("/create")
     @Operation(summary = "创建分月分成情况")
-    @PreAuthorize("@ss.hasPermission('lghjft:fyfcqk:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-fyfcqk:create')")
     public CommonResult<String> createFyfcqk(@Valid @RequestBody FyfcqkSaveReqVO createReqVO) {
         return success(fyfcqkService.createFyfcqk(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新分月分成情况")
-    @PreAuthorize("@ss.hasPermission('lghjft:fyfcqk:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-fyfcqk:update')")
     public CommonResult<Boolean> updateFyfcqk(@Valid @RequestBody FyfcqkSaveReqVO updateReqVO) {
         fyfcqkService.updateFyfcqk(updateReqVO);
         return success(true);
@@ -54,7 +54,7 @@ public class FyfcqkController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除分月分成情况")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:fyfcqk:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-fyfcqk:delete')")
     public CommonResult<Boolean> deleteFyfcqk(@RequestParam("id") String id) {
         fyfcqkService.deleteFyfcqk(id);
         return success(true);
@@ -63,7 +63,7 @@ public class FyfcqkController {
     @DeleteMapping("/delete-list")
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除分月分成情况")
-    @PreAuthorize("@ss.hasPermission('lghjft:fyfcqk:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-fyfcqk:delete')")
     public CommonResult<Boolean> deleteFyfcqkList(@RequestParam("ids") List<String> ids) {
         fyfcqkService.deleteFyfcqkListByIds(ids);
         return success(true);
@@ -72,7 +72,7 @@ public class FyfcqkController {
     @GetMapping("/get")
     @Operation(summary = "获得分月分成情况")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:fyfcqk:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-fyfcqk:query')")
     public CommonResult<FyfcqkResVO> getFyfcqk(@RequestParam("id") String id) {
         FyfcqkDO obj = fyfcqkService.getFyfcqk(id);
         return success(BeanUtils.toBean(obj, FyfcqkResVO.class));
@@ -80,7 +80,7 @@ public class FyfcqkController {
 
     @GetMapping("/page")
     @Operation(summary = "获得分月分成情况分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:fyfcqk:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-fyfcqk:query')")
     public CommonResult<PageResult<FyfcqkResVO>> getFyfcqkPage(@Valid FyfcqkPageReqVO pageReqVO) {
         PageResult<FyfcqkDO> pageResult = fyfcqkService.getFyfcqkPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, FyfcqkResVO.class));
@@ -88,7 +88,7 @@ public class FyfcqkController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出分月分成情况 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:fyfcqk:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-fyfcqk:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportFyfcqkExcel(@Valid FyfcqkPageReqVO pageReqVO,
                                   HttpServletResponse response) throws IOException {

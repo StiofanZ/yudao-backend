@@ -41,7 +41,7 @@ public class ZswzgdwController {
     @GetMapping("/get")
     @Operation(summary = "获得征收未主管单位")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:zswzgdw:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-zswzgdw:query')")
     public CommonResult<ZswzgdwResVO> getZswzgdw(@RequestParam("id") String id) {
         ZswzgdwDO obj = zswzgdwService.getZswzgdw(id);
         return success(BeanUtils.toBean(obj, ZswzgdwResVO.class));
@@ -49,7 +49,7 @@ public class ZswzgdwController {
 
     @GetMapping("/page")
     @Operation(summary = "获得征收未主管单位分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:zswzgdw:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-zswzgdw:query')")
     public CommonResult<PageResult<ZswzgdwResVO>> getZswzgdwPage(@Valid ZswzgdwPageReqVO pageReqVO) {
         PageResult<ZswzgdwDO> pageResult = zswzgdwService.getZswzgdwPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, ZswzgdwResVO.class));
@@ -57,7 +57,7 @@ public class ZswzgdwController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出征收未主管单位 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:zswzgdw:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-zswzgdw:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportZswzgdwExcel(@Valid ZswzgdwPageReqVO pageReqVO,
                                    HttpServletResponse response) throws IOException {

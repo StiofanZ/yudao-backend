@@ -38,14 +38,14 @@ public class JrbxzqdwController {
 
     @PostMapping("/create")
     @Operation(summary = "创建金融保险证券单位")
-    @PreAuthorize("@ss.hasPermission('lghjft:jrbxzqdw:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-jrbxzqdw:create')")
     public CommonResult<String> createJrbxzqdw(@Valid @RequestBody JrbxzqdwSaveReqVO createReqVO) {
         return success(jrbxzqdwService.createJrbxzqdw(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新金融保险证券单位")
-    @PreAuthorize("@ss.hasPermission('lghjft:jrbxzqdw:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-jrbxzqdw:update')")
     public CommonResult<Boolean> updateJrbxzqdw(@Valid @RequestBody JrbxzqdwSaveReqVO updateReqVO) {
         jrbxzqdwService.updateJrbxzqdw(updateReqVO);
         return success(true);
@@ -54,7 +54,7 @@ public class JrbxzqdwController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除金融保险证券单位")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:jrbxzqdw:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-jrbxzqdw:delete')")
     public CommonResult<Boolean> deleteJrbxzqdw(@RequestParam("id") String id) {
         jrbxzqdwService.deleteJrbxzqdw(id);
         return success(true);
@@ -63,7 +63,7 @@ public class JrbxzqdwController {
     @DeleteMapping("/delete-list")
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除金融保险证券单位")
-    @PreAuthorize("@ss.hasPermission('lghjft:jrbxzqdw:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-jrbxzqdw:delete')")
     public CommonResult<Boolean> deleteJrbxzqdwList(@RequestParam("ids") List<String> ids) {
         jrbxzqdwService.deleteJrbxzqdwListByIds(ids);
         return success(true);
@@ -72,7 +72,7 @@ public class JrbxzqdwController {
     @GetMapping("/get")
     @Operation(summary = "获得金融保险证券单位")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:jrbxzqdw:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-jrbxzqdw:query')")
     public CommonResult<JrbxzqdwResVO> getJrbxzqdw(@RequestParam("id") String id) {
         JrbxzqdwDO obj = jrbxzqdwService.getJrbxzqdw(id);
         return success(BeanUtils.toBean(obj, JrbxzqdwResVO.class));
@@ -80,7 +80,7 @@ public class JrbxzqdwController {
 
     @GetMapping("/page")
     @Operation(summary = "获得金融保险证券单位分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:jrbxzqdw:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-jrbxzqdw:query')")
     public CommonResult<PageResult<JrbxzqdwResVO>> getJrbxzqdwPage(@Valid JrbxzqdwPageReqVO pageReqVO) {
         PageResult<JrbxzqdwDO> pageResult = jrbxzqdwService.getJrbxzqdwPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, JrbxzqdwResVO.class));
@@ -88,7 +88,7 @@ public class JrbxzqdwController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出金融保险证券单位 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:jrbxzqdw:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-jrbxzqdw:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportJrbxzqdwExcel(@Valid JrbxzqdwPageReqVO pageReqVO,
                                     HttpServletResponse response) throws IOException {

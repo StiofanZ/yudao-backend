@@ -41,7 +41,7 @@ public class XetzController {
     @GetMapping("/get")
     @Operation(summary = "获得小额台账")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xetz:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xetz:query')")
     public CommonResult<XetzResVO> get(@RequestParam("id") String id) {
         XetzDO data = xetzService.getXetz(id);
         return success(BeanUtils.toBean(data, XetzResVO.class));
@@ -49,7 +49,7 @@ public class XetzController {
 
     @GetMapping("/page")
     @Operation(summary = "获得小额台账分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xetz:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xetz:query')")
     public CommonResult<PageResult<XetzResVO>> page(@Valid XetzPageReqVO pageReqVO) {
         PageResult<XetzDO> pageResult = xetzService.getXetzPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, XetzResVO.class));
@@ -57,7 +57,7 @@ public class XetzController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出小额台账 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xetz:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xetz:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportXetzExcel(@Valid XetzPageReqVO pageReqVO,
                                 HttpServletResponse response) throws IOException {

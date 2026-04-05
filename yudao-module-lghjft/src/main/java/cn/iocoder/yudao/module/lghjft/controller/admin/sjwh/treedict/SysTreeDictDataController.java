@@ -32,14 +32,14 @@ public class SysTreeDictDataController {
 
     @PostMapping("/create")
     @Operation(summary = "创建树形字典数据")
-    @PreAuthorize("@ss.hasPermission('lghjft:treedictdata:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-treedictdata:create')")
     public CommonResult<String> createSysTreeDictData(@Valid @RequestBody SysTreeDictDataSaveReqVO createReqVO) {
         return success(sysTreeDictDataService.createSysTreeDictData(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新树形字典数据")
-    @PreAuthorize("@ss.hasPermission('lghjft:treedictdata:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-treedictdata:update')")
     public CommonResult<Boolean> updateSysTreeDictData(@Valid @RequestBody SysTreeDictDataSaveReqVO updateReqVO) {
         sysTreeDictDataService.updateSysTreeDictData(updateReqVO);
         return success(true);
@@ -48,7 +48,7 @@ public class SysTreeDictDataController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除树形字典数据")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:treedictdata:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-treedictdata:delete')")
     public CommonResult<Boolean> deleteSysTreeDictData(@RequestParam("id") String id) {
         sysTreeDictDataService.deleteSysTreeDictData(id);
         return success(true);
@@ -57,7 +57,7 @@ public class SysTreeDictDataController {
     @DeleteMapping("/delete-list")
     @Operation(summary = "批量删除树形字典数据")
     @Parameter(name = "ids", description = "编号列表", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:treedictdata:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-treedictdata:delete')")
     public CommonResult<Boolean> deleteSysTreeDictDataList(@RequestParam("ids") List<String> ids) {
         sysTreeDictDataService.deleteSysTreeDictDataListByIds(ids);
         return success(true);
@@ -66,7 +66,7 @@ public class SysTreeDictDataController {
     @GetMapping("/get")
     @Operation(summary = "获得树形字典数据")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:treedictdata:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-treedictdata:query')")
     public CommonResult<SysTreeDictDataResVO> getSysTreeDictData(@RequestParam("id") String id) {
         SysTreeDictDataDO sysTreeDictData = sysTreeDictDataService.getSysTreeDictData(id);
         return success(BeanUtils.toBean(sysTreeDictData, SysTreeDictDataResVO.class));
@@ -74,7 +74,7 @@ public class SysTreeDictDataController {
 
     @GetMapping("/page")
     @Operation(summary = "获得树形字典数据分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:treedictdata:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-treedictdata:query')")
     public CommonResult<PageResult<SysTreeDictDataResVO>> getSysTreeDictDataPage(@Valid SysTreeDictDataPageReqVO pageReqVO) {
         PageResult<SysTreeDictDataDO> pageResult = sysTreeDictDataService.getSysTreeDictDataPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, SysTreeDictDataResVO.class));
@@ -82,7 +82,7 @@ public class SysTreeDictDataController {
 
     @GetMapping("/list")
     @Operation(summary = "获得树形字典数据列表")
-    @PreAuthorize("@ss.hasPermission('lghjft:treedictdata:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-treedictdata:query')")
     public CommonResult<List<SysTreeDictDataResVO>> getSysTreeDictDataList() {
         List<SysTreeDictDataDO> list = sysTreeDictDataService.getSysTreeDictDataList();
         return success(BeanUtils.toBean(list, SysTreeDictDataResVO.class));

@@ -38,14 +38,14 @@ public class CbjqltzController {
 
     @PostMapping("/create")
     @Operation(summary = "创建筹备金清理台账")
-    @PreAuthorize("@ss.hasPermission('lghjft:cbjqltz:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-cbjqltz:create')")
     public CommonResult<String> createCbjqltz(@Valid @RequestBody CbjqltzSaveReqVO createReqVO) {
         return success(cbjqltzService.createCbjqltz(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新筹备金清理台账")
-    @PreAuthorize("@ss.hasPermission('lghjft:cbjqltz:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-cbjqltz:update')")
     public CommonResult<Boolean> updateCbjqltz(@Valid @RequestBody CbjqltzSaveReqVO updateReqVO) {
         cbjqltzService.updateCbjqltz(updateReqVO);
         return success(true);
@@ -54,7 +54,7 @@ public class CbjqltzController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除筹备金清理台账")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:cbjqltz:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-cbjqltz:delete')")
     public CommonResult<Boolean> deleteCbjqltz(@RequestParam("id") String id) {
         cbjqltzService.deleteCbjqltz(id);
         return success(true);
@@ -63,7 +63,7 @@ public class CbjqltzController {
     @DeleteMapping("/delete-list")
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除筹备金清理台账")
-    @PreAuthorize("@ss.hasPermission('lghjft:cbjqltz:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-cbjqltz:delete')")
     public CommonResult<Boolean> deleteCbjqltzList(@RequestParam("ids") List<String> ids) {
         cbjqltzService.deleteCbjqltzListByIds(ids);
         return success(true);
@@ -72,7 +72,7 @@ public class CbjqltzController {
     @GetMapping("/get")
     @Operation(summary = "获得筹备金清理台账")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:cbjqltz:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-cbjqltz:query')")
     public CommonResult<CbjqltzResVO> getCbjqltz(@RequestParam("id") String id) {
         CbjqltzDO obj = cbjqltzService.getCbjqltz(id);
         return success(BeanUtils.toBean(obj, CbjqltzResVO.class));
@@ -80,7 +80,7 @@ public class CbjqltzController {
 
     @GetMapping("/page")
     @Operation(summary = "获得筹备金清理台账分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:cbjqltz:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-cbjqltz:query')")
     public CommonResult<PageResult<CbjqltzResVO>> getCbjqltzPage(@Valid CbjqltzPageReqVO pageReqVO) {
         PageResult<CbjqltzDO> pageResult = cbjqltzService.getCbjqltzPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, CbjqltzResVO.class));
@@ -88,7 +88,7 @@ public class CbjqltzController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出筹备金清理台账 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:cbjqltz:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-cbjqltz:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportCbjqltzExcel(@Valid CbjqltzPageReqVO pageReqVO,
                                    HttpServletResponse response) throws IOException {

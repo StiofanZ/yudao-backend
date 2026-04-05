@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.ghcbj.cbjtz.CbjtzMapper">
+
+    <!-- 批量确认返拨: 逐条更新 gh_jf 记录 -->
+    <update id="batchUpdateCbjqrfbpl">
+        <foreach collection="list" item="item" separator=";">
+            UPDATE gh_jf
+            SET FBBJ = 'Y',
+            SFBJE = #{item.sfbje},
+            FBRQ = #{item.fbrq},
+            HKPZH = #{item.hkpzh},
+            BZ = #{item.bz},
+            UPDATE_TIME = NOW()
+            WHERE ghjf_id = #{item.ghjfId}
+        </foreach>
+    </update>
+
+    <!-- 代管经费台账统计 -->
+    <select id="selectDgjftzList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.ghcbj.cbjtz.vo.DgjftzResVO">
+        SELECT
+        dept_id AS deptId,
+        JSBJ AS jsbj,
+        CBJTHBJ AS cbjthbj,
+        COUNT(*) AS bs,
+        COUNT(DISTINCT DJXH) AS hs,
+        SUM(YBTSE) AS ybtse,
+        SUM(CBJJE) AS cbjje,
+        SUM(JCGHJE) AS jcghje
+        FROM gh_jf
+        <where>
+            <if test="req.deptId != null and req.deptId != ''">AND dept_id = #{req.deptId}</if>
+            <if test="req.nsrmc != null and req.nsrmc != ''">AND NSRMC LIKE CONCAT('%', #{req.nsrmc}, '%')</if>
+            <if test="req.zgswjDm != null and req.zgswjDm != ''">AND ZGSWJ_DM = #{req.zgswjDm}</if>
+            <if test="req.jsbj != null and req.jsbj != ''">AND JSBJ = #{req.jsbj}</if>
+            <if test="req.zspmDm != null and req.zspmDm != ''">AND ZSPM_DM = #{req.zspmDm}</if>
+        </where>
+        GROUP BY dept_id, JSBJ, CBJTHBJ
+    </select>
+
+</mapper>

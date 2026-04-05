@@ -38,14 +38,14 @@ public class YhwdController {
 
     @PostMapping("/create")
     @Operation(summary = "创建银行网点")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-yhwd:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-yhwd:create')")
     public CommonResult<Long> createYhwd(@Valid @RequestBody YhwdSaveReqVO createReqVO) {
         return success(yhwdService.createYhwd(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新银行网点")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-yhwd:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-yhwd:update')")
     public CommonResult<Boolean> updateYhwd(@Valid @RequestBody YhwdSaveReqVO updateReqVO) {
         yhwdService.updateYhwd(updateReqVO);
         return success(true);
@@ -54,7 +54,7 @@ public class YhwdController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除银行网点")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-yhwd:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-yhwd:delete')")
     public CommonResult<Boolean> deleteYhwd(@RequestParam("id") Long id) {
         yhwdService.deleteYhwd(id);
         return success(true);
@@ -63,7 +63,7 @@ public class YhwdController {
     @DeleteMapping("/delete-list")
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除银行网点")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-yhwd:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-yhwd:delete')")
     public CommonResult<Boolean> deleteYhwdList(@RequestParam("ids") List<Long> ids) {
         yhwdService.deleteYhwdListByIds(ids);
         return success(true);
@@ -72,7 +72,7 @@ public class YhwdController {
     @GetMapping("/get")
     @Operation(summary = "获得银行网点")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-yhwd:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-yhwd:query')")
     public CommonResult<YhwdResVO> getYhwd(@RequestParam("id") Long id) {
         YhwdDO yhwd = yhwdService.getYhwd(id);
         return success(BeanUtils.toBean(yhwd, YhwdResVO.class));
@@ -80,7 +80,7 @@ public class YhwdController {
 
     @GetMapping("/page")
     @Operation(summary = "获得银行网点分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-yhwd:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-yhwd:query')")
     public CommonResult<PageResult<YhwdResVO>> getYhwdPage(@Valid YhwdPageReqVO pageReqVO) {
         PageResult<YhwdDO> pageResult = yhwdService.getYhwdPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, YhwdResVO.class));
@@ -88,7 +88,7 @@ public class YhwdController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出银行网点 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-yhwd:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-yhwd:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportYhwdExcel(@Valid YhwdPageReqVO pageReqVO,
                                 HttpServletResponse response) throws IOException {

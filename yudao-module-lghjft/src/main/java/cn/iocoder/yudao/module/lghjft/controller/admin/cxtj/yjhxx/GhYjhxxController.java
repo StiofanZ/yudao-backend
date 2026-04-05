@@ -38,14 +38,14 @@ public class GhYjhxxController {
 
     @PostMapping("/create")
     @Operation(summary = "创建已建会信息")
-    @PreAuthorize("@ss.hasPermission('lghjft:yjhxx:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-yjhxx:create')")
     public CommonResult<Long> createGhYjhxx(@Valid @RequestBody GhYjhxxSaveReqVO createReqVO) {
         return success(ghYjhxxService.createGhYjhxx(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新已建会信息")
-    @PreAuthorize("@ss.hasPermission('lghjft:yjhxx:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-yjhxx:update')")
     public CommonResult<Boolean> updateGhYjhxx(@Valid @RequestBody GhYjhxxSaveReqVO updateReqVO) {
         ghYjhxxService.updateGhYjhxx(updateReqVO);
         return success(true);
@@ -54,7 +54,7 @@ public class GhYjhxxController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除已建会信息")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:yjhxx:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-yjhxx:delete')")
     public CommonResult<Boolean> deleteGhYjhxx(@RequestParam("id") Long id) {
         ghYjhxxService.deleteGhYjhxx(id);
         return success(true);
@@ -63,7 +63,7 @@ public class GhYjhxxController {
     @DeleteMapping("/delete-list")
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除已建会信息")
-    @PreAuthorize("@ss.hasPermission('lghjft:yjhxx:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-yjhxx:delete')")
     public CommonResult<Boolean> deleteGhYjhxxList(@RequestParam("ids") List<Long> ids) {
         ghYjhxxService.deleteGhYjhxxListByIds(ids);
         return success(true);
@@ -72,7 +72,7 @@ public class GhYjhxxController {
     @GetMapping("/get")
     @Operation(summary = "获得已建会信息")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:yjhxx:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-yjhxx:query')")
     public CommonResult<GhYjhxxResVO> getGhYjhxx(@RequestParam("id") Long id) {
         GhYjhxxDO obj = ghYjhxxService.getGhYjhxx(id);
         return success(BeanUtils.toBean(obj, GhYjhxxResVO.class));
@@ -80,7 +80,7 @@ public class GhYjhxxController {
 
     @GetMapping("/page")
     @Operation(summary = "获得已建会信息分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:yjhxx:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-yjhxx:query')")
     public CommonResult<PageResult<GhYjhxxResVO>> getGhYjhxxPage(@Valid GhYjhxxPageReqVO pageReqVO) {
         PageResult<GhYjhxxDO> pageResult = ghYjhxxService.getGhYjhxxPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, GhYjhxxResVO.class));
@@ -88,7 +88,7 @@ public class GhYjhxxController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出已建会信息 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:yjhxx:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-yjhxx:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportGhYjhxxExcel(@Valid GhYjhxxPageReqVO pageReqVO,
                                    HttpServletResponse response) throws IOException {

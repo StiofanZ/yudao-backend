@@ -39,14 +39,14 @@ public class RwsController {
 
     @PostMapping("/create")
     @Operation(summary = "创建年度任务")
-    @PreAuthorize("@ss.hasPermission('lghjft:rws:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-rws:create')")
     public CommonResult<Integer> createRws(@Valid @RequestBody RwsSaveReqVO createReqVO) {
         return success(rwsService.createRws(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新年度任务")
-    @PreAuthorize("@ss.hasPermission('lghjft:rws:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-rws:update')")
     public CommonResult<Boolean> updateRws(@Valid @RequestBody RwsSaveReqVO updateReqVO) {
         rwsService.updateRws(updateReqVO);
         return success(true);
@@ -55,7 +55,7 @@ public class RwsController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除年度任务")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:rws:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-rws:delete')")
     public CommonResult<Boolean> deleteRws(@RequestParam("id") Integer id) {
         rwsService.deleteRws(id);
         return success(true);
@@ -64,7 +64,7 @@ public class RwsController {
     @DeleteMapping("/delete-list")
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除年度任务")
-                @PreAuthorize("@ss.hasPermission('lghjft:rws:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-rws:delete')")
     public CommonResult<Boolean> deleteRwsList(@RequestParam("ids") List<Integer> ids) {
         rwsService.deleteRwsListByIds(ids);
         return success(true);
@@ -73,7 +73,7 @@ public class RwsController {
     @GetMapping("/get")
     @Operation(summary = "获得年度任务")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:rws:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-rws:query')")
     public CommonResult<RwsResVO> getRws(@RequestParam("id") Integer id) {
         RwsDO rws = rwsService.getRws(id);
         return success(BeanUtils.toBean(rws, RwsResVO.class));
@@ -81,7 +81,7 @@ public class RwsController {
 
     @GetMapping("/page")
     @Operation(summary = "获得年度任务分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:rws:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-rws:query')")
     public CommonResult<PageResult<RwsResVO>> getRwsPage(@Valid RwsPageReqVO pageReqVO) {
         PageResult<RwsDO> pageResult = rwsService.getRwsPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, RwsResVO.class));
@@ -89,7 +89,7 @@ public class RwsController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出年度任务 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:rws:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-rws:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportRwsExcel(@Valid RwsPageReqVO pageReqVO,
               HttpServletResponse response) throws IOException {

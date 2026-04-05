@@ -32,7 +32,7 @@ public class SwjgController {
 
     @PutMapping("/update")
     @Operation(summary = "更新税务机关")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-swjg:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-swjg:update')")
     public CommonResult<Boolean> updateSwjg(@Valid @RequestBody SwjgSaveReqVO updateReqVO) {
         swjgService.updateSwjg(updateReqVO);
         return success(true);
@@ -40,7 +40,7 @@ public class SwjgController {
 
     @GetMapping("/list")
     @Operation(summary = "获得税务机关列表")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-swjg:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-swjg:query')")
     public CommonResult<List<SwjgResVO>> getSwjgList(@Valid SwjgListReqVO listReqVO) {
         List<SwjgDO> list = swjgService.getSwjgList(listReqVO);
         return success(BeanUtils.toBean(list, SwjgResVO.class));
@@ -49,7 +49,7 @@ public class SwjgController {
     @GetMapping("/get")
     @Operation(summary = "获得税务机关")
     @Parameter(name = "swjgDm", description = "机关代码", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-swjg:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-swjg:query')")
     public CommonResult<SwjgResVO> getSwjg(@RequestParam("swjgDm") String swjgDm) {
         SwjgDO swjg = swjgService.getSwjg(swjgDm);
         return success(BeanUtils.toBean(swjg, SwjgResVO.class));

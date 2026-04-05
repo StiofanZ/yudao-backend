@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.hbzz.szdzhd.SzdzhdMapper">
+
+    <resultMap type="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.szdzhd.vo.SzdzhdResVO" id="SzdzhdResult">
+        <result property="sjdm" column="SJDM"/>
+        <result property="xjdm" column="XJDM"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="jfbs" column="JFBS"/>
+        <result property="jfje" column="JFJE"/>
+        <result property="cbjje" column="CBJJE"/>
+        <result property="szje" column="SZJE"/>
+        <result property="qzje" column="QZJE"/>
+        <result property="szqzhj" column="SZQZHJ"/>
+        <result property="hjje" column="HJJE"/>
+    </resultMap>
+
+    <!-- v1 selectSzdzhdVo (exact copy) -->
+    <sql id="selectSzdzhdVo">
+        SELECT (
+                   CASE
+                       WHEN T.DEPT_ID = '620000' THEN
+                           T.DEPT_ID
+                       WHEN T.DEPT_ID LIKE '626%' THEN
+                           T.DEPT_ID
+                       ELSE
+                           rpad(substr(T.DEPT_ID, 1, 4), 6, 0)
+                       END
+                   ) AS                           `SJDM`,
+
+               count(DISTINCT t.DJXH)             JFBS,
+               sum(t.YBTSE)                       JFJE,
+               sum(t.CBJJE)                       CBJJE,
+               sum(t.SZGHJE)                      SZJE,
+               sum(t.QGGHJE)                      QZJE,
+               sum(t.SZGHJE + t.QGGHJE)           SZQZHJ,
+               sum(t.SZGHJE + t.QGGHJE + T.CBJJE) HJJE
+        FROM gh_jf t
+    </sql>
+
+    <!-- v1 selectSzdzhdList (exact copy) -->
+    <select id="selectSzdzhdList" resultMap="SzdzhdResult">
+        <include refid="selectSzdzhdVo"/>
+        <where>
+            t.JSBJ IN ('Y', 'S','W')
+
+            <if test="req.deptId != null  and req.deptId != ''">and t.dept_id = #{req.deptId}</if>
+
+            <if test="req.beginHkpch != null and req.beginHkpch != '' and req.endHkpch != null and req.endHkpch != ''">and MID(HKPCH,1,8) between #{req.beginHkpch} and
+                #{req.endHkpch}
+            </if>
+
+            <if test="req.beginJsrq != null and req.beginJsrq != '' and req.endJsrq != null and req.endJsrq != ''">and t.JSRQ between #{req.beginJsrq} and #{req.endJsrq}</if>
+
+        </where>
+        GROUP BY
+        sjdm
+    </select>
+
+</mapper>

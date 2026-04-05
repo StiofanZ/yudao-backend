@@ -38,14 +38,14 @@ public class QxCzrjController {
 
     @PostMapping("/create")
     @Operation(summary = "创建历史日志")
-    @PreAuthorize("@ss.hasPermission('lghjft:czrj:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-czrj:create')")
     public CommonResult<Long> createQxCzrj(@Valid @RequestBody QxCzrjSaveReqVO createReqVO) {
         return success(qxCzrjService.createQxCzrj(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新历史日志")
-    @PreAuthorize("@ss.hasPermission('lghjft:czrj:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-czrj:update')")
     public CommonResult<Boolean> updateQxCzrj(@Valid @RequestBody QxCzrjSaveReqVO updateReqVO) {
         qxCzrjService.updateQxCzrj(updateReqVO);
         return success(true);
@@ -54,7 +54,7 @@ public class QxCzrjController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除历史日志")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:czrj:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-czrj:delete')")
     public CommonResult<Boolean> deleteQxCzrj(@RequestParam("id") Long id) {
         qxCzrjService.deleteQxCzrj(id);
         return success(true);
@@ -63,7 +63,7 @@ public class QxCzrjController {
     @DeleteMapping("/delete-list")
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除历史日志")
-    @PreAuthorize("@ss.hasPermission('lghjft:czrj:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-czrj:delete')")
     public CommonResult<Boolean> deleteQxCzrjList(@RequestParam("ids") List<Long> ids) {
         qxCzrjService.deleteQxCzrjListByIds(ids);
         return success(true);
@@ -72,7 +72,7 @@ public class QxCzrjController {
     @GetMapping("/get")
     @Operation(summary = "获得历史日志")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:czrj:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-czrj:query')")
     public CommonResult<QxCzrjResVO> getQxCzrj(@RequestParam("id") Long id) {
         QxCzrjDO obj = qxCzrjService.getQxCzrj(id);
         return success(BeanUtils.toBean(obj, QxCzrjResVO.class));
@@ -80,7 +80,7 @@ public class QxCzrjController {
 
     @GetMapping("/page")
     @Operation(summary = "获得历史日志分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:czrj:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-czrj:query')")
     public CommonResult<PageResult<QxCzrjResVO>> getQxCzrjPage(@Valid QxCzrjPageReqVO pageReqVO) {
         PageResult<QxCzrjDO> pageResult = qxCzrjService.getQxCzrjPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, QxCzrjResVO.class));
@@ -88,7 +88,7 @@ public class QxCzrjController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出历史日志 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:czrj:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-czrj:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportQxCzrjExcel(@Valid QxCzrjPageReqVO pageReqVO,
                                   HttpServletResponse response) throws IOException {

@@ -36,7 +36,7 @@ public class XwqyjftjController {
 
     @GetMapping("/list")
     @Operation(summary = "获得小微经费统计汇总列表")
-    @PreAuthorize("@ss.hasPermission('lghjft:xwqyjftj:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqyjftj:query')")
     public CommonResult<List<XwqyjftjAggVO>> getXwqyjftjList(@Valid XwqyjftjPageReqVO reqVO) {
         List<XwqyjftjAggVO> list = xwqyjftjService.getXwqyjftjList(reqVO);
         return success(list);
@@ -44,7 +44,7 @@ public class XwqyjftjController {
 
     @GetMapping("/list-fh")
     @Operation(summary = "获得小微经费统计反馈列表(按企业分组)")
-    @PreAuthorize("@ss.hasPermission('lghjft:xwqyjftj:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqyjftj:query')")
     public CommonResult<List<XwqyjftjfhAggVO>> getXwqyjftjfhList(@Valid XwqyjftjPageReqVO reqVO) {
         List<XwqyjftjfhAggVO> list = xwqyjftjService.getXwqyjftjfhList(reqVO);
         return success(list);
@@ -52,7 +52,7 @@ public class XwqyjftjController {
 
     @GetMapping("/list-mx")
     @Operation(summary = "获得小微经费统计明细列表")
-    @PreAuthorize("@ss.hasPermission('lghjft:xwqyjftj:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqyjftj:query')")
     public CommonResult<List<XwqyjftjmxResVO>> getXwqyjftjmxList(@Valid XwqyjftjPageReqVO reqVO) {
         List<XwqyjftjmxResVO> list = xwqyjftjService.getXwqyjftjmxList(reqVO);
         return success(list);
@@ -60,7 +60,7 @@ public class XwqyjftjController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出小微经费统计 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:xwqyjftj:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqyjftj:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportXwqyjftjExcel(@Valid XwqyjftjPageReqVO reqVO,
                                     HttpServletResponse response) throws IOException {
@@ -70,7 +70,7 @@ public class XwqyjftjController {
 
     @GetMapping("/export-excel-fh")
     @Operation(summary = "导出小微经费统计反馈 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:xwqyjftj:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqyjftj:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportXwqyjftjfhExcel(@Valid XwqyjftjPageReqVO reqVO,
                                       HttpServletResponse response) throws IOException {
@@ -80,7 +80,7 @@ public class XwqyjftjController {
 
     @GetMapping("/export-excel-mx")
     @Operation(summary = "导出小微经费统计明细 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:xwqyjftj:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqyjftj:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportXwqyjftjmxExcel(@Valid XwqyjftjPageReqVO reqVO,
                                       HttpServletResponse response) throws IOException {

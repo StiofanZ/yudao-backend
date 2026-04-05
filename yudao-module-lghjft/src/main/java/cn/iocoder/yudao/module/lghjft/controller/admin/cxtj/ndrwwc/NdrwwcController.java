@@ -41,7 +41,7 @@ public class NdrwwcController {
     @GetMapping("/get")
     @Operation(summary = "获得分年各级分成情况")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:ndrwwc:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ndrwwc:query')")
     public CommonResult<NdrwwcResVO> getNdrwwc(@RequestParam("id") String id) {
         NdrwwcDO obj = ndrwwcService.getNdrwwc(id);
         return success(BeanUtils.toBean(obj, NdrwwcResVO.class));
@@ -49,7 +49,7 @@ public class NdrwwcController {
 
     @GetMapping("/page")
     @Operation(summary = "获得分年各级分成情况分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:ndrwwc:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ndrwwc:query')")
     public CommonResult<PageResult<NdrwwcResVO>> getNdrwwcPage(@Valid NdrwwcPageReqVO pageReqVO) {
         PageResult<NdrwwcDO> pageResult = ndrwwcService.getNdrwwcPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, NdrwwcResVO.class));
@@ -57,7 +57,7 @@ public class NdrwwcController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出分年各级分成情况 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:ndrwwc:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ndrwwc:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportNdrwwcExcel(@Valid NdrwwcPageReqVO pageReqVO,
                                   HttpServletResponse response) throws IOException {

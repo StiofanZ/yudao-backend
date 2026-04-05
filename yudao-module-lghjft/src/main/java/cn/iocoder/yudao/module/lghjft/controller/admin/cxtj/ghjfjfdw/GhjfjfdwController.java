@@ -41,7 +41,7 @@ public class GhjfjfdwController {
     @GetMapping("/get")
     @Operation(summary = "获得近三年缴费情况")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:ghjfjfdw:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ghjfjfdw:query')")
     public CommonResult<GhjfjfdwResVO> getGhjfjfdw(@RequestParam("id") String id) {
         GhjfjfdwDO obj = ghjfjfdwService.getGhjfjfdw(id);
         return success(BeanUtils.toBean(obj, GhjfjfdwResVO.class));
@@ -49,7 +49,7 @@ public class GhjfjfdwController {
 
     @GetMapping("/page")
     @Operation(summary = "获得近三年缴费情况分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:ghjfjfdw:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ghjfjfdw:query')")
     public CommonResult<PageResult<GhjfjfdwResVO>> getGhjfjfdwPage(@Valid GhjfjfdwPageReqVO pageReqVO) {
         PageResult<GhjfjfdwDO> pageResult = ghjfjfdwService.getGhjfjfdwPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, GhjfjfdwResVO.class));
@@ -57,7 +57,7 @@ public class GhjfjfdwController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出近三年缴费情况 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:ghjfjfdw:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ghjfjfdw:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportGhjfjfdwExcel(@Valid GhjfjfdwPageReqVO pageReqVO,
                                     HttpServletResponse response) throws IOException {

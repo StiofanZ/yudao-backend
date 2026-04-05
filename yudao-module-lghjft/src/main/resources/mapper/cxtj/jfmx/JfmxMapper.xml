@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.jfmx.CxtjJfmxMapper">
+
+    <resultMap id="JfmxResult" type="cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.JfmxResVO">
+        <result property="spuuid" column="SPUUID"/>
+        <result property="djxh" column="DJXH"/>
+        <result property="ghjgmc" column="GHJGMC"/>
+        <result property="shxydm" column="SHXYDM"/>
+        <result property="nsrmc" column="NSRMC"/>
+        <result property="nsrjc" column="NSRJC"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="ghjgxzjb" column="GHJGXZJB"/>
+        <result property="clghbj" column="CLGHBJ"/>
+        <result property="hyghbz" column="HYGHBZ"/>
+        <result property="sdghjgDm" column="SDGHJG_DM"/>
+        <result property="sdghjgxzjb" column="SDGHJGXZJB"/>
+        <result property="zgswjDm" column="ZGSWJ_DM"/>
+        <result property="zgswskfjDm" column="ZGSWSKFJ_DM"/>
+        <result property="ssglyDm" column="SSGLY_DM"/>
+        <result property="ghlbDm" column="GHLB_DM"/>
+        <result property="xtlbDm" column="XTLB_DM"/>
+        <result property="xwlx" column="XWLX"/>
+        <result property="xelx23" column="XELX23"/>
+        <result property="xelx24" column="XELX24"/>
+        <result property="xelx25" column="XELX25"/>
+        <result property="zzjglxDm" column="ZZJGLX_DM"/>
+        <result property="hyDm" column="HY_DM"/>
+        <result property="djzclxDm" column="DJZCLX_DM"/>
+        <result property="dwlsgxDm" column="DWLSGX_DM"/>
+        <result property="sblbDm" column="SBLB_DM"/>
+        <result property="nssbrq" column="NSSBRQ"/>
+        <result property="pzxh" column="PZXH"/>
+        <result property="pzmxxh" column="PZMXXH"/>
+        <result property="skssqq" column="SKSSQQ"/>
+        <result property="skssqz" column="SKSSQZ"/>
+        <result property="zsswjgDm" column="ZSSWJG_DM"/>
+        <result property="skssswjgDm" column="SKSSSWJG_DM"/>
+        <result property="skgkDm" column="SKGK_DM"/>
+        <result property="dzsphm" column="DZSPHM"/>
+        <result property="pzzlDm" column="PZZL_DM"/>
+        <result property="pzzgDm" column="PZZG_DM"/>
+        <result property="pzhm" column="PZHM"/>
+        <result property="kpyDm" column="KPY_DM"/>
+        <result property="kpyXm" column="KPY_XM"/>
+        <result property="zspmDm" column="ZSPM_DM"/>
+        <result property="zszmDm" column="ZSZM_DM"/>
+        <result property="yskmDm" column="YSKM_DM"/>
+        <result property="gzze" column="GZZE"/>
+        <result property="sl" column="SL"/>
+        <result property="ynse" column="YNSE"/>
+        <result property="jmse" column="JMSE"/>
+        <result property="yjse" column="YJSE"/>
+        <result property="ybtse" column="YBTSE"/>
+        <result property="jkfsDm" column="JKFS_DM"/>
+        <result property="jfhb" column="JFHB"/>
+        <result property="jfzh" column="JFZH"/>
+        <result property="jfhm" column="JFHM"/>
+        <result property="jfhh" column="JFHH"/>
+        <result property="jfyh" column="JFYH"/>
+        <result property="rkrq" column="RKRQ"/>
+        <result property="jsbj" column="JSBJ"/>
+        <result property="jsrq" column="JSRQ"/>
+        <result property="jsczy" column="JSCZY"/>
+        <result property="jcghzh" column="JCGHZH"/>
+        <result property="jcghhm" column="JCGHHM"/>
+        <result property="jcghhh" column="JCGHHH"/>
+        <result property="jcghbl" column="JCGHBL"/>
+        <result property="jcghje" column="JCGHJE"/>
+        <result property="cbjzh" column="CBJZH"/>
+        <result property="cbjhm" column="CBJHM"/>
+        <result property="cbjhh" column="CBJHH"/>
+        <result property="cbjbl" column="CBJBL"/>
+        <result property="cbjje" column="CBJJE"/>
+        <result property="hyghzh" column="HYGHZH"/>
+        <result property="hyghhm" column="HYGHHM"/>
+        <result property="hyghhh" column="HYGHHH"/>
+        <result property="hyghbl" column="HYGHBL"/>
+        <result property="hyghje" column="HYGHJE"/>
+        <result property="xjghzh" column="XJGHZH"/>
+        <result property="xjghhm" column="XJGHHM"/>
+        <result property="xjghhh" column="XJGHHH"/>
+        <result property="xjghbl" column="XJGHBL"/>
+        <result property="xjghje" column="XJGHJE"/>
+        <result property="sjghzh" column="SJGHZH"/>
+        <result property="sjghhm" column="SJGHHM"/>
+        <result property="sjghhh" column="SJGHHH"/>
+        <result property="sjghbl" column="SJGHBL"/>
+        <result property="sjghje" column="SJGHJE"/>
+        <result property="szghzh" column="SZGHZH"/>
+        <result property="szghhm" column="SZGHHM"/>
+        <result property="szghhh" column="SZGHHH"/>
+        <result property="szghbl" column="SZGHBL"/>
+        <result property="szghje" column="SZGHJE"/>
+        <result property="qgghzh" column="QGGHZH"/>
+        <result property="qgghhm" column="QGGHHM"/>
+        <result property="qgghhh" column="QGGHHH"/>
+        <result property="qgghbl" column="QGGHBL"/>
+        <result property="qgghje" column="QGGHJE"/>
+        <result property="sdszh" column="SDSZH"/>
+        <result property="sdshm" column="SDSHM"/>
+        <result property="sdshh" column="SDSHH"/>
+        <result property="sdsbl" column="SDSBL"/>
+        <result property="sdsje" column="SDSJE"/>
+        <result property="swjgzh" column="SWJGZH"/>
+        <result property="swjghm" column="SWJGHM"/>
+        <result property="swjghh" column="SWJGHH"/>
+        <result property="swjgbl" column="SWJGBL"/>
+        <result property="swjgje" column="SWJGJE"/>
+        <result property="cbjthbj" column="CBJTHBJ"/>
+        <result property="cbjthrq" column="CBJTHRQ"/>
+        <result property="cbjthczy" column="CBJTHCZY"/>
+        <result property="jym" column="JYM"/>
+        <result property="hkpch" column="HKPCH"/>
+        <result property="bz" column="BZ"/>
+        <result property="bluuid" column="BLUUID"/>
+        <result property="sdghzh" column="SDGHZH"/>
+        <result property="sdghhm" column="SDGHHM"/>
+        <result property="sdghhh" column="SDGHHH"/>
+        <result property="sdghbl" column="SDGHBL"/>
+        <result property="sdghje" column="SDGHJE"/>
+        <result property="createBy" column="CREATE_BY"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateBy" column="UPDATE_BY"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+    </resultMap>
+
+    <!-- v1 selectJfmxVo (exact copy from JfmxMapper.xml) -->
+    <sql id="selectJfmxVo">
+        select JF.SPUUID,
+               JF.DJXH,
+               JF.SHXYDM,
+               JF.NSRMC,
+               JF.NSRJC,
+               JF.dept_id,
+               JF.GHJGXZJB,
+               JF.CLGHBJ,
+               JF.HYGHBZ,
+               JF.SDGHJG_DM,
+               JF.SDGHJGXZJB,
+               JF.ZGSWJ_DM,
+               JF.ZGSWSKFJ_DM,
+               JF.SSGLY_DM,
+               JF.GHLB_DM,
+               JF.XTLB_DM,
+               JF.ZZJGLX_DM,
+               JF.HY_DM,
+               JF.DJZCLX_DM,
+               JF.DWLSGX_DM,
+               JF.SBLB_DM,
+               JF.NSSBRQ,
+               JF.PZXH,
+               JF.PZMXXH,
+               JF.SKSSQQ,
+               JF.SKSSQZ,
+               JF.ZSSWJG_DM,
+               JF.SKSSSWJG_DM,
+               JF.SKGK_DM,
+               JF.DZSPHM,
+               JF.PZZL_DM,
+               JF.PZZG_DM,
+               JF.PZHM,
+               JF.KPY_DM,
+               JF.KPY_XM,
+               JF.ZSPM_DM,
+               JF.ZSZM_DM,
+               JF.YSKM_DM,
+               JF.GZZE,
+               JF.SL,
+               JF.YNSE,
+               JF.JMSE,
+               JF.YJSE,
+               JF.YBTSE,
+               JF.JKFS_DM,
+               JF.JFHB,
+               JF.JFZH,
+               JF.JFHM,
+               JF.JFHH,
+               JF.JFYH,
+               JF.RKRQ,
+               JF.JSBJ,
+               JF.JSRQ,
+               JF.JSCZY,
+               JF.JCGHZH,
+               JF.JCGHHM,
+               JF.JCGHHH,
+               JF.JCGHBL,
+               JF.JCGHJE,
+               JF.CBJZH,
+               JF.CBJHM,
+               JF.CBJHH,
+               JF.CBJBL,
+               JF.CBJJE,
+               JF.HYGHZH,
+               JF.HYGHHM,
+               JF.HYGHHH,
+               JF.HYGHBL,
+               JF.HYGHJE,
+               JF.XJGHZH,
+               JF.XJGHHM,
+               JF.XJGHHH,
+               JF.XJGHBL,
+               JF.XJGHJE,
+               JF.SJGHZH,
+               JF.SJGHHM,
+               JF.SJGHHH,
+               JF.SJGHBL,
+               JF.SJGHJE,
+               JF.SZGHZH,
+               JF.SZGHHM,
+               JF.SZGHHH,
+               JF.SZGHBL,
+               JF.SZGHJE,
+               JF.QGGHZH,
+               JF.QGGHHM,
+               JF.QGGHHH,
+               JF.QGGHBL,
+               JF.QGGHJE,
+               JF.JCJZH,
+               JF.JCJHM,
+               JF.JCJHH,
+               JF.JCJBL,
+               JF.JCJJE,
+               JF.JCWSH,
+               JF.SDSZH,
+               JF.SDSHM,
+               JF.SDSHH,
+               JF.SDSBL,
+               JF.SDSJE,
+               JF.SWJGZH,
+               JF.SWJGHM,
+               JF.SWJGHH,
+               JF.SWJGBL,
+               JF.SWJGJE,
+               JF.CBJTHBJ,
+               JF.CBJTHRQ,
+               JF.CBJTHCZY,
+               JF.JYM,
+               JF.HKPCH,
+               JF.BZ,
+               JF.BLUUID,
+               JF.SDGHZH,
+               JF.SDGHHM,
+               JF.SDGHHH,
+               JF.SDGHBL,
+               JF.SDGHJE,
+               JF.CREATE_BY,
+               JF.CREATE_TIME,
+               JF.UPDATE_BY,
+               JF.UPDATE_TIME,
+               hj.hjfl9_dm  as xwlx,
+               hj.hjfl4_dm  AS xelx24,
+               hj.hjfl10_dm AS xelx25,
+               hj.hjfl6_dm  AS xelx23
+        from gh_jf jf
+                 left join gh_hj hj on jf.djxh = hj.djxh
+    </sql>
+
+    <!-- v1 selectJfmxList (exact copy from JfmxMapper.xml) -->
+    <select id="selectJfmxList" resultMap="JfmxResult">
+        <include refid="selectJfmxVo"/>
+        <where>
+            <if test="req.djxh != null  and req.djxh != ''">and JF.DJXH = #{req.djxh}</if>
+            <if test="req.shxydm != null  and req.shxydm != ''">and JF.SHXYDM = #{req.shxydm}</if>
+            <if test="req.nsrmc != null  and req.nsrmc != ''">and JF.NSRMC like concat('%', #{req.nsrmc}, '%')</if>
+            <if test="req.nsrjc != null  and req.nsrjc != ''">and JF.NSRJC like concat('%', #{req.nsrjc}, '%')</if>
+            <if test="req.deptId != null  and req.deptId != ''">and (JF.dept_id = #{req.deptId} or (JF.SDGHJG_DM = #{req.deptId} and jf.sdghje!='0') )</if>
+
+            <if test="req.ghjgxzjb != null  and req.ghjgxzjb != ''">and JF.GHJGXZJB = #{req.ghjgxzjb}</if>
+            <if test="req.clghbj != null  and req.clghbj != ''">and JF.CLGHBJ = #{req.clghbj}</if>
+            <if test="req.hyghbz != null  and req.hyghbz != ''">and JF.HYGHBZ = #{req.hyghbz}</if>
+            <if test="req.sdghjgxzjb != null  and req.sdghjgxzjb != ''">and JF.SDGHJGXZJB = #{req.sdghjgxzjb}</if>
+            <if test="req.zgswjDm != null  and req.zgswjDm != ''">and JF.ZGSWJ_DM = #{req.zgswjDm}</if>
+            <if test="req.zgswskfjDm != null  and req.zgswskfjDm != ''">and JF.ZGSWSKFJ_DM = #{req.zgswskfjDm}</if>
+            <if test="req.ssglyDm != null  and req.ssglyDm != ''">and JF.SSGLY_DM = #{req.ssglyDm}</if>
+            <if test="req.ghlbDm != null  and req.ghlbDm != ''">and JF.GHLB_DM = #{req.ghlbDm}</if>
+            <if test="req.xtlbDm != null  and req.xtlbDm != ''">and JF.XTLB_DM = #{req.xtlbDm}</if>
+            <if test="req.zzjglxDm != null  and req.zzjglxDm != ''">and JF.ZZJGLX_DM = #{req.zzjglxDm}</if>
+            <if test="req.hyDm != null  and req.hyDm != ''">and JF.HY_DM = #{req.hyDm}</if>
+            <if test="req.djzclxDm != null  and req.djzclxDm != ''">and JF.DJZCLX_DM = #{req.djzclxDm}</if>
+            <if test="req.dwlsgxDm != null  and req.dwlsgxDm != ''">and JF.DWLSGX_DM = #{req.dwlsgxDm}</if>
+            <if test="req.sblbDm != null  and req.sblbDm != ''">and JF.SBLB_DM = #{req.sblbDm}</if>
+            <if test="req.zspmDm != null  and req.zspmDm != ''">and JF.ZSPM_DM = #{req.zspmDm}</if>
+            <if test="req.rkrq != null  and req.rkrq != ''">and JF.RKRQ like concat(MID(#{req.rkrq}, 1, 4), '%')</if>
+            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">and JF.RKRQ between #{req.beginRkrq} and #{req.endRkrq}</if>
+            <if test="req.jsbj != null  and req.jsbj != ''">and jf.jsbj = #{req.jsbj}</if>
+            <if test="req.beginJsrq != null and req.beginJsrq != '' and req.endJsrq != null and req.endJsrq != ''">and JF.JSRQ between #{req.beginJsrq} and #{req.endJsrq}</if>
+            <if test="req.xwlx != null  and req.xwlx != ''">and hj.hjfl9_dm = #{req.xwlx}</if>
+            <if test="req.xelx23 != null  and req.xelx23 != ''">and hj.hjfl6_dm = #{req.xelx23}</if>
+            <if test="req.xelx24 != null  and req.xelx24 != ''">and hj.hjfl4_dm = #{req.xelx24}</if>
+            <if test="req.xelx25 != null  and req.xelx25 != ''">and hj.hjfl10_dm = #{req.xelx25}</if>
+        </where>
+        order by rkrq desc
+    </select>
+
+</mapper>

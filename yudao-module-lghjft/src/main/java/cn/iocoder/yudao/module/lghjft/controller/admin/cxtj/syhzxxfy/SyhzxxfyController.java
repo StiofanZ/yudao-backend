@@ -41,7 +41,7 @@ public class SyhzxxfyController {
     @GetMapping("/get")
     @Operation(summary = "获得首页汇总信息分月")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:syhzxxfy:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-syhzxxfy:query')")
     public CommonResult<SyhzxxfyResVO> getSyhzxxfy(@RequestParam("id") String id) {
         SyhzxxfyDO obj = syhzxxfyService.getSyhzxxfy(id);
         return success(BeanUtils.toBean(obj, SyhzxxfyResVO.class));
@@ -49,7 +49,7 @@ public class SyhzxxfyController {
 
     @GetMapping("/page")
     @Operation(summary = "获得首页汇总信息分月分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:syhzxxfy:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-syhzxxfy:query')")
     public CommonResult<PageResult<SyhzxxfyResVO>> getSyhzxxfyPage(@Valid SyhzxxfyPageReqVO pageReqVO) {
         PageResult<SyhzxxfyDO> pageResult = syhzxxfyService.getSyhzxxfyPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, SyhzxxfyResVO.class));
@@ -57,7 +57,7 @@ public class SyhzxxfyController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出首页汇总信息分月 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:syhzxxfy:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-syhzxxfy:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportSyhzxxfyExcel(@Valid SyhzxxfyPageReqVO pageReqVO,
                                     HttpServletResponse response) throws IOException {

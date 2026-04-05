@@ -41,7 +41,7 @@ public class DhjftzController {
     @GetMapping("/get")
     @Operation(summary = "获得到户经费台账")
     @Parameter(name = "djxh", description = "登记序号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:dhjftz:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-dhjftz:query')")
     public CommonResult<DhjftzResVO> getDhjftz(@RequestParam("djxh") String djxh) {
         DhjftzDO obj = dhjftzService.getDhjftz(djxh);
         return success(BeanUtils.toBean(obj, DhjftzResVO.class));
@@ -49,7 +49,7 @@ public class DhjftzController {
 
     @GetMapping("/page")
     @Operation(summary = "获得到户经费台账分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:dhjftz:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-dhjftz:query')")
     public CommonResult<PageResult<DhjftzResVO>> getDhjftzPage(@Valid DhjftzPageReqVO pageReqVO) {
         PageResult<DhjftzDO> pageResult = dhjftzService.getDhjftzPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, DhjftzResVO.class));
@@ -57,7 +57,7 @@ public class DhjftzController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出到户经费台账 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:dhjftz:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-dhjftz:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportDhjftzExcel(@Valid DhjftzPageReqVO pageReqVO,
                                   HttpServletResponse response) throws IOException {

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.jftzfswjg.JftzfswjgMapper">
+
+    <!-- v1: selectJftzfswjgVo from JfmxMapper.xml (line 3222+) -->
+    <sql id="selectJftzfswjgVo">
+        SELECT jf.DWDM,
+               jf.DEPT_ID                     AS deptId,
+               jf.ZGSWJ_DM,
+               date_format(`jf`.`RKRQ`, '%Y') AS `ND`,
+               COUNT(jf.DJXH)                    BS,
+               COUNT(DISTINCT jf.DJXH)           HS,
+               SUM(jf.YBTSE)                     YBTSE,
+               SUM(jf.JCGHJE)                    JCGHJE,
+               SUM(jf.HYGHJE)                    HYGHJE,
+               SUM(jf.SDGHJE)                    SDGHJE,
+               SUM(jf.CBJJE)                     CBJJE,
+               SUM(jf.XJGHJE)                    XJGHJE,
+               SUM(jf.SJGHJE)                    SJGHJE,
+               SUM(jf.SZGHJE)                    SZGHJE,
+               SUM(jf.QGGHJE)                    QGGHJE,
+               SUM(jf.SWJGJE)                    SWJGJE,
+               SUM(jf.SDSJE)                     SDSJE
+        FROM (SELECT (SELECT jg.GHJG_DM
+                      FROM dm_swjg jg
+                      WHERE (jg.SWJG_DM = t.ZGSWJ_DM)) DWDM,
+                     t.*
+              FROM gh_jf t
+              where 1 = 1) jf
+    </sql>
+
+    <!-- v1: selectJftzfswjgList from JfmxMapper.xml (line 3263+) -->
+    <select id="selectJftzfswjgList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jftzfswjg.vo.JftzfswjgResVO">
+        <include refid="selectJftzfswjgVo"/>
+        <where>
+            1=1
+            <if test="req.deptId != null  and req.deptId != ''">and (JF.DWDM = #{req.deptId} or JF.DWDM IN ( SELECT t.dept_id FROM sys_dept t WHERE find_in_set(#{req.deptId},
+                ancestors) ))
+            </if>
+            <if test="req.djxh != null  and req.djxh != ''">and ( JF.DJXH = #{req.djxh}</if>
+            <if test="req.nsrsbh != null  and req.nsrsbh != ''">and JF.SHXYDM = #{req.nsrsbh}</if>
+            <if test="req.shxydm != null  and req.shxydm != ''">and JF.SHXYDM = #{req.shxydm}</if>
+            <if test="req.nsrmc != null  and req.nsrmc != ''">and JF.NSRMC like concat('%', #{req.nsrmc}, '%')</if>
+            <if test="req.zgswjDm != null  and req.zgswjDm != ''">and JF.ZGSWJ_DM = #{req.zgswjDm}</if>
+            <if test="req.skssqq != null ">and JF.SKSSQQ &gt;= #{req.skssqq}</if>
+            <if test="req.skssqz != null ">and JF.SKSSQZ &lt;= #{req.skssqz}</if>
+            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">and JF.RKRQ between #{req.beginRkrq} and #{req.endRkrq}</if>
+        </where>
+        GROUP BY
+        jf.DWDM,
+        jf.DEPT_ID,
+        jf.ZGSWJ_DM,
+        date_format(`jf`.`RKRQ`, '%Y')
+    </select>
+
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.xejf.xejftz2023.Xejftz2023Mapper">
+
+    <sql id="selectXetjVo">
+        SELECT T.DWDM                 SJDM,
+               T.DEPT_ID AS           XJDM,
+               T.DEPT_ID AS           deptId,
+               COUNT(T.DJXH)          BS,
+               COUNT(DISTINCT T.DJXH) HS,
+               SUM(T.YBTSE)           YBTSE,
+               SUM(T.JCGHJE)          JCGHJE,
+               SUM(T.HYGHJE)          HYGHJE,
+               SUM(T.SDGHJE)          SDGHJE,
+               SUM(T.CBJJE)           CBJJE,
+               SUM(T.XJGHJE)          XJGHJE,
+               SUM(T.SJGHJE)          SJGHJE,
+               SUM(T.SZGHJE)          SZGHJE,
+               SUM(T.QGGHJE)          QGGHJE,
+               SUM(T.SWJGJE)          SWJGJE,
+               SUM(T.SDSJE)           SDSJE
+        FROM szjfcx T
+    </sql>
+
+    <!-- v1: selectXetjList from Xejf2023Mapper.xml (line 782+) -->
+    <select id="selectXetjList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xejftz2023.vo.Xejftz2023ResVO">
+        <include refid="selectXetjVo"/>
+        <where>
+            1=1
+            and `SPUUID` NOT IN (
+            '9E9224DA4801B9C0F2E750B0F331B658',
+            '1A59022355C1DE8A99ECC72ABA4F73BF',
+            '2C5503CB48B135A193D1C86DC8ED2FBE',
+            '4A19928B0A7B8230730BF3EB1AD70743',
+            '30FB4B3B6A65F4E9EEBE89861E115EAD',
+            '82734748BC80AEAA879EE8D195D30726',
+            '2025CCE085A39457C42135A7137CA719',
+            '53B68C60EFA87234DA01EBA8B9249BA7',
+            '16F9FF83CD0B7B6E075EDCA62126CDE5',
+            '917C47DA338B81CA80BAFE81300BE16C'
+            )
+            <if test="req.djxh != null  and req.djxh != ''">and DJXH = #{req.djxh}</if>
+            <if test="req.shxydm != null  and req.shxydm != ''">and SHXYDM = #{req.shxydm}</if>
+            <if test="req.nsrmc != null  and req.nsrmc != ''">and NSRMC like concat('%', #{req.nsrmc}, '%')</if>
+            <if test="req.deptId != null  and req.deptId != ''">and (DWDM = #{req.deptId} or DEPT_ID = #{req.deptId})</if>
+            <if test="req.zspmDm != null  and req.zspmDm != ''">and ZSPM_DM = #{req.zspmDm}</if>
+        </where>
+        GROUP BY
+        T.DWDM,T.DEPT_ID
+    </select>
+
+</mapper>

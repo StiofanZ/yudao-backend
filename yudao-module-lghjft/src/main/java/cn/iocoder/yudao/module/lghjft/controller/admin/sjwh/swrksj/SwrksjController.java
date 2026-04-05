@@ -38,14 +38,14 @@ public class SwrksjController {
 
     @PostMapping("/create")
     @Operation(summary = "创建税务入库数据")
-    @PreAuthorize("@ss.hasPermission('lghjft:swrksj:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-swrksj:create')")
     public CommonResult<Long> createSwrksj(@Valid @RequestBody SwrksjSaveReqVO createReqVO) {
         return success(swrksjService.createSwrksj(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新税务入库数据")
-    @PreAuthorize("@ss.hasPermission('lghjft:swrksj:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-swrksj:update')")
     public CommonResult<Boolean> updateSwrksj(@Valid @RequestBody SwrksjSaveReqVO updateReqVO) {
         swrksjService.updateSwrksj(updateReqVO);
         return success(true);
@@ -54,7 +54,7 @@ public class SwrksjController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除税务入库数据")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:swrksj:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-swrksj:delete')")
     public CommonResult<Boolean> deleteSwrksj(@RequestParam("id") Long id) {
         swrksjService.deleteSwrksj(id);
         return success(true);
@@ -63,7 +63,7 @@ public class SwrksjController {
     @DeleteMapping("/delete-list")
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除税务入库数据")
-    @PreAuthorize("@ss.hasPermission('lghjft:swrksj:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-swrksj:delete')")
     public CommonResult<Boolean> deleteSwrksjList(@RequestParam("ids") List<Long> ids) {
         swrksjService.deleteSwrksjListByIds(ids);
         return success(true);
@@ -72,7 +72,7 @@ public class SwrksjController {
     @GetMapping("/get")
     @Operation(summary = "获得税务入库数据")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:swrksj:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-swrksj:query')")
     public CommonResult<SwrksjResVO> getSwrksj(@RequestParam("id") Long id) {
         SwrksjDO swrksj = swrksjService.getSwrksj(id);
         return success(BeanUtils.toBean(swrksj, SwrksjResVO.class));
@@ -80,7 +80,7 @@ public class SwrksjController {
 
     @GetMapping("/page")
     @Operation(summary = "获得税务入库数据分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:swrksj:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-swrksj:query')")
     public CommonResult<PageResult<SwrksjResVO>> getSwrksjPage(@Valid SwrksjPageReqVO pageReqVO) {
         PageResult<SwrksjDO> pageResult = swrksjService.getSwrksjPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, SwrksjResVO.class));
@@ -88,7 +88,7 @@ public class SwrksjController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出税务入库数据 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:swrksj:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-swrksj:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportSwrksjExcel(@Valid SwrksjPageReqVO pageReqVO,
                                   HttpServletResponse response) throws IOException {

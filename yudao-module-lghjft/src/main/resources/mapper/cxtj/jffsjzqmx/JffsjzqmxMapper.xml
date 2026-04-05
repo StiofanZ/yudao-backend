@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.jffsjzqmx.JffsjzqmxMapper">
+
+    <!-- v1: selectJffsjzqmxVo from JfmxMapper.xml (line 2288+) -->
+    <sql id="selectJffsjzqmxVo">
+        SELECT T.DWDM                 SJDM,
+               T.DEPT_ID AS           XJDM,
+               T.DEPT_ID AS           deptId,
+               COUNT(T.DJXH)          BS,
+               COUNT(DISTINCT T.DJXH) HS,
+               SUM(T.YBTSE)           YBTSE,
+               SUM(T.JCGHJE)          JCGHJE,
+               SUM(T.HYGHJE)          HYGHJE,
+               SUM(T.SDGHJE)          SDGHJE,
+               SUM(T.CBJJE)           CBJJE,
+               SUM(T.XJGHJE)          XJGHJE,
+               SUM(T.SJGHJE)          SJGHJE,
+               SUM(T.SZGHJE)          SZGHJE,
+               SUM(T.QGGHJE)          QGGHJE,
+               SUM(T.SWJGJE)          SWJGJE,
+               SUM(T.SDSJE)           SDSJE
+        FROM szjfcx T
+    </sql>
+
+    <!-- v1: selectJffsjzqmxList from JfmxMapper.xml (line 2310+) -->
+    <select id="selectJffsjzqmxList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jffsjzqmx.vo.JffsjzqmxResVO">
+        <include refid="selectJffsjzqmxVo"/>
+        <where>
+            1=1
+            <if test="req.djxh != null  and req.djxh != ''">and DJXH = #{req.djxh}</if>
+            <if test="req.shxydm != null  and req.shxydm != ''">and SHXYDM = #{req.shxydm}</if>
+            <if test="req.nsrsbh != null  and req.nsrsbh != ''">and SHXYDM = #{req.nsrsbh}</if>
+            <if test="req.nsrjc != null  and req.nsrjc != ''">and NSRJC=#{req.nsrjc}</if>
+            <if test="req.deptId != null  and req.deptId != ''">and (DWDM = #{req.deptId} or DEPT_ID = #{req.deptId})</if>
+            <if test="req.zgswjDm != null  and req.zgswjDm != ''">and ZGSWJ_DM = #{req.zgswjDm}</if>
+            <if test="req.skssqq != null ">and SKSSQQ &gt;= #{req.skssqq}</if>
+            <if test="req.skssqz != null ">and SKSSQZ &lt;= #{req.skssqz}</if>
+            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">and RKRQ between #{req.beginRkrq} and #{req.endRkrq}</if>
+        </where>
+        GROUP BY
+        T.DWDM,T.DEPT_ID
+    </select>
+
+</mapper>

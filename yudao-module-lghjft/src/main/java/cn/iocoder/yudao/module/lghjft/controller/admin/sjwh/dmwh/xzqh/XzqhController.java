@@ -37,7 +37,7 @@ public class XzqhController {
 
     @GetMapping("/list")
     @Operation(summary = "获得行政区划列表")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-xzqh:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-xzqh:query')")
     public CommonResult<List<XzqhResVO>> getXzqhList(@Valid XzqhListReqVO listReqVO) {
         List<XzqhDO> list = xzqhService.getXzqhList(listReqVO);
         return success(BeanUtils.toBean(list, XzqhResVO.class));
@@ -45,7 +45,7 @@ public class XzqhController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出行政区划 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-xzqh:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-xzqh:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportXzqhExcel(@Valid XzqhListReqVO listReqVO,
                                 HttpServletResponse response) throws IOException {

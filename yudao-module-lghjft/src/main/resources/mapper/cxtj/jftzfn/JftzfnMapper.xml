@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.jftzfn.JftzfnMapper">
+
+    <!-- szjfcx 聚合查询共用 WHERE（与 v1 完全一致） -->
+    <sql id="szjfcxWhere">
+        <where>
+            1=1
+            <if test="query.djxh != null and query.djxh != ''">and DJXH = #{query.djxh}</if>
+            <if test="query.shxydm != null and query.shxydm != ''">and SHXYDM = #{query.shxydm}</if>
+            <if test="query.deptId != null and query.deptId != ''">and (DWDM = #{query.deptId} or DEPT_ID = #{query.deptId})</if>
+            <if test="query.ghjgxzjb != null and query.ghjgxzjb != ''">and GHJGXZJB = #{query.ghjgxzjb}</if>
+            <if test="query.clghbj != null and query.clghbj != ''">and CLGHBJ = #{query.clghbj}</if>
+            <if test="query.hyghbz != null and query.hyghbz != ''">and HYGHBZ = #{query.hyghbz}</if>
+            <if test="query.sdghjgxzjb != null and query.sdghjgxzjb != ''">and SDGHJGXZJB = #{query.sdghjgxzjb}</if>
+            <if test="query.zgswjDm != null and query.zgswjDm != ''">and ZGSWJ_DM = #{query.zgswjDm}</if>
+            <if test="query.zgswskfjDm != null and query.zgswskfjDm != ''">and ZGSWSKFJ_DM = #{query.zgswskfjDm}</if>
+            <if test="query.ssglyDm != null and query.ssglyDm != ''">and SSGLY_DM = #{query.ssglyDm}</if>
+            <if test="query.ghlbDm != null and query.ghlbDm != ''">and GHLB_DM = #{query.ghlbDm}</if>
+            <if test="query.xtlbDm != null and query.xtlbDm != ''">and XTLB_DM = #{query.xtlbDm}</if>
+            <if test="query.zspmDm != null and query.zspmDm != ''">and ZSPM_DM = #{query.zspmDm}</if>
+            <if test="query.skssqq != null">and SKSSQQ &gt;= #{query.skssqq}</if>
+            <if test="query.skssqz != null">and SKSSQZ &lt;= #{query.skssqz}</if>
+            <if test="query.ybtse != null">and YBTSE = #{query.ybtse}</if>
+            <if test="query.beginRkrq != null and query.beginRkrq != '' and query.endRkrq != null and query.endRkrq != ''">and RKRQ between #{query.beginRkrq} and
+                #{query.endRkrq}
+            </if>
+            <if test="query.rkrq != null">and RKRQ like concat(MID(#{query.rkrq}, 1, 4), '%')</if>
+            <if test="query.jsbj != null">
+                and JSBJ IN
+                <foreach collection="query.jsbj" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="query.beginJsrq != null and query.beginJsrq != '' and query.endJsrq != null and query.endJsrq != ''">and JSRQ between #{query.beginJsrq} and
+                #{query.endJsrq}
+            </if>
+            <if test="query.hkpch != null and query.hkpch != ''">and HKPCH = #{query.hkpch}</if>
+            <if test="query.cbjthbj != null and query.cbjthbj != ''">and CBJTHBJ = #{query.cbjthbj}</if>
+            <if test="query.xwlx != null">and XWLX = #{query.xwlx}</if>
+        </where>
+    </sql>
+
+    <!-- selectJftzfnList 台账年度汇总（v1 /listtzfn） -->
+    <select id="selectJftzfnList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jftzfn.vo.JftzfnSummaryResVO">
+        SELECT t.DWDM AS sjdm, t.DEPT_ID AS xjdm, T.DEPT_ID AS deptId,
+        date_format(T.RKRQ, '%Y') AS nd,
+        COUNT(T.DJXH) AS bs, COUNT(DISTINCT T.DJXH) AS hs,
+        SUM(T.YBTSE) AS ybtse, SUM(T.JCGHJE) AS jcghje, SUM(T.HYGHJE) AS hyghje,
+        SUM(T.SDGHJE) AS sdghje, SUM(T.CBJJE) AS cbjje, SUM(T.XJGHJE) AS xjghje,
+        SUM(T.SJGHJE) AS sjghje, SUM(T.SZGHJE) AS szghje, SUM(T.QGGHJE) AS qgghje,
+        SUM(T.SWJGJE) AS swjgje, SUM(T.SDSJE) AS sdsje
+        FROM szjfcx T
+        <include refid="szjfcxWhere"/>
+        GROUP BY t.DWDM, t.DEPT_ID, date_format(T.RKRQ, '%Y')
+    </select>
+
+</mapper>

@@ -37,14 +37,14 @@ public class XwqyjfController {
 
     @PostMapping("/create")
     @Operation(summary = "创建小微企业经费明细")
-    @PreAuthorize("@ss.hasPermission('lghjft:xwqyjf:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqyjf:create')")
     public CommonResult<Long> createXwqyjf(@Valid @RequestBody XwqyjfSaveReqVO createReqVO) {
         return success(xwqyjfService.createXwqyjf(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新小微企业经费明细")
-    @PreAuthorize("@ss.hasPermission('lghjft:xwqyjf:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqyjf:update')")
     public CommonResult<Boolean> updateXwqyjf(@Valid @RequestBody XwqyjfSaveReqVO updateReqVO) {
         xwqyjfService.updateXwqyjf(updateReqVO);
         return success(true);
@@ -53,7 +53,7 @@ public class XwqyjfController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除小微企业经费明细")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:xwqyjf:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqyjf:delete')")
     public CommonResult<Boolean> deleteXwqyjf(@RequestParam("id") Long id) {
         xwqyjfService.deleteXwqyjf(id);
         return success(true);
@@ -62,7 +62,7 @@ public class XwqyjfController {
     @DeleteMapping("/delete-list")
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除小微企业经费明细")
-    @PreAuthorize("@ss.hasPermission('lghjft:xwqyjf:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqyjf:delete')")
     public CommonResult<Boolean> deleteXwqyjfList(@RequestParam("ids") List<Long> ids) {
         xwqyjfService.deleteXwqyjfListByIds(ids);
         return success(true);
@@ -71,28 +71,28 @@ public class XwqyjfController {
     @GetMapping("/get")
     @Operation(summary = "获得小微企业经费明细")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:xwqyjf:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqyjf:query')")
     public CommonResult<XwqyjfDO> getXwqyjf(@RequestParam("id") Long id) {
         return success(xwqyjfService.getXwqyjf(id));
     }
 
     @GetMapping("/page")
     @Operation(summary = "获得小微企业经费95%明细分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:xwqyjf:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqyjf:query')")
     public CommonResult<PageResult<XwqyjfDO>> getXwqyjfPage(@Valid XwqyjfPageReqVO pageReqVO) {
         return success(xwqyjfService.getXwqyjfPage(pageReqVO));
     }
 
     @GetMapping("/page-yf")
     @Operation(summary = "获得小微企业经费60%明细分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:xwqyjf:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqyjf:query')")
     public CommonResult<PageResult<XwqyjfDO>> getXwqyjfPageYf(@Valid XwqyjfPageReqVO pageReqVO) {
         return success(xwqyjfService.getXwqyjfPageYf(pageReqVO));
     }
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出小微企业经费95%明细 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:xwqyjf:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqyjf:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportXwqyjfExcel(@Valid XwqyjfPageReqVO pageReqVO,
                                   HttpServletResponse response) throws IOException {
@@ -103,7 +103,7 @@ public class XwqyjfController {
 
     @GetMapping("/export-excel-yf")
     @Operation(summary = "导出小微企业经费60%明细 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:xwqyjf:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqyjf:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportXwqyjfYfExcel(@Valid XwqyjfPageReqVO pageReqVO,
                                     HttpServletResponse response) throws IOException {

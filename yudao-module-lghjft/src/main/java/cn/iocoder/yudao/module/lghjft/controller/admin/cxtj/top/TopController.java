@@ -41,7 +41,7 @@ public class TopController {
     @GetMapping("/get")
     @Operation(summary = "获得缴费排行")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:top:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-top:query')")
     public CommonResult<TopResVO> getTop(@RequestParam("id") String id) {
         TopDO obj = topService.getTop(id);
         return success(BeanUtils.toBean(obj, TopResVO.class));
@@ -49,7 +49,7 @@ public class TopController {
 
     @GetMapping("/page")
     @Operation(summary = "获得缴费排行分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:top:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-top:query')")
     public CommonResult<PageResult<TopResVO>> getTopPage(@Valid TopPageReqVO pageReqVO) {
         PageResult<TopDO> pageResult = topService.getTopPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, TopResVO.class));
@@ -57,7 +57,7 @@ public class TopController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出缴费排行 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:top:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-top:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportTopExcel(@Valid TopPageReqVO pageReqVO,
                                HttpServletResponse response) throws IOException {

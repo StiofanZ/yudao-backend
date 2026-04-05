@@ -38,14 +38,14 @@ public class CsFpblController {
 
     @PostMapping("/create")
     @Operation(summary = "创建分配比例")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-fpbl:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-fpbl:create')")
     public CommonResult<Long> createCsFpbl(@Valid @RequestBody CsFpblSaveReqVO createReqVO) {
         return success(csFpblService.createCsFpbl(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新分配比例")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-fpbl:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-fpbl:update')")
     public CommonResult<Boolean> updateCsFpbl(@Valid @RequestBody CsFpblSaveReqVO updateReqVO) {
         csFpblService.updateCsFpbl(updateReqVO);
         return success(true);
@@ -54,7 +54,7 @@ public class CsFpblController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除分配比例")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-fpbl:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-fpbl:delete')")
     public CommonResult<Boolean> deleteCsFpbl(@RequestParam("id") Long id) {
         csFpblService.deleteCsFpbl(id);
         return success(true);
@@ -63,7 +63,7 @@ public class CsFpblController {
     @DeleteMapping("/delete-list")
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除分配比例")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-fpbl:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-fpbl:delete')")
     public CommonResult<Boolean> deleteCsFpblList(@RequestParam("ids") List<Long> ids) {
         csFpblService.deleteCsFpblListByIds(ids);
         return success(true);
@@ -72,7 +72,7 @@ public class CsFpblController {
     @GetMapping("/get")
     @Operation(summary = "获得分配比例")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-fpbl:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-fpbl:query')")
     public CommonResult<CsFpblResVO> getCsFpbl(@RequestParam("id") Long id) {
         CsFpblDO obj = csFpblService.getCsFpbl(id);
         return success(BeanUtils.toBean(obj, CsFpblResVO.class));
@@ -80,7 +80,7 @@ public class CsFpblController {
 
     @GetMapping("/page")
     @Operation(summary = "获得分配比例分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-fpbl:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-fpbl:query')")
     public CommonResult<PageResult<CsFpblResVO>> getCsFpblPage(@Valid CsFpblPageReqVO pageReqVO) {
         PageResult<CsFpblDO> pageResult = csFpblService.getCsFpblPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, CsFpblResVO.class));
@@ -88,7 +88,7 @@ public class CsFpblController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出分配比例 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-fpbl:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-fpbl:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportCsFpblExcel(@Valid CsFpblPageReqVO pageReqVO,
                                   HttpServletResponse response) throws IOException {

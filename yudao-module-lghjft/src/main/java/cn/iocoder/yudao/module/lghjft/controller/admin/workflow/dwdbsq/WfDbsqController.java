@@ -28,7 +28,7 @@ public class WfDbsqController {
 
     @PostMapping("/create")
     @Operation(summary = "创建工会隶属关系调拨申请")
-    @PreAuthorize("@ss.hasPermission('lghjft:wf-dbsq:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:workflow-dwdbsq:create')")
     public CommonResult<Long> createWfDbsq(@Valid @RequestBody WfDbsqSaveReqVO createReqVO) {
         return success(wfDbsqService.create(createReqVO));
     }
@@ -36,7 +36,7 @@ public class WfDbsqController {
     @GetMapping("/get")
     @Operation(summary = "获得工会隶属关系调拨申请")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:wf-dbsq:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:workflow-dwdbsq:query')")
     public CommonResult<WfDbsqResVO> getWfDbsq(@RequestParam("id") Long id) {
         WfDbsqResVO wfDbsq = wfDbsqService.getDetail(id);
         return success(BeanUtils.toBean(wfDbsq, WfDbsqResVO.class));

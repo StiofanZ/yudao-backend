@@ -38,14 +38,14 @@ public class SzjffydsqkController {
 
     @PostMapping("/create")
     @Operation(summary = "创建分月代收情况(入库)")
-    @PreAuthorize("@ss.hasPermission('lghjft:szjffydsqk:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-szjffydsqk:create')")
     public CommonResult<String> createSzjffydsqk(@Valid @RequestBody SzjffydsqkSaveReqVO createReqVO) {
         return success(szjffydsqkService.createSzjffydsqk(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新分月代收情况(入库)")
-    @PreAuthorize("@ss.hasPermission('lghjft:szjffydsqk:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-szjffydsqk:update')")
     public CommonResult<Boolean> updateSzjffydsqk(@Valid @RequestBody SzjffydsqkSaveReqVO updateReqVO) {
         szjffydsqkService.updateSzjffydsqk(updateReqVO);
         return success(true);
@@ -54,7 +54,7 @@ public class SzjffydsqkController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除分月代收情况(入库)")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:szjffydsqk:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-szjffydsqk:delete')")
     public CommonResult<Boolean> deleteSzjffydsqk(@RequestParam("id") String id) {
         szjffydsqkService.deleteSzjffydsqk(id);
         return success(true);
@@ -63,7 +63,7 @@ public class SzjffydsqkController {
     @DeleteMapping("/delete-list")
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除分月代收情况(入库)")
-    @PreAuthorize("@ss.hasPermission('lghjft:szjffydsqk:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-szjffydsqk:delete')")
     public CommonResult<Boolean> deleteSzjffydsqkList(@RequestParam("ids") List<String> ids) {
         szjffydsqkService.deleteSzjffydsqkListByIds(ids);
         return success(true);
@@ -72,7 +72,7 @@ public class SzjffydsqkController {
     @GetMapping("/get")
     @Operation(summary = "获得分月代收情况(入库)")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:szjffydsqk:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-szjffydsqk:query')")
     public CommonResult<SzjffydsqkResVO> getSzjffydsqk(@RequestParam("id") String id) {
         SzjffydsqkDO obj = szjffydsqkService.getSzjffydsqk(id);
         return success(BeanUtils.toBean(obj, SzjffydsqkResVO.class));
@@ -80,7 +80,7 @@ public class SzjffydsqkController {
 
     @GetMapping("/page")
     @Operation(summary = "获得分月代收情况(入库)分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:szjffydsqk:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-szjffydsqk:query')")
     public CommonResult<PageResult<SzjffydsqkResVO>> getSzjffydsqkPage(@Valid SzjffydsqkPageReqVO pageReqVO) {
         PageResult<SzjffydsqkDO> pageResult = szjffydsqkService.getSzjffydsqkPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, SzjffydsqkResVO.class));
@@ -88,7 +88,7 @@ public class SzjffydsqkController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出分月代收情况(入库) Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:szjffydsqk:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-szjffydsqk:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportSzjffydsqkExcel(@Valid SzjffydsqkPageReqVO pageReqVO,
                                       HttpServletResponse response) throws IOException {

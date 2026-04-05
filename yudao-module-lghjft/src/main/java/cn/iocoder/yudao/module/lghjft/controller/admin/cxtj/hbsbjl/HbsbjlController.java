@@ -38,14 +38,14 @@ public class HbsbjlController {
 
     @PostMapping("/create")
     @Operation(summary = "创建划拨失败记录")
-    @PreAuthorize("@ss.hasPermission('lghjft:hbsbjl:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-hbsbjl:create')")
     public CommonResult<Long> createHbsbjl(@Valid @RequestBody HbsbjlSaveReqVO createReqVO) {
         return success(hbsbjlService.createHbsbjl(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新划拨失败记录")
-    @PreAuthorize("@ss.hasPermission('lghjft:hbsbjl:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-hbsbjl:update')")
     public CommonResult<Boolean> updateHbsbjl(@Valid @RequestBody HbsbjlSaveReqVO updateReqVO) {
         hbsbjlService.updateHbsbjl(updateReqVO);
         return success(true);
@@ -54,7 +54,7 @@ public class HbsbjlController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除划拨失败记录")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:hbsbjl:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-hbsbjl:delete')")
     public CommonResult<Boolean> deleteHbsbjl(@RequestParam("id") Long id) {
         hbsbjlService.deleteHbsbjl(id);
         return success(true);
@@ -63,7 +63,7 @@ public class HbsbjlController {
     @DeleteMapping("/delete-list")
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除划拨失败记录")
-    @PreAuthorize("@ss.hasPermission('lghjft:hbsbjl:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-hbsbjl:delete')")
     public CommonResult<Boolean> deleteHbsbjlList(@RequestParam("ids") List<Long> ids) {
         hbsbjlService.deleteHbsbjlListByIds(ids);
         return success(true);
@@ -72,7 +72,7 @@ public class HbsbjlController {
     @GetMapping("/get")
     @Operation(summary = "获得划拨失败记录")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:hbsbjl:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-hbsbjl:query')")
     public CommonResult<HbsbjlResVO> getHbsbjl(@RequestParam("id") Long id) {
         HbsbjlDO obj = hbsbjlService.getHbsbjl(id);
         return success(BeanUtils.toBean(obj, HbsbjlResVO.class));
@@ -80,7 +80,7 @@ public class HbsbjlController {
 
     @GetMapping("/page")
     @Operation(summary = "获得划拨失败记录分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:hbsbjl:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-hbsbjl:query')")
     public CommonResult<PageResult<HbsbjlResVO>> getHbsbjlPage(@Valid HbsbjlPageReqVO pageReqVO) {
         PageResult<HbsbjlDO> pageResult = hbsbjlService.getHbsbjlPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, HbsbjlResVO.class));
@@ -88,7 +88,7 @@ public class HbsbjlController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出划拨失败记录 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:hbsbjl:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-hbsbjl:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportHbsbjlExcel(@Valid HbsbjlPageReqVO pageReqVO,
                                   HttpServletResponse response) throws IOException {

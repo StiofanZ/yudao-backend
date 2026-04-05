@@ -32,14 +32,14 @@ public class XebfzbController {
 
     @PostMapping("/create")
     @Operation(summary = "创建小额拨付占比")
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xebfzb:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xebfzb:create')")
     public CommonResult<String> create(@Valid @RequestBody XebfzbSaveReqVO createReqVO) {
         return success(xebfzbService.createXebfzb(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新小额拨付占比")
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xebfzb:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xebfzb:update')")
     public CommonResult<Boolean> update(@Valid @RequestBody XebfzbSaveReqVO updateReqVO) {
         xebfzbService.updateXebfzb(updateReqVO);
         return success(true);
@@ -48,7 +48,7 @@ public class XebfzbController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除小额拨付占比")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xebfzb:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xebfzb:delete')")
     public CommonResult<Boolean> delete(@RequestParam("id") String id) {
         xebfzbService.deleteXebfzb(id);
         return success(true);
@@ -57,7 +57,7 @@ public class XebfzbController {
     @DeleteMapping("/delete-list")
     @Operation(summary = "批量删除小额拨付占比")
     @Parameter(name = "ids", description = "编号列表", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xebfzb:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xebfzb:delete')")
     public CommonResult<Boolean> deleteList(@RequestParam("ids") List<String> ids) {
         xebfzbService.deleteXebfzbListByIds(ids);
         return success(true);
@@ -66,7 +66,7 @@ public class XebfzbController {
     @GetMapping("/get")
     @Operation(summary = "获得小额拨付占比")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xebfzb:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xebfzb:query')")
     public CommonResult<XebfzbResVO> get(@RequestParam("id") String id) {
         XebfzbDO data = xebfzbService.getXebfzb(id);
         return success(BeanUtils.toBean(data, XebfzbResVO.class));
@@ -74,7 +74,7 @@ public class XebfzbController {
 
     @GetMapping("/page")
     @Operation(summary = "获得小额拨付占比分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xebfzb:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xebfzb:query')")
     public CommonResult<PageResult<XebfzbResVO>> page(@Valid XebfzbPageReqVO pageReqVO) {
         PageResult<XebfzbDO> pageResult = xebfzbService.getXebfzbPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, XebfzbResVO.class));

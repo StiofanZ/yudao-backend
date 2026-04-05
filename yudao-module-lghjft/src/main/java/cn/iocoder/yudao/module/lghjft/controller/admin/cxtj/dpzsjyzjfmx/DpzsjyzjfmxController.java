@@ -41,7 +41,7 @@ public class DpzsjyzjfmxController {
     @GetMapping("/get")
     @Operation(summary = "获得近一周缴费")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:dpzsjyzjfmx:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-dpzsjyzjfmx:query')")
     public CommonResult<DpzsjyzjfmxResVO> getDpzsjyzjfmx(@RequestParam("id") String id) {
         DpzsjyzjfmxDO obj = dpzsjyzjfmxService.getDpzsjyzjfmx(id);
         return success(BeanUtils.toBean(obj, DpzsjyzjfmxResVO.class));
@@ -49,7 +49,7 @@ public class DpzsjyzjfmxController {
 
     @GetMapping("/page")
     @Operation(summary = "获得近一周缴费分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:dpzsjyzjfmx:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-dpzsjyzjfmx:query')")
     public CommonResult<PageResult<DpzsjyzjfmxResVO>> getDpzsjyzjfmxPage(@Valid DpzsjyzjfmxPageReqVO pageReqVO) {
         PageResult<DpzsjyzjfmxDO> pageResult = dpzsjyzjfmxService.getDpzsjyzjfmxPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, DpzsjyzjfmxResVO.class));
@@ -57,7 +57,7 @@ public class DpzsjyzjfmxController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出近一周缴费 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:dpzsjyzjfmx:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-dpzsjyzjfmx:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportDpzsjyzjfmxExcel(@Valid DpzsjyzjfmxPageReqVO pageReqVO,
                                        HttpServletResponse response) throws IOException {

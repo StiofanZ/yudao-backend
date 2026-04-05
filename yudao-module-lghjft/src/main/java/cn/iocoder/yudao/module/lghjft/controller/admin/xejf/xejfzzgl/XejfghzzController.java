@@ -32,14 +32,14 @@ public class XejfghzzController {
 
     @PostMapping("/create")
     @Operation(summary = "创建小额缴费组织管理")
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xejfzzgl:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xejfzzgl:create')")
     public CommonResult<String> create(@Valid @RequestBody XejfghzzSaveReqVO createReqVO) {
         return success(xejfghzzService.createXejfghzz(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新小额缴费组织管理")
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xejfzzgl:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xejfzzgl:update')")
     public CommonResult<Boolean> update(@Valid @RequestBody XejfghzzSaveReqVO updateReqVO) {
         xejfghzzService.updateXejfghzz(updateReqVO);
         return success(true);
@@ -48,7 +48,7 @@ public class XejfghzzController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除小额缴费组织管理")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xejfzzgl:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xejfzzgl:delete')")
     public CommonResult<Boolean> delete(@RequestParam("id") String id) {
         xejfghzzService.deleteXejfghzz(id);
         return success(true);
@@ -57,7 +57,7 @@ public class XejfghzzController {
     @DeleteMapping("/delete-list")
     @Operation(summary = "批量删除小额缴费组织管理")
     @Parameter(name = "ids", description = "编号列表", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xejfzzgl:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xejfzzgl:delete')")
     public CommonResult<Boolean> deleteList(@RequestParam("ids") List<String> ids) {
         xejfghzzService.deleteXejfghzzListByIds(ids);
         return success(true);
@@ -66,7 +66,7 @@ public class XejfghzzController {
     @GetMapping("/get")
     @Operation(summary = "获得小额缴费组织管理")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xejfzzgl:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xejfzzgl:query')")
     public CommonResult<XejfghzzResVO> get(@RequestParam("id") String id) {
         XejfghzzDO data = xejfghzzService.getXejfghzz(id);
         return success(BeanUtils.toBean(data, XejfghzzResVO.class));
@@ -74,7 +74,7 @@ public class XejfghzzController {
 
     @GetMapping("/page")
     @Operation(summary = "获得小额缴费组织管理分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xejfzzgl:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xejfzzgl:query')")
     public CommonResult<PageResult<XejfghzzResVO>> page(@Valid XejfghzzPageReqVO pageReqVO) {
         PageResult<XejfghzzDO> pageResult = xejfghzzService.getXejfghzzPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, XejfghzzResVO.class));

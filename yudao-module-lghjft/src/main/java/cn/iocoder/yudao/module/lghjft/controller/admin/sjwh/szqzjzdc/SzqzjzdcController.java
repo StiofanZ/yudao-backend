@@ -41,7 +41,7 @@ public class SzqzjzdcController {
     @GetMapping("/get")
     @Operation(summary = "获得省总做账导出")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:sjwh:szqzjzdc:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-szqzjzdc:query')")
     public CommonResult<SzqzjzdcResVO> getSzqzjzdc(@RequestParam("id") String id) {
         SzqzjzdcDO szqzjzdc = szqzjzdcService.getSzqzjzdc(id);
         return success(BeanUtils.toBean(szqzjzdc, SzqzjzdcResVO.class));
@@ -49,7 +49,7 @@ public class SzqzjzdcController {
 
     @GetMapping("/page")
     @Operation(summary = "获得省总做账导出分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:sjwh:szqzjzdc:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-szqzjzdc:query')")
     public CommonResult<PageResult<SzqzjzdcResVO>> getSzqzjzdcPage(@Valid SzqzjzdcPageReqVO pageReqVO) {
         PageResult<SzqzjzdcDO> pageResult = szqzjzdcService.getSzqzjzdcPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, SzqzjzdcResVO.class));
@@ -57,7 +57,7 @@ public class SzqzjzdcController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出省总做账导出 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:sjwh:szqzjzdc:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-szqzjzdc:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportSzqzjzdcExcel(@Valid SzqzjzdcPageReqVO pageReqVO,
                                     HttpServletResponse response) throws IOException {

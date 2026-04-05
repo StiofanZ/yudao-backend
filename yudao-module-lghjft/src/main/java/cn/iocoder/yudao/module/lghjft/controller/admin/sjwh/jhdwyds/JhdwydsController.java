@@ -38,14 +38,14 @@ public class JhdwydsController {
 
     @PostMapping("/create")
     @Operation(summary = "创建应代收单位")
-    @PreAuthorize("@ss.hasPermission('lghjft:jhdwyds:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-jhdwyds:create')")
     public CommonResult<Integer> createjhdwyds(@Valid @RequestBody JhdwydsSaveReqVO createReqVO) {
         return success(JhdwydsService.createjhdwyds(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新应代收单位")
-    @PreAuthorize("@ss.hasPermission('lghjft:jhdwyds:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-jhdwyds:update')")
     public CommonResult<Boolean> updatejhdwyds(@Valid @RequestBody JhdwydsSaveReqVO updateReqVO) {
         JhdwydsService.updatejhdwyds(updateReqVO);
         return success(true);
@@ -54,7 +54,7 @@ public class JhdwydsController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除应代收单位")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:jhdwyds:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-jhdwyds:delete')")
     public CommonResult<Boolean> deletejhdwyds(@RequestParam("id") Integer id) {
         JhdwydsService.deletejhdwyds(id);
         return success(true);
@@ -63,7 +63,7 @@ public class JhdwydsController {
     @DeleteMapping("/delete-list")
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除应代收单位")
-    @PreAuthorize("@ss.hasPermission('lghjft:jhdwyds:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-jhdwyds:delete')")
     public CommonResult<Boolean> deletejhdwydsList(@RequestParam("ids") List<Integer> ids) {
         JhdwydsService.deletejhdwydsListByIds(ids);
         return success(true);
@@ -72,7 +72,7 @@ public class JhdwydsController {
     @GetMapping("/get")
     @Operation(summary = "获得应代收单位")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:jhdwyds:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-jhdwyds:query')")
     public CommonResult<JhdwydsResVO> getjhdwyds(@RequestParam("id") Integer id) {
         JhdwydsDO jhdwyds = JhdwydsService.getjhdwyds(id);
         return success(BeanUtils.toBean(jhdwyds, JhdwydsResVO.class));
@@ -80,7 +80,7 @@ public class JhdwydsController {
 
     @GetMapping("/page")
     @Operation(summary = "获得应代收单位分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:jhdwyds:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-jhdwyds:query')")
     public CommonResult<PageResult<JhdwydsResVO>> getjhdwydsPage(@Valid JhdwydsPageReqVO pageReqVO) {
         PageResult<JhdwydsDO> pageResult = JhdwydsService.getjhdwydsPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, JhdwydsResVO.class));
@@ -88,7 +88,7 @@ public class JhdwydsController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出应代收单位 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:jhdwyds:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-jhdwyds:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportjhdwydsExcel(@Valid JhdwydsPageReqVO pageReqVO,
                                    HttpServletResponse response) throws IOException {

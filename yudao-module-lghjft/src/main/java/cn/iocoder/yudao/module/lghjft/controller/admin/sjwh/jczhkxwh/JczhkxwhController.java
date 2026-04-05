@@ -38,14 +38,14 @@ public class JczhkxwhController {
 
     @PostMapping("/create")
     @Operation(summary = "创建基层账户空需维护")
-    @PreAuthorize("@ss.hasPermission('lghjft:jczhkxwh:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-jczhkxwh:create')")
     public CommonResult<String> createJczhkxwh(@Valid @RequestBody JczhkxwhSaveReqVO createReqVO) {
         return success(jczhkxwhService.createJczhkxwh(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新基层账户空需维护")
-    @PreAuthorize("@ss.hasPermission('lghjft:jczhkxwh:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-jczhkxwh:update')")
     public CommonResult<Boolean> updateJczhkxwh(@Valid @RequestBody JczhkxwhSaveReqVO updateReqVO) {
         jczhkxwhService.updateJczhkxwh(updateReqVO);
         return success(true);
@@ -54,7 +54,7 @@ public class JczhkxwhController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除基层账户空需维护")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:jczhkxwh:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-jczhkxwh:delete')")
     public CommonResult<Boolean> deleteJczhkxwh(@RequestParam("id") String id) {
         jczhkxwhService.deleteJczhkxwh(id);
         return success(true);
@@ -63,7 +63,7 @@ public class JczhkxwhController {
     @DeleteMapping("/delete-list")
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除基层账户空需维护")
-    @PreAuthorize("@ss.hasPermission('lghjft:jczhkxwh:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-jczhkxwh:delete')")
     public CommonResult<Boolean> deleteJczhkxwhList(@RequestParam("ids") List<String> ids) {
         jczhkxwhService.deleteJczhkxwhListByIds(ids);
         return success(true);
@@ -72,7 +72,7 @@ public class JczhkxwhController {
     @GetMapping("/get")
     @Operation(summary = "获得基层账户空需维护")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:jczhkxwh:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-jczhkxwh:query')")
     public CommonResult<JczhkxwhResVO> getJczhkxwh(@RequestParam("id") String id) {
         JczhkxwhDO jczhkxwh = jczhkxwhService.getJczhkxwh(id);
         return success(BeanUtils.toBean(jczhkxwh, JczhkxwhResVO.class));
@@ -80,7 +80,7 @@ public class JczhkxwhController {
 
     @GetMapping("/page")
     @Operation(summary = "获得基层账户空需维护分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:jczhkxwh:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-jczhkxwh:query')")
     public CommonResult<PageResult<JczhkxwhResVO>> getJczhkxwhPage(@Valid JczhkxwhPageReqVO pageReqVO) {
         PageResult<JczhkxwhDO> pageResult = jczhkxwhService.getJczhkxwhPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, JczhkxwhResVO.class));
@@ -88,7 +88,7 @@ public class JczhkxwhController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出基层账户空需维护 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:jczhkxwh:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-jczhkxwh:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportJczhkxwhExcel(@Valid JczhkxwhPageReqVO pageReqVO,
                                     HttpServletResponse response) throws IOException {

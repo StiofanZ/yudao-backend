@@ -39,14 +39,14 @@ public class HjflController {
 
     @PostMapping("/create")
     @Operation(summary = "创建户籍分类")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-hjfl:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-hjfl:create')")
     public CommonResult<Integer> createHjfl(@Valid @RequestBody HjflSaveReqVO createReqVO) {
         return success(hjflService.createHjfl(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新户籍分类")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-hjfl:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-hjfl:update')")
     public CommonResult<Boolean> updateHjfl(@Valid @RequestBody HjflSaveReqVO updateReqVO) {
         hjflService.updateHjfl(updateReqVO);
         return success(true);
@@ -55,7 +55,7 @@ public class HjflController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除户籍分类")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-hjfl:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-hjfl:delete')")
     public CommonResult<Boolean> deleteHjfl(@RequestParam("id") Integer id) {
         hjflService.deleteHjfl(id);
         return success(true);
@@ -64,7 +64,7 @@ public class HjflController {
     @DeleteMapping("/delete-list")
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除户籍分类")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-hjfl:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-hjfl:delete')")
     public CommonResult<Boolean> deleteHjflList(@RequestParam("ids") List<Integer> ids) {
         hjflService.deleteHjflListByIds(ids);
         return success(true);
@@ -73,7 +73,7 @@ public class HjflController {
     @GetMapping("/get")
     @Operation(summary = "获得户籍分类")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-hjfl:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-hjfl:query')")
     public CommonResult<HjflResVO> getHjfl(@RequestParam("id") Integer id) {
         HjflDO hjfl = hjflService.getHjfl(id);
         return success(BeanUtils.toBean(hjfl, HjflResVO.class));
@@ -81,7 +81,7 @@ public class HjflController {
 
     @GetMapping("/page")
     @Operation(summary = "获得户籍分类分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-hjfl:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-hjfl:query')")
     public CommonResult<PageResult<HjflResVO>> getHjflPage(@Valid HjflPageReqVO pageReqVO) {
         PageResult<HjflDO> pageResult = hjflService.getHjflPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, HjflResVO.class));
@@ -89,7 +89,7 @@ public class HjflController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出户籍分类 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:dmwh-hjfl:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-hjfl:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportHjflExcel(@Valid HjflPageReqVO pageReqVO,
                                 HttpServletResponse response) throws IOException {

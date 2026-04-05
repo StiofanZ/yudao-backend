@@ -418,6 +418,15 @@ private String keyword;
     @Schema(description = "小微类型")
     private String xwlx;
 
+    @Schema(description = "小额类型23")
+    private List<String> xelx23;
+
+    @Schema(description = "小额类型24")
+    private List<String> xelx24;
+
+    @Schema(description = "小额类型25")
+    private List<String> xelx25;
+
     @Schema(description = "划款批次-开始")
     private String beginHkpch;
 

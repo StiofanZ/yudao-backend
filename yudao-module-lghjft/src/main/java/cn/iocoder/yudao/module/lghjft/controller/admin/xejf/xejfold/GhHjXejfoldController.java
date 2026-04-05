@@ -32,14 +32,14 @@ public class GhHjXejfoldController {
 
     @PostMapping("/create")
     @Operation(summary = "创建23年小额确认")
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xejfold:create')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xejfold:create')")
     public CommonResult<String> create(@Valid @RequestBody GhHjXejfoldSaveReqVO createReqVO) {
         return success(ghHjXejfoldService.createGhHjXejfold(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新23年小额确认")
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xejfold:update')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xejfold:update')")
     public CommonResult<Boolean> update(@Valid @RequestBody GhHjXejfoldSaveReqVO updateReqVO) {
         ghHjXejfoldService.updateGhHjXejfold(updateReqVO);
         return success(true);
@@ -48,7 +48,7 @@ public class GhHjXejfoldController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除23年小额确认")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xejfold:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xejfold:delete')")
     public CommonResult<Boolean> delete(@RequestParam("id") String id) {
         ghHjXejfoldService.deleteGhHjXejfold(id);
         return success(true);
@@ -57,7 +57,7 @@ public class GhHjXejfoldController {
     @DeleteMapping("/delete-list")
     @Operation(summary = "批量删除23年小额确认")
     @Parameter(name = "ids", description = "编号列表", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xejfold:delete')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xejfold:delete')")
     public CommonResult<Boolean> deleteList(@RequestParam("ids") List<String> ids) {
         ghHjXejfoldService.deleteGhHjXejfoldListByIds(ids);
         return success(true);
@@ -66,7 +66,7 @@ public class GhHjXejfoldController {
     @GetMapping("/get")
     @Operation(summary = "获得23年小额确认")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xejfold:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xejfold:query')")
     public CommonResult<GhHjXejfoldResVO> get(@RequestParam("id") String id) {
         GhHjXejfoldDO data = ghHjXejfoldService.getGhHjXejfold(id);
         return success(BeanUtils.toBean(data, GhHjXejfoldResVO.class));
@@ -74,7 +74,7 @@ public class GhHjXejfoldController {
 
     @GetMapping("/page")
     @Operation(summary = "获得23年小额确认分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xejfold:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xejfold:query')")
     public CommonResult<PageResult<GhHjXejfoldResVO>> page(@Valid GhHjXejfoldPageReqVO pageReqVO) {
         PageResult<GhHjXejfoldDO> pageResult = ghHjXejfoldService.getGhHjXejfoldPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, GhHjXejfoldResVO.class));

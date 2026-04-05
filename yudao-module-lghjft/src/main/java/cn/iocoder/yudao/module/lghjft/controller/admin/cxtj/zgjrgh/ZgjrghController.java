@@ -41,7 +41,7 @@ public class ZgjrghController {
     @GetMapping("/get")
     @Operation(summary = "获得金融工会信息核对")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:zgjrgh:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-zgjrgh:query')")
     public CommonResult<ZgjrghResVO> getZgjrgh(@RequestParam("id") Long id) {
         ZgjrghDO obj = zgjrghService.getZgjrgh(id);
         return success(BeanUtils.toBean(obj, ZgjrghResVO.class));
@@ -49,7 +49,7 @@ public class ZgjrghController {
 
     @GetMapping("/page")
     @Operation(summary = "获得金融工会信息核对分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:zgjrgh:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-zgjrgh:query')")
     public CommonResult<PageResult<ZgjrghResVO>> getZgjrghPage(@Valid ZgjrghPageReqVO pageReqVO) {
         PageResult<ZgjrghDO> pageResult = zgjrghService.getZgjrghPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, ZgjrghResVO.class));
@@ -57,7 +57,7 @@ public class ZgjrghController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出金融工会信息核对 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:zgjrgh:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-zgjrgh:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportZgjrghExcel(@Valid ZgjrghPageReqVO pageReqVO,
                                   HttpServletResponse response) throws IOException {

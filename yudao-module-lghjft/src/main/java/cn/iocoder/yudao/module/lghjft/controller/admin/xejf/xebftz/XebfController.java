@@ -43,7 +43,7 @@ public class XebfController {
     @GetMapping("/get")
     @Operation(summary = "获得小额缴费拨付台账")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xebftz:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xebftz:query')")
     public CommonResult<XebfResVO> get(@RequestParam("id") Long id) {
         XebfDO data = xebfService.getXebf(id);
         return success(BeanUtils.toBean(data, XebfResVO.class));
@@ -51,7 +51,7 @@ public class XebfController {
 
     @GetMapping("/page")
     @Operation(summary = "获得小额缴费拨付台账分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xebftz:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xebftz:query')")
     public CommonResult<PageResult<XebfResVO>> page(@Valid XebfPageReqVO pageReqVO) {
         PageResult<XebfDO> pageResult = xebfService.getXebfPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, XebfResVO.class));
@@ -59,7 +59,7 @@ public class XebfController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出小额缴费拨付台账 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xebftz:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xebftz:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportXebfExcel(@Valid XebfPageReqVO pageReqVO,
                                 HttpServletResponse response) throws IOException {
@@ -74,7 +74,7 @@ public class XebfController {
      */
     @GetMapping("/list-sz")
     @Operation(summary = "获得小额拨付省总列表")
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:hkxxxejf:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-hkxxxejf:query')")
     public CommonResult<List<GhhkxxxejfszResVO>> listSz(@Valid GhhkxxxejfszReqVO reqVO) {
         List<GhhkxxxejfszResVO> list = xebfService.getGhHkxxxejfszList(reqVO.getJfqj());
         return success(list);
@@ -85,7 +85,7 @@ public class XebfController {
      */
     @GetMapping("/export-excel-sz")
     @Operation(summary = "导出小额拨付省总 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:xejf:xebftz:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xebftz:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportSzExcel(@Valid GhhkxxxejfszReqVO reqVO,
                               HttpServletResponse response) throws IOException {
