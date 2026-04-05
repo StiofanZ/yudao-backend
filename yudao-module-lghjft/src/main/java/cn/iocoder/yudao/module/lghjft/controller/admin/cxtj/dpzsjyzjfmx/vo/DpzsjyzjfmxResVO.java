@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 近一周缴费 Response VO")
 @Data
@@ -25,13 +24,13 @@ public class DpzsjyzjfmxResVO {
     @Schema(description = "jfdw")
     private String jfdw;
     @Schema(description = "skssqq")
-    private LocalDateTime skssqq;
+    private String skssqq;
     @Schema(description = "skssqz")
-    private LocalDateTime skssqz;
+    private String skssqz;
     @Schema(description = "zspm")
     private String zspm;
     @Schema(description = "jfje")
     private BigDecimal jfje;
     @Schema(description = "jfrq")
-    private LocalDateTime jfrq;
+    private String jfrq;
 }

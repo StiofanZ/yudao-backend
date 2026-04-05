@@ -89,7 +89,7 @@ public class JfmxResVO {
     private String sblbDm;
 
     @Schema(description = "nssbrq")
-    private LocalDateTime nssbrq;
+    private String nssbrq;
 
     @Schema(description = "pzxh")
     private String pzxh;
@@ -98,10 +98,10 @@ public class JfmxResVO {
     private Long pzmxxh;
 
     @Schema(description = "skssqq")
-    private LocalDateTime skssqq;
+    private String skssqq;
 
     @Schema(description = "skssqz")
-    private LocalDateTime skssqz;
+    private String skssqz;
 
     @Schema(description = "zsswjgDm")
     private String zsswjgDm;
@@ -178,13 +178,13 @@ public class JfmxResVO {
     private String jfyh;
 
     @Schema(description = "rkrq")
-    private LocalDateTime rkrq;
+    private String rkrq;
 
     @Schema(description = "jsbj")
     private String jsbj;
 
     @Schema(description = "jsrq")
-    private LocalDateTime jsrq;
+    private String jsrq;
 
     @Schema(description = "jsczy")
     private String jsczy;
@@ -294,7 +294,7 @@ public class JfmxResVO {
     @Schema(description = "cbjthbj")
     private String cbjthbj;
     @Schema(description = "cbjthrq")
-    private LocalDateTime cbjthrq;
+    private String cbjthrq;
     @Schema(description = "cbjthczy")
     private String cbjthczy;
 
