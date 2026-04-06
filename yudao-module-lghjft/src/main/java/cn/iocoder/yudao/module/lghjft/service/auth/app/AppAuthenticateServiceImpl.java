@@ -14,10 +14,7 @@ import cn.iocoder.yudao.framework.common.util.servlet.ServletUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeLghReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.AuthorizeResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.auth.GhCsSsoDO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.dlzh.GhQxDlzhDO;
-import cn.iocoder.yudao.module.lghjft.dal.mysql.auth.DwQxSfMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.auth.GhCsSsoMapper;
-import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.dlzh.GhQxDlzhMapper;
 import cn.iocoder.yudao.module.lghjft.framework.auth.config.LghJftAppAuthProperties;
 import cn.iocoder.yudao.module.lghjft.service.auth.AuthenticateService;
 import cn.iocoder.yudao.module.system.api.logger.dto.LoginLogCreateReqDTO;
@@ -49,10 +46,6 @@ import static cn.iocoder.yudao.module.system.enums.ErrorCodeConstants.USER_NOT_E
 public class AppAuthenticateServiceImpl implements  AppAuthenticateService{
     @Resource
     private GhCsSsoMapper ghCsSsoMapper;
-    @Resource
-    private GhQxDlzhMapper ghQxDlzhMapper;
-    @Resource
-    private DwQxSfMapper dwQxSfMapper;
     @Resource
     private LghJftAppAuthProperties lghJftAppAuthProperties;
     @Resource
@@ -158,19 +151,17 @@ public class AppAuthenticateServiceImpl implements  AppAuthenticateService{
             throw exception(USER_NOT_EXISTS);
         }
 
-        // 8. 获取新表用户信息
-        GhQxDlzhDO userDO = ghQxDlzhMapper.selectOne(GhQxDlzhDO::getYhzh, user.getUsername());
-        if (userDO == null) {
-            throw exception(USER_NOT_EXISTS);
-        }
-
-        // 9. 创建 Token 令牌，记录登录日志
-//        AuthorizeResVO authorizeResVO = createTokenAfterLoginSuccess(res, auid, LoginLogTypeEnum.LOGIN_SOCIAL);
+        // 7. 创建 Token 令牌，记录登录日志
         AuthorizeResVO authorizeResVO = new AuthorizeResVO();
+        authorizeResVO.setUserId(user.getId());
+        authorizeResVO.setYhzh(user.getUsername());
+        authorizeResVO.setYhnc(user.getNickname());
+        authorizeResVO.setDlzh(user.getUsername());
+        authorizeResVO.setDlfs(4); // LOGIN_SOCIAL
+        authorizeResVO.setYhlx(UserTypeEnum.ADMIN.getValue());
 
-        // 10. 获取单位权限身份列表
-        authorizeResVO.setDwQxSf(dwQxSfMapper.selectDwQxSfListByDlzh(authorizeResVO.getDlzh()));
-        return authorizeResVO;
+        AuthorizeResVO result = createTokenAfterLoginSuccess(authorizeResVO, auid, cn.iocoder.yudao.module.system.enums.logger.LoginLogTypeEnum.LOGIN_SOCIAL);
+        return result;
     }
 
     private AuthorizeResVO createTokenAfterLoginSuccess(AuthorizeResVO resVO, String loginUsername, LoginLogTypeEnum logType) {
@@ -197,13 +188,15 @@ public class AppAuthenticateServiceImpl implements  AppAuthenticateService{
         reqDTO.setUserIp(ServletUtils.getClientIP());
         reqDTO.setResult(loginResult.getResult());
         loginLogService.createLoginLog(reqDTO);
-        // 更新最后登录时间 (更新新表)
+        // 更新 system_users 最后登录时间
         if (userId != null && Objects.equals(LoginResultEnum.SUCCESS.getResult(), loginResult.getResult())) {
-            ghQxDlzhMapper.updateById(GhQxDlzhDO.builder()
-                    .id(userId)
-                    .loginIp(ServletUtils.getClientIP())
-                    .loginDate(LocalDateTime.now())
-                    .build());
+            cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO update =
+                    new cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO();
+            update.setId(userId);
+            update.setLoginIp(ServletUtils.getClientIP());
+            update.setLoginDate(LocalDateTime.now());
+            // 通过 userService 委托更新
+            userService.updateUserLogin(userId, ServletUtils.getClientIP());
         }
     }
 

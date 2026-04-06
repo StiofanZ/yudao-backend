@@ -3,14 +3,11 @@ package cn.iocoder.yudao.module.lghjft.service.dx;
 import cn.hutool.core.util.StrUtil;
 import cn.iocoder.yudao.framework.common.enums.UserTypeEnum;
 import cn.iocoder.yudao.framework.common.util.servlet.ServletUtils;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.dlzh.GhQxDlzhDO;
-import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.dlzh.GhQxDlzhMapper;
 import cn.iocoder.yudao.module.system.api.sms.SmsCodeApi;
 import cn.iocoder.yudao.module.system.api.sms.SmsSendApi;
 import cn.iocoder.yudao.module.system.api.sms.dto.code.SmsCodeSendReqDTO;
 import cn.iocoder.yudao.module.system.api.sms.dto.code.SmsCodeUseReqDTO;
 import cn.iocoder.yudao.module.system.api.sms.dto.send.SmsSendSingleToUserReqDTO;
-import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
 import cn.iocoder.yudao.module.system.dal.mysql.user.AdminUserMapper;
 import cn.iocoder.yudao.module.system.enums.sms.SmsSceneEnum;
 import jakarta.annotation.Resource;
@@ -32,8 +29,6 @@ public class DxfwServiceImpl implements DxfwService {
     private SmsCodeApi smsCodeApi;
     @Resource
     private SmsSendApi smsSendApi;
-    @Resource
-    private GhQxDlzhMapper ghQxDlzhMapper;
     @Resource
     private AdminUserMapper adminUserMapper;
 
@@ -93,15 +88,9 @@ public class DxfwServiceImpl implements DxfwService {
     }
 
     private void yzdlyh(String lxdh, Integer yhlx) {
-        GhQxDlzhDO dlzhDO = ghQxDlzhMapper.selectOne(lxdh, null, null, null);
-        if (dlzhDO != null) {
-            return;
+        if (adminUserMapper.selectByMobile(lxdh) == null) {
+            throw exception(USER_NOT_EXISTS);
         }
-        AdminUserDO userDO = adminUserMapper.selectByMobile(lxdh);
-        if (userDO != null) {
-            return;
-        }
-        throw exception(USER_NOT_EXISTS);
     }
 
     private Integer hqdlyzmScene(Integer yhlx) {

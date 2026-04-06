@@ -17,8 +17,7 @@ public class SfxxSaveReqVO {
     @NotNull(message = "登录账号ID不能为空")
     private Long dlzhId;
 
-    @Schema(description = "登记序号", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotEmpty(message = "登记序号不能为空")
+    @Schema(description = "登记序号")
     @Length(max = 20, message = "登记序号长度不能超过20个字符")
     private String djxh;
 

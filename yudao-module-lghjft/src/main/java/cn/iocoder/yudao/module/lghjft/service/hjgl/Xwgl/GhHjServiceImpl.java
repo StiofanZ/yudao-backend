@@ -25,7 +25,7 @@ import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUti
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.*;
 
 @Service
-public class GhHjServiceImpl implements IGhHjService {
+public class GhHjServiceImpl implements GhHjService {
 
     @Resource
     private GhhjMapper ghhjMapper;

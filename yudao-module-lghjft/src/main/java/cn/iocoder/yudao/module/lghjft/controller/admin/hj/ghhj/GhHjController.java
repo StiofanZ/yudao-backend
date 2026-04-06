@@ -8,7 +8,7 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.hj.ghhj.vo.GhHjAllocation
 import cn.iocoder.yudao.module.lghjft.controller.admin.hj.ghhj.vo.GhHjPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hj.ghhj.vo.GhHjSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hj.ghhj.vo.GhHjVO;
-import cn.iocoder.yudao.module.lghjft.service.hjgl.Xwgl.IGhHjService;
+import cn.iocoder.yudao.module.lghjft.service.hjgl.Xwgl.GhHjService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -39,7 +39,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 public class GhHjController {
 
     @Resource
-    private IGhHjService ghHjService;
+    private GhHjService ghHjService;
 
     /**
      * 查询户籍管理列表（分页）

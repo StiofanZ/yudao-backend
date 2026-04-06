@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper
 public interface GhhjMapper {
@@ -57,4 +58,17 @@ public interface GhhjMapper {
     List<GhHjNsrxxResVO> getListByDjNsrxxDto(@Param("searchNsrKey") String searchNsrKey,
                                              @Param("djxh") String djxh,
                                              @Param("shxydm") String shxydm);
+
+    /**
+     * 根据 djxh 集合批量查询户籍记录（用于身份信息页关联显示）
+     */
+    List<GhHjNsrxxResVO> selectListByDjxhs(@Param("djxhs") Set<String> djxhs);
+
+    /**
+     * 根据用户标识集合查询可绑定的户籍记录
+     *
+     * @param identifiers 用户标识集合（shxydm、mobile、username、email 等非空值）
+     * @return 匹配的户籍记录列表
+     */
+    List<GhHjNsrxxResVO> selectBindableByIdentifiers(@Param("ids") Set<String> identifiers);
 }

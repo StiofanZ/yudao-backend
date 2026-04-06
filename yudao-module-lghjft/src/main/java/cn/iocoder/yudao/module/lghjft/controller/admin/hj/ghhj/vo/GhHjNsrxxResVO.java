@@ -25,4 +25,7 @@ public class GhHjNsrxxResVO {
 
     @Schema(description = "部门名称")
     private String deptName;
+
+    @Schema(description = "联系电话")
+    private String lxdh;
 }

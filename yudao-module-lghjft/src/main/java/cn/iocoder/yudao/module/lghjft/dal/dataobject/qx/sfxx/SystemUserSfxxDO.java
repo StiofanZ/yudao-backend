@@ -6,14 +6,14 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
-@TableName("gh_qx_sfxx")
+@TableName("system_user_sfxx")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GhQxSfxxDO extends BaseDO {
+public class SystemUserSfxxDO extends BaseDO {
 
     @TableId(type = IdType.AUTO)
     private Long id;

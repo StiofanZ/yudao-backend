@@ -5,7 +5,6 @@ import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.auth.vo.*;
-import cn.iocoder.yudao.module.lghjft.controller.app.auth.vo.AuthorizeAppReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.auth.vo.AuthorizeAppResVO;
 import cn.iocoder.yudao.module.lghjft.service.auth.AuthenticateService;
 import cn.iocoder.yudao.module.lghjft.service.auth.app.AppAuthenticateService;
@@ -35,7 +34,6 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 public class AuthorizeAppController {
     @Resource
     private AuthenticateService authenticateService;
-    // 新增的App端Service
     @Resource
     private AppAuthenticateService appAuthenticateService;
     @Resource
@@ -44,13 +42,7 @@ public class AuthorizeAppController {
     @PostMapping("/auth/login")
     @PermitAll
     @Operation(summary = "授权登录")
-    public CommonResult<AuthorizeAppResVO> login(@RequestBody @Valid AuthorizeAppReqVO appReqVO) {
-        AuthorizeReqVO reqVO = new AuthorizeReqVO();
-        reqVO.setYhzh(appReqVO.getDlzh());
-        reqVO.setYhyx(appReqVO.getDlzh());
-        reqVO.setShxydm(appReqVO.getDlzh());
-        reqVO.setLxdh(appReqVO.getDlzh());
-        reqVO.setPassword(appReqVO.getPassword());
+    public CommonResult<AuthorizeAppResVO> login(@RequestBody @Valid AuthorizeReqVO reqVO) {
         reqVO.setYhlx(UserTypeEnum.MEMBER.getValue());
         AuthorizeResVO resVO = authenticateService.login(reqVO);
         return success(BeanUtils.toBean(resVO, AuthorizeAppResVO.class));
@@ -72,20 +64,19 @@ public class AuthorizeAppController {
         return success(BeanUtils.toBean(authenticateService.smsLogin(reqVO), AuthorizeAppResVO.class));
     }
 
-
     @PostMapping("/auth/login-by-lgh")
     @PermitAll
     @Operation(summary = "LGH 授权登录")
-    public CommonResult<AuthorizeResVO> loginByLgh(@RequestBody @Valid AuthorizeLghReqVO reqVO) {
-
-        // 判断逻辑：App端会传loginSign参数，PC端不传
-        if (StringUtils.isNotBlank(reqVO.getLoginSign()) && !reqVO.getLoginSign().equals("app")) {
+    public CommonResult<AuthorizeAppResVO> loginByLgh(@RequestBody @Valid AuthorizeLghReqVO reqVO) {
+        AuthorizeResVO resVO;
+        if (StringUtils.isNotBlank(reqVO.getLoginSign()) && !"app".equals(reqVO.getLoginSign())) {
             log.info("检测到loginSign参数，使用App端登录: {}", reqVO.getLoginSign());
-            return success(appAuthenticateService.appLoginAuthCode(reqVO));
+            resVO = appAuthenticateService.appLoginAuthCode(reqVO);
         } else {
             log.info("未检测到loginSign参数，使用PC端登录");
-            return success(authenticateService.loginAuthCode(reqVO));
+            resVO = authenticateService.loginAuthCode(reqVO);
         }
+        return success(BeanUtils.toBean(resVO, AuthorizeAppResVO.class));
     }
 
     @GetMapping("/auth/check-token")

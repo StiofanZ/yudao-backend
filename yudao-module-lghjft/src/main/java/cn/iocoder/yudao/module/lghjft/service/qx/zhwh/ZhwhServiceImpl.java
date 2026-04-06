@@ -8,15 +8,15 @@ import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.zhwh.vo.*;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hj.ghhjyhxx.GhHjYhxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hjgl.jcxx.GhHjJcxxDO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.dlzh.GhQxDlzhDO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.sfxx.GhQxSfxxDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.sfxx.SystemUserSfxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.zhwh.GhQxZhwhDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.hj.ghhjyhxx.GhHjYhxxMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.hjgl.jcxx.GhHjJcxxMapper;
-import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.sfxx.GhQxSfxxMapper;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.sfxx.SystemUserSfxxMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.zhwh.GhQxZhwhMapper;
 import cn.iocoder.yudao.module.lghjft.service.hjgl.jcxx.JcxxService;
-import cn.iocoder.yudao.module.lghjft.service.qx.dlzh.GhQxDlzhService;
+import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
+import cn.iocoder.yudao.module.system.dal.mysql.user.AdminUserMapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -38,11 +38,11 @@ public class ZhwhServiceImpl implements ZhwhService {
     @Resource
     private GhQxZhwhMapper ghQxZhwhMapper;
     @Resource
-    private GhQxDlzhService ghQxDlzhService;
+    private AdminUserMapper adminUserMapper;
     @Resource
     private JcxxService jcxxService;
     @Resource
-    private GhQxSfxxMapper ghQxSfxxMapper;
+    private SystemUserSfxxMapper systemUserSfxxMapper;
     @Resource
     private GhHjJcxxMapper ghHjJcxxMapper;
     @Resource
@@ -156,7 +156,7 @@ public class ZhwhServiceImpl implements ZhwhService {
 
     private GhQxZhwhDO buildZhwhDO(ZhwhBaseVO reqVO, GhQxZhwhDO exist) {
         Long dlzhId = reqVO.getDlzhId() != null ? reqVO.getDlzhId() : SecurityFrameworkUtils.getLoginUserId();
-        GhQxDlzhDO dlzh = ghQxDlzhService.getDlzh(dlzhId);
+        AdminUserDO dlzh = adminUserMapper.selectById(dlzhId);
         if (dlzh == null) {
             throw exception(ZHWH_NOT_EXISTS);
         }
@@ -177,11 +177,11 @@ public class ZhwhServiceImpl implements ZhwhService {
         if (exist != null && exist.getDeptId() != null) {
             return exist.getDeptId();
         }
-        GhQxSfxxDO sfxx = ghQxSfxxMapper.selectOne(new LambdaQueryWrapperX<GhQxSfxxDO>()
-                .eq(GhQxSfxxDO::getDlzhId, dlzhId)
-                .eq(GhQxSfxxDO::getDjxh, djxh)
-                .eq(GhQxSfxxDO::getStatus, 1)
-                .orderByDesc(GhQxSfxxDO::getId)
+        SystemUserSfxxDO sfxx = systemUserSfxxMapper.selectOne(new LambdaQueryWrapperX<SystemUserSfxxDO>()
+                .eq(SystemUserSfxxDO::getDlzhId, dlzhId)
+                .eq(SystemUserSfxxDO::getDjxh, djxh)
+                .eq(SystemUserSfxxDO::getStatus, 1)
+                .orderByDesc(SystemUserSfxxDO::getId)
                 .last("limit 1"));
         if (sfxx != null) {
             return sfxx.getDeptId();

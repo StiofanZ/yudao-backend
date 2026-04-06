@@ -242,4 +242,26 @@
         </if>
     </select>
 
+    <!-- 根据 djxh 集合批量查询户籍记录 -->
+    <select id="selectListByDjxhs" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.hj.ghhj.vo.GhHjNsrxxResVO">
+        SELECT h.djxh AS djxh, h.shxydm AS shxydm, h.nsrmc AS nsrmc,
+        h.dept_id AS deptId, h.lxdh AS lxdh
+        FROM gh_hj h
+        WHERE h.djxh IN
+        <foreach item="djxh" collection="djxhs" open="(" separator="," close=")">#{djxh}</foreach>
+    </select>
+
+    <!-- 根据用户标识集合查询可绑定的户籍记录（gh_hj UNION jhdwyds） -->
+    <select id="selectBindableByIdentifiers" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.hj.ghhj.vo.GhHjNsrxxResVO">
+        SELECT h.djxh AS djxh, h.shxydm AS shxydm, h.nsrmc AS nsrmc,
+        h.dept_id AS deptId, h.lxdh AS lxdh
+        FROM gh_hj h
+        WHERE h.shxydm IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">#{id}</foreach>
+        OR h.nsrsbh IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">#{id}</foreach>
+        OR h.lxdh IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">#{id}</foreach>
+    </select>
+
 </mapper>

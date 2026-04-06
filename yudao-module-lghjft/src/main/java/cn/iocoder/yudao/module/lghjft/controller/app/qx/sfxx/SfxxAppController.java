@@ -6,8 +6,7 @@ import cn.iocoder.yudao.module.lghjft.controller.app.qx.sfxx.vo.SfxxAppReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.app.qx.sfxx.vo.SfxxAppSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.service.hjgl.jcxx.JcxxService;
 import cn.iocoder.yudao.module.lghjft.service.qx.SfxxService;
-import cn.iocoder.yudao.module.lghjft.service.qx.dlzh.GhQxDlzhService;
-import cn.iocoder.yudao.module.lghjft.service.qx.sfxx.GhQxSfxxService;
+import cn.iocoder.yudao.module.lghjft.service.qx.sfxx.SystemUserSfxxService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -26,9 +25,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 @Validated
 public class SfxxAppController {
     @Resource
-    private GhQxSfxxService ghQxSfxxService;
-    @Resource
-    private GhQxDlzhService ghQxDlzhService;
+    private SystemUserSfxxService systemUserSfxxService;
     @Resource
     private JcxxService jcxxService;
     @Resource
@@ -38,7 +35,7 @@ public class SfxxAppController {
     @Operation(summary = "创建身份信息")
     @PreAuthorize("isAuthenticated()")
     public CommonResult<Long> createSfxx(@Valid @RequestBody SfxxAppSaveReqVO createReqVO) {
-        return success(ghQxSfxxService.createSfxx(createReqVO));
+        return success(systemUserSfxxService.createSfxx(createReqVO));
     }
 
     @PutMapping("/audit")
@@ -47,7 +44,7 @@ public class SfxxAppController {
     public CommonResult<Boolean> auditSfxx(@RequestParam("id") Long id,
                                            @RequestParam("status") Integer status,
                                            @RequestParam(value = "jjyy", required = false) String jjyy) {
-        ghQxSfxxService.auditSfxxWithOwnerCheck(id, status, jjyy);
+        systemUserSfxxService.auditSfxxWithOwnerCheck(id, status, jjyy);
         return success(true);
     }
 
@@ -55,7 +52,7 @@ public class SfxxAppController {
     @Operation(summary = "解绑身份信息")
     @PreAuthorize("isAuthenticated()")
     public CommonResult<Boolean> unbindSfxx(@RequestParam("id") Long id, @RequestParam("jbyy") String jbyy) {
-        ghQxSfxxService.unbindSfxxWithOwnerCheck(id, jbyy);
+        systemUserSfxxService.unbindSfxxWithOwnerCheck(id, jbyy);
         return success(true);
     }
 

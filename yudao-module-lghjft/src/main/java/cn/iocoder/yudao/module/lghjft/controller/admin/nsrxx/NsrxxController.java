@@ -8,10 +8,10 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jf.ghjf.GhJfDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nsrxx.NsrxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nsrxx.NsrxxKzDO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.sfxx.GhQxSfxxDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.sfxx.SystemUserSfxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.jf.ghjf.GhJfMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.nsrxx.NsrxxKzMapper;
-import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.sfxx.GhQxSfxxMapper;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.sfxx.SystemUserSfxxMapper;
 import cn.iocoder.yudao.module.lghjft.service.nsrxx.NsrxxService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,7 +42,7 @@ public class NsrxxController {
     @Resource
     private NsrxxKzMapper nsrxxKzMapper;
     @Resource
-    private GhQxSfxxMapper ghQxSfxxMapper;
+    private SystemUserSfxxMapper systemUserSfxxMapper;
     @Resource
     private GhJfMapper ghJfMapper;
 
@@ -120,8 +120,8 @@ public class NsrxxController {
         String djxhStr = resp.getDjxh().toString();
 
         // 查询身份信息
-        GhQxSfxxDO sfxxDO = ghQxSfxxMapper.selectOne(new LambdaQueryWrapper<GhQxSfxxDO>()
-                .eq(GhQxSfxxDO::getDjxh, djxhStr)
+        SystemUserSfxxDO sfxxDO = systemUserSfxxMapper.selectOne(new LambdaQueryWrapper<SystemUserSfxxDO>()
+                .eq(SystemUserSfxxDO::getDjxh, djxhStr)
                 .last("LIMIT 1"));
         if (sfxxDO != null) {
             resp.setSfxx(BeanUtils.toBean(sfxxDO, SfxxResVO.class));

@@ -6,15 +6,14 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo.SfxxSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.sfxx.GhQxSfxxDO;
-import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.sfxx.GhQxSfxxMapper;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.sfxx.SystemUserSfxxDO;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.sfxx.SystemUserSfxxMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
-
 import java.util.Objects;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
@@ -22,26 +21,24 @@ import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUti
 import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.*;
 
-
-
 @Service
 @Validated
-public class GhQxSfxxServiceImpl implements GhQxSfxxService {
+public class SystemUserSfxxServiceImpl implements SystemUserSfxxService {
 
     @Resource
-    private GhQxSfxxMapper ghQxSfxxMapper;
+    private SystemUserSfxxMapper systemUserSfxxMapper;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Long createSfxx(SfxxSaveReqVO createReqVO) {
-        GhQxSfxxDO sfxx = BeanUtils.toBean(createReqVO, GhQxSfxxDO.class);
+        SystemUserSfxxDO sfxx = BeanUtils.toBean(createReqVO, SystemUserSfxxDO.class);
         if (sfxx.getDeptId() == null) {
             sfxx.setDeptId(getLoginUserDeptId());
         }
         if (sfxx.getStatus() == null) {
             sfxx.setStatus(0);
         }
-        ghQxSfxxMapper.insert(sfxx);
+        systemUserSfxxMapper.insert(sfxx);
         return sfxx.getId();
     }
 
@@ -49,41 +46,41 @@ public class GhQxSfxxServiceImpl implements GhQxSfxxService {
     @Override
     public void updateSfxx(SfxxSaveReqVO updateReqVO) {
         validateSfxxExists(updateReqVO.getId());
-        GhQxSfxxDO updateObj = BeanUtils.toBean(updateReqVO, GhQxSfxxDO.class);
-        ghQxSfxxMapper.updateById(updateObj);
+        SystemUserSfxxDO updateObj = BeanUtils.toBean(updateReqVO, SystemUserSfxxDO.class);
+        systemUserSfxxMapper.updateById(updateObj);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteSfxx(Long id) {
         validateSfxxExists(id);
-        ghQxSfxxMapper.deleteById(id);
+        systemUserSfxxMapper.deleteById(id);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteSfxxListByIds(List<Long> ids) {
-        ghQxSfxxMapper.deleteByIds(ids);
+        systemUserSfxxMapper.deleteByIds(ids);
     }
 
     @Override
-    public GhQxSfxxDO getSfxx(Long id) {
-        return ghQxSfxxMapper.selectById(id);
+    public SystemUserSfxxDO getSfxx(Long id) {
+        return systemUserSfxxMapper.selectById(id);
     }
 
     @Override
-    public GhQxSfxxDO getSfxx(Long dlzhId, String djxh) {
-        return ghQxSfxxMapper.selectOne(GhQxSfxxDO::getDlzhId, dlzhId, GhQxSfxxDO::getDjxh, djxh);
+    public SystemUserSfxxDO getSfxx(Long dlzhId, String djxh) {
+        return systemUserSfxxMapper.selectOne(SystemUserSfxxDO::getDlzhId, dlzhId, SystemUserSfxxDO::getDjxh, djxh);
     }
 
     @Override
-    public PageResult<GhQxSfxxDO> getSfxxPage(SfxxPageReqVO pageReqVO) {
-        return ghQxSfxxMapper.selectPage(pageReqVO);
+    public PageResult<SystemUserSfxxDO> getSfxxPage(SfxxPageReqVO pageReqVO) {
+        return systemUserSfxxMapper.selectPage(pageReqVO);
     }
 
     @Override
-    public List<GhQxSfxxDO> getSfxxList(SfxxReqVO sfxxReqVO) {
-        return ghQxSfxxMapper.selectList(sfxxReqVO);
+    public List<SystemUserSfxxDO> getSfxxList(SfxxReqVO sfxxReqVO) {
+        return systemUserSfxxMapper.selectList(sfxxReqVO);
     }
 
     @Override
@@ -92,16 +89,16 @@ public class GhQxSfxxServiceImpl implements GhQxSfxxService {
         if (Integer.valueOf(2).equals(status) && StrUtil.isBlank(jjyy)) {
             throw exception(SFXX_REJECT_REASON_REQUIRED);
         }
-        GhQxSfxxDO updateObj = new GhQxSfxxDO();
+        SystemUserSfxxDO updateObj = new SystemUserSfxxDO();
         updateObj.setId(id);
         updateObj.setStatus(status);
         updateObj.setJjyy(Integer.valueOf(2).equals(status) ? jjyy : null);
-        ghQxSfxxMapper.updateById(updateObj);
+        systemUserSfxxMapper.updateById(updateObj);
     }
 
     @Override
     public void auditSfxxWithOwnerCheck(Long id, Integer status, String jjyy) {
-        GhQxSfxxDO sfxx = validateSfxxExistsAndReturn(id);
+        SystemUserSfxxDO sfxx = validateSfxxExistsAndReturn(id);
         validateSfxxOwner(sfxx);
         auditSfxx(id, status, jjyy);
     }
@@ -109,41 +106,38 @@ public class GhQxSfxxServiceImpl implements GhQxSfxxService {
     @Override
     public void unbindSfxx(Long id, String jbyy) {
         validateSfxxExists(id);
-        // 更新解绑原因
-        GhQxSfxxDO updateObj = new GhQxSfxxDO();
+        SystemUserSfxxDO updateObj = new SystemUserSfxxDO();
         updateObj.setId(id);
         updateObj.setJbyy(jbyy);
-        ghQxSfxxMapper.updateById(updateObj);
-        // 逻辑删除
-        ghQxSfxxMapper.deleteById(id);
+        systemUserSfxxMapper.updateById(updateObj);
+        systemUserSfxxMapper.deleteById(id);
     }
 
     @Override
     public void unbindSfxxWithOwnerCheck(Long id, String jbyy) {
-        GhQxSfxxDO sfxx = validateSfxxExistsAndReturn(id);
+        SystemUserSfxxDO sfxx = validateSfxxExistsAndReturn(id);
         validateSfxxOwner(sfxx);
         unbindSfxx(id, jbyy);
     }
 
     private void validateSfxxExists(Long id) {
-        if (id == null || ghQxSfxxMapper.selectById(id) == null) {
+        if (id == null || systemUserSfxxMapper.selectById(id) == null) {
             throw exception(SFXX_NOT_EXISTS);
         }
     }
 
-    private GhQxSfxxDO validateSfxxExistsAndReturn(Long id) {
-        GhQxSfxxDO sfxx = ghQxSfxxMapper.selectById(id);
+    private SystemUserSfxxDO validateSfxxExistsAndReturn(Long id) {
+        SystemUserSfxxDO sfxx = systemUserSfxxMapper.selectById(id);
         if (id == null || sfxx == null) {
             throw exception(SFXX_NOT_EXISTS);
         }
         return sfxx;
     }
 
-    private void validateSfxxOwner(GhQxSfxxDO sfxx) {
+    private void validateSfxxOwner(SystemUserSfxxDO sfxx) {
         Long loginUserId = getLoginUserId();
         if (!Objects.equals(sfxx.getDlzhId(), loginUserId)) {
             throw exception(OPERATION_NOT_PERMITTED);
         }
     }
-
 }

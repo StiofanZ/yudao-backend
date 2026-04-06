@@ -13,19 +13,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class AuthorizeReqVO {
-    @Schema(description = "用户账号或手机号", example = "admin")
-    private String yhzh;
+    @Schema(description = "登录账号（用户名/手机号/邮箱/社会信用代码）", requiredMode = Schema.RequiredMode.REQUIRED, example = "admin")
+    @NotEmpty(message = "登录账号不能为空")
+    private String dlzh;
     @Schema(description = "密码", requiredMode = Schema.RequiredMode.REQUIRED, example = "Abcd1234")
     @NotEmpty(message = "密码不能为空")
     private String password;
-    @Schema(description = "联系电话", example = "15500000000")
-    private String lxdh;
-    @Schema(description = "用户邮箱", example = "yudao@iocoder.cn")
-    private String yhyx;
-    @Schema(description = "社会信用代码", example = "91320114MA1X7L7X7G")
-    private String shxydm;
     @Schema(description = "登录方式", example = "100")
     private Integer dlfs;
-    @Schema(description = "用户类型",example = "1")
+    @Schema(description = "用户类型", example = "1")
     private Integer yhlx;
 }

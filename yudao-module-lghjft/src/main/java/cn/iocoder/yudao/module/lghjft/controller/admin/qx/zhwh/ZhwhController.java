@@ -5,14 +5,14 @@ import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.zhwh.vo.*;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.dlzh.GhQxDlzhDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.zhwh.GhQxZhwhDO;
-import cn.iocoder.yudao.module.lghjft.service.qx.dlzh.GhQxDlzhService;
 import cn.iocoder.yudao.module.lghjft.service.qx.zhwh.ZhwhService;
 import cn.iocoder.yudao.module.system.api.dept.DeptApi;
 import cn.iocoder.yudao.module.system.api.dept.dto.DeptRespDTO;
 import cn.iocoder.yudao.module.system.api.user.AdminUserApi;
 import cn.iocoder.yudao.module.system.api.user.dto.AdminUserRespDTO;
+import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
+import cn.iocoder.yudao.module.system.dal.mysql.user.AdminUserMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,7 +40,7 @@ public class ZhwhController {
     @Resource
     private ZhwhService zhwhService;
     @Resource
-    private GhQxDlzhService ghQxDlzhService;
+    private AdminUserMapper adminUserMapper;
     @Resource
     private DeptApi deptApi;
     @Resource
@@ -119,19 +119,19 @@ public class ZhwhController {
 
     private void fillRelatedInfo(List<ZhwhResVO> list) {
         Set<Long> dlzhIds = convertSet(list, ZhwhResVO::getDlzhId);
-        Map<Long, GhQxDlzhDO> dlzhMap = dlzhIds.isEmpty()
+        Map<Long, AdminUserDO> dlzhMap = dlzhIds.isEmpty()
                 ? Collections.emptyMap()
-                : convertMap(ghQxDlzhService.getDlzhList(dlzhIds), GhQxDlzhDO::getId);
+                : convertMap(adminUserMapper.selectBatchIds(dlzhIds), AdminUserDO::getId);
         Map<Long, DeptRespDTO> deptMap = deptApi.getDeptMap(convertSet(list, ZhwhResVO::getDeptId));
         Set<Long> auditUserIds = convertSet(list, ZhwhResVO::getAuditUserId);
         Map<Long, AdminUserRespDTO> auditUserMap = auditUserIds.isEmpty()
                 ? Collections.emptyMap()
                 : adminUserApi.getUserMap(auditUserIds);
         list.forEach(item -> {
-            GhQxDlzhDO dlzh = dlzhMap.get(item.getDlzhId());
+            AdminUserDO dlzh = dlzhMap.get(item.getDlzhId());
             if (dlzh != null) {
-                item.setApplicantName(dlzh.getYhxm());
-                item.setApplicantPhone(dlzh.getLxdh());
+                item.setApplicantName(dlzh.getNickname());
+                item.setApplicantPhone(dlzh.getMobile());
             }
             DeptRespDTO dept = deptMap.get(item.getDeptId());
             if (dept != null) {

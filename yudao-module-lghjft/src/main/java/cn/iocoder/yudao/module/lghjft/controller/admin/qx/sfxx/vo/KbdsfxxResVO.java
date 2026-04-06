@@ -1,12 +1,12 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.qx.sfxx.vo;
 
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.sfxx.GhQxSfxxDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.sfxx.SystemUserSfxxDO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Schema(description = "管理后台 - 可绑定身份信息 Response VO")
 @Data
-public class KbdsfxxResVO extends GhQxSfxxDO {
+public class KbdsfxxResVO extends SystemUserSfxxDO {
 
     @Schema(description = "单位名称", example = "某某公司")
     private String dwmc;

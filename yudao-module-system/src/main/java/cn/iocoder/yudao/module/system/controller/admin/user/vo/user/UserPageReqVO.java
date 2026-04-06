@@ -38,4 +38,7 @@ public class UserPageReqVO extends PageParam {
     @Schema(description = "角色编号", example = "1024")
     private Long roleId;
 
+    @Schema(description = "是否必须有部门（true=内部用户，false=外部用户）", example = "true")
+    private Boolean hasDeptId;
+
 }

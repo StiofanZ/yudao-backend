@@ -9,17 +9,17 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dwxxsp.vo.DwxxspPageRe
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.dwxxsp.vo.DwxxspResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.qx.zhwh.vo.ZhwhAuditReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.nsrxx.NsrxxDO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.dlzh.GhQxDlzhDO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.sfxx.GhQxSfxxDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.sfxx.SystemUserSfxxDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.qx.zhwh.GhQxZhwhDO;
-import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.sfxx.GhQxSfxxMapper;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.sfxx.SystemUserSfxxMapper;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.qx.zhwh.GhQxZhwhMapper;
 import cn.iocoder.yudao.module.lghjft.service.nsrxx.NsrxxService;
-import cn.iocoder.yudao.module.lghjft.service.qx.dlzh.GhQxDlzhService;
-import cn.iocoder.yudao.module.lghjft.service.qx.sfxx.GhQxSfxxService;
+import cn.iocoder.yudao.module.lghjft.service.qx.sfxx.SystemUserSfxxService;
 import cn.iocoder.yudao.module.lghjft.service.qx.zhwh.ZhwhService;
 import cn.iocoder.yudao.module.system.api.dept.DeptApi;
 import cn.iocoder.yudao.module.system.api.dept.dto.DeptRespDTO;
+import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
+import cn.iocoder.yudao.module.system.dal.mysql.user.AdminUserMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -42,9 +42,9 @@ public class DwxxspServiceImpl implements DwxxspService {
     @Resource
     private GhQxZhwhMapper ghQxZhwhMapper;
     @Resource
-    private GhQxSfxxMapper ghQxSfxxMapper;
+    private SystemUserSfxxMapper systemUserSfxxMapper;
     @Resource
-    private GhQxDlzhService ghQxDlzhService;
+    private AdminUserMapper adminUserMapper;
     @Resource
     private NsrxxService nsrxxService;
     @Resource
@@ -52,7 +52,7 @@ public class DwxxspServiceImpl implements DwxxspService {
     @Resource
     private ZhwhService zhwhService;
     @Resource
-    private GhQxSfxxService ghQxSfxxService;
+    private SystemUserSfxxService systemUserSfxxService;
 
     @Override
     public PageResult<DwxxspResVO> getDwxxspPage(DwxxspPageReqVO reqVO) {
@@ -82,7 +82,7 @@ public class DwxxspServiceImpl implements DwxxspService {
             return buildAccountChangeDetail(zhwhService.getZhwh(businessId));
         }
         if (BUSINESS_TYPE_IDENTITY.equals(businessType)) {
-            return buildIdentityDetail(ghQxSfxxService.getSfxx(businessId));
+            return buildIdentityDetail(systemUserSfxxService.getSfxx(businessId));
         }
         throw exception(DWXXSP_BUSINESS_TYPE_NOT_SUPPORT);
     }
@@ -98,7 +98,7 @@ public class DwxxspServiceImpl implements DwxxspService {
             return;
         }
         if (BUSINESS_TYPE_IDENTITY.equals(reqVO.getBusinessType())) {
-            ghQxSfxxService.auditSfxx(reqVO.getBusinessId(), reqVO.getStatus(), reqVO.getRemark());
+            systemUserSfxxService.auditSfxx(reqVO.getBusinessId(), reqVO.getStatus(), reqVO.getRemark());
             return;
         }
         throw exception(DWXXSP_BUSINESS_TYPE_NOT_SUPPORT);
@@ -118,14 +118,14 @@ public class DwxxspServiceImpl implements DwxxspService {
         if (zhwh == null) {
             return null;
         }
-        GhQxDlzhDO dlzh = ghQxDlzhService.getDlzh(zhwh.getDlzhId());
+        AdminUserDO dlzh = adminUserMapper.selectById(zhwh.getDlzhId());
         DeptRespDTO dept = zhwh.getDeptId() != null ? deptApi.getDept(zhwh.getDeptId()) : null;
         DwxxspResVO respVO = new DwxxspResVO();
         respVO.setBusinessType(BUSINESS_TYPE_ACCOUNT_CHANGE);
         respVO.setBusinessId(zhwh.getId());
         respVO.setApplyNo(zhwh.getApplyNo());
-        respVO.setApplicantName(dlzh != null ? dlzh.getYhxm() : null);
-        respVO.setApplicantPhone(dlzh != null ? dlzh.getLxdh() : null);
+        respVO.setApplicantName(dlzh != null ? dlzh.getNickname() : null);
+        respVO.setApplicantPhone(dlzh != null ? dlzh.getMobile() : null);
         respVO.setDwmc(zhwh.getDwmc());
         respVO.setShxydm(zhwh.getShxydm());
         respVO.setSummary("账户变更：" + StrUtil.blankToDefault(zhwh.getOldJcghzh(), "-") + " -> "
@@ -138,28 +138,28 @@ public class DwxxspServiceImpl implements DwxxspService {
     }
 
     private List<DwxxspResVO> buildIdentityRecords(DwxxspPageReqVO reqVO) {
-        return ghQxSfxxMapper.selectList(new LambdaQueryWrapperX<GhQxSfxxDO>()
-                        .eqIfPresent(GhQxSfxxDO::getStatus, reqVO.getStatus())
-                        .orderByDesc(GhQxSfxxDO::getCreateTime)
-                        .orderByDesc(GhQxSfxxDO::getId))
+        return systemUserSfxxMapper.selectList(new LambdaQueryWrapperX<SystemUserSfxxDO>()
+                        .eqIfPresent(SystemUserSfxxDO::getStatus, reqVO.getStatus())
+                        .orderByDesc(SystemUserSfxxDO::getCreateTime)
+                        .orderByDesc(SystemUserSfxxDO::getId))
                 .stream()
                 .map(this::buildIdentityRecord)
                 .toList();
     }
 
-    private DwxxspResVO buildIdentityRecord(GhQxSfxxDO sfxx) {
+    private DwxxspResVO buildIdentityRecord(SystemUserSfxxDO sfxx) {
         if (sfxx == null) {
             return null;
         }
-        GhQxDlzhDO dlzh = ghQxDlzhService.getDlzh(sfxx.getDlzhId());
+        AdminUserDO dlzh = adminUserMapper.selectById(sfxx.getDlzhId());
         NsrxxDO nsrxx = nsrxxService.getNsrxx(sfxx.getDjxh());
         DeptRespDTO dept = sfxx.getDeptId() != null ? deptApi.getDept(sfxx.getDeptId()) : null;
         DwxxspResVO respVO = new DwxxspResVO();
         respVO.setBusinessType(BUSINESS_TYPE_IDENTITY);
         respVO.setBusinessId(sfxx.getId());
         respVO.setApplyNo("SFXX-" + sfxx.getId());
-        respVO.setApplicantName(dlzh != null ? dlzh.getYhxm() : null);
-        respVO.setApplicantPhone(dlzh != null ? dlzh.getLxdh() : null);
+        respVO.setApplicantName(dlzh != null ? dlzh.getNickname() : null);
+        respVO.setApplicantPhone(dlzh != null ? dlzh.getMobile() : null);
         respVO.setDwmc(nsrxx != null ? nsrxx.getNsrmc() : null);
         respVO.setShxydm(nsrxx != null ? StrUtil.blankToDefault(nsrxx.getShxydm(), nsrxx.getNsrsbh()) : null);
         respVO.setSummary("身份授权：" + toSflxText(sfxx.getSflx()) + " / " + toQxlxText(sfxx.getQxlx()));
@@ -174,15 +174,15 @@ public class DwxxspServiceImpl implements DwxxspService {
         if (zhwh == null) {
             return null;
         }
-        GhQxDlzhDO dlzh = ghQxDlzhService.getDlzh(zhwh.getDlzhId());
+        AdminUserDO dlzh = adminUserMapper.selectById(zhwh.getDlzhId());
         DeptRespDTO dept = zhwh.getDeptId() != null ? deptApi.getDept(zhwh.getDeptId()) : null;
         DwxxspDetailResVO detail = new DwxxspDetailResVO();
         detail.setBusinessType(BUSINESS_TYPE_ACCOUNT_CHANGE);
         detail.setBusinessId(zhwh.getId());
         detail.setApplyNo(zhwh.getApplyNo());
         detail.setStatus(zhwh.getStatus());
-        detail.setApplicantName(dlzh != null ? dlzh.getYhxm() : null);
-        detail.setApplicantPhone(dlzh != null ? dlzh.getLxdh() : null);
+        detail.setApplicantName(dlzh != null ? dlzh.getNickname() : null);
+        detail.setApplicantPhone(dlzh != null ? dlzh.getMobile() : null);
         detail.setDwmc(zhwh.getDwmc());
         detail.setShxydm(zhwh.getShxydm());
         detail.setDeptName(dept != null ? dept.getName() : null);
@@ -201,11 +201,11 @@ public class DwxxspServiceImpl implements DwxxspService {
         return detail;
     }
 
-    private DwxxspDetailResVO buildIdentityDetail(GhQxSfxxDO sfxx) {
+    private DwxxspDetailResVO buildIdentityDetail(SystemUserSfxxDO sfxx) {
         if (sfxx == null) {
             return null;
         }
-        GhQxDlzhDO dlzh = ghQxDlzhService.getDlzh(sfxx.getDlzhId());
+        AdminUserDO dlzh = adminUserMapper.selectById(sfxx.getDlzhId());
         NsrxxDO nsrxx = nsrxxService.getNsrxx(sfxx.getDjxh());
         DeptRespDTO dept = sfxx.getDeptId() != null ? deptApi.getDept(sfxx.getDeptId()) : null;
         DwxxspDetailResVO detail = new DwxxspDetailResVO();
@@ -213,8 +213,8 @@ public class DwxxspServiceImpl implements DwxxspService {
         detail.setBusinessId(sfxx.getId());
         detail.setApplyNo("SFXX-" + sfxx.getId());
         detail.setStatus(sfxx.getStatus());
-        detail.setApplicantName(dlzh != null ? dlzh.getYhxm() : null);
-        detail.setApplicantPhone(dlzh != null ? dlzh.getLxdh() : null);
+        detail.setApplicantName(dlzh != null ? dlzh.getNickname() : null);
+        detail.setApplicantPhone(dlzh != null ? dlzh.getMobile() : null);
         detail.setDwmc(nsrxx != null ? nsrxx.getNsrmc() : null);
         detail.setShxydm(nsrxx != null ? StrUtil.blankToDefault(nsrxx.getShxydm(), nsrxx.getNsrsbh()) : null);
         detail.setDeptName(dept != null ? dept.getName() : null);
