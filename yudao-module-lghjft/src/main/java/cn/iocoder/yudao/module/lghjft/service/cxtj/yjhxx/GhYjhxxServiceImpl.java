@@ -11,10 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.HKXX_NOT_EXISTS;
+import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.YJHXX_NOT_EXISTS;
 
 @Service
 @Validated
@@ -27,6 +28,7 @@ public class GhYjhxxServiceImpl implements GhYjhxxService {
     @Transactional(rollbackFor = Exception.class)
     public Long createGhYjhxx(GhYjhxxSaveReqVO createReqVO) {
         GhYjhxxDO obj = BeanUtils.toBean(createReqVO, GhYjhxxDO.class);
+        obj.setCreateTime(LocalDateTime.now());
         ghYjhxxMapper.insert(obj);
         return obj.getJhxxId();
     }
@@ -36,6 +38,7 @@ public class GhYjhxxServiceImpl implements GhYjhxxService {
     public void updateGhYjhxx(GhYjhxxSaveReqVO updateReqVO) {
         validateExists(updateReqVO.getJhxxId());
         GhYjhxxDO updateObj = BeanUtils.toBean(updateReqVO, GhYjhxxDO.class);
+        updateObj.setUpdateTime(LocalDateTime.now());
         ghYjhxxMapper.updateById(updateObj);
     }
 
@@ -54,7 +57,7 @@ public class GhYjhxxServiceImpl implements GhYjhxxService {
 
     private void validateExists(Long id) {
         if (ghYjhxxMapper.selectById(id) == null) {
-            throw exception(HKXX_NOT_EXISTS);
+            throw exception(YJHXX_NOT_EXISTS);
         }
     }
 

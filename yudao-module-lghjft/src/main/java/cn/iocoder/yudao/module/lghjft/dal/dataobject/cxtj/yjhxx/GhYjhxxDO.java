@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 /**
  * GhYjhxx DO
  */
@@ -22,4 +24,8 @@ public class GhYjhxxDO {
     private String shxydm;
     private String nsrsbh;
     private String yxbj;
+    private String createBy;
+    private LocalDateTime createTime;
+    private String updateBy;
+    private LocalDateTime updateTime;
 }

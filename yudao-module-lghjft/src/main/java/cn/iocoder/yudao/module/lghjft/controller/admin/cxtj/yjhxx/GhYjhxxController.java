@@ -61,8 +61,8 @@ public class GhYjhxxController {
     }
 
     @DeleteMapping("/delete-list")
-    @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除已建会信息")
+    @Parameter(name = "ids", description = "编号列表", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-yjhxx:delete')")
     public CommonResult<Boolean> deleteGhYjhxxList(@RequestParam("ids") List<Long> ids) {
         ghYjhxxService.deleteGhYjhxxListByIds(ids);
@@ -94,7 +94,7 @@ public class GhYjhxxController {
                                    HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<GhYjhxxDO> list = ghYjhxxService.getGhYjhxxPage(pageReqVO).getList();
-        ExcelUtils.write(response, "已建会信息.xls", "数据", GhYjhxxResVO.class,
+        ExcelUtils.write(response, "已建会信息数据.xls", "数据", GhYjhxxResVO.class,
                 BeanUtils.toBean(list, GhYjhxxResVO.class));
     }
 }

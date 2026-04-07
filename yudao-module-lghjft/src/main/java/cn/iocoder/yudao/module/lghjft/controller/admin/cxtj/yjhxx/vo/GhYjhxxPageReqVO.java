@@ -8,12 +8,20 @@ import lombok.Data;
 @Data
 public class GhYjhxxPageReqVO extends PageParam {
 
-    @Schema(description = "nsrmc")
+    @Schema(description = "纳税人名称")
     private String nsrmc;
-    @Schema(description = "shxydm")
+    @Schema(description = "社会信用代码")
     private String shxydm;
-    @Schema(description = "nsrsbh")
+    @Schema(description = "纳税人识别号")
     private String nsrsbh;
-    @Schema(description = "yxbj")
+    @Schema(description = "有效标记")
     private String yxbj;
+    @Schema(description = "创建人")
+    private String createBy;
+    @Schema(description = "创建时间")
+    private String createTime;
+    @Schema(description = "修改人")
+    private String updateBy;
+    @Schema(description = "修改时间")
+    private String updateTime;
 }

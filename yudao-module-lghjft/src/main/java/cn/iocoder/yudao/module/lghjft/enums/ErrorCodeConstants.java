@@ -97,4 +97,6 @@ public interface ErrorCodeConstants {
 
     // IDOR protection
     ErrorCode OPERATION_NOT_PERMITTED = new ErrorCode(2_028_000_001, "无权操作该记录");
+
+    ErrorCode YJHXX_NOT_EXISTS = new ErrorCode(2_029_000_001, "已建会信息不存在");
 }
