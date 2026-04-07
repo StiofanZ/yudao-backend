@@ -6,6 +6,7 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.hbsbjlyxg.vo.Hbsbjly
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.hbsbjlyxg.vo.HbsbjlyxgSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.hbsbjlyxg.HbsbjlyxgDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.hbsbjlyxg.HbsbjlyxgMapper;
+import cn.iocoder.yudao.module.lghjft.framework.deptfilter.DeptFilterHelper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,9 @@ public class HbsbjlyxgServiceImpl implements HbsbjlyxgService {
 
     @Resource
     private HbsbjlyxgMapper hbsbjlyxgMapper;
+
+    @Resource
+    private DeptFilterHelper deptFilterHelper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -65,6 +69,8 @@ public class HbsbjlyxgServiceImpl implements HbsbjlyxgService {
 
     @Override
     public PageResult<HbsbjlyxgDO> getHbsbjlyxgPage(HbsbjlyxgPageReqVO pageReqVO) {
+        // 应用部门过滤逻辑（还原 V1 行为：root = "100000"）
+        pageReqVO.setDeptId(deptFilterHelper.filterDeptId(pageReqVO.getDeptId()));
         return hbsbjlyxgMapper.selectPage(pageReqVO);
     }
 }

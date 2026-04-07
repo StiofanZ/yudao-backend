@@ -7,15 +7,19 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.hbsbjl.vo.HbsbjlSave
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.hbsbjl.HbsbjlDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.hbsbjl.HbsbjlMapper;
 import cn.iocoder.yudao.module.lghjft.framework.deptfilter.DeptFilterHelper;
+import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
+import cn.iocoder.yudao.module.system.service.user.AdminUserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils.getLoginUserId;
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.HKXX_NOT_EXISTS;
 
 @Service
@@ -27,6 +31,9 @@ public class HbsbjlServiceImpl implements HbsbjlService {
 
     @Resource
     private DeptFilterHelper deptFilterHelper;
+
+    @Resource
+    private AdminUserService adminUserService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -40,7 +47,20 @@ public class HbsbjlServiceImpl implements HbsbjlService {
     @Transactional(rollbackFor = Exception.class)
     public void updateHbsbjl(HbsbjlSaveReqVO updateReqVO) {
         validateExists(updateReqVO.getHkxxId());
-        HbsbjlDO updateObj = BeanUtils.toBean(updateReqVO, HbsbjlDO.class);
+        // V1 restricted update: only xzh, xhm, xhh, xgbj, bz allowed
+        HbsbjlDO updateObj = new HbsbjlDO();
+        updateObj.setHkxxId(updateReqVO.getHkxxId());
+        updateObj.setXzh(updateReqVO.getXzh());
+        updateObj.setXhm(updateReqVO.getXhm());
+        updateObj.setXhh(updateReqVO.getXhh());
+        updateObj.setXgbj(updateReqVO.getXgbj());
+        updateObj.setBz(updateReqVO.getBz());
+        // V1 auto-sets xgr (modifier nickname) and xgsj (modification time)
+        AdminUserDO user = adminUserService.getUser(getLoginUserId());
+        if (user != null) {
+            updateObj.setXgr(user.getNickname());
+        }
+        updateObj.setXgsj(LocalDateTime.now());
         hbsbjlMapper.updateById(updateObj);
     }
 

@@ -53,11 +53,12 @@ public class HbsbjlController {
     }
 
     @SuppressWarnings("unchecked")
-    @PutMapping("/fushen-pl")
+    @PutMapping("/fushenPl")
     @Operation(summary = "批量复审")
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-hbsbjl:update')")
     public CommonResult<Boolean> fushenPl(@RequestBody Map<String, Object> request) {
-        List<Long> hkxxIds = (List<Long>) request.get("hkxxIds");
+        List<Long> hkxxIds = ((List<?>) request.get("hkxxIds")).stream()
+                .map(id -> Long.valueOf(id.toString())).toList();
         Map<String, Object> updateFields = (Map<String, Object>) request.get("updateFields");
         hbsbjlService.fushenPlByhkxxIds(hkxxIds, updateFields);
         return success(true);
