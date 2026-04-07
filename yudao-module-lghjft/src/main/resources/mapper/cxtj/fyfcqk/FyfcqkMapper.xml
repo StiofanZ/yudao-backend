@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.fyfcqk.FyfcqkMapper">
+
+    <resultMap type="cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.fyfcqk.FyfcqkDO" id="FyfcqkResult">
+        <result property="dsyf"   column="dsyf"   />
+        <result property="rkjf"   column="rkjf"   />
+        <result property="tkjf"   column="tkjf"   />
+        <result property="ygfcjf" column="ygfcjf" />
+        <result property="yfcjf"  column="yfcjf"  />
+        <result property="wfcjf"  column="wfcjf"  />
+        <result property="szfc"   column="szfc"   />
+        <result property="znj"    column="znj"    />
+        <result property="qzfc"   column="qzfc"   />
+        <result property="hj"     column="hj"     />
+    </resultMap>
+
+    <select id="selectAggregateList" resultMap="FyfcqkResult">
+        select case when a.dsyf is not null then a.dsyf else '合计' end as dsyf,
+               sum(a.rkjf) as rkjf,
+               sum(a.tkjf) as tkjf,
+               sum(a.ygfcjf) as ygfcjf,
+               sum(a.yfcjf) as yfcjf,
+               sum(a.wfcjf) as wfcjf,
+               sum(a.szfc) as szfc,
+               sum(a.znj) as znj,
+               sum(a.qzfc) as qzfc,
+               sum(a.hj) as hj
+          from fyfcqk a
+         where 1=1
+         group by a.dsyf with rollup
+    </select>
+
+    <select id="selectAggregateListByDateRange" resultMap="FyfcqkResult">
+        select case when a.dsyf is not null then a.dsyf else '合计' end as dsyf,
+               sum(a.rkjf) as rkjf,
+               sum(a.tkjf) as tkjf,
+               sum(a.ygfcjf) as ygfcjf,
+               sum(a.yfcjf) as yfcjf,
+               sum(a.wfcjf) as wfcjf,
+               sum(a.szfc) as szfc,
+               sum(a.znj) as znj,
+               sum(a.qzfc) as qzfc,
+               sum(a.hj) as hj
+          from fyfcqk a
+         where dsyf between #{beginRkrq} and #{endRkrq}
+         group by a.dsyf with rollup
+    </select>
+
+</mapper>

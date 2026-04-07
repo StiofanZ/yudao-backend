@@ -8,11 +8,9 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.fyfcqk.vo.FyfcqkPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.fyfcqk.vo.FyfcqkResVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.fyfcqk.vo.FyfcqkSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.fyfcqk.FyfcqkDO;
 import cn.iocoder.yudao.module.lghjft.service.cxtj.fyfcqk.FyfcqkService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,48 +34,6 @@ public class FyfcqkController {
     @Resource
     private FyfcqkService fyfcqkService;
 
-    @PostMapping("/create")
-    @Operation(summary = "创建分月分成情况")
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-fyfcqk:create')")
-    public CommonResult<String> createFyfcqk(@Valid @RequestBody FyfcqkSaveReqVO createReqVO) {
-        return success(fyfcqkService.createFyfcqk(createReqVO));
-    }
-
-    @PutMapping("/update")
-    @Operation(summary = "更新分月分成情况")
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-fyfcqk:update')")
-    public CommonResult<Boolean> updateFyfcqk(@Valid @RequestBody FyfcqkSaveReqVO updateReqVO) {
-        fyfcqkService.updateFyfcqk(updateReqVO);
-        return success(true);
-    }
-
-    @DeleteMapping("/delete")
-    @Operation(summary = "删除分月分成情况")
-    @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-fyfcqk:delete')")
-    public CommonResult<Boolean> deleteFyfcqk(@RequestParam("id") String id) {
-        fyfcqkService.deleteFyfcqk(id);
-        return success(true);
-    }
-
-    @DeleteMapping("/delete-list")
-    @Parameter(name = "ids", description = "编号", required = true)
-    @Operation(summary = "批量删除分月分成情况")
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-fyfcqk:delete')")
-    public CommonResult<Boolean> deleteFyfcqkList(@RequestParam("ids") List<String> ids) {
-        fyfcqkService.deleteFyfcqkListByIds(ids);
-        return success(true);
-    }
-
-    @GetMapping("/get")
-    @Operation(summary = "获得分月分成情况")
-    @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-fyfcqk:query')")
-    public CommonResult<FyfcqkResVO> getFyfcqk(@RequestParam("id") String id) {
-        FyfcqkDO obj = fyfcqkService.getFyfcqk(id);
-        return success(BeanUtils.toBean(obj, FyfcqkResVO.class));
-    }
-
     @GetMapping("/page")
     @Operation(summary = "获得分月分成情况分页")
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-fyfcqk:query')")
@@ -94,7 +50,7 @@ public class FyfcqkController {
                                   HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<FyfcqkDO> list = fyfcqkService.getFyfcqkPage(pageReqVO).getList();
-        ExcelUtils.write(response, "分月分成情况.xls", "数据", FyfcqkResVO.class,
+        ExcelUtils.write(response, "分月分成情况数据.xls", "数据", FyfcqkResVO.class,
                 BeanUtils.toBean(list, FyfcqkResVO.class));
     }
 }
