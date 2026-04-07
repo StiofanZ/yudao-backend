@@ -6,9 +6,10 @@ import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
-import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.zswzgdw.vo.ZswzgdwPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.zswzgdw.vo.ZswzgdwResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.zswzgdw.vo.*;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.zswzgdw.ZswzgdwDO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.zswzgdw.ZswzgdwQrDO;
+import cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.zswzgdw.ZswzgdwQrMapper;
 import cn.iocoder.yudao.module.lghjft.service.cxtj.zswzgdw.ZswzgdwService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -18,10 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,13 +36,46 @@ public class ZswzgdwController {
     @Resource
     private ZswzgdwService zswzgdwService;
 
+    @Resource
+    private ZswzgdwQrMapper zswzgdwQrMapper;
+
+    @PostMapping("/create")
+    @Operation(summary = "创建征收未主管单位")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-zswzgdw:create')")
+    public CommonResult<String> createZswzgdw(@Valid @RequestBody ZswzgdwSaveReqVO createReqVO) {
+        return success(zswzgdwService.createZswzgdw(createReqVO));
+    }
+
+    @PutMapping("/update")
+    @Operation(summary = "更新征收未主管单位")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-zswzgdw:update')")
+    public CommonResult<Boolean> updateZswzgdw(@Valid @RequestBody ZswzgdwSaveReqVO updateReqVO) {
+        zswzgdwService.updateZswzgdw(updateReqVO);
+        return success(true);
+    }
+
+    @DeleteMapping("/delete")
+    @Operation(summary = "删除征收未主管单位")
+    @Parameter(name = "djxh", description = "登记序号", required = true)
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-zswzgdw:delete')")
+    public CommonResult<Boolean> deleteZswzgdw(@RequestParam("djxh") String djxh) {
+        zswzgdwService.deleteZswzgdw(djxh);
+        return success(true);
+    }
+
     @GetMapping("/get")
     @Operation(summary = "获得征收未主管单位")
-    @Parameter(name = "id", description = "编号", required = true, example = "1024")
+    @Parameter(name = "djxh", description = "登记序号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-zswzgdw:query')")
-    public CommonResult<ZswzgdwResVO> getZswzgdw(@RequestParam("id") String id) {
-        ZswzgdwDO obj = zswzgdwService.getZswzgdw(id);
-        return success(BeanUtils.toBean(obj, ZswzgdwResVO.class));
+    public CommonResult<ZswzgdwResVO> getZswzgdw(@RequestParam("djxh") String djxh) {
+        ZswzgdwDO obj = zswzgdwService.getZswzgdw(djxh);
+        ZswzgdwResVO resVO = BeanUtils.toBean(obj, ZswzgdwResVO.class);
+        // 查询关联的确认记录（V1 通过 left join 返回子表数据）
+        if (resVO != null) {
+            List<ZswzgdwQrDO> qrList = zswzgdwQrMapper.selectByDjxh(djxh);
+            resVO.setZswzgdwQrList(BeanUtils.toBean(qrList, ZswzgdwQrVO.class));
+        }
+        return success(resVO);
     }
 
     @GetMapping("/page")
