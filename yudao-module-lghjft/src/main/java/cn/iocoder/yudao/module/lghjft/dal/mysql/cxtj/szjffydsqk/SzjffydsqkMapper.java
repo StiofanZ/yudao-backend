@@ -40,7 +40,6 @@ public interface SzjffydsqkMapper extends BaseMapperX<SzjffydsqkDO> {
             wrapper.eq("ZNJ", reqVO.getZnj());
         }
 
-        wrapper.orderByDesc("DWDM");
         return selectPage(reqVO, wrapper);
     }
 }
