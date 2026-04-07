@@ -699,4 +699,59 @@
         order by rkrq desc
     </select>
 
+    <!-- ==================== 省总到账核对 (V1 selectSzdzhdList) ==================== -->
+
+    <resultMap type="cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.SzdzhdResVO" id="SzdzhdResult">
+        <result property="sjdm"    column="sjdm"    />
+        <result property="xjdm"    column="xjdm"    />
+        <result property="deptId"  column="dept_id"  />
+        <result property="jsrq"    column="jsrq"    />
+        <result property="jfbs"    column="jfbs"    />
+        <result property="jfje"    column="jfje"    />
+        <result property="cbjje"   column="cbjje"   />
+        <result property="szje"    column="szje"    />
+        <result property="qzje"    column="qzje"    />
+        <result property="szqzhj"  column="szqzhj"  />
+        <result property="hjje"    column="hjje"    />
+    </resultMap>
+
+    <sql id="selectSzdzhdVo">
+        select
+        (
+        case
+        when t.dept_id = '620000' then
+        t.dept_id
+        when t.dept_id like '626%' then
+        t.dept_id
+        else
+        rpad(substr(t.dept_id, 1, 4), 6, 0)
+        end
+        ) as `sjdm`,
+
+        count(distinct t.djxh) jfbs,
+        sum(t.ybtse) jfje,
+        sum(t.cbjje) cbjje,
+        sum(t.szghje) szje,
+        sum(t.qgghje) qzje,
+        sum(t.szghje + t.qgghje) szqzhj,
+        sum(t.szghje + t.qgghje + t.cbjje) hjje
+        from
+        gh_jf t
+    </sql>
+
+    <select id="selectSzdzhdList" resultMap="SzdzhdResult">
+        <include refid="selectSzdzhdVo"/>
+        <where>
+            t.jsbj in ('Y', 'S', 'W')
+
+            <if test="req.deptId != null and req.deptId != ''"> and t.dept_id = #{req.deptId} </if>
+
+            <if test="req.beginHkpch != null and req.beginHkpch != '' and req.endHkpch != null and req.endHkpch != ''"> and mid(hkpch,1,8) between #{req.beginHkpch} and #{req.endHkpch}</if>
+
+            <if test="req.beginJsrq != null and req.beginJsrq != '' and req.endJsrq != null and req.endJsrq != ''"> and t.jsrq between #{req.beginJsrq} and #{req.endJsrq}</if>
+        </where>
+         group by
+        sjdm
+    </select>
+
 </mapper>

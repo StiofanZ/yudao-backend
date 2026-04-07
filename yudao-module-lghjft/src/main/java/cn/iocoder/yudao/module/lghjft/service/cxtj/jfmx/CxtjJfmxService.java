@@ -6,6 +6,8 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.JfmxResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.JfmxSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.JftzmxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.JftzmxResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.SzdzhdPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.SzdzhdResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.jfmx.CxtjJfmxDO;
 import jakarta.validation.Valid;
 
@@ -56,4 +58,12 @@ public interface CxtjJfmxService {
      * @return 经费台账明细分页
      */
     PageResult<JftzmxResVO> getJftzmxPage(JftzmxPageReqVO pageReqVO);
+
+    /**
+     * 获得省总到账核对分页
+     *
+     * @param pageReqVO 分页查询
+     * @return 省总到账核对分页
+     */
+    PageResult<SzdzhdResVO> getSzdzhdPage(SzdzhdPageReqVO pageReqVO);
 }
