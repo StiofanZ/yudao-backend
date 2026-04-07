@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class nsrckzhzhxxDO {
+public class NsrckzhzhxxDO {
 
     /**
      * 存款账号UUID

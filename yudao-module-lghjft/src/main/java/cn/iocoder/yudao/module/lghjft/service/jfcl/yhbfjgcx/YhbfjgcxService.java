@@ -1,14 +1,12 @@
 package cn.iocoder.yudao.module.lghjft.service.jfcl.yhbfjgcx;
 
-import java.util.*;
-
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfjgcx.vo.YhbfjgcxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfjgcx.vo.YhbfjgcxSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfjgcx.YhbfjgcxDO;
-import jakarta.validation.*;
+import jakarta.validation.Valid;
 
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.pojo.PageParam;
+import java.util.List;
 
 /**
  * 银行拨付结果查询 Service 接口

@@ -27,13 +27,6 @@ public interface ErrorCodeConstants {
     ErrorCode SFXX_NOT_EXISTS = new ErrorCode(2_015_000_001, "身份信息不存在");
     ErrorCode SFXX_REJECT_REASON_REQUIRED = new ErrorCode(2_015_000_002, "拒绝授权时，拒绝原因不能为空");
 
-    ErrorCode DLZH_NOT_EXISTS = new ErrorCode(2_016_000_001, "登录账号不存在");
-    ErrorCode DLZH_PASSWORD_REQUIRED = new ErrorCode(2_016_000_002, "密码不能为空");
-    ErrorCode DLZH_YHZH_EXISTS = new ErrorCode(2_016_000_003, "用户账号已存在");
-    ErrorCode DLZH_LXDH_EXISTS = new ErrorCode(2_016_000_004, "联系电话已存在");
-    ErrorCode DLZH_YHYX_EXISTS = new ErrorCode(2_016_000_005, "用户邮箱已存在");
-    ErrorCode DLZH_SHXYDM_EXISTS = new ErrorCode(2_016_000_006, "社会信用代码已存在");
-
     ErrorCode GH_HJ_JCXX_NOT_EXISTS = new ErrorCode(2_017_000_001, "户籍基础信息不存在");
     ErrorCode GH_HJ_JCXX_DJXH_EXISTS = new ErrorCode(2_017_000_002, "户籍基础信息登记序号已存在");
     ErrorCode GH_JF_NOT_EXISTS = new ErrorCode(2_018_000_001, "税务入库不存在");

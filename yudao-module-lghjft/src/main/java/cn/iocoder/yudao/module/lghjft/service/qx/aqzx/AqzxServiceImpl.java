@@ -16,7 +16,7 @@ import org.springframework.validation.annotation.Validated;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.AQZX_VERIFY_MOBILE_NOT_EXISTS;
-import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.DLZH_NOT_EXISTS;
+import static cn.iocoder.yudao.module.system.enums.ErrorCodeConstants.USER_NOT_EXISTS;
 
 @Service
 @Validated
@@ -67,7 +67,7 @@ public class AqzxServiceImpl implements AqzxService {
     private AdminUserDO getCurrentUser() {
         AdminUserDO user = adminUserMapper.selectById(SecurityFrameworkUtils.getLoginUserId());
         if (user == null) {
-            throw exception(DLZH_NOT_EXISTS);
+            throw exception(USER_NOT_EXISTS);
         }
         return user;
     }
