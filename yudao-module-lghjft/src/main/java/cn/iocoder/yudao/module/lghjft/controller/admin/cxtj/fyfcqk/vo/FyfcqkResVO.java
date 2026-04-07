@@ -4,35 +4,31 @@ import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 @Schema(description = "管理后台 - 分月分成情况 Response VO")
 @Data
 @ExcelIgnoreUnannotated
 public class FyfcqkResVO {
 
-    @Schema(description = "deptId")
-    private String deptId;
-    @Schema(description = "rkrq")
-    private LocalDateTime rkrq;
     @Schema(description = "dsyf")
     private String dsyf;
     @Schema(description = "rkjf")
-    private String rkjf;
+    private BigDecimal rkjf;
     @Schema(description = "tkjf")
-    private String tkjf;
+    private BigDecimal tkjf;
     @Schema(description = "ygfcjf")
-    private String ygfcjf;
+    private BigDecimal ygfcjf;
     @Schema(description = "yfcjf")
-    private String yfcjf;
+    private BigDecimal yfcjf;
     @Schema(description = "wfcjf")
-    private String wfcjf;
+    private BigDecimal wfcjf;
     @Schema(description = "szfc")
-    private String szfc;
+    private BigDecimal szfc;
     @Schema(description = "znj")
-    private String znj;
+    private BigDecimal znj;
     @Schema(description = "qzfc")
-    private String qzfc;
+    private BigDecimal qzfc;
     @Schema(description = "hj")
-    private String hj;
+    private BigDecimal hj;
 }
