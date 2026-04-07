@@ -8,6 +8,7 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.dhjftz.vo.DhjftzPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.dhjftz.vo.DhjftzResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.dhjftz.vo.DhjftzSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.dhjftz.DhjftzDO;
 import cn.iocoder.yudao.module.lghjft.service.cxtj.dhjftz.DhjftzService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,10 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -37,6 +35,30 @@ public class DhjftzController {
 
     @Resource
     private DhjftzService dhjftzService;
+
+    @PostMapping("/create")
+    @Operation(summary = "创建到户经费台账")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-dhjftz:create')")
+    public CommonResult<String> createDhjftz(@Valid @RequestBody DhjftzSaveReqVO createReqVO) {
+        return success(dhjftzService.createDhjftz(createReqVO));
+    }
+
+    @PutMapping("/update")
+    @Operation(summary = "更新到户经费台账")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-dhjftz:update')")
+    public CommonResult<Boolean> updateDhjftz(@Valid @RequestBody DhjftzSaveReqVO updateReqVO) {
+        dhjftzService.updateDhjftz(updateReqVO);
+        return success(true);
+    }
+
+    @DeleteMapping("/delete")
+    @Operation(summary = "删除到户经费台账")
+    @Parameter(name = "djxh", description = "登记序号", required = true)
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-dhjftz:delete')")
+    public CommonResult<Boolean> deleteDhjftz(@RequestParam("djxh") String djxh) {
+        dhjftzService.deleteDhjftz(djxh);
+        return success(true);
+    }
 
     @GetMapping("/get")
     @Operation(summary = "获得到户经费台账")

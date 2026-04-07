@@ -34,6 +34,7 @@ public interface ErrorCodeConstants {
 
     ErrorCode HKXX_NOT_EXISTS = new ErrorCode(2_019_000_001, "基层经费到账对象不存在");
     ErrorCode JF_NOT_EXISTS = new ErrorCode(2_019_000_002, " 经费明细对象不存在");
+    ErrorCode DHJFTZ_NOT_EXISTS = new ErrorCode(2_019_000_003, "到户经费台账不存在");
 
     ErrorCode ZHWH_NOT_EXISTS = new ErrorCode(2_020_000_001, "账户维护申请不存在");
     ErrorCode ZHWH_STATUS_NOT_PENDING = new ErrorCode(2_020_000_002, "当前申请不是待审核状态，不能继续处理");
