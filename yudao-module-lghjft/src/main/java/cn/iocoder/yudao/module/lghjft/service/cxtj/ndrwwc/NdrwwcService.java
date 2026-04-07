@@ -24,11 +24,11 @@ public interface NdrwwcService {
     void updateNdrwwc(@Valid NdrwwcSaveReqVO updateReqVO);
 
     /**
-     * 删除分上缴周期统计
+     * 批量删除分上缴周期统计 — V1: deleteNdrwwcByNds(String[] nds)
      *
-     * @param nd 年度
+     * @param nds 年度数组
      */
-    void deleteNdrwwc(String nd);
+    void deleteNdrwwcByNds(String[] nds);
 
     /**
      * 获得分上缴周期统计

@@ -36,6 +36,9 @@ public class NdrwwcController {
     @Resource
     private NdrwwcService ndrwwcService;
 
+    /**
+     * V1: POST — 新增分年各级分成情况
+     */
     @PostMapping("/create")
     @Operation(summary = "创建分上缴周期统计")
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ndrwwc:create')")
@@ -43,6 +46,9 @@ public class NdrwwcController {
         return success(ndrwwcService.createNdrwwc(createReqVO));
     }
 
+    /**
+     * V1: PUT — 修改分年各级分成情况
+     */
     @PutMapping("/update")
     @Operation(summary = "更新分上缴周期统计")
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ndrwwc:update')")
@@ -51,15 +57,21 @@ public class NdrwwcController {
         return success(true);
     }
 
-    @DeleteMapping("/delete")
-    @Operation(summary = "删除分上缴周期统计")
-    @Parameter(name = "nd", description = "年度", required = true)
+    /**
+     * V1: DELETE /{nds} — 批量删除 (String[] 数组)
+     */
+    @DeleteMapping("/delete/{nds}")
+    @Operation(summary = "批量删除分上缴周期统计")
+    @Parameter(name = "nds", description = "年度数组", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ndrwwc:delete')")
-    public CommonResult<Boolean> deleteNdrwwc(@RequestParam("nd") String nd) {
-        ndrwwcService.deleteNdrwwc(nd);
+    public CommonResult<Boolean> deleteNdrwwc(@PathVariable("nds") String[] nds) {
+        ndrwwcService.deleteNdrwwcByNds(nds);
         return success(true);
     }
 
+    /**
+     * V1: GET /{nd} — 获取单条
+     */
     @GetMapping("/get")
     @Operation(summary = "获得分上缴周期统计")
     @Parameter(name = "nd", description = "年度", required = true)
@@ -69,6 +81,9 @@ public class NdrwwcController {
         return success(BeanUtils.toBean(obj, NdrwwcResVO.class));
     }
 
+    /**
+     * V1: GET /list — NO pagination (startPage 被注释掉)
+     */
     @GetMapping("/page")
     @Operation(summary = "获得分上缴周期统计分页")
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ndrwwc:query')")
@@ -77,6 +92,9 @@ public class NdrwwcController {
         return success(BeanUtils.toBean(pageResult, NdrwwcResVO.class));
     }
 
+    /**
+     * V1: POST /export — 导出 "分上缴周期统计数据"
+     */
     @GetMapping("/export-excel")
     @Operation(summary = "导出分上缴周期统计 Excel")
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ndrwwc:export')")
@@ -85,7 +103,7 @@ public class NdrwwcController {
                                   HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<NdrwwcDO> list = ndrwwcService.getNdrwwcPage(pageReqVO).getList();
-        ExcelUtils.write(response, "分上缴周期统计.xls", "数据", NdrwwcResVO.class,
+        ExcelUtils.write(response, "分上缴周期统计数据.xls", "数据", NdrwwcResVO.class,
                 BeanUtils.toBean(list, NdrwwcResVO.class));
     }
 }

@@ -7,10 +7,13 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.ndrwwc.vo.NdrwwcSave
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.ndrwwc.NdrwwcDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.ndrwwc.NdrwwcMapper;
 import cn.iocoder.yudao.module.lghjft.framework.deptfilter.DeptFilterHelper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.Arrays;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.NDRWWC_NOT_EXISTS;
@@ -41,11 +44,18 @@ public class NdrwwcServiceImpl implements NdrwwcService {
         ndrwwcMapper.updateById(updateObj);
     }
 
+    /**
+     * 批量删除 — V1: deleteNdrwwcByNds(String[] nds)
+     * delete from ndrwwc where ND in (...)
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteNdrwwc(String nd) {
-        validateExists(nd);
-        ndrwwcMapper.deleteById(nd);
+    public void deleteNdrwwcByNds(String[] nds) {
+        if (nds == null || nds.length == 0) {
+            return;
+        }
+        ndrwwcMapper.delete(new QueryWrapper<NdrwwcDO>()
+                .in("nd", Arrays.asList(nds)));
     }
 
     @Override
