@@ -6,12 +6,14 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.hbsbjl.vo.HbsbjlPage
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.hbsbjl.vo.HbsbjlSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.hbsbjl.HbsbjlDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.hbsbjl.HbsbjlMapper;
+import cn.iocoder.yudao.module.lghjft.framework.deptfilter.DeptFilterHelper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
+import java.util.Map;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.HKXX_NOT_EXISTS;
@@ -22,6 +24,9 @@ public class HbsbjlServiceImpl implements HbsbjlService {
 
     @Resource
     private HbsbjlMapper hbsbjlMapper;
+
+    @Resource
+    private DeptFilterHelper deptFilterHelper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -65,6 +70,14 @@ public class HbsbjlServiceImpl implements HbsbjlService {
 
     @Override
     public PageResult<HbsbjlDO> getHbsbjlPage(HbsbjlPageReqVO pageReqVO) {
+        // 应用部门过滤逻辑（还原 V1 行为：root = "100000"）
+        pageReqVO.setDeptId(deptFilterHelper.filterDeptId(pageReqVO.getDeptId()));
         return hbsbjlMapper.selectPage(pageReqVO);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int fushenPlByhkxxIds(List<Long> hkxxIds, Map<String, Object> updateFields) {
+        return hbsbjlMapper.fushenPlByhkxxIds(hkxxIds, updateFields);
     }
 }

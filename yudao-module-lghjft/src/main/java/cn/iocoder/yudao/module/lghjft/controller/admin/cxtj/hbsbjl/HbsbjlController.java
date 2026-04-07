@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.EXPORT;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
@@ -48,6 +49,17 @@ public class HbsbjlController {
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-hbsbjl:update')")
     public CommonResult<Boolean> updateHbsbjl(@Valid @RequestBody HbsbjlSaveReqVO updateReqVO) {
         hbsbjlService.updateHbsbjl(updateReqVO);
+        return success(true);
+    }
+
+    @SuppressWarnings("unchecked")
+    @PutMapping("/fushen-pl")
+    @Operation(summary = "批量复审")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-hbsbjl:update')")
+    public CommonResult<Boolean> fushenPl(@RequestBody Map<String, Object> request) {
+        List<Long> hkxxIds = (List<Long>) request.get("hkxxIds");
+        Map<String, Object> updateFields = (Map<String, Object>) request.get("updateFields");
+        hbsbjlService.fushenPlByhkxxIds(hkxxIds, updateFields);
         return success(true);
     }
 

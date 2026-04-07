@@ -7,6 +7,7 @@ import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.hbsbjl.HbsbjlDO;
 import jakarta.validation.Valid;
 
 import java.util.List;
+import java.util.Map;
 
 public interface HbsbjlService {
     Long createHbsbjl(@Valid HbsbjlSaveReqVO createReqVO);
@@ -20,4 +21,13 @@ public interface HbsbjlService {
     HbsbjlDO getHbsbjl(Long id);
 
     PageResult<HbsbjlDO> getHbsbjlPage(HbsbjlPageReqVO pageReqVO);
+
+    /**
+     * 批量复审（还原 V1 fushenPlByhkxxIds）
+     *
+     * @param hkxxIds      需批量修改的记录 ID 列表
+     * @param updateFields 需批量修改的字段 map（key=列名, value=值）
+     * @return 影响行数
+     */
+    int fushenPlByhkxxIds(List<Long> hkxxIds, Map<String, Object> updateFields);
 }

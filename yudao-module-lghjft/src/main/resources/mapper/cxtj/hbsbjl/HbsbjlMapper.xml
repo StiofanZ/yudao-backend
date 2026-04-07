@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.hbsbjl.HbsbjlMapper">
+
+    <!-- 批量复审: 动态更新字段（还原 V1 fushenPlByhkxxIds） -->
+    <update id="fushenPlByhkxxIds">
+        UPDATE gh_hkxx
+        <set>
+            <foreach item="value" index="key" collection="updateFields.entrySet()" separator=",">
+                ${key} = #{value}
+            </foreach>
+        </set>
+        WHERE HKXX_ID IN
+        <foreach item="hkxxId" collection="hkxxIds" separator="," open="(" close=")">
+            #{hkxxId}
+        </foreach>
+    </update>
+
+</mapper>
