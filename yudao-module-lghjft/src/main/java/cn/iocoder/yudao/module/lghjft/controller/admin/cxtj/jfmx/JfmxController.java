@@ -9,6 +9,8 @@ import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.JfmxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.JfmxResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.JfmxSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.JftzmxPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.JftzmxResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.jfmx.CxtjJfmxDO;
 import cn.iocoder.yudao.module.lghjft.service.cxtj.jfmx.CxtjJfmxService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -85,5 +87,25 @@ public class JfmxController {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<JfmxResVO> list = cxtjJfmxService.getJfmxPage(pageReqVO).getList();
         ExcelUtils.write(response, "经费明细.xls", "数据", JfmxResVO.class, list);
+    }
+
+    // ==================== 经费台账明细 (V1 /listmx + /tzexport) ====================
+
+    @GetMapping("/listmx")
+    @Operation(summary = "获得经费台账明细分页")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-jfmx:query')")
+    public CommonResult<PageResult<JftzmxResVO>> getJftzmxPage(@Valid JftzmxPageReqVO pageReqVO) {
+        return success(cxtjJfmxService.getJftzmxPage(pageReqVO));
+    }
+
+    @GetMapping("/tzexport")
+    @Operation(summary = "导出经费台账明细 Excel")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-jfmx:export')")
+    @ApiAccessLog(operateType = EXPORT)
+    public void exportJftzmxExcel(@Valid JftzmxPageReqVO pageReqVO,
+                                  HttpServletResponse response) throws IOException {
+        pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
+        List<JftzmxResVO> list = cxtjJfmxService.getJftzmxPage(pageReqVO).getList();
+        ExcelUtils.write(response, "经费台账明细.xls", "数据", JftzmxResVO.class, list);
     }
 }
