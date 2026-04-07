@@ -50,9 +50,17 @@ public class BbsjController {
         }
         AdminUserDO user = userService.getUser(loginUser.getId());
         if (Objects.isNull(params)) {
-            DeptDO dept = deptService.getDept(user.getDeptId());
-            parents.add(dept.getParentId());
-            depts.add(dept);
+            // 根节点：返回全国总工会（id=100000）作为树根，而非当前用户部门
+            DeptDO rootDept = deptService.getDept(100000L);
+            if (rootDept != null) {
+                parents.add(rootDept.getParentId());
+                depts.add(rootDept);
+            } else {
+                // fallback：如果根部门不存在，返回当前用户部门
+                DeptDO dept = deptService.getDept(user.getDeptId());
+                parents.add(dept.getParentId());
+                depts.add(dept);
+            }
         } else {
             Map<String, Object> map = JsonUtils.parseObject(params, new TypeReference<Map<String, Object>>() {
             });
