@@ -12,8 +12,10 @@ public interface GhYjhxxMapper extends BaseMapperX<GhYjhxxDO> {
 
     default PageResult<GhYjhxxDO> selectPage(GhYjhxxPageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<GhYjhxxDO>()
-                .eqIfPresent(GhYjhxxDO::getNsrmc, reqVO.getNsrmc())
+                .likeIfPresent(GhYjhxxDO::getNsrmc, reqVO.getNsrmc())
                 .eqIfPresent(GhYjhxxDO::getShxydm, reqVO.getShxydm())
+                .eqIfPresent(GhYjhxxDO::getNsrsbh, reqVO.getNsrsbh())
+                .eqIfPresent(GhYjhxxDO::getYxbj, reqVO.getYxbj())
                 .orderByDesc(GhYjhxxDO::getJhxxId));
     }
 }

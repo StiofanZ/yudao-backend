@@ -12,4 +12,8 @@ public class GhYjhxxPageReqVO extends PageParam {
     private String nsrmc;
     @Schema(description = "shxydm")
     private String shxydm;
+    @Schema(description = "nsrsbh")
+    private String nsrsbh;
+    @Schema(description = "yxbj")
+    private String yxbj;
 }
