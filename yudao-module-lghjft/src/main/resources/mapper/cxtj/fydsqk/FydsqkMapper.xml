@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.fydsqk.FydsqkMapper">
+
+    <resultMap type="cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.fydsqk.FydsqkDO" id="FydsqkResult">
+        <result property="dsyf" column="dsyf" />
+        <result property="rkjf" column="rkjf" />
+        <result property="ghjf" column="ghjf" />
+        <result property="cbj"  column="cbj"  />
+        <result property="znj"  column="znj"  />
+    </resultMap>
+
+    <select id="selectAggregateList" resultMap="FydsqkResult">
+        select case when a.dsyf is not null then a.dsyf else '合计' end as dsyf,
+               sum(a.rkjf) as rkjf,
+               sum(a.ghjf) as ghjf,
+               sum(a.cbj) as cbj,
+               sum(a.znj) as znj
+          from fydsqk a
+         where 1=1
+         group by a.dsyf with rollup
+    </select>
+
+    <select id="selectAggregateListByDateRange" resultMap="FydsqkResult">
+        select case when a.dsyf is not null then a.dsyf else '合计' end as dsyf,
+               sum(a.rkjf) as rkjf,
+               sum(a.ghjf) as ghjf,
+               sum(a.cbj) as cbj,
+               sum(a.znj) as znj
+          from fydsqk a
+         where dsyf between #{beginRkrq} and #{endRkrq}
+         group by a.dsyf with rollup
+    </select>
+
+</mapper>

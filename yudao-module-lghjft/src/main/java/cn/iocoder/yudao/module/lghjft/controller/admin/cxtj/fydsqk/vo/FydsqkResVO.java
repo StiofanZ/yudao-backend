@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.fydsqk.vo;
 
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
+import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -11,14 +12,23 @@ import java.math.BigDecimal;
 @ExcelIgnoreUnannotated
 public class FydsqkResVO {
 
-    @Schema(description = "dsyf")
+    @Schema(description = "代收月份")
+    @ExcelProperty("代收月份")
     private String dsyf;
-    @Schema(description = "rkjf")
+
+    @Schema(description = "入库经费")
+    @ExcelProperty("入库经费")
     private BigDecimal rkjf;
-    @Schema(description = "ghjf")
+
+    @Schema(description = "工会经费")
+    @ExcelProperty("工会经费")
     private BigDecimal ghjf;
-    @Schema(description = "cbj")
+
+    @Schema(description = "筹备金")
+    @ExcelProperty("筹备金")
     private BigDecimal cbj;
-    @Schema(description = "znj")
+
+    @Schema(description = "滞纳金")
+    @ExcelProperty("滞纳金")
     private BigDecimal znj;
 }

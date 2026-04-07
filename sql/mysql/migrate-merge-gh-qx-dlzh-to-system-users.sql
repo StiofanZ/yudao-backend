@@ -39,3 +39,6 @@ WHERE u.id != d.id;
 
 -- Step 5: 删除旧表
 DROP TABLE gh_qx_dlzh;
+
+-- Step 6: 重命名 gh_qx_sfxx → system_user_sfxx
+RENAME TABLE gh_qx_sfxx TO system_user_sfxx;
