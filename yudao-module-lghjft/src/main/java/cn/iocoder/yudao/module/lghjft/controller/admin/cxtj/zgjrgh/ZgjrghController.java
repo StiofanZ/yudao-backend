@@ -85,7 +85,7 @@ public class ZgjrghController {
                                   HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<ZgjrghDO> list = zgjrghService.getZgjrghPage(pageReqVO).getList();
-        ExcelUtils.write(response, "金融工会信息核对.xls", "数据", ZgjrghResVO.class,
+        ExcelUtils.write(response, "金融工会信息确认数据.xls", "数据", ZgjrghResVO.class,
                 BeanUtils.toBean(list, ZgjrghResVO.class));
     }
 }

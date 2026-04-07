@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.zgjrgh.vo;
 
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
+import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -12,184 +13,491 @@ import java.time.LocalDateTime;
 @ExcelIgnoreUnannotated
 public class ZgjrghResVO {
 
-    @Schema(description = "ghjfId")
+    @Schema(description = "工会经费ID")
+    @ExcelProperty("工会经费ID")
     private Long ghjfId;
-    @Schema(description = "spuuid")
+
+    @Schema(description = "税票ID")
+    @ExcelProperty("税票ID")
     private String spuuid;
-    @Schema(description = "djxh")
+
+    @Schema(description = "登记序号")
+    @ExcelProperty("登记序号")
     private String djxh;
-    @Schema(description = "shxydm")
+
+    @Schema(description = "社会信用代码")
+    @ExcelProperty("社会信用代码")
     private String shxydm;
-    @Schema(description = "nsrmc")
+
+    @Schema(description = "纳税人名称")
+    @ExcelProperty("纳税人名称")
     private String nsrmc;
-    @Schema(description = "nsrjc")
+
+    @Schema(description = "纳税人简称")
+    @ExcelProperty("纳税人简称")
     private String nsrjc;
-    @Schema(description = "deptId")
+
+    @Schema(description = "工会机构代码")
+    @ExcelProperty("工会机构代码")
     private String deptId;
-    @Schema(description = "ghjgxzjb")
+
+    @Schema(description = "工会机构行政级别")
+    @ExcelProperty("工会机构行政级别")
     private String ghjgxzjb;
-    @Schema(description = "clghbj")
+
+    @Schema(description = "成立工会标记")
+    @ExcelProperty("成立工会标记")
     private String clghbj;
-    @Schema(description = "hyghbz")
+
+    @Schema(description = "行业工会标志")
+    @ExcelProperty("行业工会标志")
     private String hyghbz;
-    @Schema(description = "sdghjgDm")
+
+    @Schema(description = "属地工会机构代码")
+    @ExcelProperty("属地工会机构代码")
     private String sdghjgDm;
-    @Schema(description = "sdghjgxzjb")
+
+    @Schema(description = "属地工会行政级别")
+    @ExcelProperty("属地工会行政级别")
     private String sdghjgxzjb;
-    @Schema(description = "zgswjDm")
+
+    @Schema(description = "主管税务局代码")
+    @ExcelProperty("主管税务局代码")
     private String zgswjDm;
-    @Schema(description = "zgswskfjDm")
+
+    @Schema(description = "主管税务分局代码")
+    @ExcelProperty("主管税务分局代码")
     private String zgswskfjDm;
-    @Schema(description = "ssglyDm")
+
+    @Schema(description = "税管员代码")
+    @ExcelProperty("税管员代码")
     private String ssglyDm;
-    @Schema(description = "ghlbDm")
+
+    @Schema(description = "工会类别代码")
+    @ExcelProperty("工会类别代码")
     private String ghlbDm;
-    @Schema(description = "xtlbDm")
+
+    @Schema(description = "系统类别代码")
+    @ExcelProperty("系统类别代码")
     private String xtlbDm;
-    @Schema(description = "zzjglxDm")
+
+    @Schema(description = "组织机构类型代码")
+    @ExcelProperty("组织机构类型代码")
     private String zzjglxDm;
-    @Schema(description = "hyDm")
+
+    @Schema(description = "行业代码")
+    @ExcelProperty("行业代码")
     private String hyDm;
-    @Schema(description = "djzclxDm")
+
+    @Schema(description = "登记注册类型代码")
+    @ExcelProperty("登记注册类型代码")
     private String djzclxDm;
-    @Schema(description = "dwlsgxDm")
+
+    @Schema(description = "单位隶属关系代码")
+    @ExcelProperty("单位隶属关系代码")
     private String dwlsgxDm;
-    @Schema(description = "sblbDm")
+
+    @Schema(description = "申报类别代码")
+    @ExcelProperty("申报类别代码")
     private String sblbDm;
-    @Schema(description = "nssbrq")
+
+    @Schema(description = "申报日期")
+    @ExcelProperty("申报日期")
     private LocalDateTime nssbrq;
-    @Schema(description = "pzxh")
+
+    @Schema(description = "票证序号")
+    @ExcelProperty("票证序号")
     private String pzxh;
-    @Schema(description = "pzmxxh")
+
+    @Schema(description = "票证明细号")
+    @ExcelProperty("票证明细号")
     private Long pzmxxh;
-    @Schema(description = "skssqq")
+
+    @Schema(description = "所属期起")
+    @ExcelProperty("所属期起")
     private LocalDateTime skssqq;
-    @Schema(description = "skssqz")
+
+    @Schema(description = "所属期止")
+    @ExcelProperty("所属期止")
     private LocalDateTime skssqz;
-    @Schema(description = "zsswjgDm")
+
+    @Schema(description = "征收税务局代码")
+    @ExcelProperty("征收税务局代码")
     private String zsswjgDm;
-    @Schema(description = "skssswjgDm")
+
+    @Schema(description = "税款所属税务机关")
+    @ExcelProperty("税款所属税务机关")
     private String skssswjgDm;
-    @Schema(description = "skgkDm")
+
+    @Schema(description = "税款国库代码")
+    @ExcelProperty("税款国库代码")
     private String skgkDm;
-    @Schema(description = "dzsphm")
+
+    @Schema(description = "电子票证号码")
+    @ExcelProperty("电子票证号码")
     private String dzsphm;
-    @Schema(description = "pzzlDm")
+
+    @Schema(description = "票证种类")
+    @ExcelProperty("票证种类")
     private String pzzlDm;
-    @Schema(description = "pzzgDm")
+
+    @Schema(description = "票证字轨")
+    @ExcelProperty("票证字轨")
     private String pzzgDm;
-    @Schema(description = "pzhm")
+
+    @Schema(description = "票证号码")
+    @ExcelProperty("票证号码")
     private String pzhm;
-    @Schema(description = "kpyDm")
+
+    @Schema(description = "开票员代码")
+    @ExcelProperty("开票员代码")
     private String kpyDm;
-    @Schema(description = "kpyXm")
+
+    @Schema(description = "开票员姓名")
+    @ExcelProperty("开票员姓名")
     private String kpyXm;
-    @Schema(description = "zspmDm")
+
+    @Schema(description = "征收品目代码")
+    @ExcelProperty("征收品目代码")
     private String zspmDm;
-    @Schema(description = "zszmDm")
+
+    @Schema(description = "征收子目代码")
+    @ExcelProperty("征收子目代码")
     private String zszmDm;
-    @Schema(description = "yskmDm")
+
+    @Schema(description = "预算科目代码")
+    @ExcelProperty("预算科目代码")
     private String yskmDm;
-    @Schema(description = "gzze")
+
+    @Schema(description = "工资总额")
+    @ExcelProperty("工资总额")
     private BigDecimal gzze;
-    @Schema(description = "sl")
+
+    @Schema(description = "税率")
+    @ExcelProperty("税率")
     private BigDecimal sl;
-    @Schema(description = "ynse")
+
+    @Schema(description = "应纳税额")
+    @ExcelProperty("应纳税额")
     private BigDecimal ynse;
-    @Schema(description = "jmse")
+
+    @Schema(description = "减免税额")
+    @ExcelProperty("减免税额")
     private BigDecimal jmse;
-    @Schema(description = "yjse")
+
+    @Schema(description = "已缴税额")
+    @ExcelProperty("已缴税额")
     private BigDecimal yjse;
-    @Schema(description = "ybtse")
+
+    @Schema(description = "应补退税额")
+    @ExcelProperty("应补退税额")
     private BigDecimal ybtse;
-    @Schema(description = "jkfsDm")
+
+    @Schema(description = "缴款方式")
+    @ExcelProperty("缴款方式")
     private String jkfsDm;
-    @Schema(description = "jfhb")
+
+    @Schema(description = "缴费行别")
+    @ExcelProperty("缴费行别")
     private String jfhb;
-    @Schema(description = "jfzh")
+
+    @Schema(description = "缴费正好")
+    @ExcelProperty("缴费正好")
     private String jfzh;
-    @Schema(description = "jfhm")
+
+    @Schema(description = "缴费户名")
+    @ExcelProperty("缴费户名")
     private String jfhm;
-    @Schema(description = "jfhh")
+
+    @Schema(description = "缴费行号")
+    @ExcelProperty("缴费行号")
     private String jfhh;
-    @Schema(description = "jfyh")
+
+    @Schema(description = "缴费银行")
+    @ExcelProperty("缴费银行")
     private String jfyh;
-    @Schema(description = "rkrq")
+
+    @Schema(description = "入库日期")
+    @ExcelProperty("入库日期")
     private LocalDateTime rkrq;
-    @Schema(description = "jsbj")
+
+    @Schema(description = "结算标记")
+    @ExcelProperty("结算标记")
     private String jsbj;
-    @Schema(description = "jsrq")
+
+    @Schema(description = "结算日期")
+    @ExcelProperty("结算日期")
     private LocalDateTime jsrq;
-    @Schema(description = "jsczy")
+
+    @Schema(description = "结算操作员")
+    @ExcelProperty("结算操作员")
     private String jsczy;
-    @Schema(description = "jcghzh")
+
+    @Schema(description = "基层工会账号")
+    @ExcelProperty("基层工会账号")
     private String jcghzh;
-    @Schema(description = "jcghhm")
+
+    @Schema(description = "基层工会户名")
+    @ExcelProperty("基层工会户名")
     private String jcghhm;
-    @Schema(description = "jcghhh")
+
+    @Schema(description = "基层工会行号")
+    @ExcelProperty("基层工会行号")
     private String jcghhh;
-    @Schema(description = "jcghbl")
+
+    @Schema(description = "基层工会比例")
+    @ExcelProperty("基层工会比例")
     private BigDecimal jcghbl;
-    @Schema(description = "jcghje")
+
+    @Schema(description = "基层工会金额")
+    @ExcelProperty("基层工会金额")
     private BigDecimal jcghje;
-    @Schema(description = "cbjzh")
+
+    @Schema(description = "筹备金账号")
+    @ExcelProperty("筹备金账号")
     private String cbjzh;
-    @Schema(description = "cbjhm")
+
+    @Schema(description = "筹备金户名")
+    @ExcelProperty("筹备金户名")
     private String cbjhm;
-    @Schema(description = "cbjhh")
+
+    @Schema(description = "筹备金行号")
+    @ExcelProperty("筹备金行号")
     private String cbjhh;
-    @Schema(description = "cbjbl")
+
+    @Schema(description = "筹备金比例")
+    @ExcelProperty("筹备金比例")
     private BigDecimal cbjbl;
-    @Schema(description = "cbjje")
+
+    @Schema(description = "筹备金金额")
+    @ExcelProperty("筹备金金额")
     private BigDecimal cbjje;
-    @Schema(description = "hyghzh")
+
+    @Schema(description = "行业工会账号")
+    @ExcelProperty("行业工会账号")
     private String hyghzh;
-    @Schema(description = "hyghhm")
+
+    @Schema(description = "行业工会户名")
+    @ExcelProperty("行业工会户名")
     private String hyghhm;
-    @Schema(description = "hyghhh")
+
+    @Schema(description = "行业工会行号")
+    @ExcelProperty("行业工会行号")
     private String hyghhh;
-    @Schema(description = "hyghbl")
+
+    @Schema(description = "行业工会比例")
+    @ExcelProperty("行业工会比例")
     private BigDecimal hyghbl;
-    @Schema(description = "hyghje")
+
+    @Schema(description = "行业工会金额")
+    @ExcelProperty("行业工会金额")
     private BigDecimal hyghje;
-    @Schema(description = "xjghzh")
+
+    @Schema(description = "县级工会账号")
+    @ExcelProperty("县级工会账号")
     private String xjghzh;
-    @Schema(description = "xjghhm")
+
+    @Schema(description = "县级工会户名")
+    @ExcelProperty("县级工会户名")
     private String xjghhm;
-    @Schema(description = "xjghhh")
+
+    @Schema(description = "县级工会行号")
+    @ExcelProperty("县级工会行号")
     private String xjghhh;
-    @Schema(description = "xjghbl")
+
+    @Schema(description = "县级工会比例")
+    @ExcelProperty("县级工会比例")
     private BigDecimal xjghbl;
-    @Schema(description = "xjghje")
+
+    @Schema(description = "县级工会金额")
+    @ExcelProperty("县级工会金额")
     private BigDecimal xjghje;
-    @Schema(description = "sjghzh")
+
+    @Schema(description = "市级工会账号")
+    @ExcelProperty("市级工会账号")
     private String sjghzh;
-    @Schema(description = "sjghhm")
+
+    @Schema(description = "市级工会户名")
+    @ExcelProperty("市级工会户名")
     private String sjghhm;
-    @Schema(description = "sjghhh")
+
+    @Schema(description = "市级工会行号")
+    @ExcelProperty("市级工会行号")
     private String sjghhh;
-    @Schema(description = "sjghbl")
+
+    @Schema(description = "市级工会比例")
+    @ExcelProperty("市级工会比例")
     private BigDecimal sjghbl;
-    @Schema(description = "sjghje")
+
+    @Schema(description = "市级工会金额")
+    @ExcelProperty("市级工会金额")
     private BigDecimal sjghje;
-    @Schema(description = "szghzh")
+
+    @Schema(description = "省总工会账号")
+    @ExcelProperty("省总工会账号")
     private String szghzh;
-    @Schema(description = "szghhm")
+
+    @Schema(description = "省总工会户名")
+    @ExcelProperty("省总工会户名")
     private String szghhm;
-    @Schema(description = "szghhh")
+
+    @Schema(description = "省总工会行号")
+    @ExcelProperty("省总工会行号")
     private String szghhh;
-    @Schema(description = "szghbl")
+
+    @Schema(description = "省总工会比例")
+    @ExcelProperty("省总工会比例")
     private BigDecimal szghbl;
-    @Schema(description = "szghje")
+
+    @Schema(description = "省总工会金额")
+    @ExcelProperty("省总工会金额")
     private BigDecimal szghje;
-    @Schema(description = "qgghzh")
+
+    @Schema(description = "全总账号")
+    @ExcelProperty("全总账号")
     private String qgghzh;
-    @Schema(description = "qgghhm")
+
+    @Schema(description = "全总户名")
+    @ExcelProperty("全总户名")
     private String qgghhm;
-    @Schema(description = "qgghhh")
+
+    @Schema(description = "全总行号")
+    @ExcelProperty("全总行号")
     private String qgghhh;
-    @Schema(description = "qgghbl")
+
+    @Schema(description = "全总比例")
+    @ExcelProperty("全总比例")
     private BigDecimal qgghbl;
-    @Schema(description = "qgghje")
+
+    @Schema(description = "全总金额")
+    @ExcelProperty("全总金额")
     private BigDecimal qgghje;
+
+    @Schema(description = "稽查局账号")
+    @ExcelProperty("稽查局账号")
+    private String jcjzh;
+
+    @Schema(description = "稽查局户名")
+    @ExcelProperty("稽查局户名")
+    private String jcjhm;
+
+    @Schema(description = "稽查局行号")
+    @ExcelProperty("稽查局行号")
+    private String jcjhh;
+
+    @Schema(description = "稽查局比例")
+    @ExcelProperty("稽查局比例")
+    private BigDecimal jcjbl;
+
+    @Schema(description = "稽查局金额")
+    @ExcelProperty("稽查局金额")
+    private BigDecimal jcjje;
+
+    @Schema(description = "稽查局文书号")
+    @ExcelProperty("稽查局文书号")
+    private String jcwsh;
+
+    @Schema(description = "省税局账号")
+    @ExcelProperty("省税局账号")
+    private String sdszh;
+
+    @Schema(description = "省税局户名")
+    @ExcelProperty("省税局户名")
+    private String sdshm;
+
+    @Schema(description = "省税局行号")
+    @ExcelProperty("省税局行号")
+    private String sdshh;
+
+    @Schema(description = "省税局比例")
+    @ExcelProperty("省税局比例")
+    private BigDecimal sdsbl;
+
+    @Schema(description = "省税局金额")
+    @ExcelProperty("省税局金额")
+    private BigDecimal sdsje;
+
+    @Schema(description = "税务机关账号")
+    @ExcelProperty("税务机关账号")
+    private String swjgzh;
+
+    @Schema(description = "税务机关户名")
+    @ExcelProperty("税务机关户名")
+    private String swjghm;
+
+    @Schema(description = "税务机关行号")
+    @ExcelProperty("税务机关行号")
+    private String swjghh;
+
+    @Schema(description = "税务机关比例")
+    @ExcelProperty("税务机关比例")
+    private BigDecimal swjgbl;
+
+    @Schema(description = "税务机关金额")
+    @ExcelProperty("税务机关金额")
+    private BigDecimal swjgje;
+
+    @Schema(description = "筹备金退回标记")
+    @ExcelProperty("筹备金退回标记")
+    private String cbjthbj;
+
+    @Schema(description = "筹备金退回日期")
+    @ExcelProperty("筹备金退回日期")
+    private LocalDateTime cbjthrq;
+
+    @Schema(description = "筹备金退回操作员")
+    @ExcelProperty("筹备金退回操作员")
+    private String cbjthczy;
+
+    @Schema(description = "校验码")
+    @ExcelProperty("校验码")
+    private String jym;
+
+    @Schema(description = "划款批次号")
+    @ExcelProperty("划款批次号")
+    private String hkpch;
+
+    @Schema(description = "备注")
+    @ExcelProperty("备注")
+    private String bz;
+
+    @Schema(description = "分配比例UUID")
+    @ExcelProperty("分配比例UUID")
+    private String bluuid;
+
+    @Schema(description = "属地工会账号")
+    @ExcelProperty("属地工会账号")
+    private String sdghzh;
+
+    @Schema(description = "属地工会户名")
+    @ExcelProperty("属地工会户名")
+    private String sdghhm;
+
+    @Schema(description = "属地工会行号")
+    @ExcelProperty("属地工会行号")
+    private String sdghhh;
+
+    @Schema(description = "属地工会比例")
+    @ExcelProperty("属地工会比例")
+    private BigDecimal sdghbl;
+
+    @Schema(description = "属地工会金额")
+    @ExcelProperty("属地工会金额")
+    private BigDecimal sdghje;
+
+    @Schema(description = "创建人")
+    @ExcelProperty("创建人")
+    private String createBy;
+
+    @Schema(description = "创建时间")
+    @ExcelProperty("创建时间")
+    private LocalDateTime createTime;
+
+    @Schema(description = "修改人")
+    @ExcelProperty("修改人")
+    private String updateBy;
+
+    @Schema(description = "修改时间")
+    @ExcelProperty("修改时间")
+    private LocalDateTime updateTime;
 }

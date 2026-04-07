@@ -11,47 +11,100 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ZgjrghMapper extends BaseMapperX<ZgjrghDO> {
 
     /**
-     * 金融工会信息核对分页 -- 还原 V1 selectZgjrghList 完整 WHERE + ORDER BY
+     * 金融工会信息核对分页 -- 1:1 还原 V1 selectZgjrghList 全部 WHERE + ORDER BY
      */
     default PageResult<ZgjrghDO> selectPage(ZgjrghPageReqVO reqVO) {
         QueryWrapper<ZgjrghDO> wrapper = new QueryWrapper<>();
 
-        if (reqVO.getDjxh() != null && !reqVO.getDjxh().isEmpty()) {
-            wrapper.eq("djxh", reqVO.getDjxh());
-        }
+        // --- V1 active search fields (frontend 21 条) ---
+
+        // shxydm = (V1: eq)
         if (reqVO.getShxydm() != null && !reqVO.getShxydm().isEmpty()) {
             wrapper.eq("shxydm", reqVO.getShxydm());
         }
-        // V1: nsrmc 用 LIKE
+        // nsrmc LIKE (V1: like concat)
         if (reqVO.getNsrmc() != null && !reqVO.getNsrmc().isEmpty()) {
             wrapper.like("nsrmc", reqVO.getNsrmc());
         }
-        // V1: nsrjc 用 LIKE
-        if (reqVO.getNsrjc() != null && !reqVO.getNsrjc().isEmpty()) {
-            wrapper.like("nsrjc", reqVO.getNsrjc());
-        }
+        // dept_id = (V1: eq)
         if (reqVO.getDeptId() != null && !reqVO.getDeptId().isEmpty()) {
             wrapper.eq("dept_id", reqVO.getDeptId());
         }
-        // V1: skssqq >= #{skssqq}
+        // clghbj = (V1: eq)
+        if (reqVO.getClghbj() != null && !reqVO.getClghbj().isEmpty()) {
+            wrapper.eq("clghbj", reqVO.getClghbj());
+        }
+        // hyghbz = (V1: eq)
+        if (reqVO.getHyghbz() != null && !reqVO.getHyghbz().isEmpty()) {
+            wrapper.eq("hyghbz", reqVO.getHyghbz());
+        }
+        // ghlb_dm = (V1: eq)
+        if (reqVO.getGhlbDm() != null && !reqVO.getGhlbDm().isEmpty()) {
+            wrapper.eq("ghlb_dm", reqVO.getGhlbDm());
+        }
+        // xtlb_dm = (V1: eq)
+        if (reqVO.getXtlbDm() != null && !reqVO.getXtlbDm().isEmpty()) {
+            wrapper.eq("xtlb_dm", reqVO.getXtlbDm());
+        }
+        // zspm_dm = (V1: eq)
+        if (reqVO.getZspmDm() != null && !reqVO.getZspmDm().isEmpty()) {
+            wrapper.eq("zspm_dm", reqVO.getZspmDm());
+        }
+        // gzze = (V1: eq)
+        if (reqVO.getGzze() != null) {
+            wrapper.eq("gzze", reqVO.getGzze());
+        }
+        // sl = (V1: eq)
+        if (reqVO.getSl() != null) {
+            wrapper.eq("sl", reqVO.getSl());
+        }
+        // ybtse = (V1: eq)
+        if (reqVO.getYbtse() != null) {
+            wrapper.eq("ybtse", reqVO.getYbtse());
+        }
+        // skssqq >= (V1: >=)
         if (reqVO.getSkssqq() != null) {
             wrapper.ge("skssqq", reqVO.getSkssqq());
         }
-        // V1: skssqz <= #{skssqz}
+        // skssqz <= (V1: <=)
         if (reqVO.getSkssqz() != null) {
             wrapper.le("skssqz", reqVO.getSkssqz());
         }
-        // V1: RKRQ between #{params.beginRkrq} and #{params.endRkrq}
+        // rkrq between (V1: between params.beginRkrq and params.endRkrq)
         if (reqVO.getBeginRkrq() != null && reqVO.getEndRkrq() != null) {
             wrapper.between("rkrq", reqVO.getBeginRkrq(), reqVO.getEndRkrq());
         }
-        // V1: JSRQ between #{params.beginJsrq} and #{params.endJsrq}
+        // jsbj = (V1: eq)
+        if (reqVO.getJsbj() != null && !reqVO.getJsbj().isEmpty()) {
+            wrapper.eq("jsbj", reqVO.getJsbj());
+        }
+        // jsrq between (V1: between params.beginJsrq and params.endJsrq)
         if (reqVO.getBeginJsrq() != null && reqVO.getEndJsrq() != null) {
             wrapper.between("jsrq", reqVO.getBeginJsrq(), reqVO.getEndJsrq());
         }
-        // V1: jsbj
-        if (reqVO.getJsbj() != null && !reqVO.getJsbj().isEmpty()) {
-            wrapper.eq("jsbj", reqVO.getJsbj());
+        // jcghzh = (V1: eq)
+        if (reqVO.getJcghzh() != null && !reqVO.getJcghzh().isEmpty()) {
+            wrapper.eq("jcghzh", reqVO.getJcghzh());
+        }
+        // jcghhm LIKE (V1: like concat)
+        if (reqVO.getJcghhm() != null && !reqVO.getJcghhm().isEmpty()) {
+            wrapper.like("jcghhm", reqVO.getJcghhm());
+        }
+        // jcghbl = (V1: eq)
+        if (reqVO.getJcghbl() != null) {
+            wrapper.eq("jcghbl", reqVO.getJcghbl());
+        }
+        // jcghje = (V1: eq)
+        if (reqVO.getJcghje() != null) {
+            wrapper.eq("jcghje", reqVO.getJcghje());
+        }
+        // cbjthbj = (V1: eq)
+        if (reqVO.getCbjthbj() != null && !reqVO.getCbjthbj().isEmpty()) {
+            wrapper.eq("cbjthbj", reqVO.getCbjthbj());
+        }
+        // hkpch = (V1: eq)
+        if (reqVO.getHkpch() != null && !reqVO.getHkpch().isEmpty()) {
+            wrapper.eq("hkpch", reqVO.getHkpch());
         }
 
         // V1: ORDER BY RKRQ DESC
