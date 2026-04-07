@@ -8,6 +8,7 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.ghjfjfdw.vo.GhjfjfdwPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.ghjfjfdw.vo.GhjfjfdwResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.ghjfjfdw.vo.GhjfjfdwSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.ghjfjfdw.GhjfjfdwDO;
 import cn.iocoder.yudao.module.lghjft.service.cxtj.ghjfjfdw.GhjfjfdwService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,10 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,12 +36,36 @@ public class GhjfjfdwController {
     @Resource
     private GhjfjfdwService ghjfjfdwService;
 
+    @PostMapping("/create")
+    @Operation(summary = "创建近三年缴费情况")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ghjfjfdw:create')")
+    public CommonResult<String> createGhjfjfdw(@Valid @RequestBody GhjfjfdwSaveReqVO createReqVO) {
+        return success(ghjfjfdwService.createGhjfjfdw(createReqVO));
+    }
+
+    @PutMapping("/update")
+    @Operation(summary = "更新近三年缴费情况")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ghjfjfdw:update')")
+    public CommonResult<Boolean> updateGhjfjfdw(@Valid @RequestBody GhjfjfdwSaveReqVO updateReqVO) {
+        ghjfjfdwService.updateGhjfjfdw(updateReqVO);
+        return success(true);
+    }
+
+    @DeleteMapping("/delete")
+    @Operation(summary = "删除近三年缴费情况")
+    @Parameter(name = "djxh", description = "登记序号", required = true)
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ghjfjfdw:delete')")
+    public CommonResult<Boolean> deleteGhjfjfdw(@RequestParam("djxh") String djxh) {
+        ghjfjfdwService.deleteGhjfjfdw(djxh);
+        return success(true);
+    }
+
     @GetMapping("/get")
     @Operation(summary = "获得近三年缴费情况")
-    @Parameter(name = "id", description = "编号", required = true, example = "1024")
+    @Parameter(name = "djxh", description = "登记序号", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ghjfjfdw:query')")
-    public CommonResult<GhjfjfdwResVO> getGhjfjfdw(@RequestParam("id") String id) {
-        GhjfjfdwDO obj = ghjfjfdwService.getGhjfjfdw(id);
+    public CommonResult<GhjfjfdwResVO> getGhjfjfdw(@RequestParam("djxh") String djxh) {
+        GhjfjfdwDO obj = ghjfjfdwService.getGhjfjfdw(djxh);
         return success(BeanUtils.toBean(obj, GhjfjfdwResVO.class));
     }
 
