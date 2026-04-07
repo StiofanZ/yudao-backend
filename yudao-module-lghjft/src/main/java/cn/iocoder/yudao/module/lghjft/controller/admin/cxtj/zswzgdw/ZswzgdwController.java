@@ -8,8 +8,6 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.zswzgdw.vo.*;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.zswzgdw.ZswzgdwDO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.zswzgdw.ZswzgdwQrDO;
-import cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.zswzgdw.ZswzgdwQrMapper;
 import cn.iocoder.yudao.module.lghjft.service.cxtj.zswzgdw.ZswzgdwService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -36,9 +34,6 @@ public class ZswzgdwController {
     @Resource
     private ZswzgdwService zswzgdwService;
 
-    @Resource
-    private ZswzgdwQrMapper zswzgdwQrMapper;
-
     @PostMapping("/create")
     @Operation(summary = "创建征收未主管单位")
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-zswzgdw:create')")
@@ -54,26 +49,24 @@ public class ZswzgdwController {
         return success(true);
     }
 
-    @DeleteMapping("/delete")
-    @Operation(summary = "删除征收未主管单位")
-    @Parameter(name = "djxh", description = "登记序号", required = true)
+    @DeleteMapping("/delete/{djxhs}")
+    @Operation(summary = "批量删除征收未主管单位")
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-zswzgdw:delete')")
-    public CommonResult<Boolean> deleteZswzgdw(@RequestParam("djxh") String djxh) {
-        zswzgdwService.deleteZswzgdw(djxh);
+    public CommonResult<Boolean> deleteZswzgdw(@PathVariable("djxhs") String[] djxhs) {
+        zswzgdwService.deleteZswzgdwByDjxhs(djxhs);
         return success(true);
     }
 
     @GetMapping("/get")
-    @Operation(summary = "获得征收未主管单位")
-    @Parameter(name = "djxh", description = "登记序号", required = true, example = "1024")
+    @Operation(summary = "获得征收未主管单位（含确认列表）")
+    @Parameter(name = "djxh", description = "登记序号", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-zswzgdw:query')")
     public CommonResult<ZswzgdwResVO> getZswzgdw(@RequestParam("djxh") String djxh) {
+        // V1: selectZswzgdwByDjxh — WITH cascade (returns zswzgdwQrList via LEFT JOIN)
         ZswzgdwDO obj = zswzgdwService.getZswzgdw(djxh);
         ZswzgdwResVO resVO = BeanUtils.toBean(obj, ZswzgdwResVO.class);
-        // 查询关联的确认记录（V1 通过 left join 返回子表数据）
-        if (resVO != null) {
-            List<ZswzgdwQrDO> qrList = zswzgdwQrMapper.selectByDjxh(djxh);
-            resVO.setZswzgdwQrList(BeanUtils.toBean(qrList, ZswzgdwQrVO.class));
+        if (resVO != null && obj.getZswzgdwQrList() != null) {
+            resVO.setZswzgdwQrList(BeanUtils.toBean(obj.getZswzgdwQrList(), ZswzgdwQrVO.class));
         }
         return success(resVO);
     }
@@ -94,7 +87,7 @@ public class ZswzgdwController {
                                    HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<ZswzgdwDO> list = zswzgdwService.getZswzgdwPage(pageReqVO).getList();
-        ExcelUtils.write(response, "征收未主管单位.xls", "数据", ZswzgdwResVO.class,
+        ExcelUtils.write(response, "征收未主管单位数据.xls", "数据", ZswzgdwResVO.class,
                 BeanUtils.toBean(list, ZswzgdwResVO.class));
     }
 }
