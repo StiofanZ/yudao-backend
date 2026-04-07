@@ -23,7 +23,6 @@ public interface ZswzgdwMapper extends BaseMapperX<ZswzgdwDO> {
      * - bs: eq
      * - jfje: eq
      * - jcghje: eq
-     * - qrjgDm: eq
      */
     default PageResult<ZswzgdwDO> selectPage(ZswzgdwPageReqVO reqVO) {
         QueryWrapperX<ZswzgdwDO> wrapper = new QueryWrapperX<ZswzgdwDO>()
@@ -36,7 +35,6 @@ public interface ZswzgdwMapper extends BaseMapperX<ZswzgdwDO> {
                 .eqIfPresent("bs", reqVO.getBs())
                 .eqIfPresent("jfje", reqVO.getJfje())
                 .eqIfPresent("jcghje", reqVO.getJcghje())
-                .eqIfPresent("qrjg_dm", reqVO.getQrjgDm())
                 .orderByDesc("djxh");
 
         // V1: (a.DWDM=#{deptId} or a.DEPT_ID = #{deptId})
