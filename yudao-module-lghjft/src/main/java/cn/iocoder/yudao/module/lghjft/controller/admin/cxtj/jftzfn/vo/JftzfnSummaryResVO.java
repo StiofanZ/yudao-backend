@@ -24,6 +24,18 @@ public class JftzfnSummaryResVO {
     @ExcelProperty("工会机构代码")
     private String deptId;
 
+    @Schema(description = "纳税人名称")
+    @ExcelProperty("纳税人名称")
+    private String nsrmc;
+
+    @Schema(description = "社会信用代码")
+    @ExcelProperty("社会信用代码")
+    private String shxydm;
+
+    @Schema(description = "登记序号")
+    @ExcelProperty("登记序号")
+    private String djxh;
+
     @Schema(description = "月份 (yyyy-MM)")
     private String dsyf;
 

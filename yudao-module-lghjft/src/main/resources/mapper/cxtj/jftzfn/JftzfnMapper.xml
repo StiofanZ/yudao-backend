@@ -2,153 +2,176 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.jftzfn.JftzfnMapper">
 
-    <!-- szjfcx 聚合查询共用 WHERE（与 v1 完全一致） -->
-    <sql id="szjfcxWhere">
+    <!-- v1: selectJftzfnVo + selectJftzfnList from JfmxMapper.xml (line 2904+)
+         FROM GH_JF JF LEFT JOIN GH_HJ HJ on jf.djxh=hj.djxh
+         HS uses timestampdiff(MONTH, jf.SKSSQQ, jf.SKSSQZ) + 1
+         GROUP BY JF.DEPT_ID, JF.NSRMC, JF.SHXYDM, JF.DJXH, date_format(JF.RKRQ, '%Y')
+         ORDER BY jf.djxh
+    -->
+    <select id="selectJftzfnList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jftzfn.vo.JftzfnSummaryResVO">
+        select
+        JF.DEPT_ID as deptId,
+        JF.NSRMC as nsrmc,
+        JF.SHXYDM as shxydm,
+        JF.DJXH as djxh,
+        date_format(JF.RKRQ, '%Y') as nd,
+        COUNT(JF.DJXH) as bs,
+        SUM(
+        timestampdiff(
+        MONTH,
+        jf.SKSSQQ,
+        jf.SKSSQZ
+        ) + 1
+        ) as hs,
+        SUM(JF.YBTSE) as ybtse,
+        SUM(JF.JCGHJE) as jcghje,
+        SUM(JF.HYGHJE) as hyghje,
+        SUM(JF.SDGHJE) as sdghje,
+        SUM(JF.CBJJE) as cbjje,
+        SUM(JF.XJGHJE) as xjghje,
+        SUM(JF.SJGHJE) as sjghje,
+        SUM(JF.SZGHJE) as szghje,
+        SUM(JF.QGGHJE) as qgghje,
+        SUM(JF.SWJGJE) as swjgje,
+        SUM(JF.SDSJE) as sdsje
+        from
+        GH_JF JF
+        left join GH_HJ HJ on jf.djxh=hj.djxh
         <where>
-            1=1
-            <if test="query.djxh != null and query.djxh != ''">and DJXH = #{query.djxh}</if>
-            <if test="query.shxydm != null and query.shxydm != ''">and SHXYDM = #{query.shxydm}</if>
-            <if test="query.nsrsbh != null and query.nsrsbh != ''">and SHXYDM = #{query.nsrsbh}</if>
-            <if test="query.nsrjc != null and query.nsrjc != ''">and NSRJC = #{query.nsrjc}</if>
-            <if test="query.nsrmc != null and query.nsrmc != ''">and NSRMC like concat('%', #{query.nsrmc}, '%')</if>
-            <if test="query.deptId != null and query.deptId != ''">and (DWDM = #{query.deptId} or DEPT_ID = #{query.deptId})</if>
-            <if test="query.ghjgxzjb != null and query.ghjgxzjb != ''">and GHJGXZJB = #{query.ghjgxzjb}</if>
-            <if test="query.clghbj != null and query.clghbj != ''">and CLGHBJ = #{query.clghbj}</if>
-            <if test="query.hyghbz != null and query.hyghbz != ''">and HYGHBZ = #{query.hyghbz}</if>
-            <if test="query.sdghjgxzjb != null and query.sdghjgxzjb != ''">and SDGHJGXZJB = #{query.sdghjgxzjb}</if>
-            <if test="query.zgswjDm != null and query.zgswjDm != ''">and ZGSWJ_DM = #{query.zgswjDm}</if>
-            <if test="query.zgswskfjDm != null and query.zgswskfjDm != ''">and ZGSWSKFJ_DM = #{query.zgswskfjDm}</if>
-            <if test="query.ssglyDm != null and query.ssglyDm != ''">and SSGLY_DM = #{query.ssglyDm}</if>
-            <if test="query.ghlbDm != null and query.ghlbDm != ''">and GHLB_DM = #{query.ghlbDm}</if>
-            <if test="query.xtlbDm != null and query.xtlbDm != ''">and XTLB_DM = #{query.xtlbDm}</if>
-            <if test="query.zzjglxDm != null and query.zzjglxDm != ''">and ZZJGLX_DM = #{query.zzjglxDm}</if>
-            <if test="query.hyDm != null and query.hyDm != ''">and HY_DM = #{query.hyDm}</if>
-            <if test="query.djzclxDm != null and query.djzclxDm != ''">and DJZCLX_DM = #{query.djzclxDm}</if>
-            <if test="query.dwlsgxDm != null and query.dwlsgxDm != ''">and DWLSGX_DM = #{query.dwlsgxDm}</if>
-            <if test="query.sblbDm != null and query.sblbDm != ''">and SBLB_DM = #{query.sblbDm}</if>
-            <if test="query.nssbrq != null">and NSSBRQ = #{query.nssbrq}</if>
-            <if test="query.pzxh != null and query.pzxh != ''">and PZXH = #{query.pzxh}</if>
-            <if test="query.pzmxxh != null">and PZMXXH = #{query.pzmxxh}</if>
-            <if test="query.skssqq != null">and SKSSQQ &gt;= #{query.skssqq}</if>
-            <if test="query.skssqz != null">and SKSSQZ &lt;= #{query.skssqz}</if>
-            <if test="query.zsswjgDm != null and query.zsswjgDm != ''">and ZSSWJG_DM = #{query.zsswjgDm}</if>
-            <if test="query.skssswjgDm != null and query.skssswjgDm != ''">and SKSSSWJG_DM = #{query.skssswjgDm}</if>
-            <if test="query.skgkDm != null and query.skgkDm != ''">and SKGK_DM = #{query.skgkDm}</if>
-            <if test="query.dzsphm != null and query.dzsphm != ''">and DZSPHM = #{query.dzsphm}</if>
-            <if test="query.pzzlDm != null and query.pzzlDm != ''">and PZZL_DM = #{query.pzzlDm}</if>
-            <if test="query.pzzgDm != null and query.pzzgDm != ''">and PZZG_DM = #{query.pzzgDm}</if>
-            <if test="query.pzhm != null and query.pzhm != ''">and PZHM = #{query.pzhm}</if>
-            <if test="query.kpyDm != null and query.kpyDm != ''">and KPY_DM = #{query.kpyDm}</if>
-            <if test="query.kpyXm != null and query.kpyXm != ''">and KPY_XM = #{query.kpyXm}</if>
-            <if test="query.zspmDm != null and query.zspmDm != ''">and ZSPM_DM = #{query.zspmDm}</if>
-            <if test="query.zszmDm != null and query.zszmDm != ''">and ZSZM_DM = #{query.zszmDm}</if>
-            <if test="query.yskmDm != null and query.yskmDm != ''">and YSKM_DM = #{query.yskmDm}</if>
-            <if test="query.gzze != null">and GZZE = #{query.gzze}</if>
-            <if test="query.sl != null">and SL = #{query.sl}</if>
-            <if test="query.ynse != null">and YNSE = #{query.ynse}</if>
-            <if test="query.jmse != null">and JMSE = #{query.jmse}</if>
-            <if test="query.yjse != null">and YJSE = #{query.yjse}</if>
-            <if test="query.ybtse != null">and YBTSE = #{query.ybtse}</if>
-            <if test="query.jkfsDm != null and query.jkfsDm != ''">and JKFS_DM = #{query.jkfsDm}</if>
-            <if test="query.jfhb != null and query.jfhb != ''">and JFHB = #{query.jfhb}</if>
-            <if test="query.jfzh != null and query.jfzh != ''">and JFZH = #{query.jfzh}</if>
-            <if test="query.jfhm != null and query.jfhm != ''">and JFHM = #{query.jfhm}</if>
-            <if test="query.jfhh != null and query.jfhh != ''">and JFHH = #{query.jfhh}</if>
-            <if test="query.jfyh != null and query.jfyh != ''">and JFYH = #{query.jfyh}</if>
-            <if test="query.beginRkrq != null and query.beginRkrq != '' and query.endRkrq != null and query.endRkrq != ''">and RKRQ between #{query.beginRkrq} and
-                #{query.endRkrq}
-            </if>
-            <if test="query.rkrq != null">and RKRQ like concat(MID(#{query.rkrq}, 1, 4), '%')</if>
+            <if test="query.deptId != null and query.deptId != ''">and (JF.dept_id = #{query.deptId} or JF.SDGHJG_DM = #{query.deptId})</if>
+            <if test="query.djxh != null and query.djxh != ''">and JF.DJXH = #{query.djxh}</if>
+            <if test="query.nsrsbh != null and query.nsrsbh != ''">and JF.SHXYDM = #{query.nsrsbh}</if>
+            <if test="query.shxydm != null and query.shxydm != ''">and JF.SHXYDM = #{query.shxydm}</if>
+            <if test="query.nsrmc != null and query.nsrjc != ''">and JF.NSRMC like concat('%', #{query.nsrmc}, '%')</if>
+            <if test="query.ghjgxzjb != null and query.ghjgxzjb != ''">and JF.GHJGXZJB = #{query.ghjgxzjb}</if>
+            <if test="query.clghbj != null and query.clghbj != ''">and JF.CLGHBJ = #{query.clghbj}</if>
+            <if test="query.hyghbz != null and query.hyghbz != ''">and JF.HYGHBZ = #{query.hyghbz}</if>
+            <if test="query.sdghjgxzjb != null and query.sdghjgxzjb != ''">and JF.SDGHJGXZJB = #{query.sdghjgxzjb}</if>
+            <if test="query.zgswjDm != null and query.zgswjDm != ''">and JF.ZGSWJ_DM = #{query.zgswjDm}</if>
+            <if test="query.zgswskfjDm != null and query.zgswskfjDm != ''">and JF.ZGSWSKFJ_DM = #{query.zgswskfjDm}</if>
+            <if test="query.ssglyDm != null and query.ssglyDm != ''">and JF.SSGLY_DM = #{query.ssglyDm}</if>
+            <if test="query.ghlbDm != null and query.ghlbDm != ''">and JF.GHLB_DM = #{query.ghlbDm}</if>
+            <if test="query.xtlbDm != null and query.xtlbDm != ''">and JF.XTLB_DM = #{query.xtlbDm}</if>
+            <if test="query.zzjglxDm != null and query.zzjglxDm != ''">and JF.ZZJGLX_DM = #{query.zzjglxDm}</if>
+            <if test="query.hyDm != null and query.hyDm != ''">and JF.HY_DM = #{query.hyDm}</if>
+            <if test="query.djzclxDm != null and query.djzclxDm != ''">and JF.DJZCLX_DM = #{query.djzclxDm}</if>
+            <if test="query.dwlsgxDm != null and query.dwlsgxDm != ''">and JF.DWLSGX_DM = #{query.dwlsgxDm}</if>
+            <if test="query.sblbDm != null and query.sblbDm != ''">and JF.SBLB_DM = #{query.sblbDm}</if>
+            <if test="query.nssbrq != null">and JF.NSSBRQ = #{query.nssbrq}</if>
+            <if test="query.pzxh != null and query.pzxh != ''">and JF.PZXH = #{query.pzxh}</if>
+            <if test="query.pzmxxh != null">and JF.PZMXXH = #{query.pzmxxh}</if>
+            <if test="query.skssqq != null">and JF.SKSSQQ &gt;= #{query.skssqq}</if>
+            <if test="query.skssqz != null">and JF.SKSSQZ &lt;= #{query.skssqz}</if>
+            <if test="query.zsswjgDm != null and query.zsswjgDm != ''">and JF.ZSSWJG_DM = #{query.zsswjgDm}</if>
+            <if test="query.skssswjgDm != null and query.skssswjgDm != ''">and JF.SKSSSWJG_DM = #{query.skssswjgDm}</if>
+            <if test="query.skgkDm != null and query.skgkDm != ''">and JF.SKGK_DM = #{query.skgkDm}</if>
+            <if test="query.dzsphm != null and query.dzsphm != ''">and JF.DZSPHM = #{query.dzsphm}</if>
+            <if test="query.pzzlDm != null and query.pzzlDm != ''">and JF.PZZL_DM = #{query.pzzlDm}</if>
+            <if test="query.pzzgDm != null and query.pzzgDm != ''">and JF.PZZG_DM = #{query.pzzgDm}</if>
+            <if test="query.pzhm != null and query.pzhm != ''">and JF.PZHM = #{query.pzhm}</if>
+            <if test="query.kpyDm != null and query.kpyDm != ''">and JF.KPY_DM = #{query.kpyDm}</if>
+            <if test="query.kpyXm != null and query.kpyXm != ''">and JF.KPY_XM = #{query.kpyXm}</if>
+            <if test="query.zspmDm != null and query.zspmDm != ''">and JF.ZSPM_DM = #{query.zspmDm}</if>
+            <if test="query.zszmDm != null and query.zszmDm != ''">and JF.ZSZM_DM = #{query.zszmDm}</if>
+            <if test="query.yskmDm != null and query.yskmDm != ''">and JF.YSKM_DM = #{query.yskmDm}</if>
+            <if test="query.gzze != null">and JF.GZZE = #{query.gzze}</if>
+            <if test="query.sl != null">and JF.SL = #{query.sl}</if>
+            <if test="query.ynse != null">and JF.YNSE = #{query.ynse}</if>
+            <if test="query.jmse != null">and JF.JMSE = #{query.jmse}</if>
+            <if test="query.yjse != null">and JF.YJSE = #{query.yjse}</if>
+            <if test="query.ybtse != null">and JF.YBTSE = #{query.ybtse}</if>
+            <if test="query.jkfsDm != null and query.jkfsDm != ''">and JF.JKFS_DM = #{query.jkfsDm}</if>
+            <if test="query.jfhb != null and query.jfhb != ''">and JF.JFHB = #{query.jfhb}</if>
+            <if test="query.jfzh != null and query.jfzh != ''">and JF.JFZH = #{query.jfzh}</if>
+            <if test="query.jfhm != null and query.jfhm != ''">and JF.JFHM = #{query.jfhm}</if>
+            <if test="query.jfhh != null and query.jfhh != ''">and JF.JFHH = #{query.jfhh}</if>
+            <if test="query.jfyh != null and query.jfyh != ''">and JF.JFYH = #{query.jfyh}</if>
+            <if test="query.beginRkrq != null and query.beginRkrq != '' and query.endRkrq != null and query.endRkrq != ''">and JF.RKRQ between #{query.beginRkrq} and #{query.endRkrq}</if>
             <if test="query.jsbj != null">
-                and JSBJ IN
+                and jf.jsbj IN
                 <foreach collection="query.jsbj" item="item" open="(" separator="," close=")">
                     #{item}
                 </foreach>
             </if>
-            <if test="query.jsrq != null">and JSRQ = #{query.jsrq}</if>
-            <if test="query.beginJsrq != null and query.beginJsrq != '' and query.endJsrq != null and query.endJsrq != ''">and JSRQ between #{query.beginJsrq} and
-                #{query.endJsrq}
-            </if>
-            <if test="query.jsczy != null and query.jsczy != ''">and JSCZY = #{query.jsczy}</if>
-            <if test="query.jcghzh != null and query.jcghzh != ''">and JCGHZH = #{query.jcghzh}</if>
-            <if test="query.jcghhm != null and query.jcghhm != ''">and JCGHHM like concat('%', #{query.jcghhm}, '%')</if>
-            <if test="query.jcghhh != null and query.jcghhh != ''">and JCGHHH = #{query.jcghhh}</if>
-            <if test="query.jcghbl != null">and JCGHBL = #{query.jcghbl}</if>
-            <if test="query.jcghje != null">and JCGHJE = #{query.jcghje}</if>
-            <if test="query.cbjzh != null and query.cbjzh != ''">and CBJZH = #{query.cbjzh}</if>
-            <if test="query.cbjhm != null and query.cbjhm != ''">and CBJHM like concat('%', #{query.cbjhm}, '%')</if>
-            <if test="query.cbjhh != null and query.cbjhh != ''">and CBJHH = #{query.cbjhh}</if>
-            <if test="query.cbjbl != null">and CBJBL = #{query.cbjbl}</if>
-            <if test="query.cbjje != null">and CBJJE = #{query.cbjje}</if>
-            <if test="query.hyghzh != null and query.hyghzh != ''">and HYGHZH = #{query.hyghzh}</if>
-            <if test="query.hyghhm != null and query.hyghhm != ''">and HYGHHM like concat('%', #{query.hyghhm}, '%')</if>
-            <if test="query.hyghhh != null and query.hyghhh != ''">and HYGHHH = #{query.hyghhh}</if>
-            <if test="query.hyghbl != null">and HYGHBL = #{query.hyghbl}</if>
-            <if test="query.hyghje != null">and HYGHJE = #{query.hyghje}</if>
-            <if test="query.xjghzh != null and query.xjghzh != ''">and XJGHZH = #{query.xjghzh}</if>
-            <if test="query.xjghhm != null and query.xjghhm != ''">and XJGHHM like concat('%', #{query.xjghhm}, '%')</if>
-            <if test="query.xjghhh != null and query.xjghhh != ''">and XJGHHH = #{query.xjghhh}</if>
-            <if test="query.xjghbl != null">and XJGHBL = #{query.xjghbl}</if>
-            <if test="query.xjghje != null">and XJGHJE = #{query.xjghje}</if>
-            <if test="query.sjghzh != null and query.sjghzh != ''">and SJGHZH = #{query.sjghzh}</if>
-            <if test="query.sjghhm != null and query.sjghhm != ''">and SJGHHM like concat('%', #{query.sjghhm}, '%')</if>
-            <if test="query.sjghhh != null and query.sjghhh != ''">and SJGHHH = #{query.sjghhh}</if>
-            <if test="query.sjghbl != null">and SJGHBL = #{query.sjghbl}</if>
-            <if test="query.sjghje != null">and SJGHJE = #{query.sjghje}</if>
-            <if test="query.szghzh != null and query.szghzh != ''">and SZGHZH = #{query.szghzh}</if>
-            <if test="query.szghhm != null and query.szghhm != ''">and SZGHHM like concat('%', #{query.szghhm}, '%')</if>
-            <if test="query.szghhh != null and query.szghhh != ''">and SZGHHH = #{query.szghhh}</if>
-            <if test="query.szghbl != null">and SZGHBL = #{query.szghbl}</if>
-            <if test="query.szghje != null">and SZGHJE = #{query.szghje}</if>
-            <if test="query.qgghzh != null and query.qgghzh != ''">and QGGHZH = #{query.qgghzh}</if>
-            <if test="query.qgghhm != null and query.qgghhm != ''">and QGGHHM like concat('%', #{query.qgghhm}, '%')</if>
-            <if test="query.qgghhh != null and query.qgghhh != ''">and QGGHHH = #{query.qgghhh}</if>
-            <if test="query.qgghbl != null">and QGGHBL = #{query.qgghbl}</if>
-            <if test="query.qgghje != null">and QGGHJE = #{query.qgghje}</if>
-            <if test="query.jcjzh != null and query.jcjzh != ''">and JCJZH = #{query.jcjzh}</if>
-            <if test="query.jcjhm != null and query.jcjhm != ''">and JCJHM = #{query.jcjhm}</if>
-            <if test="query.jcjhh != null and query.jcjhh != ''">and JCJHH = #{query.jcjhh}</if>
-            <if test="query.jcjbl != null">and JCJBL = #{query.jcjbl}</if>
-            <if test="query.jcjje != null">and JCJJE = #{query.jcjje}</if>
-            <if test="query.jcwsh != null and query.jcwsh != ''">and JCWSH = #{query.jcwsh}</if>
-            <if test="query.sdszh != null and query.sdszh != ''">and SDSZH = #{query.sdszh}</if>
-            <if test="query.sdshm != null and query.sdshm != ''">and SDSHM like concat('%', #{query.sdshm}, '%')</if>
-            <if test="query.sdshh != null and query.sdshh != ''">and SDSHH = #{query.sdshh}</if>
-            <if test="query.sdsbl != null">and SDSBL = #{query.sdsbl}</if>
-            <if test="query.sdsje != null">and SDSJE = #{query.sdsje}</if>
-            <if test="query.swjgzh != null and query.swjgzh != ''">and SWJGZH = #{query.swjgzh}</if>
-            <if test="query.swjghm != null and query.swjghm != ''">and SWJGHM like concat('%', #{query.swjghm}, '%')</if>
-            <if test="query.swjghh != null and query.swjghh != ''">and SWJGHH = #{query.swjghh}</if>
-            <if test="query.swjgbl != null">and SWJGBL = #{query.swjgbl}</if>
-            <if test="query.swjgje != null">and SWJGJE = #{query.swjgje}</if>
-            <if test="query.hkpch != null and query.hkpch != ''">and HKPCH = #{query.hkpch}</if>
-            <if test="query.cbjthbj != null and query.cbjthbj != ''">and CBJTHBJ = #{query.cbjthbj}</if>
-            <if test="query.cbjthrq != null">and CBJTHRQ = #{query.cbjthrq}</if>
-            <if test="query.cbjthczy != null and query.cbjthczy != ''">and CBJTHCZY = #{query.cbjthczy}</if>
-            <if test="query.jym != null and query.jym != ''">and JYM = #{query.jym}</if>
-            <if test="query.bz != null and query.bz != ''">and BZ = #{query.bz}</if>
-            <if test="query.bluuid != null and query.bluuid != ''">and BLUUID = #{query.bluuid}</if>
-            <if test="query.sdghzh != null and query.sdghzh != ''">and SDGHZH = #{query.sdghzh}</if>
-            <if test="query.sdghhm != null and query.sdghhm != ''">and SDGHHM like concat('%', #{query.sdghhm}, '%')</if>
-            <if test="query.sdghhh != null and query.sdghhh != ''">and SDGHHH = #{query.sdghhh}</if>
-            <if test="query.sdghbl != null">and SDGHBL = #{query.sdghbl}</if>
-            <if test="query.sdghje != null">and SDGHJE = #{query.sdghje}</if>
-            <if test="query.xwlx != null">and XWLX = #{query.xwlx}</if>
+            <if test="query.jsrq != null and query.jsrq != ''">and JF.JSRQ = #{query.jsrq}</if>
+            <if test="query.beginJsrq != null and query.beginJsrq != '' and query.endJsrq != null and query.endJsrq != ''">and JF.JSRQ between #{query.beginJsrq} and #{query.endJsrq}</if>
+            <if test="query.jsczy != null and query.jsczy != ''">and JF.JSCZY = #{query.jsczy}</if>
+            <if test="query.jcghzh != null and query.jcghzh != ''">and JF.JCGHZH = #{query.jcghzh}</if>
+            <if test="query.jcghhm != null and query.jcghhm != ''">and JF.JCGHHM like concat('%', #{query.jcghhm}, '%')</if>
+            <if test="query.jcghhh != null and query.jcghhh != ''">and JF.JCGHHH = #{query.jcghhh}</if>
+            <if test="query.jcghbl != null">and JF.JCGHBL = #{query.jcghbl}</if>
+            <if test="query.jcghje != null">and JF.JCGHJE = #{query.jcghje}</if>
+            <if test="query.cbjzh != null and query.cbjzh != ''">and JF.CBJZH = #{query.cbjzh}</if>
+            <if test="query.cbjhm != null and query.cbjhm != ''">and JF.CBJHM like concat('%', #{query.cbjhm}, '%')</if>
+            <if test="query.cbjhh != null and query.cbjhh != ''">and JF.CBJHH = #{query.cbjhh}</if>
+            <if test="query.cbjbl != null">and JF.CBJBL = #{query.cbjbl}</if>
+            <if test="query.cbjje != null">and JF.CBJJE = #{query.cbjje}</if>
+            <if test="query.hyghzh != null and query.hyghzh != ''">and JF.HYGHZH = #{query.hyghzh}</if>
+            <if test="query.hyghhm != null and query.hyghhm != ''">and JF.HYGHHM like concat('%', #{query.hyghhm}, '%')</if>
+            <if test="query.hyghhh != null and query.hyghhh != ''">and JF.HYGHHH = #{query.hyghhh}</if>
+            <if test="query.hyghbl != null">and JF.HYGHBL = #{query.hyghbl}</if>
+            <if test="query.hyghje != null">and JF.HYGHJE = #{query.hyghje}</if>
+            <if test="query.xjghzh != null and query.xjghzh != ''">and JF.XJGHZH = #{query.xjghzh}</if>
+            <if test="query.xjghhm != null and query.xjghhm != ''">and JF.XJGHHM like concat('%', #{query.xjghhm}, '%')</if>
+            <if test="query.xjghhh != null and query.xjghhh != ''">and JF.XJGHHH = #{query.xjghhh}</if>
+            <if test="query.xjghbl != null">and JF.XJGHBL = #{query.xjghbl}</if>
+            <if test="query.xjghje != null">and JF.XJGHJE = #{query.xjghje}</if>
+            <if test="query.sjghzh != null and query.sjghzh != ''">and JF.SJGHZH = #{query.sjghzh}</if>
+            <if test="query.sjghhm != null and query.sjghhm != ''">and JF.SJGHHM like concat('%', #{query.sjghhm}, '%')</if>
+            <if test="query.sjghhh != null and query.sjghhh != ''">and JF.SJGHHH = #{query.sjghhh}</if>
+            <if test="query.sjghbl != null">and JF.SJGHBL = #{query.sjghbl}</if>
+            <if test="query.sjghje != null">and JF.SJGHJE = #{query.sjghje}</if>
+            <if test="query.szghzh != null and query.szghzh != ''">and JF.SZGHZH = #{query.szghzh}</if>
+            <if test="query.szghhm != null and query.szghhm != ''">and JF.SZGHHM like concat('%', #{query.szghhm}, '%')</if>
+            <if test="query.szghhh != null and query.szghhh != ''">and JF.SZGHHH = #{query.szghhh}</if>
+            <if test="query.szghbl != null">and JF.SZGHBL = #{query.szghbl}</if>
+            <if test="query.szghje != null">and JF.SZGHJE = #{query.szghje}</if>
+            <if test="query.qgghzh != null and query.qgghzh != ''">and JF.QGGHZH = #{query.qgghzh}</if>
+            <if test="query.qgghhm != null and query.qgghhm != ''">and JF.QGGHHM like concat('%', #{query.qgghhm}, '%')</if>
+            <if test="query.qgghhh != null and query.qgghhh != ''">and JF.QGGHHH = #{query.qgghhh}</if>
+            <if test="query.qgghbl != null">and JF.QGGHBL = #{query.qgghbl}</if>
+            <if test="query.qgghje != null">and JF.QGGHJE = #{query.qgghje}</if>
+            <if test="query.jcjzh != null and query.jcjzh != ''">and JF.JCJZH = #{query.jcjzh}</if>
+            <if test="query.jcjhm != null and query.jcjhm != ''">and JF.JCJHM = #{query.jcjhm}</if>
+            <if test="query.jcjhh != null and query.jcjhh != ''">and JF.JCJHH = #{query.jcjhh}</if>
+            <if test="query.jcjbl != null">and JF.JCJBL = #{query.jcjbl}</if>
+            <if test="query.jcjje != null">and JF.JCJJE = #{query.jcjje}</if>
+            <if test="query.jcwsh != null and query.jcwsh != ''">and JF.JCWSH = #{query.jcwsh}</if>
+            <if test="query.sdszh != null and query.sdszh != ''">and JF.SDSZH = #{query.sdszh}</if>
+            <if test="query.sdshm != null and query.sdshm != ''">and JF.SDSHM like concat('%', #{query.sdshm}, '%')</if>
+            <if test="query.sdshh != null and query.sdshh != ''">and JF.SDSHH = #{query.sdshh}</if>
+            <if test="query.sdsbl != null">and JF.SDSBL = #{query.sdsbl}</if>
+            <if test="query.sdsje != null">and JF.SDSJE = #{query.sdsje}</if>
+            <if test="query.swjgzh != null and query.swjgzh != ''">and JF.SWJGZH = #{query.swjgzh}</if>
+            <if test="query.swjghm != null and query.swjghm != ''">and JF.SWJGHM like concat('%', #{query.swjghm}, '%')</if>
+            <if test="query.swjghh != null and query.swjghh != ''">and JF.SWJGHH = #{query.swjghh}</if>
+            <if test="query.swjgbl != null">and JF.SWJGBL = #{query.swjgbl}</if>
+            <if test="query.swjgje != null">and JF.SWJGJE = #{query.swjgje}</if>
+            <if test="query.cbjthbj != null and query.cbjthbj != ''">and JF.CBJTHBJ = #{query.cbjthbj}</if>
+            <if test="query.cbjthrq != null">and JF.CBJTHRQ = #{query.cbjthrq}</if>
+            <if test="query.cbjthczy != null and query.cbjthczy != ''">and JF.CBJTHCZY = #{query.cbjthczy}</if>
+            <if test="query.jym != null and query.jym != ''">and JF.JYM = #{query.jym}</if>
+            <if test="query.hkpch != null and query.hkpch != ''">and JF.HKPCH = #{query.hkpch}</if>
+            <if test="query.bz != null and query.bz != ''">and JF.BZ = #{query.bz}</if>
+            <if test="query.bluuid != null and query.bluuid != ''">and JF.BLUUID = #{query.bluuid}</if>
+            <if test="query.sdghzh != null and query.sdghzh != ''">and JF.SDGHZH = #{query.sdghzh}</if>
+            <if test="query.sdghhm != null and query.sdghhm != ''">and JF.SDGHHM like concat('%', #{query.sdghhm}, '%')</if>
+            <if test="query.sdghhh != null and query.sdghhh != ''">and JF.SDGHHH = #{query.sdghhh}</if>
+            <if test="query.sdghbl != null">and JF.SDGHBL = #{query.sdghbl}</if>
+            <if test="query.sdghje != null">and JF.SDGHJE = #{query.sdghje}</if>
+            <if test="query.createBy != null and query.createBy != ''">and JF.CREATE_BY = #{query.createBy}</if>
+            <if test="query.createTime != null">and JF.CREATE_TIME = #{query.createTime}</if>
+            <if test="query.updateBy != null and query.updateBy != ''">and JF.UPDATE_BY = #{query.updateBy}</if>
+            <if test="query.updateTime != null">and JF.UPDATE_TIME = #{query.updateTime}</if>
+            <if test="query.xwlx != null">and hj.hjfl9_dm = #{query.xwlx}</if>
         </where>
-    </sql>
-
-    <!-- selectJftzfnList 台账年度汇总（v1 /listtzfn） -->
-    <select id="selectJftzfnList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jftzfn.vo.JftzfnSummaryResVO">
-        SELECT t.DWDM AS sjdm, t.DEPT_ID AS xjdm, T.DEPT_ID AS deptId,
-        date_format(T.RKRQ, '%Y') AS nd,
-        COUNT(T.DJXH) AS bs, COUNT(DISTINCT T.DJXH) AS hs,
-        SUM(T.YBTSE) AS ybtse, SUM(T.JCGHJE) AS jcghje, SUM(T.HYGHJE) AS hyghje,
-        SUM(T.SDGHJE) AS sdghje, SUM(T.CBJJE) AS cbjje, SUM(T.XJGHJE) AS xjghje,
-        SUM(T.SJGHJE) AS sjghje, SUM(T.SZGHJE) AS szghje, SUM(T.QGGHJE) AS qgghje,
-        SUM(T.SWJGJE) AS swjgje, SUM(T.SDSJE) AS sdsje
-        FROM szjfcx T
-        <include refid="szjfcxWhere"/>
-        GROUP BY t.DWDM, t.DEPT_ID, date_format(T.RKRQ, '%Y')
+        GROUP BY
+        JF.DEPT_ID,
+        JF.NSRMC,
+        JF.SHXYDM,
+        JF.DJXH,
+        date_format(JF.RKRQ, '%Y')
+        order by jf.djxh
     </select>
 
 </mapper>
