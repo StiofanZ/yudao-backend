@@ -38,6 +38,7 @@ public interface ErrorCodeConstants {
     ErrorCode NDRWWC_NOT_EXISTS = new ErrorCode(2_019_000_004, "分上缴周期统计不存在");
     ErrorCode TOP_NOT_EXISTS = new ErrorCode(2_019_000_005, "缴费排行不存在");
     ErrorCode GHJFJFDW_NOT_EXISTS = new ErrorCode(2_019_000_006, "近三年缴费情况不存在");
+    ErrorCode ZGJRGH_NOT_EXISTS = new ErrorCode(2_019_000_007, "金融工会信息核对不存在");
 
     ErrorCode ZHWH_NOT_EXISTS = new ErrorCode(2_020_000_001, "账户维护申请不存在");
     ErrorCode ZHWH_STATUS_NOT_PENDING = new ErrorCode(2_020_000_002, "当前申请不是待审核状态，不能继续处理");
