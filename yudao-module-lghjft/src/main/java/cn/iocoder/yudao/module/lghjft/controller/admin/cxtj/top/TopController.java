@@ -8,6 +8,7 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.top.vo.TopPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.top.vo.TopResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.top.vo.TopSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.top.TopDO;
 import cn.iocoder.yudao.module.lghjft.service.cxtj.top.TopService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,10 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,12 +36,36 @@ public class TopController {
     @Resource
     private TopService topService;
 
+    @PostMapping("/create")
+    @Operation(summary = "创建缴费排行")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-top:create')")
+    public CommonResult<String> createTop(@Valid @RequestBody TopSaveReqVO createReqVO) {
+        return success(topService.createTop(createReqVO));
+    }
+
+    @PutMapping("/update")
+    @Operation(summary = "更新缴费排行")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-top:update')")
+    public CommonResult<Boolean> updateTop(@Valid @RequestBody TopSaveReqVO updateReqVO) {
+        topService.updateTop(updateReqVO);
+        return success(true);
+    }
+
+    @DeleteMapping("/delete")
+    @Operation(summary = "删除缴费排行")
+    @Parameter(name = "djxh", description = "登记序号", required = true)
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-top:delete')")
+    public CommonResult<Boolean> deleteTop(@RequestParam("djxh") String djxh) {
+        topService.deleteTop(djxh);
+        return success(true);
+    }
+
     @GetMapping("/get")
     @Operation(summary = "获得缴费排行")
-    @Parameter(name = "id", description = "编号", required = true, example = "1024")
+    @Parameter(name = "djxh", description = "登记序号", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-top:query')")
-    public CommonResult<TopResVO> getTop(@RequestParam("id") String id) {
-        TopDO obj = topService.getTop(id);
+    public CommonResult<TopResVO> getTop(@RequestParam("djxh") String djxh) {
+        TopDO obj = topService.getTop(djxh);
         return success(BeanUtils.toBean(obj, TopResVO.class));
     }
 
