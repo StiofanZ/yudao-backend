@@ -29,5 +29,4 @@ public class ZswzgdwDO {
     private Long bs;
     private BigDecimal jfje;
     private BigDecimal jcghje;
-    private String qrjgDm;
 }
