@@ -51,12 +51,12 @@ public class GhjfjfdwController {
         return success(true);
     }
 
-    @DeleteMapping("/delete")
-    @Operation(summary = "删除近三年缴费情况")
-    @Parameter(name = "djxh", description = "登记序号", required = true)
+    @DeleteMapping("/delete/{djxhs}")
+    @Operation(summary = "批量删除近三年缴费情况")
+    @Parameter(name = "djxhs", description = "登记序号数组", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ghjfjfdw:delete')")
-    public CommonResult<Boolean> deleteGhjfjfdw(@RequestParam("djxh") String djxh) {
-        ghjfjfdwService.deleteGhjfjfdw(djxh);
+    public CommonResult<Boolean> deleteGhjfjfdw(@PathVariable("djxhs") String[] djxhs) {
+        ghjfjfdwService.deleteGhjfjfdwBatch(djxhs);
         return success(true);
     }
 
@@ -85,7 +85,7 @@ public class GhjfjfdwController {
                                     HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<GhjfjfdwDO> list = ghjfjfdwService.getGhjfjfdwPage(pageReqVO).getList();
-        ExcelUtils.write(response, "近三年缴费情况.xls", "数据", GhjfjfdwResVO.class,
+        ExcelUtils.write(response, "近三年缴费情况数据.xls", "数据", GhjfjfdwResVO.class,
                 BeanUtils.toBean(list, GhjfjfdwResVO.class));
     }
 }

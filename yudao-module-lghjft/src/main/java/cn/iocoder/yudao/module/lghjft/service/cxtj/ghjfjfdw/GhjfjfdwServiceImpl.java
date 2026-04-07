@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Arrays;
+
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.GHJFJFDW_NOT_EXISTS;
 
@@ -43,9 +45,8 @@ public class GhjfjfdwServiceImpl implements GhjfjfdwService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteGhjfjfdw(String djxh) {
-        validateExists(djxh);
-        ghjfjfdwMapper.deleteById(djxh);
+    public void deleteGhjfjfdwBatch(String[] djxhs) {
+        ghjfjfdwMapper.deleteBatchIds(Arrays.asList(djxhs));
     }
 
     @Override

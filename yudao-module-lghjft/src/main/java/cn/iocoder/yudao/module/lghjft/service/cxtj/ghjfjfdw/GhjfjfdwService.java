@@ -24,11 +24,11 @@ public interface GhjfjfdwService {
     void updateGhjfjfdw(@Valid GhjfjfdwSaveReqVO updateReqVO);
 
     /**
-     * 删除近三年缴费情况
+     * 批量删除近三年缴费情况
      *
-     * @param djxh 登记序号
+     * @param djxhs 登记序号数组
      */
-    void deleteGhjfjfdw(String djxh);
+    void deleteGhjfjfdwBatch(String[] djxhs);
 
     /**
      * 获得近三年缴费情况
