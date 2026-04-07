@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 金融保险证券单位新增/修改 Request VO")
 @Data
@@ -38,7 +39,9 @@ public class JrbxzqdwSaveReqVO {
     private String cwfzrgddh;
     private String cwfzryddh;
     private BigDecimal cyrs;
+    /** 备注 — V1 update 允许修改 */
     private String bz;
+    /** 核实结果 — V1 update 允许修改 */
     private String hsjg;
     private BigDecimal gzze;
     private Long bs;

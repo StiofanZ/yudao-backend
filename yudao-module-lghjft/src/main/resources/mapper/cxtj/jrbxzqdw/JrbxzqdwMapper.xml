@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.jrbxzqdw.JrbxzqdwMapper">
+
+    <resultMap type="cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.jrbxzqdw.JrbxzqdwDO" id="JrbxzqdwResult">
+        <result property="id"    column="id"    />
+        <result property="dwdm"    column="dwdm"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="shxydm"    column="shxydm"    />
+        <result property="nsrsbh"    column="nsrsbh"    />
+        <result property="nsrmc"    column="nsrmc"    />
+        <result property="djxh"    column="djxh"    />
+        <result property="zgjrghzgdwbz"    column="zgjrghzgdwbz"    />
+        <result property="xtlbDm"    column="xtlb_dm"    />
+        <result property="ghlbDm"    column="ghlb_dm"    />
+        <result property="nsrztDm"    column="nsrzt_dm"    />
+        <result property="djzclxDm"    column="djzclx_dm"    />
+        <result property="djzclxmc"    column="djzclxmc"    />
+        <result property="scjydz"    column="scjydz"    />
+        <result property="scjydzxzqhszDm"    column="scjydzxzqhsz_dm"    />
+        <result property="xzqhmc"    column="xzqhmc"    />
+        <result property="jdxzDm"    column="jdxz_dm"    />
+        <result property="hyDm"    column="hy_dm"    />
+        <result property="hymc"    column="hymc"    />
+        <result property="djjgDm"    column="djjg_dm"    />
+        <result property="djjgmc"    column="djjgmc"    />
+        <result property="zgswjDm"    column="zgswj_dm"    />
+        <result property="zgswjmc"    column="zgswjmc"    />
+        <result property="zgswskfjDm"    column="zgswskfj_dm"    />
+        <result property="zgksfjmc"    column="zgksfjmc"    />
+        <result property="cwfzrxm"    column="cwfzrxm"    />
+        <result property="cwfzrgddh"    column="cwfzrgddh"    />
+        <result property="cwfzryddh"    column="cwfzryddh"    />
+        <result property="cyrs"    column="cyrs"    />
+        <result property="bz"    column="bz"    />
+        <result property="hsjg"    column="hsjg"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="gzze"    column="gzze"    />
+        <result property="bs"    column="bs"    />
+        <result property="je"    column="je"    />
+        <result property="sl"    column="sl"    />
+        <result property="bs2024"    column="bs2024"    />
+        <result property="je2024"    column="je2024"    />
+        <result property="bs2023"    column="bs2023"    />
+        <result property="je2023"    column="je2023"    />
+        <result property="bs2022"    column="bs2022"    />
+        <result property="je2022"    column="je2022"    />
+        <result property="bs2021"    column="bs2021"    />
+        <result property="je2021"    column="je2021"    />
+        <result property="bs2020"    column="bs2020"    />
+        <result property="je2020"    column="je2020"    />
+    </resultMap>
+
+    <!-- v1: selectJrbxzqdwVo — 3-table JOIN (jrbxzqdw + gh_hj + jrbxzqdwjfqk1 + jrbxzqdwjfqk) -->
+    <sql id="selectJrbxzqdwVo">
+        select
+        t.id,
+        t.dwdm,
+        h.dept_id,
+        t.shxydm,
+        t.nsrsbh,
+        t.nsrmc,
+        t.djxh,
+        t.zgjrghzgdwbz,
+        h.xtlb_dm,
+        h.ghlb_dm,
+        t.nsrzt_dm,
+        t.djzclx_dm,
+        t.djzclxmc,
+        t.scjydz,
+        t.scjydzxzqhsz_dm,
+        t.xzqhmc,
+        t.jdxz_dm,
+        t.hy_dm,
+        t.hymc,
+        t.djjg_dm,
+        t.djjgmc,
+        t.zgswj_dm,
+        t.zgswjmc,
+        t.zgswskfj_dm,
+        t.zgksfjmc,
+        t.cwfzrxm,
+        t.cwfzrgddh,
+        t.cwfzryddh,
+        t.cyrs,
+        t.bz,
+        t.hsjg,
+        t.create_by,
+        t.create_time,
+        t.update_by,
+        t.update_time,
+        b.gzze,
+        b.bs,
+        b.je,
+        b.sl,
+        k.bs2024,
+        k.je2024,
+        k.bs2023,
+        k.je2023,
+        k.bs2022,
+        k.je2022,
+        k.bs2021,
+        k.je2021,
+        k.bs2020,
+        k.je2020
+        from
+        jrbxzqdw t
+        left join gh_hj h on t.djxh = h.djxh
+        left join jrbxzqdwjfqk1 b on t.djxh = b.djxh
+        left join jrbxzqdwjfqk k on t.djxh = k.djxh
+    </sql>
+
+    <!-- v1: selectJrbxzqdwList — paginated list with all WHERE conditions -->
+    <select id="selectJrbxzqdwList" parameterType="cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jrbxzqdw.vo.JrbxzqdwPageReqVO" resultMap="JrbxzqdwResult">
+        <include refid="selectJrbxzqdwVo"/>
+        <where>
+            <if test="dwdm != null and dwdm != ''"> and t.dwdm = #{dwdm}</if>
+            <if test="deptId != null and deptId != ''"> and (t.dwdm = #{deptId} or h.dept_id = #{deptId})</if>
+            <if test="shxydm != null and shxydm != ''"> and t.shxydm = #{shxydm}</if>
+            <if test="nsrsbh != null and nsrsbh != ''"> and t.nsrsbh = #{nsrsbh}</if>
+            <if test="nsrmc != null and nsrmc != ''"> and t.nsrmc like concat('%', #{nsrmc}, '%')</if>
+            <if test="djxh != null and djxh != ''"> and t.djxh = #{djxh}</if>
+            <if test="zgjrghzgdwbz != null and zgjrghzgdwbz != ''"> and t.zgjrghzgdwbz = #{zgjrghzgdwbz}</if>
+            <if test="nsrztDm != null and nsrztDm != ''"> and t.nsrzt_dm = #{nsrztDm}</if>
+            <if test="djzclxDm != null and djzclxDm != ''"> and t.djzclx_dm = #{djzclxDm}</if>
+            <if test="djzclxmc != null and djzclxmc != ''"> and t.djzclxmc = #{djzclxmc}</if>
+            <if test="scjydz != null and scjydz != ''"> and t.scjydz = #{scjydz}</if>
+            <if test="scjydzxzqhszDm != null and scjydzxzqhszDm != ''"> and t.scjydzxzqhsz_dm = #{scjydzxzqhszDm}</if>
+            <if test="xzqhmc != null and xzqhmc != ''"> and t.xzqhmc = #{xzqhmc}</if>
+            <if test="jdxzDm != null and jdxzDm != ''"> and t.jdxz_dm = #{jdxzDm}</if>
+            <if test="hyDm != null and hyDm != ''"> and t.hy_dm = #{hyDm}</if>
+            <if test="hymc != null and hymc != ''"> and t.hymc = #{hymc}</if>
+            <if test="djjgDm != null and djjgDm != ''"> and t.djjg_dm = #{djjgDm}</if>
+            <if test="djjgmc != null and djjgmc != ''"> and t.djjgmc = #{djjgmc}</if>
+            <if test="zgswjDm != null and zgswjDm != ''"> and t.zgswj_dm = #{zgswjDm}</if>
+            <if test="zgswjmc != null and zgswjmc != ''"> and t.zgswjmc = #{zgswjmc}</if>
+            <if test="zgswskfjDm != null and zgswskfjDm != ''"> and t.zgswskfj_dm = #{zgswskfjDm}</if>
+            <if test="zgksfjmc != null and zgksfjmc != ''"> and t.zgksfjmc = #{zgksfjmc}</if>
+            <if test="cwfzrxm != null and cwfzrxm != ''"> and t.cwfzrxm = #{cwfzrxm}</if>
+            <if test="cwfzrgddh != null and cwfzrgddh != ''"> and t.cwfzrgddh = #{cwfzrgddh}</if>
+            <if test="cwfzryddh != null and cwfzryddh != ''"> and t.cwfzryddh = #{cwfzryddh}</if>
+            <if test="cyrs != null"> and t.cyrs = #{cyrs}</if>
+            <if test="bz != null and bz != ''"> and t.bz = #{bz}</if>
+            <if test="hsjg != null and hsjg != ''"> and t.hsjg = #{hsjg}</if>
+            <if test="createBy != null and createBy != ''"> and t.create_by = #{createBy}</if>
+            <if test="createTime != null"> and t.create_time = #{createTime}</if>
+            <if test="updateBy != null and updateBy != ''"> and t.update_by = #{updateBy}</if>
+            <if test="updateTime != null"> and t.update_time = #{updateTime}</if>
+            <if test="sl != null and sl != ''"> and b.sl = #{sl}</if>
+        </where>
+        order by b.gzze desc
+    </select>
+
+    <!-- v1: selectJrbxzqdwById — single record by ID -->
+    <select id="selectJrbxzqdwById" parameterType="String" resultMap="JrbxzqdwResult">
+        <include refid="selectJrbxzqdwVo"/>
+        where t.id = #{id}
+    </select>
+
+    <!-- v1: updateJrbxzqdw — RESTRICTED: only bz, hsjg, createBy, createTime, updateBy, updateTime -->
+    <update id="updateJrbxzqdw" parameterType="cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.jrbxzqdw.JrbxzqdwDO">
+        update jrbxzqdw
+        <trim prefix="set" suffixOverrides=",">
+            <if test="bz != null">bz = #{bz},</if>
+            <if test="hsjg != null">hsjg = #{hsjg},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <!-- v1: insertJrbxzqdw -->
+    <insert id="insertJrbxzqdw" parameterType="cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.jrbxzqdw.JrbxzqdwDO">
+        insert into jrbxzqdw
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="dwdm != null">dwdm,</if>
+            <if test="shxydm != null">shxydm,</if>
+            <if test="nsrsbh != null and nsrsbh != ''">nsrsbh,</if>
+            <if test="nsrmc != null and nsrmc != ''">nsrmc,</if>
+            <if test="djxh != null and djxh != ''">djxh,</if>
+            <if test="zgjrghzgdwbz != null and zgjrghzgdwbz != ''">zgjrghzgdwbz,</if>
+            <if test="nsrztDm != null and nsrztDm != ''">nsrzt_dm,</if>
+            <if test="djzclxDm != null">djzclx_dm,</if>
+            <if test="djzclxmc != null">djzclxmc,</if>
+            <if test="scjydz != null">scjydz,</if>
+            <if test="scjydzxzqhszDm != null">scjydzxzqhsz_dm,</if>
+            <if test="xzqhmc != null">xzqhmc,</if>
+            <if test="jdxzDm != null">jdxz_dm,</if>
+            <if test="hyDm != null">hy_dm,</if>
+            <if test="hymc != null">hymc,</if>
+            <if test="djjgDm != null">djjg_dm,</if>
+            <if test="djjgmc != null">djjgmc,</if>
+            <if test="zgswjDm != null">zgswj_dm,</if>
+            <if test="zgswjmc != null">zgswjmc,</if>
+            <if test="zgswskfjDm != null">zgswskfj_dm,</if>
+            <if test="zgksfjmc != null">zgksfjmc,</if>
+            <if test="cwfzrxm != null">cwfzrxm,</if>
+            <if test="cwfzrgddh != null">cwfzrgddh,</if>
+            <if test="cwfzryddh != null">cwfzryddh,</if>
+            <if test="cyrs != null">cyrs,</if>
+            <if test="bz != null">bz,</if>
+            <if test="hsjg != null">hsjg,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="dwdm != null">#{dwdm},</if>
+            <if test="shxydm != null">#{shxydm},</if>
+            <if test="nsrsbh != null and nsrsbh != ''">#{nsrsbh},</if>
+            <if test="nsrmc != null and nsrmc != ''">#{nsrmc},</if>
+            <if test="djxh != null and djxh != ''">#{djxh},</if>
+            <if test="zgjrghzgdwbz != null and zgjrghzgdwbz != ''">#{zgjrghzgdwbz},</if>
+            <if test="nsrztDm != null and nsrztDm != ''">#{nsrztDm},</if>
+            <if test="djzclxDm != null">#{djzclxDm},</if>
+            <if test="djzclxmc != null">#{djzclxmc},</if>
+            <if test="scjydz != null">#{scjydz},</if>
+            <if test="scjydzxzqhszDm != null">#{scjydzxzqhszDm},</if>
+            <if test="xzqhmc != null">#{xzqhmc},</if>
+            <if test="jdxzDm != null">#{jdxzDm},</if>
+            <if test="hyDm != null">#{hyDm},</if>
+            <if test="hymc != null">#{hymc},</if>
+            <if test="djjgDm != null">#{djjgDm},</if>
+            <if test="djjgmc != null">#{djjgmc},</if>
+            <if test="zgswjDm != null">#{zgswjDm},</if>
+            <if test="zgswjmc != null">#{zgswjmc},</if>
+            <if test="zgswskfjDm != null">#{zgswskfjDm},</if>
+            <if test="zgksfjmc != null">#{zgksfjmc},</if>
+            <if test="cwfzrxm != null">#{cwfzrxm},</if>
+            <if test="cwfzrgddh != null">#{cwfzrgddh},</if>
+            <if test="cwfzryddh != null">#{cwfzryddh},</if>
+            <if test="cyrs != null">#{cyrs},</if>
+            <if test="bz != null">#{bz},</if>
+            <if test="hsjg != null">#{hsjg},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <!-- v1: deleteJrbxzqdwById -->
+    <delete id="deleteJrbxzqdwById" parameterType="String">
+        delete from jrbxzqdw where id = #{id}
+    </delete>
+
+    <!-- v1: deleteJrbxzqdwByIds — batch delete -->
+    <delete id="deleteJrbxzqdwByIds" parameterType="String">
+        delete from jrbxzqdw where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

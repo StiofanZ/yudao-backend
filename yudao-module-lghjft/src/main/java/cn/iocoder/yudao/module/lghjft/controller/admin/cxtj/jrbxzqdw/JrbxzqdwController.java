@@ -94,7 +94,7 @@ public class JrbxzqdwController {
                                     HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<JrbxzqdwDO> list = jrbxzqdwService.getJrbxzqdwPage(pageReqVO).getList();
-        ExcelUtils.write(response, "金融保险证券单位.xls", "数据", JrbxzqdwResVO.class,
+        ExcelUtils.write(response, "金融保险证券单位数据.xls", "数据", JrbxzqdwResVO.class,
                 BeanUtils.toBean(list, JrbxzqdwResVO.class));
     }
 }
