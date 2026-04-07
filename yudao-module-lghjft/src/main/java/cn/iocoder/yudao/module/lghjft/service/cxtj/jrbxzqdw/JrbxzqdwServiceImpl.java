@@ -6,6 +6,7 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jrbxzqdw.vo.Jrbxzqdw
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jrbxzqdw.vo.JrbxzqdwSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.jrbxzqdw.JrbxzqdwDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.jrbxzqdw.JrbxzqdwMapper;
+import cn.iocoder.yudao.module.lghjft.framework.deptfilter.DeptFilterHelper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,9 @@ public class JrbxzqdwServiceImpl implements JrbxzqdwService {
 
     @Resource
     private JrbxzqdwMapper jrbxzqdwMapper;
+
+    @Resource
+    private DeptFilterHelper deptFilterHelper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -65,6 +69,8 @@ public class JrbxzqdwServiceImpl implements JrbxzqdwService {
 
     @Override
     public PageResult<JrbxzqdwDO> getJrbxzqdwPage(JrbxzqdwPageReqVO pageReqVO) {
+        // 应用部门过滤逻辑（还原 V1 行为：root = "100000"）
+        pageReqVO.setDeptId(deptFilterHelper.filterDeptId(pageReqVO.getDeptId()));
         return jrbxzqdwMapper.selectPage(pageReqVO);
     }
 }
