@@ -7,40 +7,88 @@ import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.top.TopDO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface TopMapper extends BaseMapperX<TopDO> {
 
     /**
-     * 缴费排行分页 — 还原 v1 selectTopList1 完整 WHERE 条件
-     * <p>
-     * v1 selectTopList1 使用 root "100000"（全国），order by jfjedn desc
-     * v1 selectTopList  使用 root "620000"（甘肃省），order by jfjecy desc，limit 100
-     * V2 分页查询对应 v1 selectTopList1（默认 root = "100000"）
+     * 构建 V1 完整 16 字段 WHERE 条件
      */
-    default PageResult<TopDO> selectPage(TopPageReqVO reqVO) {
-        QueryWrapper<TopDO> wrapper = new QueryWrapper<>();
-
-        // --- V1 完整条件 ---
+    private static void applyAllConditions(QueryWrapper<TopDO> wrapper, TopPageReqVO reqVO) {
         if (reqVO.getDjxh() != null && !reqVO.getDjxh().isEmpty()) {
             wrapper.eq("djxh", reqVO.getDjxh());
         }
         if (reqVO.getShxydm() != null && !reqVO.getShxydm().isEmpty()) {
-            wrapper.eq("SHXYDM", reqVO.getShxydm());
+            wrapper.eq("shxydm", reqVO.getShxydm());
         }
-        // v1: nsrmc 用 LIKE（遵循 CLAUDE.md 迁移规范）
+        // v1: nsrmc 用 eq（与 v1 xml 一致）
         if (reqVO.getNsrmc() != null && !reqVO.getNsrmc().isEmpty()) {
-            wrapper.like("NSRMC", reqVO.getNsrmc());
+            wrapper.eq("nsrmc", reqVO.getNsrmc());
         }
         if (reqVO.getDeptId() != null && !reqVO.getDeptId().isEmpty()) {
-            wrapper.eq("DEPT_ID", reqVO.getDeptId());
+            wrapper.eq("dept_id", reqVO.getDeptId());
         }
         if (reqVO.getDwmc() != null && !reqVO.getDwmc().isEmpty()) {
-            wrapper.like("DWMC", reqVO.getDwmc());
+            wrapper.eq("dwmc", reqVO.getDwmc());
         }
+        if (reqVO.getBsdn() != null) {
+            wrapper.eq("bsdn", reqVO.getBsdn());
+        }
+        if (reqVO.getBswn() != null) {
+            wrapper.eq("bswn", reqVO.getBswn());
+        }
+        if (reqVO.getBscy() != null) {
+            wrapper.eq("bscy", reqVO.getBscy());
+        }
+        if (reqVO.getJfjedn() != null) {
+            wrapper.eq("jfjedn", reqVO.getJfjedn());
+        }
+        if (reqVO.getJfjewn() != null) {
+            wrapper.eq("jfjewn", reqVO.getJfjewn());
+        }
+        if (reqVO.getJfjecy() != null) {
+            wrapper.eq("jfjecy", reqVO.getJfjecy());
+        }
+        if (reqVO.getJfbl() != null && !reqVO.getJfbl().isEmpty()) {
+            wrapper.eq("jfbl", reqVO.getJfbl());
+        }
+        if (reqVO.getSjjedn() != null) {
+            wrapper.eq("sjjedn", reqVO.getSjjedn());
+        }
+        if (reqVO.getSjjewn() != null) {
+            wrapper.eq("sjjewn", reqVO.getSjjewn());
+        }
+        if (reqVO.getSjjecy() != null) {
+            wrapper.eq("sjjecy", reqVO.getSjjecy());
+        }
+        if (reqVO.getSjbl() != null && !reqVO.getSjbl().isEmpty()) {
+            wrapper.eq("sjbl", reqVO.getSjbl());
+        }
+    }
 
-        // v1 selectTopList1: order by jfjedn desc
-        wrapper.orderByDesc("JFJEDN");
+    /**
+     * 缴费排行列表（非分页） — 还原 v1 selectTopList
+     * <p>
+     * v1 selectTopList: root "620000"（甘肃省），order by jfjecy desc，limit 100
+     */
+    default List<TopDO> selectList(TopPageReqVO reqVO) {
+        QueryWrapper<TopDO> wrapper = new QueryWrapper<>();
+        applyAllConditions(wrapper, reqVO);
+        wrapper.orderByDesc("jfjecy");
+        wrapper.last("limit 100");
+        return selectList(wrapper);
+    }
 
+    /**
+     * 缴费排行分页 — 还原 v1 selectTopList1
+     * <p>
+     * v1 selectTopList1: root "100000"（全国），order by jfjedn desc
+     */
+    default PageResult<TopDO> selectPage(TopPageReqVO reqVO) {
+        QueryWrapper<TopDO> wrapper = new QueryWrapper<>();
+        applyAllConditions(wrapper, reqVO);
+        wrapper.orderByDesc("jfjedn");
         return selectPage(reqVO, wrapper);
     }
 }

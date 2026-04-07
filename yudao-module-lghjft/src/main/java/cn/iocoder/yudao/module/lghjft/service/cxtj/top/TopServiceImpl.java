@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.TOP_NOT_EXISTS;
 
@@ -43,9 +46,8 @@ public class TopServiceImpl implements TopService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteTop(String djxh) {
-        validateExists(djxh);
-        topMapper.deleteById(djxh);
+    public void deleteTopBatch(String[] djxhs) {
+        topMapper.deleteBatchIds(Arrays.asList(djxhs));
     }
 
     @Override
@@ -54,8 +56,15 @@ public class TopServiceImpl implements TopService {
     }
 
     @Override
+    public List<TopDO> getTopList(TopPageReqVO reqVO) {
+        // 还原 V1 行为：selectTopList root = "620000"（甘肃省）
+        reqVO.setDeptId(deptFilterHelper.filterDeptId(reqVO.getDeptId(), DeptFilterHelper.ROOT_DEPT_SECONDARY));
+        return topMapper.selectList(reqVO);
+    }
+
+    @Override
     public PageResult<TopDO> getTopPage(TopPageReqVO pageReqVO) {
-        // 应用部门过滤逻辑（还原 V1 行为：selectTopList1 root = "100000"）
+        // 还原 V1 行为：selectTopList1 root = "100000"（全国）
         pageReqVO.setDeptId(deptFilterHelper.filterDeptId(pageReqVO.getDeptId()));
         return topMapper.selectPage(pageReqVO);
     }

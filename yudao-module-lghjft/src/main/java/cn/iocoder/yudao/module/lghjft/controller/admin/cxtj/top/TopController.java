@@ -51,12 +51,12 @@ public class TopController {
         return success(true);
     }
 
-    @DeleteMapping("/delete")
-    @Operation(summary = "删除缴费排行")
-    @Parameter(name = "djxh", description = "登记序号", required = true)
+    @DeleteMapping("/delete/{djxhs}")
+    @Operation(summary = "批量删除缴费排行")
+    @Parameter(name = "djxhs", description = "登记序号数组", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-top:delete')")
-    public CommonResult<Boolean> deleteTop(@RequestParam("djxh") String djxh) {
-        topService.deleteTop(djxh);
+    public CommonResult<Boolean> deleteTop(@PathVariable("djxhs") String[] djxhs) {
+        topService.deleteTopBatch(djxhs);
         return success(true);
     }
 
@@ -67,6 +67,14 @@ public class TopController {
     public CommonResult<TopResVO> getTop(@RequestParam("djxh") String djxh) {
         TopDO obj = topService.getTop(djxh);
         return success(BeanUtils.toBean(obj, TopResVO.class));
+    }
+
+    @GetMapping("/list")
+    @Operation(summary = "获得缴费排行列表（非分页，LIMIT 100）")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-top:query')")
+    public CommonResult<List<TopResVO>> getTopList(@Valid TopPageReqVO reqVO) {
+        List<TopDO> list = topService.getTopList(reqVO);
+        return success(BeanUtils.toBean(list, TopResVO.class));
     }
 
     @GetMapping("/page")
@@ -85,7 +93,7 @@ public class TopController {
                                HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<TopDO> list = topService.getTopPage(pageReqVO).getList();
-        ExcelUtils.write(response, "缴费排行.xls", "数据", TopResVO.class,
+        ExcelUtils.write(response, "缴费排行数据.xls", "数据", TopResVO.class,
                 BeanUtils.toBean(list, TopResVO.class));
     }
 }
