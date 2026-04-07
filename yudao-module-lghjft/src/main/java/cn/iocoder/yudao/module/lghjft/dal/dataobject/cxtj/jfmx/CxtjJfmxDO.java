@@ -89,6 +89,49 @@ public class CxtjJfmxDO {
     private String cbjhh;
     private BigDecimal cbjbl;
     private BigDecimal cbjje;
+
+    private String hyghzh;
+    private String hyghhm;
+    private String hyghhh;
+    private BigDecimal hyghbl;
+    private BigDecimal hyghje;
+
+    private String xjghzh;
+    private String xjghhm;
+    private String xjghhh;
+    private BigDecimal xjghbl;
+    private BigDecimal xjghje;
+
+    private String sjghzh;
+    private String sjghhm;
+    private String sjghhh;
+    private BigDecimal sjghbl;
+    private BigDecimal sjghje;
+
+    private String szghzh;
+    private String szghhm;
+    private String szghhh;
+    private BigDecimal szghbl;
+    private BigDecimal szghje;
+
+    private String qgghzh;
+    private String qgghhm;
+    private String qgghhh;
+    private BigDecimal qgghbl;
+    private BigDecimal qgghje;
+
+    private String sdszh;
+    private String sdshm;
+    private String sdshh;
+    private BigDecimal sdsbl;
+    private BigDecimal sdsje;
+
+    private String swjgzh;
+    private String swjghm;
+    private String swjghh;
+    private BigDecimal swjgbl;
+    private BigDecimal swjgje;
+
     private String cbjthbj;
     private String cbjthrq;
     private String cbjthczy;

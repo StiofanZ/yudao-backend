@@ -97,4 +97,16 @@ public class JfmxPageReqVO extends PageParam {
 
     @Schema(description = "小额类型25")
     private String xelx25;
+
+    @Schema(description = "筹备金退回标记")
+    private String cbjthbj;
+
+    @Schema(description = "基层工会账号")
+    private String jcghzh;
+
+    @Schema(description = "基层工会户名")
+    private String jcghhm;
+
+    @Schema(description = "基层工会行号")
+    private String jcghhh;
 }

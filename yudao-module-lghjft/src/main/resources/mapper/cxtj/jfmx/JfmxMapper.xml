@@ -289,6 +289,10 @@
             <if test="req.xelx23 != null  and req.xelx23 != ''">and hj.hjfl6_dm = #{req.xelx23}</if>
             <if test="req.xelx24 != null  and req.xelx24 != ''">and hj.hjfl4_dm = #{req.xelx24}</if>
             <if test="req.xelx25 != null  and req.xelx25 != ''">and hj.hjfl10_dm = #{req.xelx25}</if>
+            <if test="req.cbjthbj != null  and req.cbjthbj != ''">and JF.CBJTHBJ = #{req.cbjthbj}</if>
+            <if test="req.jcghzh != null  and req.jcghzh != ''">and JF.JCGHZH = #{req.jcghzh}</if>
+            <if test="req.jcghhm != null  and req.jcghhm != ''">and JF.JCGHHM like concat('%', #{req.jcghhm}, '%')</if>
+            <if test="req.jcghhh != null  and req.jcghhh != ''">and JF.JCGHHH = #{req.jcghhh}</if>
         </where>
         order by rkrq desc
     </select>

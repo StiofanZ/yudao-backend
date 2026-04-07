@@ -3,8 +3,47 @@ package cn.iocoder.yudao.module.lghjft.service.cxtj.jfmx;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.JfmxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.JfmxResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.JfmxSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.jfmx.CxtjJfmxDO;
+import jakarta.validation.Valid;
 
 public interface CxtjJfmxService {
 
+    /**
+     * 创建经费明细
+     *
+     * @param createReqVO 创建信息
+     * @return spuuid
+     */
+    String createJfmx(@Valid JfmxSaveReqVO createReqVO);
+
+    /**
+     * 更新经费明细
+     *
+     * @param updateReqVO 更新信息
+     */
+    void updateJfmx(@Valid JfmxSaveReqVO updateReqVO);
+
+    /**
+     * 删除经费明细
+     *
+     * @param spuuid spuuid
+     */
+    void deleteJfmx(String spuuid);
+
+    /**
+     * 获得经费明细
+     *
+     * @param spuuid spuuid
+     * @return 经费明细
+     */
+    CxtjJfmxDO getJfmx(String spuuid);
+
+    /**
+     * 获得经费明细分页
+     *
+     * @param pageReqVO 分页查询
+     * @return 经费明细分页
+     */
     PageResult<JfmxResVO> getJfmxPage(JfmxPageReqVO pageReqVO);
 }
