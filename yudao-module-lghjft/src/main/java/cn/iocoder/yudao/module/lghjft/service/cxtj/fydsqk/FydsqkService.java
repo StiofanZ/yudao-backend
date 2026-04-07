@@ -20,4 +20,9 @@ public interface FydsqkService {
     FydsqkDO getFydsqk(String id);
 
     PageResult<FydsqkDO> getFydsqkPage(FydsqkPageReqVO pageReqVO);
+
+    /**
+     * 分月代收情况聚合查询（GROUP BY WITH ROLLUP），返回全部行含合计行
+     */
+    List<FydsqkDO> getFydsqkAggregateList(FydsqkPageReqVO reqVO);
 }

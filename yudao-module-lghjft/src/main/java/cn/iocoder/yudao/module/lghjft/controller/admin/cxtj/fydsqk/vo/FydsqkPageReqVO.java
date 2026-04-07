@@ -10,4 +10,8 @@ public class FydsqkPageReqVO extends PageParam {
 
     @Schema(description = "deptId")
     private String deptId;
+    @Schema(description = "入库日期-开始（对应DSYF过滤）")
+    private String beginRkrq;
+    @Schema(description = "入库日期-结束（对应DSYF过滤）")
+    private String endRkrq;
 }
