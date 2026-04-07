@@ -31,12 +31,30 @@
             <if test="req.djxh != null  and req.djxh != ''">and DJXH = #{req.djxh}</if>
             <if test="req.shxydm != null  and req.shxydm != ''">and SHXYDM = #{req.shxydm}</if>
             <if test="req.nsrsbh != null  and req.nsrsbh != ''">and SHXYDM = #{req.nsrsbh}</if>
-            <if test="req.nsrjc != null  and req.nsrjc != ''">and NSRJC=#{req.nsrjc}</if>
+            <if test="req.nsrjc != null  and req.nsrjc != ''">and NSRJC = #{req.nsrjc}</if>
             <if test="req.deptId != null  and req.deptId != ''">and (DWDM = #{req.deptId} or DEPT_ID = #{req.deptId})</if>
+            <if test="req.ghjgxzjb != null  and req.ghjgxzjb != ''">and GHJGXZJB = #{req.ghjgxzjb}</if>
+            <if test="req.clghbj != null  and req.clghbj != ''">and CLGHBJ = #{req.clghbj}</if>
+            <if test="req.hyghbz != null  and req.hyghbz != ''">and HYGHBZ = #{req.hyghbz}</if>
+            <if test="req.sdghjgxzjb != null  and req.sdghjgxzjb != ''">and SDGHJGXZJB = #{req.sdghjgxzjb}</if>
             <if test="req.zgswjDm != null  and req.zgswjDm != ''">and ZGSWJ_DM = #{req.zgswjDm}</if>
+            <if test="req.zgswskfjDm != null  and req.zgswskfjDm != ''">and ZGSWSKFJ_DM = #{req.zgswskfjDm}</if>
+            <if test="req.ssglyDm != null  and req.ssglyDm != ''">and SSGLY_DM = #{req.ssglyDm}</if>
+            <if test="req.ghlbDm != null  and req.ghlbDm != ''">and GHLB_DM = #{req.ghlbDm}</if>
+            <if test="req.xtlbDm != null  and req.xtlbDm != ''">and XTLB_DM = #{req.xtlbDm}</if>
+            <if test="req.zzjglxDm != null  and req.zzjglxDm != ''">and ZZJGLX_DM = #{req.zzjglxDm}</if>
+            <if test="req.hyDm != null  and req.hyDm != ''">and HY_DM = #{req.hyDm}</if>
+            <if test="req.djzclxDm != null  and req.djzclxDm != ''">and DJZCLX_DM = #{req.djzclxDm}</if>
+            <if test="req.dwlsgxDm != null  and req.dwlsgxDm != ''">and DWLSGX_DM = #{req.dwlsgxDm}</if>
+            <if test="req.sblbDm != null  and req.sblbDm != ''">and SBLB_DM = #{req.sblbDm}</if>
             <if test="req.skssqq != null ">and SKSSQQ &gt;= #{req.skssqq}</if>
             <if test="req.skssqz != null ">and SKSSQZ &lt;= #{req.skssqz}</if>
+            <if test="req.zspmDm != null  and req.zspmDm != ''">and ZSPM_DM = #{req.zspmDm}</if>
+            <if test="req.jsbj != null  and req.jsbj != ''">and JSBJ = #{req.jsbj}</if>
+            <if test="req.cbjthbj != null  and req.cbjthbj != ''">and CBJTHBJ = #{req.cbjthbj}</if>
+            <if test="req.xwlx != null  and req.xwlx != ''">and XWLX = #{req.xwlx}</if>
             <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">and RKRQ between #{req.beginRkrq} and #{req.endRkrq}</if>
+            <if test="req.beginJsrq != null and req.beginJsrq != '' and req.endJsrq != null and req.endJsrq != ''">and JSRQ between #{req.beginJsrq} and #{req.endJsrq}</if>
         </where>
         GROUP BY
         T.DWDM,T.DEPT_ID
