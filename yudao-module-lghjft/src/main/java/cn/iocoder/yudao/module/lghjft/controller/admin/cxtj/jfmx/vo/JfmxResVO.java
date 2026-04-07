@@ -269,6 +269,19 @@ public class JfmxResVO {
     @Schema(description = "qgghje")
     private BigDecimal qgghje;
 
+    @Schema(description = "jcjzh")
+    private String jcjzh;
+    @Schema(description = "jcjhm")
+    private String jcjhm;
+    @Schema(description = "jcjhh")
+    private String jcjhh;
+    @Schema(description = "jcjbl")
+    private BigDecimal jcjbl;
+    @Schema(description = "jcjje")
+    private BigDecimal jcjje;
+    @Schema(description = "jcwsh")
+    private String jcwsh;
+
     @Schema(description = "sdszh")
     private String sdszh;
     @Schema(description = "sdshm")

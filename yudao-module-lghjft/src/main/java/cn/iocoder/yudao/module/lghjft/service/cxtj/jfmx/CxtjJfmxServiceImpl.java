@@ -9,13 +9,13 @@ import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.jfmx.CxtjJfmxDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.jfmx.CxtjJfmxMapper;
 import cn.iocoder.yudao.module.lghjft.framework.deptfilter.DeptFilterHelper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
@@ -76,12 +76,9 @@ public class CxtjJfmxServiceImpl implements CxtjJfmxService {
         // 应用部门过滤逻辑（还原 V1 行为）
         pageReqVO.setDeptId(deptFilterHelper.filterDeptId(pageReqVO.getDeptId()));
 
-        List<JfmxResVO> records = cxtjJfmxMapper.selectJfmxList(pageReqVO);
-        int fromIndex = Math.max((pageReqVO.getPageNo() - 1) * pageReqVO.getPageSize(), 0);
-        if (fromIndex >= records.size()) {
-            return new PageResult<>(new ArrayList<>(), (long) records.size());
-        }
-        int toIndex = Math.min(fromIndex + pageReqVO.getPageSize(), records.size());
-        return new PageResult<>(records.subList(fromIndex, toIndex), (long) records.size());
+        Page<JfmxResVO> page = new Page<>(pageReqVO.getPageNo(), pageReqVO.getPageSize());
+        page.setOptimizeCountSql(false);
+        IPage<JfmxResVO> ipage = cxtjJfmxMapper.selectJfmxList(page, pageReqVO);
+        return new PageResult<>(ipage.getRecords(), ipage.getTotal());
     }
 }
