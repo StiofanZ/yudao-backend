@@ -35,9 +35,11 @@ public class JffnmxController {
     private JffnmxService jffnmxService;
 
     @GetMapping("/page")
-    @Operation(summary = "经费分年明细分页")
+    @Operation(summary = "经费分年明细列表（V1 不分页）")
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-jffnmx:query')")
     public CommonResult<PageResult<JffnmxSummaryResVO>> page(@Valid JffnmxPageReqVO pageReqVO) {
+        // V1 startPage() 被注释，不分页，返回全部记录
+        pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         return success(jffnmxService.selectJffnmxList(pageReqVO));
     }
 

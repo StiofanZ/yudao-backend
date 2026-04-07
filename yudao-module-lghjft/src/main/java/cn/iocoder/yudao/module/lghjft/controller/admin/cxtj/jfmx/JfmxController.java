@@ -64,6 +64,15 @@ public class JfmxController {
         return success(true);
     }
 
+    @DeleteMapping("/delete-list")
+    @Operation(summary = "批量删除经费明细")
+    @Parameter(name = "spuuids", description = "spuuid 列表", required = true)
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-jfmx:delete')")
+    public CommonResult<Boolean> deleteJfmxList(@RequestParam("spuuids") List<String> spuuids) {
+        cxtjJfmxService.deleteJfmxList(spuuids);
+        return success(true);
+    }
+
     @GetMapping("/get")
     @Operation(summary = "获得经费明细")
     @Parameter(name = "spuuid", description = "spuuid", required = true)

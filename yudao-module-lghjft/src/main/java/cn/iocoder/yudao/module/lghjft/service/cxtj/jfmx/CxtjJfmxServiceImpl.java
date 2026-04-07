@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.List;
 import java.util.UUID;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
@@ -60,6 +61,15 @@ public class CxtjJfmxServiceImpl implements CxtjJfmxService {
     public void deleteJfmx(String spuuid) {
         validateExists(spuuid);
         cxtjJfmxMapper.delete(new QueryWrapper<CxtjJfmxDO>().eq("spuuid", spuuid));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteJfmxList(List<String> spuuids) {
+        if (spuuids == null || spuuids.isEmpty()) {
+            return;
+        }
+        cxtjJfmxMapper.delete(new QueryWrapper<CxtjJfmxDO>().in("spuuid", spuuids));
     }
 
     @Override

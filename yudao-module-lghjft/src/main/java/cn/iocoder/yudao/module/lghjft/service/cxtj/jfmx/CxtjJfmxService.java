@@ -10,6 +10,7 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.SzdzhdPageRe
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.SzdzhdResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.jfmx.CxtjJfmxDO;
 import jakarta.validation.Valid;
+import java.util.List;
 
 public interface CxtjJfmxService {
 
@@ -34,6 +35,13 @@ public interface CxtjJfmxService {
      * @param spuuid spuuid
      */
     void deleteJfmx(String spuuid);
+
+    /**
+     * 批量删除经费明细
+     *
+     * @param spuuids spuuid 列表
+     */
+    void deleteJfmxList(List<String> spuuids);
 
     /**
      * 获得经费明细
