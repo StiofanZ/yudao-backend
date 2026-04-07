@@ -8,6 +8,7 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.ndrwwc.vo.NdrwwcPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.ndrwwc.vo.NdrwwcResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.ndrwwc.vo.NdrwwcSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.ndrwwc.NdrwwcDO;
 import cn.iocoder.yudao.module.lghjft.service.cxtj.ndrwwc.NdrwwcService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,10 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,7 +27,7 @@ import java.util.List;
 import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.EXPORT;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
-@Tag(name = "管理后台 - 分年各级分成情况")
+@Tag(name = "管理后台 - 分上缴周期统计")
 @RestController
 @RequestMapping("/lghjft/cxtj/ndrwwc")
 @Validated
@@ -38,17 +36,41 @@ public class NdrwwcController {
     @Resource
     private NdrwwcService ndrwwcService;
 
+    @PostMapping("/create")
+    @Operation(summary = "创建分上缴周期统计")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ndrwwc:create')")
+    public CommonResult<String> createNdrwwc(@Valid @RequestBody NdrwwcSaveReqVO createReqVO) {
+        return success(ndrwwcService.createNdrwwc(createReqVO));
+    }
+
+    @PutMapping("/update")
+    @Operation(summary = "更新分上缴周期统计")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ndrwwc:update')")
+    public CommonResult<Boolean> updateNdrwwc(@Valid @RequestBody NdrwwcSaveReqVO updateReqVO) {
+        ndrwwcService.updateNdrwwc(updateReqVO);
+        return success(true);
+    }
+
+    @DeleteMapping("/delete")
+    @Operation(summary = "删除分上缴周期统计")
+    @Parameter(name = "nd", description = "年度", required = true)
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ndrwwc:delete')")
+    public CommonResult<Boolean> deleteNdrwwc(@RequestParam("nd") String nd) {
+        ndrwwcService.deleteNdrwwc(nd);
+        return success(true);
+    }
+
     @GetMapping("/get")
-    @Operation(summary = "获得分年各级分成情况")
-    @Parameter(name = "id", description = "编号", required = true, example = "1024")
+    @Operation(summary = "获得分上缴周期统计")
+    @Parameter(name = "nd", description = "年度", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ndrwwc:query')")
-    public CommonResult<NdrwwcResVO> getNdrwwc(@RequestParam("id") String id) {
-        NdrwwcDO obj = ndrwwcService.getNdrwwc(id);
+    public CommonResult<NdrwwcResVO> getNdrwwc(@RequestParam("nd") String nd) {
+        NdrwwcDO obj = ndrwwcService.getNdrwwc(nd);
         return success(BeanUtils.toBean(obj, NdrwwcResVO.class));
     }
 
     @GetMapping("/page")
-    @Operation(summary = "获得分年各级分成情况分页")
+    @Operation(summary = "获得分上缴周期统计分页")
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ndrwwc:query')")
     public CommonResult<PageResult<NdrwwcResVO>> getNdrwwcPage(@Valid NdrwwcPageReqVO pageReqVO) {
         PageResult<NdrwwcDO> pageResult = ndrwwcService.getNdrwwcPage(pageReqVO);
@@ -56,14 +78,14 @@ public class NdrwwcController {
     }
 
     @GetMapping("/export-excel")
-    @Operation(summary = "导出分年各级分成情况 Excel")
+    @Operation(summary = "导出分上缴周期统计 Excel")
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ndrwwc:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportNdrwwcExcel(@Valid NdrwwcPageReqVO pageReqVO,
                                   HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<NdrwwcDO> list = ndrwwcService.getNdrwwcPage(pageReqVO).getList();
-        ExcelUtils.write(response, "分年各级分成情况.xls", "数据", NdrwwcResVO.class,
+        ExcelUtils.write(response, "分上缴周期统计.xls", "数据", NdrwwcResVO.class,
                 BeanUtils.toBean(list, NdrwwcResVO.class));
     }
 }
