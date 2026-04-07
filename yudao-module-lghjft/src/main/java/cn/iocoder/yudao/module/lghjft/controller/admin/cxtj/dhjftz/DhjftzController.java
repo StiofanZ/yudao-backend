@@ -51,21 +51,27 @@ public class DhjftzController {
         return success(true);
     }
 
-    @DeleteMapping("/delete")
-    @Operation(summary = "删除到户经费台账")
-    @Parameter(name = "djxh", description = "登记序号", required = true)
+    /**
+     * 批量删除到户经费台账 — 还原 V1 DELETE /{deptIds} (String[] 数组)
+     */
+    @DeleteMapping("/delete/{deptIds}")
+    @Operation(summary = "批量删除到户经费台账")
+    @Parameter(name = "deptIds", description = "工会机构代码数组", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-dhjftz:delete')")
-    public CommonResult<Boolean> deleteDhjftz(@RequestParam("djxh") String djxh) {
-        dhjftzService.deleteDhjftz(djxh);
+    public CommonResult<Boolean> deleteDhjftz(@PathVariable("deptIds") String[] deptIds) {
+        dhjftzService.deleteDhjftzByDeptIds(deptIds);
         return success(true);
     }
 
+    /**
+     * 获取单户经费台账详细信息 — 还原 V1 GET /{deptId}
+     */
     @GetMapping("/get")
     @Operation(summary = "获得到户经费台账")
-    @Parameter(name = "djxh", description = "登记序号", required = true)
+    @Parameter(name = "deptId", description = "工会机构代码", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-dhjftz:query')")
-    public CommonResult<DhjftzResVO> getDhjftz(@RequestParam("djxh") String djxh) {
-        DhjftzDO obj = dhjftzService.getDhjftz(djxh);
+    public CommonResult<DhjftzResVO> getDhjftz(@RequestParam("deptId") String deptId) {
+        DhjftzDO obj = dhjftzService.getDhjftzByDeptId(deptId);
         return success(BeanUtils.toBean(obj, DhjftzResVO.class));
     }
 
@@ -85,7 +91,7 @@ public class DhjftzController {
                                   HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<DhjftzDO> list = dhjftzService.getDhjftzPage(pageReqVO).getList();
-        ExcelUtils.write(response, "到户经费台账.xls", "数据", DhjftzResVO.class,
+        ExcelUtils.write(response, "单户经费台账数据.xls", "数据", DhjftzResVO.class,
                 BeanUtils.toBean(list, DhjftzResVO.class));
     }
 }

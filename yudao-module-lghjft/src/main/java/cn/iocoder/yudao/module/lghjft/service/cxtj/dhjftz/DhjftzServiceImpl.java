@@ -7,10 +7,13 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.dhjftz.vo.DhjftzSave
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.dhjftz.DhjftzDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.dhjftz.DhjftzMapper;
 import cn.iocoder.yudao.module.lghjft.framework.deptfilter.DeptFilterHelper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.Arrays;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.DHJFTZ_NOT_EXISTS;
@@ -41,16 +44,28 @@ public class DhjftzServiceImpl implements DhjftzService {
         dhjftzMapper.updateById(updateObj);
     }
 
+    /**
+     * 批量删除 — V1: deleteDhjftzByDeptIds
+     * 按 dept_id 批量删除
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteDhjftz(String djxh) {
-        validateExists(djxh);
-        dhjftzMapper.deleteById(djxh);
+    public void deleteDhjftzByDeptIds(String[] deptIds) {
+        if (deptIds == null || deptIds.length == 0) {
+            return;
+        }
+        dhjftzMapper.delete(new QueryWrapper<DhjftzDO>()
+                .in("dept_id", Arrays.asList(deptIds)));
     }
 
+    /**
+     * V1: selectDhjftzByDeptId — 按 dept_id 查询单条
+     */
     @Override
-    public DhjftzDO getDhjftz(String djxh) {
-        return dhjftzMapper.selectById(djxh);
+    public DhjftzDO getDhjftzByDeptId(String deptId) {
+        return dhjftzMapper.selectOne(new QueryWrapper<DhjftzDO>()
+                .eq("dept_id", deptId)
+                .last("limit 1"));
     }
 
     @Override

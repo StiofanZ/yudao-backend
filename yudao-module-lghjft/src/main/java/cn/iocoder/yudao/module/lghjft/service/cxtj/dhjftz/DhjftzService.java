@@ -24,19 +24,19 @@ public interface DhjftzService {
     void updateDhjftz(@Valid DhjftzSaveReqVO updateReqVO);
 
     /**
-     * 删除到户经费台账
+     * 批量删除到户经费台账 — V1: deleteDhjftzByDeptIds
      *
-     * @param djxh 登记序号
+     * @param deptIds 工会机构代码数组
      */
-    void deleteDhjftz(String djxh);
+    void deleteDhjftzByDeptIds(String[] deptIds);
 
     /**
-     * 获得到户经费台账
+     * 获得到户经费台账 — V1: selectDhjftzByDeptId
      *
-     * @param djxh 登记序号
+     * @param deptId 工会机构代码
      * @return 到户经费台账
      */
-    DhjftzDO getDhjftz(String djxh);
+    DhjftzDO getDhjftzByDeptId(String deptId);
 
     /**
      * 获得到户经费台账分页
