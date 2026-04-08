@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Schema(description = "管理后台 - 滞纳金做账 Response VO")
 @Data
@@ -79,4 +80,22 @@ public class ZnjzzResVO {
     private LocalDateTime createTime;
     private String updateBy;
     private LocalDateTime updateTime;
+
+    /** 经费确认收账子表 (v1 cascade) */
+    @Schema(description = "确认收账子表")
+    private List<GhjfQrszItem> ghjfQrszList;
+
+    @Data
+    public static class GhjfQrszItem {
+        private Long hkxxId;
+        private String ghHkxxJym;
+        private String dzbj;
+        private LocalDateTime qrrq;
+        private String yhhdh;
+        private String bz;
+        private String createBy;
+        private LocalDateTime createTime;
+        private String updateBy;
+        private LocalDateTime updateTime;
+    }
 }

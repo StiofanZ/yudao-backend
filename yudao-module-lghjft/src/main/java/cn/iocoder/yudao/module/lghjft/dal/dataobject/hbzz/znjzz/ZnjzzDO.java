@@ -8,7 +8,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * 滞纳金做账 DO
+ * 滞纳金做账 DO — 映射 v1 表 gh_hkxx
+ * 不继承 BaseDO，不使用 @TableLogic
  */
 @TableName("gh_hkxx")
 @Data
@@ -37,4 +38,8 @@ public class ZnjzzDO {
     private String schkpch;
     private String bz;
     private String scbz;
+    private String createBy;
+    private LocalDateTime createTime;
+    private String updateBy;
+    private LocalDateTime updateTime;
 }

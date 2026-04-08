@@ -4,12 +4,10 @@ import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.sxfzz.vo.SxfzzPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.sxfzz.vo.SxfzzResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.sxfzz.vo.SxfzzSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.sxfzz.SxfzzDO;
 import cn.iocoder.yudao.module.lghjft.service.hbzz.sxfzz.SxfzzService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -70,20 +68,18 @@ public class SxfzzController {
     }
 
     @GetMapping("/get")
-    @Operation(summary = "获得手续费做账")
+    @Operation(summary = "获得手续费做账（含确认收账子表）")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:hbzz-sxfzz:query')")
     public CommonResult<SxfzzResVO> getSxfzz(@RequestParam("id") Long id) {
-        SxfzzDO sxfzz = sxfzzService.getSxfzz(id);
-        return success(BeanUtils.toBean(sxfzz, SxfzzResVO.class));
+        return success(sxfzzService.getSxfzz(id));
     }
 
     @GetMapping("/page")
     @Operation(summary = "获得手续费做账分页")
     @PreAuthorize("@ss.hasPermission('lghjft:hbzz-sxfzz:query')")
     public CommonResult<PageResult<SxfzzResVO>> getSxfzzPage(@Valid SxfzzPageReqVO pageReqVO) {
-        PageResult<SxfzzDO> pageResult = sxfzzService.getSxfzzPage(pageReqVO);
-        return success(BeanUtils.toBean(pageResult, SxfzzResVO.class));
+        return success(sxfzzService.getSxfzzPage(pageReqVO));
     }
 
     @GetMapping("/export-excel")
@@ -93,8 +89,7 @@ public class SxfzzController {
     public void exportSxfzzExcel(@Valid SxfzzPageReqVO pageReqVO,
                                  HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
-        List<SxfzzDO> list = sxfzzService.getSxfzzPage(pageReqVO).getList();
-        ExcelUtils.write(response, "手续费做账.xls", "数据", SxfzzResVO.class,
-                BeanUtils.toBean(list, SxfzzResVO.class));
+        List<SxfzzResVO> list = sxfzzService.getSxfzzPage(pageReqVO).getList();
+        ExcelUtils.write(response, "手续费做账.xls", "数据", SxfzzResVO.class, list);
     }
 }

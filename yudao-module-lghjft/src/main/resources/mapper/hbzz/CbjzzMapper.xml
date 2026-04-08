@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.hbzz.cbjzz.CbjzzMapper">
+
+    <resultMap type="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.cbjzz.vo.CbjzzResVO" id="CbjzzResult">
+        <result property="hkxxId" column="HKXX_ID"/>
+        <result property="hkpch" column="HKPCH"/>
+        <result property="xh" column="XH"/>
+        <result property="lx" column="LX"/>
+        <result property="zh" column="ZH"/>
+        <result property="hm" column="HM"/>
+        <result property="hh" column="HH"/>
+        <result property="je" column="JE"/>
+        <result property="sjdm" column="SJDM"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="dz" column="DZ"/>
+        <result property="fy" column="FY"/>
+        <result property="jym" column="JYM"/>
+        <result property="thbj" column="THBJ"/>
+        <result property="thrq" column="THRQ"/>
+        <result property="thyy" column="THYY"/>
+        <result property="schkpch" column="SCHKPCH"/>
+        <result property="bz" column="BZ"/>
+        <result property="scbz" column="SCBZ"/>
+        <result property="createBy" column="CREATE_BY"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateBy" column="UPDATE_BY"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="qrrq" column="QRRQ"/>
+        <result property="dzbj" column="DZBJ"/>
+        <result property="yhhdh" column="YHHDH"/>
+    </resultMap>
+
+    <!-- v1: detail with qrsz cascade -->
+    <resultMap id="CbjzzDetailResult" type="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.cbjzz.vo.CbjzzResVO" extends="CbjzzResult">
+        <collection property="cbjQrszList" notNullColumn="sub_HKXX_ID" javaType="java.util.List"
+                    resultMap="CbjQrszResult"/>
+    </resultMap>
+
+    <resultMap type="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.cbjzz.vo.CbjzzResVO$CbjQrszItem" id="CbjQrszResult">
+        <result property="hkxxId" column="sub_HKXX_ID"/>
+        <result property="ghHkxxJym" column="sub_GH_HKXX_JYM"/>
+        <result property="dzbj" column="sub_DZBJ"/>
+        <result property="qrrq" column="sub_QRRQ"/>
+        <result property="yhhdh" column="sub_YHHDH"/>
+        <result property="bz" column="sub_BZ"/>
+        <result property="createBy" column="sub_CREATE_BY"/>
+        <result property="createTime" column="sub_CREATE_TIME"/>
+        <result property="updateBy" column="sub_UPDATE_BY"/>
+        <result property="updateTime" column="sub_UPDATE_TIME"/>
+    </resultMap>
+
+    <!-- v1 selectCbjzzVo -->
+    <sql id="selectCbjzzVo">
+        select a.hkxx_id, hkpch, xh, lx, zh, a.hm, a.hh, je,
+        (case
+            when a.dept_id='620000' then a.dept_id
+            when a.dept_id like '626%' then a.dept_id
+            else rpad(substr(a.dept_id, 1, 4), 6, 0)
+        end) as `sjdm`,
+        a.dept_id, dz, fy, a.jym, thbj, thrq, thyy, schkpch,
+        a.create_by, a.create_time, a.update_by, a.update_time,
+        b.qrrq, b.dzbj, b.yhhdh, b.bz,
+        b.create_by as sub_CREATE_BY, b.create_time as sub_CREATE_TIME,
+        b.update_by as sub_UPDATE_BY, b.update_time as sub_UPDATE_TIME
+        from gh_hkxx a
+        left join gh_hkxx_qrsz b on b.hkxx_id = a.hkxx_id
+    </sql>
+
+    <!-- v1 selectCbjzzList -->
+    <select id="selectLegacyList" resultMap="CbjzzResult">
+        <include refid="selectCbjzzVo"/>
+        <where>
+            instr(a.fy,'返还基层筹备金') > 0
+            and a.yxbj='Y'
+            <if test="req.hkpch != null and req.hkpch != ''">and hkpch = #{req.hkpch}</if>
+            <if test="req.beginBfwjrq != null and req.beginBfwjrq != '' and req.endBfwjrq != null and req.endBfwjrq != ''">and mid(hkpch,1,8) between #{req.beginBfwjrq} and #{req.endBfwjrq}</if>
+            <if test="req.beginQrrq != null and req.beginQrrq != '' and req.endQrrq != null and req.endQrrq != ''">and qrrq between #{req.beginQrrq} and #{req.endQrrq}</if>
+            <if test="req.dzbj != null">and dzbj = #{req.dzbj}</if>
+            <if test="req.yhhdh != null">and yhhdh = #{req.yhhdh}</if>
+            <if test="req.xh != null">and xh = #{req.xh}</if>
+            <if test="req.lx != null and req.lx != ''">and lx = #{req.lx}</if>
+            <if test="req.zh != null and req.zh != ''">and zh = #{req.zh}</if>
+            <if test="req.hm != null and req.hm != ''">and hm like concat('%', #{req.hm}, '%')</if>
+            <if test="req.hh != null and req.hh != ''">and hh = #{req.hh}</if>
+            <if test="req.je != null">and je = #{req.je}</if>
+            <if test="req.deptId != null and req.deptId != ''">and dept_id = #{req.deptId}</if>
+            <if test="req.dz != null and req.dz != ''">and dz like concat('%', #{req.dz}, '%')</if>
+            <if test="req.fy != null and req.fy != ''">and fy like concat('%', #{req.fy}, '%')</if>
+            <if test="req.jym != null and req.jym != ''">and jym = #{req.jym}</if>
+            <if test="req.thbj != null and req.thbj != ''">and thbj = #{req.thbj}</if>
+            <if test="req.beginThrq != null and req.beginThrq != '' and req.endThrq != null and req.endThrq != ''">and thrq between #{req.beginThrq} and #{req.endThrq}</if>
+            <if test="req.thyy != null and req.thyy != ''">and thyy = #{req.thyy}</if>
+            <if test="req.schkpch != null and req.schkpch != ''">and schkpch = #{req.schkpch}</if>
+            <if test="req.bz != null and req.bz != ''">and bz like concat('%', #{req.bz}, '%')</if>
+            <if test="req.scbz != null and req.scbz != ''">and scbz = #{req.scbz}</if>
+            <if test="req.createBy != null and req.createBy != ''">and create_by = #{req.createBy}</if>
+            <if test="req.beginCreateTime != null and req.beginCreateTime != '' and req.endCreateTime != null and req.endCreateTime != ''">and create_time between #{req.beginCreateTime} and #{req.endCreateTime}</if>
+            <if test="req.updateBy != null and req.updateBy != ''">and update_by = #{req.updateBy}</if>
+            <if test="req.beginUpdateTime != null and req.beginUpdateTime != '' and req.endUpdateTime != null and req.endUpdateTime != ''">and update_time between #{req.beginUpdateTime} and #{req.endUpdateTime}</if>
+        </where>
+        order by dz asc, hkpch desc
+    </select>
+
+    <!-- v1 selectCbjzzListcbj — grouped export -->
+    <select id="selectLegacyListCbj" resultMap="CbjzzResult">
+        select
+        (case
+            when a.dept_id = '620000' then a.dept_id
+            when a.dept_id like '626%' then a.dept_id
+            else rpad(substr(a.dept_id, 1, 4), 6, 0)
+        end) as `sjdm`,
+        sum(je) je
+        from gh_hkxx a
+        left join gh_hkxx_qrsz b on b.hkxx_id = a.hkxx_id
+        <where>
+            instr(a.fy,'返还基层筹备金') > 0
+            and a.yxbj='Y'
+            <if test="req.hkpch != null and req.hkpch != ''">and hkpch = #{req.hkpch}</if>
+            <if test="req.beginBfwjrq != null and req.beginBfwjrq != '' and req.endBfwjrq != null and req.endBfwjrq != ''">and mid(hkpch,1,8) between #{req.beginBfwjrq} and #{req.endBfwjrq}</if>
+            <if test="req.beginQrrq != null and req.beginQrrq != '' and req.endQrrq != null and req.endQrrq != ''">and qrrq between #{req.beginQrrq} and #{req.endQrrq}</if>
+            <if test="req.dzbj != null">and dzbj = #{req.dzbj}</if>
+            <if test="req.yhhdh != null">and yhhdh = #{req.yhhdh}</if>
+            <if test="req.xh != null">and xh = #{req.xh}</if>
+            <if test="req.lx != null and req.lx != ''">and lx = #{req.lx}</if>
+            <if test="req.zh != null and req.zh != ''">and zh = #{req.zh}</if>
+            <if test="req.hm != null and req.hm != ''">and hm like concat('%', #{req.hm}, '%')</if>
+            <if test="req.hh != null and req.hh != ''">and hh = #{req.hh}</if>
+            <if test="req.je != null">and je = #{req.je}</if>
+            <if test="req.deptId != null and req.deptId != ''">and dept_id = #{req.deptId}</if>
+            <if test="req.dz != null and req.dz != ''">and dz like concat('%', #{req.dz}, '%')</if>
+            <if test="req.fy != null and req.fy != ''">and fy like concat('%', #{req.fy}, '%')</if>
+            <if test="req.jym != null and req.jym != ''">and jym = #{req.jym}</if>
+            <if test="req.thbj != null and req.thbj != ''">and thbj = #{req.thbj}</if>
+            <if test="req.beginThrq != null and req.beginThrq != '' and req.endThrq != null and req.endThrq != ''">and thrq between #{req.beginThrq} and #{req.endThrq}</if>
+            <if test="req.thyy != null and req.thyy != ''">and thyy = #{req.thyy}</if>
+            <if test="req.schkpch != null and req.schkpch != ''">and schkpch = #{req.schkpch}</if>
+            <if test="req.bz != null and req.bz != ''">and bz like concat('%', #{req.bz}, '%')</if>
+            <if test="req.scbz != null and req.scbz != ''">and scbz = #{req.scbz}</if>
+            <if test="req.createBy != null and req.createBy != ''">and create_by = #{req.createBy}</if>
+            <if test="req.beginCreateTime != null and req.beginCreateTime != '' and req.endCreateTime != null and req.endCreateTime != ''">and create_time between #{req.beginCreateTime} and #{req.endCreateTime}</if>
+            <if test="req.updateBy != null and req.updateBy != ''">and update_by = #{req.updateBy}</if>
+            <if test="req.beginUpdateTime != null and req.beginUpdateTime != '' and req.endUpdateTime != null and req.endUpdateTime != ''">and update_time between #{req.beginUpdateTime} and #{req.endUpdateTime}</if>
+        </where>
+        group by sjdm
+        order by sjdm
+    </select>
+
+    <!-- v1 selectCbjzzByHkxxId — detail with qrsz -->
+    <select id="selectLegacyById" resultMap="CbjzzDetailResult">
+        select a.hkxx_id, a.hkpch, a.xh, a.lx, a.zh, a.hm, a.hh, a.je, a.dept_id,
+               a.dz, a.fy, a.jym, a.thbj, a.thrq, a.thyy, a.schkpch,
+               a.create_by, a.create_time, a.update_by, a.update_time,
+               b.hkxx_id as sub_HKXX_ID, b.gh_hkxx_jym as sub_GH_HKXX_JYM,
+               b.qrrq as sub_QRRQ, b.dzbj as sub_DZBJ, b.yhhdh as sub_YHHDH,
+               b.bz as sub_BZ, b.create_by as sub_CREATE_BY, b.create_time as sub_CREATE_TIME,
+               b.update_by as sub_UPDATE_BY, b.update_time as sub_UPDATE_TIME
+        from gh_hkxx a
+        left join gh_hkxx_qrsz b on b.hkxx_id = a.hkxx_id
+        where a.hkxx_id = #{hkxxId}
+    </select>
+
+</mapper>

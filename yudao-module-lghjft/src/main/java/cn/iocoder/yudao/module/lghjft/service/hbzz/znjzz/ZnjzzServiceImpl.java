@@ -35,13 +35,17 @@ public class ZnjzzServiceImpl implements ZnjzzService {
     @Resource
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * v1 核心逻辑：如果 zh 为空，从 sys_dept 读取登录用户部门���银行账号；
+     * deptId 始终置 null（按银行账号过滤，不按部门过滤）
+     */
     private void fillZhFromDept(ZnjzzPageReqVO req) {
         if (StrUtil.isEmpty(req.getZh())) {
             try {
                 AdminUserDO user = userService.getUser(getLoginUserId());
                 if (user != null && user.getDeptId() != null) {
                     Map<String, Object> dept = jdbcTemplate.queryForMap(
-                            "SELECT yhzh FROM sys_dept WHERE dept_id = ?",
+                            "select yhzh from sys_dept where dept_id = ?",
                             user.getDeptId());
                     req.setZh(dept.get("yhzh") != null ? dept.get("yhzh").toString() : null);
                 }
@@ -67,8 +71,8 @@ public class ZnjzzServiceImpl implements ZnjzzService {
     }
 
     @Override
-    public ZnjzzDO getZnjzz(Long id) {
-        return znjzzMapper.selectById(id);
+    public ZnjzzResVO getZnjzz(Long id) {
+        return znjzzMapper.selectLegacyById(id);
     }
 
     @Override
@@ -76,6 +80,8 @@ public class ZnjzzServiceImpl implements ZnjzzService {
     public Long createZnjzz(ZnjzzSaveReqVO createReqVO) {
         ZnjzzDO znjzz = BeanUtils.toBean(createReqVO, ZnjzzDO.class);
         znjzzMapper.insert(znjzz);
+        // v1: batch insert cascade subtable
+        insertGhjfQrsz(znjzz.getHkxxId(), znjzz.getJym(), createReqVO.getGhjfQrszList());
         return znjzz.getHkxxId();
     }
 
@@ -83,6 +89,12 @@ public class ZnjzzServiceImpl implements ZnjzzService {
     @Transactional(rollbackFor = Exception.class)
     public void updateZnjzz(ZnjzzSaveReqVO updateReqVO) {
         validateExists(updateReqVO.getHkxxId());
+        // v1: delete old qrsz, re-insert
+        jdbcTemplate.update("delete from gh_hkxx_qrsz where hkxx_id = ?", updateReqVO.getHkxxId());
+        ZnjzzDO mainRecord = znjzzMapper.selectById(updateReqVO.getHkxxId());
+        insertGhjfQrsz(updateReqVO.getHkxxId(), mainRecord != null ? mainRecord.getJym() : null,
+                updateReqVO.getGhjfQrszList());
+        // v1: update main table
         ZnjzzDO updateObj = BeanUtils.toBean(updateReqVO, ZnjzzDO.class);
         znjzzMapper.updateById(updateObj);
     }
@@ -91,13 +103,47 @@ public class ZnjzzServiceImpl implements ZnjzzService {
     @Transactional(rollbackFor = Exception.class)
     public void deleteZnjzz(Long id) {
         validateExists(id);
+        // v1: delete subtable first, then main
+        jdbcTemplate.update("delete from gh_hkxx_qrsz where hkxx_id = ?", id);
         znjzzMapper.deleteById(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteZnjzzListByIds(List<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return;
+        }
+        String placeholders = String.join(",", ids.stream().map(i -> "?").toList());
+        jdbcTemplate.update("delete from gh_hkxx_qrsz where hkxx_id in (" + placeholders + ")",
+                ids.toArray());
         znjzzMapper.deleteByIds(ids);
+    }
+
+    /**
+     * v1: batch insert gh_hkxx_qrsz subtable
+     */
+    private void insertGhjfQrsz(Long hkxxId, String jym, List<ZnjzzSaveReqVO.GhjfQrszItem> items) {
+        if (items == null || items.isEmpty()) {
+            return;
+        }
+        String nickName = null;
+        try {
+            AdminUserDO user = userService.getUser(getLoginUserId());
+            if (user != null) {
+                nickName = user.getNickname();
+            }
+        } catch (Exception e) {
+            // ignore
+        }
+        for (ZnjzzSaveReqVO.GhjfQrszItem item : items) {
+            jdbcTemplate.update(
+                    "insert into gh_hkxx_qrsz (hkxx_id, gh_hkxx_jym, qrrq, yhhdh, bz, create_by, create_time, update_by, update_time) " +
+                            "values (?, ?, ?, ?, ?, ?, sysdate(), ?, sysdate())",
+                    hkxxId, jym, item.getQrrq(), item.getYhhdh(), item.getBz(),
+                    nickName, item.getUpdateBy()
+            );
+        }
     }
 
     private void validateExists(Long id) {

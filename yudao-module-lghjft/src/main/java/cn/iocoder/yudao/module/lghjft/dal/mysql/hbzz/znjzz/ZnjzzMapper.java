@@ -12,5 +12,9 @@ import java.util.List;
 @Mapper
 public interface ZnjzzMapper extends BaseMapperX<ZnjzzDO> {
 
+    /** v1 selectZnjzzList */
     List<ZnjzzResVO> selectLegacyList(@Param("req") ZnjzzPageReqVO reqVO);
+
+    /** v1 selectZnjzzByHkxxId — detail with qrsz cascade */
+    ZnjzzResVO selectLegacyById(@Param("hkxxId") Long hkxxId);
 }

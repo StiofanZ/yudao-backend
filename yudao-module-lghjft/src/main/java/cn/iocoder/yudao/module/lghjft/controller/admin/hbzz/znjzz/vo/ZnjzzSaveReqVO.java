@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Schema(description = "管理后台 - 滞纳金做账新增/修改 Request VO")
 @Data
@@ -31,4 +32,19 @@ public class ZnjzzSaveReqVO {
     private String dzbj;
     private String bz;
     private String scbz;
+
+    /** 经费确认收账子表 (v1 cascade) */
+    private List<GhjfQrszItem> ghjfQrszList;
+
+    @Data
+    public static class GhjfQrszItem {
+        private Long hkxxId;
+        private String ghHkxxJym;
+        private String dzbj;
+        private String qrrq;
+        private String yhhdh;
+        private String bz;
+        private String createBy;
+        private String updateBy;
+    }
 }

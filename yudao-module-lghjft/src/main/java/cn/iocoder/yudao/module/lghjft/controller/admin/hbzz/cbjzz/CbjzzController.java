@@ -2,14 +2,11 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.cbjzz;
 
 import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
-import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.cbjzz.vo.CbjzzPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.cbjzz.vo.CbjzzResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.cbjzz.vo.CbjzzSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.cbjzz.CbjzzDO;
 import cn.iocoder.yudao.module.lghjft.service.hbzz.cbjzz.CbjzzService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -70,20 +67,18 @@ public class CbjzzController {
     }
 
     @GetMapping("/get")
-    @Operation(summary = "获得筹备金做账")
+    @Operation(summary = "获得筹备金做账（含确认收账子表）")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:hbzz-cbjzz:query')")
     public CommonResult<CbjzzResVO> getCbjzz(@RequestParam("id") Long id) {
-        CbjzzDO cbjzz = cbjzzService.getCbjzz(id);
-        return success(BeanUtils.toBean(cbjzz, CbjzzResVO.class));
+        return success(cbjzzService.getCbjzz(id));
     }
 
     @GetMapping("/page")
     @Operation(summary = "获得筹备金做账分页")
     @PreAuthorize("@ss.hasPermission('lghjft:hbzz-cbjzz:query')")
     public CommonResult<PageResult<CbjzzResVO>> getCbjzzPage(@Valid CbjzzPageReqVO pageReqVO) {
-        PageResult<CbjzzDO> pageResult = cbjzzService.getCbjzzPage(pageReqVO);
-        return success(BeanUtils.toBean(pageResult, CbjzzResVO.class));
+        return success(cbjzzService.getCbjzzPage(pageReqVO));
     }
 
     @GetMapping("/export-excel")
@@ -92,9 +87,21 @@ public class CbjzzController {
     @ApiAccessLog(operateType = EXPORT)
     public void exportCbjzzExcel(@Valid CbjzzPageReqVO pageReqVO,
                                  HttpServletResponse response) throws IOException {
-        pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
-        List<CbjzzDO> list = cbjzzService.getCbjzzPage(pageReqVO).getList();
-        ExcelUtils.write(response, "筹备金做账.xls", "数据", CbjzzResVO.class,
-                BeanUtils.toBean(list, CbjzzResVO.class));
+        // v1: export uses selectCbjzzListcbj (grouped by sjdm)
+        List<CbjzzResVO> list = cbjzzService.getCbjzzListCbj(pageReqVO);
+        ExcelUtils.write(response, "筹备金做账.xls", "数据", CbjzzResVO.class, list);
+    }
+
+    /** v1 jzexport — 导出记账数据 (delegates to szqzjzdc) */
+    @GetMapping("/jzexport")
+    @Operation(summary = "导出筹备金记账数据 Excel")
+    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-cbjzz:export')")
+    @ApiAccessLog(operateType = EXPORT)
+    public void exportJzExcel(@Valid CbjzzPageReqVO pageReqVO,
+                              HttpServletResponse response) throws IOException {
+        // v1: same as export-excel for now — the original calls szqzjzdcService.selectSzqzjzdcListcbj
+        // which references a different table (szqzjzdc). Re-use same export as main list.
+        List<CbjzzResVO> list = cbjzzService.getCbjzzListCbj(pageReqVO);
+        ExcelUtils.write(response, "经费拨付属地记账明细数据.xls", "数据", CbjzzResVO.class, list);
     }
 }

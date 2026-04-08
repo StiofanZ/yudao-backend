@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.hbzz.znjzz.ZnjzzMapper">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.hbzz.sxfzz.SxfzzMapper">
 
-    <resultMap type="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.znjzz.vo.ZnjzzResVO" id="ZnjzzResult">
+    <resultMap type="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.sxfzz.vo.SxfzzResVO" id="SxfzzResult">
         <result property="hkxxId" column="HKXX_ID"/>
         <result property="hkpch" column="HKPCH"/>
         <result property="xh" column="XH"/>
@@ -19,6 +19,8 @@
         <result property="thrq" column="THRQ"/>
         <result property="thyy" column="THYY"/>
         <result property="schkpch" column="SCHKPCH"/>
+        <result property="bz" column="BZ"/>
+        <result property="scbz" column="SCBZ"/>
         <result property="createBy" column="CREATE_BY"/>
         <result property="createTime" column="CREATE_TIME"/>
         <result property="updateBy" column="UPDATE_BY"/>
@@ -26,16 +28,15 @@
         <result property="qrrq" column="QRRQ"/>
         <result property="dzbj" column="DZBJ"/>
         <result property="yhhdh" column="YHHDH"/>
-        <result property="bz" column="BZ"/>
     </resultMap>
 
-    <!-- v1: detail with qrsz cascade -->
-    <resultMap id="ZnjzzDetailResult" type="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.znjzz.vo.ZnjzzResVO" extends="ZnjzzResult">
-        <collection property="ghjfQrszList" notNullColumn="sub_HKXX_ID" javaType="java.util.List"
-                    resultMap="GhjfQrszResult"/>
+    <!-- v1: detail with swsxfdz cascade -->
+    <resultMap id="SxfzzDetailResult" type="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.sxfzz.vo.SxfzzResVO" extends="SxfzzResult">
+        <collection property="swsxfdzList" notNullColumn="sub_HKXX_ID" javaType="java.util.List"
+                    resultMap="SwsxfdzResult"/>
     </resultMap>
 
-    <resultMap type="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.znjzz.vo.ZnjzzResVO$GhjfQrszItem" id="GhjfQrszResult">
+    <resultMap type="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.sxfzz.vo.SxfzzResVO$SwsxfdzItem" id="SwsxfdzResult">
         <result property="hkxxId" column="sub_HKXX_ID"/>
         <result property="ghHkxxJym" column="sub_GH_HKXX_JYM"/>
         <result property="dzbj" column="sub_DZBJ"/>
@@ -48,9 +49,9 @@
         <result property="updateTime" column="sub_UPDATE_TIME"/>
     </resultMap>
 
-    <!-- v1 selectZnjzzVo -->
-    <sql id="selectZnjzzVo">
-        select a.hkxx_id, hkpch, xh, lx, zh, a.hm, a.hh, je, a.dept_id, dz, fy, a.jym,
+    <!-- v1 selectSxfzzVo — with dm_swjg join -->
+    <sql id="selectSxfzzVo">
+        select a.hkxx_id, hkpch, xh, lx, zh, a.hm, a.hh, je, a.dept_id, a.dz, fy, a.jym,
                thbj, thrq, thyy, schkpch,
                a.create_by, a.create_time, a.update_by, a.update_time,
                b.qrrq, b.dzbj, b.yhhdh, b.bz,
@@ -58,26 +59,26 @@
                b.update_by as sub_UPDATE_BY, b.update_time as sub_UPDATE_TIME
         from gh_hkxx a
         left join gh_hkxx_qrsz b on b.hkxx_id = a.hkxx_id
+        left join dm_swjg d on mid(a.dz,1,11) = d.swjg_dm
     </sql>
 
-    <!-- v1 selectZnjzzList -->
-    <select id="selectLegacyList" resultMap="ZnjzzResult">
-        <include refid="selectZnjzzVo"/>
+    <!-- v1 selectSxfzzList -->
+    <select id="selectLegacyList" resultMap="SxfzzResult">
+        <include refid="selectSxfzzVo"/>
         <where>
-            instr(a.fy,'滞纳金') > 0
+            a.lx in ('8','C')
             and a.yxbj='Y'
-            <if test="req.hkpch != null and req.hkpch != ''">and hkpch like concat('%', #{req.hkpch}, '%')</if>
+            <if test="req.hkpch != null and req.hkpch != ''">and hkpch = #{req.hkpch}</if>
             <if test="req.beginBfwjrq != null and req.beginBfwjrq != '' and req.endBfwjrq != null and req.endBfwjrq != ''">and mid(hkpch,1,8) between #{req.beginBfwjrq} and #{req.endBfwjrq}</if>
             <if test="req.xh != null">and xh = #{req.xh}</if>
             <if test="req.beginQrrq != null and req.beginQrrq != '' and req.endQrrq != null and req.endQrrq != ''">and qrrq between #{req.beginQrrq} and #{req.endQrrq}</if>
             <if test="req.dzbj != null">and dzbj = #{req.dzbj}</if>
-            <if test="req.yhhdh != null">and yhhdh = #{req.yhhdh}</if>
             <if test="req.lx != null and req.lx != ''">and lx = #{req.lx}</if>
             <if test="req.zh != null and req.zh != ''">and zh = #{req.zh}</if>
             <if test="req.hm != null and req.hm != ''">and hm like concat('%', #{req.hm}, '%')</if>
             <if test="req.hh != null and req.hh != ''">and hh = #{req.hh}</if>
             <if test="req.je != null">and je = #{req.je}</if>
-            <if test="req.deptId != null and req.deptId != ''">and dept_id = #{req.deptId}</if>
+            <if test="req.deptId != null and req.deptId != ''">and d.ghjg_dm = #{req.deptId}</if>
             <if test="req.dz != null and req.dz != ''">and dz like concat('%', #{req.dz}, '%')</if>
             <if test="req.fy != null and req.fy != ''">and fy like concat('%', #{req.fy}, '%')</if>
             <if test="req.jym != null and req.jym != ''">and jym = #{req.jym}</if>
@@ -86,19 +87,22 @@
             <if test="req.thyy != null and req.thyy != ''">and thyy = #{req.thyy}</if>
             <if test="req.schkpch != null and req.schkpch != ''">and schkpch = #{req.schkpch}</if>
             <if test="req.bz != null and req.bz != ''">and bz like concat('%', #{req.bz}, '%')</if>
+            <if test="req.scbz != null and req.scbz != ''">and scbz = #{req.scbz}</if>
             <if test="req.createBy != null and req.createBy != ''">and create_by = #{req.createBy}</if>
+            <if test="req.beginCreateTime != null and req.beginCreateTime != '' and req.endCreateTime != null and req.endCreateTime != ''">and create_time between #{req.beginCreateTime} and #{req.endCreateTime}</if>
             <if test="req.updateBy != null and req.updateBy != ''">and update_by = #{req.updateBy}</if>
+            <if test="req.beginUpdateTime != null and req.beginUpdateTime != '' and req.endUpdateTime != null and req.endUpdateTime != ''">and update_time between #{req.beginUpdateTime} and #{req.endUpdateTime}</if>
         </where>
         order by hkpch desc
     </select>
 
-    <!-- v1 selectZnjzzByHkxxId — detail with qrsz -->
-    <select id="selectLegacyById" resultMap="ZnjzzDetailResult">
+    <!-- v1 selectSxfzzByHkxxId — detail with swsxfdz cascade -->
+    <select id="selectLegacyById" resultMap="SxfzzDetailResult">
         select a.hkxx_id, a.hkpch, a.xh, a.lx, a.zh, a.hm, a.hh, a.je, a.dept_id,
-               a.dz, a.fy, a.jym, a.thbj, a.thrq, a.thyy, a.schkpch,
+               a.dz, a.fy, a.jym, a.thbj, a.thrq, a.thyy, a.schkpch, a.bz, a.scbz,
                a.create_by, a.create_time, a.update_by, a.update_time,
                b.hkxx_id as sub_HKXX_ID, b.gh_hkxx_jym as sub_GH_HKXX_JYM,
-               b.qrrq as sub_QRRQ, b.dzbj as sub_DZBJ, b.yhhdh as sub_YHHDH,
+               b.dzbj as sub_DZBJ, b.qrrq as sub_QRRQ, b.yhhdh as sub_YHHDH,
                b.bz as sub_BZ, b.create_by as sub_CREATE_BY, b.create_time as sub_CREATE_TIME,
                b.update_by as sub_UPDATE_BY, b.update_time as sub_UPDATE_TIME
         from gh_hkxx a

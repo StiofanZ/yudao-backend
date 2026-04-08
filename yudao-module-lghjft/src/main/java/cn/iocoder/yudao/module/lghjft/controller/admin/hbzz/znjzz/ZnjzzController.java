@@ -4,12 +4,10 @@ import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.znjzz.vo.ZnjzzPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.znjzz.vo.ZnjzzResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.znjzz.vo.ZnjzzSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.znjzz.ZnjzzDO;
 import cn.iocoder.yudao.module.lghjft.service.hbzz.znjzz.ZnjzzService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -70,12 +68,11 @@ public class ZnjzzController {
     }
 
     @GetMapping("/get")
-    @Operation(summary = "获得滞纳金做账")
+    @Operation(summary = "获得滞纳金做账（含确认���账子表）")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:hbzz-znjzz:query')")
     public CommonResult<ZnjzzResVO> getZnjzz(@RequestParam("id") Long id) {
-        ZnjzzDO znjzz = znjzzService.getZnjzz(id);
-        return success(BeanUtils.toBean(znjzz, ZnjzzResVO.class));
+        return success(znjzzService.getZnjzz(id));
     }
 
     @GetMapping("/page")

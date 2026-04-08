@@ -2,8 +2,8 @@ package cn.iocoder.yudao.module.lghjft.service.hbzz.sxfzz;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.sxfzz.vo.SxfzzPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.sxfzz.vo.SxfzzResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.sxfzz.vo.SxfzzSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.sxfzz.SxfzzDO;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public interface SxfzzService {
 
     void deleteSxfzzListByIds(List<Long> ids);
 
-    SxfzzDO getSxfzz(Long id);
+    SxfzzResVO getSxfzz(Long id);
 
-    PageResult<SxfzzDO> getSxfzzPage(SxfzzPageReqVO pageReqVO);
+    PageResult<SxfzzResVO> getSxfzzPage(SxfzzPageReqVO pageReqVO);
 }
