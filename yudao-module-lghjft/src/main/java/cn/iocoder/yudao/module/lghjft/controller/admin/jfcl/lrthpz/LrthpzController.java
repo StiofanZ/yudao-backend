@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.EXPORT;
@@ -59,6 +60,16 @@ public class LrthpzController {
     @PreAuthorize("@ss.hasPermission('lghjft:jfcl-lrthpz:delete')")
     public CommonResult<Boolean> deleteLrthpz(@RequestParam("id") Long id) {
         lrthpzService.deleteLrthpz(id);
+        return success(true);
+    }
+
+    @DeleteMapping("/delete-list")
+    @Operation(summary = "批量删除录入退回凭证")
+    @Parameter(name = "ids", description = "编号列表", required = true)
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-lrthpz:delete')")
+    public CommonResult<Boolean> deleteLrthpzList(@RequestParam("ids") String ids) {
+        List<Long> idList = Arrays.stream(ids.split(",")).map(Long::parseLong).toList();
+        lrthpzService.deleteLrthpzBatch(idList);
         return success(true);
     }
 

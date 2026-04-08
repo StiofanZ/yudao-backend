@@ -17,15 +17,14 @@ public interface LrthpzService {
 
     void deleteLrthpz(Long id);
 
+    void deleteLrthpzBatch(List<Long> ids);
+
     LrthpzDO getLrthpz(Long id);
 
     PageResult<LrthpzDO> getLrthpzPage(LrthpzPageReqVO pageReqVO);
 
     /**
-     * 导入退回凭证
-     *
-     * @param list Excel导入的数据列表
-     * @return 成功导入的条数
+     * 导入退回凭证 (V1 import logic: validate hkxxId via yhbfmx, set thbj='Y', xgbj='N')
      */
     int importLrthpz(List<LrthpzImportVO> list);
 }

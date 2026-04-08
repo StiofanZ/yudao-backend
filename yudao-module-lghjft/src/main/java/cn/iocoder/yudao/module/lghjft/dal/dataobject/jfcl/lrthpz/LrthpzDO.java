@@ -8,7 +8,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * 录入退回凭证 DO
+ * 录入退回凭证 DO - maps v1 table gh_hkxx
+ * NOT extending BaseDO, no @TableLogic per v1 mapping rules
  */
 @TableName("gh_hkxx")
 @Data
@@ -42,4 +43,10 @@ public class LrthpzDO {
     private String schkpch;
     private String bz;
     private String scbz;
+    private String yxbj;
+    /** v1 audit fields */
+    private String createBy;
+    private LocalDateTime createTime;
+    private String updateBy;
+    private LocalDateTime updateTime;
 }
