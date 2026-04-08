@@ -6,29 +6,19 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Schema(description = "管理后台 - 当期单笔数据分页 Request VO")
+@Schema(description = "管理后台 - 读取代收数据分页 Request VO")
 @Data
 public class DqdssjPageReqVO extends PageParam {
 
-    @Schema(description = "社会信用代码")
-    private String shxydm;
+    @Schema(description = "税票ID")
+    private String spuuid;
 
-    @Schema(description = "纳税人名称")
-    private String nsrmc;
+    @Schema(description = "增量标记")
+    private String zlbj;
 
-    @Schema(description = "工会机构代码")
-    private String deptId;
-
-    @Schema(description = "主管税务局代码")
-    private String zgswjDm;
-
-    @Schema(description = "结算标记")
-    private String jsbj;
-
-    @Schema(description = "征收品目代码")
-    private String zspmDm;
     @Schema(description = "入库日期-起")
     private LocalDateTime rkrqStart;
+
     @Schema(description = "入库日期-止")
     private LocalDateTime rkrqEnd;
 }

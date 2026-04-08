@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.dqdssj.DqdssjMapper">
+
+    <!--v1: selecListzl - paginated query gh_jf WHERE jsbj='E' + 60+ optional filters-->
+    <select id="selecListzl" parameterType="cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.dqdssj.vo.DqzldssjPageReqVO"
+            resultType="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.dqdssj.JfzcDqdssjVo">
+        select t.* from gh_jf t
+        <where>
+            and t.jsbj='E'
+            <if test="rkrqStart != null and rkrqEnd != null">
+                and (t.rkrq between date_format(#{rkrqStart},'%Y-%m-%d') and date_format(#{rkrqEnd},'%Y-%m-%d'))
+            </if>
+            <if test="spuuid != null and spuuid != ''"> and spuuid = #{spuuid}</if>
+            <if test="djxh != null and djxh != ''"> and djxh = #{djxh}</if>
+            <if test="shxydm != null and shxydm != ''"> and shxydm = #{shxydm}</if>
+            <if test="nsrmc != null and nsrmc != ''"> and nsrmc like concat('%', #{nsrmc}, '%')</if>
+            <if test="deptId != null and deptId != ''"> and dept_id = #{deptId}</if>
+            <if test="skssqq != null"> and skssqq &gt;= #{skssqq}</if>
+            <if test="skssqz != null"> and skssqz &lt;= #{skssqz}</if>
+            <if test="zspmDm != null and zspmDm != ''"> and zspm_dm = #{zspmDm}</if>
+        </where>
+    </select>
+
+    <!--v1: updateJfclDqdssj - batch UPDATE using CASE-->
+    <update id="updateJfclDqdssj" parameterType="java.util.List">
+        update gh_jf
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="jsbj =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jsbj != null">
+                        when spuuid=#{item.spuuid} then #{item.jsbj}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="jsrq =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jsrq != null">
+                        when spuuid=#{item.spuuid} then #{item.jsrq}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="update_by =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.updateBy != null">
+                        when spuuid=#{item.spuuid} then #{item.updateBy}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="update_time =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.updateTime != null">
+                        when spuuid=#{item.spuuid} then #{item.updateTime}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+    </update>
+</mapper>

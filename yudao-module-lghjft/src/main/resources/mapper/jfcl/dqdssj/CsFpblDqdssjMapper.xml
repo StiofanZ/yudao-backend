@@ -1,0 +1,605 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.dqdssj.CsFpblDqdssjMapper">
+    <resultMap id="baseResultMap" type="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.dqdssj.JfzcDqdssjVo">
+        <id column="SPUUID" jdbcType="VARCHAR" property="spuuid"/>
+        <result column="ZSUUID" jdbcType="VARCHAR" property="zsuuid"/>
+        <result column="DZSPHM" jdbcType="DECIMAL" property="dzsphm"/>
+        <result column="DZSPMXXH" jdbcType="DECIMAL" property="dzspmxxh"/>
+        <result column="GLDZSPMXXH" jdbcType="DECIMAL" property="gldzspmxxh"/>
+        <result column="PZZL_DM" jdbcType="VARCHAR" property="pzzlDm"/>
+        <result column="PZZG_DM" jdbcType="VARCHAR" property="pzzgDm"/>
+        <result column="PZHM" jdbcType="VARCHAR" property="pzhm"/>
+        <result column="HZJKSBZ" jdbcType="CHAR" property="hzjksbz"/>
+        <result column="DJXH" jdbcType="VARCHAR" property="djxh"/>
+        <result column="SKSSQQ" jdbcType="TIMESTAMP" property="skssqq"/>
+        <result column="SKSSQZ" jdbcType="TIMESTAMP" property="skssqz"/>
+        <result column="ZSXM_DM" jdbcType="VARCHAR" property="zsxmDm"/>
+        <result column="ZSPM_DM" jdbcType="CHAR" property="zspmDm"/>
+        <result column="ZSZM_DM" jdbcType="CHAR" property="zszmDm"/>
+        <result column="DJZCLX_DM" jdbcType="CHAR" property="djzclxDm"/>
+        <result column="HY_DM" jdbcType="VARCHAR" property="hyDm"/>
+        <result column="SBFS_DM" jdbcType="CHAR" property="sbfsDm"/>
+        <result column="ZSFS_DM" jdbcType="CHAR" property="zsfsDm"/>
+        <result column="CZLX_DM" jdbcType="CHAR" property="czlxDm"/>
+        <result column="SKZL_DM" jdbcType="CHAR" property="skzlDm"/>
+        <result column="SKSX_DM" jdbcType="CHAR" property="sksxDm"/>
+        <result column="ZSDLFS_DM" jdbcType="CHAR" property="zsdlfsDm"/>
+        <result column="KSSL" jdbcType="DECIMAL" property="kssl"/>
+        <result column="JSYJ" jdbcType="DECIMAL" property="jsyj"/>
+        <result column="YJSE" jdbcType="DECIMAL" property="yjse"/>
+        <result column="SL_1" jdbcType="DECIMAL" property="sl1"/>
+        <result column="SJJE" jdbcType="DECIMAL" property="sjje"/>
+        <result column="KJRQ" jdbcType="TIMESTAMP" property="kjrq"/>
+        <result column="SKJNFS_DM" jdbcType="CHAR" property="skjnfsDm"/>
+        <result column="YSKM_DM" jdbcType="VARCHAR" property="yskmDm"/>
+        <result column="YSFPBL_DM" jdbcType="CHAR" property="ysfpblDm"/>
+        <result column="SKGK_DM" jdbcType="CHAR" property="skgkDm"/>
+        <result column="CKZHZHUUID" jdbcType="VARCHAR" property="ckzhzhuuid"/>
+        <result column="YHHB_DM" jdbcType="CHAR" property="yhhbDm"/>
+        <result column="YHYYWD_DM" jdbcType="VARCHAR" property="yhyywdDm"/>
+        <result column="YHZH" jdbcType="VARCHAR" property="yhzh"/>
+        <result column="JDXZ_DM" jdbcType="CHAR" property="jdxzDm"/>
+        <result column="TZLX_DM" jdbcType="CHAR" property="tzlxDm"/>
+        <result column="JKQX" jdbcType="TIMESTAMP" property="jkqx"/>
+        <result column="YJKQX" jdbcType="TIMESTAMP" property="yjkqx"/>
+        <result column="SJRQ_1" jdbcType="TIMESTAMP" property="sjrq1"/>
+        <result column="SJXHRQ" jdbcType="TIMESTAMP" property="sjxhrq"/>
+        <result column="SJXHR_DM" jdbcType="CHAR" property="sjxhrDm"/>
+        <result column="SJJZRQ_1" jdbcType="TIMESTAMP" property="sjjzrq1"/>
+        <result column="RKRQ" jdbcType="TIMESTAMP" property="rkrq"/>
+        <result column="RKXHRQ" jdbcType="TIMESTAMP" property="rkxhrq"/>
+        <result column="RKXHR_DM" jdbcType="CHAR" property="rkxhrDm"/>
+        <result column="RKJZRQ" jdbcType="TIMESTAMP" property="rkjzrq"/>
+        <result column="SSGLY_DM" jdbcType="CHAR" property="ssglyDm"/>
+        <result column="ZGSWSKFJ_DM" jdbcType="CHAR" property="zgswskfjDm"/>
+        <result column="SKSSSWJG_DM" jdbcType="CHAR" property="skssswjgDm"/>
+        <result column="ZSSWJG_DM" jdbcType="CHAR" property="zsswjgDm"/>
+        <result column="BZ" jdbcType="VARCHAR" property="bz"/>
+        <result column="KJDJXH" jdbcType="DECIMAL" property="kjdjxh"/>
+        <result column="SYBH_1" jdbcType="VARCHAR" property="sybh1"/>
+        <result column="LRRQ" jdbcType="TIMESTAMP" property="lrrq"/>
+        <result column="LRR_DM" jdbcType="CHAR" property="lrrDm"/>
+        <result column="XGRQ" jdbcType="TIMESTAMP" property="xgrq"/>
+        <result column="XGR_DM" jdbcType="CHAR" property="xgrDm"/>
+        <result column="SJGSDQ" jdbcType="CHAR" property="sjgsdq"/>
+        <result column="SJTB_SJ" jdbcType="TIMESTAMP" property="sjtbSj"/>
+        <result column="YSJRQ" jdbcType="TIMESTAMP" property="ysjrq"/>
+        <result column="SJBLBZ" jdbcType="DECIMAL" property="sjblbz"/>
+        <result column="PZXH" jdbcType="VARCHAR" property="pzxh" />
+        <result column="NSRMC" jdbcType="VARCHAR" property="nsrmc" />
+        <result column="ZGSWJ_DM" jdbcType="VARCHAR" property="zgswjDm" />
+        <result column="DWLSGX_DM" jdbcType="VARCHAR" property="dwlsgxDm" />
+        <result column="TYDM" jdbcType="VARCHAR" property="tydm" />
+        <result column="NSRJC" jdbcType="VARCHAR" property="nsrjc"/>
+        <result column="YFZH" jdbcType="VARCHAR" property="yfzh"/>
+        <result column="JSRQ" jdbcType="TIMESTAMP" property="jsrq"/>
+        <result column="GHLB_DM" jdbcType="VARCHAR" property="ghlbDm"/>
+        <result column="XTLB_DM" jdbcType="VARCHAR" property="xtlbDm"/>
+        <result column="ZZJGLX_DM" jdbcType="VARCHAR" property="zzjglxDm"/>
+        <result column="DWLSGX_DM" jdbcType="VARCHAR" property="dwlsgxDm"/>
+        <result column="SBLB_DM" jdbcType="VARCHAR" property="sblbDm"/>
+        <result column="YBTSE" jdbcType="DECIMAL" property="ybtse"/>
+        <result column="JMSE" jdbcType="DECIMAL" property="jmse"/>
+        <result column="YNSE" jdbcType="DECIMAL" property="ynse"/>
+        <result column="JKFS_DM" jdbcType="VARCHAR" property="jkfsDm"/>
+        <result column="CBJTHBJ" jdbcType="VARCHAR" property="cbjthbj"/>
+        <result column="YBTSE" jdbcType="DECIMAL" property="ybtse"/>
+        <result column="KPY_DM" jdbcType="VARCHAR" property="kpyDm"/>
+        <result column="PZMXXH" jdbcType="BIGINT" property="pzmxxh"/>
+        <result column="GZZE" jdbcType="DECIMAL" property="gzze"/>
+        <result column="SL" jdbcType="DECIMAL" property="sl"/>
+        <result column="DEPT_ID" jdbcType="DECIMAL" property="deptId"/>
+        <result column="SDGHJG_DM" jdbcType="DECIMAL" property="sdghjgDm"/>
+        <result column="SDGHXZJB" jdbcType="DECIMAL" property="sdghjgxzjb"/>
+    </resultMap>
+    <insert id="insertQsjshkrj" parameterType="java.util.List">
+        INSERT INTO gh_qsjshkrj(LX,RKRQ,JE,JSRQ,HKRQ,PCH,CREATE_BY,CREATE_TIME,UPDATE_BY,UPDATE_TIME)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.lx},#{item.rkrq},#{item.je},#{item.jsrq},#{item.hkrq},#{item.pch},#{item.createBy},#{item.createTime},#{item.updateBy},#{item.updateTime})
+        </foreach>
+    </insert>
+    <update id="updateQsjshkrj" parameterType="java.util.List">
+        UPDATE gh_qsjshkrj
+        <trim prefix="set" suffixOverrides=",">
+<!--            <trim prefix="JSRQ =case" suffix="end,">-->
+<!--                <foreach collection="list" item="item" index="index">-->
+<!--                    <if test="item.jsrq !=null">-->
+<!--                        when rkrq=#{item.rkrq} then #{item.jsrq}-->
+<!--                    </if>-->
+<!--                </foreach>-->
+<!--            </trim>-->
+            <trim prefix="JE =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.je !=null">
+                        when rkrq=#{item.rkrq} then #{item.je}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="UPDATE_BY =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.updateBy !=null">
+                        when rkrq=#{item.rkrq} then #{item.updateBy}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="UPDATE_TIME =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.updateTime !=null">
+                        when rkrq=#{item.rkrq} then #{item.updateTime}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        WHERE rkrq IN
+        <foreach collection="list" index="index" item="item"
+                 separator="," open="(" close=")">
+            #{item.rkrq}
+        </foreach>
+    </update>
+    <select id="selectCsFpblJobList" parameterType="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.dqdssj.CsFpblDqdssjVo" resultType="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.dqdssj.CsFpblDqdssjVo">
+        SELECT
+        BL_ID, BLUUID, LX, MS, YXQQ, YXQZ, XYBZ, JCGHBL, HYGHBL, SDGHBL, XJGHBL,
+        SJGHBL, SZGHBL, QGZGHBL, SJCJBL, SDSJBL, SWJGBL, TJ, YXJ, MRBZ, JYM
+        FROM CS_FPBL WHERE XYBZ = 'Y' ORDER BY YXJ ASC
+    </select>
+    <select id="selectJFZCJobList" parameterType="java.util.Map" resultMap="baseResultMap">
+        SELECT * FROM JFZC T  WHERE (#{rkrqStart} &lt;= T.RKRQ and  T.RKRQ &lt;= #{rkrqEnd}) AND (#{yxqq} &lt;= T.SKSSQQ and  T.SKSSQZ &lt;= #{yxqz})
+        <if test="spuuid !=null and spuuid != ''">
+            AND T.SPUUID = #{spuuid}
+        </if>
+        AND (${whereSql})
+    </select>
+
+    <select id="selectJFZCJobzlList" parameterType="java.util.Map" resultMap="baseResultMap">
+        SELECT * FROM JFZC T
+        <where>
+         (#{rkrqStart} &lt;= T.RKRQ and  T.RKRQ &lt;= #{rkrqEnd}) AND (#{yxqq} &lt;= T.SKSSQQ and  T.SKSSQZ &lt;= #{yxqz})
+                 AND  T.SPUUID IN (
+            '40D624474F9C8E3925138E61E226EAE6',
+            'B204618DA861B06A8D488D8757EDA459',
+            'C4596D70ECD3A6A4D576F464342502B6',
+            'D629B1D133AEA927F392169FE60EB99F',
+            'EC8F551680BF7D0FB4F345EFBDA907D8',
+            'EE8647ABDC4D1B3E1C1376C19C2C6D4A',
+            '191DC936C2040C4ADE0EE2BB12B7B984',
+            'B3CF6603EC92EA3BBC7FCFCBEE10BF62',
+            '5FA0945915C77978AFE81B96AB510DC3',
+            '9D22A25643A57AA90662723BA2782CB2',
+            '84DB4FA5152EBFF27824F3BDE0D04621',
+            '6E719192DD2C6983ED971F55731AE06D',
+            '20965491BA3FE45AC34519F84D87068E',
+            '082400A993A674FFDFAF5310D98B8486',
+            'DA5CC47A43E25D9353A4A29B029E8479',
+            '25EBD6294C7A250E5CDC4581AF124C7D',
+            '582E2A589691AA39874FA238D4679B57',
+            'A75B56AA300790E0431FDCA11FC3E1DD',
+            '88217374D32ACC319B1C86EC7970098A',
+            'D62C131BCD217FF9F5B53F9B6E07EA58',
+            '752D9CBAA236443AD178EB69021E64DC',
+            '268962D70CF65A22532009F50D711837',
+            '75923A5E02F8AF0C17CFA3A7BA16741A',
+            '5CD994937792DF1D3FB890D44863D7BC',
+            '0A224779DB89D4E6CD8F1F5C8979EC3F',
+            '215155378CE64D69AB959B2F548A8C0D',
+            '27BE6CAFAA34C99EFEE3A288A86598A6',
+            '86AF1C6F50BC0FD360608AB1659E5C81',
+            '960EC5B6F86B021422FC5C5E4960EABD',
+            'EA514AE41CCAC6DDA9A2E750D5B065F0',
+            'E9C6BAF6F2604770512CAE0A8DA9E0D7',
+            '3C5C938800C59EB14D0995BD4CDFD1FF',
+            '98CF1E0D7704100144259BF77A9D7CBF',
+            '573B79415C80D476EDF30EEA102044D5',
+            'CD9D32365728D04CCCA835BE90D957F9',
+            '5E9B711736516F481A8ECA436A76EB2C',
+            '830067366E2CAEC3DFBEAB5B6A994FAF',
+            '7AB1385ED757E16E44D5D3C1E837C59C',
+            '96358817EA4ADF5F0309530CCEB2CAD1',
+            '9CD013711CA11E03F1907140E8A78774',
+            'CD5C8F8F5CFDC47E87AFC669A02C21C3',
+            'CD8411E59B2345EB028C79B0BC2B6C5D',
+            'C162C52314CF36C24A5B7640FAEFCB42',
+            'A0E89C3D3F173E1924DAB1A343DBE552',
+            'D5A6B19056EF3086C0CE266A31032938',
+            'F48889B232E897E9480523D6621F3F67',
+            '3AA426D8C03AC8ED2FF8D99B4750E65C',
+            '779D69687518FDB192AFE861D3A9F262',
+            '7B4C6315A0889329759156499EA33FE6',
+            'E4C1D6DAAE9628BBB14EC0158BED62BA',
+            '7F8230C8DDF8C17D0D946F8AEEAC37A6',
+            '091FA7204188A4A612E3A69F42AC015B',
+            '1B92658895AF7585CF9074F3A6C50CC0',
+            '31AFCAB84BCCE05A9A011D0CEF5DF202',
+            '45C861F432AABF87C83872FD8E6CC42F',
+            '4B5F7B63E9A01BCC37AF17A450D945AE',
+            '552571475C83D1D6A5E5B78A2B99B587',
+            '8812DA62BEB942A82C73E6475A02DC16',
+            '88D75B53AA00CC9F8F3AFC311792799D',
+            '40730B7B1420C3545A41CDC1A478631C',
+            'DA6A60CF4237718ADFC1E5F2F76076C4',
+            '56C9FEE7D3E027B42617A22B9CA246E1',
+            '786A83991B1FF6943E410FCBF712B2CC',
+            '13BD03B17687766141FDCD65B323633F',
+            'B05E4E12F3C8C3985746629CD0B5CE4B',
+            '8DE9EC78519F9AC96A42FA68B360B929',
+            'FC869D91B459304466704B93D5D9BE89',
+            'F1707E06407E331489B6F6B15FCE7FBE',
+            '3109A11B725F9DA67FF2BC1C5880893F',
+            '374C40F4793B86299A053E9993852E5D',
+            'D5DA9255DBB390A611F437781ADB5775',
+            '1F75BFB57FCC057041A6952E457A9486',
+            '90C1C9D02EF817AEE9BDE9B4548367CC',
+            '70F1CC446151EB8A3E71BAAB1C95F5D9',
+            '9492502CF5CD22288BBDECEB267E9E79',
+            '9C0D8E16ADF8F703F8CB36581739998A',
+            'D677DAF0BA01355950372DAA61FB7E38',
+            '79DB84FE493E51BE0350B9E942C17442',
+            '0A67C208807AFAF2C82DE82A1AFBB3EC',
+            '617A7A9019F621C1B760D139891B9754',
+            '84C77D573F69E5F19109E925FE0C4BDD',
+            '59E66BB37A4C36AB728100C1D4B9FDF0',
+            '6ED90B19CECBFE8ED6BFDDAA3CF14840',
+            '4B17746807B3D119DA93765C79AA25BD',
+            'CBE67DBF26CA1B54AA3348716201F4EB',
+            '82503B6ABC8652353ABBB8086634DFDC',
+            '9600F3DF737FE15119E50B34F2C662EC',
+            'CBE6C7737FFBD7653EA457E3095A8192',
+            'F9D8CDFB04437E81962E4DBCFC8E6690',
+            'D47B05939860AACC2B860601C5B28CEC',
+            'C1DA524B91CDB2496DF8FADE1ACCCF98',
+            '40D624474F9C8E3925138E61E226EAE6',
+            'B204618DA861B06A8D488D8757EDA459',
+            '128A249CDFBC9AF6775432584B46FB70',
+            '1ECFE562595D8365F30AB24C26ABDB36',
+            'C4596D70ECD3A6A4D576F464342502B6',
+            '8C84A5E48799A03D29F1804FF79D483D',
+            '971E751FC9A7009DF293C6CB258B929C',
+            'D629B1D133AEA927F392169FE60EB99F',
+            'D8F734479DE225ACD27616BA17F4C98D',
+            'EC8F551680BF7D0FB4F345EFBDA907D8',
+            '7B277D1EC6585B145759D090E44FB98A',
+            'E9B2CD8EF709A68B48FFC12E6EE1ED08',
+            'CE59C462920841A8CB058003FF765707',
+            '38AE7BF2ACA2273448CC6C2385D08EB5',
+            'FB97C0C71C0669BB4CCB0F1CE7CB5864',
+            'C7FE8EC6FBE6B6365C743C6DB44DFA44',
+            'EE8647ABDC4D1B3E1C1376C19C2C6D4A',
+            '191DC936C2040C4ADE0EE2BB12B7B984',
+            'AA6F0E5717D39A28E798321033011183',
+            '406BEAF9F9663F77958F5440818E9C70',
+            '75C8225804FE21F7EC6420CC94E27E99',
+            '042A08D2A056AD2FA4EA464FD66B1885',
+            'B3CF6603EC92EA3BBC7FCFCBEE10BF62',
+            '5FA0945915C77978AFE81B96AB510DC3',
+            '3D08B049DAA391908194FB97DEB5CADE',
+            '630A8A39AA59B7CAB7B5F0D3AE9059ED',
+            '34F6D91E714CFD6E3205A2B701BF3268',
+            '5692F7085000DDBCB6C4333A9E6768AD',
+            'BEC32A82739633E13C4EAD95282C318A',
+            '84DB4FA5152EBFF27824F3BDE0D04621',
+            '6E719192DD2C6983ED971F55731AE06D',
+            'F5D6F3D7806BC888E8EC82816D92D6B4',
+            'EE46EFCDCADC11D3FC66EC3288BB9E15',
+            '0ECB5211FD3EF5722CC4097F8F1D5056',
+            'D87425942F9A0FCA06454F69909727E4',
+            '20965491BA3FE45AC34519F84D87068E',
+            '6F6516116F417A0CDC7C34815D2A7B9A',
+            '082400A993A674FFDFAF5310D98B8486',
+            'DA5CC47A43E25D9353A4A29B029E8479',
+            '77B3E12A8712FB4A0577A79020CE1613',
+            '78F4E5CA406585FFB30452A15F9EA90C',
+            '00C41821204CC22EE9D2C215489655F0',
+            '8BDAB055159F8D9DB29D8C2BC472337E',
+            '25EBD6294C7A250E5CDC4581AF124C7D',
+            'D07E496738D003197845A93810709386',
+            '04454E7922F1F5433DCA19994598C2F8',
+            '582E2A589691AA39874FA238D4679B57',
+            '53ED360CBE7EDA540A2FA87F162B58DB',
+            'A75B56AA300790E0431FDCA11FC3E1DD',
+            '2BEC36922A9D6ED6C4CC7BED14CDC90D',
+            'E0F95126E4233F22025F80F4971A1989',
+            '88217374D32ACC319B1C86EC7970098A',
+            '4F14BCCBB9E085134D9015B2A50EBF90',
+            'A02532554BBA6959668AC0E1822EF02E',
+            '986FE13D93A4EC085E29E5612651A489',
+            'D62C131BCD217FF9F5B53F9B6E07EA58',
+            '752D9CBAA236443AD178EB69021E64DC',
+            'DC717D6F84774710142EC2B052F5A3E8',
+            '87F29EAF2637BEF5253B2E8A4873C37D',
+            '46A4F5174953023662954EF48387B3AF',
+            'E01DD32D1D29BE9F0834589C0EBD085A',
+            'CA1D254D300FAEAB20D66FE906EB2580',
+            '8025181B9AB2012B06DF30E7A1BD5DDE',
+            '88D8B9E8DD2587F37658122AEB350AD1',
+            '268962D70CF65A22532009F50D711837',
+            '75923A5E02F8AF0C17CFA3A7BA16741A',
+            '06C315425313A1E6EAFDD9D4B268ADDF',
+            '90EB4E0CAB02811110ADFC0C95ACDD95',
+            '5CD994937792DF1D3FB890D44863D7BC',
+            'DA55E444F19FBE695BA670CB7CE5CB78',
+            '5D5BC2F3099886E617FCE18D78E8F0FF',
+            'CF93F73F69046C4B7C7459475734DF2A',
+            'C63EA14B591B256ACBB75D907E570BDE',
+            '158F80AD863ED9EB06482EDF30A25B16',
+            '0A224779DB89D4E6CD8F1F5C8979EC3F',
+            '25E27282B569D2929056DFFB53F36159',
+            '215155378CE64D69AB959B2F548A8C0D',
+            'D4996A02C74C7191D043FE41C9CD3451',
+            '0B063A995E0FA8F91F87C95CD33745C8',
+            '7CBD0AAC49C237424714B3C202AB6DF7',
+            '27BE6CAFAA34C99EFEE3A288A86598A6',
+            '4913B687BE1CB2BAFD481E09C02E7090',
+            'C6D7DCFC119DF00253FD0AB4510C8DBD',
+            'B278A8EDFC81BE98BBBDBEF2067204D4',
+            'AB4F4984F5F33EC40CB823511571B088',
+            '135AF9686F4096BE341CE5C72155DF8C',
+            '86AF1C6F50BC0FD360608AB1659E5C81',
+            '960EC5B6F86B021422FC5C5E4960EABD',
+            'E91EEF0B2F833A981C5F223CE06D788C',
+            '7477545FC02B16EDA4492C824DB842BC',
+            '889E333303C096A3A0F9AEE1F1D5EDF4',
+            '69DEE291AAD7915D53C5A3F1E61A1671',
+            'EA514AE41CCAC6DDA9A2E750D5B065F0',
+            'E4A4E346F2D08EEF98AEFE29AB622BC0',
+            'E9C6BAF6F2604770512CAE0A8DA9E0D7',
+            'BD19D1024720CD329223416E7DDCEE1E',
+            'B4A8981D6A9C8472C8D674D86E08D960',
+            '892AF5CB2D166F3FEB75401F84CF9A4F',
+            '43046CA811193233A29946E86FF6C4FC',
+            '0D1C761EDB6786662294CBF7651504D9',
+            '205743273EB29ACAD4E2457C0BE88490',
+            'DFD4284581A457379CB6F0C9A906F586',
+            '26B54313CC4B3A04DD952A001185D154',
+            'C047AB5AF34643D1E1CA303DE9C3DDF8',
+            '0A8BD98B2207B1C69AB574323A890B35',
+            '3DE23F20793ED9619FC19620F3A020E3',
+            '8AD8A0F713CC4680881DA8A8F25C883B',
+            'EA6D0D76E72857BF4133C7F52A2B6A51',
+            '3C5C938800C59EB14D0995BD4CDFD1FF',
+            '46999642B00262C3BF268B7BA4646E12',
+            '05344B4C632C2E3F14983659D37E7596',
+            '5B427C2D399CE283E40A22725BFD1579',
+            'BDCCB68E2B5C7A08F1453093CAC5E366',
+            '98CF1E0D7704100144259BF77A9D7CBF',
+            '573B79415C80D476EDF30EEA102044D5',
+            '12275135A9A27EF9BE208C41DED6600A',
+            'CD9D32365728D04CCCA835BE90D957F9',
+            '5E9B711736516F481A8ECA436A76EB2C',
+            'BE3006502CFD855A69B73A527FA7DBFB',
+            '830067366E2CAEC3DFBEAB5B6A994FAF',
+            '3243C46C2FCBBDA2179CAC837AF5A05D',
+            '4FFFFC3BA34EA57D7292E41C895269CA',
+            'AEFB693247AD154B32AD7D2B0B69E884',
+            '7082976A0818739359A6F84458BC7F30',
+            '152659D49478B68B83976E190B0A1B0E',
+            '7AB1385ED757E16E44D5D3C1E837C59C',
+            '75DFFE85C403D0C0888770645495C426',
+            '96358817EA4ADF5F0309530CCEB2CAD1',
+            '9CD013711CA11E03F1907140E8A78774',
+            'CD5C8F8F5CFDC47E87AFC669A02C21C3',
+            'CD8411E59B2345EB028C79B0BC2B6C5D',
+            '1327270D4D03575B03E115AE2E621AB6',
+            '714BEDFEE0DF664935AD9C51D1039EC3',
+            'C162C52314CF36C24A5B7640FAEFCB42',
+            '10351F65D88B6FC744A337793E8A7167',
+            'A0E89C3D3F173E1924DAB1A343DBE552',
+            '3E81E87D505AC1C1586A963C28890A08',
+            '4D5A4BBA2FDA4CBC5778D86E2D4BDA9C',
+            'D5A6B19056EF3086C0CE266A31032938',
+            '0F6B96E42EDCA9E93214346873C4359D',
+            '97F374CEE58AC90F2113126359858862',
+            '8A37566206E2CFC1C53CEAEC99DA187F',
+            'F48889B232E897E9480523D6621F3F67',
+            '1C80EF02ADC4E8A827B0CF71D6AD1CE9',
+            '3AA426D8C03AC8ED2FF8D99B4750E65C',
+            '779D69687518FDB192AFE861D3A9F262',
+            '9D0831DBF8F82864A3F6584DD74D9FB3',
+            '7B4C6315A0889329759156499EA33FE6',
+            '8850F9CEDF8F5BD5027D802AC1317A60',
+            '80F3B41E02AAB7B49CB48E4F252FA4A1',
+            '888AFE26A704D393ACB69A8630149B96',
+            '7F8230C8DDF8C17D0D946F8AEEAC37A6',
+            'BEE59743C708F4583B92F69D8DD80B3D',
+            'E4BED398E294D80BD56052E3F193D585',
+            '5A278A9D1A6D023E6A958570953BFEAD',
+            '091FA7204188A4A612E3A69F42AC015B',
+            '1B92658895AF7585CF9074F3A6C50CC0',
+            '31AFCAB84BCCE05A9A011D0CEF5DF202',
+            '45C861F432AABF87C83872FD8E6CC42F',
+            '4B5F7B63E9A01BCC37AF17A450D945AE',
+            '552571475C83D1D6A5E5B78A2B99B587',
+            '8812DA62BEB942A82C73E6475A02DC16',
+            '88D75B53AA00CC9F8F3AFC311792799D',
+            '40730B7B1420C3545A41CDC1A478631C',
+            'A30BDF081C22D22C14E0A01C9EFC7572',
+            'FC384A28CC16D25E084FF79C6B19A07E',
+            'DA6A60CF4237718ADFC1E5F2F76076C4',
+            '56C9FEE7D3E027B42617A22B9CA246E1',
+            'B8B669DAADAA6BECD77F1992960F2F2F',
+            '40F5969A89503B329C7A556E68A44EE5',
+            'B87633910FD83BF4C607A2CC8A510978',
+            'E3B8167BF4901AE42BD36F40C26A3202',
+            '13BD03B17687766141FDCD65B323633F',
+            '8DE9EC78519F9AC96A42FA68B360B929',
+            'FC869D91B459304466704B93D5D9BE89',
+            'F1707E06407E331489B6F6B15FCE7FBE',
+            'D42F927F78C91D410DC82E05D5321244',
+            '0AF2E8A263EEF434233D680768711FCA',
+            '3109A11B725F9DA67FF2BC1C5880893F',
+            '374C40F4793B86299A053E9993852E5D',
+            'BD57DAD1160A3A7D5808FA35F5EC778B',
+            'F550972E41A877421232AFD37FF93061',
+            'C06F884692F1BC6F8A81FD29DCD119E3',
+            '1F75BFB57FCC057041A6952E457A9486',
+            '90C1C9D02EF817AEE9BDE9B4548367CC',
+            '70F1CC446151EB8A3E71BAAB1C95F5D9',
+            '9492502CF5CD22288BBDECEB267E9E79',
+            '9C0D8E16ADF8F703F8CB36581739998A',
+            '638903E893E0FDC1644F1BE3B7BA8CB1',
+            'D677DAF0BA01355950372DAA61FB7E38',
+            '79DB84FE493E51BE0350B9E942C17442',
+            '0A67C208807AFAF2C82DE82A1AFBB3EC',
+            'CB9365467FA25717EACBE8D43FDE87BA',
+            '59E66BB37A4C36AB728100C1D4B9FDF0',
+            '6ED90B19CECBFE8ED6BFDDAA3CF14840',
+            '4B17746807B3D119DA93765C79AA25BD',
+            '52CCAA43A8EA4677ED749845CFD3E604',
+            'CCBA0F06A50103574DB70DD57013AAA5',
+            'CBE67DBF26CA1B54AA3348716201F4EB',
+            'DC5227B536D5CCEC9B68B3FE9021C26E',
+            'AED9BCB860BC8A6B8898B15D86E35320',
+            'B204618DA861B06A8D488D8757EDA459',
+            '082400A993A674FFDFAF5310D98B8486',
+            '25EBD6294C7A250E5CDC4581AF124C7D',
+            '88217374D32ACC319B1C86EC7970098A',
+            '5CD994937792DF1D3FB890D44863D7BC',
+            '7CBD0AAC49C237424714B3C202AB6DF7',
+            '27BE6CAFAA34C99EFEE3A288A86598A6',
+            '69DEE291AAD7915D53C5A3F1E61A1671',
+            'EA514AE41CCAC6DDA9A2E750D5B065F0',
+            '5E9B711736516F481A8ECA436A76EB2C',
+            'A0E89C3D3F173E1924DAB1A343DBE552',
+            'E4C1D6DAAE9628BBB14EC0158BED62BA',
+            '7F8230C8DDF8C17D0D946F8AEEAC37A6',
+            '4B17746807B3D119DA93765C79AA25BD'
+
+
+)
+        <if test="spuuid != null  and spuuid != ''"> and SPUUID = #{spuuid}</if>
+        <if test="djxh != null  and djxh != ''"> and DJXH = #{djxh}</if>
+        <if test="shxydm != null  and shxydm != ''"> and SHXYDM = #{shxydm}</if>
+        <if test="nsrmc != null  and nsrmc != ''"> and NSRMC like concat('%', #{nsrmc}, '%')</if>
+        <if test="nsrjc != null  and nsrjc != ''"> and NSRJC like concat('%', #{nsrjc}, '%')</if>
+        <if test="deptId != null  and deptId != ''"> and dept_id = #{deptId}</if>
+        <if test="ghjgxzjb != null  and ghjgxzjb != ''"> and GHJGXZJB = #{ghjgxzjb}</if>
+        <if test="clghbj != null  and clghbj != ''"> and CLGHBJ = #{clghbj}</if>
+        <if test="hyghbz != null  and hyghbz != ''"> and HYGHBZ = #{hyghbz}</if>
+        <if test="sdghjgDm != null  and sdghjgDm != ''"> and SDGHJG_DM = #{sdghjgDm}</if>
+        <if test="sdghjgxzjb != null  and sdghjgxzjb != ''"> and SDGHJGXZJB = #{sdghjgxzjb}</if>
+        <if test="zgswjDm != null  and zgswjDm != ''"> and ZGSWJ_DM = #{zgswjDm}</if>
+        <if test="zgswskfjDm != null  and zgswskfjDm != ''"> and ZGSWSKFJ_DM = #{zgswskfjDm}</if>
+        <if test="ssglyDm != null  and ssglyDm != ''"> and SSGLY_DM = #{ssglyDm}</if>
+        <if test="ghlbDm != null  and ghlbDm != ''"> and GHLB_DM = #{ghlbDm}</if>
+        <if test="xtlbDm != null  and xtlbDm != ''"> and XTLB_DM = #{xtlbDm}</if>
+        <if test="zzjglxDm != null  and zzjglxDm != ''"> and ZZJGLX_DM = #{zzjglxDm}</if>
+        <if test="hyDm != null  and hyDm != ''"> and HY_DM = #{hyDm}</if>
+        <if test="djzclxDm != null  and djzclxDm != ''"> and DJZCLX_DM = #{djzclxDm}</if>
+        <if test="dwlsgxDm != null  and dwlsgxDm != ''"> and DWLSGX_DM = #{dwlsgxDm}</if>
+        <if test="sblbDm != null  and sblbDm != ''"> and SBLB_DM = #{sblbDm}</if>
+<!--        <if test="params.beginNssbrq != null and params.beginNssbrq != '' and params.endNssbrq != null and params.endNssbrq != ''"> and NSSBRQ between #{params.beginNssbrq} and #{params.endNssbrq}</if>-->
+        <if test="pzxh != null  and pzxh != ''"> and PZXH = #{pzxh}</if>
+        <if test="pzmxxh != null "> and PZMXXH = #{pzmxxh}</if>
+        <if test="skssqq != null "> and SKSSQQ &gt;= #{skssqq}</if>
+        <if test="skssqz != null "> and SKSSQZ &lt;= #{skssqz}</if>
+        <if test="zsswjgDm != null  and zsswjgDm != ''"> and ZSSWJG_DM = #{zsswjgDm}</if>
+        <if test="skssswjgDm != null  and skssswjgDm != ''"> and SKSSSWJG_DM = #{skssswjgDm}</if>
+        <if test="skgkDm != null  and skgkDm != ''"> and SKGK_DM = #{skgkDm}</if>
+        <if test="dzsphm != null  and dzsphm != ''"> and DZSPHM = #{dzsphm}</if>
+        <if test="pzzlDm != null  and pzzlDm != ''"> and PZZL_DM = #{pzzlDm}</if>
+        <if test="pzzgDm != null  and pzzgDm != ''"> and PZZG_DM = #{pzzgDm}</if>
+        <if test="pzhm != null  and pzhm != ''"> and PZHM = #{pzhm}</if>
+        <if test="kpyDm != null  and kpyDm != ''"> and KPY_DM = #{kpyDm}</if>
+        <if test="kpyXm != null  and kpyXm != ''"> and KPY_XM = #{kpyXm}</if>
+        <if test="zspmDm != null  and zspmDm != ''"> and ZSPM_DM = #{zspmDm}</if>
+        <if test="zszmDm != null  and zszmDm != ''"> and ZSZM_DM = #{zszmDm}</if>
+        <if test="yskmDm != null  and yskmDm != ''"> and YSKM_DM = #{yskmDm}</if>
+<!--        <if test="params.beginGzze != null and params.beginGzze != '' and params.endGzze != null and params.endGzze != ''"> and GZZE between #{params.beginGzze} and #{params.endGzze}</if>-->
+<!--        <if test="sl != null "> and SL = #{sl}</if>-->
+        <if test="ynse != null "> and YNSE = #{ynse}</if>
+        <if test="jmse != null "> and JMSE = #{jmse}</if>
+        <if test="yjse != null "> and YJSE = #{yjse}</if>
+<!--        <if test="params.beginYbtse != null and params.beginYbtse != '' and params.endYbtse != null and params.endYbtse != ''"> and YBTSE between #{params.beginYbtse} and #{params.endYbtse}</if>-->
+        <if test="jkfsDm != null  and jkfsDm != ''"> and JKFS_DM = #{jkfsDm}</if>
+        <if test="jfhb != null  and jfhb != ''"> and JFHB = #{jfhb}</if>
+        <if test="jfzh != null  and jfzh != ''"> and JFZH = #{jfzh}</if>
+        <if test="jfhm != null  and jfhm != ''"> and JFHM = #{jfhm}</if>
+        <if test="jfhh != null  and jfhh != ''"> and JFHH = #{jfhh}</if>
+        <if test="jfyh != null  and jfyh != ''"> and JFYH = #{jfyh}</if>
+        <!--            <if test="params.beginRkrq != null and params.beginRkrq != '' and params.endRkrq != null and params.endRkrq != ''"> and RKRQ between #{params.beginRkrq} and #{params.endRkrq}</if>-->
+        <if test="jsbj != null  and jsbj != ''"> and JSBJ = #{jsbj}</if>
+<!--        <if test="params.beginJsrq != null and params.beginJsrq != '' and params.endJsrq != null and params.endJsrq != ''"> and JSRQ between #{params.beginJsrq} and #{params.endJsrq}</if>-->
+        <if test="jsczy != null  and jsczy != ''"> and JSCZY = #{jsczy}</if>
+        <if test="jcghzh != null  and jcghzh != ''"> and JCGHZH = #{jcghzh}</if>
+        <if test="jcghhm != null  and jcghhm != ''"> and JCGHHM like concat('%', #{jcghhm}, '%')</if>
+        <if test="jcghhh != null  and jcghhh != ''"> and JCGHHH = #{jcghhh}</if>
+        <if test="jcghbl != null "> and JCGHBL = #{jcghbl}</if>
+        <if test="jcghje != null "> and JCGHJE = #{jcghje}</if>
+        <if test="cbjzh != null  and cbjzh != ''"> and CBJZH = #{cbjzh}</if>
+        <if test="cbjhm != null  and cbjhm != ''"> and CBJHM like concat('%', #{cbjhm}, '%')</if>
+        <if test="cbjhh != null  and cbjhh != ''"> and CBJHH = #{cbjhh}</if>
+        <if test="cbjbl != null "> and CBJBL = #{cbjbl}</if>
+        <if test="cbjje != null "> and CBJJE = #{cbjje}</if>
+        <if test="hyghzh != null  and hyghzh != ''"> and HYGHZH = #{hyghzh}</if>
+        <if test="hyghhm != null  and hyghhm != ''"> and HYGHHM like concat('%', #{hyghhm}, '%')</if>
+        <if test="hyghhh != null  and hyghhh != ''"> and HYGHHH = #{hyghhh}</if>
+        <if test="hyghbl != null "> and HYGHBL = #{hyghbl}</if>
+        <if test="hyghje != null "> and HYGHJE = #{hyghje}</if>
+        <if test="xjghzh != null  and xjghzh != ''"> and XJGHZH = #{xjghzh}</if>
+        <if test="xjghhm != null  and xjghhm != ''"> and XJGHHM like concat('%', #{xjghhm}, '%')</if>
+        <if test="xjghhh != null  and xjghhh != ''"> and XJGHHH = #{xjghhh}</if>
+        <if test="xjghbl != null "> and XJGHBL = #{xjghbl}</if>
+        <if test="xjghje != null "> and XJGHJE = #{xjghje}</if>
+        <if test="sjghzh != null  and sjghzh != ''"> and SJGHZH = #{sjghzh}</if>
+        <if test="sjghhm != null  and sjghhm != ''"> and SJGHHM like concat('%', #{sjghhm}, '%')</if>
+        <if test="sjghhh != null  and sjghhh != ''"> and SJGHHH = #{sjghhh}</if>
+        <if test="sjghbl != null "> and SJGHBL = #{sjghbl}</if>
+        <if test="sjghje != null "> and SJGHJE = #{sjghje}</if>
+        <if test="szghzh != null  and szghzh != ''"> and SZGHZH = #{szghzh}</if>
+        <if test="szghhm != null  and szghhm != ''"> and SZGHHM like concat('%', #{szghhm}, '%')</if>
+        <if test="szghhh != null  and szghhh != ''"> and SZGHHH = #{szghhh}</if>
+        <if test="szghbl != null "> and SZGHBL = #{szghbl}</if>
+        <if test="szghje != null "> and SZGHJE = #{szghje}</if>
+        <if test="qgghzh != null  and qgghzh != ''"> and QGGHZH = #{qgghzh}</if>
+        <if test="qgghhm != null  and qgghhm != ''"> and QGGHHM like concat('%', #{qgghhm}, '%')</if>
+        <if test="qgghhh != null  and qgghhh != ''"> and QGGHHH = #{qgghhh}</if>
+        <if test="qgghbl != null "> and QGGHBL = #{qgghbl}</if>
+        <if test="qgghje != null "> and QGGHJE = #{qgghje}</if>
+        <if test="jcjzh != null  and jcjzh != ''"> and JCJZH = #{jcjzh}</if>
+        <if test="jcjhm != null  and jcjhm != ''"> and JCJHM = #{jcjhm}</if>
+        <if test="jcjhh != null  and jcjhh != ''"> and JCJHH = #{jcjhh}</if>
+        <if test="jcjbl != null "> and JCJBL = #{jcjbl}</if>
+        <if test="jcjje != null "> and JCJJE = #{jcjje}</if>
+        <if test="jcwsh != null  and jcwsh != ''"> and JCWSH = #{jcwsh}</if>
+        <if test="sdszh != null  and sdszh != ''"> and SDSZH = #{sdszh}</if>
+        <if test="sdshm != null  and sdshm != ''"> and SDSHM like concat('%', #{sdshm}, '%')</if>
+        <if test="sdshh != null  and sdshh != ''"> and SDSHH = #{sdshh}</if>
+        <if test="sdsbl != null "> and SDSBL = #{sdsbl}</if>
+        <if test="sdsje != null "> and SDSJE = #{sdsje}</if>
+        <if test="swjgzh != null  and swjgzh != ''"> and SWJGZH = #{swjgzh}</if>
+        <if test="swjghm != null  and swjghm != ''"> and SWJGHM like concat('%', #{swjghm}, '%')</if>
+        <if test="swjghh != null  and swjghh != ''"> and SWJGHH = #{swjghh}</if>
+        <if test="swjgbl != null "> and SWJGBL = #{swjgbl}</if>
+        <if test="swjgje != null "> and SWJGJE = #{swjgje}</if>
+        <if test="cbjthbj != null  and cbjthbj != ''"> and CBJTHBJ = #{cbjthbj}</if>
+<!--        <if test="params.beginCbjthrq != null and params.beginCbjthrq != '' and params.endCbjthrq != null and params.endCbjthrq != ''"> and CBJTHRQ between #{params.beginCbjthrq} and #{params.endCbjthrq}</if>-->
+        <if test="cbjthczy != null  and cbjthczy != ''"> and CBJTHCZY = #{cbjthczy}</if>
+        <if test="jym != null  and jym != ''"> and JYM = #{jym}</if>
+        <if test="hkpch != null  and hkpch != ''"> and HKPCH like concat('%', #{hkpch}, '%')</if>
+        <if test="bz != null  and bz != ''"> and BZ like concat('%', #{bz}, '%')</if>
+        <if test="bluuid != null  and bluuid != ''"> and BLUUID = #{bluuid}</if>
+        <if test="sdghzh != null  and sdghzh != ''"> and SDGHZH = #{sdghzh}</if>
+        <if test="sdghhm != null  and sdghhm != ''"> and SDGHHM like concat('%', #{sdghhm}, '%')</if>
+        <if test="sdghhh != null  and sdghhh != ''"> and SDGHHH = #{sdghhh}</if>
+        <if test="sdghbl != null "> and SDGHBL = #{sdghbl}</if>
+        <if test="sdghje != null "> and SDGHJE = #{sdghje}</if>
+        <if test="createBy != null  and createBy != ''"> and CREATE_BY = #{createBy}</if>
+<!--        <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and CREATE_TIME between #{params.beginCreateTime} and #{params.endCreateTime}</if>-->
+        <if test="updateBy != null  and updateBy != ''"> and UPDATE_BY = #{updateBy}</if>
+<!--        <if test="params.beginUpdateTime != null and params.beginUpdateTime != '' and params.endUpdateTime != null and params.endUpdateTime != ''"> and UPDATE_TIME between #{params.beginUpdateTime} and #{params.endUpdateTime}</if>-->
+        AND (${whereSql})
+        </where>
+    </select>
+    <select id="selectQsjshkrjList" resultType="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.dqdssj.QsjshkrjDO">
+        SELECT * FROM gh_qsjshkrj T  WHERE (#{rkrqStart} &lt;= T.RKRQ and  T.RKRQ &lt;= #{rkrqEnd}) AND T.LX = '1'
+    </select>
+    <select id="selectForQsjshkrj" resultType="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.dqdssj.JfzcDqdssjVo">
+        SELECT T.RKRQ,SUM(T.YBTSE) YBTSE FROM GH_JF T  WHERE (#{rkrqStart} &lt;= T.RKRQ and  T.RKRQ &lt;= #{rkrqEnd})
+        <if test="spuuid !=null and spuuid != ''">
+            AND T.SPUUID = #{spuuid}
+        </if>
+        GROUP BY T.RKRQ
+    </select>
+</mapper>

@@ -1,0 +1,899 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.dqdssj.GhJfDqdssjMapper">
+    <!--批量新增-->
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO gh_jf(SPUUID,DJXH,SHXYDM,NSRMC,
+        NSRJC,dept_id,GHJGXZJB,CLGHBJ,HYGHBZ,SDGHJG_DM,SDGHJGXZJB,ZGSWJ_DM,ZGSWSKFJ_DM,SSGLY_DM,GHLB_DM,XTLB_DM,
+        ZZJGLX_DM,HY_DM,DJZCLX_DM,DWLSGX_DM,SBLB_DM,NSSBRQ,PZXH,PZMXXH,
+        SKSSQQ,SKSSQZ,ZSSWJG_DM,SKSSSWJG_DM,SKGK_DM,DZSPHM,PZZL_DM,PZZG_DM,PZHM,KPY_DM,KPY_XM,ZSPM_DM,ZSZM_DM,
+        YSKM_DM,GZZE,SL,YNSE,JMSE,YJSE,YBTSE,JKFS_DM,JFHB,JFZH,JFHM,JFHH,JFYH,RKRQ,JSBJ,JSRQ,JSCZY,JCGHZH,JCGHHM,
+        JCGHHH,JCGHBL,JCGHJE,CBJZH,CBJHM,CBJHH,CBJBL,CBJJE,HYGHZH,HYGHHM,HYGHHH,HYGHBL,
+        HYGHJE,XJGHZH,XJGHHM,XJGHHH,XJGHBL,XJGHJE,SJGHZH,SJGHHM,SJGHHH,SJGHBL,SJGHJE,SZGHZH,SZGHHM,SZGHHH,SZGHBL,
+        SZGHJE,QGGHZH,QGGHHM,QGGHHH,QGGHBL,QGGHJE,JCJZH,JCJHM,JCJHH,JCJBL,JCJJE,JCWSH,
+        SDSZH,SDSHM,SDSHH,SDSBL,SDSJE,SWJGZH,SWJGHM,SWJGHH,SWJGBL,SWJGJE,CBJTHBJ,CBJTHRQ,CBJTHCZY,
+        JYM,HKPCH,BZ,BLUUID,SDGHZH,SDGHHM,SDGHHH,SDGHBL,SDGHJE,CREATE_BY,CREATE_TIME,UPDATE_BY,UPDATE_TIME)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.spuuid},#{item.djxh},#{item.shxydm},#{item.nsrmc},#{item.nsrjc},#{item.deptId},
+            #{item.ghjgxzjb},#{item.clghbj},#{item.hyghbz},#{item.sdghjgDm},#{item.sdghjgxzjb},
+            #{item.zgswjDm},#{item.zgswskfjDm},#{item.ssglyDm},#{item.ghlbDm},#{item.xtlbDm},
+            #{item.zzjglxDm},#{item.hyDm},#{item.djzclxDm},#{item.dwlsgxDm},#{item.sblbDm},
+            #{item.nssbrq},#{item.pzxh},#{item.pzmxxh},#{item.skssqq},#{item.skssqz},#{item.zsswjgDm},#{item.skssswjgDm},
+            #{item.skgkDm},#{item.dzsphm},#{item.pzzlDm},#{item.pzzgDm},#{item.pzhm},#{item.kpyDm},
+            #{item.kpyXm},#{item.zspmDm},#{item.zszmDm},#{item.yskmDm},#{item.gzze},
+            #{item.sl},#{item.ynse},#{item.jmse},#{item.yjse},#{item.ybtse},#{item.jkfsDm},
+            #{item.jfhb},#{item.jfzh},#{item.jfhm},#{item.jfhh},#{item.jfyh},#{item.rkrq},
+            #{item.jsbj},#{item.jsrq},#{item.jsczy},#{item.jcghzh},#{item.jcghhm},
+            #{item.jcghhh},#{item.jcghbl},#{item.jcghje},#{item.cbjzh},#{item.cbjhm},
+            #{item.cbjhh},#{item.cbjbl},#{item.cbjje},#{item.hyghzh},#{item.hyghhm},#{item.hyghhh},#{item.hyghbl},#{item.hyghje},
+            #{item.xjghzh},#{item.xjghhm},#{item.xjghhh},#{item.xjghbl},#{item.xjghje},
+            #{item.sjghzh},#{item.sjghhm},#{item.sjghhh},#{item.sjghbl},#{item.sjghje},
+            #{item.szghzh},#{item.szghhm},#{item.szghhh},#{item.szghbl},
+            #{item.szghje},#{item.qgghzh},#{item.qgghhm},#{item.qgghhh},#{item.qgghbl},
+            #{item.qgghje},#{item.jcjzh},#{item.jcjhm},#{item.jcjhh},#{item.jcjbl},#{item.jcjje},#{item.jcwsh},#{item.sdszh},
+            #{item.sdshm},#{item.sdshh},#{item.sdsbl},#{item.sdsje},#{item.swjgzh},#{item.swjghm},
+            #{item.swjghh},#{item.swjgbl},#{item.swjgje},#{item.cbjthbj},#{item.cbjthrq},#{item.cbjthczy},#{item.jym},#{item.hkpch},#{item.bz},#{item.bluuid},#{item.sdghzh},#{item.sdghhm},#{item.sdghhh},#{item.sdghbl},#{item.sdghje},#{item.createBy},#{item.createTime},#{item.updateBy},#{item.updateTime})
+        </foreach>
+    </insert>
+    <update id="updateBatch" parameterType="java.util.List">
+        UPDATE gh_jf
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="DJXH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.djxh !=null">
+                        when spuuid=#{item.spuuid} then #{item.djxh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SHXYDM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.shxydm !=null">
+                        when spuuid=#{item.spuuid} then #{item.shxydm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="NSRMC =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.nsrmc !=null">
+                        when spuuid=#{item.spuuid} then #{item.nsrmc}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="NSRJC =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.nsrjc !=null">
+                        when spuuid=#{item.spuuid} then #{item.nsrjc}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="DEPT_ID =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.deptId !=null">
+                        when spuuid=#{item.spuuid} then #{item.deptId}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="GHJGXZJB =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.ghjgxzjb !=null">
+                        when spuuid=#{item.spuuid} then #{item.ghjgxzjb}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="CLGHBJ =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.clghbj !=null">
+                        when spuuid=#{item.spuuid} then #{item.clghbj}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="HYGHBZ =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.hyghbz !=null">
+                        when spuuid=#{item.spuuid} then #{item.hyghbz}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SDGHJG_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.sdghjgDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.sdghjgDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SDGHJGXZJB =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.sdghjgxzjb !=null">
+                        when spuuid=#{item.spuuid} then #{item.sdghjgxzjb}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="ZGSWJ_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.zgswjDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.zgswjDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="ZGSWSKFJ_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.zgswskfjDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.zgswskfjDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SSGLY_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.ssglyDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.ssglyDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="GHLB_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.ghlbDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.ghlbDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="XTLB_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.xtlbDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.xtlbDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="ZZJGLX_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.zzjglxDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.zzjglxDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="HY_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.hyDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.hyDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="DJZCLX_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.djzclxDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.djzclxDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="DWLSGX_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.dwlsgxDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.dwlsgxDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SBLB_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.sblbDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.sblbDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="NSSBRQ =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.nssbrq !=null">
+                        when spuuid=#{item.spuuid} then #{item.nssbrq}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="PZXH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.pzxh !=null">
+                        when spuuid=#{item.spuuid} then #{item.pzxh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="PZMXXH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.pzmxxh !=null">
+                        when spuuid=#{item.spuuid} then #{item.pzmxxh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SKSSQQ =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.skssqq !=null">
+                        when spuuid=#{item.spuuid} then #{item.skssqq}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SKSSQZ =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.skssqz !=null">
+                        when spuuid=#{item.spuuid} then #{item.skssqz}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="ZSSWJG_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.zsswjgDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.zsswjgDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SKSSSWJG_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.skssswjgDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.skssswjgDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SKGK_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.skgkDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.skgkDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="DZSPHM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.dzsphm !=null">
+                        when spuuid=#{item.spuuid} then #{item.dzsphm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="PZZL_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.pzzlDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.pzzlDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="PZZG_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.pzzgDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.pzzgDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="PZHM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.pzhm !=null">
+                        when spuuid=#{item.spuuid} then #{item.pzhm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="KPY_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.kpyDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.kpyDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="KPY_XM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.kpyXm !=null">
+                        when spuuid=#{item.spuuid} then #{item.kpyXm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="ZSPM_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.zspmDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.zspmDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="ZSZM_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.zszmDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.zszmDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="YSKM_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.yskmDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.yskmDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="GZZE =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.gzze !=null">
+                        when spuuid=#{item.spuuid} then #{item.gzze}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SL =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.sl !=null">
+                        when spuuid=#{item.spuuid} then #{item.sl}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="YNSE =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.ynse !=null">
+                        when spuuid=#{item.spuuid} then #{item.ynse}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JMSE =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jmse !=null">
+                        when spuuid=#{item.spuuid} then #{item.jmse}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="YJSE =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.yjse !=null">
+                        when spuuid=#{item.spuuid} then #{item.yjse}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="YBTSE =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.ybtse !=null">
+                        when spuuid=#{item.spuuid} then #{item.ybtse}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JKFS_DM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jkfsDm !=null">
+                        when spuuid=#{item.spuuid} then #{item.jkfsDm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JFHB =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jfhb !=null">
+                        when spuuid=#{item.spuuid} then #{item.jfhb}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JFZH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jfzh !=null">
+                        when spuuid=#{item.spuuid} then #{item.jfzh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JFHM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jfhm !=null">
+                        when spuuid=#{item.spuuid} then #{item.jfhm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JFHH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jfhh !=null">
+                        when spuuid=#{item.spuuid} then #{item.jfhh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JFYH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jfyh !=null">
+                        when spuuid=#{item.spuuid} then #{item.jfyh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="RKRQ =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.rkrq !=null">
+                        when spuuid=#{item.spuuid} then #{item.rkrq}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JSBJ =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jsbj !=null">
+                        when spuuid=#{item.spuuid} then #{item.jsbj}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JSRQ =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jsrq !=null">
+                        when spuuid=#{item.spuuid} then #{item.jsrq}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JSCZY =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jsczy !=null">
+                        when spuuid=#{item.spuuid} then #{item.jsczy}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JCGHZH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jcghzh !=null">
+                        when spuuid=#{item.spuuid} then #{item.jcghzh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JCGHHM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jcghhm !=null">
+                        when spuuid=#{item.spuuid} then #{item.jcghhm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JCGHHH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jcghhh !=null">
+                        when spuuid=#{item.spuuid} then #{item.jcghhh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JCGHBL =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jcghbl !=null">
+                        when spuuid=#{item.spuuid} then #{item.jcghbl}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JCGHJE =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jcghje !=null">
+                        when spuuid=#{item.spuuid} then #{item.jcghje}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="CBJZH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.cbjzh !=null">
+                        when spuuid=#{item.spuuid} then #{item.cbjzh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="CBJHM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.cbjhm !=null">
+                        when spuuid=#{item.spuuid} then #{item.cbjhm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="CBJHH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.cbjhh !=null">
+                        when spuuid=#{item.spuuid} then #{item.cbjhh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="CBJBL =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.cbjbl !=null">
+                        when spuuid=#{item.spuuid} then #{item.cbjbl}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="CBJJE =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.cbjje !=null">
+                        when spuuid=#{item.spuuid} then #{item.cbjje}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="HYGHZH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.hyghzh !=null">
+                        when spuuid=#{item.spuuid} then #{item.hyghzh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="HYGHHM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.hyghhm !=null">
+                        when spuuid=#{item.spuuid} then #{item.hyghhm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="HYGHHH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.hyghhh !=null">
+                        when spuuid=#{item.spuuid} then #{item.hyghhh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="HYGHBL =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.hyghbl !=null">
+                        when spuuid=#{item.spuuid} then #{item.hyghbl}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="HYGHJE =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.hyghje !=null">
+                        when spuuid=#{item.spuuid} then #{item.hyghje}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JCGHHH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jcghhh !=null">
+                        when spuuid=#{item.spuuid} then #{item.jcghhh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="XJGHZH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.xjghzh !=null">
+                        when spuuid=#{item.spuuid} then #{item.xjghzh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="XJGHHM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.xjghhm !=null">
+                        when spuuid=#{item.spuuid} then #{item.xjghhm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="XJGHHH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.xjghhh !=null">
+                        when spuuid=#{item.spuuid} then #{item.xjghhh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="XJGHBL =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.xjghbl !=null">
+                        when spuuid=#{item.spuuid} then #{item.xjghbl}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="XJGHJE =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.xjghje !=null">
+                        when spuuid=#{item.spuuid} then #{item.xjghje}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SJGHZH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.sjghzh !=null">
+                        when spuuid=#{item.spuuid} then #{item.sjghzh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SJGHHM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.sjghhm !=null">
+                        when spuuid=#{item.spuuid} then #{item.sjghhm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SJGHHH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.sjghhh !=null">
+                        when spuuid=#{item.spuuid} then #{item.sjghhh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SJGHBL =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.sjghbl !=null">
+                        when spuuid=#{item.spuuid} then #{item.sjghbl}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SJGHJE =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.sjghje !=null">
+                        when spuuid=#{item.spuuid} then #{item.sjghje}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SZGHZH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.szghzh !=null">
+                        when spuuid=#{item.spuuid} then #{item.szghzh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SZGHHM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.szghhm !=null">
+                        when spuuid=#{item.spuuid} then #{item.szghhm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SZGHHH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.szghhh !=null">
+                        when spuuid=#{item.spuuid} then #{item.szghhh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SZGHBL =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.szghbl !=null">
+                        when spuuid=#{item.spuuid} then #{item.szghbl}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SZGHJE =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.szghje !=null">
+                        when spuuid=#{item.spuuid} then #{item.szghje}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="QGGHZH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.qgghzh !=null">
+                        when spuuid=#{item.spuuid} then #{item.qgghzh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="QGGHHM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.qgghhm !=null">
+                        when spuuid=#{item.spuuid} then #{item.qgghhm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="QGGHHH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.qgghhh !=null">
+                        when spuuid=#{item.spuuid} then #{item.qgghhh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="QGGHBL =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.qgghbl !=null">
+                        when spuuid=#{item.spuuid} then #{item.qgghbl}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="QGGHJE =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.qgghje !=null">
+                        when spuuid=#{item.spuuid} then #{item.qgghje}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JCJZH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jcjzh !=null">
+                        when spuuid=#{item.spuuid} then #{item.jcjzh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JCJHM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jcjhm !=null">
+                        when spuuid=#{item.spuuid} then #{item.jcjhm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JCJHH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jcjhh !=null">
+                        when spuuid=#{item.spuuid} then #{item.jcjhh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JCJBL =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jcjbl !=null">
+                        when spuuid=#{item.spuuid} then #{item.jcjbl}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JCJJE =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jcjje !=null">
+                        when spuuid=#{item.spuuid} then #{item.jcjje}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JCWSH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jcwsh !=null">
+                        when spuuid=#{item.spuuid} then #{item.jcwsh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SDSZH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.sdszh !=null">
+                        when spuuid=#{item.spuuid} then #{item.sdszh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SDSHM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.sdshm !=null">
+                        when spuuid=#{item.spuuid} then #{item.sdshm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SDSHH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.sdshh !=null">
+                        when spuuid=#{item.spuuid} then #{item.sdshh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SDSBL =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.sdsbl !=null">
+                        when spuuid=#{item.spuuid} then #{item.sdsbl}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SDSJE =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.sdsje !=null">
+                        when spuuid=#{item.spuuid} then #{item.sdsje}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SWJGZH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.swjgzh !=null">
+                        when spuuid=#{item.spuuid} then #{item.swjgzh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SWJGHM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.swjghm !=null">
+                        when spuuid=#{item.spuuid} then #{item.swjghm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SWJGHH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.swjghh !=null">
+                        when spuuid=#{item.spuuid} then #{item.swjghh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SWJGBL =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.swjgbl !=null">
+                        when spuuid=#{item.spuuid} then #{item.swjgbl}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SWJGJE =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.swjgje !=null">
+                        when spuuid=#{item.spuuid} then #{item.swjgje}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="CBJTHBJ =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.cbjthbj !=null">
+                        when spuuid=#{item.spuuid} then #{item.cbjthbj}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="CBJTHRQ =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.cbjthrq !=null">
+                        when spuuid=#{item.spuuid} then #{item.cbjthrq}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="CBJTHCZY =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.cbjthczy !=null">
+                        when spuuid=#{item.spuuid} then #{item.cbjthczy}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="JYM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.jym !=null">
+                        when spuuid=#{item.spuuid} then #{item.jym}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="HKPCH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.hkpch !=null">
+                        when spuuid=#{item.spuuid} then #{item.hkpch}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="BZ =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.bz !=null">
+                        when spuuid=#{item.spuuid} then #{item.bz}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="BLUUID =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.bluuid !=null">
+                        when spuuid=#{item.spuuid} then #{item.bluuid}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SDGHZH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.sdghzh !=null">
+                        when spuuid=#{item.spuuid} then #{item.sdghzh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SDGHHM =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.sdghhm !=null">
+                        when spuuid=#{item.spuuid} then #{item.sdghhm}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SDGHHH =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.sdghhh !=null">
+                        when spuuid=#{item.spuuid} then #{item.sdghhh}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SDGHBL =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.sdghbl !=null">
+                        when spuuid=#{item.spuuid} then #{item.sdghbl}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="SDGHJE =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.sdghje !=null">
+                        when spuuid=#{item.spuuid} then #{item.sdghje}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="UPDATE_BY =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.updateBy !=null">
+                        when spuuid=#{item.spuuid} then #{item.updateBy}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="UPDATE_TIME =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.updateTime !=null">
+                        when spuuid=#{item.spuuid} then #{item.updateTime}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        WHERE spuuid IN
+        <foreach collection="list" index="index" item="item"
+                 separator="," open="(" close=")">
+            #{item.spuuid}
+        </foreach>
+        and hkpch is null
+    </update>
+    <delete id="deleteBatch">
+        DELETE FROM gh_jf WHERE spuuid IN
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <select id="queryUpdateBySpuuidList" resultType="java.lang.String">
+<!--        SELECT spuuid FROM gh_jf WHERE (bluuid != null OR bluuid != 'null') and hkpch is null  and jsbj not in ('Y','T','S','Z','J','F') AND spuuid IN-->
+        SELECT spuuid FROM gh_jf WHERE (bluuid != null OR bluuid != 'null') and hkpch is null  and jsbj not in ('T','S','Z','J','F','X') AND spuuid IN
+
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+</mapper>
