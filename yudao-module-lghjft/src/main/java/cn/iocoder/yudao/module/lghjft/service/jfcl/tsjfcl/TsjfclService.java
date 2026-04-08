@@ -3,8 +3,11 @@ package cn.iocoder.yudao.module.lghjft.service.jfcl.tsjfcl;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.tsjfcl.vo.TsjfclPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.tsjfcl.vo.TsjfclSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.tsjfcl.GhJfTsjfDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.tsjfcl.TsjfclDO;
 import jakarta.validation.Valid;
+
+import java.util.List;
 
 public interface TsjfclService {
 
@@ -14,7 +17,11 @@ public interface TsjfclService {
 
     void deleteTsjfcl(Long id);
 
+    void deleteTsjfclByIds(Long[] ghjfIds);
+
     TsjfclDO getTsjfcl(Long id);
 
     PageResult<TsjfclDO> getTsjfclPage(TsjfclPageReqVO pageReqVO);
+
+    void batchTsjfclpl(List<GhJfTsjfDO> ghJfTsjfList);
 }

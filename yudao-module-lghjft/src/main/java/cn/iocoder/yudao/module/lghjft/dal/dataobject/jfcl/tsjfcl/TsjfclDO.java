@@ -1,11 +1,13 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.tsjfcl;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 特殊经费处理 DO
@@ -137,4 +139,12 @@ public class TsjfclDO {
     private String sdghhh;
     private BigDecimal sdghbl;
     private BigDecimal sdghje;
+    private String createBy;
+    private LocalDateTime createTime;
+    private String updateBy;
+    private LocalDateTime updateTime;
+
+    /** child records from gh_jf_tsjf (not a DB column) */
+    @TableField(exist = false)
+    private List<GhJfTsjfDO> ghJfTsjfList;
 }

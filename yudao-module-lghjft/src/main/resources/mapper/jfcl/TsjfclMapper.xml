@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.tsjfcl.TsjfclMapper">
+
+    <resultMap type="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.tsjfcl.TsjfclDO" id="TsjfclResult">
+        <result property="ghjfId"    column="ghjf_id"    />
+        <result property="spuuid"    column="SPUUID"    />
+        <result property="djxh"    column="DJXH"    />
+        <result property="shxydm"    column="SHXYDM"    />
+        <result property="nsrmc"    column="NSRMC"    />
+        <result property="nsrjc"    column="NSRJC"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="ghjgxzjb"    column="GHJGXZJB"    />
+        <result property="clghbj"    column="CLGHBJ"    />
+        <result property="hyghbz"    column="HYGHBZ"    />
+        <result property="sdghjgDm"    column="SDGHJG_DM"    />
+        <result property="sdghjgxzjb"    column="SDGHJGXZJB"    />
+        <result property="zgswjDm"    column="ZGSWJ_DM"    />
+        <result property="zgswskfjDm"    column="ZGSWSKFJ_DM"    />
+        <result property="ssglyDm"    column="SSGLY_DM"    />
+        <result property="ghlbDm"    column="GHLB_DM"    />
+        <result property="xtlbDm"    column="XTLB_DM"    />
+        <result property="zzjglxDm"    column="ZZJGLX_DM"    />
+        <result property="hyDm"    column="HY_DM"    />
+        <result property="djzclxDm"    column="DJZCLX_DM"    />
+        <result property="dwlsgxDm"    column="DWLSGX_DM"    />
+        <result property="sblbDm"    column="SBLB_DM"    />
+        <result property="nssbrq"    column="NSSBRQ"    />
+        <result property="pzxh"    column="PZXH"    />
+        <result property="pzmxxh"    column="PZMXXH"    />
+        <result property="skssqq"    column="SKSSQQ"    />
+        <result property="skssqz"    column="SKSSQZ"    />
+        <result property="zsswjgDm"    column="ZSSWJG_DM"    />
+        <result property="skssswjgDm"    column="SKSSSWJG_DM"    />
+        <result property="skgkDm"    column="SKGK_DM"    />
+        <result property="dzsphm"    column="DZSPHM"    />
+        <result property="pzzlDm"    column="PZZL_DM"    />
+        <result property="pzzgDm"    column="PZZG_DM"    />
+        <result property="pzhm"    column="PZHM"    />
+        <result property="kpyDm"    column="KPY_DM"    />
+        <result property="kpyXm"    column="KPY_XM"    />
+        <result property="zspmDm"    column="ZSPM_DM"    />
+        <result property="zszmDm"    column="ZSZM_DM"    />
+        <result property="yskmDm"    column="YSKM_DM"    />
+        <result property="gzze"    column="GZZE"    />
+        <result property="sl"    column="SL"    />
+        <result property="ynse"    column="YNSE"    />
+        <result property="jmse"    column="JMSE"    />
+        <result property="yjse"    column="YJSE"    />
+        <result property="ybtse"    column="YBTSE"    />
+        <result property="jkfsDm"    column="JKFS_DM"    />
+        <result property="jfhb"    column="JFHB"    />
+        <result property="jfzh"    column="JFZH"    />
+        <result property="jfhm"    column="JFHM"    />
+        <result property="jfhh"    column="JFHH"    />
+        <result property="jfyh"    column="JFYH"    />
+        <result property="rkrq"    column="RKRQ"    />
+        <result property="jsbj"    column="JSBJ"    />
+        <result property="jsrq"    column="JSRQ"    />
+        <result property="jsczy"    column="JSCZY"    />
+        <result property="jcghzh"    column="JCGHZH"    />
+        <result property="jcghhm"    column="JCGHHM"    />
+        <result property="jcghhh"    column="JCGHHH"    />
+        <result property="jcghbl"    column="JCGHBL"    />
+        <result property="jcghje"    column="JCGHJE"    />
+        <result property="cbjzh"    column="CBJZH"    />
+        <result property="cbjhm"    column="CBJHM"    />
+        <result property="cbjhh"    column="CBJHH"    />
+        <result property="cbjbl"    column="CBJBL"    />
+        <result property="cbjje"    column="CBJJE"    />
+        <result property="hyghzh"    column="HYGHZH"    />
+        <result property="hyghhm"    column="HYGHHM"    />
+        <result property="hyghhh"    column="HYGHHH"    />
+        <result property="hyghbl"    column="HYGHBL"    />
+        <result property="hyghje"    column="HYGHJE"    />
+        <result property="xjghzh"    column="XJGHZH"    />
+        <result property="xjghhm"    column="XJGHHM"    />
+        <result property="xjghhh"    column="XJGHHH"    />
+        <result property="xjghbl"    column="XJGHBL"    />
+        <result property="xjghje"    column="XJGHJE"    />
+        <result property="sjghzh"    column="SJGHZH"    />
+        <result property="sjghhm"    column="SJGHHM"    />
+        <result property="sjghhh"    column="SJGHHH"    />
+        <result property="sjghbl"    column="SJGHBL"    />
+        <result property="sjghje"    column="SJGHJE"    />
+        <result property="szghzh"    column="SZGHZH"    />
+        <result property="szghhm"    column="SZGHHM"    />
+        <result property="szghhh"    column="SZGHHH"    />
+        <result property="szghbl"    column="SZGHBL"    />
+        <result property="szghje"    column="SZGHJE"    />
+        <result property="qgghzh"    column="QGGHZH"    />
+        <result property="qgghhm"    column="QGGHHM"    />
+        <result property="qgghhh"    column="QGGHHH"    />
+        <result property="qgghbl"    column="QGGHBL"    />
+        <result property="qgghje"    column="QGGHJE"    />
+        <result property="jcjzh"    column="JCJZH"    />
+        <result property="jcjhm"    column="JCJHM"    />
+        <result property="jcjhh"    column="JCJHH"    />
+        <result property="jcjbl"    column="JCJBL"    />
+        <result property="jcjje"    column="JCJJE"    />
+        <result property="jcwsh"    column="JCWSH"    />
+        <result property="sdszh"    column="SDSZH"    />
+        <result property="sdshm"    column="SDSHM"    />
+        <result property="sdshh"    column="SDSHH"    />
+        <result property="sdsbl"    column="SDSBL"    />
+        <result property="sdsje"    column="SDSJE"    />
+        <result property="swjgzh"    column="SWJGZH"    />
+        <result property="swjghm"    column="SWJGHM"    />
+        <result property="swjghh"    column="SWJGHH"    />
+        <result property="swjgbl"    column="SWJGBL"    />
+        <result property="swjgje"    column="SWJGJE"    />
+        <result property="cbjthbj"    column="CBJTHBJ"    />
+        <result property="cbjthrq"    column="CBJTHRQ"    />
+        <result property="cbjthczy"    column="CBJTHCZY"    />
+        <result property="jym"    column="JYM"    />
+        <result property="hkpch"    column="HKPCH"    />
+        <result property="bz"    column="BZ"    />
+        <result property="bluuid"    column="BLUUID"    />
+        <result property="sdghzh"    column="SDGHZH"    />
+        <result property="sdghhm"    column="SDGHHM"    />
+        <result property="sdghhh"    column="SDGHHH"    />
+        <result property="sdghbl"    column="SDGHBL"    />
+        <result property="sdghje"    column="SDGHJE"    />
+        <result property="createBy"    column="CREATE_BY"    />
+        <result property="createTime"    column="CREATE_TIME"    />
+        <result property="updateBy"    column="UPDATE_BY"    />
+        <result property="updateTime"    column="UPDATE_TIME"    />
+    </resultMap>
+
+    <resultMap id="TsjfclGhJfTsjfResult" type="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.tsjfcl.TsjfclDO" extends="TsjfclResult">
+        <collection property="ghJfTsjfList" notNullColumn="sub_ghjf_id" javaType="java.util.List" resultMap="GhJfTsjfResult" />
+    </resultMap>
+
+    <resultMap type="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.tsjfcl.GhJfTsjfDO" id="GhJfTsjfResult">
+        <result property="ghjfId"    column="sub_ghjf_id"    />
+        <result property="spuuid"    column="sub_SPUUID"    />
+        <result property="tsjfbj"    column="sub_TSJFBJ"    />
+        <result property="tsjfsm"    column="sub_TSJFSM"    />
+        <result property="clsj"    column="sub_CLSJ"    />
+        <result property="tsjfwj"    column="sub_TSJFWJ"    />
+        <result property="tsjftp"    column="sub_TSJFTP"    />
+        <result property="createBy"    column="sub_CREATE_BY"    />
+        <result property="createTime"    column="sub_CREATE_TIME"    />
+        <result property="updateBy"    column="sub_UPDATE_BY"    />
+        <result property="updateTime"    column="sub_UPDATE_TIME"    />
+    </resultMap>
+
+    <sql id="selectTsjfclVo">
+        select ghjf_id, SPUUID, DJXH, SHXYDM, NSRMC, NSRJC, dept_id, GHJGXZJB, CLGHBJ, HYGHBZ, SDGHJG_DM, SDGHJGXZJB, ZGSWJ_DM, ZGSWSKFJ_DM, SSGLY_DM, GHLB_DM, XTLB_DM, ZZJGLX_DM, HY_DM, DJZCLX_DM, DWLSGX_DM, SBLB_DM, NSSBRQ, PZXH, PZMXXH, SKSSQQ, SKSSQZ, ZSSWJG_DM, SKSSSWJG_DM, SKGK_DM, DZSPHM, PZZL_DM, PZZG_DM, PZHM, KPY_DM, KPY_XM, ZSPM_DM, ZSZM_DM, YSKM_DM, GZZE, SL, YNSE, JMSE, YJSE, YBTSE, JKFS_DM, JFHB, JFZH, JFHM, JFHH, JFYH, RKRQ, JSBJ, JSRQ, JSCZY, JCGHZH, JCGHHM, JCGHHH, JCGHBL, JCGHJE, CBJZH, CBJHM, CBJHH, CBJBL, CBJJE, HYGHZH, HYGHHM, HYGHHH, HYGHBL, HYGHJE, XJGHZH, XJGHHM, XJGHHH, XJGHBL, XJGHJE, SJGHZH, SJGHHM, SJGHHH, SJGHBL, SJGHJE, SZGHZH, SZGHHM, SZGHHH, SZGHBL, SZGHJE, QGGHZH, QGGHHM, QGGHHH, QGGHBL, QGGHJE, JCJZH, JCJHM, JCJHH, JCJBL, JCJJE, JCWSH, SDSZH, SDSHM, SDSHH, SDSBL, SDSJE, SWJGZH, SWJGHM, SWJGHH, SWJGBL, SWJGJE, CBJTHBJ, CBJTHRQ, CBJTHCZY, JYM, HKPCH, BZ, BLUUID, SDGHZH, SDGHHM, SDGHHH, SDGHBL, SDGHJE, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME from gh_jf jf
+    </sql>
+
+    <!-- v1: selectTsjfclList -->
+    <select id="selectTsjfclPage" resultMap="TsjfclResult">
+        <include refid="selectTsjfclVo"/>
+        <where>
+            <if test="query.shxydm != null and query.shxydm != ''">and SHXYDM = #{query.shxydm}</if>
+            <if test="query.nsrmc != null and query.nsrmc != ''">and NSRMC like concat('%', #{query.nsrmc}, '%')</if>
+            <if test="query.deptId != null and query.deptId != ''">and dept_id = #{query.deptId}</if>
+            <if test="query.zgswjDm != null and query.zgswjDm != ''">and ZGSWJ_DM = #{query.zgswjDm}</if>
+            <if test="query.skssqq != null and query.skssqq != ''">and SKSSQQ &gt;= #{query.skssqq}</if>
+            <if test="query.skssqz != null and query.skssqz != ''">and SKSSQZ &lt;= #{query.skssqz}</if>
+            <if test="query.zspmDm != null and query.zspmDm != ''">and ZSPM_DM = #{query.zspmDm}</if>
+            <if test="query.rkrqStart != null and query.rkrqStart != '' and query.rkrqEnd != null and query.rkrqEnd != ''">and RKRQ between #{query.rkrqStart} and #{query.rkrqEnd}</if>
+            <if test="query.jsbj != null and query.jsbj != ''">and JSBJ = #{query.jsbj}</if>
+            <if test="query.jsrqStart != null and query.jsrqStart != '' and query.jsrqEnd != null and query.jsrqEnd != ''">and JSRQ between #{query.jsrqStart} and #{query.jsrqEnd}</if>
+        </where>
+        order by rkrq desc
+    </select>
+
+    <!-- v1: selectTsjfclByGhjfId with child collection via LEFT JOIN -->
+    <select id="selectTsjfclByGhjfId" resultMap="TsjfclGhJfTsjfResult">
+        select a.ghjf_id, a.SPUUID, a.DJXH, a.SHXYDM, a.NSRMC, a.NSRJC, a.dept_id, a.GHJGXZJB, a.CLGHBJ, a.HYGHBZ, a.SDGHJG_DM, a.SDGHJGXZJB, a.ZGSWJ_DM, a.ZGSWSKFJ_DM, a.SSGLY_DM, a.GHLB_DM, a.XTLB_DM, a.ZZJGLX_DM, a.HY_DM, a.DJZCLX_DM, a.DWLSGX_DM, a.SBLB_DM, a.NSSBRQ, a.PZXH, a.PZMXXH, a.SKSSQQ, a.SKSSQZ, a.ZSSWJG_DM, a.SKSSSWJG_DM, a.SKGK_DM, a.DZSPHM, a.PZZL_DM, a.PZZG_DM, a.PZHM, a.KPY_DM, a.KPY_XM, a.ZSPM_DM, a.ZSZM_DM, a.YSKM_DM, a.GZZE, a.SL, a.YNSE, a.JMSE, a.YJSE, a.YBTSE, a.JKFS_DM, a.JFHB, a.JFZH, a.JFHM, a.JFHH, a.JFYH, a.RKRQ, a.JSBJ, a.JSRQ, a.JSCZY, a.JCGHZH, a.JCGHHM, a.JCGHHH, a.JCGHBL, a.JCGHJE, a.CBJZH, a.CBJHM, a.CBJHH, a.CBJBL, a.CBJJE, a.HYGHZH, a.HYGHHM, a.HYGHHH, a.HYGHBL, a.HYGHJE, a.XJGHZH, a.XJGHHM, a.XJGHHH, a.XJGHBL, a.XJGHJE, a.SJGHZH, a.SJGHHM, a.SJGHHH, a.SJGHBL, a.SJGHJE, a.SZGHZH, a.SZGHHM, a.SZGHHH, a.SZGHBL, a.SZGHJE, a.QGGHZH, a.QGGHHM, a.QGGHHH, a.QGGHBL, a.QGGHJE, a.JCJZH, a.JCJHM, a.JCJHH, a.JCJBL, a.JCJJE, a.JCWSH, a.SDSZH, a.SDSHM, a.SDSHH, a.SDSBL, a.SDSJE, a.SWJGZH, a.SWJGHM, a.SWJGHH, a.SWJGBL, a.SWJGJE, a.CBJTHBJ, a.CBJTHRQ, a.CBJTHCZY, a.JYM, a.HKPCH, a.BZ, a.BLUUID, a.SDGHZH, a.SDGHHM, a.SDGHHH, a.SDGHBL, a.SDGHJE, a.CREATE_BY, a.CREATE_TIME, a.UPDATE_BY, a.UPDATE_TIME,
+ b.ghjf_id as sub_ghjf_id, b.SPUUID as sub_SPUUID, b.TSJFBJ as sub_TSJFBJ, b.TSJFSM as sub_TSJFSM, b.CLSJ as sub_CLSJ, b.TSJFWJ as sub_TSJFWJ, b.TSJFTP as sub_TSJFTP, b.CREATE_BY as sub_CREATE_BY, b.CREATE_TIME as sub_CREATE_TIME, b.UPDATE_BY as sub_UPDATE_BY, b.UPDATE_TIME as sub_UPDATE_TIME
+        from gh_jf a
+        left join gh_jf_tsjf b on b.ghjf_id = a.ghjf_id
+        where a.ghjf_id = #{ghjfId}
+    </select>
+
+    <!-- v1: insertTsjfcl -->
+    <insert id="insertTsjfcl" useGeneratedKeys="true" keyProperty="ghjfId">
+        insert into gh_jf
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spuuid != null and spuuid != ''">SPUUID,</if>
+            <if test="djxh != null and djxh != ''">DJXH,</if>
+            <if test="shxydm != null and shxydm != ''">SHXYDM,</if>
+            <if test="nsrmc != null and nsrmc != ''">NSRMC,</if>
+            <if test="nsrjc != null and nsrjc != ''">NSRJC,</if>
+            <if test="deptId != null and deptId != ''">dept_id,</if>
+            <if test="ghjgxzjb != null and ghjgxzjb != ''">GHJGXZJB,</if>
+            <if test="clghbj != null and clghbj != ''">CLGHBJ,</if>
+            <if test="hyghbz != null and hyghbz != ''">HYGHBZ,</if>
+            <if test="sdghjgDm != null and sdghjgDm != ''">SDGHJG_DM,</if>
+            <if test="sdghjgxzjb != null and sdghjgxzjb != ''">SDGHJGXZJB,</if>
+            <if test="zgswjDm != null and zgswjDm != ''">ZGSWJ_DM,</if>
+            <if test="zgswskfjDm != null and zgswskfjDm != ''">ZGSWSKFJ_DM,</if>
+            <if test="ssglyDm != null">SSGLY_DM,</if>
+            <if test="ghlbDm != null and ghlbDm != ''">GHLB_DM,</if>
+            <if test="xtlbDm != null and xtlbDm != ''">XTLB_DM,</if>
+            <if test="zzjglxDm != null">ZZJGLX_DM,</if>
+            <if test="hyDm != null">HY_DM,</if>
+            <if test="djzclxDm != null">DJZCLX_DM,</if>
+            <if test="dwlsgxDm != null">DWLSGX_DM,</if>
+            <if test="sblbDm != null and sblbDm != ''">SBLB_DM,</if>
+            <if test="nssbrq != null">NSSBRQ,</if>
+            <if test="pzxh != null and pzxh != ''">PZXH,</if>
+            <if test="pzmxxh != null">PZMXXH,</if>
+            <if test="skssqq != null">SKSSQQ,</if>
+            <if test="skssqz != null">SKSSQZ,</if>
+            <if test="zsswjgDm != null and zsswjgDm != ''">ZSSWJG_DM,</if>
+            <if test="skssswjgDm != null and skssswjgDm != ''">SKSSSWJG_DM,</if>
+            <if test="skgkDm != null and skgkDm != ''">SKGK_DM,</if>
+            <if test="dzsphm != null">DZSPHM,</if>
+            <if test="pzzlDm != null">PZZL_DM,</if>
+            <if test="pzzgDm != null">PZZG_DM,</if>
+            <if test="pzhm != null">PZHM,</if>
+            <if test="kpyDm != null and kpyDm != ''">KPY_DM,</if>
+            <if test="kpyXm != null">KPY_XM,</if>
+            <if test="zspmDm != null and zspmDm != ''">ZSPM_DM,</if>
+            <if test="zszmDm != null">ZSZM_DM,</if>
+            <if test="yskmDm != null and yskmDm != ''">YSKM_DM,</if>
+            <if test="gzze != null">GZZE,</if>
+            <if test="sl != null">SL,</if>
+            <if test="ynse != null">YNSE,</if>
+            <if test="jmse != null">JMSE,</if>
+            <if test="yjse != null">YJSE,</if>
+            <if test="ybtse != null">YBTSE,</if>
+            <if test="jkfsDm != null and jkfsDm != ''">JKFS_DM,</if>
+            <if test="jfhb != null and jfhb != ''">JFHB,</if>
+            <if test="jfzh != null">JFZH,</if>
+            <if test="jfhm != null">JFHM,</if>
+            <if test="jfhh != null">JFHH,</if>
+            <if test="jfyh != null">JFYH,</if>
+            <if test="rkrq != null">RKRQ,</if>
+            <if test="jsbj != null and jsbj != ''">JSBJ,</if>
+            <if test="jsrq != null">JSRQ,</if>
+            <if test="jsczy != null">JSCZY,</if>
+            <if test="jcghzh != null">JCGHZH,</if>
+            <if test="jcghhm != null">JCGHHM,</if>
+            <if test="jcghhh != null">JCGHHH,</if>
+            <if test="jcghbl != null">JCGHBL,</if>
+            <if test="jcghje != null">JCGHJE,</if>
+            <if test="cbjzh != null">CBJZH,</if>
+            <if test="cbjhm != null">CBJHM,</if>
+            <if test="cbjhh != null">CBJHH,</if>
+            <if test="cbjbl != null">CBJBL,</if>
+            <if test="cbjje != null">CBJJE,</if>
+            <if test="hyghzh != null">HYGHZH,</if>
+            <if test="hyghhm != null">HYGHHM,</if>
+            <if test="hyghhh != null">HYGHHH,</if>
+            <if test="hyghbl != null">HYGHBL,</if>
+            <if test="hyghje != null">HYGHJE,</if>
+            <if test="xjghzh != null">XJGHZH,</if>
+            <if test="xjghhm != null">XJGHHM,</if>
+            <if test="xjghhh != null">XJGHHH,</if>
+            <if test="xjghbl != null">XJGHBL,</if>
+            <if test="xjghje != null">XJGHJE,</if>
+            <if test="sjghzh != null">SJGHZH,</if>
+            <if test="sjghhm != null">SJGHHM,</if>
+            <if test="sjghhh != null">SJGHHH,</if>
+            <if test="sjghbl != null">SJGHBL,</if>
+            <if test="sjghje != null">SJGHJE,</if>
+            <if test="szghzh != null">SZGHZH,</if>
+            <if test="szghhm != null">SZGHHM,</if>
+            <if test="szghhh != null">SZGHHH,</if>
+            <if test="szghbl != null">SZGHBL,</if>
+            <if test="szghje != null">SZGHJE,</if>
+            <if test="qgghzh != null">QGGHZH,</if>
+            <if test="qgghhm != null">QGGHHM,</if>
+            <if test="qgghhh != null">QGGHHH,</if>
+            <if test="qgghbl != null">QGGHBL,</if>
+            <if test="qgghje != null">QGGHJE,</if>
+            <if test="jcjzh != null">JCJZH,</if>
+            <if test="jcjhm != null">JCJHM,</if>
+            <if test="jcjhh != null">JCJHH,</if>
+            <if test="jcjbl != null">JCJBL,</if>
+            <if test="jcjje != null">JCJJE,</if>
+            <if test="jcwsh != null">JCWSH,</if>
+            <if test="sdszh != null">SDSZH,</if>
+            <if test="sdshm != null">SDSHM,</if>
+            <if test="sdshh != null">SDSHH,</if>
+            <if test="sdsbl != null">SDSBL,</if>
+            <if test="sdsje != null">SDSJE,</if>
+            <if test="swjgzh != null">SWJGZH,</if>
+            <if test="swjghm != null">SWJGHM,</if>
+            <if test="swjghh != null">SWJGHH,</if>
+            <if test="swjgbl != null">SWJGBL,</if>
+            <if test="swjgje != null">SWJGJE,</if>
+            <if test="cbjthbj != null and cbjthbj != ''">CBJTHBJ,</if>
+            <if test="cbjthrq != null">CBJTHRQ,</if>
+            <if test="cbjthczy != null">CBJTHCZY,</if>
+            <if test="jym != null">JYM,</if>
+            <if test="hkpch != null">HKPCH,</if>
+            <if test="bz != null">BZ,</if>
+            <if test="bluuid != null">BLUUID,</if>
+            <if test="sdghzh != null">SDGHZH,</if>
+            <if test="sdghhm != null">SDGHHM,</if>
+            <if test="sdghhh != null">SDGHHH,</if>
+            <if test="sdghbl != null">SDGHBL,</if>
+            <if test="sdghje != null">SDGHJE,</if>
+            <if test="createBy != null">CREATE_BY,</if>
+            <if test="createTime != null">CREATE_TIME,</if>
+            <if test="updateBy != null">UPDATE_BY,</if>
+            <if test="updateTime != null">UPDATE_TIME,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="spuuid != null and spuuid != ''">#{spuuid},</if>
+            <if test="djxh != null and djxh != ''">#{djxh},</if>
+            <if test="shxydm != null and shxydm != ''">#{shxydm},</if>
+            <if test="nsrmc != null and nsrmc != ''">#{nsrmc},</if>
+            <if test="nsrjc != null and nsrjc != ''">#{nsrjc},</if>
+            <if test="deptId != null and deptId != ''">#{deptId},</if>
+            <if test="ghjgxzjb != null and ghjgxzjb != ''">#{ghjgxzjb},</if>
+            <if test="clghbj != null and clghbj != ''">#{clghbj},</if>
+            <if test="hyghbz != null and hyghbz != ''">#{hyghbz},</if>
+            <if test="sdghjgDm != null and sdghjgDm != ''">#{sdghjgDm},</if>
+            <if test="sdghjgxzjb != null and sdghjgxzjb != ''">#{sdghjgxzjb},</if>
+            <if test="zgswjDm != null and zgswjDm != ''">#{zgswjDm},</if>
+            <if test="zgswskfjDm != null and zgswskfjDm != ''">#{zgswskfjDm},</if>
+            <if test="ssglyDm != null">#{ssglyDm},</if>
+            <if test="ghlbDm != null and ghlbDm != ''">#{ghlbDm},</if>
+            <if test="xtlbDm != null and xtlbDm != ''">#{xtlbDm},</if>
+            <if test="zzjglxDm != null">#{zzjglxDm},</if>
+            <if test="hyDm != null">#{hyDm},</if>
+            <if test="djzclxDm != null">#{djzclxDm},</if>
+            <if test="dwlsgxDm != null">#{dwlsgxDm},</if>
+            <if test="sblbDm != null and sblbDm != ''">#{sblbDm},</if>
+            <if test="nssbrq != null">#{nssbrq},</if>
+            <if test="pzxh != null and pzxh != ''">#{pzxh},</if>
+            <if test="pzmxxh != null">#{pzmxxh},</if>
+            <if test="skssqq != null">#{skssqq},</if>
+            <if test="skssqz != null">#{skssqz},</if>
+            <if test="zsswjgDm != null and zsswjgDm != ''">#{zsswjgDm},</if>
+            <if test="skssswjgDm != null and skssswjgDm != ''">#{skssswjgDm},</if>
+            <if test="skgkDm != null and skgkDm != ''">#{skgkDm},</if>
+            <if test="dzsphm != null">#{dzsphm},</if>
+            <if test="pzzlDm != null">#{pzzlDm},</if>
+            <if test="pzzgDm != null">#{pzzgDm},</if>
+            <if test="pzhm != null">#{pzhm},</if>
+            <if test="kpyDm != null and kpyDm != ''">#{kpyDm},</if>
+            <if test="kpyXm != null">#{kpyXm},</if>
+            <if test="zspmDm != null and zspmDm != ''">#{zspmDm},</if>
+            <if test="zszmDm != null">#{zszmDm},</if>
+            <if test="yskmDm != null and yskmDm != ''">#{yskmDm},</if>
+            <if test="gzze != null">#{gzze},</if>
+            <if test="sl != null">#{sl},</if>
+            <if test="ynse != null">#{ynse},</if>
+            <if test="jmse != null">#{jmse},</if>
+            <if test="yjse != null">#{yjse},</if>
+            <if test="ybtse != null">#{ybtse},</if>
+            <if test="jkfsDm != null and jkfsDm != ''">#{jkfsDm},</if>
+            <if test="jfhb != null and jfhb != ''">#{jfhb},</if>
+            <if test="jfzh != null">#{jfzh},</if>
+            <if test="jfhm != null">#{jfhm},</if>
+            <if test="jfhh != null">#{jfhh},</if>
+            <if test="jfyh != null">#{jfyh},</if>
+            <if test="rkrq != null">#{rkrq},</if>
+            <if test="jsbj != null and jsbj != ''">#{jsbj},</if>
+            <if test="jsrq != null">#{jsrq},</if>
+            <if test="jsczy != null">#{jsczy},</if>
+            <if test="jcghzh != null">#{jcghzh},</if>
+            <if test="jcghhm != null">#{jcghhm},</if>
+            <if test="jcghhh != null">#{jcghhh},</if>
+            <if test="jcghbl != null">#{jcghbl},</if>
+            <if test="jcghje != null">#{jcghje},</if>
+            <if test="cbjzh != null">#{cbjzh},</if>
+            <if test="cbjhm != null">#{cbjhm},</if>
+            <if test="cbjhh != null">#{cbjhh},</if>
+            <if test="cbjbl != null">#{cbjbl},</if>
+            <if test="cbjje != null">#{cbjje},</if>
+            <if test="hyghzh != null">#{hyghzh},</if>
+            <if test="hyghhm != null">#{hyghhm},</if>
+            <if test="hyghhh != null">#{hyghhh},</if>
+            <if test="hyghbl != null">#{hyghbl},</if>
+            <if test="hyghje != null">#{hyghje},</if>
+            <if test="xjghzh != null">#{xjghzh},</if>
+            <if test="xjghhm != null">#{xjghhm},</if>
+            <if test="xjghhh != null">#{xjghhh},</if>
+            <if test="xjghbl != null">#{xjghbl},</if>
+            <if test="xjghje != null">#{xjghje},</if>
+            <if test="sjghzh != null">#{sjghzh},</if>
+            <if test="sjghhm != null">#{sjghhm},</if>
+            <if test="sjghhh != null">#{sjghhh},</if>
+            <if test="sjghbl != null">#{sjghbl},</if>
+            <if test="sjghje != null">#{sjghje},</if>
+            <if test="szghzh != null">#{szghzh},</if>
+            <if test="szghhm != null">#{szghhm},</if>
+            <if test="szghhh != null">#{szghhh},</if>
+            <if test="szghbl != null">#{szghbl},</if>
+            <if test="szghje != null">#{szghje},</if>
+            <if test="qgghzh != null">#{qgghzh},</if>
+            <if test="qgghhm != null">#{qgghhm},</if>
+            <if test="qgghhh != null">#{qgghhh},</if>
+            <if test="qgghbl != null">#{qgghbl},</if>
+            <if test="qgghje != null">#{qgghje},</if>
+            <if test="jcjzh != null">#{jcjzh},</if>
+            <if test="jcjhm != null">#{jcjhm},</if>
+            <if test="jcjhh != null">#{jcjhh},</if>
+            <if test="jcjbl != null">#{jcjbl},</if>
+            <if test="jcjje != null">#{jcjje},</if>
+            <if test="jcwsh != null">#{jcwsh},</if>
+            <if test="sdszh != null">#{sdszh},</if>
+            <if test="sdshm != null">#{sdshm},</if>
+            <if test="sdshh != null">#{sdshh},</if>
+            <if test="sdsbl != null">#{sdsbl},</if>
+            <if test="sdsje != null">#{sdsje},</if>
+            <if test="swjgzh != null">#{swjgzh},</if>
+            <if test="swjghm != null">#{swjghm},</if>
+            <if test="swjghh != null">#{swjghh},</if>
+            <if test="swjgbl != null">#{swjgbl},</if>
+            <if test="swjgje != null">#{swjgje},</if>
+            <if test="cbjthbj != null and cbjthbj != ''">#{cbjthbj},</if>
+            <if test="cbjthrq != null">#{cbjthrq},</if>
+            <if test="cbjthczy != null">#{cbjthczy},</if>
+            <if test="jym != null">#{jym},</if>
+            <if test="hkpch != null">#{hkpch},</if>
+            <if test="bz != null">#{bz},</if>
+            <if test="bluuid != null">#{bluuid},</if>
+            <if test="sdghzh != null">#{sdghzh},</if>
+            <if test="sdghhm != null">#{sdghhm},</if>
+            <if test="sdghhh != null">#{sdghhh},</if>
+            <if test="sdghbl != null">#{sdghbl},</if>
+            <if test="sdghje != null">#{sdghje},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <!-- v1: updateTsjfcl -->
+    <update id="updateTsjfcl">
+        update gh_jf
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="spuuid != null and spuuid != ''">SPUUID = #{spuuid},</if>
+            <if test="djxh != null and djxh != ''">DJXH = #{djxh},</if>
+            <if test="shxydm != null and shxydm != ''">SHXYDM = #{shxydm},</if>
+            <if test="nsrmc != null and nsrmc != ''">NSRMC = #{nsrmc},</if>
+            <if test="nsrjc != null and nsrjc != ''">NSRJC = #{nsrjc},</if>
+            <if test="deptId != null and deptId != ''">dept_id = #{deptId},</if>
+            <if test="updateBy != null">UPDATE_BY = #{updateBy},</if>
+            <if test="updateTime != null">UPDATE_TIME = #{updateTime},</if>
+        </trim>
+        where ghjf_id = #{ghjfId}
+    </update>
+
+    <!-- v1: deleteTsjfclByGhjfId -->
+    <delete id="deleteTsjfclByGhjfId">
+        delete from gh_jf where ghjf_id = #{ghjfId}
+    </delete>
+
+    <!-- v1: deleteTsjfclByGhjfIds -->
+    <delete id="deleteTsjfclByGhjfIds">
+        delete from gh_jf where ghjf_id in
+        <foreach item="ghjfId" collection="ghjfIds" open="(" separator="," close=")">
+            #{ghjfId}
+        </foreach>
+    </delete>
+
+    <!-- v1: deleteGhJfTsjfByGhjfIds (child batch delete) -->
+    <delete id="deleteGhJfTsjfByGhjfIds">
+        delete from gh_jf_tsjf where ghjf_id in
+        <foreach item="ghjfId" collection="ghjfIds" open="(" separator="," close=")">
+            #{ghjfId}
+        </foreach>
+    </delete>
+
+    <!-- v1: deleteGhJfTsjfByGhjfId (child single delete) -->
+    <delete id="deleteGhJfTsjfByGhjfId">
+        delete from gh_jf_tsjf where ghjf_id = #{ghjfId}
+    </delete>
+
+    <!-- v1: batchGhJfTsjf -->
+    <insert id="batchGhJfTsjf">
+        insert into gh_jf_tsjf( ghjf_id, SPUUID, TSJFBJ, TSJFSM, CLSJ, TSJFWJ, TSJFTP, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.ghjfId}, #{item.spuuid}, #{item.tsjfbj}, #{item.tsjfsm}, #{item.clsj}, #{item.tsjfwj}, #{item.tsjftp}, #{item.createBy}, sysdate(), #{item.updateBy}, sysdate())
+        </foreach>
+    </insert>
+
+    <!-- v1: batchInsertOrUpdateChildData (ON DUPLICATE KEY UPDATE) -->
+    <insert id="batchInsertOrUpdateChildData">
+        insert into gh_jf_tsjf ( ghjf_id, SPUUID, TSJFBJ, TSJFSM, CLSJ, TSJFWJ, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME) values
+        <foreach collection="ghJfTsjfList" item="item" separator=",">
+            ( #{item.ghjfId}, #{item.spuuid}, #{item.tsjfbj}, #{item.tsjfsm}, #{item.clsj}, #{item.tsjfwj}, #{item.createBy}, #{item.createTime}, #{item.updateBy}, #{item.updateTime})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        SPUUID = VALUES(SPUUID),
+        TSJFBJ = VALUES(TSJFBJ),
+        TSJFSM = VALUES(TSJFSM),
+        CLSJ = VALUES(CLSJ),
+        TSJFWJ = VALUES(TSJFWJ),
+        CREATE_BY = VALUES(CREATE_BY),
+        CREATE_TIME = VALUES(CREATE_TIME),
+        UPDATE_BY = VALUES(UPDATE_BY),
+        UPDATE_TIME = VALUES(UPDATE_TIME)
+    </insert>
+
+    <!-- v1: batchUpdateMainTableModifyTime -->
+    <update id="batchUpdateMainTableModifyTime">
+        update gh_jf
+        set UPDATE_BY = #{ghJfTsjfList[0].updateBy},
+            UPDATE_TIME = #{ghJfTsjfList[0].updateTime}
+        where ghjf_id in
+        <foreach collection="ghJfTsjfList" item="item" separator="," open="(" close=")">
+            #{item.ghjfId}
+        </foreach>
+    </update>
+
+</mapper>

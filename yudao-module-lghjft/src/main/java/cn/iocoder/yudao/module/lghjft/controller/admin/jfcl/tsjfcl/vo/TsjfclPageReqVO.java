@@ -25,4 +25,22 @@ public class TsjfclPageReqVO extends PageParam {
 
     @Schema(description = "征收品目代码")
     private String zspmDm;
+
+    @Schema(description = "所属期起")
+    private String skssqq;
+
+    @Schema(description = "所属期止")
+    private String skssqz;
+
+    @Schema(description = "入库日期开始")
+    private String rkrqStart;
+
+    @Schema(description = "入库日期结束")
+    private String rkrqEnd;
+
+    @Schema(description = "结算日期开始")
+    private String jsrqStart;
+
+    @Schema(description = "结算日期结束")
+    private String jsrqEnd;
 }
