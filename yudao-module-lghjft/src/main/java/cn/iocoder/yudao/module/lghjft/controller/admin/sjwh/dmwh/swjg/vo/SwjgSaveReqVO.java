@@ -56,7 +56,7 @@ public class SwjgSaveReqVO {
     private String ghjgDm;
 
     @Schema(description = "顺序号")
-    private Integer sxh;
+    private Long sxh;
 
     @Schema(description = "校验码", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotEmpty(message = "校验码不能为空")

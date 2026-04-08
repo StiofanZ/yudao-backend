@@ -12,7 +12,7 @@ import lombok.Data;
 public class SkgkResVO {
 
     @Schema(description = "国库ID", requiredMode = Schema.RequiredMode.REQUIRED, example = "19910")
-    private Integer gkId;
+    private Long gkId;
 
 
     @Schema(description = "税款国库代码", requiredMode = Schema.RequiredMode.REQUIRED)

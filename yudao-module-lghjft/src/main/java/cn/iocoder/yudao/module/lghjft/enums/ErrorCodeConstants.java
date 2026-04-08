@@ -101,4 +101,8 @@ public interface ErrorCodeConstants {
     ErrorCode OPERATION_NOT_PERMITTED = new ErrorCode(2_028_000_001, "无权操作该记录");
 
     ErrorCode YJHXX_NOT_EXISTS = new ErrorCode(2_029_000_001, "已建会信息不存在");
+
+    ErrorCode XZQH_NOT_EXISTS = new ErrorCode(2_030_000_001, "行政区划不存在");
+    ErrorCode SWJG_NOT_EXISTS = new ErrorCode(2_030_000_002, "税务机关不存在");
+    ErrorCode FPBL_NOT_EXISTS = new ErrorCode(2_030_000_003, "分配比例不存在");
 }

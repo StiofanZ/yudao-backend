@@ -32,7 +32,7 @@ public class HjflSaveReqVO {
 
     @Schema(description = "顺序号")
     @Digits(integer = 4, fraction = 0, message = "顺序号只能是整数，且长度不超过4位") // 对应数据库 SXH decimal(4,0)
-    private Short sxh; // Short 类型天然适配 decimal(4,0)，无需额外长度限制（Short 最大值 32767，覆盖4位整数）
+    private Long sxh;
 
     @Schema(description = "户籍分类id", example = "27518")
     private Integer hjflid; // 数据库 int 类型，无需长度校验（Integer 覆盖 int 范围）

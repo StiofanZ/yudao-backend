@@ -15,26 +15,27 @@ import java.util.List;
 public interface SwjgService {
 
     /**
+     * 创建税务机关
+     */
+    String createSwjg(@Valid SwjgSaveReqVO createReqVO);
+
+    /**
      * 更新税务机关
-     *
-     * @param updateReqVO 更新信息
      */
     void updateSwjg(@Valid SwjgSaveReqVO updateReqVO);
 
+    /**
+     * 批量删除税务机关
+     */
+    void deleteSwjgByIds(List<String> swjgDms);
 
     /**
      * 获得税务机关
-     *
-     * @param swjgDm 税务机关代码
-     * @return 税务机关
      */
     SwjgDO getSwjg(String swjgDm);
 
     /**
      * 获得税务机关列表
-     *
-     * @param listReqVO 查询条件
-     * @return 税务机关列表
      */
     List<SwjgDO> getSwjgList(SwjgListReqVO listReqVO);
 

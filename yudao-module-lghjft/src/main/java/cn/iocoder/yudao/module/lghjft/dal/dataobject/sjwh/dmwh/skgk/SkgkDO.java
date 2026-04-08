@@ -23,7 +23,7 @@ public class SkgkDO {
      * 国库ID
      */
     @TableId
-    private Integer gkId;
+    private Long gkId;
     /**
      * 税款国库代码
      */

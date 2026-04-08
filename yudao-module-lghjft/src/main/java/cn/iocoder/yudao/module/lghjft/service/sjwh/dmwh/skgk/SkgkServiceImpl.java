@@ -30,50 +30,41 @@ public class SkgkServiceImpl implements SkgkService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public Integer createSkgk(SkgkSaveReqVO createReqVO) {
-        // 插入
+    public Long createSkgk(SkgkSaveReqVO createReqVO) {
         SkgkDO skgk = BeanUtils.toBean(createReqVO, SkgkDO.class);
         skgkMapper.insert(skgk);
-
-        // 返回
         return skgk.getGkId();
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateSkgk(SkgkSaveReqVO updateReqVO) {
-        // 校验存在
         validateSkgkExists(updateReqVO.getGkId());
-        // 更新
         SkgkDO updateObj = BeanUtils.toBean(updateReqVO, SkgkDO.class);
         skgkMapper.updateById(updateObj);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void deleteSkgk(Integer id) {
-        // 校验存在
+    public void deleteSkgk(Long id) {
         validateSkgkExists(id);
-        // 删除
         skgkMapper.deleteById(id);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void deleteSkgkListByIds(List<Integer> ids) {
-        // 删除
+    public void deleteSkgkListByIds(List<Long> ids) {
         skgkMapper.deleteByIds(ids);
     }
 
-
-    private void validateSkgkExists(Integer id) {
+    private void validateSkgkExists(Long id) {
         if (skgkMapper.selectById(id) == null) {
             throw exception(SKGK_NOT_EXISTS);
         }
     }
 
     @Override
-    public SkgkDO getSkgk(Integer id) {
+    public SkgkDO getSkgk(Long id) {
         return skgkMapper.selectById(id);
     }
 

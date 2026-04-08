@@ -19,10 +19,9 @@ public interface SkgkMapper extends BaseMapperX<SkgkDO> {
     default PageResult<SkgkDO> selectPage(SkgkPageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<SkgkDO>()
                 .eqIfPresent(SkgkDO::getSkgkDm, reqVO.getSkgkDm())
-                .eqIfPresent(SkgkDO::getSkgkmc, reqVO.getSkgkmc())
-                .eqIfPresent(SkgkDO::getSkgkjc, reqVO.getSkgkjc())
-                .eqIfPresent(SkgkDO::getXzqhDm, reqVO.getXzqhDm())
-                .orderByDesc(SkgkDO::getGkId));
+                .likeIfPresent(SkgkDO::getSkgkmc, reqVO.getSkgkmc())
+                .likeIfPresent(SkgkDO::getSkgkjc, reqVO.getSkgkjc())
+                .eqIfPresent(SkgkDO::getXzqhDm, reqVO.getXzqhDm()));
     }
 
 }

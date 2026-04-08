@@ -18,17 +18,21 @@ public interface SwjgMapper extends BaseMapperX<SwjgDO> {
 
     default List<SwjgDO> selectList(SwjgListReqVO reqVO) {
         return selectList(new LambdaQueryWrapperX<SwjgDO>()
-                .eqIfPresent(SwjgDO::getSwjgmc, reqVO.getSwjgmc())
+                .likeIfPresent(SwjgDO::getSwjgmc, reqVO.getSwjgmc())
+                .likeIfPresent(SwjgDO::getSwjgjc, reqVO.getSwjgjc())
+                .eqIfPresent(SwjgDO::getDz, reqVO.getDz())
+                .eqIfPresent(SwjgDO::getYzbm, reqVO.getYzbm())
+                .eqIfPresent(SwjgDO::getLxr, reqVO.getLxr())
+                .eqIfPresent(SwjgDO::getLxdh, reqVO.getLxdh())
                 .eqIfPresent(SwjgDO::getSxfzh, reqVO.getSxfzh())
-                .orderByDesc(SwjgDO::getSwjgDm));
-    }
-
-    default SwjgDO selectBySjswjgDmAndSwjgmc(Long sjswjgDm, String swjgmc) {
-        return selectOne(SwjgDO::getSjswjgDm, sjswjgDm, SwjgDO::getSwjgmc, swjgmc);
-    }
-
-    default Long selectCountBySjswjgDm(String sjswjgDm) {
-        return selectCount(SwjgDO::getSjswjgDm, sjswjgDm);
+                .eqIfPresent(SwjgDO::getSxfhm, reqVO.getSxfhm())
+                .eqIfPresent(SwjgDO::getSxfhh, reqVO.getSxfhh())
+                .eqIfPresent(SwjgDO::getSxfyh, reqVO.getSxfyh())
+                .eqIfPresent(SwjgDO::getSjswjgDm, reqVO.getSjswjgDm())
+                .eqIfPresent(SwjgDO::getJcjbj, reqVO.getJcjbj())
+                .eqIfPresent(SwjgDO::getGhjgDm, reqVO.getGhjgDm())
+                .eqIfPresent(SwjgDO::getSxh, reqVO.getSxh())
+                .eqIfPresent(SwjgDO::getJym, reqVO.getJym()));
     }
 
 }

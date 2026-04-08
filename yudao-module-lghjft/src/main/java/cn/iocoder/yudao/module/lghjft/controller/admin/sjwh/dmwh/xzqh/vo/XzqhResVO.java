@@ -12,7 +12,7 @@ public class XzqhResVO {
 
     @Schema(description = "行政区划代码", requiredMode = Schema.RequiredMode.REQUIRED)
     @ExcelProperty("行政区划代码")
-    private Long xzqhDm;
+    private String xzqhDm;
 
     @Schema(description = "行政区划名称", requiredMode = Schema.RequiredMode.REQUIRED)
     @ExcelProperty("行政区划名称")

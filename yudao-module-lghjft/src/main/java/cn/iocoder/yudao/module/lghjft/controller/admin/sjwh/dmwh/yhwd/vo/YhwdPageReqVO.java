@@ -32,7 +32,7 @@ public class YhwdPageReqVO extends PageParam {
     private String xzqhDm;
 
     @Schema(description = "顺序号")
-    private Integer sxh;
+    private Long sxh;
 
     @Schema(description = "有效期止")
     private LocalDateTime yxqz;

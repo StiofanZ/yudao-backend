@@ -9,7 +9,7 @@ import lombok.Data;
 public class SkgkSaveReqVO {
 
     @Schema(description = "国库ID", requiredMode = Schema.RequiredMode.REQUIRED, example = "19910")
-    private Integer gkId;
+    private Long gkId;
 
     @Schema(description = "税款国库代码", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotEmpty(message = "税款国库代码不能为空")

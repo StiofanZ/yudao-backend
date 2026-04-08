@@ -9,7 +9,6 @@ import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.dmwh.skgk.vo.SkgkPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.dmwh.skgk.vo.SkgkResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.dmwh.skgk.vo.SkgkSaveReqVO;
-
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.dmwh.skgk.SkgkDO;
 import cn.iocoder.yudao.module.lghjft.service.sjwh.dmwh.skgk.SkgkService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,7 +39,7 @@ public class SkgkController {
     @PostMapping("/create")
     @Operation(summary = "创建收款国库")
     @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-skgk:create')")
-    public CommonResult<Integer> createSkgk(@Valid @RequestBody SkgkSaveReqVO createReqVO) {
+    public CommonResult<Long> createSkgk(@Valid @RequestBody SkgkSaveReqVO createReqVO) {
         return success(skgkService.createSkgk(createReqVO));
     }
 
@@ -56,7 +55,7 @@ public class SkgkController {
     @Operation(summary = "删除收款国库")
     @Parameter(name = "id", description = "编号", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-skgk:delete')")
-    public CommonResult<Boolean> deleteSkgk(@RequestParam("id") Integer id) {
+    public CommonResult<Boolean> deleteSkgk(@RequestParam("id") Long id) {
         skgkService.deleteSkgk(id);
         return success(true);
     }
@@ -65,7 +64,7 @@ public class SkgkController {
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除收款国库")
     @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-skgk:delete')")
-    public CommonResult<Boolean> deleteSkgkList(@RequestParam("ids") List<Integer> ids) {
+    public CommonResult<Boolean> deleteSkgkList(@RequestParam("ids") List<Long> ids) {
         skgkService.deleteSkgkListByIds(ids);
         return success(true);
     }
@@ -74,7 +73,7 @@ public class SkgkController {
     @Operation(summary = "获得收款国库")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:sjwh-dmwh-skgk:query')")
-    public CommonResult<SkgkResVO> getSkgk(@RequestParam("id") Integer id) {
+    public CommonResult<SkgkResVO> getSkgk(@RequestParam("id") Long id) {
         SkgkDO skgk = skgkService.getSkgk(id);
         return success(BeanUtils.toBean(skgk, SkgkResVO.class));
     }
@@ -95,7 +94,6 @@ public class SkgkController {
                                 HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<SkgkDO> list = skgkService.getSkgkPage(pageReqVO).getList();
-        // 导出 Excel
         ExcelUtils.write(response, "收款国库.xls", "数据", SkgkResVO.class,
                 BeanUtils.toBean(list, SkgkResVO.class));
     }

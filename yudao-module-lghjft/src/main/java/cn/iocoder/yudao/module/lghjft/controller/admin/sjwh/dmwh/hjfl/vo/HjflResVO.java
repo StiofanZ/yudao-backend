@@ -31,7 +31,7 @@ public class HjflResVO {
 
     @Schema(description = "顺序号")
     @ExcelProperty("顺序号")
-    private Short sxh;
+    private Long sxh;
 
     @Schema(description = "户籍分类id", example = "27518")
     private Integer hjflid;

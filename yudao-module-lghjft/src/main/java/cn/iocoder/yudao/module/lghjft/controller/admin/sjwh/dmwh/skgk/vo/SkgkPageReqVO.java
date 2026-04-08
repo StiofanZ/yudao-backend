@@ -9,7 +9,7 @@ import lombok.Data;
 public class SkgkPageReqVO extends PageParam {
 
     @Schema(description = "税款国库id")
-    private Integer gkId;
+    private Long gkId;
 
     @Schema(description = "税款国库代码")
     private String skgkDm;

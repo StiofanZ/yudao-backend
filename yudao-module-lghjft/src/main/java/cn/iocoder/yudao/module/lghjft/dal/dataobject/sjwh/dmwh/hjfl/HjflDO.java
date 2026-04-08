@@ -40,7 +40,7 @@ public class HjflDO {
     /**
      * 顺序号
      */
-    private Short sxh;
+    private Long sxh;
     /**
      * 户籍分类id
      */

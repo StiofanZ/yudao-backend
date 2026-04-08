@@ -42,7 +42,7 @@ public class YhwdResVO {
 
     @Schema(description = "顺序号")
     @ExcelProperty("顺序号")
-    private Integer sxh;
+    private Long sxh;
 
     @Schema(description = "有效期止")
     @ExcelProperty("有效期止")

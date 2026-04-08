@@ -68,7 +68,7 @@ public class SwjgResVO {
 
     @Schema(description = "顺序号")
     @ExcelProperty("顺序号")
-    private Integer sxh;
+    private Long sxh;
 
     @Schema(description = "校验码", requiredMode = Schema.RequiredMode.REQUIRED)
     @ExcelProperty("校验码")

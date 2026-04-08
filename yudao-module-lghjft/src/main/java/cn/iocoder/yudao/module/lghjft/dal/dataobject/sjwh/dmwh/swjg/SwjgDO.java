@@ -20,8 +20,6 @@ import lombok.*;
 @AllArgsConstructor
 public class SwjgDO {
 
-    public static final Long SJSWJG_DM_ROOT = 0L;
-
     /**
      * 税务机关代码
      */
@@ -82,7 +80,7 @@ public class SwjgDO {
     /**
      * 顺序号
      */
-    private Integer sxh;
+    private Long sxh;
     /**
      * 校验码
      */

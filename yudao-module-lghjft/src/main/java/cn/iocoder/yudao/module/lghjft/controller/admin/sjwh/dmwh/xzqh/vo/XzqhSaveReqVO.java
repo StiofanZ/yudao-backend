@@ -9,7 +9,7 @@ import lombok.Data;
 public class XzqhSaveReqVO {
 
     @Schema(description = "行政区划代码", requiredMode = Schema.RequiredMode.REQUIRED)
-    private Long xzqhDm;
+    private String xzqhDm;
 
     @Schema(description = "行政区划名称", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotEmpty(message = "行政区划名称不能为空")

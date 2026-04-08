@@ -14,7 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.HKXX_NOT_EXISTS;
+import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.FPBL_NOT_EXISTS;
 
 @Service
 @Validated
@@ -54,7 +54,7 @@ public class CsFpblServiceImpl implements CsFpblService {
 
     private void validateExists(Long id) {
         if (csFpblMapper.selectById(id) == null) {
-            throw exception(HKXX_NOT_EXISTS);
+            throw exception(FPBL_NOT_EXISTS);
         }
     }
 

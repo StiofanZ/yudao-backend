@@ -52,7 +52,7 @@ public class YhwdDO {
     /**
      * 顺序号
      */
-    private Integer sxh;
+    private Long sxh;
     /**
      * 有效期止
      */

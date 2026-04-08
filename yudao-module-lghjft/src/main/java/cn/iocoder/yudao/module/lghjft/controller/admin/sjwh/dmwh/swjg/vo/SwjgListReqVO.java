@@ -50,7 +50,7 @@ public class SwjgListReqVO {
     private String ghjgDm;
 
     @Schema(description = "顺序号")
-    private Integer sxh;
+    private Long sxh;
 
     @Schema(description = "校验码")
     private String jym;
