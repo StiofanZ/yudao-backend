@@ -19,4 +19,10 @@ public class GhjfcbjqfPageReqVO extends PageParam {
 
     @Schema(description = "工会机构代码")
     private String deptId;
+
+    @Schema(description = "缴费账号")
+    private String jfzh;
+
+    @Schema(description = "缴费户名")
+    private String jfhm;
 }

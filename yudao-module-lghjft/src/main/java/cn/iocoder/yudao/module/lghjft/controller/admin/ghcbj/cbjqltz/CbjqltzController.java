@@ -53,10 +53,10 @@ public class CbjqltzController {
 
     @DeleteMapping("/delete")
     @Operation(summary = "删除筹备金清理台账")
-    @Parameter(name = "id", description = "编号", required = true)
+    @Parameter(name = "djxh", description = "登记序号", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-cbjqltz:delete')")
-    public CommonResult<Boolean> deleteCbjqltz(@RequestParam("id") String id) {
-        cbjqltzService.deleteCbjqltz(id);
+    public CommonResult<Boolean> deleteCbjqltz(@RequestParam("djxh") String djxh) {
+        cbjqltzService.deleteCbjqltz(djxh);
         return success(true);
     }
 
@@ -71,10 +71,10 @@ public class CbjqltzController {
 
     @GetMapping("/get")
     @Operation(summary = "获得筹备金清理台账")
-    @Parameter(name = "id", description = "编号", required = true, example = "1024")
+    @Parameter(name = "djxh", description = "登记序号", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-cbjqltz:query')")
-    public CommonResult<CbjqltzResVO> getCbjqltz(@RequestParam("id") String id) {
-        CbjqltzDO obj = cbjqltzService.getCbjqltz(id);
+    public CommonResult<CbjqltzResVO> getCbjqltz(@RequestParam("djxh") String djxh) {
+        CbjqltzDO obj = cbjqltzService.getCbjqltz(djxh);
         return success(BeanUtils.toBean(obj, CbjqltzResVO.class));
     }
 

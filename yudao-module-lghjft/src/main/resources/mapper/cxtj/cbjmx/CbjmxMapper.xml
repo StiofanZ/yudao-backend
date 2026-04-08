@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.cbjmx.CbjmxMapper">
+
+    <resultMap type="cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.cbjmx.CbjmxtjDO" id="CbjmxtjResult">
+        <result property="dwdm" column="dwdm" />
+        <result property="deptId" column="dept_id" />
+        <result property="shxydm" column="shxydm" />
+        <result property="nsrmc" column="nsrmc" />
+        <result property="jsbj" column="jsbj" />
+        <result property="cbjthbj" column="cbjthbj" />
+        <result property="fbbj" column="fbbj" />
+        <result property="bs" column="bs" />
+        <result property="hs" column="hs" />
+        <result property="qtje" column="qtje" />
+        <result property="jfje" column="jfje" />
+        <result property="cbjje" column="cbjje" />
+        <result property="sfbje" column="sfbje" />
+    </resultMap>
+
+    <resultMap type="cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.cbjmx.CbjmxhzDO" id="CbjmxhzResult">
+        <result property="dwdm" column="dwdm" />
+        <result property="deptId" column="dept_id" />
+        <result property="jsbj" column="jsbj" />
+        <result property="cbjthbj" column="cbjthbj" />
+        <result property="fbbj" column="fbbj" />
+        <result property="bs" column="bs" />
+        <result property="hs" column="hs" />
+        <result property="qtje" column="qtje" />
+        <result property="jfje" column="jfje" />
+        <result property="cbjje" column="cbjje" />
+        <result property="sfbje" column="sfbje" />
+    </resultMap>
+
+    <!-- v1 selectCbjmxtjList: GROUP BY dwdm, dept_id, shxydm, nsrmc, jsbj, cbjthbj, fbbj ORDER BY dwdm -->
+    <select id="selectCbjmxtjList" resultMap="CbjmxtjResult">
+        select
+            dwdm,
+            dept_id,
+            shxydm, nsrmc,
+            jsbj,
+            cbjthbj,
+            fbbj,
+            count(djxh) bs,
+            count(distinct djxh) hs,
+            sum(qtje) qtje,
+            sum(jfje) jfje,
+            sum(cbjje) cbjje,
+            sum(sfbje) sfbje
+        from cbjmx
+        <where>
+            <if test="zspmDm != null and zspmDm != ''"> and zspm_dm = #{zspmDm}</if>
+            <if test="nd != null and nd != ''"> and nd = #{nd}</if>
+            <if test="deptId != null and deptId != ''"> and dept_id = #{deptId}</if>
+            <if test="shxydm != null and shxydm != ''"> and shxydm = #{shxydm}</if>
+            <if test="nsrmc != null and nsrmc != ''"> and nsrmc = #{nsrmc}</if>
+        </where>
+        group by
+            dwdm,
+            dept_id, shxydm, nsrmc,
+            jsbj,
+            cbjthbj,
+            fbbj
+        order by
+            dwdm
+    </select>
+
+    <!-- v1 selectCbjmxhzList: GROUP BY dwdm, dept_id, jsbj, cbjthbj, fbbj ORDER BY dwdm
+         v1 deptId filter uses find_in_set for ancestor lookup -->
+    <select id="selectCbjmxhzList" resultMap="CbjmxhzResult">
+        select
+            dwdm,
+            dept_id,
+            jsbj,
+            cbjthbj,
+            fbbj,
+            count(djxh) bs,
+            count(distinct djxh) hs,
+            sum(qtje) qtje,
+            sum(jfje) jfje,
+            sum(cbjje) cbjje,
+            sum(sfbje) sfbje
+        from cbjmx
+        <where>
+            <if test="zspmDm != null and zspmDm != ''"> and zspm_dm = #{zspmDm}</if>
+            <if test="nd != null and nd != ''"> and nd = #{nd}</if>
+            <if test="deptId != null and deptId != ''"> and (dept_id = #{deptId} or dept_id in (select t.dept_id from sys_dept t where find_in_set(#{deptId}, ancestors)))</if>
+            <if test="shxydm != null and shxydm != ''"> and shxydm = #{shxydm}</if>
+            <if test="nsrmc != null and nsrmc != ''"> and nsrmc = #{nsrmc}</if>
+        </where>
+        group by
+            dwdm,
+            dept_id,
+            jsbj,
+            cbjthbj,
+            fbbj
+        order by
+            dwdm
+    </select>
+
+</mapper>

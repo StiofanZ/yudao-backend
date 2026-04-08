@@ -9,15 +9,45 @@ import lombok.Data;
 @Data
 public class CbjqfmxPageReqVO extends PageParam {
 
-    @Schema(description = "deptId")
+    @Schema(description = "工会机构代码")
     private String deptId;
 
-    @Schema(description = "nsrmc")
+    @Schema(description = "纳税人名称")
     private String nsrmc;
 
-    @Schema(description = "zgswjDm")
+    @Schema(description = "主管税务局代码")
     private String zgswjDm;
 
-    @Schema(description = "zspmDm")
+    @Schema(description = "征收品目代码")
     private String zspmDm;
+
+    @Schema(description = "社会信用代码")
+    private String shxydm;
+
+    @Schema(description = "纳税人简称")
+    private String nsrjc;
+
+    @Schema(description = "所属期起")
+    private String skssqq;
+
+    @Schema(description = "所属期止")
+    private String skssqz;
+
+    @Schema(description = "入库日期-开始")
+    private String beginRkrq;
+
+    @Schema(description = "入库日期-结束")
+    private String endRkrq;
+
+    @Schema(description = "结算标记")
+    private String jsbj;
+
+    @Schema(description = "基层经费拨付状态")
+    private String cbjthbj;
+
+    @Schema(description = "处理日期-开始")
+    private String beginCbjthrq;
+
+    @Schema(description = "处理日期-结束")
+    private String endCbjthrq;
 }

@@ -11,15 +11,14 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.ghcbj.ghjfcbjqf.vo.Ghjfcb
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.ghcbj.ghjfcbjqf.GhjfcbjqfDO;
 import cn.iocoder.yudao.module.lghjft.service.ghcbj.ghjfcbjqf.GhjfcbjqfService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,7 +28,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
 @Tag(name = "管理后台 - 筹备金全返")
 @RestController
-@RequestMapping("/lghjft/ghcbj/ghjfcbjqf")
+@RequestMapping("/lghjft/cxtj/ghjfcbjqf")
 @Validated
 public class GhjfcbjqfController {
 
@@ -38,7 +37,7 @@ public class GhjfcbjqfController {
 
     @GetMapping("/page")
     @Operation(summary = "获得筹备金全返分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-ghjfcbjqf:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ghjfcbjqf:query')")
     public CommonResult<PageResult<GhjfcbjqfResVO>> getGhjfcbjqfPage(@Valid GhjfcbjqfPageReqVO pageReqVO) {
         PageResult<GhjfcbjqfDO> pageResult = ghjfcbjqfService.getGhjfcbjqfPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, GhjfcbjqfResVO.class));
@@ -46,7 +45,7 @@ public class GhjfcbjqfController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出筹备金全返 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-ghjfcbjqf:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ghjfcbjqf:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportGhjfcbjqfExcel(@Valid GhjfcbjqfPageReqVO pageReqVO,
                                      HttpServletResponse response) throws IOException {
