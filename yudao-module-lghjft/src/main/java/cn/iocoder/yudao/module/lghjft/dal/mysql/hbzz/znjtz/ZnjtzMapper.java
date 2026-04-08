@@ -46,9 +46,26 @@ public interface ZnjtzMapper extends BaseMapperX<ZnjtzDO> {
         if (reqVO.getYbtse() != null && !reqVO.getYbtse().isEmpty()) {
             wrapper.eq("ybtse", reqVO.getYbtse());
         }
+        if (reqVO.getHkpch() != null && !reqVO.getHkpch().isEmpty()) {
+            wrapper.eq("hkpch", reqVO.getHkpch());
+        }
+        if (reqVO.getHkpzh() != null && !reqVO.getHkpzh().isEmpty()) {
+            wrapper.eq("hkpzh", reqVO.getHkpzh());
+        }
+        if (reqVO.getFbbj() != null && !reqVO.getFbbj().isEmpty()) {
+            wrapper.eq("fbbj", reqVO.getFbbj());
+        }
         if (reqVO.getBeginRkrq() != null && !reqVO.getBeginRkrq().isEmpty()
                 && reqVO.getEndRkrq() != null && !reqVO.getEndRkrq().isEmpty()) {
             wrapper.between("rkrq", reqVO.getBeginRkrq(), reqVO.getEndRkrq());
+        }
+        if (reqVO.getBeginJsrq() != null && !reqVO.getBeginJsrq().isEmpty()
+                && reqVO.getEndJsrq() != null && !reqVO.getEndJsrq().isEmpty()) {
+            wrapper.between("jsrq", reqVO.getBeginJsrq(), reqVO.getEndJsrq());
+        }
+        if (reqVO.getBeginFbrq() != null && !reqVO.getBeginFbrq().isEmpty()
+                && reqVO.getEndFbrq() != null && !reqVO.getEndFbrq().isEmpty()) {
+            wrapper.between("fbrq", reqVO.getBeginFbrq(), reqVO.getEndFbrq());
         }
 
         // v1 order by rkrq desc

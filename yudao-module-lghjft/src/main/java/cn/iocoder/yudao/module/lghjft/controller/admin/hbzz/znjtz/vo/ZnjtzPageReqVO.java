@@ -30,6 +30,13 @@ public class ZnjtzPageReqVO extends PageParam {
     private String skssqq;
     private String skssqz;
     private String ybtse;
+    private String hkpch;
+    private String hkpzh;
+    private String fbbj;
     private String beginRkrq;
     private String endRkrq;
+    private String beginJsrq;
+    private String endJsrq;
+    private String beginFbrq;
+    private String endFbrq;
 }
