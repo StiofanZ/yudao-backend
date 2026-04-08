@@ -27,25 +27,25 @@ public class YhbfmxPageReqVO extends PageParam {
     private String yhmc;
 
     @Schema(description = "收款人开户地")
-    private byte[] skrkhd;
+    private String skrkhd;
 
     @Schema(description = "收方邮件地址")
-    private byte[] sfyjdz;
+    private String sfyjdz;
 
     @Schema(description = "收方移动电话")
-    private byte[] sfyddh;
+    private String sfyddh;
 
     @Schema(description = "币种")
     private String rmb;
 
     @Schema(description = "付款分行")
-    private byte[] fkfh;
+    private String fkfh;
 
     @Schema(description = "*结算方式")
     private String jsfs;
 
     @Schema(description = "业务种类")
-    private byte[] ywzl;
+    private String ywzl;
 
     @Schema(description = "*付方账号")
     private String ffzh;
@@ -84,7 +84,7 @@ public class YhbfmxPageReqVO extends PageParam {
     private String fclx;
 
     @Schema(description = "序号")
-    private Integer xh;
+    private Long xh;
 
     @Schema(description = "uuid序列号", example = "7315")
     private String uuid;

@@ -35,7 +35,7 @@ public interface YhbfmxMapper {
 
     List<YhbfmxDO> getYhbfmx(YhbfmxPageReqVO reqVO);
 
-    int updateYxbjByHkpch(@Param("hkpch") String hkpch, @Param("yxbj") String yxbj);
+    int updateYxbjByHkpch(@Param("hkpch") String hkpch, @Param("yxbj") String yxbj, @Param("updateBy") String updateBy);
 
     int insertBatch(@Param("list") List<YhbfmxDO> list);
 

@@ -50,15 +50,15 @@ public class YhbfmxDO {
     /**
      * 收款人开户地
      */
-    private byte[] skrkhd;
+    private String skrkhd;
     /**
      * 收方邮件地址
      */
-    private byte[] sfyjdz;
+    private String sfyjdz;
     /**
      * 收方移动电话
      */
-    private byte[] sfyddh;
+    private String sfyddh;
     /**
      * 币种
      */
@@ -66,7 +66,7 @@ public class YhbfmxDO {
     /**
      * 付款分行
      */
-    private byte[] fkfh;
+    private String fkfh;
     /**
      * *结算方式
      */
@@ -74,7 +74,7 @@ public class YhbfmxDO {
     /**
      * 业务种类
      */
-    private byte[] ywzl;
+    private String ywzl;
     /**
      * *付方账号
      */
@@ -126,7 +126,7 @@ public class YhbfmxDO {
     /**
      * 序号
      */
-    private Integer xh;
+    private Long xh;
     /**
      * uuid序列号
      */

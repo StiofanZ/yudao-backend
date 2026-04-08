@@ -31,19 +31,19 @@
         <result property="xh"          column="xh"/>
         <result property="uuid"        column="UUID"/>
         <result property="bflx"        column="bflx"/>
-        <result property="bfzt"       column="bfzt"/>
-        <result property="bfjg"       column="bfjg"/>
+        <result property="bfzt"        column="bfzt"/>
+        <result property="bfjg"        column="bfjg"/>
         <result property="thrq"        column="thrq"/>
         <result property="bz"          column="bz"/>
-        <result property="schzxx"     column="schzxx"/>
+        <result property="schzxx"      column="schzxx"/>
         <result property="yxbj"        column="YXBJ"/>
-        <result property="ysthbj"     column="ysthbj"/>
-        <result property="ysthrq"     column="ysthrq"/>
-        <result property="ysthyy"     column="ysthyy"/>
+        <result property="ysthbj"      column="ysthbj"/>
+        <result property="ysthrq"      column="ysthrq"/>
+        <result property="ysthyy"      column="ysthyy"/>
         <result property="yscjr"       column="yscjr"/>
-        <result property="yscjsj"     column="yscjsj"/>
+        <result property="yscjsj"      column="yscjsj"/>
         <result property="ysxgr"       column="ysxgr"/>
-        <result property="ysxgsj"     column="ysxgsj"/>
+        <result property="ysxgsj"      column="ysxgsj"/>
         <result property="createBy"    column="CREATE_BY"/>
         <result property="createTime"  column="CREATE_TIME"/>
         <result property="updateBy"    column="UPDATE_BY"/>
@@ -113,23 +113,18 @@
             <if test="req.schzxx != null and req.schzxx != ''">and schzxx = #{req.schzxx}</if>
             <if test="req.yxbj != null and req.yxbj != ''">and YXBJ = #{req.yxbj}</if>
             <if test="req.ysthbj != null and req.ysthbj != ''">and ysthbj = #{req.ysthbj}</if>
-            <!-- 2. 原始退回日期 -->
             <if test="req.beginYsthrq != null and req.beginYsthrq != '' and req.endYsthrq != null and req.endYsthrq != ''">
                 and ysthrq between #{req.beginYsthrq} and #{req.endYsthrq}
             </if>
             <if test="req.ysthyy != null and req.ysthyy != ''">and ysthyy = #{req.ysthyy}</if>
             <if test="req.yscjr != null and req.yscjr != ''">and yscjr = #{req.yscjr}</if>
-            <!-- 3. 原始创建时间 -->
             <if test="req.beginYscjsj != null and req.beginYscjsj != '' and req.endYscjsj != null and req.endYscjsj != ''">
                 and yscjsj between #{req.beginYscjsj} and #{req.endYscjsj}
             </if>
-
             <if test="req.ysxgr != null and req.ysxgr != ''">and ysxgr = #{req.ysxgr}</if>
-            <!-- 4. 原始修改时间 -->
             <if test="req.beginYsxgsj != null and req.beginYsxgsj != '' and req.endYsxgsj != null and req.endYsxgsj != ''">
                 and ysxgsj between #{req.beginYsxgsj} and #{req.endYsxgsj}
             </if>
-
             <if test="req.createBy != null and req.createBy != ''">and CREATE_BY = #{req.createBy}</if>
             <if test="req.beginCreateTime != null and req.beginCreateTime != '' and req.endCreateTime != null and req.endCreateTime != ''">
                 and CREATE_TIME between #{req.beginCreateTime} and #{req.endCreateTime}
@@ -254,7 +249,7 @@
     <!-- ==================== 4. 修改 ==================== -->
     <update id="updateById" parameterType="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfmx.YhbfmxDO">
         update gh_hkxx_yhbfmx
-        <trim prefix="SET" suffixOverrides=",">
+        <trim prefix="set" suffixOverrides=",">
             <if test="hkxxId != null">hkxx_id = #{hkxxId},</if>
             <if test="zh != null and zh != ''">zh = #{zh},</if>
             <if test="hm != null and hm != ''">hm = #{hm},</if>
@@ -314,201 +309,207 @@
     </delete>
 
     <!-- ==================== 6. 业务专用方法 ==================== -->
+    <!-- 查询银行拨付明细-结算 (1:1 V1 getGhyhbfmxJs) -->
     <select id="getYhbfmxJs" resultMap="YhbfmxResultMap">
-        SELECT
+        select
             t.hkxx_id,
             t.zh,
             t.hm,
-            ( SELECT MAX( wd.YHWDMC ) FROM dm_yhwd wd WHERE wd.WDHH = t.hh ) yhmc,
-            t.hh AS sflhh,
-            NULL AS skrkhd,
-            NULL AS sfyjdz,
-            NULL AS sfyddh,
-            '人民币' AS rmb,
-            NULL AS fkfh,
-            '普通' AS jsfs,
-            NULL AS ywzl,
-            '841180069910001' AS ffzh,
-            '00001' AS ffjzzdy,
-            NULL AS qwr,
-            NULL AS qwsj,
-            t.FY AS yt,
-            t.je AS je,
+            (select max(wd.YHWDMC) from dm_yhwd wd where wd.WDHH = t.hh) yhmc,
+            t.hh as sflhh,
+            null as skrkhd,
+            null as sfyjdz,
+            null as sfyddh,
+            '人民币' as rmb,
+            null as fkfh,
+            '普通' as jsfs,
+            null as ywzl,
+            '841180069910001' as ffzh,
+            '00001' as ffjzzdy,
+            null as qwr,
+            null as qwsj,
+            t.FY as yt,
+            t.je as je,
             t.dept_id as dept_id,
-            CONCAT( t.DZ, T.FY ) AS FY,
+            concat(t.DZ, t.FY) as FY,
             t.hkpch,
-            NULL AS bfhzpch,
-            concat(( curdate() + 0 ), '00001' ) AS bfpch,
-            t.LX AS fclx,
-            ROW_NUMBER () OVER () AS xh,
-            UUID() UUID,
-            '1' AS bflx,
-            'N' AS bfzt,
-            NULL AS thrq,
-            NULL AS bz,
-            'N' AS schzxx,
-            'Y' AS YXBJ,
-            t.THBJ AS ysthbj,
-            t.THRQ AS ysthrq,
+            null as bfhzpch,
+            concat((curdate() + 0), '00001') as bfpch,
+            t.LX as fclx,
+            row_number() over () as xh,
+            uuid() UUID,
+            '1' as bflx,
+            'N' as bfzt,
+            null as thrq,
+            null as bz,
+            'N' as schzxx,
+            'Y' as YXBJ,
+            t.THBJ as ysthbj,
+            t.THRQ as ysthrq,
             t.THYY ysthyy,
-            t.CREATE_BY AS yscjr,
-            CREATE_TIME AS yscjsj,
+            t.CREATE_BY as yscjr,
+            CREATE_TIME as yscjsj,
             t.UPDATE_BY ysxgr,
             t.UPDATE_TIME ysxgsj,
-            'SYSTEM' AS CREATE_BY,
-            NOW() AS CREATE_TIME,
-            'SYSTEM' AS UPDATE_BY,
-            NOW() AS UPDATE_TIME
-        FROM gh_hkxx t WHERE t.HKPCH = #{hkpch}
+            'SYSTEM' as CREATE_BY,
+            now() as CREATE_TIME,
+            'SYSTEM' as UPDATE_BY,
+            now() as UPDATE_TIME
+        from gh_hkxx t
+        where t.HKPCH = #{hkpch}
     </select>
 
+    <!-- 查询银行拨付明细-补结算 (1:1 V1 getGhyhbfmxBjs) -->
     <select id="getYhbfmxBjs" resultMap="YhbfmxResultMap">
-        SELECT
+        select
             t.hkxx_id,
             t.zh,
             t.hm,
-            (SELECT MAX(wd.YHWDMC) FROM dm_yhwd wd WHERE wd.WDHH = t.hh) yhmc,
-            t.hh AS sflhh,
-            NULL AS skrkhd,
-            NULL AS sfyjdz,
-            NULL AS sfyddh,
-            '人民币' AS rmb,
-            NULL AS fkfh,
-            '普通' AS jsfs,
-            NULL AS ywzl,
-            '841180069910001' AS ffzh,
-            '00001' AS ffjzzdy,
-            NULL AS qwr,
-            NULL AS qwsj,
-            t.FY AS yt,
-            t.je AS je,
+            (select max(wd.YHWDMC) from dm_yhwd wd where wd.WDHH = t.hh) yhmc,
+            t.hh as sflhh,
+            null as skrkhd,
+            null as sfyjdz,
+            null as sfyddh,
+            '人民币' as rmb,
+            null as fkfh,
+            '普通' as jsfs,
+            null as ywzl,
+            '841180069910001' as ffzh,
+            '00001' as ffjzzdy,
+            null as qwr,
+            null as qwsj,
+            t.FY as yt,
+            t.je as je,
             t.dept_id as dept_id,
-            CONCAT(t.DZ, T.FY) AS FY,
+            concat(t.DZ, t.FY) as FY,
             t.hkpch,
-            NULL AS bfhzpch,
-            concat((curdate() + 0), '00001') AS bfpch,
+            null as bfhzpch,
+            concat((curdate() + 0), '00001') as bfpch,
             t.LX as fclx,
-            ROW_NUMBER () OVER () AS xh,
-            UUID() UUID,
-            '2' AS bflx,
-            'N' AS bfzt,
-            NULL AS thrq,
-            NULL AS bz,
-            'N' AS schzxx,
-            'Y' AS YXBJ,
-            t.THBJ AS ysthbj,
-            t.THRQ AS ysthrq,
+            row_number() over () as xh,
+            uuid() UUID,
+            '2' as bflx,
+            'N' as bfzt,
+            null as thrq,
+            null as bz,
+            'N' as schzxx,
+            'Y' as YXBJ,
+            t.THBJ as ysthbj,
+            t.THRQ as ysthrq,
             t.THYY ysthyy,
-            t.CREATE_BY AS yscjr,
-            CREATE_TIME AS yscjsj,
+            t.CREATE_BY as yscjr,
+            CREATE_TIME as yscjsj,
             t.UPDATE_BY ysxgr,
             t.UPDATE_TIME ysxgsj,
-            'SYSTEM' AS CREATE_BY,
-            NOW() AS CREATE_TIME,
-            'SYSTEM' AS UPDATE_BY,
-            NOW() AS UPDATE_TIME
-        FROM gh_hkxx t WHERE t.HKPCH = #{hkpch}
+            'SYSTEM' as CREATE_BY,
+            now() as CREATE_TIME,
+            'SYSTEM' as UPDATE_BY,
+            now() as UPDATE_TIME
+        from gh_hkxx t
+        where t.HKPCH = #{hkpch}
     </select>
 
+    <!-- 查询银行拨付明细-失败退回 (1:1 V1 getGhyhbfmxSbthcb with UNION query) -->
     <select id="getYhbfmxSbthcb" resultMap="YhbfmxResultMap">
-        SELECT
+        select
             t.hkxx_id,
-            t.xzh AS zh,
-            t.xhm AS hm,
-            (SELECT MAX(wd.YHWDMC) FROM dm_yhwd wd WHERE wd.WDHH = t.xhh) yhmc,
-            t.xhh AS sflhh,
-            NULL AS skrkhd,
-            NULL AS sfyjdz,
-            NULL AS sfyddh,
-            '人民币' AS rmb,
-            NULL AS fkfh,
-            '普通' AS jsfs,
-            NULL AS ywzl,
-            '841180069910001' AS ffzh,
-            '00001' AS ffjzzdy,
-            NULL AS qwr,
-            NULL AS qwsj,
-            t.FY AS yt,
-            t.je AS je,
+            t.xzh as zh,
+            t.xhm as hm,
+            (select max(wd.YHWDMC) from dm_yhwd wd where wd.WDHH = t.xhh) yhmc,
+            t.xhh as sflhh,
+            null as skrkhd,
+            null as sfyjdz,
+            null as sfyddh,
+            '人民币' as rmb,
+            null as fkfh,
+            '普通' as jsfs,
+            null as ywzl,
+            '841180069910001' as ffzh,
+            '00001' as ffjzzdy,
+            null as qwr,
+            null as qwsj,
+            t.FY as yt,
+            t.je as je,
             t.dept_id dept_id,
-            CONCAT(t.DZ, T.FY) AS FY,
+            concat(t.DZ, t.FY) as FY,
             t.hkpch,
-            NULL AS bfhzpch,
-            concat((curdate() + 0), '00001') AS bfpch,
+            null as bfhzpch,
+            concat((curdate() + 0), '00001') as bfpch,
             t.LX as fclx,
-            ROW_NUMBER () OVER () AS xh,
-            UUID() UUID,
-            '3' AS bflx,
-            'N' AS bfzt,
-            NULL AS thrq,
-            NULL AS bz,
-            'N' AS schzxx,
-            'Y' AS YXBJ,
-            t.THBJ AS ysthbj,
-            t.THRQ AS ysthrq,
+            row_number() over () as xh,
+            uuid() UUID,
+            '3' as bflx,
+            'N' as bfzt,
+            null as thrq,
+            null as bz,
+            'N' as schzxx,
+            'Y' as YXBJ,
+            t.THBJ as ysthbj,
+            t.THRQ as ysthrq,
             t.THYY ysthyy,
-            t.CREATE_BY AS yscjr,
-            t.CREATE_TIME AS yscjsj,
+            t.CREATE_BY as yscjr,
+            t.CREATE_TIME as yscjsj,
             t.xgr ysxgr,
             t.xgsj ysxgsj,
-            'SYSTEM' AS CREATE_BY,
-            NOW() AS CREATE_TIME,
-            'SYSTEM' AS UPDATE_BY,
-            NOW() AS UPDATE_TIME
-        FROM gh_hkxx t
-        WHERE t.THBJ = 'Y' AND T.XGBJ = 'Y' AND T.xgsj BETWEEN #{beginUpdateTime} AND #{endUpdateTime}
-          AND t.HKXX_ID NOT IN ('277432','293175','297499','305858','310245','524757','528379')
-        UNION ALL
-        SELECT
+            'SYSTEM' as CREATE_BY,
+            now() as CREATE_TIME,
+            'SYSTEM' as UPDATE_BY,
+            now() as UPDATE_TIME
+        from gh_hkxx t
+        where t.THBJ = 'Y' and t.XGBJ = 'Y' and t.xgsj between #{beginUpdateTime} and #{endUpdateTime}
+          and t.HKXX_ID not in ('277432','293175','297499','305858','310245','524757','528379')
+        union all
+        select
             t.hkxx_id,
-            t.xzh AS zh,
-            t.xhm AS hm,
-            (SELECT MAX(wd.YHWDMC) FROM dm_yhwd wd WHERE wd.WDHH = t.xhh) yhmc,
-            t.xhh AS sflhh,
-            NULL AS skrkhd,
-            NULL AS sfyjdz,
-            NULL AS sfyddh,
-            '人民币' AS rmb,
-            NULL AS fkfh,
-            '普通' AS jsfs,
-            NULL AS ywzl,
-            '841180069910001' AS ffzh,
-            '00001' AS ffjzzdy,
-            NULL AS qwr,
-            NULL AS qwsj,
-            t.FY AS yt,
-            t.je AS je,
+            t.xzh as zh,
+            t.xhm as hm,
+            (select max(wd.YHWDMC) from dm_yhwd wd where wd.WDHH = t.xhh) yhmc,
+            t.xhh as sflhh,
+            null as skrkhd,
+            null as sfyjdz,
+            null as sfyddh,
+            '人民币' as rmb,
+            null as fkfh,
+            '普通' as jsfs,
+            null as ywzl,
+            '841180069910001' as ffzh,
+            '00001' as ffjzzdy,
+            null as qwr,
+            null as qwsj,
+            t.FY as yt,
+            t.je as je,
             t.dept_id dept_id,
-            CONCAT(t.DZ, T.FY) AS FY,
+            concat(t.DZ, t.FY) as FY,
             t.hkpch,
-            NULL AS bfhzpch,
-            concat((curdate() + 0), '00001') AS bfpch,
+            null as bfhzpch,
+            concat((curdate() + 0), '00001') as bfpch,
             t.LX as fclx,
-            ROW_NUMBER () OVER () AS xh,
-            UUID() UUID,
-            '3' AS bflx,
-            'N' AS bfzt,
-            NULL AS thrq,
-            NULL AS bz,
-            'N' AS schzxx,
-            'Y' AS YXBJ,
-            t.THBJ AS ysthbj,
-            t.THRQ AS ysthrq,
+            row_number() over () as xh,
+            uuid() UUID,
+            '3' as bflx,
+            'N' as bfzt,
+            null as thrq,
+            null as bz,
+            'N' as schzxx,
+            'Y' as YXBJ,
+            t.THBJ as ysthbj,
+            t.THRQ as ysthrq,
             t.THYY ysthyy,
-            t.CREATE_BY AS yscjr,
-            t.CREATE_TIME AS yscjsj,
+            t.CREATE_BY as yscjr,
+            t.CREATE_TIME as yscjsj,
             t.xgr ysxgr,
             t.xgsj ysxgsj,
-            'SYSTEM' AS CREATE_BY,
-            NOW() AS CREATE_TIME,
-            'SYSTEM' AS UPDATE_BY,
-            NOW() AS UPDATE_TIME
-        FROM gh_hkxxxejf t
-        WHERE t.THBJ = 'Y' AND T.XGBJ = 'Y' AND T.XGSJ BETWEEN #{beginUpdateTime} AND #{endUpdateTime}
+            'SYSTEM' as CREATE_BY,
+            now() as CREATE_TIME,
+            'SYSTEM' as UPDATE_BY,
+            now() as UPDATE_TIME
+        from gh_hkxxxejf t
+        where t.THBJ = 'Y' and t.XGBJ = 'Y' and t.XGSJ between #{beginUpdateTime} and #{endUpdateTime}
     </select>
 
+    <!-- 查询银行拨付明细（生成银行汇总） (1:1 V1 getGhHkxxYhbfmx) -->
     <select id="getYhbfmx" resultMap="YhbfmxResultMap">
-        SELECT * FROM gh_hkxx_yhbfmx WHERE bfzt='N'
+        select * from gh_hkxx_yhbfmx where 1=1 and bfzt='N'
         <if test="zh != null and zh != ''">
             and zh in
             <foreach collection="zh.split(',')" item="item" open="(" separator="," close=")">#{item}</foreach>
@@ -540,6 +541,7 @@
         <if test="deptId != null and deptId != ''">and dept_id = #{deptId}</if>
     </select>
 
+    <!-- 根据 bfids 查询 -->
     <select id="selectListByBfidStr" resultMap="YhbfmxResultMap">
         <include refid="selectYhbfmxVo"/>
         where bfid in
@@ -547,12 +549,14 @@
         order by bfid asc
     </select>
 
+    <!-- 批量写入银行拨付明细 (1:1 V1 insertBatchGhyhbfmxJs) -->
     <insert id="insertBatch" parameterType="java.util.List">
-        INSERT INTO gh_hkxx_yhbfmx (
-        hkxx_id, zh, hm, yhmc, sflhh, skrkhd, sfyjdz, sfyddh, rmb, fkfh, jsfs, ywzl, ffzh, ffjzzdy,
-        qwr, qwsj, yt, je, dept_id, fy, hkpch, bfhzpch, bfpch, fclx, xh, UUID, bflx, bfzt, bfjg,
-        thrq, bz, schzxx, YXBJ, ysthbj, ysthrq, ysthyy, yscjr, yscjsj, ysxgr, ysxgsj, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
-        ) VALUES
+        insert into gh_hkxx_yhbfmx (
+            hkxx_id, zh, hm, yhmc, sflhh, skrkhd, sfyjdz, sfyddh, rmb, fkfh, jsfs, ywzl, ffzh, ffjzzdy,
+            qwr, qwsj, yt, je, dept_id, fy, hkpch, bfhzpch, bfpch, fclx, xh, UUID, bflx, bfzt, bfjg,
+            thrq, bz, schzxx, YXBJ, ysthbj, ysthrq, ysthyy, yscjr, yscjsj, ysxgr, ysxgsj,
+            CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
+        ) values
         <foreach collection="list" item="item" separator=",">
             (#{item.hkxxId},#{item.zh},#{item.hm},#{item.yhmc},#{item.sflhh},#{item.skrkhd},#{item.sfyjdz},
             #{item.sfyddh},#{item.rmb},#{item.fkfh},#{item.jsfs},#{item.ywzl},#{item.ffzh},#{item.ffjzzdy},
@@ -563,8 +567,9 @@
         </foreach>
     </insert>
 
+    <!-- 批量更新银行拨付明细 (1:1 V1 updateBatchGhHkxxYhbfmx) -->
     <update id="updateBatchYhbfmx" parameterType="java.util.List">
-        UPDATE gh_hkxx_yhbfmx
+        update gh_hkxx_yhbfmx
         <trim prefix="set" suffixOverrides=",">
             <trim prefix="bfhzpch =case" suffix="end,">
                 <foreach collection="list" item="item">
@@ -588,18 +593,19 @@
             </trim>
             <trim prefix="UPDATE_TIME =case" suffix="end,">
                 <foreach collection="list" item="item">
-                    when bfid=#{item.bfid} then NOW()
+                    when bfid=#{item.bfid} then now()
                 </foreach>
             </trim>
         </trim>
-        WHERE bfid IN
+        where bfid in
         <foreach collection="list" item="item" open="(" separator="," close=")">#{item.bfid}</foreach>
     </update>
 
+    <!-- 更新银行拨付明细有效标记 (1:1 V1 updateYxbjByGhHkxxYhbfmx) -->
     <update id="updateYxbjByHkpch">
-        UPDATE gh_hkxx_yhbfmx
-        SET YXBJ = #{yxbj}, UPDATE_BY = #{updateBy}, UPDATE_TIME = NOW()
-        WHERE YXBJ = 'Y'
+        update gh_hkxx_yhbfmx
+        set YXBJ = #{yxbj}, UPDATE_BY = #{updateBy}, UPDATE_TIME = now()
+        where YXBJ = 'Y'
         <if test="hkpch != null">and hkpch = #{hkpch}</if>
     </update>
 
