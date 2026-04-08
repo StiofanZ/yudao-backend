@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.jfbjs.JfbjsMapper">
+
+    <!-- v1: selectJfclJfbjs — 查询 gh_jf 中待补结算数据 (for settlement) -->
+    <select id="selectJfclJfbjs" resultType="java.util.Map">
+        select t.spuuid, t.jmse, t.rkrq
+        from gh_jf t
+        <where>
+            <![CDATA[t.rkrq >= date_format(#{reqVO.rkrqStart}, '%Y-%m-%d') and t.rkrq <= date_format(#{reqVO.rkrqEnd}, '%Y-%m-%d')]]>
+            and t.jsbj = 'N'
+            <if test="reqVO.spuuid != null and reqVO.spuuid != ''">and t.spuuid = #{reqVO.spuuid}</if>
+            <if test="reqVO.djxh != null and reqVO.djxh != ''">and t.djxh = #{reqVO.djxh}</if>
+            <if test="reqVO.shxydm != null and reqVO.shxydm != ''">and t.shxydm = #{reqVO.shxydm}</if>
+            <if test="reqVO.nsrmc != null and reqVO.nsrmc != ''">and t.nsrmc like concat('%', #{reqVO.nsrmc}, '%')</if>
+            <if test="reqVO.deptId != null and reqVO.deptId != ''">and t.dept_id = #{reqVO.deptId}</if>
+            <if test="reqVO.skssqq != null and reqVO.skssqq != ''">and t.skssqq &gt;= #{reqVO.skssqq}</if>
+            <if test="reqVO.skssqz != null and reqVO.skssqz != ''">and t.skssqz &lt;= #{reqVO.skssqz}</if>
+            <if test="reqVO.zspmDm != null and reqVO.zspmDm != ''">and t.zspm_dm = #{reqVO.zspmDm}</if>
+        </where>
+    </select>
+
+    <!-- v1: updateJfclJfbjs — 批量更新 gh_jf 的 jsbj/jsrq/update_by/update_time (CASE on spuuid) -->
+    <update id="updateJfclJfbjs" parameterType="java.util.List">
+        update gh_jf
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="jsbj = case" suffix="end,">
+                <foreach collection="list" item="item">
+                    when spuuid = #{item.spuuid} then #{item.jsbj}
+                </foreach>
+            </trim>
+            <trim prefix="jsrq = case" suffix="end,">
+                <foreach collection="list" item="item">
+                    when spuuid = #{item.spuuid} then #{item.jsrq}
+                </foreach>
+            </trim>
+            <trim prefix="update_by = case" suffix="end,">
+                <foreach collection="list" item="item">
+                    when spuuid = #{item.spuuid} then #{item.updateBy}
+                </foreach>
+            </trim>
+            <trim prefix="update_time = case" suffix="end,">
+                <foreach collection="list" item="item">
+                    when spuuid = #{item.spuuid} then #{item.updateTime}
+                </foreach>
+            </trim>
+        </trim>
+        where spuuid in
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item.spuuid}
+        </foreach>
+    </update>
+
+    <!-- v1: selectQsjshkrjList — 根据入库日期查询结算、划拨日志 -->
+    <select id="selectQsjshkrjList" resultType="java.util.Map">
+        select * from gh_qsjshkrj t where t.lx = '1' and t.rkrq in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <!-- v1: updateBatchQsjshkrj — 更新结算/划拨日志 -->
+    <update id="updateBatchQsjshkrj" parameterType="java.util.List">
+        update gh_qsjshkrj
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="jsrq = case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.jsrq != null">
+                        when rkrq = #{item.rkrq} then #{item.jsrq}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="update_by = case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.updateBy != null">
+                        when rkrq = #{item.rkrq} then #{item.updateBy}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="update_time = case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.updateTime != null">
+                        when rkrq = #{item.rkrq} then #{item.updateTime}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where rkrq in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.rkrq}
+        </foreach>
+    </update>
+
+</mapper>

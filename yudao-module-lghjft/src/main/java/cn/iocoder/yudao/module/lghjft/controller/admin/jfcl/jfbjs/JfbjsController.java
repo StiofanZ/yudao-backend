@@ -8,11 +8,9 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.jfbjs.vo.JfbjsPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.jfbjs.vo.JfbjsResVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.jfbjs.vo.JfbjsSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.jfbjs.JfclJfbjsDO;
 import cn.iocoder.yudao.module.lghjft.service.jfcl.jfbjs.JfbjsService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,39 +34,10 @@ public class JfbjsController {
     @Resource
     private JfbjsService jfbjsService;
 
-    @PostMapping("/create")
-    @Operation(summary = "创建经费补结算")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-jfbjs:create')")
-    public CommonResult<Long> createJfbjs(@Valid @RequestBody JfbjsSaveReqVO createReqVO) {
-        return success(jfbjsService.createJfbjs(createReqVO));
-    }
-
-    @PutMapping("/update")
-    @Operation(summary = "更新经费补结算")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-jfbjs:update')")
-    public CommonResult<Boolean> updateJfbjs(@Valid @RequestBody JfbjsSaveReqVO updateReqVO) {
-        jfbjsService.updateJfbjs(updateReqVO);
-        return success(true);
-    }
-
-    @DeleteMapping("/delete")
-    @Operation(summary = "删除经费补结算")
-    @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-jfbjs:delete')")
-    public CommonResult<Boolean> deleteJfbjs(@RequestParam("id") Long id) {
-        jfbjsService.deleteJfbjs(id);
-        return success(true);
-    }
-
-    @GetMapping("/get")
-    @Operation(summary = "获得经费补结算")
-    @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-jfbjs:query')")
-    public CommonResult<JfbjsResVO> getJfbjs(@RequestParam("id") Long id) {
-        JfclJfbjsDO data = jfbjsService.getJfbjs(id);
-        return success(BeanUtils.toBean(data, JfbjsResVO.class));
-    }
-
+    /**
+     * v1: GET /list — 查询经费补结算列表
+     * 查询 gh_jf WHERE 65+ optional conditions AND jsbj='N'
+     */
     @GetMapping("/page")
     @Operation(summary = "获得经费补结算分页")
     @PreAuthorize("@ss.hasPermission('lghjft:jfcl-jfbjs:query')")
@@ -77,15 +46,37 @@ public class JfbjsController {
         return success(BeanUtils.toBean(pageResult, JfbjsResVO.class));
     }
 
+    /**
+     * v1: POST / — 工会经费补结算
+     * 查询 gh_jf WHERE jsbj='N', 设置 jsbj='Y'/'W' based on jmse,
+     * 同时更新 gh_qsjshkrj 结算日志
+     */
+    @PostMapping("/settle")
+    @Operation(summary = "工会经费补结算")
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-jfbjs:update')")
+    public CommonResult<Boolean> settleJfbjs(@Valid @RequestBody JfbjsPageReqVO reqVO) {
+        jfbjsService.settleJfbjs(reqVO);
+        return success(true);
+    }
+
+    /**
+     * v1: POST /export — 导出待补结算数据
+     * 入库日期起止不能为空
+     */
     @GetMapping("/export-excel")
-    @Operation(summary = "导出经费补结算 Excel")
+    @Operation(summary = "导出待补结算数据")
     @ApiAccessLog(operateType = EXPORT)
     @PreAuthorize("@ss.hasPermission('lghjft:jfcl-jfbjs:export')")
     public void exportJfbjsExcel(@Valid JfbjsPageReqVO pageReqVO,
                                  HttpServletResponse response) throws IOException {
+        // v1: if(null == jfclJfbjs || null == jfclJfbjs.getRkrqStart() || null == jfclJfbjs.getRkrqEnd())
+        if (pageReqVO.getRkrqStart() == null || pageReqVO.getRkrqStart().isEmpty()
+                || pageReqVO.getRkrqEnd() == null || pageReqVO.getRkrqEnd().isEmpty()) {
+            throw new RuntimeException("入库日期起止不能为空");
+        }
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<JfclJfbjsDO> list = jfbjsService.getJfbjsPage(pageReqVO).getList();
-        ExcelUtils.write(response, "经费补结算.xls", "数据", JfbjsResVO.class,
+        ExcelUtils.write(response, "代收数据.xls", "数据", JfbjsResVO.class,
                 BeanUtils.toBean(list, JfbjsResVO.class));
     }
 }
