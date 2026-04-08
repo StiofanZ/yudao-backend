@@ -1,11 +1,13 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.tsjfcx.vo;
 
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.tsjfcl.GhJfTsjfDO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Schema(description = "管理后台 - 特殊经费查询 Response VO")
 @Data
@@ -256,4 +258,14 @@ public class TsjfcxResVO {
     private String swjgmc;
     @Schema(description = "工会机构名称")
     private String ghjgmc;
+    @Schema(description = "创建者")
+    private String createBy;
+    @Schema(description = "创建时间")
+    private LocalDateTime createTime;
+    @Schema(description = "更新者")
+    private String updateBy;
+    @Schema(description = "更新时间")
+    private LocalDateTime updateTime;
+    @Schema(description = "特殊经费确认子表")
+    private List<GhJfTsjfDO> ghJfTsjfList;
 }

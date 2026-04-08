@@ -36,39 +36,7 @@ public class TsjfcxController {
     @Resource
     private TsjfcxService tsjfcxService;
 
-    @PostMapping("/create")
-    @Operation(summary = "创建特殊经费查询")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-tsjfcx:create')")
-    public CommonResult<Long> createTsjfcx(@Valid @RequestBody TsjfcxSaveReqVO createReqVO) {
-        return success(tsjfcxService.createTsjfcx(createReqVO));
-    }
-
-    @PutMapping("/update")
-    @Operation(summary = "更新特殊经费查询")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-tsjfcx:update')")
-    public CommonResult<Boolean> updateTsjfcx(@Valid @RequestBody TsjfcxSaveReqVO updateReqVO) {
-        tsjfcxService.updateTsjfcx(updateReqVO);
-        return success(true);
-    }
-
-    @DeleteMapping("/delete")
-    @Operation(summary = "删除特殊经费查询")
-    @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-tsjfcx:delete')")
-    public CommonResult<Boolean> deleteTsjfcx(@RequestParam("id") Long id) {
-        tsjfcxService.deleteTsjfcx(id);
-        return success(true);
-    }
-
-    @GetMapping("/get")
-    @Operation(summary = "获得特殊经费查询")
-    @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-tsjfcx:query')")
-    public CommonResult<TsjfcxResVO> getTsjfcx(@RequestParam("id") Long id) {
-        TsjfcxDO data = tsjfcxService.getTsjfcx(id);
-        return success(BeanUtils.toBean(data, TsjfcxResVO.class));
-    }
-
+    // --- 1. GET /page (v1: GET /list) ---
     @GetMapping("/page")
     @Operation(summary = "获得特殊经费查询分页")
     @PreAuthorize("@ss.hasPermission('lghjft:jfcl-tsjfcx:query')")
@@ -77,6 +45,7 @@ public class TsjfcxController {
         return success(BeanUtils.toBean(pageResult, TsjfcxResVO.class));
     }
 
+    // --- 2. GET /export-excel (v1: POST /export) ---
     @GetMapping("/export-excel")
     @Operation(summary = "导出特殊经费查询 Excel")
     @ApiAccessLog(operateType = EXPORT)
@@ -87,5 +56,42 @@ public class TsjfcxController {
         List<TsjfcxDO> list = tsjfcxService.getTsjfcxPage(pageReqVO).getList();
         ExcelUtils.write(response, "特殊经费查询.xls", "数据", TsjfcxResVO.class,
                 BeanUtils.toBean(list, TsjfcxResVO.class));
+    }
+
+    // --- 3. GET /get (v1: GET /{ghjfId} — detail with child gh_jf_tsjf records) ---
+    @GetMapping("/get")
+    @Operation(summary = "获得特殊经费查询详细信息（含子表）")
+    @Parameter(name = "id", description = "编号", required = true, example = "1024")
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-tsjfcx:query')")
+    public CommonResult<TsjfcxResVO> getTsjfcx(@RequestParam("id") Long id) {
+        TsjfcxDO data = tsjfcxService.getTsjfcx(id);
+        return success(BeanUtils.toBean(data, TsjfcxResVO.class));
+    }
+
+    // --- 4. POST /create (v1: POST — add with child insert) ---
+    @PostMapping("/create")
+    @Operation(summary = "创建特殊经费查询")
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-tsjfcx:create')")
+    public CommonResult<Long> createTsjfcx(@Valid @RequestBody TsjfcxSaveReqVO createReqVO) {
+        return success(tsjfcxService.createTsjfcx(createReqVO));
+    }
+
+    // --- 5. PUT /update (v1: PUT — edit, transactional delete+insert child) ---
+    @PutMapping("/update")
+    @Operation(summary = "更新特殊经费查询")
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-tsjfcx:update')")
+    public CommonResult<Boolean> updateTsjfcx(@Valid @RequestBody TsjfcxSaveReqVO updateReqVO) {
+        tsjfcxService.updateTsjfcx(updateReqVO);
+        return success(true);
+    }
+
+    // --- 6. DELETE /delete (v1: DELETE /{ghjfIds} — batch delete cascade) ---
+    @DeleteMapping("/delete")
+    @Operation(summary = "删除特殊经费查询（支持批量，级联删除子表）")
+    @Parameter(name = "ids", description = "编号列表", required = true)
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-tsjfcx:delete')")
+    public CommonResult<Boolean> deleteTsjfcx(@RequestParam("ids") Long[] ids) {
+        tsjfcxService.deleteTsjfcxByIds(ids);
+        return success(true);
     }
 }

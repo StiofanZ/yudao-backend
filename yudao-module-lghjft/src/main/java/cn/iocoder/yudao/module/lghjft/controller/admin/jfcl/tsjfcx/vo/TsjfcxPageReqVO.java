@@ -17,12 +17,36 @@ public class TsjfcxPageReqVO extends PageParam {
     @Schema(description = "工会机构代码")
     private String deptId;
 
-    @Schema(description = "主管税务局代码")
-    private String zgswjDm;
+    @Schema(description = "所属期起")
+    private String skssqq;
+
+    @Schema(description = "所属期止")
+    private String skssqz;
+
+    @Schema(description = "征收品目代码")
+    private String zspmDm;
+
+    @Schema(description = "入库日期-开始")
+    private String rkrqStart;
+
+    @Schema(description = "入库日期-结束")
+    private String rkrqEnd;
 
     @Schema(description = "结算标记")
     private String jsbj;
 
-    @Schema(description = "征收品目代码")
-    private String zspmDm;
+    @Schema(description = "结算日期-开始")
+    private String jsrqStart;
+
+    @Schema(description = "结算日期-结束")
+    private String jsrqEnd;
+
+    @Schema(description = "处理日期-开始")
+    private String clsjStart;
+
+    @Schema(description = "处理日期-结束")
+    private String clsjEnd;
+
+    @Schema(description = "特殊经费标记")
+    private String tsjfbj;
 }

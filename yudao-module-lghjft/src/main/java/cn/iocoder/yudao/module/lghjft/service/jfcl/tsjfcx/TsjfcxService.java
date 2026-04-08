@@ -14,6 +14,8 @@ public interface TsjfcxService {
 
     void deleteTsjfcx(Long id);
 
+    void deleteTsjfcxByIds(Long[] ghjfIds);
+
     TsjfcxDO getTsjfcx(Long id);
 
     PageResult<TsjfcxDO> getTsjfcxPage(TsjfcxPageReqVO pageReqVO);

@@ -1,18 +1,23 @@
 package cn.iocoder.yudao.module.lghjft.service.jfcl.tsjfcx;
 
-import cn.idev.excel.util.StringUtils;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.tsjfcx.vo.TsjfcxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.tsjfcx.vo.TsjfcxSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.tsjfcl.GhJfTsjfDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.tsjfcx.TsjfcxDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.tsjfcx.TsjfcxMapper;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
 import cn.iocoder.yudao.module.system.service.user.AdminUserService;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils.getLoginUserId;
@@ -31,7 +36,17 @@ public class TsjfcxServiceImpl implements TsjfcxService {
     @Transactional(rollbackFor = Exception.class)
     public Long createTsjfcx(TsjfcxSaveReqVO createReqVO) {
         TsjfcxDO entity = BeanUtils.toBean(createReqVO, TsjfcxDO.class);
-        tsjfcxMapper.insert(entity);
+        entity.setCreateTime(LocalDateTime.now());
+        // v1: set createBy from login user
+        try {
+            AdminUserDO user = userService.getUser(getLoginUserId());
+            if (user != null) {
+                entity.setCreateBy(user.getNickname());
+            }
+        } catch (Exception ignored) {}
+        tsjfcxMapper.insertTsjfcx(entity);
+        // v1: insert child gh_jf_tsjf records
+        insertGhJfTsjf(entity);
         return entity.getGhjfId();
     }
 
@@ -40,40 +55,79 @@ public class TsjfcxServiceImpl implements TsjfcxService {
     public void updateTsjfcx(TsjfcxSaveReqVO updateReqVO) {
         validateTsjfcxExists(updateReqVO.getGhjfId());
         TsjfcxDO updateObj = BeanUtils.toBean(updateReqVO, TsjfcxDO.class);
-        tsjfcxMapper.updateById(updateObj);
+        updateObj.setUpdateTime(LocalDateTime.now());
+        // v1: set updateBy from login user
+        try {
+            AdminUserDO user = userService.getUser(getLoginUserId());
+            if (user != null) {
+                updateObj.setUpdateBy(user.getNickname());
+            }
+        } catch (Exception ignored) {}
+        // v1: delete + re-insert child records
+        tsjfcxMapper.deleteGhJfTsjfByGhjfId(updateObj.getGhjfId());
+        insertGhJfTsjf(updateObj);
+        tsjfcxMapper.updateTsjfcx(updateObj);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteTsjfcx(Long id) {
         validateTsjfcxExists(id);
-        tsjfcxMapper.deleteById(id);
+        // v1: cascade delete child first then main
+        tsjfcxMapper.deleteGhJfTsjfByGhjfId(id);
+        tsjfcxMapper.deleteTsjfcxByGhjfId(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteTsjfcxByIds(Long[] ghjfIds) {
+        // v1: cascade delete child first then main
+        tsjfcxMapper.deleteGhJfTsjfByGhjfIds(ghjfIds);
+        tsjfcxMapper.deleteTsjfcxByGhjfIds(ghjfIds);
     }
 
     @Override
     public TsjfcxDO getTsjfcx(Long id) {
-        return tsjfcxMapper.selectById(id);
+        // v1: selectTsjfcxByGhjfId with LEFT JOIN collection for child records
+        return tsjfcxMapper.selectTsjfcxByGhjfId(id);
     }
 
     @Override
     public PageResult<TsjfcxDO> getTsjfcxPage(TsjfcxPageReqVO pageReqVO) {
-        // v1 deptId filtering
-        if (StringUtils.isEmpty(pageReqVO.getDeptId())) {
+        // v1 deptId filtering: default to login user's dept, root=100000 means all
+        if (pageReqVO.getDeptId() == null || pageReqVO.getDeptId().isEmpty()) {
             try {
                 AdminUserDO user = userService.getUser(getLoginUserId());
                 if (user != null && user.getDeptId() != null) {
                     pageReqVO.setDeptId(user.getDeptId().toString());
                 }
-            } catch (Exception e) { /* ignore */ }
+            } catch (Exception ignored) {}
         }
         if ("100000".equals(pageReqVO.getDeptId())) {
             pageReqVO.setDeptId(null);
         }
-        com.baomidou.mybatisplus.extension.plugins.pagination.Page<TsjfcxDO> page =
-                new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(pageReqVO.getPageNo(), pageReqVO.getPageSize());
+        Page<TsjfcxDO> page = new Page<>(pageReqVO.getPageNo(), pageReqVO.getPageSize());
         page.setOptimizeCountSql(false);
-        com.baomidou.mybatisplus.core.metadata.IPage<TsjfcxDO> ipage = tsjfcxMapper.selectTsjfcxPage(page, pageReqVO);
-        return new PageResult<>(ipage.getRecords(), ipage.getTotal());
+        return new PageResult<>(
+                tsjfcxMapper.selectTsjfcxPage(page, pageReqVO).getRecords(),
+                page.getTotal()
+        );
+    }
+
+    /**
+     * v1: insertGhJfTsjf - insert child gh_jf_tsjf records
+     */
+    private void insertGhJfTsjf(TsjfcxDO tsjfcx) {
+        List<GhJfTsjfDO> ghJfTsjfList = tsjfcx.getGhJfTsjfList();
+        Long ghjfId = tsjfcx.getGhjfId();
+        if (ghJfTsjfList != null && !ghJfTsjfList.isEmpty()) {
+            List<GhJfTsjfDO> list = new ArrayList<>();
+            for (GhJfTsjfDO item : ghJfTsjfList) {
+                item.setGhjfId(ghjfId);
+                list.add(item);
+            }
+            tsjfcxMapper.batchGhJfTsjf(list);
+        }
     }
 
     private void validateTsjfcxExists(Long id) {

@@ -1,14 +1,18 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.tsjfcx;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.tsjfcl.GhJfTsjfDO;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 特殊经费查询 DO
+ * v1 table - no BaseDO, no @TableLogic
  */
 @TableName("gh_jf")
 @Data
@@ -137,4 +141,24 @@ public class TsjfcxDO {
     private String sdghhh;
     private BigDecimal sdghbl;
     private BigDecimal sdghje;
+    private String createBy;
+    private LocalDateTime createTime;
+    private String updateBy;
+    private LocalDateTime updateTime;
+
+    /** v1: tsjfbj from LEFT JOIN gh_jf_tsjf (not a gh_jf column) */
+    @TableField(exist = false)
+    private String tsjfbj;
+
+    /** v1: clsj from LEFT JOIN gh_jf_tsjf (not a gh_jf column) */
+    @TableField(exist = false)
+    private LocalDateTime clsj;
+
+    /** v1: tsjfsm from LEFT JOIN gh_jf_tsjf (not a gh_jf column) */
+    @TableField(exist = false)
+    private String tsjfsm;
+
+    /** v1: child records from gh_jf_tsjf (not a DB column) */
+    @TableField(exist = false)
+    private List<GhJfTsjfDO> ghJfTsjfList;
 }

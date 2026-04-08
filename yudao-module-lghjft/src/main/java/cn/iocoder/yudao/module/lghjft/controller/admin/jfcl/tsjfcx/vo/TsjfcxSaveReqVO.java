@@ -1,10 +1,12 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.tsjfcx.vo;
 
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.tsjfcl.GhJfTsjfDO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Schema(description = "管理后台 - 特殊经费查询新增/修改 Request VO")
 @Data
@@ -254,4 +256,6 @@ public class TsjfcxSaveReqVO {
     private String swjgmc;
     @Schema(description = "工会机构名称")
     private String ghjgmc;
+    @Schema(description = "特殊经费确认子表")
+    private List<GhJfTsjfDO> ghJfTsjfList;
 }
