@@ -368,9 +368,6 @@ public class CbjtzResVO {
     @Schema(description = "hkpch")
     private String hkpch;
 
-    @Schema(description = "bz1")
-    private String bz1;
-
     @Schema(description = "bluuid")
     private String bluuid;
 

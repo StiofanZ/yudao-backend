@@ -131,7 +131,6 @@ public class CbjtzDO {
     private String cbjthczy;
     private String jym;
     private String hkpch;
-    private String bz1;
     private String bluuid;
     private String sdghzh;
     private String sdghhm;
