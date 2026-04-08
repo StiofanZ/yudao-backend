@@ -43,7 +43,7 @@ public class HkxxBfzhpcController {
     }
 
     @GetMapping("/jcghzh/{jcghzh}")
-    @Operation(summary = "按基层工会账号查账户排除详情")
+    @Operation(summary = "按基层工会账���查账户排��详情")
     @Parameter(name = "jcghzh", description = "基层工会账号", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:sjwh-bfzhpc:query')")
     public CommonResult<HkxxBfzhpcResVO> getByJcghzh(@PathVariable String jcghzh) {
@@ -58,7 +58,7 @@ public class HkxxBfzhpcController {
         return success(true);
     }
 
-    @GetMapping("/export-excel")
+    @PostMapping("/export")
     @Operation(summary = "导出账户排除 Excel")
     @PreAuthorize("@ss.hasPermission('lghjft:sjwh-bfzhpc:export')")
     @ApiAccessLog(operateType = EXPORT)
@@ -112,18 +112,18 @@ public class HkxxBfzhpcController {
         return success(hkxxBfzhpcService.getBfjfPage(pageReqVO));
     }
 
-    @GetMapping("/get")
+    @GetMapping("/spuuid/{spuuid}")
     @Operation(summary = "按 spuuid 查经费排除详情")
     @Parameter(name = "spuuid", description = "税票UUID", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:sjwh-bfzhpc:query')")
-    public CommonResult<HkxxBfzhpcResVO> getHkxxBfzhpc(@RequestParam("spuuid") String spuuid) {
+    public CommonResult<HkxxBfzhpcResVO> getBySpuuid(@PathVariable String spuuid) {
         return success(hkxxBfzhpcService.getHkxxBfzhpc(spuuid));
     }
 
-    @PutMapping("/update-bfjf")
+    @PutMapping("/bfjf")
     @Operation(summary = "更新经费排除信息")
     @PreAuthorize("@ss.hasPermission('lghjft:sjwh-bfzhpc:update')")
-    public CommonResult<Boolean> updateHkxxBfzhpc(@Valid @RequestBody HkxxBfzhpcSaveReqVO updateReqVO) {
+    public CommonResult<Boolean> updateBfjfpc(@Valid @RequestBody HkxxBfzhpcSaveReqVO updateReqVO) {
         hkxxBfzhpcService.updateHkxxBfzhpc(updateReqVO);
         return success(true);
     }

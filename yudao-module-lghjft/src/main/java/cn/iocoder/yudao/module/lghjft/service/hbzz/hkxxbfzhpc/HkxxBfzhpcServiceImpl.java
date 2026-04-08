@@ -25,8 +25,6 @@ import static cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils.getLogi
 
 /**
  * 拨付信息 Service 实现类
- *
- * @author 李文军
  */
 @Service
 @Validated
@@ -103,15 +101,6 @@ public class HkxxBfzhpcServiceImpl implements HkxxBfzhpcService {
     // ========== 经费排除 ==========
 
     @Override
-    public PageResult<HkxxBfzhpcResVO> getBfjfpcPage(HkxxBfzhpcPageReqVO pageReqVO) {
-        fillDeptId(pageReqVO);
-        Page<HkxxBfzhpcResVO> page = new Page<>(pageReqVO.getPageNo(), pageReqVO.getPageSize());
-        page.setOptimizeCountSql(false);
-        IPage<HkxxBfzhpcResVO> ipage = hkxxBfzhpcMapper.selectBfjfpcPage(page, pageReqVO);
-        return new PageResult<>(ipage.getRecords(), ipage.getTotal());
-    }
-
-    @Override
     public PageResult<HkxxBfzhpcResVO> getBfjfPage(HkxxBfzhpcPageReqVO pageReqVO) {
         fillDeptId(pageReqVO);
         Page<HkxxBfzhpcResVO> page = new Page<>(pageReqVO.getPageNo(), pageReqVO.getPageSize());
@@ -171,12 +160,10 @@ public class HkxxBfzhpcServiceImpl implements HkxxBfzhpcService {
     // ========== 内部方法 ==========
 
     /**
-     * 批量插入或更新子表（复制旧代码逻辑）
+     * 批量插入或更新子表（与 v1 insertGhHkxxBfzhpc 逻辑一致）
      */
     private void insertGhHkxxBfzhpcList(HkxxBfzhpcSaveReqVO bfzhpc) {
         List<HkxxBfzhpcSaveReqVO.GhHkxxBfzhpcItem> ghHkxxBfzhpcList = bfzhpc.getGhHkxxBfzhpcList();
-        String djxh = bfzhpc.getDjxh();
-        String spuuid = bfzhpc.getSpuuid();
 
         if (CollUtil.isEmpty(ghHkxxBfzhpcList)) {
             return;
@@ -188,8 +175,8 @@ public class HkxxBfzhpcServiceImpl implements HkxxBfzhpcService {
         for (HkxxBfzhpcSaveReqVO.GhHkxxBfzhpcItem item : ghHkxxBfzhpcList) {
             HkxxBfzhpcDO ghHkxxBfzhpc = new HkxxBfzhpcDO();
             ghHkxxBfzhpc.setZhpcid(item.getZhpcid());
-            ghHkxxBfzhpc.setDjxh(djxh);
-            ghHkxxBfzhpc.setSpuuid(spuuid);
+            ghHkxxBfzhpc.setDjxh(bfzhpc.getDjxh());
+            ghHkxxBfzhpc.setSpuuid(bfzhpc.getSpuuid());
             ghHkxxBfzhpc.setZh(bfzhpc.getJcghzh());
             ghHkxxBfzhpc.setHm(bfzhpc.getJcghhm());
             ghHkxxBfzhpc.setHh(bfzhpc.getJcghhh());

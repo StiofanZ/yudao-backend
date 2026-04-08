@@ -10,13 +10,11 @@ import java.util.List;
 
 /**
  * 拨付信息 Service 接口
- *
- * @author 李文军
  */
 public interface HkxxBfzhpcService {
 
     /**
-     * 新增拨付排除（经费级别）
+     * 新增拨付排除
      */
     void createHkxxBfzhpc(@Valid HkxxBfzhpcSaveReqVO createReqVO);
 
@@ -41,37 +39,32 @@ public interface HkxxBfzhpcService {
     void deleteHkxxBfzhpcListByIds(List<Integer> ids);
 
     /**
-     * 获得经费排除详情（按spuuid）
+     * 获得经费排除详情（按spuuid，级联子表）
      */
     HkxxBfzhpcResVO getHkxxBfzhpc(String spuuid);
 
     /**
-     * 按基层工会账号查账户排除详情
+     * 按基层工会账号查账户排除详情（级联子表）
      */
     HkxxBfzhpcResVO getHkxxBfzhpcByJcghzh(String jcghzh);
 
     /**
-     * 按登记序号查单位排除详情
+     * 按登记序号查单位排除详情（级联子表）
      */
     HkxxBfzhpcResVO getBfdwpcByDjxh(String djxh);
 
     /**
-     * 账户排除分页（FROM bfzhpc）
+     * 账户排除分页（from bfzhpc）
      */
     PageResult<HkxxBfzhpcResVO> getBfzhpcPage(HkxxBfzhpcPageReqVO pageReqVO);
 
     /**
-     * 经费排除分页（FROM gh_jf，/page endpoint）
-     */
-    PageResult<HkxxBfzhpcResVO> getBfjfpcPage(HkxxBfzhpcPageReqVO pageReqVO);
-
-    /**
-     * 单位排除分页（FROM bfzhpc）
+     * 单位排除分页（from bfzhpc）
      */
     PageResult<HkxxBfzhpcResVO> getBfdwPage(HkxxBfzhpcPageReqVO pageReqVO);
 
     /**
-     * 经费排除分页（FROM gh_jf，/page-bfjf endpoint）
+     * 经费排除分页（from gh_jf）
      */
     PageResult<HkxxBfzhpcResVO> getBfjfPage(HkxxBfzhpcPageReqVO pageReqVO);
 

@@ -13,49 +13,42 @@ import java.util.List;
 
 /**
  * 拨付信息 Mapper
- *
- * @author 李文军
  */
 @Mapper
 public interface HkxxBfzhpcMapper extends BaseMapperX<HkxxBfzhpcDO> {
 
     /**
-     * 账户排除分页查询（FROM bfzhpc，与 v1 selectBfzhpcList 一致）
+     * 账户排除分页查询（from bfzhpc，与 v1 selectBfzhpcList 一致）
      */
     IPage<HkxxBfzhpcResVO> selectBfzhpcPage(Page<HkxxBfzhpcResVO> page, @Param("query") HkxxBfzhpcPageReqVO query);
 
     /**
-     * 单位排除分页查询（FROM bfzhpc，与 v1 selectBfdwpcList 一致）
+     * 单位排除分页查询（from bfzhpc，与 v1 selectBfdwpcList 一致）
      */
     IPage<HkxxBfzhpcResVO> selectBfdwPage(Page<HkxxBfzhpcResVO> page, @Param("query") HkxxBfzhpcPageReqVO query);
 
     /**
-     * 经费排除分页查询（与 v1 selectBfjfpcList 一致，用于 /page endpoint）
-     */
-    IPage<HkxxBfzhpcResVO> selectBfjfpcPage(Page<HkxxBfzhpcResVO> page, @Param("query") HkxxBfzhpcPageReqVO query);
-
-    /**
-     * 经费排除分页查询（与 v1 selectBfjfpcList 一致，用于 /page-bfjf endpoint）
+     * 经费排除分页查询（与 v1 selectBfjfpcList 一致）
      */
     IPage<HkxxBfzhpcResVO> selectBfjfPage(Page<HkxxBfzhpcResVO> page, @Param("query") HkxxBfzhpcPageReqVO query);
 
     /**
-     * 按 spuuid 查经费排除详情
+     * 按 spuuid 查经费排除详情（级联子表）
      */
     HkxxBfzhpcResVO selectByspuuid(String spuuid);
 
     /**
-     * 按基层工会账号查账户排除详情（FROM bfzhpc）
+     * 按基层工会账号查账户排除详情（级联子表，from bfzhpc）
      */
     HkxxBfzhpcResVO selectByJcghzh(@Param("jcghzh") String jcghzh);
 
     /**
-     * 按登记序号查单位排除详情（FROM bfzhpc）
+     * 按登记序号查单位排除详情（级联子表，from bfzhpc）
      */
     HkxxBfzhpcResVO selectBfdwByDjxh(@Param("djxh") String djxh);
 
     /**
-     * 批量插入或更新子表（ON DUPLICATE KEY UPDATE）
+     * 批量插入或更新子表（on duplicate key update）
      */
     int batchGhHkxxBfzhpc(@Param("list") List<HkxxBfzhpcDO> list);
 

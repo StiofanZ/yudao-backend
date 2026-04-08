@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Schema(description = "管理后台 - 拨付信息 Response VO")
 @Data
@@ -17,6 +18,7 @@ public class HkxxBfzhpcResVO {
 
     @Schema(description = "登记序号", example = "123456")
     private String djxh;
+
     @Schema(description = "部门ID", example = "100")
     private String deptId;
 
@@ -56,7 +58,7 @@ public class HkxxBfzhpcResVO {
     @Schema(description = "备注", example = "测试备注")
     private String bz;
 
-    @Schema(description = "创建者", example = "admin")
+    @Schema(description = "���建者", example = "admin")
     private String createBy;
 
     @Schema(description = "创建时间")
@@ -67,9 +69,6 @@ public class HkxxBfzhpcResVO {
 
     @Schema(description = "更新时间")
     private LocalDateTime updateTime;
-
-    // ========== 扩展展示字段 ==========
-
 
     // ========== 经费相关字段 ==========
 
@@ -84,4 +83,9 @@ public class HkxxBfzhpcResVO {
 
     @Schema(description = "税款所属期止", example = "2024-01-31")
     private String skssqz;
+
+    // ========== 级联子表（详情查询用） ==========
+
+    @Schema(description = "账户排除解除子表列表")
+    private List<HkxxBfzhpcSaveReqVO.GhHkxxBfzhpcItem> ghHkxxBfzhpcList;
 }
