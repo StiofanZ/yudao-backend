@@ -2,11 +2,7 @@ package cn.iocoder.yudao.module.lghjft.service.jfcl.yhbfjgcx;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfjgcx.vo.YhbfjgcxPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfjgcx.vo.YhbfjgcxSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfjgcx.YhbfjgcxDO;
-import jakarta.validation.Valid;
-
-import java.util.List;
 
 /**
  * 银行拨付结果查询 Service 接口
@@ -16,48 +12,33 @@ import java.util.List;
 public interface YhbfjgcxService {
 
     /**
-     * 创建银行拨付结果查询
-     *
-     * @param createReqVO 创建信息
-     * @return 编号
+     * 查询银行拨付结果查询
      */
-    String createyhbfjgcx(@Valid YhbfjgcxSaveReqVO createReqVO);
+    YhbfjgcxDO selectYhbfjgcxByBfpch(String bfpch);
 
     /**
-     * 更新银行拨付结果查询
-     *
-     * @param updateReqVO 更新信息
+     * 查询银行拨付结果查询列表（分页）
      */
-    void updateyhbfjgcx(@Valid YhbfjgcxSaveReqVO updateReqVO);
+    PageResult<YhbfjgcxDO> selectYhbfjgcxList(YhbfjgcxPageReqVO reqVO);
 
     /**
-     * 删除银行拨付结果查询
-     *
-     * @param id 编号
+     * 新增银行拨付结果查询
      */
-    void deleteyhbfjgcx(String id);
+    int insertYhbfjgcx(YhbfjgcxDO yhbfjgcx);
 
     /**
-    * 批量删除银行拨付结果查询
-    *
-    * @param ids 编号
-    */
-    void deleteyhbfjgcxListByIds(List<String> ids);
+     * 修改银行拨付结果查询
+     */
+    int updateYhbfjgcx(YhbfjgcxDO yhbfjgcx);
 
     /**
-     * 获得银行拨付结果查询
-     *
-     * @param id 编号
-     * @return 银行拨付结果查询
+     * 批量删除银行拨付结果查询
      */
-    YhbfjgcxDO getyhbfjgcx(String id);
+    int deleteYhbfjgcxByBfpchs(String[] bfpchs);
 
     /**
-     * 获得银行拨付结果查询分页
-     *
-     * @param pageReqVO 分页查询
-     * @return 银行拨付结果查询分页
+     * 删除银行拨付结果查询信息
      */
-    PageResult<YhbfjgcxDO> getyhbfjgcxPage(YhbfjgcxPageReqVO pageReqVO);
+    int deleteYhbfjgcxByBfpch(String bfpch);
 
 }

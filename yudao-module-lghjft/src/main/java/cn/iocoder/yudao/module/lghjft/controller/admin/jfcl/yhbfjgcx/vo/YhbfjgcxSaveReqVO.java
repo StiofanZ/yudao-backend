@@ -28,7 +28,7 @@ public class YhbfjgcxSaveReqVO {
     private String bfzt;
 
     @Schema(description = "拨付总笔数")
-    private Integer bfzbs;
+    private Long bfzbs;
 
     @Schema(description = "拨付总金额")
     private BigDecimal bfzje;
@@ -37,7 +37,7 @@ public class YhbfjgcxSaveReqVO {
     private String cgjg;
 
     @Schema(description = "成功笔数")
-    private Integer cgbs;
+    private Long cgbs;
 
     @Schema(description = "成功金额")
     private BigDecimal cgje;
@@ -46,7 +46,7 @@ public class YhbfjgcxSaveReqVO {
     private String sbjg;
 
     @Schema(description = "失败笔数")
-    private Integer sbbs;
+    private Long sbbs;
 
     @Schema(description = "失败金额")
     private BigDecimal sbje;
@@ -55,7 +55,7 @@ public class YhbfjgcxSaveReqVO {
     private String tpjg;
 
     @Schema(description = "退票笔数")
-    private Integer tpbs;
+    private Long tpbs;
 
     @Schema(description = "退票金额")
     private BigDecimal tpje;
@@ -64,7 +64,7 @@ public class YhbfjgcxSaveReqVO {
     private String fjjg;
 
     @Schema(description = "否决笔数")
-    private Integer fjbs;
+    private Long fjbs;
 
     @Schema(description = "否决金额")
     private BigDecimal fjje;
@@ -73,7 +73,7 @@ public class YhbfjgcxSaveReqVO {
     private String gqjg;
 
     @Schema(description = "过期笔数")
-    private Integer gqbs;
+    private Long gqbs;
 
     @Schema(description = "过期金额")
     private BigDecimal gqje;
@@ -82,18 +82,9 @@ public class YhbfjgcxSaveReqVO {
     private String cxjg;
 
     @Schema(description = "撤销笔数")
-    private Integer cxbs;
+    private Long cxbs;
 
     @Schema(description = "撤销金额")
     private BigDecimal cxje;
-
-    @Schema(description = "创建者")
-    private String createBy;
-
-    @Schema(description = "更新者")
-    private String updateBy;
-
-    @Schema(description = "备注", example = "你猜")
-    private String remark;
 
 }

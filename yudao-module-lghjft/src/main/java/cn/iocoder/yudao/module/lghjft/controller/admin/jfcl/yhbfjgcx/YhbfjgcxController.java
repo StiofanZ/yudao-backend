@@ -2,7 +2,6 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.yhbfjgcx;
 
 import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
-import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
@@ -36,67 +35,75 @@ public class YhbfjgcxController {
     @Resource
     private YhbfjgcxService yhbfjgcxService;
 
-    @PostMapping("/create")
-    @Operation(summary = "创建银行拨付结果查询")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfjgcx:create')")
-    public CommonResult<String> createyhbfjgcx(@Valid @RequestBody YhbfjgcxSaveReqVO createReqVO) {
-        return success(yhbfjgcxService.createyhbfjgcx(createReqVO));
-    }
-
-    @PutMapping("/update")
-    @Operation(summary = "更新银行拨付结果查询")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfjgcx:update')")
-    public CommonResult<Boolean> updateyhbfjgcx(@Valid @RequestBody YhbfjgcxSaveReqVO updateReqVO) {
-        yhbfjgcxService.updateyhbfjgcx(updateReqVO);
-        return success(true);
-    }
-
-    @DeleteMapping("/delete")
-    @Operation(summary = "删除银行拨付结果查询")
-    @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfjgcx:delete')")
-    public CommonResult<Boolean> deleteyhbfjgcx(@RequestParam("id") String id) {
-        yhbfjgcxService.deleteyhbfjgcx(id);
-        return success(true);
-    }
-
-    @DeleteMapping("/delete-list")
-    @Parameter(name = "ids", description = "编号", required = true)
-    @Operation(summary = "批量删除银行拨付结果查询")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfjgcx:delete')")
-    public CommonResult<Boolean> deleteyhbfjgcxList(@RequestParam("ids") List<String> ids) {
-        yhbfjgcxService.deleteyhbfjgcxListByIds(ids);
-        return success(true);
-    }
-
-    @GetMapping("/get")
-    @Operation(summary = "获得银行拨付结果查询")
-    @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfjgcx:query')")
-    public CommonResult<YhbfjgcxResVO> getyhbfjgcx(@RequestParam("id") String id) {
-        YhbfjgcxDO yhbfjgcx = yhbfjgcxService.getyhbfjgcx(id);
-        return success(BeanUtils.toBean(yhbfjgcx, YhbfjgcxResVO.class));
-    }
-
+    /**
+     * 查询银行拨付结果查询列表
+     */
     @GetMapping("/page")
-    @Operation(summary = "获得银行拨付结果查询分页")
+    @Operation(summary = "查询银行拨付结果查询分页")
     @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfjgcx:query')")
-    public CommonResult<PageResult<YhbfjgcxResVO>> getyhbfjgcxPage(@Valid YhbfjgcxPageReqVO pageReqVO) {
-        PageResult<YhbfjgcxDO> pageResult = yhbfjgcxService.getyhbfjgcxPage(pageReqVO);
+    public CommonResult<PageResult<YhbfjgcxResVO>> getYhbfjgcxPage(@Valid YhbfjgcxPageReqVO pageReqVO) {
+        PageResult<YhbfjgcxDO> pageResult = yhbfjgcxService.selectYhbfjgcxList(pageReqVO);
         return success(BeanUtils.toBean(pageResult, YhbfjgcxResVO.class));
     }
 
-    @GetMapping("/export-excel")
-    @Operation(summary = "导出银行拨付结果查询 Excel")
+    /**
+     * 导出银行拨付结果查询列表
+     */
+    @PostMapping("/export")
+    @Operation(summary = "导出银行拨付结果查询列表")
     @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfjgcx:export')")
     @ApiAccessLog(operateType = EXPORT)
-    public void exportyhbfjgcxExcel(@Valid YhbfjgcxPageReqVO pageReqVO,
-              HttpServletResponse response) throws IOException {
-        pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
-        List<YhbfjgcxDO> list = yhbfjgcxService.getyhbfjgcxPage(pageReqVO).getList();
-        // 导出 Excel
-        ExcelUtils.write(response, "银行拨付结果查询.xls", "数据", YhbfjgcxResVO.class,
-                BeanUtils.toBean(list, YhbfjgcxResVO.class));
+    public void export(HttpServletResponse response, @Valid YhbfjgcxPageReqVO pageReqVO) throws IOException {
+        List<YhbfjgcxDO> list = yhbfjgcxService.selectYhbfjgcxList(pageReqVO).getList();
+        ExcelUtils.write(response, "银行拨付结果查询数据.xls", "数据",
+                YhbfjgcxResVO.class, BeanUtils.toBean(list, YhbfjgcxResVO.class));
+    }
+
+    /**
+     * 获取银行拨付结果查询详细信息
+     */
+    @GetMapping("/{bfpch}")
+    @Operation(summary = "获取银行拨付结果查询详细信息")
+    @Parameter(name = "bfpch", description = "银行拨付结果查询主键", required = true)
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfjgcx:query')")
+    public CommonResult<YhbfjgcxResVO> getInfo(@PathVariable("bfpch") String bfpch) {
+        YhbfjgcxDO yhbfjgcxDO = yhbfjgcxService.selectYhbfjgcxByBfpch(bfpch);
+        return success(BeanUtils.toBean(yhbfjgcxDO, YhbfjgcxResVO.class));
+    }
+
+    /**
+     * 新增银行拨付结果查询
+     */
+    @PostMapping
+    @Operation(summary = "新增银行拨付结果查询")
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfjgcx:create')")
+    public CommonResult<Boolean> add(@Valid @RequestBody YhbfjgcxSaveReqVO saveReqVO) {
+        YhbfjgcxDO yhbfjgcxDO = BeanUtils.toBean(saveReqVO, YhbfjgcxDO.class);
+        yhbfjgcxService.insertYhbfjgcx(yhbfjgcxDO);
+        return success(true);
+    }
+
+    /**
+     * 修改银行拨付结果查询
+     */
+    @PutMapping
+    @Operation(summary = "修改银行拨付结果查询")
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfjgcx:update')")
+    public CommonResult<Boolean> edit(@Valid @RequestBody YhbfjgcxSaveReqVO saveReqVO) {
+        YhbfjgcxDO yhbfjgcxDO = BeanUtils.toBean(saveReqVO, YhbfjgcxDO.class);
+        yhbfjgcxService.updateYhbfjgcx(yhbfjgcxDO);
+        return success(true);
+    }
+
+    /**
+     * 删除银行拨付结果查询
+     */
+    @DeleteMapping("/{bfpchs}")
+    @Operation(summary = "删除银行拨付结果查询")
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfjgcx:delete')")
+    public CommonResult<Boolean> remove(@PathVariable String[] bfpchs) {
+        yhbfjgcxService.deleteYhbfjgcxByBfpchs(bfpchs);
+        return success(true);
     }
 
 }

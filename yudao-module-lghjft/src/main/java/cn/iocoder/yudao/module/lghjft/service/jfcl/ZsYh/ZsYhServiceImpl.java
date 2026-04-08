@@ -114,8 +114,8 @@ public class ZsYhServiceImpl extends ZsYhServiceBase implements ZsYhService {
             bb1paybhx1Obj.put("crtSqn", String.valueOf(ghHkxxYhbfmx.getHkxxId())); //收方编号 crtSqn
             bb1paybhx1Obj.put("yurRef", String.valueOf(ghHkxxYhbfmx.getBfid())); //业务参考号 yurRef
             bb1paybhx1Obj.put("busNar", CmbUtil.subStr(ghHkxxYhbfmx.getFy(),100)); //业务摘要 busNar
-            bb1paybhx1Obj.put("ntfCh1", CmbUtil.getNewStr(Arrays.toString(ghHkxxYhbfmx.getSfyjdz()))); //通知方式一（邮箱） ntfCh1
-            bb1paybhx1Obj.put("ntfCh2", CmbUtil.getNewStr(Arrays.toString(ghHkxxYhbfmx.getSfyddh()))); //通知方式二（手机号） ntfCh2
+            bb1paybhx1Obj.put("ntfCh1", CmbUtil.getNewStr(ghHkxxYhbfmx.getSfyjdz())); //通知方式一（邮箱） ntfCh1
+            bb1paybhx1Obj.put("ntfCh2", CmbUtil.getNewStr(ghHkxxYhbfmx.getSfyddh())); //通知方式二（手机号） ntfCh2
             bb1paybhx1Obj.put("trsTyp", ghHkxxYhbfmx.getYwzl()); //业务种类 trsTyp
             bb1paybhx1Obj.put("rcvChk", StringUtils.EMPTY); //行内收方账号户名校验 rcvChk
             bb1paybhx1Obj.put("drpFlg", StringUtils.EMPTY); //直汇普通标志 drpFlg

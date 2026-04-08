@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.yhbfjgcx.YhbfjgcxMapper">
+
+    <resultMap type="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfjgcx.YhbfjgcxDO" id="YhbfjgcxResult">
+        <result property="bfpch" column="bfpch"/>
+        <result property="bfrq" column="bfrq"/>
+        <result property="bfhzid" column="bfhzid"/>
+        <result property="bfbmc" column="bfbmc"/>
+        <result property="bfhzpch" column="bfhzpch"/>
+        <result property="bfzt" column="bfzt"/>
+        <result property="bfzbs" column="bfzbs"/>
+        <result property="bfzje" column="bfzje"/>
+        <result property="cgjg" column="cgjg"/>
+        <result property="cgbs" column="cgbs"/>
+        <result property="cgje" column="cgje"/>
+        <result property="sbjg" column="sbjg"/>
+        <result property="sbbs" column="sbbs"/>
+        <result property="sbje" column="sbje"/>
+        <result property="tpjg" column="tpjg"/>
+        <result property="tpbs" column="tpbs"/>
+        <result property="tpje" column="tpje"/>
+        <result property="fjjg" column="fjjg"/>
+        <result property="fjbs" column="fjbs"/>
+        <result property="fjje" column="fjje"/>
+        <result property="gqjg" column="gqjg"/>
+        <result property="gqbs" column="gqbs"/>
+        <result property="gqje" column="gqje"/>
+        <result property="cxjg" column="cxjg"/>
+        <result property="cxbs" column="cxbs"/>
+        <result property="cxje" column="cxje"/>
+    </resultMap>
+
+    <sql id="selectYhbfjgcxVo">
+        select bfpch, bfrq, bfhzid, bfbmc, bfhzpch, bfzt, bfzbs, bfzje, cgjg, cgbs, cgje, sbjg, sbbs, sbje, tpjg, tpbs, tpje, fjjg, fjbs, fjje, gqjg, gqbs, gqje, cxjg, cxbs, cxje from yhbfjgcx
+    </sql>
+
+    <select id="selectYhbfjgcxList" resultMap="YhbfjgcxResult">
+        <include refid="selectYhbfjgcxVo"/>
+        <where>
+            <if test="req.bfpch != null and req.bfpch != ''">and bfpch = #{req.bfpch}</if>
+            <if test="req.beginBfrq != null and req.beginBfrq != '' and req.endBfrq != null and req.endBfrq != ''">and MID(bfrq,1,8) between #{req.beginBfrq} and #{req.endBfrq}</if>
+            <if test="req.bfhzid != null and req.bfhzid != ''">and bfhzid = #{req.bfhzid}</if>
+            <if test="req.bfbmc != null and req.bfbmc != ''">and bfbmc like concat('%', #{req.bfbmc}, '%')</if>
+            <if test="req.bfhzpch != null and req.bfhzpch != ''">and bfhzpch = #{req.bfhzpch}</if>
+            <if test="req.bfzt != null and req.bfzt != ''">and bfzt = #{req.bfzt}</if>
+            <if test="req.bfzbs != null">and bfzbs = #{req.bfzbs}</if>
+            <if test="req.bfzje != null">and bfzje = #{req.bfzje}</if>
+            <if test="req.cgjg != null and req.cgjg != ''">and cgjg = #{req.cgjg}</if>
+            <if test="req.cgbs != null">and cgbs = #{req.cgbs}</if>
+            <if test="req.cgje != null">and cgje = #{req.cgje}</if>
+            <if test="req.sbjg != null and req.sbjg != ''">and sbjg = #{req.sbjg}</if>
+            <if test="req.sbbs != null">and sbbs = #{req.sbbs}</if>
+            <if test="req.sbje != null">and sbje = #{req.sbje}</if>
+            <if test="req.tpjg != null and req.tpjg != ''">and tpjg = #{req.tpjg}</if>
+            <if test="req.tpbs != null">and tpbs = #{req.tpbs}</if>
+            <if test="req.tpje != null">and tpje = #{req.tpje}</if>
+            <if test="req.fjjg != null and req.fjjg != ''">and fjjg = #{req.fjjg}</if>
+            <if test="req.fjbs != null">and fjbs = #{req.fjbs}</if>
+            <if test="req.fjje != null">and fjje = #{req.fjje}</if>
+            <if test="req.gqjg != null and req.gqjg != ''">and gqjg = #{req.gqjg}</if>
+            <if test="req.gqbs != null">and gqbs = #{req.gqbs}</if>
+            <if test="req.gqje != null">and gqje = #{req.gqje}</if>
+            <if test="req.cxjg != null and req.cxjg != ''">and cxjg = #{req.cxjg}</if>
+            <if test="req.cxbs != null">and cxbs = #{req.cxbs}</if>
+            <if test="req.cxje != null">and cxje = #{req.cxje}</if>
+        </where>
+    </select>
+
+    <select id="selectYhbfjgcxByBfpch" parameterType="String" resultMap="YhbfjgcxResult">
+        <include refid="selectYhbfjgcxVo"/>
+        where bfpch = #{bfpch}
+    </select>
+
+    <insert id="insertYhbfjgcx" parameterType="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfjgcx.YhbfjgcxDO">
+        insert into yhbfjgcx
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bfpch != null">bfpch,</if>
+            <if test="bfrq != null">bfrq,</if>
+            <if test="bfhzid != null and bfhzid != ''">bfhzid,</if>
+            <if test="bfbmc != null">bfbmc,</if>
+            <if test="bfhzpch != null">bfhzpch,</if>
+            <if test="bfzt != null">bfzt,</if>
+            <if test="bfzbs != null">bfzbs,</if>
+            <if test="bfzje != null">bfzje,</if>
+            <if test="cgjg != null">cgjg,</if>
+            <if test="cgbs != null">cgbs,</if>
+            <if test="cgje != null">cgje,</if>
+            <if test="sbjg != null">sbjg,</if>
+            <if test="sbbs != null">sbbs,</if>
+            <if test="sbje != null">sbje,</if>
+            <if test="tpjg != null">tpjg,</if>
+            <if test="tpbs != null">tpbs,</if>
+            <if test="tpje != null">tpje,</if>
+            <if test="fjjg != null">fjjg,</if>
+            <if test="fjbs != null">fjbs,</if>
+            <if test="fjje != null">fjje,</if>
+            <if test="gqjg != null">gqjg,</if>
+            <if test="gqbs != null">gqbs,</if>
+            <if test="gqje != null">gqje,</if>
+            <if test="cxjg != null">cxjg,</if>
+            <if test="cxbs != null">cxbs,</if>
+            <if test="cxje != null">cxje,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bfpch != null">#{bfpch},</if>
+            <if test="bfrq != null">#{bfrq},</if>
+            <if test="bfhzid != null and bfhzid != ''">#{bfhzid},</if>
+            <if test="bfbmc != null">#{bfbmc},</if>
+            <if test="bfhzpch != null">#{bfhzpch},</if>
+            <if test="bfzt != null">#{bfzt},</if>
+            <if test="bfzbs != null">#{bfzbs},</if>
+            <if test="bfzje != null">#{bfzje},</if>
+            <if test="cgjg != null">#{cgjg},</if>
+            <if test="cgbs != null">#{cgbs},</if>
+            <if test="cgje != null">#{cgje},</if>
+            <if test="sbjg != null">#{sbjg},</if>
+            <if test="sbbs != null">#{sbbs},</if>
+            <if test="sbje != null">#{sbje},</if>
+            <if test="tpjg != null">#{tpjg},</if>
+            <if test="tpbs != null">#{tpbs},</if>
+            <if test="tpje != null">#{tpje},</if>
+            <if test="fjjg != null">#{fjjg},</if>
+            <if test="fjbs != null">#{fjbs},</if>
+            <if test="fjje != null">#{fjje},</if>
+            <if test="gqjg != null">#{gqjg},</if>
+            <if test="gqbs != null">#{gqbs},</if>
+            <if test="gqje != null">#{gqje},</if>
+            <if test="cxjg != null">#{cxjg},</if>
+            <if test="cxbs != null">#{cxbs},</if>
+            <if test="cxje != null">#{cxje},</if>
+        </trim>
+    </insert>
+
+    <update id="updateYhbfjgcx" parameterType="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.yhbfjgcx.YhbfjgcxDO">
+        update yhbfjgcx
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="bfrq != null">bfrq = #{bfrq},</if>
+            <if test="bfhzid != null and bfhzid != ''">bfhzid = #{bfhzid},</if>
+            <if test="bfbmc != null">bfbmc = #{bfbmc},</if>
+            <if test="bfhzpch != null">bfhzpch = #{bfhzpch},</if>
+            <if test="bfzt != null">bfzt = #{bfzt},</if>
+            <if test="bfzbs != null">bfzbs = #{bfzbs},</if>
+            <if test="bfzje != null">bfzje = #{bfzje},</if>
+            <if test="cgjg != null">cgjg = #{cgjg},</if>
+            <if test="cgbs != null">cgbs = #{cgbs},</if>
+            <if test="cgje != null">cgje = #{cgje},</if>
+            <if test="sbjg != null">sbjg = #{sbjg},</if>
+            <if test="sbbs != null">sbbs = #{sbbs},</if>
+            <if test="sbje != null">sbje = #{sbje},</if>
+            <if test="tpjg != null">tpjg = #{tpjg},</if>
+            <if test="tpbs != null">tpbs = #{tpbs},</if>
+            <if test="tpje != null">tpje = #{tpje},</if>
+            <if test="fjjg != null">fjjg = #{fjjg},</if>
+            <if test="fjbs != null">fjbs = #{fjbs},</if>
+            <if test="fjje != null">fjje = #{fjje},</if>
+            <if test="gqjg != null">gqjg = #{gqjg},</if>
+            <if test="gqbs != null">gqbs = #{gqbs},</if>
+            <if test="gqje != null">gqje = #{gqje},</if>
+            <if test="cxjg != null">cxjg = #{cxjg},</if>
+            <if test="cxbs != null">cxbs = #{cxbs},</if>
+            <if test="cxje != null">cxje = #{cxje},</if>
+        </trim>
+        where bfpch = #{bfpch}
+    </update>
+
+    <delete id="deleteYhbfjgcxByBfpch" parameterType="String">
+        delete from yhbfjgcx where bfpch = #{bfpch}
+    </delete>
+
+    <delete id="deleteYhbfjgcxByBfpchs" parameterType="String">
+        delete from yhbfjgcx where bfpch in
+        <foreach item="bfpch" collection="array" open="(" separator="," close=")">
+            #{bfpch}
+        </foreach>
+    </delete>
+
+</mapper>

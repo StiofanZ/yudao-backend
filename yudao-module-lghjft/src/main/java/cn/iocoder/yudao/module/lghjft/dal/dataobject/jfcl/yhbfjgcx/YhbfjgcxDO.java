@@ -13,8 +13,8 @@ import java.math.BigDecimal;
  *
  * @author 李文军
  */
-@TableName("yhbfjg_cx")
-@KeySequence("yhbfjg_cx_seq") // 用于 Oracle、PostgreSQL、Kingbase、DB2、H2 数据库的主键自增。如果是 MySQL 等数据库，可不写。
+@TableName("yhbfjgcx")
+@KeySequence("yhbfjgcx_seq") // 用于 Oracle、PostgreSQL、Kingbase、DB2、H2 数据库的主键自增。如果是 MySQL 等数据库，可不写。
 @Data
 @ToString
 @Builder
@@ -50,7 +50,7 @@ public class YhbfjgcxDO {
     /**
      * 拨付总笔数
      */
-    private Integer bfzbs;
+    private Long bfzbs;
     /**
      * 拨付总金额
      */
@@ -62,7 +62,7 @@ public class YhbfjgcxDO {
     /**
      * 成功笔数
      */
-    private Integer cgbs;
+    private Long cgbs;
     /**
      * 成功金额
      */
@@ -74,7 +74,7 @@ public class YhbfjgcxDO {
     /**
      * 失败笔数
      */
-    private Integer sbbs;
+    private Long sbbs;
     /**
      * 失败金额
      */
@@ -86,7 +86,7 @@ public class YhbfjgcxDO {
     /**
      * 退票笔数
      */
-    private Integer tpbs;
+    private Long tpbs;
     /**
      * 退票金额
      */
@@ -98,7 +98,7 @@ public class YhbfjgcxDO {
     /**
      * 否决笔数
      */
-    private Integer fjbs;
+    private Long fjbs;
     /**
      * 否决金额
      */
@@ -110,7 +110,7 @@ public class YhbfjgcxDO {
     /**
      * 过期笔数
      */
-    private Integer gqbs;
+    private Long gqbs;
     /**
      * 过期金额
      */
@@ -122,22 +122,10 @@ public class YhbfjgcxDO {
     /**
      * 撤销笔数
      */
-    private Integer cxbs;
+    private Long cxbs;
     /**
      * 撤销金额
      */
     private BigDecimal cxje;
-    /**
-     * 创建者
-     */
-    private String createBy;
-    /**
-     * 更新者
-     */
-    private String updateBy;
-    /**
-     * 备注
-     */
-    private String remark;
 
 }
