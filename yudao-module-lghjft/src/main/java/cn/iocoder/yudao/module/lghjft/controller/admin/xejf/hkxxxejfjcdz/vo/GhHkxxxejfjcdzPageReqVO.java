@@ -17,4 +17,14 @@ public class GhHkxxxejfjcdzPageReqVO extends PageParam {
     private String deptId;
     @Schema(description = "退回标记")
     private String thbj;
+    @Schema(description = "户名")
+    private String hm;
+    @Schema(description = "新户名")
+    private String xhm;
+    @Schema(description = "地址")
+    private String dz;
+    @Schema(description = "附言")
+    private String fy;
+    @Schema(description = "修改标记")
+    private String xgbj;
 }

@@ -2,21 +2,43 @@ package cn.iocoder.yudao.module.lghjft.dal.mysql.xejf.hkxxxejfcbj;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
-import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xejf.hkxxxejfcbj.vo.GhHkxxxejfcbjPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.xejf.hkxxxejfcbj.GhHkxxxejfcbjDO;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface GhHkxxxejfcbjMapper extends BaseMapperX<GhHkxxxejfcbjDO> {
 
+    /**
+     * v1 selectGhHkxxxejfcbjList 完整条件迁移
+     * 关键: MID(HKPCH,1,8) between 日期范围, QRRQ between, order by dz asc
+     */
     default PageResult<GhHkxxxejfcbjDO> selectPage(GhHkxxxejfcbjPageReqVO reqVO) {
-        return selectPage(reqVO, new LambdaQueryWrapperX<GhHkxxxejfcbjDO>()
-                .eqIfPresent(GhHkxxxejfcbjDO::getHkxxId, reqVO.getHkxxId())
-                .eqIfPresent(GhHkxxxejfcbjDO::getHkpch, reqVO.getHkpch())
-                .eqIfPresent(GhHkxxxejfcbjDO::getJfqj, reqVO.getJfqj())
-                .eqIfPresent(GhHkxxxejfcbjDO::getSjdm, reqVO.getSjdm())
-                .eqIfPresent(GhHkxxxejfcbjDO::getDeptId, reqVO.getDeptId())
-                .orderByDesc(GhHkxxxejfcbjDO::getHkxxId));
+        QueryWrapper<GhHkxxxejfcbjDO> wrapper = new QueryWrapper<>();
+        if (reqVO.getHkpch() != null && !reqVO.getHkpch().isEmpty()) {
+            wrapper.eq("hkpch", reqVO.getHkpch());
+        }
+        // v1: MID(HKPCH,1,8) between beginHkpch and endHkpch
+        if (reqVO.getBeginHkpch() != null && !reqVO.getBeginHkpch().isEmpty()
+                && reqVO.getEndHkpch() != null && !reqVO.getEndHkpch().isEmpty()) {
+            wrapper.apply("mid(hkpch,1,8) between {0} and {1}",
+                    reqVO.getBeginHkpch(), reqVO.getEndHkpch());
+        }
+        // v1: QRRQ between
+        if (reqVO.getBeginQrrq() != null && !reqVO.getBeginQrrq().isEmpty()
+                && reqVO.getEndQrrq() != null && !reqVO.getEndQrrq().isEmpty()) {
+            wrapper.apply("qrrq between {0} and {1}",
+                    reqVO.getBeginQrrq(), reqVO.getEndQrrq());
+        }
+        if (reqVO.getJfqj() != null) {
+            wrapper.eq("jfqj", reqVO.getJfqj());
+        }
+        if (reqVO.getDeptId() != null && !reqVO.getDeptId().isEmpty()) {
+            wrapper.eq("dept_id", reqVO.getDeptId());
+        }
+        // v1: order by dz asc
+        wrapper.orderByAsc("dz");
+        return selectPage(reqVO, wrapper);
     }
 }

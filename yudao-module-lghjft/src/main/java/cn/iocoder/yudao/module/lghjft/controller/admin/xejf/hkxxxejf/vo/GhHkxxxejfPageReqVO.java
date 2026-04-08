@@ -15,8 +15,22 @@ public class GhHkxxxejfPageReqVO extends PageParam {
     private Long jfqj;
     @Schema(description = "类型")
     private String lx;
+    @Schema(description = "账号")
+    private String zh;
+    @Schema(description = "账号1")
+    private String zh1;
+    @Schema(description = "账号2")
+    private String zh2;
+    @Schema(description = "账号3")
+    private String zh3;
+    @Schema(description = "户名")
+    private String hm;
     @Schema(description = "工会机构")
     private String deptId;
     @Schema(description = "退回标记")
     private String thbj;
+    @Schema(description = "拨付文件日期起")
+    private String beginHkpch;
+    @Schema(description = "拨付文件日期止")
+    private String endHkpch;
 }

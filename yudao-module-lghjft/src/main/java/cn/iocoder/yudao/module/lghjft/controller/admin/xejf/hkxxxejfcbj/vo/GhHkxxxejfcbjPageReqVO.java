@@ -17,4 +17,12 @@ public class GhHkxxxejfcbjPageReqVO extends PageParam {
     private String sjdm;
     @Schema(description = "工会机构")
     private String deptId;
+    @Schema(description = "拨付文件日期起")
+    private String beginHkpch;
+    @Schema(description = "拨付文件日期止")
+    private String endHkpch;
+    @Schema(description = "确认日期起")
+    private String beginQrrq;
+    @Schema(description = "确认日期止")
+    private String endQrrq;
 }

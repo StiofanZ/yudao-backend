@@ -17,49 +17,49 @@ public interface XetzMapper extends BaseMapperX<XetzDO> {
     default PageResult<XetzDO> selectPage(XetzPageReqVO reqVO) {
         QueryWrapper<XetzDO> wrapper = new QueryWrapper<>();
         if (reqVO.getJfqj() != null && !reqVO.getJfqj().isEmpty()) {
-            wrapper.eq("JFQJ", reqVO.getJfqj());
+            wrapper.eq("jfqj", reqVO.getJfqj());
         }
         if (reqVO.getDjxh() != null && !reqVO.getDjxh().isEmpty()) {
-            wrapper.eq("DJXH", reqVO.getDjxh());
+            wrapper.eq("djxh", reqVO.getDjxh());
         }
         if (reqVO.getShxydm() != null && !reqVO.getShxydm().isEmpty()) {
-            wrapper.eq("SHXYDM", reqVO.getShxydm());
+            wrapper.eq("shxydm", reqVO.getShxydm());
         }
         if (reqVO.getNsrmc() != null && !reqVO.getNsrmc().isEmpty()) {
-            wrapper.like("NSRMC", reqVO.getNsrmc());
+            wrapper.like("nsrmc", reqVO.getNsrmc());
         }
         // v1: and (dept_id = #{deptId} or SDGHJG_DM = #{deptId})
         if (reqVO.getDeptId() != null && !reqVO.getDeptId().isEmpty()) {
-            wrapper.and(w -> w.eq("DEPT_ID", reqVO.getDeptId())
-                    .or().eq("SDGHJG_DM", reqVO.getDeptId()));
+            wrapper.and(w -> w.eq("dept_id", reqVO.getDeptId())
+                    .or().eq("sdghjg_dm", reqVO.getDeptId()));
         }
         if (reqVO.getXwlx() != null && !reqVO.getXwlx().isEmpty()) {
-            wrapper.eq("XWLX", reqVO.getXwlx());
+            wrapper.eq("xwlx", reqVO.getXwlx());
         }
         if (reqVO.getGhlbDm() != null && !reqVO.getGhlbDm().isEmpty()) {
-            wrapper.eq("GHLB_DM", reqVO.getGhlbDm());
+            wrapper.eq("ghlb_dm", reqVO.getGhlbDm());
         }
         if (reqVO.getXtlbDm() != null && !reqVO.getXtlbDm().isEmpty()) {
-            wrapper.eq("XTLB_DM", reqVO.getXtlbDm());
+            wrapper.eq("xtlb_dm", reqVO.getXtlbDm());
         }
         if (reqVO.getXelx23() != null && reqVO.getXelx23().length > 0) {
-            wrapper.in("XELX23", (Object[]) reqVO.getXelx23());
+            wrapper.in("xelx23", (Object[]) reqVO.getXelx23());
         }
         if (reqVO.getXelx24() != null && reqVO.getXelx24().length > 0) {
-            wrapper.in("XELX24", (Object[]) reqVO.getXelx24());
+            wrapper.in("xelx24", (Object[]) reqVO.getXelx24());
         }
         if (reqVO.getXelx25() != null && reqVO.getXelx25().length > 0) {
-            wrapper.in("XELX25", (Object[]) reqVO.getXelx25());
+            wrapper.in("xelx25", (Object[]) reqVO.getXelx25());
         }
         if (reqVO.getBeginYbtse() != null && !reqVO.getBeginYbtse().isEmpty()
                 && reqVO.getEndYbtse() != null && !reqVO.getEndYbtse().isEmpty()) {
-            wrapper.between("YBTSE", reqVO.getBeginYbtse(), reqVO.getEndYbtse());
+            wrapper.between("ybtse", reqVO.getBeginYbtse(), reqVO.getEndYbtse());
         }
         if (reqVO.getBeginSjje() != null && !reqVO.getBeginSjje().isEmpty()
                 && reqVO.getEndSjje() != null && !reqVO.getEndSjje().isEmpty()) {
-            wrapper.between("SJJE", reqVO.getBeginSjje(), reqVO.getEndSjje());
+            wrapper.between("sjje", reqVO.getBeginSjje(), reqVO.getEndSjje());
         }
-        wrapper.orderByDesc("JFQJ");
+        wrapper.orderByDesc("jfqj");
         return selectPage(reqVO, wrapper);
     }
 }
