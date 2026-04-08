@@ -2,40 +2,247 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.ghcbj.cbjtz.CbjtzMapper">
 
-    <!-- 批量确认返拨: 逐条更新 gh_jf 记录 -->
-    <update id="batchUpdateCbjqrfbpl">
-        <foreach collection="list" item="item" separator=";">
-            UPDATE gh_jf
-            SET FBBJ = 'Y',
-            SFBJE = #{item.sfbje},
-            FBRQ = #{item.fbrq},
-            HKPZH = #{item.hkpzh},
-            BZ = #{item.bz},
-            UPDATE_TIME = NOW()
-            WHERE ghjf_id = #{item.ghjfId}
+    <!-- v1 selectCbjtzVo: cbjtz table (view) + left join cxtj_cbjqrfb -->
+    <sql id="selectCbjtzVo">
+        select a.ghjf_id, a.spuuid, djxh, shxydm, nsrmc, nsrjc, dept_id, ghjgxzjb, clghbj, hyghbz,
+               sdghjg_dm, sdghjgxzjb, zgswj_dm, zgswskfj_dm, ssgly_dm, ghlb_dm, xtlb_dm, zzjglx_dm,
+               hy_dm, djzclx_dm, dwlsgx_dm, sblb_dm, nssbrq, pzxh, pzmxxh, skssqq, skssqz, zsswjg_dm,
+               skssswjg_dm, skgk_dm, dzsphm, pzzl_dm, pzzg_dm, pzhm, kpy_dm, kpy_xm, zspm_dm, zszm_dm,
+               yskm_dm, gzze, sl, ynse, jmse, yjse, ybtse, jkfs_dm, jfhb, jfzh, jfhm, jfhh, jfyh,
+               rkrq, jsbj, jsrq, jsczy, jcghzh, jcghhm, jcghhh, jcghbl, jcghje, cbjzh, cbjhm, cbjhh,
+               cbjbl, cbjje, hyghzh, hyghhm, hyghhh, hyghbl, hyghje, xjghzh, xjghhm, xjghhh, xjghbl,
+               xjghje, sjghzh, sjghhm, sjghhh, sjghbl, sjghje, szghzh, szghhm, szghhh, szghbl, szghje,
+               qgghzh, qgghhm, qgghhh, qgghbl, qgghje, jcjzh, jcjhm, jcjhh, jcjbl, jcjje, jcwsh,
+               sdszh, sdshm, sdshh, sdsbl, sdsje, swjgzh, swjghm, swjghh, swjgbl, swjgje, cbjthbj,
+               cbjthrq, cbjthczy, jym, hkpch, bluuid, sdghzh, sdghhm, sdghhh, sdghbl, sdghje,
+               b.create_by, a.create_time, a.update_by, a.update_time,
+               b.sfbje, b.fbbj, b.fbrq, b.zjxcrq, b.hkpzh, b.bz
+        from cbjtz a
+        left join cxtj_cbjqrfb b on b.ghjf_id = a.ghjf_id
+    </sql>
+
+    <!-- v1 selectDgjftzVo: gh_jf table + left join cxtj_cbjqrfb -->
+    <sql id="selectDgjftzVo">
+        select a.ghjf_id, a.spuuid, djxh, shxydm, nsrmc, nsrjc, dept_id, ghjgxzjb, clghbj, hyghbz,
+               sdghjg_dm, sdghjgxzjb, zgswj_dm, zgswskfj_dm, ssgly_dm, ghlb_dm, xtlb_dm, zzjglx_dm,
+               hy_dm, djzclx_dm, dwlsgx_dm, sblb_dm, nssbrq, pzxh, pzmxxh, skssqq, skssqz, zsswjg_dm,
+               skssswjg_dm, skgk_dm, dzsphm, pzzl_dm, pzzg_dm, pzhm, kpy_dm, kpy_xm, zspm_dm, zszm_dm,
+               yskm_dm, gzze, sl, ynse, jmse, yjse, ybtse, jkfs_dm, jfhb, jfzh, jfhm, jfhh, jfyh,
+               rkrq, jsbj, jsrq, jsczy, jcghzh, jcghhm, jcghhh, jcghbl, jcghje, cbjzh, cbjhm, cbjhh,
+               cbjbl, cbjje, hyghzh, hyghhm, hyghhh, hyghbl, hyghje, xjghzh, xjghhm, xjghhh, xjghbl,
+               xjghje, sjghzh, sjghhm, sjghhh, sjghbl, sjghje, szghzh, szghhm, szghhh, szghbl, szghje,
+               qgghzh, qgghhm, qgghhh, qgghbl, qgghje, jcjzh, jcjhm, jcjhh, jcjbl, jcjje, jcwsh,
+               sdszh, sdshm, sdshh, sdsbl, sdsje, swjgzh, swjghm, swjghh, swjgbl, swjgje, cbjthbj,
+               cbjthrq, cbjthczy, jym, hkpch, bluuid, sdghzh, sdghhm, sdghhh, sdghbl, sdghje,
+               b.create_by, a.create_time, a.update_by, a.update_time,
+               b.sfbje, b.fbbj, b.fbrq, b.zjxcrq, b.hkpzh, b.bz
+        from gh_jf a
+        left join cxtj_cbjqrfb b on b.ghjf_id = a.ghjf_id
+    </sql>
+
+    <!-- v1 selectCbjtzList: paginated, from cbjtz view, jsbj='Y', order by rkrq desc -->
+    <select id="selectCbjtzPageList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.ghcbj.cbjtz.vo.CbjtzResVO">
+        <include refid="selectCbjtzVo"/>
+        <where> jsbj = 'Y'
+            <if test="req.shxydm != null and req.shxydm != ''"> and shxydm = #{req.shxydm}</if>
+            <if test="req.nsrmc != null and req.nsrmc != ''"> and nsrmc like concat('%', #{req.nsrmc}, '%')</if>
+            <if test="req.deptId != null and req.deptId != ''"> and dept_id = #{req.deptId}</if>
+            <if test="req.zgswjDm != null and req.zgswjDm != ''"> and zgswj_dm = #{req.zgswjDm}</if>
+            <if test="req.zspmDm != null and req.zspmDm != ''"> and zspm_dm = #{req.zspmDm}</if>
+            <if test="req.skssqq != null and req.skssqq != ''"> and skssqq &gt;= #{req.skssqq}</if>
+            <if test="req.skssqz != null and req.skssqz != ''"> and skssqz &lt;= #{req.skssqz}</if>
+            <if test="req.ybtse != null and req.ybtse != ''"> and ybtse = #{req.ybtse}</if>
+            <if test="req.cbjthbj != null and req.cbjthbj != ''"> and cbjthbj = #{req.cbjthbj}</if>
+            <if test="req.hkpzh != null and req.hkpzh != ''"> and hkpzh = #{req.hkpzh}</if>
+            <if test="req.fbbj != null and req.fbbj != ''"> and fbbj = #{req.fbbj}</if>
+            <if test="req.bz != null and req.bz != ''"> and b.bz like concat('%', #{req.bz}, '%')</if>
+            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">
+                and rkrq between #{req.beginRkrq} and #{req.endRkrq}
+            </if>
+            <if test="req.beginJsrq != null and req.beginJsrq != '' and req.endJsrq != null and req.endJsrq != ''">
+                and jsrq between #{req.beginJsrq} and #{req.endJsrq}
+            </if>
+            <if test="req.beginFbrq != null and req.beginFbrq != '' and req.endFbrq != null and req.endFbrq != ''">
+                and fbrq between #{req.beginFbrq} and #{req.endFbrq}
+            </if>
+        </where>
+        order by rkrq desc
+        <if test="req.pageSize != null and req.pageSize > 0">
+            limit #{req.pageSize} offset #{req.offset}
+        </if>
+    </select>
+
+    <!-- count for cbjtz page -->
+    <select id="selectCbjtzPageCount" resultType="long">
+        select count(*)
+        from cbjtz a
+        left join cxtj_cbjqrfb b on b.ghjf_id = a.ghjf_id
+        <where> jsbj = 'Y'
+            <if test="req.shxydm != null and req.shxydm != ''"> and shxydm = #{req.shxydm}</if>
+            <if test="req.nsrmc != null and req.nsrmc != ''"> and nsrmc like concat('%', #{req.nsrmc}, '%')</if>
+            <if test="req.deptId != null and req.deptId != ''"> and dept_id = #{req.deptId}</if>
+            <if test="req.zgswjDm != null and req.zgswjDm != ''"> and zgswj_dm = #{req.zgswjDm}</if>
+            <if test="req.zspmDm != null and req.zspmDm != ''"> and zspm_dm = #{req.zspmDm}</if>
+            <if test="req.skssqq != null and req.skssqq != ''"> and skssqq &gt;= #{req.skssqq}</if>
+            <if test="req.skssqz != null and req.skssqz != ''"> and skssqz &lt;= #{req.skssqz}</if>
+            <if test="req.ybtse != null and req.ybtse != ''"> and ybtse = #{req.ybtse}</if>
+            <if test="req.cbjthbj != null and req.cbjthbj != ''"> and cbjthbj = #{req.cbjthbj}</if>
+            <if test="req.hkpzh != null and req.hkpzh != ''"> and hkpzh = #{req.hkpzh}</if>
+            <if test="req.fbbj != null and req.fbbj != ''"> and fbbj = #{req.fbbj}</if>
+            <if test="req.bz != null and req.bz != ''"> and b.bz like concat('%', #{req.bz}, '%')</if>
+            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">
+                and rkrq between #{req.beginRkrq} and #{req.endRkrq}
+            </if>
+            <if test="req.beginJsrq != null and req.beginJsrq != '' and req.endJsrq != null and req.endJsrq != ''">
+                and jsrq between #{req.beginJsrq} and #{req.endJsrq}
+            </if>
+            <if test="req.beginFbrq != null and req.beginFbrq != '' and req.endFbrq != null and req.endFbrq != ''">
+                and fbrq between #{req.beginFbrq} and #{req.endFbrq}
+            </if>
+        </where>
+    </select>
+
+    <!-- v1 selectDgjftzList: from gh_jf, jsbj='Y' AND zspm_dm='399001010' AND jcghje!='0' AND cbjthbj in ('D','Z') -->
+    <select id="selectDgjftzPageList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.ghcbj.cbjtz.vo.CbjtzResVO">
+        <include refid="selectDgjftzVo"/>
+        <where> jsbj = 'Y'
+            and zspm_dm = '399001010'
+            and jcghje != '0'
+            and cbjthbj in ('D', 'Z')
+            <if test="req.shxydm != null and req.shxydm != ''"> and shxydm = #{req.shxydm}</if>
+            <if test="req.nsrmc != null and req.nsrmc != ''"> and nsrmc like concat('%', #{req.nsrmc}, '%')</if>
+            <if test="req.deptId != null and req.deptId != ''"> and dept_id = #{req.deptId}</if>
+            <if test="req.zgswjDm != null and req.zgswjDm != ''"> and zgswj_dm = #{req.zgswjDm}</if>
+            <if test="req.zspmDm != null and req.zspmDm != ''"> and zspm_dm = #{req.zspmDm}</if>
+            <if test="req.skssqq != null and req.skssqq != ''"> and skssqq &gt;= #{req.skssqq}</if>
+            <if test="req.skssqz != null and req.skssqz != ''"> and skssqz &lt;= #{req.skssqz}</if>
+            <if test="req.ybtse != null and req.ybtse != ''"> and ybtse = #{req.ybtse}</if>
+            <if test="req.cbjthbj != null and req.cbjthbj != ''"> and cbjthbj = #{req.cbjthbj}</if>
+            <if test="req.hkpzh != null and req.hkpzh != ''"> and hkpzh = #{req.hkpzh}</if>
+            <if test="req.fbbj != null and req.fbbj != ''"> and fbbj = #{req.fbbj}</if>
+            <if test="req.bz != null and req.bz != ''"> and b.bz like concat('%', #{req.bz}, '%')</if>
+            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">
+                and rkrq between #{req.beginRkrq} and #{req.endRkrq}
+            </if>
+            <if test="req.beginJsrq != null and req.beginJsrq != '' and req.endJsrq != null and req.endJsrq != ''">
+                and jsrq between #{req.beginJsrq} and #{req.endJsrq}
+            </if>
+            <if test="req.beginFbrq != null and req.beginFbrq != '' and req.endFbrq != null and req.endFbrq != ''">
+                and fbrq between #{req.beginFbrq} and #{req.endFbrq}
+            </if>
+        </where>
+        order by rkrq desc
+        <if test="req.pageSize != null and req.pageSize > 0">
+            limit #{req.pageSize} offset #{req.offset}
+        </if>
+    </select>
+
+    <!-- count for dgjftz page -->
+    <select id="selectDgjftzPageCount" resultType="long">
+        select count(*)
+        from gh_jf a
+        left join cxtj_cbjqrfb b on b.ghjf_id = a.ghjf_id
+        <where> jsbj = 'Y'
+            and zspm_dm = '399001010'
+            and jcghje != '0'
+            and cbjthbj in ('D', 'Z')
+            <if test="req.shxydm != null and req.shxydm != ''"> and shxydm = #{req.shxydm}</if>
+            <if test="req.nsrmc != null and req.nsrmc != ''"> and nsrmc like concat('%', #{req.nsrmc}, '%')</if>
+            <if test="req.deptId != null and req.deptId != ''"> and dept_id = #{req.deptId}</if>
+            <if test="req.zgswjDm != null and req.zgswjDm != ''"> and zgswj_dm = #{req.zgswjDm}</if>
+            <if test="req.zspmDm != null and req.zspmDm != ''"> and zspm_dm = #{req.zspmDm}</if>
+            <if test="req.skssqq != null and req.skssqq != ''"> and skssqq &gt;= #{req.skssqq}</if>
+            <if test="req.skssqz != null and req.skssqz != ''"> and skssqz &lt;= #{req.skssqz}</if>
+            <if test="req.ybtse != null and req.ybtse != ''"> and ybtse = #{req.ybtse}</if>
+            <if test="req.cbjthbj != null and req.cbjthbj != ''"> and cbjthbj = #{req.cbjthbj}</if>
+            <if test="req.hkpzh != null and req.hkpzh != ''"> and hkpzh = #{req.hkpzh}</if>
+            <if test="req.fbbj != null and req.fbbj != ''"> and fbbj = #{req.fbbj}</if>
+            <if test="req.bz != null and req.bz != ''"> and b.bz like concat('%', #{req.bz}, '%')</if>
+            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">
+                and rkrq between #{req.beginRkrq} and #{req.endRkrq}
+            </if>
+            <if test="req.beginJsrq != null and req.beginJsrq != '' and req.endJsrq != null and req.endJsrq != ''">
+                and jsrq between #{req.beginJsrq} and #{req.endJsrq}
+            </if>
+            <if test="req.beginFbrq != null and req.beginFbrq != '' and req.endFbrq != null and req.endFbrq != ''">
+                and fbrq between #{req.beginFbrq} and #{req.endFbrq}
+            </if>
+        </where>
+    </select>
+
+    <!-- v1 batchCbjqrfbpl: insert/update cxtj_cbjqrfb + update gh_jf -->
+    <insert id="batchInsertOrUpdateCbjqrfb">
+        insert into cxtj_cbjqrfb (ghjf_id, spuuid, sfbje, fbbj, fbrq, hkpzh, bz, create_by, create_time, update_by, update_time)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.ghjfId}, #{item.spuuid}, #{item.sfbje}, 'Y', #{item.fbrq}, #{item.hkpzh}, #{item.bz},
+             #{item.createBy}, now(), #{item.updateBy}, now())
+        </foreach>
+        on duplicate key update
+        spuuid = values(spuuid),
+        sfbje = values(sfbje),
+        fbbj = 'Y',
+        fbrq = values(fbrq),
+        hkpzh = values(hkpzh),
+        bz = values(bz),
+        update_by = values(update_by),
+        update_time = values(update_time)
+    </insert>
+
+    <update id="batchUpdateMainTable">
+        update gh_jf
+        set cbjthbj = 'Z',
+            cbjthczy = #{updateBy},
+            cbjthrq = now(),
+            update_by = #{updateBy},
+            update_time = now()
+        where ghjf_id in
+        <foreach collection="ghjfIds" item="id" open="(" separator="," close=")">
+            #{id}
         </foreach>
     </update>
 
-    <!-- 代管经费台账统计 -->
-    <select id="selectDgjftzList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.ghcbj.cbjtz.vo.DgjftzResVO">
-        SELECT
-        dept_id AS deptId,
-        JSBJ AS jsbj,
-        CBJTHBJ AS cbjthbj,
-        COUNT(*) AS bs,
-        COUNT(DISTINCT DJXH) AS hs,
-        SUM(YBTSE) AS ybtse,
-        SUM(CBJJE) AS cbjje,
-        SUM(JCGHJE) AS jcghje
-        FROM gh_jf
-        <where>
-            <if test="req.deptId != null and req.deptId != ''">AND dept_id = #{req.deptId}</if>
-            <if test="req.nsrmc != null and req.nsrmc != ''">AND NSRMC LIKE CONCAT('%', #{req.nsrmc}, '%')</if>
-            <if test="req.zgswjDm != null and req.zgswjDm != ''">AND ZGSWJ_DM = #{req.zgswjDm}</if>
-            <if test="req.jsbj != null and req.jsbj != ''">AND JSBJ = #{req.jsbj}</if>
-            <if test="req.zspmDm != null and req.zspmDm != ''">AND ZSPM_DM = #{req.zspmDm}</if>
-        </where>
-        GROUP BY dept_id, JSBJ, CBJTHBJ
-    </select>
+    <!-- v1 delete cascade: delete from cxtj_cbjqrfb -->
+    <delete id="deleteCbjqrfbByGhjfIds">
+        delete from cxtj_cbjqrfb where ghjf_id in
+        <foreach collection="ghjfIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteCbjqrfbByGhjfId">
+        delete from cxtj_cbjqrfb where ghjf_id = #{ghjfId}
+    </delete>
+
+    <!-- v1 batchCbjqrfb: insert into cxtj_cbjqrfb (used by update/create) -->
+    <insert id="batchCbjqrfb">
+        insert into cxtj_cbjqrfb (ghjf_id, spuuid, sfbje, fbrq, fbbj, zjxcrq, hkpzh, bz, create_by, create_time, update_by, update_time)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.ghjfId}, #{item.spuuid}, #{item.sfbje}, #{item.fbrq}, 'Y', #{item.zjxcrq}, #{item.hkpzh}, #{item.bz},
+             #{item.createBy}, now(), #{item.updateBy}, now())
+        </foreach>
+        on duplicate key update
+        spuuid = values(spuuid),
+        sfbje = values(sfbje),
+        fbrq = values(fbrq),
+        fbbj = 'Y',
+        zjxcrq = values(zjxcrq),
+        hkpzh = values(hkpzh),
+        bz = values(bz),
+        update_by = values(update_by),
+        update_time = values(update_time)
+    </insert>
+
+    <!-- v1 updateCbjtz: update gh_jf set CBJTHBJ='Z', CBJTHCZY, CBJTHRQ, UPDATE_BY, UPDATE_TIME -->
+    <update id="updateCbjtzById">
+        update gh_jf
+        set cbjthbj = 'Z',
+            <if test="updateBy != null">cbjthczy = #{updateBy},</if>
+            cbjthrq = now(),
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            update_time = now()
+        where ghjf_id = #{ghjfId}
+    </update>
 
 </mapper>

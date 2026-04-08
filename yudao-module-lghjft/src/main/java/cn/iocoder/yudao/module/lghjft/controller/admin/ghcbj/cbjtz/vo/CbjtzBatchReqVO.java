@@ -29,4 +29,13 @@ public class CbjtzBatchReqVO {
 
     @Schema(description = "返拨日期")
     private LocalDateTime fbrq;
+
+    @Schema(description = "资金下拨日期")
+    private LocalDateTime zjxcrq;
+
+    @Schema(description = "创建人")
+    private String createBy;
+
+    @Schema(description = "更新人")
+    private String updateBy;
 }

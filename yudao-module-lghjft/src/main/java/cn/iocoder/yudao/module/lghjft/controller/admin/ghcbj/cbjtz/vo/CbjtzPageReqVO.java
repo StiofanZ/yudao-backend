@@ -9,6 +9,10 @@ import lombok.Data;
 @Data
 public class CbjtzPageReqVO extends PageParam {
 
+    /** computed offset for XML-based pagination (not from client) */
+    @Schema(hidden = true)
+    private Integer offset;
+
     @Schema(description = "deptId")
     private String deptId;
 

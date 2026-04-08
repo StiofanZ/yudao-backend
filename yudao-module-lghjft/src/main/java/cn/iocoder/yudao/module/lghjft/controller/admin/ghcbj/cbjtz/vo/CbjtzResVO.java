@@ -15,22 +15,27 @@ public class CbjtzResVO {
     @Schema(description = "ghjfId")
     private Long ghjfId;
 
-    @Schema(description = "fbbj")
+    /** from cxtj_cbjqrfb sub-table via JOIN */
+    @Schema(description = "返拨标记")
     private String fbbj;
 
-    @Schema(description = "sfbje")
+    /** from cxtj_cbjqrfb sub-table via JOIN */
+    @Schema(description = "实返拨金额")
     private BigDecimal sfbje;
 
-    @Schema(description = "fbrq")
+    /** from cxtj_cbjqrfb sub-table via JOIN */
+    @Schema(description = "返拨日期")
     private LocalDateTime fbrq;
 
-    @Schema(description = "zjxcrq")
+    /** from cxtj_cbjqrfb sub-table via JOIN */
+    @Schema(description = "资金下拨日期")
     private LocalDateTime zjxcrq;
 
-    @Schema(description = "hkpzh")
+    /** from cxtj_cbjqrfb sub-table via JOIN */
+    @Schema(description = "汇款凭证号")
     private String hkpzh;
 
-    @Schema(description = "bz")
+    @Schema(description = "备注")
     private String bz;
 
     @Schema(description = "spuuid")

@@ -83,16 +83,16 @@ public class CbjtzController {
     @Operation(summary = "获得筹备金台账分页")
     @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-cbjtz:query')")
     public CommonResult<PageResult<CbjtzResVO>> getCbjtzPage(@Valid CbjtzPageReqVO pageReqVO) {
-        PageResult<CbjtzDO> pageResult = cbjtzService.getCbjtzPage(pageReqVO);
-        return success(BeanUtils.toBean(pageResult, CbjtzResVO.class));
+        PageResult<CbjtzResVO> pageResult = cbjtzService.getCbjtzPage(pageReqVO);
+        return success(pageResult);
     }
 
     @GetMapping("/page-dgjftz")
     @Operation(summary = "代管经费台账明细分页")
     @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-cbjtz:query')")
     public CommonResult<PageResult<CbjtzResVO>> getDgjftzPage(@Valid CbjtzPageReqVO pageReqVO) {
-        PageResult<CbjtzDO> pageResult = cbjtzService.getDgjftzPage(pageReqVO);
-        return success(BeanUtils.toBean(pageResult, CbjtzResVO.class));
+        PageResult<CbjtzResVO> pageResult = cbjtzService.getDgjftzPage(pageReqVO);
+        return success(pageResult);
     }
 
     @GetMapping("/export-excel")
@@ -102,9 +102,8 @@ public class CbjtzController {
     public void exportCbjtzExcel(@Valid CbjtzPageReqVO pageReqVO,
                                  HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
-        List<CbjtzDO> list = cbjtzService.getCbjtzPage(pageReqVO).getList();
-        ExcelUtils.write(response, "筹备金台账.xls", "数据", CbjtzResVO.class,
-                BeanUtils.toBean(list, CbjtzResVO.class));
+        List<CbjtzResVO> list = cbjtzService.getCbjtzPage(pageReqVO).getList();
+        ExcelUtils.write(response, "筹备金台账.xls", "数据", CbjtzResVO.class, list);
     }
 
     @GetMapping("/export-excel-dgjftz")
@@ -114,9 +113,8 @@ public class CbjtzController {
     public void exportDgjftzExcel(@Valid CbjtzPageReqVO pageReqVO,
                                   HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
-        List<CbjtzDO> list = cbjtzService.getDgjftzPage(pageReqVO).getList();
-        ExcelUtils.write(response, "代管经费台账.xls", "数据", CbjtzResVO.class,
-                BeanUtils.toBean(list, CbjtzResVO.class));
+        List<CbjtzResVO> list = cbjtzService.getDgjftzPage(pageReqVO).getList();
+        ExcelUtils.write(response, "代管经费台账.xls", "数据", CbjtzResVO.class, list);
     }
 
     @PostMapping("/batch-cbjqrfbpl")

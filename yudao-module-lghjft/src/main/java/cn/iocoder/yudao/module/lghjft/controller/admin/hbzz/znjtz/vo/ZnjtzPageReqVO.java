@@ -12,6 +12,9 @@ public class ZnjtzPageReqVO extends PageParam {
     @Schema(description = "deptId")
     private String deptId;
 
+    @Schema(description = "shxydm")
+    private String shxydm;
+
     @Schema(description = "nsrmc")
     private String nsrmc;
 
@@ -23,4 +26,10 @@ public class ZnjtzPageReqVO extends PageParam {
 
     @Schema(description = "zspmDm")
     private String zspmDm;
+
+    private String skssqq;
+    private String skssqz;
+    private String ybtse;
+    private String beginRkrq;
+    private String endRkrq;
 }

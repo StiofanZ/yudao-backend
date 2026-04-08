@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.hbzz.znjtz.ZnjtzMapper">
+
+    <!-- v1 cascade delete from cxtj_cbjqrfb -->
+    <delete id="deleteCbjqrfbByGhjfIds">
+        delete from cxtj_cbjqrfb where ghjf_id in
+        <foreach collection="ghjfIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteCbjqrfbByGhjfId">
+        delete from cxtj_cbjqrfb where ghjf_id = #{ghjfId}
+    </delete>
+
+</mapper>
