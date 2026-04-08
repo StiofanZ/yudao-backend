@@ -6,6 +6,8 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.jfmxwh.vo.JfmxwhSave
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.jfmxwh.JfmxwhDO;
 import jakarta.validation.Valid;
 
+import java.util.List;
+
 public interface JfmxwhService {
 
     Long createJfmxwh(@Valid JfmxwhSaveReqVO createReqVO);
@@ -13,6 +15,8 @@ public interface JfmxwhService {
     void updateJfmxwh(@Valid JfmxwhSaveReqVO updateReqVO);
 
     void deleteJfmxwh(Long id);
+
+    void deleteJfmxwhList(List<Long> ids);
 
     JfmxwhDO getJfmxwh(Long id);
 

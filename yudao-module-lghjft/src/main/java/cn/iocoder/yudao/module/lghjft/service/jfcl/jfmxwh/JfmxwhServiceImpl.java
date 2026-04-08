@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.List;
+
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils.getLoginUserId;
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.JFCL_NOT_EXISTS;
@@ -52,13 +54,19 @@ public class JfmxwhServiceImpl implements JfmxwhService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteJfmxwhList(List<Long> ids) {
+        jfmxwhMapper.deleteBatchIds(ids);
+    }
+
+    @Override
     public JfmxwhDO getJfmxwh(Long id) {
         return jfmxwhMapper.selectById(id);
     }
 
     @Override
     public PageResult<JfmxwhDO> getJfmxwhPage(JfmxwhPageReqVO pageReqVO) {
-        // v1 deptId filtering
+        // v1 deptId filtering: default to current user's deptId, root=100000 sees all
         if (StringUtils.isEmpty(pageReqVO.getDeptId())) {
             try {
                 AdminUserDO user = userService.getUser(getLoginUserId());

@@ -246,4 +246,12 @@ public class JfmxwhSaveReqVO {
     private BigDecimal sdghbl;
     @Schema(description = "属地工会金额")
     private BigDecimal sdghje;
+    @Schema(description = "创建人")
+    private String createBy;
+    @Schema(description = "创建时间")
+    private LocalDateTime createTime;
+    @Schema(description = "修改人")
+    private String updateBy;
+    @Schema(description = "修改时间")
+    private LocalDateTime updateTime;
 }

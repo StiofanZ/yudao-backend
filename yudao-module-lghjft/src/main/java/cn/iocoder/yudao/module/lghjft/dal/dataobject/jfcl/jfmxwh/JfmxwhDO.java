@@ -8,7 +8,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * 经费明细维护 DO
+ * 经费明细维护 DO — 映射 v1 表 gh_jf
+ * 禁止继承 BaseDO，禁止 @TableLogic
  */
 @TableName("gh_jf")
 @Data
@@ -137,4 +138,9 @@ public class JfmxwhDO {
     private String sdghhh;
     private BigDecimal sdghbl;
     private BigDecimal sdghje;
+    /** v1 审计字段 */
+    private String createBy;
+    private LocalDateTime createTime;
+    private String updateBy;
+    private LocalDateTime updateTime;
 }

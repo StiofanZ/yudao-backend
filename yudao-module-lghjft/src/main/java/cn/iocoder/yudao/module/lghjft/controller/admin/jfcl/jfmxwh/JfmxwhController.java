@@ -60,6 +60,15 @@ public class JfmxwhController {
         return success(true);
     }
 
+    @DeleteMapping("/delete-list")
+    @Operation(summary = "批量删除经费明细维护")
+    @Parameter(name = "ids", description = "编号列表", required = true)
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-jfmxwh:delete')")
+    public CommonResult<Boolean> deleteJfmxwhList(@RequestParam("ids") List<Long> ids) {
+        jfmxwhService.deleteJfmxwhList(ids);
+        return success(true);
+    }
+
     @GetMapping("/get")
     @Operation(summary = "获得经费明细维护")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
