@@ -153,6 +153,15 @@ public class JfbfmxController {
         return success(jfbfmxService.getTjByHkpch(pageReqVO));
     }
 
+    @GetMapping("/page-sdjz")
+    @Operation(summary = "获得经费拨付属地记账明细")
+    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jfbfmx:query')")
+    public CommonResult<List<SzqzjzdcResVO>> getSdjzList(@Valid JfbfmxPageReqVO pageReqVO) {
+        SzqzjzdcPageReqVO reqVO = BeanUtils.toBean(pageReqVO, SzqzjzdcPageReqVO.class);
+        List<SzqzjzdcDO> list = szqzjzdcService.getLegacySdjzList(reqVO);
+        return success(BeanUtils.toBean(list, SzqzjzdcResVO.class));
+    }
+
     @GetMapping("/export-excel")
     @Operation(summary = "导出经费拨付省总汇总 Excel")
     @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jfbfmx:export')")
