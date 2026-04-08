@@ -4,12 +4,10 @@ import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.JcjfzzPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.JcjfzzResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jcjfzz.vo.JcjfzzSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.jcjfzz.JcjfzzDO;
 import cn.iocoder.yudao.module.lghjft.service.hbzz.jcjfzz.JcjfzzService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -74,16 +72,14 @@ public class JcjfzzController {
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jcjfzz:query')")
     public CommonResult<JcjfzzResVO> getJcjfzz(@RequestParam("id") Long id) {
-        JcjfzzDO jcjfzz = jcjfzzService.getJcjfzz(id);
-        return success(BeanUtils.toBean(jcjfzz, JcjfzzResVO.class));
+        return success(jcjfzzService.getJcjfzz(id));
     }
 
     @GetMapping("/page")
     @Operation(summary = "获得基层经费到账分页")
     @PreAuthorize("@ss.hasPermission('lghjft:hbzz-jcjfzz:query')")
     public CommonResult<PageResult<JcjfzzResVO>> getJcjfzzPage(@Valid JcjfzzPageReqVO pageReqVO) {
-        PageResult<JcjfzzDO> pageResult = jcjfzzService.getJcjfzzPage(pageReqVO);
-        return success(BeanUtils.toBean(pageResult, JcjfzzResVO.class));
+        return success(jcjfzzService.getJcjfzzPage(pageReqVO));
     }
 
     @GetMapping("/export-excel")
@@ -93,8 +89,7 @@ public class JcjfzzController {
     public void exportJcjfzzExcel(@Valid JcjfzzPageReqVO pageReqVO,
                                   HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
-        List<JcjfzzDO> list = jcjfzzService.getJcjfzzPage(pageReqVO).getList();
-        ExcelUtils.write(response, "基层经费到账.xls", "数据", JcjfzzResVO.class,
-                BeanUtils.toBean(list, JcjfzzResVO.class));
+        List<JcjfzzResVO> list = jcjfzzService.getJcjfzzPage(pageReqVO).getList();
+        ExcelUtils.write(response, "基层经费到账.xls", "数据", JcjfzzResVO.class, list);
     }
 }
