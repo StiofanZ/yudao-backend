@@ -4,9 +4,9 @@
 
     <!-- ==================== SQL fragments ==================== -->
 
-    <!-- SELECT fields + FROM + JOIN (shared by all four queries) -->
+    <!-- select fields + from + JOIN (shared by all four queries) -->
     <sql id="selectXwqyjfVo">
-        SELECT jf.ghjf_id,
+        select jf.ghjf_id,
                jf.SPUUID,
                jf.DJXH,
                jf.SHXYDM,
@@ -283,13 +283,13 @@
 
             <include refid="dynamicFilters"/>
         </where>
-        ORDER BY b.HJFL7_DM desc
-        <if test="req.offset != null">LIMIT #{req.pageSize} OFFSET #{req.offset}</if>
+        order by b.HJFL7_DM desc
+        <if test="req.offset != null">LIMIT #{req.pageSize} OFFset #{req.offset}</if>
     </select>
 
     <!-- 95% fund details count -->
     <select id="selectXwqyjfCount" resultType="long">
-        SELECT count(*)
+        select count(*)
         from gh_jf jf left join gh_hj b on b.djxh = jf.djxh
         <where>
             1=1 and b.HJFL9_DM in ('Y','T')
@@ -499,13 +499,13 @@
 
             <include refid="dynamicFilters"/>
         </where>
-        ORDER BY b.HJFL7_DM desc
-        <if test="req.offset != null">LIMIT #{req.pageSize} OFFSET #{req.offset}</if>
+        order by b.HJFL7_DM desc
+        <if test="req.offset != null">LIMIT #{req.pageSize} OFFset #{req.offset}</if>
     </select>
 
     <!-- 60% fund details count -->
     <select id="selectXwqyjfCountyf" resultType="long">
-        SELECT count(*)
+        select count(*)
         from gh_jf jf left join gh_hj b on b.djxh = jf.djxh
         <where>
             1=1 and b.HJFL9_DM in ('Y','T')

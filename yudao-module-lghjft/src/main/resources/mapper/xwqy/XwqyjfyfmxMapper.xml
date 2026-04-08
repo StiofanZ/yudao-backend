@@ -3,7 +3,7 @@
 <mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.xwqy.xwqyjfyfmx.XwqyjfyfmxMapper">
 
     <sql id="selectXwqyjfVo">
-        SELECT jf.ghjf_id,
+        select jf.ghjf_id,
                jf.SPUUID,
                jf.DJXH,
                jf.SHXYDM,
@@ -459,13 +459,13 @@
 
             <include refid="dynamicFilters"/>
         </where>
-        ORDER BY b.HJFL7_DM desc
-        <if test="req.offset != null">LIMIT #{req.pageSize} OFFSET #{req.offset}</if>
+        order by b.HJFL7_DM desc
+        <if test="req.offset != null">LIMIT #{req.pageSize} OFFset #{req.offset}</if>
     </select>
 
     <!-- 60% fund details count -->
     <select id="selectXwqyjfyfmxCount" resultType="long">
-        SELECT count(*)
+        select count(*)
         from gh_jf jf left join gh_hj b on b.djxh = jf.djxh
         <where>
             1=1 and b.HJFL9_DM in ('Y','T')

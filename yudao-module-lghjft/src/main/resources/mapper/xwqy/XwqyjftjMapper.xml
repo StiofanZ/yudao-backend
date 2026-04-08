@@ -5,165 +5,165 @@
     <!-- 统计汇总: 按 dwdm, dept_id, jsbj, cbjthbj 分组 (v1: selectXwqyjftjList) -->
     <select id="selectXwqyjftjList"
             resultType="cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjftj.vo.XwqyjftjAggVO">
-        SELECT
-        jf.DWDM AS dwdm,
-        jf.dept_id AS deptId,
-        jf.jsbj AS jsbj,
-        jf.cbjthbj AS cbjthbj,
-        COUNT(jf.djxh) AS jfbs,
-        COUNT(DISTINCT jf.djxh) AS jfhs,
-        SUM(jf.YBTSE) AS ybtse,
-        SUM(jf.YFJE) AS yfje,
-        SUM(jf.GKZFJE) AS gkzfje,
-        SUM(jf.GJTHJE) AS gjthje,
-        SUM(jf.jcghje) AS jcghje,
-        SUM(jf.cbjje) AS cbjje,
-        SUM(jf.HYGHJE) AS hyghje,
-        SUM(jf.xjghje) AS xjghje,
-        SUM(jf.SJGHJE) AS sjghje,
-        SUM(jf.SZGHJE) AS szghje,
-        SUM(jf.QGGHJE) AS qgghje,
-        SUM(jf.sdsje) AS sdsje,
-        SUM(jf.swjgje) AS swjgje
-        FROM xwqyjf jf
+        select
+        jf.DWDM as dwdm,
+        jf.dept_id as deptId,
+        jf.jsbj as jsbj,
+        jf.cbjthbj as cbjthbj,
+        count(jf.djxh) as jfbs,
+        count(distinct jf.djxh) as jfhs,
+        sum(jf.YBTSE) as ybtse,
+        sum(jf.YFJE) as yfje,
+        sum(jf.GKZFJE) as gkzfje,
+        sum(jf.GJTHJE) as gjthje,
+        sum(jf.jcghje) as jcghje,
+        sum(jf.cbjje) as cbjje,
+        sum(jf.HYGHJE) as hyghje,
+        sum(jf.xjghje) as xjghje,
+        sum(jf.SJGHJE) as sjghje,
+        sum(jf.SZGHJE) as szghje,
+        sum(jf.QGGHJE) as qgghje,
+        sum(jf.sdsje) as sdsje,
+        sum(jf.swjgje) as swjgje
+        from xwqyjf jf
         <where>
             1=1
-            <if test="req.dwdm != null and req.dwdm != ''">AND jf.DWDM = #{req.dwdm}</if>
-            <if test="req.nd != null and req.nd != ''">AND jf.ND = #{req.nd}</if>
-            <if test="req.shxydm != null and req.shxydm != ''">AND jf.SHXYDM = #{req.shxydm}</if>
-            <if test="req.nsrmc != null and req.nsrmc != ''">AND jf.NSRMC LIKE CONCAT('%', #{req.nsrmc}, '%')</if>
-            <if test="req.xwsbdwdm != null and req.xwsbdwdm != ''">AND jf.xwsbdwdm = #{req.xwsbdwdm}</if>
-            <if test="req.beginXwsbrq != null and req.beginXwsbrq != '' and req.endXwsbrq != null and req.endXwsbrq != ''">AND jf.xwsbrq BETWEEN #{req.beginXwsbrq} AND
+            <if test="req.dwdm != null and req.dwdm != ''">and jf.DWDM = #{req.dwdm}</if>
+            <if test="req.nd != null and req.nd != ''">and jf.ND = #{req.nd}</if>
+            <if test="req.shxydm != null and req.shxydm != ''">and jf.SHXYDM = #{req.shxydm}</if>
+            <if test="req.nsrmc != null and req.nsrmc != ''">and jf.NSRMC like concat('%', #{req.nsrmc}, '%')</if>
+            <if test="req.xwsbdwdm != null and req.xwsbdwdm != ''">and jf.xwsbdwdm = #{req.xwsbdwdm}</if>
+            <if test="req.beginXwsbrq != null and req.beginXwsbrq != '' and req.endXwsbrq != null and req.endXwsbrq != ''">and jf.xwsbrq between #{req.beginXwsbrq} AND
                 #{req.endXwsbrq}
             </if>
-            <if test="req.xwlx != null and req.xwlx != ''">AND jf.xwlx = #{req.xwlx}</if>
-            <if test="req.deptId != null and req.deptId != ''">AND (jf.dept_id = #{req.deptId} OR jf.dept_id IN (SELECT t.dept_id FROM sys_dept t WHERE find_in_set(#{req.deptId},
+            <if test="req.xwlx != null and req.xwlx != ''">and jf.xwlx = #{req.xwlx}</if>
+            <if test="req.deptId != null and req.deptId != ''">and (jf.dept_id = #{req.deptId} or jf.dept_id in (select t.dept_id from sys_dept t WHERE find_in_set(#{req.deptId},
                 ancestors)))
             </if>
-            <if test="req.hyghbz != null and req.hyghbz != ''">AND jf.HYGHBZ = #{req.hyghbz}</if>
-            <if test="req.ghlbDm != null and req.ghlbDm != ''">AND jf.GHLB_DM = #{req.ghlbDm}</if>
-            <if test="req.xtlbDm != null and req.xtlbDm != ''">AND jf.XTLB_DM = #{req.xtlbDm}</if>
-            <if test="req.zspmDm != null and req.zspmDm != ''">AND jf.ZSPM_DM = #{req.zspmDm}</if>
-            <if test="req.skssqq != null and req.skssqq != ''">AND jf.SKSSQQ = #{req.skssqq}</if>
-            <if test="req.skssqz != null and req.skssqz != ''">AND jf.SKSSQZ = #{req.skssqz}</if>
-            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">AND jf.RKRQ BETWEEN #{req.beginRkrq} AND #{req.endRkrq}</if>
-            <if test="req.jsbj != null and req.jsbj != ''">AND jf.JSBJ = #{req.jsbj}</if>
-            <if test="req.beginJsrq != null and req.beginJsrq != '' and req.endJsrq != null and req.endJsrq != ''">AND jf.JSRQ BETWEEN #{req.beginJsrq} AND #{req.endJsrq}</if>
-            <if test="req.cbjthbj != null and req.cbjthbj != ''">AND jf.CBJTHBJ = #{req.cbjthbj}</if>
-            <if test="req.beginCbjthrq != null and req.beginCbjthrq != '' and req.endCbjthrq != null and req.endCbjthrq != ''">AND jf.CBJTHRQ BETWEEN #{req.beginCbjthrq} AND
+            <if test="req.hyghbz != null and req.hyghbz != ''">and jf.HYGHBZ = #{req.hyghbz}</if>
+            <if test="req.ghlbDm != null and req.ghlbDm != ''">and jf.GHLB_DM = #{req.ghlbDm}</if>
+            <if test="req.xtlbDm != null and req.xtlbDm != ''">and jf.XTLB_DM = #{req.xtlbDm}</if>
+            <if test="req.zspmDm != null and req.zspmDm != ''">and jf.ZSPM_DM = #{req.zspmDm}</if>
+            <if test="req.skssqq != null and req.skssqq != ''">and jf.SKSSQQ = #{req.skssqq}</if>
+            <if test="req.skssqz != null and req.skssqz != ''">and jf.SKSSQZ = #{req.skssqz}</if>
+            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">and jf.RKRQ between #{req.beginRkrq} and #{req.endRkrq}</if>
+            <if test="req.jsbj != null and req.jsbj != ''">and jf.JSBJ = #{req.jsbj}</if>
+            <if test="req.beginJsrq != null and req.beginJsrq != '' and req.endJsrq != null and req.endJsrq != ''">and jf.JSRQ between #{req.beginJsrq} and #{req.endJsrq}</if>
+            <if test="req.cbjthbj != null and req.cbjthbj != ''">and jf.CBJTHBJ = #{req.cbjthbj}</if>
+            <if test="req.beginCbjthrq != null and req.beginCbjthrq != '' and req.endCbjthrq != null and req.endCbjthrq != ''">and jf.CBJTHRQ between #{req.beginCbjthrq} AND
                 #{req.endCbjthrq}
             </if>
-            <if test="req.hkpch != null and req.hkpch != ''">AND jf.HKPCH = #{req.hkpch}</if>
+            <if test="req.hkpch != null and req.hkpch != ''">and jf.HKPCH = #{req.hkpch}</if>
         </where>
-        GROUP BY jf.DWDM, jf.dept_id, jf.jsbj, jf.cbjthbj
-        ORDER BY jf.DWDM
+        group by jf.DWDM, jf.dept_id, jf.jsbj, jf.cbjthbj
+        order by jf.DWDM
     </select>
 
     <!-- 统计反馈: 按 dwdm, dept_id, shxydm, nsrmc, jsbj, cbjthbj 分组 (v1: selectXwqyjftjfhList) -->
     <select id="selectXwqyjftjfhList"
             resultType="cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjftj.vo.XwqyjftjfhAggVO">
-        SELECT
-        jf.DWDM AS dwdm,
-        jf.dept_id AS deptId,
-        jf.shxydm AS shxydm,
-        jf.nsrmc AS nsrmc,
-        jf.jsbj AS jsbj,
-        jf.cbjthbj AS cbjthbj,
-        COUNT(jf.djxh) AS jfbs,
-        SUM(jf.YBTSE) AS ybtse,
-        SUM(jf.YFJE) AS yfje,
-        SUM(jf.GKZFJE) AS gkzfje,
-        SUM(jf.GJTHJE) AS gjthje,
-        SUM(jf.jcghje) AS jcghje,
-        SUM(jf.cbjje) AS cbjje,
-        SUM(jf.HYGHJE) AS hyghje,
-        SUM(jf.xjghje) AS xjghje,
-        SUM(jf.SJGHJE) AS sjghje,
-        SUM(jf.SZGHJE) AS szghje,
-        SUM(jf.QGGHJE) AS qgghje,
-        SUM(jf.sdsje) AS sdsje,
-        SUM(jf.swjgje) AS swjgje
-        FROM xwqyjf jf
+        select
+        jf.DWDM as dwdm,
+        jf.dept_id as deptId,
+        jf.shxydm as shxydm,
+        jf.nsrmc as nsrmc,
+        jf.jsbj as jsbj,
+        jf.cbjthbj as cbjthbj,
+        count(jf.djxh) as jfbs,
+        sum(jf.YBTSE) as ybtse,
+        sum(jf.YFJE) as yfje,
+        sum(jf.GKZFJE) as gkzfje,
+        sum(jf.GJTHJE) as gjthje,
+        sum(jf.jcghje) as jcghje,
+        sum(jf.cbjje) as cbjje,
+        sum(jf.HYGHJE) as hyghje,
+        sum(jf.xjghje) as xjghje,
+        sum(jf.SJGHJE) as sjghje,
+        sum(jf.SZGHJE) as szghje,
+        sum(jf.QGGHJE) as qgghje,
+        sum(jf.sdsje) as sdsje,
+        sum(jf.swjgje) as swjgje
+        from xwqyjf jf
         <where>
             1=1
-            <if test="req.dwdm != null and req.dwdm != ''">AND jf.DWDM = #{req.dwdm}</if>
-            <if test="req.nd != null and req.nd != ''">AND jf.ND = #{req.nd}</if>
-            <if test="req.shxydm != null and req.shxydm != ''">AND jf.SHXYDM = #{req.shxydm}</if>
-            <if test="req.nsrmc != null and req.nsrmc != ''">AND jf.NSRMC LIKE CONCAT('%', #{req.nsrmc}, '%')</if>
-            <if test="req.xwsbdwdm != null and req.xwsbdwdm != ''">AND jf.xwsbdwdm = #{req.xwsbdwdm}</if>
-            <if test="req.beginXwsbrq != null and req.beginXwsbrq != '' and req.endXwsbrq != null and req.endXwsbrq != ''">AND jf.xwsbrq BETWEEN #{req.beginXwsbrq} AND
+            <if test="req.dwdm != null and req.dwdm != ''">and jf.DWDM = #{req.dwdm}</if>
+            <if test="req.nd != null and req.nd != ''">and jf.ND = #{req.nd}</if>
+            <if test="req.shxydm != null and req.shxydm != ''">and jf.SHXYDM = #{req.shxydm}</if>
+            <if test="req.nsrmc != null and req.nsrmc != ''">and jf.NSRMC like concat('%', #{req.nsrmc}, '%')</if>
+            <if test="req.xwsbdwdm != null and req.xwsbdwdm != ''">and jf.xwsbdwdm = #{req.xwsbdwdm}</if>
+            <if test="req.beginXwsbrq != null and req.beginXwsbrq != '' and req.endXwsbrq != null and req.endXwsbrq != ''">and jf.xwsbrq between #{req.beginXwsbrq} AND
                 #{req.endXwsbrq}
             </if>
-            <if test="req.xwlx != null and req.xwlx != ''">AND jf.xwlx = #{req.xwlx}</if>
-            <if test="req.deptId != null and req.deptId != ''">AND jf.dept_id = #{req.deptId}</if>
-            <if test="req.hyghbz != null and req.hyghbz != ''">AND jf.HYGHBZ = #{req.hyghbz}</if>
-            <if test="req.ghlbDm != null and req.ghlbDm != ''">AND jf.GHLB_DM = #{req.ghlbDm}</if>
-            <if test="req.xtlbDm != null and req.xtlbDm != ''">AND jf.XTLB_DM = #{req.xtlbDm}</if>
-            <if test="req.zspmDm != null and req.zspmDm != ''">AND jf.ZSPM_DM = #{req.zspmDm}</if>
-            <if test="req.skssqq != null and req.skssqq != ''">AND jf.SKSSQQ = #{req.skssqq}</if>
-            <if test="req.skssqz != null and req.skssqz != ''">AND jf.SKSSQZ = #{req.skssqz}</if>
-            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">AND jf.RKRQ BETWEEN #{req.beginRkrq} AND #{req.endRkrq}</if>
-            <if test="req.jsbj != null and req.jsbj != ''">AND jf.JSBJ = #{req.jsbj}</if>
-            <if test="req.beginJsrq != null and req.beginJsrq != '' and req.endJsrq != null and req.endJsrq != ''">AND jf.JSRQ BETWEEN #{req.beginJsrq} AND #{req.endJsrq}</if>
-            <if test="req.cbjthbj != null and req.cbjthbj != ''">AND jf.CBJTHBJ = #{req.cbjthbj}</if>
-            <if test="req.beginCbjthrq != null and req.beginCbjthrq != '' and req.endCbjthrq != null and req.endCbjthrq != ''">AND jf.CBJTHRQ BETWEEN #{req.beginCbjthrq} AND
+            <if test="req.xwlx != null and req.xwlx != ''">and jf.xwlx = #{req.xwlx}</if>
+            <if test="req.deptId != null and req.deptId != ''">and jf.dept_id = #{req.deptId}</if>
+            <if test="req.hyghbz != null and req.hyghbz != ''">and jf.HYGHBZ = #{req.hyghbz}</if>
+            <if test="req.ghlbDm != null and req.ghlbDm != ''">and jf.GHLB_DM = #{req.ghlbDm}</if>
+            <if test="req.xtlbDm != null and req.xtlbDm != ''">and jf.XTLB_DM = #{req.xtlbDm}</if>
+            <if test="req.zspmDm != null and req.zspmDm != ''">and jf.ZSPM_DM = #{req.zspmDm}</if>
+            <if test="req.skssqq != null and req.skssqq != ''">and jf.SKSSQQ = #{req.skssqq}</if>
+            <if test="req.skssqz != null and req.skssqz != ''">and jf.SKSSQZ = #{req.skssqz}</if>
+            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">and jf.RKRQ between #{req.beginRkrq} and #{req.endRkrq}</if>
+            <if test="req.jsbj != null and req.jsbj != ''">and jf.JSBJ = #{req.jsbj}</if>
+            <if test="req.beginJsrq != null and req.beginJsrq != '' and req.endJsrq != null and req.endJsrq != ''">and jf.JSRQ between #{req.beginJsrq} and #{req.endJsrq}</if>
+            <if test="req.cbjthbj != null and req.cbjthbj != ''">and jf.CBJTHBJ = #{req.cbjthbj}</if>
+            <if test="req.beginCbjthrq != null and req.beginCbjthrq != '' and req.endCbjthrq != null and req.endCbjthrq != ''">and jf.CBJTHRQ between #{req.beginCbjthrq} AND
                 #{req.endCbjthrq}
             </if>
-            <if test="req.hkpch != null and req.hkpch != ''">AND jf.HKPCH = #{req.hkpch}</if>
+            <if test="req.hkpch != null and req.hkpch != ''">and jf.HKPCH = #{req.hkpch}</if>
         </where>
-        GROUP BY jf.DWDM, jf.dept_id, jf.shxydm, jf.nsrmc, jf.jsbj, jf.cbjthbj
-        ORDER BY jf.DWDM
+        group by jf.DWDM, jf.dept_id, jf.shxydm, jf.nsrmc, jf.jsbj, jf.cbjthbj
+        order by jf.DWDM
     </select>
 
     <!-- 明细列表: 不分组, 直接查 xwqyjf (v1: selectXwqyjftjmxList) -->
     <select id="selectXwqyjftjmxList"
             resultType="cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjftj.vo.XwqyjftjmxResVO">
-        SELECT
-        DWDM AS dwdm, ND AS nd, ghjf_id AS ghjfId, SPUUID AS spuuid,
-        DJXH AS djxh, SHXYDM AS shxydm, NSRMC AS nsrmc,
-        xwsbdwdm, xwsbrq, xwlx, NSRJC AS nsrjc,
-        dept_id AS deptId, GHJGXZJB AS ghjgxzjb, CLGHBJ AS clghbj,
-        HYGHBZ AS hyghbz, SDGHJG_DM AS sdghjgDm, SDGHJGXZJB AS sdghjgxzjb,
-        ZGSWJ_DM AS zgswjDm, ZGSWSKFJ_DM AS zgswskfjDm, SSGLY_DM AS ssglyDm,
-        GHLB_DM AS ghlbDm, XTLB_DM AS xtlbDm, ZZJGLX_DM AS zzjglxDm,
-        HY_DM AS hyDm, DJZCLX_DM AS djzclxDm, DWLSGX_DM AS dwlsgxDm,
-        SBLB_DM AS sblbDm, NSSBRQ AS nssbrq, PZXH AS pzxh, PZMXXH AS pzmxxh,
-        SKSSQQ AS skssqq, SKSSQZ AS skssqz, ZSSWJG_DM AS zsswjgDm,
-        SKSSSWJG_DM AS skssswjgDm,
-        ZSPM_DM AS zspmDm, GZZE AS gzze, SL AS sl, YNSE AS ynse,
-        JMSE AS jmse, YJSE AS yjse, YBTSE AS ybtse,
-        YFJE AS yfje, GKZFJE AS gkzfje, GJTHJE AS gjthje,
-        JSBJ AS jsbj, JSRQ AS jsrq,
-        JCGHJE AS jcghje, CBJJE AS cbjje, HYGHJE AS hyghje,
-        XJGHJE AS xjghje, SJGHJE AS sjghje, SZGHJE AS szghje,
-        QGGHJE AS qgghje, SDSJE AS sdsje, SWJGJE AS swjgje,
-        CBJTHBJ AS cbjthbj, HKPCH AS hkpch, RKRQ AS rkrq
-        FROM xwqyjf
+        select
+        DWDM as dwdm, ND as nd, ghjf_id as ghjfId, SPUUID as spuuid,
+        DJXH as djxh, SHXYDM as shxydm, NSRMC as nsrmc,
+        xwsbdwdm, xwsbrq, xwlx, NSRJC as nsrjc,
+        dept_id as deptId, GHJGXZJB as ghjgxzjb, CLGHBJ as clghbj,
+        HYGHBZ as hyghbz, SDGHJG_DM as sdghjgDm, SDGHJGXZJB as sdghjgxzjb,
+        ZGSWJ_DM as zgswjDm, ZGSWSKFJ_DM as zgswskfjDm, SSGLY_DM as ssglyDm,
+        GHLB_DM as ghlbDm, XTLB_DM as xtlbDm, ZZJGLX_DM as zzjglxDm,
+        HY_DM as hyDm, DJZCLX_DM as djzclxDm, DWLSGX_DM as dwlsgxDm,
+        SBLB_DM as sblbDm, NSSBRQ as nssbrq, PZXH as pzxh, PZMXXH as pzmxxh,
+        SKSSQQ as skssqq, SKSSQZ as skssqz, ZSSWJG_DM as zsswjgDm,
+        SKSSSWJG_DM as skssswjgDm,
+        ZSPM_DM as zspmDm, GZZE as gzze, SL as sl, YNSE as ynse,
+        JMSE as jmse, YJSE as yjse, YBTSE as ybtse,
+        YFJE as yfje, GKZFJE as gkzfje, GJTHJE as gjthje,
+        JSBJ as jsbj, JSRQ as jsrq,
+        JCGHJE as jcghje, CBJJE as cbjje, HYGHJE as hyghje,
+        XJGHJE as xjghje, SJGHJE as sjghje, SZGHJE as szghje,
+        QGGHJE as qgghje, SDSJE as sdsje, SWJGJE as swjgje,
+        CBJTHBJ as cbjthbj, HKPCH as hkpch, RKRQ as rkrq
+        from xwqyjf
         <where>
-            <if test="req.dwdm != null and req.dwdm != ''">AND DWDM = #{req.dwdm}</if>
-            <if test="req.nd != null and req.nd != ''">AND ND = #{req.nd}</if>
-            <if test="req.shxydm != null and req.shxydm != ''">AND SHXYDM = #{req.shxydm}</if>
-            <if test="req.nsrmc != null and req.nsrmc != ''">AND NSRMC LIKE CONCAT('%', #{req.nsrmc}, '%')</if>
-            <if test="req.xwsbdwdm != null and req.xwsbdwdm != ''">AND xwsbdwdm = #{req.xwsbdwdm}</if>
-            <if test="req.beginXwsbrq != null and req.beginXwsbrq != '' and req.endXwsbrq != null and req.endXwsbrq != ''">AND xwsbrq BETWEEN #{req.beginXwsbrq} AND
+            <if test="req.dwdm != null and req.dwdm != ''">and DWDM = #{req.dwdm}</if>
+            <if test="req.nd != null and req.nd != ''">and ND = #{req.nd}</if>
+            <if test="req.shxydm != null and req.shxydm != ''">and SHXYDM = #{req.shxydm}</if>
+            <if test="req.nsrmc != null and req.nsrmc != ''">and NSRMC like concat('%', #{req.nsrmc}, '%')</if>
+            <if test="req.xwsbdwdm != null and req.xwsbdwdm != ''">and xwsbdwdm = #{req.xwsbdwdm}</if>
+            <if test="req.beginXwsbrq != null and req.beginXwsbrq != '' and req.endXwsbrq != null and req.endXwsbrq != ''">and xwsbrq between #{req.beginXwsbrq} AND
                 #{req.endXwsbrq}
             </if>
-            <if test="req.xwlx != null and req.xwlx != ''">AND xwlx = #{req.xwlx}</if>
-            <if test="req.deptId != null and req.deptId != ''">AND dept_id = #{req.deptId}</if>
-            <if test="req.hyghbz != null and req.hyghbz != ''">AND HYGHBZ = #{req.hyghbz}</if>
-            <if test="req.ghlbDm != null and req.ghlbDm != ''">AND GHLB_DM = #{req.ghlbDm}</if>
-            <if test="req.xtlbDm != null and req.xtlbDm != ''">AND XTLB_DM = #{req.xtlbDm}</if>
-            <if test="req.zspmDm != null and req.zspmDm != ''">AND ZSPM_DM = #{req.zspmDm}</if>
-            <if test="req.skssqq != null and req.skssqq != ''">AND SKSSQQ = #{req.skssqq}</if>
-            <if test="req.skssqz != null and req.skssqz != ''">AND SKSSQZ = #{req.skssqz}</if>
-            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">AND RKRQ BETWEEN #{req.beginRkrq} AND #{req.endRkrq}</if>
-            <if test="req.jsbj != null and req.jsbj != ''">AND JSBJ = #{req.jsbj}</if>
-            <if test="req.beginJsrq != null and req.beginJsrq != '' and req.endJsrq != null and req.endJsrq != ''">AND JSRQ BETWEEN #{req.beginJsrq} AND #{req.endJsrq}</if>
-            <if test="req.cbjthbj != null and req.cbjthbj != ''">AND CBJTHBJ = #{req.cbjthbj}</if>
-            <if test="req.beginCbjthrq != null and req.beginCbjthrq != '' and req.endCbjthrq != null and req.endCbjthrq != ''">AND CBJTHRQ BETWEEN #{req.beginCbjthrq} AND
+            <if test="req.xwlx != null and req.xwlx != ''">and xwlx = #{req.xwlx}</if>
+            <if test="req.deptId != null and req.deptId != ''">and dept_id = #{req.deptId}</if>
+            <if test="req.hyghbz != null and req.hyghbz != ''">and HYGHBZ = #{req.hyghbz}</if>
+            <if test="req.ghlbDm != null and req.ghlbDm != ''">and GHLB_DM = #{req.ghlbDm}</if>
+            <if test="req.xtlbDm != null and req.xtlbDm != ''">and XTLB_DM = #{req.xtlbDm}</if>
+            <if test="req.zspmDm != null and req.zspmDm != ''">and ZSPM_DM = #{req.zspmDm}</if>
+            <if test="req.skssqq != null and req.skssqq != ''">and SKSSQQ = #{req.skssqq}</if>
+            <if test="req.skssqz != null and req.skssqz != ''">and SKSSQZ = #{req.skssqz}</if>
+            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">and RKRQ between #{req.beginRkrq} and #{req.endRkrq}</if>
+            <if test="req.jsbj != null and req.jsbj != ''">and JSBJ = #{req.jsbj}</if>
+            <if test="req.beginJsrq != null and req.beginJsrq != '' and req.endJsrq != null and req.endJsrq != ''">and JSRQ between #{req.beginJsrq} and #{req.endJsrq}</if>
+            <if test="req.cbjthbj != null and req.cbjthbj != ''">and CBJTHBJ = #{req.cbjthbj}</if>
+            <if test="req.beginCbjthrq != null and req.beginCbjthrq != '' and req.endCbjthrq != null and req.endCbjthrq != ''">and CBJTHRQ between #{req.beginCbjthrq} AND
                 #{req.endCbjthrq}
             </if>
-            <if test="req.hkpch != null and req.hkpch != ''">AND HKPCH = #{req.hkpch}</if>
+            <if test="req.hkpch != null and req.hkpch != ''">and HKPCH = #{req.hkpch}</if>
         </where>
     </select>
 

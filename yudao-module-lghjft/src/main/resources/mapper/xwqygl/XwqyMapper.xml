@@ -86,66 +86,66 @@
         select <include refid="selectXwqyglColumns"/>
         from gh_hj
         <where>
-            <if test="deptId != null and deptId != ''">AND DEPT_ID = #{deptId}</if>
-            <if test="hyghbz != null and hyghbz != ''">AND HYGHBZ = #{hyghbz}</if>
-            <if test="shxydm != null and shxydm != ''">AND SHXYDM = #{shxydm}</if>
-            <if test="nsrmc != null and nsrmc != ''">AND NSRMC LIKE concat('%', #{nsrmc}, '%')</if>
-            <if test="nsrjc != null and nsrjc != ''">AND NSRJC LIKE concat('%', #{nsrjc}, '%')</if>
-            <if test="zgswjDm != null and zgswjDm != ''">AND ZGSWJ_DM = #{zgswjDm}</if>
-            <if test="zgswjmc != null and zgswjmc != ''">AND ZGSWJMC LIKE concat('%', #{zgswjmc}, '%')</if>
-            <if test="zgswskfjDm != null and zgswskfjDm != ''">AND ZGSWSKFJ_DM = #{zgswskfjDm}</if>
-            <if test="zgswskfjmc != null and zgswskfjmc != ''">AND ZGSWSKFJMC LIKE concat('%', #{zgswskfjmc}, '%')</if>
-            <if test="ssglyDm != null and ssglyDm != ''">AND SSGLY_DM = #{ssglyDm}</if>
-            <if test="ssglyxm != null and ssglyxm != ''">AND SSGLYXM = #{ssglyxm}</if>
-            <if test="zzjglxDm != null and zzjglxDm != ''">AND ZZJGLX_DM = #{zzjglxDm}</if>
-            <if test="zzjglxmc != null and zzjglxmc != ''">AND ZZJGLXMC = #{zzjglxmc}</if>
-            <if test="hyDm != null and hyDm != ''">AND HY_DM = #{hyDm}</if>
-            <if test="hymc != null and hymc != ''">AND HYMC = #{hymc}</if>
-            <if test="djzclxDm != null and djzclxDm != ''">AND DJZCLX_DM = #{djzclxDm}</if>
-            <if test="djzclxmc != null and djzclxmc != ''">AND DJZCLXMC = #{djzclxmc}</if>
-            <if test="dwlsgxDm != null and dwlsgxDm != ''">AND DWLSGX_DM = #{dwlsgxDm}</if>
-            <if test="dwlsgxmc != null and dwlsgxmc != ''">AND DWLSGXMC = #{dwlsgxmc}</if>
-            <if test="zgrs != null">AND ZGRS = #{zgrs}</if>
-            <if test="nsrztDm != null and nsrztDm != ''">AND NSRZT_DM = #{nsrztDm}</if>
-            <if test="nsrztmc != null and nsrztmc != ''">AND NSRZTMC = #{nsrztmc}</if>
-            <if test="fzcrq != null">AND FZCRQ = #{fzcrq}</if>
-            <if test="zxrq != null">AND ZXRQ = #{zxrq}</if>
-            <if test="zcdz != null and zcdz != ''">AND ZCDZ LIKE concat('%', #{zcdz}, '%')</if>
-            <if test="yzbm != null and yzbm != ''">AND YZBM = #{yzbm}</if>
-            <if test="lxr != null and lxr != ''">AND LXR = #{lxr}</if>
-            <if test="lxdh != null and lxdh != ''">AND LXDH = #{lxdh}</if>
-            <if test="ghlbDm != null and ghlbDm != ''">AND GHLB_DM = #{ghlbDm}</if>
-            <if test="xtlbDm != null and xtlbDm != ''">AND XTLB_DM = #{xtlbDm}</if>
-            <if test="hjfl1Dm != null and hjfl1Dm != ''">AND HJFL1_DM = #{hjfl1Dm}</if>
-            <if test="hjfl2Dm != null and hjfl2Dm != ''">AND HJFL2_DM = #{hjfl2Dm}</if>
-            <if test="hjfl3Dm != null and hjfl3Dm != ''">AND HJFL3_DM = #{hjfl3Dm}</if>
-            <if test="hjfl4Dm != null and hjfl4Dm != ''">AND HJFL4_DM = #{hjfl4Dm}</if>
-            <if test="hjfl5Dm != null and hjfl5Dm != ''">AND HJFL5_DM = #{hjfl5Dm}</if>
-            <if test="hjfl6Dm != null and hjfl6Dm != ''">AND HJFL6_DM = #{hjfl6Dm}</if>
-            <if test="hjfl7Dm != null and hjfl7Dm != ''">AND HJFL7_DM = #{hjfl7Dm}</if>
-            <if test="dclghbj != null and dclghbj != ''">AND HJFL8_DM = #{dclghbj}</if>
-            <if test="hjfl9Dm != null and hjfl9Dm != ''">AND HJFL9_DM = #{hjfl9Dm}</if>
-            <if test="sdghjgDm != null and sdghjgDm != ''">AND SDGHJG_DM = #{sdghjgDm}</if>
-            <if test="clghbj != null and clghbj != ''">AND CLGHBJ = #{clghbj}</if>
+            <if test="deptId != null and deptId != ''">and DEPT_ID = #{deptId}</if>
+            <if test="hyghbz != null and hyghbz != ''">and HYGHBZ = #{hyghbz}</if>
+            <if test="shxydm != null and shxydm != ''">and SHXYDM = #{shxydm}</if>
+            <if test="nsrmc != null and nsrmc != ''">and NSRMC like concat('%', #{nsrmc}, '%')</if>
+            <if test="nsrjc != null and nsrjc != ''">and NSRJC like concat('%', #{nsrjc}, '%')</if>
+            <if test="zgswjDm != null and zgswjDm != ''">and ZGSWJ_DM = #{zgswjDm}</if>
+            <if test="zgswjmc != null and zgswjmc != ''">and ZGSWJMC like concat('%', #{zgswjmc}, '%')</if>
+            <if test="zgswskfjDm != null and zgswskfjDm != ''">and ZGSWSKFJ_DM = #{zgswskfjDm}</if>
+            <if test="zgswskfjmc != null and zgswskfjmc != ''">and ZGSWSKFJMC like concat('%', #{zgswskfjmc}, '%')</if>
+            <if test="ssglyDm != null and ssglyDm != ''">and SSGLY_DM = #{ssglyDm}</if>
+            <if test="ssglyxm != null and ssglyxm != ''">and SSGLYXM = #{ssglyxm}</if>
+            <if test="zzjglxDm != null and zzjglxDm != ''">and ZZJGLX_DM = #{zzjglxDm}</if>
+            <if test="zzjglxmc != null and zzjglxmc != ''">and ZZJGLXMC = #{zzjglxmc}</if>
+            <if test="hyDm != null and hyDm != ''">and HY_DM = #{hyDm}</if>
+            <if test="hymc != null and hymc != ''">and HYMC = #{hymc}</if>
+            <if test="djzclxDm != null and djzclxDm != ''">and DJZCLX_DM = #{djzclxDm}</if>
+            <if test="djzclxmc != null and djzclxmc != ''">and DJZCLXMC = #{djzclxmc}</if>
+            <if test="dwlsgxDm != null and dwlsgxDm != ''">and DWLSGX_DM = #{dwlsgxDm}</if>
+            <if test="dwlsgxmc != null and dwlsgxmc != ''">and DWLSGXMC = #{dwlsgxmc}</if>
+            <if test="zgrs != null">and ZGRS = #{zgrs}</if>
+            <if test="nsrztDm != null and nsrztDm != ''">and NSRZT_DM = #{nsrztDm}</if>
+            <if test="nsrztmc != null and nsrztmc != ''">and NSRZTMC = #{nsrztmc}</if>
+            <if test="fzcrq != null">and FZCRQ = #{fzcrq}</if>
+            <if test="zxrq != null">and ZXRQ = #{zxrq}</if>
+            <if test="zcdz != null and zcdz != ''">and ZCDZ like concat('%', #{zcdz}, '%')</if>
+            <if test="yzbm != null and yzbm != ''">and YZBM = #{yzbm}</if>
+            <if test="lxr != null and lxr != ''">and LXR = #{lxr}</if>
+            <if test="lxdh != null and lxdh != ''">and LXDH = #{lxdh}</if>
+            <if test="ghlbDm != null and ghlbDm != ''">and GHLB_DM = #{ghlbDm}</if>
+            <if test="xtlbDm != null and xtlbDm != ''">and XTLB_DM = #{xtlbDm}</if>
+            <if test="hjfl1Dm != null and hjfl1Dm != ''">and HJFL1_DM = #{hjfl1Dm}</if>
+            <if test="hjfl2Dm != null and hjfl2Dm != ''">and HJFL2_DM = #{hjfl2Dm}</if>
+            <if test="hjfl3Dm != null and hjfl3Dm != ''">and HJFL3_DM = #{hjfl3Dm}</if>
+            <if test="hjfl4Dm != null and hjfl4Dm != ''">and HJFL4_DM = #{hjfl4Dm}</if>
+            <if test="hjfl5Dm != null and hjfl5Dm != ''">and HJFL5_DM = #{hjfl5Dm}</if>
+            <if test="hjfl6Dm != null and hjfl6Dm != ''">and HJFL6_DM = #{hjfl6Dm}</if>
+            <if test="hjfl7Dm != null and hjfl7Dm != ''">and HJFL7_DM = #{hjfl7Dm}</if>
+            <if test="dclghbj != null and dclghbj != ''">and HJFL8_DM = #{dclghbj}</if>
+            <if test="hjfl9Dm != null and hjfl9Dm != ''">and HJFL9_DM = #{hjfl9Dm}</if>
+            <if test="sdghjgDm != null and sdghjgDm != ''">and SDGHJG_DM = #{sdghjgDm}</if>
+            <if test="clghbj != null and clghbj != ''">and CLGHBJ = #{clghbj}</if>
             <if test="beginClghrq != null and endClghrq != null">
-                AND CLGHRQ BETWEEN #{beginClghrq} AND #{endClghrq}
+                and CLGHRQ between #{beginClghrq} and #{endClghrq}
             </if>
-            <if test="jcghdm != null and jcghdm != ''">AND JCGHDM = #{jcghdm}</if>
-            <if test="jcghmc != null and jcghmc != ''">AND JCGHMC LIKE concat('%', #{jcghmc}, '%')</if>
-            <if test="jcghzh != null and jcghzh != ''">AND JCGHZH = #{jcghzh}</if>
-            <if test="jcghhm != null and jcghhm != ''">AND JCGHHM LIKE concat('%', #{jcghhm}, '%')</if>
-            <if test="jcghhh != null and jcghhh != ''">AND JCGHHH = #{jcghhh}</if>
-            <if test="jcghyh != null and jcghyh != ''">AND JCGHYH = #{jcghyh}</if>
-            <if test="bz != null and bz != ''">AND BZ = #{bz}</if>
-            <if test="jym != null and jym != ''">AND JYM = #{jym}</if>
-            <if test="nsrsbh != null and nsrsbh != ''">AND NSRSBH = #{nsrsbh}</if>
-            <if test="createBy != null and createBy != ''">AND CREATE_BY = #{createBy}</if>
-            <if test="createTime != null">AND CREATE_TIME = #{createTime}</if>
-            <if test="updateBy != null and updateBy != ''">AND UPDATE_BY = #{updateBy}</if>
-            <if test="updateTime != null">AND UPDATE_TIME = #{updateTime}</if>
+            <if test="jcghdm != null and jcghdm != ''">and JCGHDM = #{jcghdm}</if>
+            <if test="jcghmc != null and jcghmc != ''">and JCGHMC like concat('%', #{jcghmc}, '%')</if>
+            <if test="jcghzh != null and jcghzh != ''">and JCGHZH = #{jcghzh}</if>
+            <if test="jcghhm != null and jcghhm != ''">and JCGHHM like concat('%', #{jcghhm}, '%')</if>
+            <if test="jcghhh != null and jcghhh != ''">and JCGHHH = #{jcghhh}</if>
+            <if test="jcghyh != null and jcghyh != ''">and JCGHYH = #{jcghyh}</if>
+            <if test="bz != null and bz != ''">and BZ = #{bz}</if>
+            <if test="jym != null and jym != ''">and JYM = #{jym}</if>
+            <if test="nsrsbh != null and nsrsbh != ''">and NSRSBH = #{nsrsbh}</if>
+            <if test="createBy != null and createBy != ''">and CREATE_BY = #{createBy}</if>
+            <if test="createTime != null">and CREATE_TIME = #{createTime}</if>
+            <if test="updateBy != null and updateBy != ''">and UPDATE_BY = #{updateBy}</if>
+            <if test="updateTime != null">and UPDATE_TIME = #{updateTime}</if>
         </where>
         <if test="offset != null and limit != null">
-            LIMIT #{offset}, #{limit}
+            limit #{offset}, #{limit}
         </if>
     </select>
 
@@ -154,63 +154,63 @@
         select count(*)
         from gh_hj
         <where>
-            <if test="deptId != null and deptId != ''">AND DEPT_ID = #{deptId}</if>
-            <if test="hyghbz != null and hyghbz != ''">AND HYGHBZ = #{hyghbz}</if>
-            <if test="shxydm != null and shxydm != ''">AND SHXYDM = #{shxydm}</if>
-            <if test="nsrmc != null and nsrmc != ''">AND NSRMC LIKE concat('%', #{nsrmc}, '%')</if>
-            <if test="nsrjc != null and nsrjc != ''">AND NSRJC LIKE concat('%', #{nsrjc}, '%')</if>
-            <if test="zgswjDm != null and zgswjDm != ''">AND ZGSWJ_DM = #{zgswjDm}</if>
-            <if test="zgswjmc != null and zgswjmc != ''">AND ZGSWJMC LIKE concat('%', #{zgswjmc}, '%')</if>
-            <if test="zgswskfjDm != null and zgswskfjDm != ''">AND ZGSWSKFJ_DM = #{zgswskfjDm}</if>
-            <if test="zgswskfjmc != null and zgswskfjmc != ''">AND ZGSWSKFJMC LIKE concat('%', #{zgswskfjmc}, '%')</if>
-            <if test="ssglyDm != null and ssglyDm != ''">AND SSGLY_DM = #{ssglyDm}</if>
-            <if test="ssglyxm != null and ssglyxm != ''">AND SSGLYXM = #{ssglyxm}</if>
-            <if test="zzjglxDm != null and zzjglxDm != ''">AND ZZJGLX_DM = #{zzjglxDm}</if>
-            <if test="zzjglxmc != null and zzjglxmc != ''">AND ZZJGLXMC = #{zzjglxmc}</if>
-            <if test="hyDm != null and hyDm != ''">AND HY_DM = #{hyDm}</if>
-            <if test="hymc != null and hymc != ''">AND HYMC = #{hymc}</if>
-            <if test="djzclxDm != null and djzclxDm != ''">AND DJZCLX_DM = #{djzclxDm}</if>
-            <if test="djzclxmc != null and djzclxmc != ''">AND DJZCLXMC = #{djzclxmc}</if>
-            <if test="dwlsgxDm != null and dwlsgxDm != ''">AND DWLSGX_DM = #{dwlsgxDm}</if>
-            <if test="dwlsgxmc != null and dwlsgxmc != ''">AND DWLSGXMC = #{dwlsgxmc}</if>
-            <if test="zgrs != null">AND ZGRS = #{zgrs}</if>
-            <if test="nsrztDm != null and nsrztDm != ''">AND NSRZT_DM = #{nsrztDm}</if>
-            <if test="nsrztmc != null and nsrztmc != ''">AND NSRZTMC = #{nsrztmc}</if>
-            <if test="fzcrq != null">AND FZCRQ = #{fzcrq}</if>
-            <if test="zxrq != null">AND ZXRQ = #{zxrq}</if>
-            <if test="zcdz != null and zcdz != ''">AND ZCDZ LIKE concat('%', #{zcdz}, '%')</if>
-            <if test="yzbm != null and yzbm != ''">AND YZBM = #{yzbm}</if>
-            <if test="lxr != null and lxr != ''">AND LXR = #{lxr}</if>
-            <if test="lxdh != null and lxdh != ''">AND LXDH = #{lxdh}</if>
-            <if test="ghlbDm != null and ghlbDm != ''">AND GHLB_DM = #{ghlbDm}</if>
-            <if test="xtlbDm != null and xtlbDm != ''">AND XTLB_DM = #{xtlbDm}</if>
-            <if test="hjfl1Dm != null and hjfl1Dm != ''">AND HJFL1_DM = #{hjfl1Dm}</if>
-            <if test="hjfl2Dm != null and hjfl2Dm != ''">AND HJFL2_DM = #{hjfl2Dm}</if>
-            <if test="hjfl3Dm != null and hjfl3Dm != ''">AND HJFL3_DM = #{hjfl3Dm}</if>
-            <if test="hjfl4Dm != null and hjfl4Dm != ''">AND HJFL4_DM = #{hjfl4Dm}</if>
-            <if test="hjfl5Dm != null and hjfl5Dm != ''">AND HJFL5_DM = #{hjfl5Dm}</if>
-            <if test="hjfl6Dm != null and hjfl6Dm != ''">AND HJFL6_DM = #{hjfl6Dm}</if>
-            <if test="hjfl7Dm != null and hjfl7Dm != ''">AND HJFL7_DM = #{hjfl7Dm}</if>
-            <if test="dclghbj != null and dclghbj != ''">AND HJFL8_DM = #{dclghbj}</if>
-            <if test="hjfl9Dm != null and hjfl9Dm != ''">AND HJFL9_DM = #{hjfl9Dm}</if>
-            <if test="sdghjgDm != null and sdghjgDm != ''">AND SDGHJG_DM = #{sdghjgDm}</if>
-            <if test="clghbj != null and clghbj != ''">AND CLGHBJ = #{clghbj}</if>
+            <if test="deptId != null and deptId != ''">and DEPT_ID = #{deptId}</if>
+            <if test="hyghbz != null and hyghbz != ''">and HYGHBZ = #{hyghbz}</if>
+            <if test="shxydm != null and shxydm != ''">and SHXYDM = #{shxydm}</if>
+            <if test="nsrmc != null and nsrmc != ''">and NSRMC like concat('%', #{nsrmc}, '%')</if>
+            <if test="nsrjc != null and nsrjc != ''">and NSRJC like concat('%', #{nsrjc}, '%')</if>
+            <if test="zgswjDm != null and zgswjDm != ''">and ZGSWJ_DM = #{zgswjDm}</if>
+            <if test="zgswjmc != null and zgswjmc != ''">and ZGSWJMC like concat('%', #{zgswjmc}, '%')</if>
+            <if test="zgswskfjDm != null and zgswskfjDm != ''">and ZGSWSKFJ_DM = #{zgswskfjDm}</if>
+            <if test="zgswskfjmc != null and zgswskfjmc != ''">and ZGSWSKFJMC like concat('%', #{zgswskfjmc}, '%')</if>
+            <if test="ssglyDm != null and ssglyDm != ''">and SSGLY_DM = #{ssglyDm}</if>
+            <if test="ssglyxm != null and ssglyxm != ''">and SSGLYXM = #{ssglyxm}</if>
+            <if test="zzjglxDm != null and zzjglxDm != ''">and ZZJGLX_DM = #{zzjglxDm}</if>
+            <if test="zzjglxmc != null and zzjglxmc != ''">and ZZJGLXMC = #{zzjglxmc}</if>
+            <if test="hyDm != null and hyDm != ''">and HY_DM = #{hyDm}</if>
+            <if test="hymc != null and hymc != ''">and HYMC = #{hymc}</if>
+            <if test="djzclxDm != null and djzclxDm != ''">and DJZCLX_DM = #{djzclxDm}</if>
+            <if test="djzclxmc != null and djzclxmc != ''">and DJZCLXMC = #{djzclxmc}</if>
+            <if test="dwlsgxDm != null and dwlsgxDm != ''">and DWLSGX_DM = #{dwlsgxDm}</if>
+            <if test="dwlsgxmc != null and dwlsgxmc != ''">and DWLSGXMC = #{dwlsgxmc}</if>
+            <if test="zgrs != null">and ZGRS = #{zgrs}</if>
+            <if test="nsrztDm != null and nsrztDm != ''">and NSRZT_DM = #{nsrztDm}</if>
+            <if test="nsrztmc != null and nsrztmc != ''">and NSRZTMC = #{nsrztmc}</if>
+            <if test="fzcrq != null">and FZCRQ = #{fzcrq}</if>
+            <if test="zxrq != null">and ZXRQ = #{zxrq}</if>
+            <if test="zcdz != null and zcdz != ''">and ZCDZ like concat('%', #{zcdz}, '%')</if>
+            <if test="yzbm != null and yzbm != ''">and YZBM = #{yzbm}</if>
+            <if test="lxr != null and lxr != ''">and LXR = #{lxr}</if>
+            <if test="lxdh != null and lxdh != ''">and LXDH = #{lxdh}</if>
+            <if test="ghlbDm != null and ghlbDm != ''">and GHLB_DM = #{ghlbDm}</if>
+            <if test="xtlbDm != null and xtlbDm != ''">and XTLB_DM = #{xtlbDm}</if>
+            <if test="hjfl1Dm != null and hjfl1Dm != ''">and HJFL1_DM = #{hjfl1Dm}</if>
+            <if test="hjfl2Dm != null and hjfl2Dm != ''">and HJFL2_DM = #{hjfl2Dm}</if>
+            <if test="hjfl3Dm != null and hjfl3Dm != ''">and HJFL3_DM = #{hjfl3Dm}</if>
+            <if test="hjfl4Dm != null and hjfl4Dm != ''">and HJFL4_DM = #{hjfl4Dm}</if>
+            <if test="hjfl5Dm != null and hjfl5Dm != ''">and HJFL5_DM = #{hjfl5Dm}</if>
+            <if test="hjfl6Dm != null and hjfl6Dm != ''">and HJFL6_DM = #{hjfl6Dm}</if>
+            <if test="hjfl7Dm != null and hjfl7Dm != ''">and HJFL7_DM = #{hjfl7Dm}</if>
+            <if test="dclghbj != null and dclghbj != ''">and HJFL8_DM = #{dclghbj}</if>
+            <if test="hjfl9Dm != null and hjfl9Dm != ''">and HJFL9_DM = #{hjfl9Dm}</if>
+            <if test="sdghjgDm != null and sdghjgDm != ''">and SDGHJG_DM = #{sdghjgDm}</if>
+            <if test="clghbj != null and clghbj != ''">and CLGHBJ = #{clghbj}</if>
             <if test="beginClghrq != null and endClghrq != null">
-                AND CLGHRQ BETWEEN #{beginClghrq} AND #{endClghrq}
+                and CLGHRQ between #{beginClghrq} and #{endClghrq}
             </if>
-            <if test="jcghdm != null and jcghdm != ''">AND JCGHDM = #{jcghdm}</if>
-            <if test="jcghmc != null and jcghmc != ''">AND JCGHMC LIKE concat('%', #{jcghmc}, '%')</if>
-            <if test="jcghzh != null and jcghzh != ''">AND JCGHZH = #{jcghzh}</if>
-            <if test="jcghhm != null and jcghhm != ''">AND JCGHHM LIKE concat('%', #{jcghhm}, '%')</if>
-            <if test="jcghhh != null and jcghhh != ''">AND JCGHHH = #{jcghhh}</if>
-            <if test="jcghyh != null and jcghyh != ''">AND JCGHYH = #{jcghyh}</if>
-            <if test="bz != null and bz != ''">AND BZ = #{bz}</if>
-            <if test="jym != null and jym != ''">AND JYM = #{jym}</if>
-            <if test="nsrsbh != null and nsrsbh != ''">AND NSRSBH = #{nsrsbh}</if>
-            <if test="createBy != null and createBy != ''">AND CREATE_BY = #{createBy}</if>
-            <if test="createTime != null">AND CREATE_TIME = #{createTime}</if>
-            <if test="updateBy != null and updateBy != ''">AND UPDATE_BY = #{updateBy}</if>
-            <if test="updateTime != null">AND UPDATE_TIME = #{updateTime}</if>
+            <if test="jcghdm != null and jcghdm != ''">and JCGHDM = #{jcghdm}</if>
+            <if test="jcghmc != null and jcghmc != ''">and JCGHMC like concat('%', #{jcghmc}, '%')</if>
+            <if test="jcghzh != null and jcghzh != ''">and JCGHZH = #{jcghzh}</if>
+            <if test="jcghhm != null and jcghhm != ''">and JCGHHM like concat('%', #{jcghhm}, '%')</if>
+            <if test="jcghhh != null and jcghhh != ''">and JCGHHH = #{jcghhh}</if>
+            <if test="jcghyh != null and jcghyh != ''">and JCGHYH = #{jcghyh}</if>
+            <if test="bz != null and bz != ''">and BZ = #{bz}</if>
+            <if test="jym != null and jym != ''">and JYM = #{jym}</if>
+            <if test="nsrsbh != null and nsrsbh != ''">and NSRSBH = #{nsrsbh}</if>
+            <if test="createBy != null and createBy != ''">and CREATE_BY = #{createBy}</if>
+            <if test="createTime != null">and CREATE_TIME = #{createTime}</if>
+            <if test="updateBy != null and updateBy != ''">and UPDATE_BY = #{updateBy}</if>
+            <if test="updateTime != null">and UPDATE_TIME = #{updateTime}</if>
         </where>
     </select>
 
@@ -340,7 +340,7 @@
     <!-- 修改 (v1: updateXwqygl) -->
     <update id="updateXwqygl" parameterType="cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqygl.vo.XwqyglSaveReqVO">
         update gh_hj
-        <trim prefix="SET" suffixOverrides=",">
+        <trim prefix="set" suffixOverrides=",">
             <if test="deptId != null">DEPT_ID = #{deptId},</if>
             <if test="hyghbz != null and hyghbz != ''">HYGHBZ = #{hyghbz},</if>
             <if test="shxydm != null and shxydm != ''">SHXYDM = #{shxydm},</if>
