@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 public class RwsSaveReqVO {
 
     @Schema(description = "任务id", requiredMode = Schema.RequiredMode.REQUIRED, example = "9124")
-    private Integer rwid;
+    private Long rwid;
 
     @Schema(description = "任务类型	")
     private String rwlx;

@@ -25,7 +25,7 @@ public class JhdwydsDO {
      * 建会单位代收ID
      */
     @TableId
-    private Integer jhdwId;
+    private Long jhdwId;
     /**
      * 工会机构
      */
@@ -73,11 +73,11 @@ public class JhdwydsDO {
     /**
      * 税务登记职工人数
      */
-    private Integer zgrs;
+    private String zgrs;
     /**
      * 工会登记职工人数
      */
-    private Integer ghzgrs;
+    private String ghzgrs;
     /**
      * 工会法人统一社会信用代码
      */

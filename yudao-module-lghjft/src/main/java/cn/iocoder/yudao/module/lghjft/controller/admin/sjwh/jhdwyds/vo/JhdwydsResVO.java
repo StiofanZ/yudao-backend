@@ -16,7 +16,7 @@ public class JhdwydsResVO {
 
     @Schema(description = "建会单位代收ID", requiredMode = Schema.RequiredMode.REQUIRED, example = "24703")
     @ExcelProperty("建会单位代收ID")
-    private Integer jhdwId;
+    private Long jhdwId;
 
     @Schema(description = "工会机构", requiredMode = Schema.RequiredMode.REQUIRED, example = "7269")
     @ExcelProperty("工会机构")
@@ -64,11 +64,11 @@ public class JhdwydsResVO {
 
     @Schema(description = "税务登记职工人数")
     @ExcelProperty("税务登记职工人数")
-    private Integer zgrs;
+    private String zgrs;
 
     @Schema(description = "工会登记职工人数")
     @ExcelProperty("工会登记职工人数")
-    private Integer ghzgrs;
+    private String ghzgrs;
 
     @Schema(description = "工会法人统一社会信用代码")
     @ExcelProperty("工会法人统一社会信用代码")

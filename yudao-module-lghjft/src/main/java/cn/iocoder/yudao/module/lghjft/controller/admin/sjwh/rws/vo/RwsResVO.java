@@ -16,7 +16,7 @@ public class RwsResVO {
 
     @Schema(description = "任务id", requiredMode = Schema.RequiredMode.REQUIRED, example = "9124")
     @ExcelProperty("任务id")
-    private Integer rwid;
+    private Long rwid;
 
     @Schema(description = "任务类型	")
     @ExcelProperty(value = "任务类型	", converter = DictConvert.class)

@@ -7,7 +7,6 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.rws.vo.RwsSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.rws.RwsDO;
 import jakarta.validation.*;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.pojo.PageParam;
 
 /**
  * 年度任务 Service 接口
@@ -22,7 +21,7 @@ public interface RwsService {
      * @param createReqVO 创建信息
      * @return 编号
      */
-    Integer createRws(@Valid RwsSaveReqVO createReqVO);
+    Long createRws(@Valid RwsSaveReqVO createReqVO);
 
     /**
      * 更新年度任务
@@ -36,14 +35,14 @@ public interface RwsService {
      *
      * @param id 编号
      */
-    void deleteRws(Integer id);
+    void deleteRws(Long id);
 
     /**
     * 批量删除年度任务
     *
     * @param ids 编号
     */
-    void deleteRwsListByIds(List<Integer> ids);
+    void deleteRwsListByIds(List<Long> ids);
 
     /**
      * 获得年度任务
@@ -51,7 +50,7 @@ public interface RwsService {
      * @param id 编号
      * @return 年度任务
      */
-    RwsDO getRws(Integer id);
+    RwsDO getRws(Long id);
 
     /**
      * 获得年度任务分页

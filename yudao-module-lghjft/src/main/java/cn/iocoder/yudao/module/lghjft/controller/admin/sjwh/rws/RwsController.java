@@ -40,7 +40,7 @@ public class RwsController {
     @PostMapping("/create")
     @Operation(summary = "创建年度任务")
     @PreAuthorize("@ss.hasPermission('lghjft:sjwh-rws:create')")
-    public CommonResult<Integer> createRws(@Valid @RequestBody RwsSaveReqVO createReqVO) {
+    public CommonResult<Long> createRws(@Valid @RequestBody RwsSaveReqVO createReqVO) {
         return success(rwsService.createRws(createReqVO));
     }
 
@@ -56,7 +56,7 @@ public class RwsController {
     @Operation(summary = "删除年度任务")
     @Parameter(name = "id", description = "编号", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:sjwh-rws:delete')")
-    public CommonResult<Boolean> deleteRws(@RequestParam("id") Integer id) {
+    public CommonResult<Boolean> deleteRws(@RequestParam("id") Long id) {
         rwsService.deleteRws(id);
         return success(true);
     }
@@ -65,7 +65,7 @@ public class RwsController {
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除年度任务")
     @PreAuthorize("@ss.hasPermission('lghjft:sjwh-rws:delete')")
-    public CommonResult<Boolean> deleteRwsList(@RequestParam("ids") List<Integer> ids) {
+    public CommonResult<Boolean> deleteRwsList(@RequestParam("ids") List<Long> ids) {
         rwsService.deleteRwsListByIds(ids);
         return success(true);
     }
@@ -74,7 +74,7 @@ public class RwsController {
     @Operation(summary = "获得年度任务")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:sjwh-rws:query')")
-    public CommonResult<RwsResVO> getRws(@RequestParam("id") Integer id) {
+    public CommonResult<RwsResVO> getRws(@RequestParam("id") Long id) {
         RwsDO rws = rwsService.getRws(id);
         return success(BeanUtils.toBean(rws, RwsResVO.class));
     }

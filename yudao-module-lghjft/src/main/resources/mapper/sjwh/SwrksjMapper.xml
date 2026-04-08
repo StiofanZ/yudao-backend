@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.sjwh.swrksj.SwrksjMapper">
+
+    <resultMap type="cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.swrksj.SwrksjDO" id="SwrksjResult">
+        <result property="ghjfId"    column="ghjf_id"    />
+        <result property="spuuid"    column="spuuid"    />
+        <result property="djxh"    column="djxh"    />
+        <result property="shxydm"    column="shxydm"    />
+        <result property="nsrmc"    column="nsrmc"    />
+        <result property="nsrjc"    column="nsrjc"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="deptId1"    column="dept_id1"    />
+        <result property="ghjgxzjb"    column="ghjgxzjb"    />
+        <result property="clghbj"    column="clghbj"    />
+        <result property="hyghbz"    column="hyghbz"    />
+        <result property="sdghjgDm"    column="sdghjg_dm"    />
+        <result property="sdghjgxzjb"    column="sdghjgxzjb"    />
+        <result property="zgswjDm"    column="zgswj_dm"    />
+        <result property="zgswskfjDm"    column="zgswskfj_dm"    />
+        <result property="ssglyDm"    column="ssgly_dm"    />
+        <result property="ghlbDm"    column="ghlb_dm"    />
+        <result property="xtlbDm"    column="xtlb_dm"    />
+        <result property="zzjglxDm"    column="zzjglx_dm"    />
+        <result property="hyDm"    column="hy_dm"    />
+        <result property="djzclxDm"    column="djzclx_dm"    />
+        <result property="dwlsgxDm"    column="dwlsgx_dm"    />
+        <result property="sblbDm"    column="sblb_dm"    />
+        <result property="nssbrq"    column="nssbrq"    />
+        <result property="pzxh"    column="pzxh"    />
+        <result property="pzmxxh"    column="pzmxxh"    />
+        <result property="skssqq"    column="skssqq"    />
+        <result property="skssqz"    column="skssqz"    />
+        <result property="zsswjgDm"    column="zsswjg_dm"    />
+        <result property="skssswjgDm"    column="skssswjg_dm"    />
+        <result property="skgkDm"    column="skgk_dm"    />
+        <result property="dzsphm"    column="dzsphm"    />
+        <result property="pzzlDm"    column="pzzl_dm"    />
+        <result property="pzzgDm"    column="pzzg_dm"    />
+        <result property="pzhm"    column="pzhm"    />
+        <result property="kpyDm"    column="kpy_dm"    />
+        <result property="kpyXm"    column="kpy_xm"    />
+        <result property="zspmDm"    column="zspm_dm"    />
+        <result property="zszmDm"    column="zszm_dm"    />
+        <result property="yskmDm"    column="yskm_dm"    />
+        <result property="gzze"    column="gzze"    />
+        <result property="sl"    column="sl"    />
+        <result property="ynse"    column="ynse"    />
+        <result property="jmse"    column="jmse"    />
+        <result property="yjse"    column="yjse"    />
+        <result property="ybtse"    column="ybtse"    />
+        <result property="jkfsDm"    column="jkfs_dm"    />
+        <result property="jfhb"    column="jfhb"    />
+        <result property="jfzh"    column="jfzh"    />
+        <result property="jfhm"    column="jfhm"    />
+        <result property="jfhh"    column="jfhh"    />
+        <result property="jfyh"    column="jfyh"    />
+        <result property="rkrq"    column="rkrq"    />
+        <result property="jsbj"    column="jsbj"    />
+        <result property="jsrq"    column="jsrq"    />
+        <result property="jsczy"    column="jsczy"    />
+        <result property="jcghzh"    column="jcghzh"    />
+        <result property="jcghhm"    column="jcghhm"    />
+        <result property="jcghhh"    column="jcghhh"    />
+        <result property="jcghbl"    column="jcghbl"    />
+        <result property="jcghje"    column="jcghje"    />
+        <result property="cbjzh"    column="cbjzh"    />
+        <result property="cbjhm"    column="cbjhm"    />
+        <result property="cbjhh"    column="cbjhh"    />
+        <result property="cbjbl"    column="cbjbl"    />
+        <result property="cbjje"    column="cbjje"    />
+        <result property="hyghzh"    column="hyghzh"    />
+        <result property="hyghhm"    column="hyghhm"    />
+        <result property="hyghhh"    column="hyghhh"    />
+        <result property="hyghbl"    column="hyghbl"    />
+        <result property="hyghje"    column="hyghje"    />
+        <result property="xjghzh"    column="xjghzh"    />
+        <result property="xjghhm"    column="xjghhm"    />
+        <result property="xjghhh"    column="xjghhh"    />
+        <result property="xjghbl"    column="xjghbl"    />
+        <result property="xjghje"    column="xjghje"    />
+        <result property="sjghzh"    column="sjghzh"    />
+        <result property="sjghhm"    column="sjghhm"    />
+        <result property="sjghhh"    column="sjghhh"    />
+        <result property="sjghbl"    column="sjghbl"    />
+        <result property="sjghje"    column="sjghje"    />
+        <result property="szghzh"    column="szghzh"    />
+        <result property="szghhm"    column="szghhm"    />
+        <result property="szghhh"    column="szghhh"    />
+        <result property="szghbl"    column="szghbl"    />
+        <result property="szghje"    column="szghje"    />
+        <result property="qgghzh"    column="qgghzh"    />
+        <result property="qgghhm"    column="qgghhm"    />
+        <result property="qgghhh"    column="qgghhh"    />
+        <result property="qgghbl"    column="qgghbl"    />
+        <result property="qgghje"    column="qgghje"    />
+        <result property="jcjzh"    column="jcjzh"    />
+        <result property="jcjhm"    column="jcjhm"    />
+        <result property="jcjhh"    column="jcjhh"    />
+        <result property="jcjbl"    column="jcjbl"    />
+        <result property="jcjje"    column="jcjje"    />
+        <result property="jcwsh"    column="jcwsh"    />
+        <result property="sdszh"    column="sdszh"    />
+        <result property="sdshm"    column="sdshm"    />
+        <result property="sdshh"    column="sdshh"    />
+        <result property="sdsbl"    column="sdsbl"    />
+        <result property="sdsje"    column="sdsje"    />
+        <result property="swjgzh"    column="swjgzh"    />
+        <result property="swjghm"    column="swjghm"    />
+        <result property="swjghh"    column="swjghh"    />
+        <result property="swjgbl"    column="swjgbl"    />
+        <result property="swjgje"    column="swjgje"    />
+        <result property="cbjthbj"    column="cbjthbj"    />
+        <result property="cbjthrq"    column="cbjthrq"    />
+        <result property="cbjthczy"    column="cbjthczy"    />
+        <result property="jym"    column="jym"    />
+        <result property="hkpch"    column="hkpch"    />
+        <result property="bz"    column="bz"    />
+        <result property="bluuid"    column="bluuid"    />
+        <result property="sdghzh"    column="sdghzh"    />
+        <result property="sdghhm"    column="sdghhm"    />
+        <result property="sdghhh"    column="sdghhh"    />
+        <result property="sdghbl"    column="sdghbl"    />
+        <result property="sdghje"    column="sdghje"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectSwrksjVo">
+        select * from (
+        select
+        ghjf_id,
+        spuuid,
+        djxh,
+        shxydm,
+        nsrmc,
+        nsrjc,
+        dept_id,
+        (select t.ghjg_dm from dm_swjg t where t.swjg_dm = j.zgswj_dm) dept_id1,
+        ghjgxzjb,
+        clghbj,
+        hyghbz,
+        sdghjg_dm,
+        sdghjgxzjb,
+        zgswj_dm,
+        zgswskfj_dm,
+        ssgly_dm,
+        ghlb_dm,
+        xtlb_dm,
+        zzjglx_dm,
+        hy_dm,
+        djzclx_dm,
+        dwlsgx_dm,
+        sblb_dm,
+        nssbrq,
+        pzxh,
+        pzmxxh,
+        skssqq,
+        skssqz,
+        zsswjg_dm,
+        skssswjg_dm,
+        skgk_dm,
+        dzsphm,
+        pzzl_dm,
+        pzzg_dm,
+        pzhm,
+        kpy_dm,
+        kpy_xm,
+        zspm_dm,
+        zszm_dm,
+        yskm_dm,
+        gzze,
+        sl,
+        ynse,
+        jmse,
+        yjse,
+        ybtse,
+        jkfs_dm,
+        jfhb,
+        jfzh,
+        jfhm,
+        jfhh,
+        jfyh,
+        rkrq,
+        jsbj,
+        jsrq,
+        jsczy,
+        jcghzh,
+        jcghhm,
+        jcghhh,
+        jcghbl,
+        jcghje,
+        cbjzh,
+        cbjhm,
+        cbjhh,
+        cbjbl,
+        cbjje,
+        hyghzh,
+        hyghhm,
+        hyghhh,
+        hyghbl,
+        hyghje,
+        xjghzh,
+        xjghhm,
+        xjghhh,
+        xjghbl,
+        xjghje,
+        sjghzh,
+        sjghhm,
+        sjghhh,
+        sjghbl,
+        sjghje,
+        szghzh,
+        szghhm,
+        szghhh,
+        szghbl,
+        szghje,
+        qgghzh,
+        qgghhm,
+        qgghhh,
+        qgghbl,
+        qgghje,
+        jcjzh,
+        jcjhm,
+        jcjhh,
+        jcjbl,
+        jcjje,
+        jcwsh,
+        sdszh,
+        sdshm,
+        sdshh,
+        sdsbl,
+        sdsje,
+        swjgzh,
+        swjghm,
+        swjghh,
+        swjgbl,
+        swjgje,
+        cbjthbj,
+        cbjthrq,
+        cbjthczy,
+        jym,
+        hkpch,
+        bz,
+        bluuid,
+        sdghzh,
+        sdghhm,
+        sdghhh,
+        sdghbl,
+        sdghje,
+        create_by,
+        create_time,
+        update_by,
+        update_time
+        from
+        gh_jf j
+        where
+        j.dept_id = '000000'
+        and j.zspm_dm != '399001910'
+        and j.jsbj != 'T'
+        and j.jsbj != 'S'
+        and j.jsbj != 'Y'
+        and j.jsbj != 'J'
+        and j.djxh not in (select djxh from gh_hj)) a
+    </sql>
+
+    <select id="selectSwrksjPage" resultMap="SwrksjResult">
+        <include refid="selectSwrksjVo"/>
+        <where>
+            <if test="query.spuuid != null and query.spuuid != ''"> and spuuid = #{query.spuuid}</if>
+            <if test="query.djxh != null and query.djxh != ''"> and djxh = #{query.djxh}</if>
+            <if test="query.shxydm != null and query.shxydm != ''"> and shxydm = #{query.shxydm}</if>
+            <if test="query.nsrmc != null and query.nsrmc != ''"> and nsrmc like concat('%', #{query.nsrmc}, '%')</if>
+            <if test="query.deptId != null and query.deptId != ''"> and dept_id1 = #{query.deptId}</if>
+            <if test="query.zgswjDm != null and query.zgswjDm != ''"> and zgswj_dm = #{query.zgswjDm}</if>
+            <if test="query.zspmDm != null and query.zspmDm != ''"> and zspm_dm = #{query.zspmDm}</if>
+            <if test="query.jsbj != null and query.jsbj != ''"> and jsbj = #{query.jsbj}</if>
+        </where>
+        order by ghjf_id desc
+    </select>
+
+    <select id="selectSwrksjList" resultMap="SwrksjResult">
+        <include refid="selectSwrksjVo"/>
+        <where>
+            <if test="query.spuuid != null and query.spuuid != ''"> and spuuid = #{query.spuuid}</if>
+            <if test="query.djxh != null and query.djxh != ''"> and djxh = #{query.djxh}</if>
+            <if test="query.shxydm != null and query.shxydm != ''"> and shxydm = #{query.shxydm}</if>
+            <if test="query.nsrmc != null and query.nsrmc != ''"> and nsrmc like concat('%', #{query.nsrmc}, '%')</if>
+            <if test="query.deptId != null and query.deptId != ''"> and dept_id1 = #{query.deptId}</if>
+            <if test="query.zgswjDm != null and query.zgswjDm != ''"> and zgswj_dm = #{query.zgswjDm}</if>
+            <if test="query.zspmDm != null and query.zspmDm != ''"> and zspm_dm = #{query.zspmDm}</if>
+            <if test="query.jsbj != null and query.jsbj != ''"> and jsbj = #{query.jsbj}</if>
+        </where>
+        order by ghjf_id desc
+    </select>
+
+</mapper>

@@ -30,7 +30,7 @@ public class RwsServiceImpl implements RwsService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Integer createRws(RwsSaveReqVO createReqVO) {
+    public Long createRws(RwsSaveReqVO createReqVO) {
         // 插入
         RwsDO rws = BeanUtils.toBean(createReqVO, RwsDO.class);
         rwsMapper.insert(rws);
@@ -51,7 +51,7 @@ public class RwsServiceImpl implements RwsService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteRws(Integer id) {
+    public void deleteRws(Long id) {
         // 校验存在
         validateRwsExists(id);
         // 删除
@@ -60,20 +60,19 @@ public class RwsServiceImpl implements RwsService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-        public void deleteRwsListByIds(List<Integer> ids) {
+    public void deleteRwsListByIds(List<Long> ids) {
         // 删除
         rwsMapper.deleteByIds(ids);
-        }
+    }
 
-
-    private void validateRwsExists(Integer id) {
+    private void validateRwsExists(Long id) {
         if (rwsMapper.selectById(id) == null) {
             throw exception(RWS_NOT_EXISTS);
         }
     }
 
     @Override
-    public RwsDO getRws(Integer id) {
+    public RwsDO getRws(Long id) {
         return rwsMapper.selectById(id);
     }
 

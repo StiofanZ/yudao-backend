@@ -31,19 +31,19 @@ import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.JHDWYDS_NO
 public class JhdwydsServiceImpl implements JhdwydsService {
 
     @Resource
-    private JhdwydsMapper JhdwydsMapper;
+    private JhdwydsMapper jhdwydsMapper;
     @Resource
     private AdminUserService userService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Integer createjhdwyds(JhdwydsSaveReqVO createReqVO) {
+    public Long createjhdwyds(JhdwydsSaveReqVO createReqVO) {
         // 插入
         JhdwydsDO jhdwyds = BeanUtils.toBean(createReqVO, JhdwydsDO.class);
         jhdwyds.setCreateTime(DateUtils.getNowDate());
         AdminUserDO user = userService.getUser(getLoginUserId());
         jhdwyds.setCreateBy(user.getNickname());
-        JhdwydsMapper.insert(jhdwyds);
+        jhdwydsMapper.insert(jhdwyds);
 
         // 返回
         return jhdwyds.getJhdwId();
@@ -58,42 +58,48 @@ public class JhdwydsServiceImpl implements JhdwydsService {
         JhdwydsDO updateObj = BeanUtils.toBean(updateReqVO, JhdwydsDO.class);
         AdminUserDO user = userService.getUser(getLoginUserId());
         updateObj.setUpdateBy(user.getNickname());
-
-
-        JhdwydsMapper.updateById(updateObj);
+        jhdwydsMapper.updateById(updateObj);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deletejhdwyds(Integer id) {
+    public void deletejhdwyds(Long id) {
         // 校验存在
         validatejhdwydsExists(id);
         // 删除
-        JhdwydsMapper.deleteById(id);
+        jhdwydsMapper.deleteById(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deletejhdwydsListByIds(List<Integer> ids) {
+    public void deletejhdwydsListByIds(List<Long> ids) {
         // 删除
-        JhdwydsMapper.deleteByIds(ids);
+        jhdwydsMapper.deleteByIds(ids);
     }
 
 
-    private void validatejhdwydsExists(Integer id) {
-        if (JhdwydsMapper.selectById(id) == null) {
+    private void validatejhdwydsExists(Long id) {
+        if (jhdwydsMapper.selectById(id) == null) {
             throw exception(JHDWYDS_NOT_EXISTS);
         }
     }
 
     @Override
-    public JhdwydsDO getjhdwyds(Integer id) {
-        return JhdwydsMapper.selectById(id);
+    public JhdwydsDO getjhdwyds(Long id) {
+        return jhdwydsMapper.selectById(id);
     }
 
     @Override
     public PageResult<JhdwydsDO> getjhdwydsPage(JhdwydsPageReqVO pageReqVO) {
-        return JhdwydsMapper.selectPage(pageReqVO);
+        // v1 dept filtering: default to login user's deptId, 100000 means all
+        if (StringUtils.isEmpty(pageReqVO.getDeptId())) {
+            AdminUserDO user = userService.getUser(getLoginUserId());
+            pageReqVO.setDeptId(user.getDeptId().toString());
+        }
+        if ("100000".equals(pageReqVO.getDeptId())) {
+            pageReqVO.setDeptId(null);
+        }
+        return jhdwydsMapper.selectPage(pageReqVO);
     }
 
 
@@ -107,7 +113,7 @@ public class JhdwydsServiceImpl implements JhdwydsService {
             reqVO.setDeptId(null);
         }
 
-        return JhdwydsMapper.selectList(reqVO);
+        return jhdwydsMapper.selectList(reqVO);
     }
 
 }

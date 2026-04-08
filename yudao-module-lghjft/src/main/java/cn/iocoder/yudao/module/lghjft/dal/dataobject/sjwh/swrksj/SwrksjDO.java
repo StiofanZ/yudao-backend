@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.swrksj;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
@@ -26,6 +27,12 @@ public class SwrksjDO {
     private String nsrmc;
     private String nsrjc;
     private String deptId;
+    /**
+     * 默认工会机构代码（由子查询 dm_swjg 计算得出）
+     * 不是数据库表字段，仅查询时使用
+     */
+    @TableField(exist = false)
+    private String deptId1;
     private String ghjgxzjb;
     private String clghbj;
     private String hyghbz;
@@ -137,4 +144,8 @@ public class SwrksjDO {
     private String sdghhh;
     private BigDecimal sdghbl;
     private BigDecimal sdghje;
+    private String createBy;
+    private LocalDateTime createTime;
+    private String updateBy;
+    private LocalDateTime updateTime;
 }

@@ -39,7 +39,7 @@ public class JhdwydsController {
     @PostMapping("/create")
     @Operation(summary = "创建应代收单位")
     @PreAuthorize("@ss.hasPermission('lghjft:sjwh-jhdwyds:create')")
-    public CommonResult<Integer> createjhdwyds(@Valid @RequestBody JhdwydsSaveReqVO createReqVO) {
+    public CommonResult<Long> createjhdwyds(@Valid @RequestBody JhdwydsSaveReqVO createReqVO) {
         return success(JhdwydsService.createjhdwyds(createReqVO));
     }
 
@@ -55,7 +55,7 @@ public class JhdwydsController {
     @Operation(summary = "删除应代收单位")
     @Parameter(name = "id", description = "编号", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:sjwh-jhdwyds:delete')")
-    public CommonResult<Boolean> deletejhdwyds(@RequestParam("id") Integer id) {
+    public CommonResult<Boolean> deletejhdwyds(@RequestParam("id") Long id) {
         JhdwydsService.deletejhdwyds(id);
         return success(true);
     }
@@ -64,7 +64,7 @@ public class JhdwydsController {
     @Parameter(name = "ids", description = "编号", required = true)
     @Operation(summary = "批量删除应代收单位")
     @PreAuthorize("@ss.hasPermission('lghjft:sjwh-jhdwyds:delete')")
-    public CommonResult<Boolean> deletejhdwydsList(@RequestParam("ids") List<Integer> ids) {
+    public CommonResult<Boolean> deletejhdwydsList(@RequestParam("ids") List<Long> ids) {
         JhdwydsService.deletejhdwydsListByIds(ids);
         return success(true);
     }
@@ -73,7 +73,7 @@ public class JhdwydsController {
     @Operation(summary = "获得应代收单位")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:sjwh-jhdwyds:query')")
-    public CommonResult<JhdwydsResVO> getjhdwyds(@RequestParam("id") Integer id) {
+    public CommonResult<JhdwydsResVO> getjhdwyds(@RequestParam("id") Long id) {
         JhdwydsDO jhdwyds = JhdwydsService.getjhdwyds(id);
         return success(BeanUtils.toBean(jhdwyds, JhdwydsResVO.class));
     }

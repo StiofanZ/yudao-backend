@@ -167,4 +167,16 @@ public class JczhkxwhResVO {
 
     @Schema(description = "nsrsbh")
     private String nsrsbh;
+
+    @Schema(description = "创建人")
+    private String createBy;
+
+    @Schema(description = "创建时间")
+    private LocalDateTime createTime;
+
+    @Schema(description = "修改人")
+    private String updateBy;
+
+    @Schema(description = "修改时间")
+    private LocalDateTime updateTime;
 }

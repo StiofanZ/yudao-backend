@@ -21,7 +21,7 @@ public interface JhdwydsService {
      * @param createReqVO 创建信息
      * @return 编号
      */
-    Integer createjhdwyds(@Valid JhdwydsSaveReqVO createReqVO);
+    Long createjhdwyds(@Valid JhdwydsSaveReqVO createReqVO);
 
     /**
      * 更新应代收单位
@@ -35,14 +35,14 @@ public interface JhdwydsService {
      *
      * @param id 编号
      */
-    void deletejhdwyds(Integer id);
+    void deletejhdwyds(Long id);
 
     /**
      * 批量删除应代收单位
      *
      * @param ids 编号
      */
-    void deletejhdwydsListByIds(List<Integer> ids);
+    void deletejhdwydsListByIds(List<Long> ids);
 
     /**
      * 获得应代收单位
@@ -50,7 +50,7 @@ public interface JhdwydsService {
      * @param id 编号
      * @return 应代收单位
      */
-    JhdwydsDO getjhdwyds(Integer id);
+    JhdwydsDO getjhdwyds(Long id);
 
     /**
      * 获得应代收单位分页

@@ -25,7 +25,7 @@ public class RwsDO {
      * 任务id
      */
     @TableId
-    private Integer rwid;
+    private Long rwid;
     /**
      * 任务类型	
      *

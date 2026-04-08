@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.jczhkxwh;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
@@ -58,6 +59,16 @@ public class JczhkxwhDO {
     private String hjfl5Dm;
     private String hjfl6Dm;
     private String hjfl7Dm;
+    /**
+     * dclghbj - maps to column HJFL8_DM
+     */
+    @TableField("HJFL8_DM")
+    private String dclghbj;
+    /**
+     * xwyqbj - maps to column HJFL9_DM
+     */
+    @TableField("HJFL9_DM")
+    private String xwyqbj;
     private String sdghjgDm;
     private String clghbj;
     private LocalDateTime clghrq;
@@ -70,4 +81,8 @@ public class JczhkxwhDO {
     private String bz;
     private String jym;
     private String nsrsbh;
+    private String createBy;
+    private LocalDateTime createTime;
+    private String updateBy;
+    private LocalDateTime updateTime;
 }

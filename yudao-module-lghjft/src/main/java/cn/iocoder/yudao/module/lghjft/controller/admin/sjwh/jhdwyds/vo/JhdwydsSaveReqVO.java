@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class JhdwydsSaveReqVO {
 
     @Schema(description = "建会单位代收ID", requiredMode = Schema.RequiredMode.REQUIRED, example = "24703")
-    private Integer jhdwId;
+    private Long jhdwId;
 
     @Schema(description = "工会机构", requiredMode = Schema.RequiredMode.REQUIRED, example = "7269")
     private String deptId;
@@ -46,10 +46,10 @@ public class JhdwydsSaveReqVO {
     private String nsrztDm;
 
     @Schema(description = "税务登记职工人数")
-    private Integer zgrs;
+    private String zgrs;
 
     @Schema(description = "工会登记职工人数")
-    private Integer ghzgrs;
+    private String ghzgrs;
 
     @Schema(description = "工会法人统一社会信用代码")
     private String ghshxydm;

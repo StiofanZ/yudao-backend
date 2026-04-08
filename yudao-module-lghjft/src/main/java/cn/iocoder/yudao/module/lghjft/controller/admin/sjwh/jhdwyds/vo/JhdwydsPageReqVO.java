@@ -16,6 +16,9 @@ public class JhdwydsPageReqVO extends PageParam {
     @Schema(description = "工会机构", example = "7269")
     private String deptId;
 
+    @Schema(description = "登记序号")
+    private String djxh;
+
     @Schema(description = "社会信用代码")
     private String shxydm;
 
@@ -44,13 +47,16 @@ public class JhdwydsPageReqVO extends PageParam {
     private String nsrztDm;
 
     @Schema(description = "税务登记职工人数")
-    private Integer zgrs;
+    private String zgrs;
 
     @Schema(description = "工会登记职工人数")
-    private Integer ghzgrs;
+    private String ghzgrs;
 
     @Schema(description = "工会法人统一社会信用代码")
     private String ghshxydm;
+
+    @Schema(description = "工会组织名称")
+    private String ghmc;
 
     @Schema(description = "工会类型代码")
     private String ghlxDm;
