@@ -1,7 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.szqzjzdc;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
@@ -10,24 +9,20 @@ import java.math.BigDecimal;
 
 /**
  * 省总做账导出 DO
+ *
+ * 映射 v1 表 szqzjzdc，禁止继承 BaseDO，禁止 @TableField(exist = false)
  */
 @TableName("szqzjzdc")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
+@ToString
 public class SzqzjzdcDO {
 
     @TableId(type = IdType.INPUT)
     private String pzbh;
     private String flbh;
-    @TableField(exist = false)
-    private String hkpch;
-    @TableField(exist = false)
-    private String zh;
-    @TableField(exist = false)
-    private String deptId;
     private String kjn;
     private String kjqj;
     private String pzlx;

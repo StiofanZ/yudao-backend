@@ -5,329 +5,677 @@
 <mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.sjwh.szqzjzdc.SzqzjzdcMapper">
 
     <resultMap id="SzqzjzdcLegacyResultMap" type="cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.szqzjzdc.SzqzjzdcDO">
-        <result property="pzbh" column="PZBH"/>
-        <result property="flbh" column="FLBH"/>
-        <result property="hkpch" column="HKPCH"/>
-        <result property="zh" column="ZH"/>
-        <result property="deptId" column="DEPT_ID"/>
-        <result property="kjn" column="KJN"/>
-        <result property="kjqj" column="KJQJ"/>
-        <result property="pzlx" column="PZLX"/>
-        <result property="pzrq" column="PZRQ"/>
-        <result property="kjtx" column="KJTX"/>
-        <result property="zy" column="ZY"/>
-        <result property="kjkmm" column="KJKMM"/>
-        <result property="jfje" column="JFJE"/>
-        <result property="dfje" column="DFJE"/>
-        <result property="fjzs" column="FJZS"/>
-        <result property="ysdh" column="YSDH"/>
-        <result property="zt" column="ZT"/>
-        <result property="zdr" column="ZDR"/>
-        <result property="shr" column="SHR"/>
-        <result property="jzr" column="JZR"/>
-        <result property="zfcbwz" column="ZFCBWZ"/>
-        <result property="zbtx" column="ZBTX"/>
-        <result property="ysly" column="YSLY"/>
-        <result property="wldw" column="WLDW"/>
-        <result property="bm" column="BM"/>
-        <result property="ry" column="RY"/>
-        <result property="bmysjjfl" column="BMYSJJFL"/>
-        <result property="zfgnfl" column="ZFGNFL"/>
-        <result property="zclx" column="ZCLX"/>
-        <result property="jfly" column="JFLY"/>
-        <result property="zjxz" column="ZJXZ"/>
-        <result property="zfysjjfl" column="ZFYSJJFL"/>
-        <result property="mxkm" column="MXKM"/>
-        <result property="zffs" column="ZFFS"/>
-        <result property="xm" column="XM"/>
-        <result property="jsfs" column="JSFS"/>
-        <result property="xjgh" column="XJGH"/>
-        <result property="xmhd" column="XMHD"/>
-        <result property="ggjcss" column="GGJCSS"/>
-        <result property="jfsl" column="JFSL"/>
-        <result property="dfsl" column="DFSL"/>
-        <result property="dj" column="DJ"/>
+        <result property="pzbh" column="pzbh"/>
+        <result property="flbh" column="flbh"/>
+        <result property="kjn" column="kjn"/>
+        <result property="kjqj" column="kjqj"/>
+        <result property="pzlx" column="pzlx"/>
+        <result property="pzrq" column="pzrq"/>
+        <result property="kjtx" column="kjtx"/>
+        <result property="zy" column="zy"/>
+        <result property="kjkmm" column="kjkmm"/>
+        <result property="jfje" column="jfje"/>
+        <result property="dfje" column="dfje"/>
+        <result property="fjzs" column="fjzs"/>
+        <result property="ysdh" column="ysdh"/>
+        <result property="zt" column="zt"/>
+        <result property="zdr" column="zdr"/>
+        <result property="shr" column="shr"/>
+        <result property="jzr" column="jzr"/>
+        <result property="zfcbwz" column="zfcbwz"/>
+        <result property="zbtx" column="zbtx"/>
+        <result property="ysly" column="ysly"/>
+        <result property="wldw" column="wldw"/>
+        <result property="bm" column="bm"/>
+        <result property="ry" column="ry"/>
+        <result property="bmysjjfl" column="bmysjjfl"/>
+        <result property="zfgnfl" column="zfgnfl"/>
+        <result property="zclx" column="zclx"/>
+        <result property="jfly" column="jfly"/>
+        <result property="zjxz" column="zjxz"/>
+        <result property="zfysjjfl" column="zfysjjfl"/>
+        <result property="mxkm" column="mxkm"/>
+        <result property="zffs" column="zffs"/>
+        <result property="xm" column="xm"/>
+        <result property="jsfs" column="jsfs"/>
+        <result property="xjgh" column="xjgh"/>
+        <result property="xmhd" column="xmhd"/>
+        <result property="ggjcss" column="ggjcss"/>
+        <result property="jfsl" column="jfsl"/>
+        <result property="dfsl" column="dfsl"/>
+        <result property="dj" column="dj"/>
     </resultMap>
 
-    <sql id="selectLegacySdjzSummarySql">
-        SELECT '1'     AS PZBH,
-               '1'     AS FLBH,
-               T.HKPCH AS HKPCH,
-               NULL    AS ZH,
-               T.DWDM  AS DEPT_ID, LEFT (T.HKPCH, 4) AS KJN, CAST (SUBSTRING (T.HKPCH, 5, 2) AS UNSIGNED) AS KJQJ, 'JZ->记账' AS PZLX, CONCAT(
-            SUBSTRING (T.HKPCH, 1, 4), '-', LPAD(SUBSTRING (T.HKPCH, 5, 2), 2, '0'), '-', LPAD(SUBSTRING (T.HKPCH, 7, 2), 2, '0')
-            ) AS PZRQ, '财' AS KJTX, CASE
-            WHEN RIGHT (T.HKPCH, 1) = '1' THEN CONCAT(
-            '收', SUBSTRING (T.HKPCH, 1, 4), '年', CAST (SUBSTRING (T.HKPCH, 5, 2) AS UNSIGNED) - 1, '月', '属地工会经费'
-            )
-            WHEN RIGHT (T.HKPCH, 1) = '2' THEN CONCAT(
-            '收', SUBSTRING (T.HKPCH, 1, 4), '年', CAST (SUBSTRING (T.HKPCH, 5, 2) AS UNSIGNED) - 1, '月', '属地工会经费', '--', '（补结算）'
-            )
-            ELSE NULL
-        END
-        AS ZY,
-            '10202->集中户' AS KJKMM,
-            SUM(T.SDGHJE) AS JFJE,
-            NULL AS DFJE,
-            '4' AS FJZS,
-            NULL AS YSDH,
-            NULL AS ZT,
-            '彭雪皎' AS ZDR,
-            NULL AS SHR,
-            NULL AS JZR,
-            NULL AS ZFCBWZ,
-            NULL AS ZBTX,
-            NULL AS YSLY,
-            NULL AS WLDW,
-            NULL AS BM,
-            NULL AS RY,
-            NULL AS BMYSJJFL,
-            NULL AS ZFGNFL,
-            NULL AS ZCLX,
-            NULL AS JFLY,
-            '02->非专项资金' AS ZJXZ,
-            NULL AS ZFYSJJFL,
-            NULL AS MXKM,
-            NULL AS ZFFS,
-            NULL AS XM,
-            NULL AS JSFS,
-            '0000->甘肃省总工会' AS XJGH,
-            NULL AS XMHD,
-            NULL AS GGJCSS,
-            NULL AS JFSL,
-            NULL AS DFSL,
-            NULL AS DJ
-        FROM HYJFCX T
+    <!-- ==================== main list (from szqzdzzc view) ==================== -->
+    <!-- V1: selectSzqzjzdcVo — summary row (基层工会经费, sum(hjje)/sum(szje)) -->
+    <sql id="selectMainSummarySql">
+        select
+        '1' pzbh,
+        '1' as flbh,
+        left(hkpch, 4) kjn,
+        cast(substring(hkpch, 5, 2) as unsigned) as kjqj,
+        'JZ->记账' pzlx,
+        concat(substring(hkpch, 1, 4), '-', lpad(substring(hkpch, 5, 2), 2, '0'), '-', lpad(substring(hkpch, 7, 2), 2, '0')) as pzrq,
+        '财' as kjtx,
+        case
+            when right(hkpch, 1) = '1' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '基层工会经费')
+            when right(hkpch, 1) = '2' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '基层工会经费', '--', '（补结算）')
+            else null
+        end as zy,
+        '10202->集中户' kjkmm,
+        case
+            when substring(hkpch, 1, 6) >= '202502' then sum(szje)
+            else sum(hjje)
+        end as jfje,
+        null dfje,
+        '4' fjzs,
+        null ysdh,
+        null zt,
+        '彭雪皎' zdr,
+        null shr,
+        null jzr,
+        null zfcbwz,
+        null zbtx,
+        null ysly,
+        null wldw,
+        null bm,
+        null ry,
+        null bmysjjfl,
+        null zfgnfl,
+        null zclx,
+        null jfly,
+        '02->非专项资金' zjxz,
+        null zfysjjfl,
+        null mxkm,
+        null zffs,
+        null xm,
+        null jsfs,
+        '0000->甘肃省总工会' as xjgh,
+        null xmhd,
+        null ggjcss,
+        null jfsl,
+        null dfsl,
+        null dj
+        from szqzdzzc t
     </sql>
 
-    <sql id="selectLegacySdjzDetailSql">
-        SELECT '1'      AS  PZBH,
-               ROW_NUMBER() OVER () + 1 AS FLBH, T.HKPCH AS HKPCH,
-               T.SDGHZH AS  ZH,
-               T.DWDM   AS  DEPT_ID, LEFT (T.HKPCH, 4) AS KJN, CAST (SUBSTRING (T.HKPCH, 5, 2) AS UNSIGNED) AS KJQJ, 'JZ->记账' AS PZLX, CONCAT(
-            SUBSTRING (T.HKPCH, 1, 4), '-', LPAD(SUBSTRING (T.HKPCH, 5, 2), 2, '0'), '-', LPAD(SUBSTRING (T.HKPCH, 7, 2), 2, '0')
-            ) AS PZRQ, '财' AS KJTX, CASE
-            WHEN RIGHT (T.HKPCH, 1) = '1' THEN CONCAT(
-            '收', SUBSTRING (T.HKPCH, 1, 4), '年', CAST (SUBSTRING (T.HKPCH, 5, 2) AS UNSIGNED) - 1, '月', '属地工会经费', '--', T.NSRMC
-            )
-            WHEN RIGHT (T.HKPCH, 1) = '2' THEN CONCAT(
-            '收', SUBSTRING (T.HKPCH, 1, 4), '年', CAST (SUBSTRING (T.HKPCH, 5, 2) AS UNSIGNED) - 1, '月', '属地工会经费', '--', T.NSRMC, '（补结算）'
-            )
-            ELSE NULL
-        END
-        AS ZY,
-            '40202->税务代收工会经费' AS KJKMM,
-            NULL AS JFJE,
-            T.SDGHJE AS DFJE,
-            '4' AS FJZS,
-            NULL AS YSDH,
-            NULL AS ZT,
-            '彭雪皎' AS ZDR,
-            NULL AS SHR,
-            NULL AS JZR,
-            NULL AS ZFCBWZ,
-            NULL AS ZBTX,
-            NULL AS YSLY,
-            NULL AS WLDW,
-            NULL AS BM,
-            NULL AS RY,
-            NULL AS BMYSJJFL,
-            NULL AS ZFGNFL,
-            NULL AS ZCLX,
-            NULL AS JFLY,
-            '02->非专项资金' AS ZJXZ,
-            NULL AS ZFYSJJFL,
-            NULL AS MXKM,
-            NULL AS ZFFS,
-            NULL AS XM,
-            NULL AS JSFS,
-            (
-                SELECT A.DICT_LABEL
-                FROM SYS_DICT_DATA A
-                WHERE A.DICT_VALUE = T.DWDM
-                  AND A.DICT_TYPE = 'sys_xjgh'
-            ) AS XJGH,
-            NULL AS XMHD,
-            NULL AS GGJCSS,
-            NULL AS JFSL,
-            NULL AS DFSL,
-            NULL AS DJ
-        FROM HYJFCX T
+    <!-- V1: selectSzqzjzdcVo1 — detail rows (基层工会经费--dwmc, hjje/szje per row) -->
+    <sql id="selectMainDetailSql">
+        select
+        '1' pzbh,
+        row_number() over () + 1 as flbh,
+        left(hkpch, 4) kjn,
+        cast(substring(hkpch, 5, 2) as unsigned) as kjqj,
+        'JZ->记账' pzlx,
+        concat(substring(hkpch, 1, 4), '-', lpad(substring(hkpch, 5, 2), 2, '0'), '-', lpad(substring(hkpch, 7, 2), 2, '0')) as pzrq,
+        '财' as kjtx,
+        case
+            when right(hkpch, 1) = '1' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '基层工会经费', '--', dwmc)
+            when right(hkpch, 1) = '2' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '基层工会经费', '--', dwmc, '（补结算）')
+            else null
+        end as zy,
+        '40202->税务代收工会经费' kjkmm,
+        null as jfje,
+        case
+            when substring(hkpch, 1, 6) >= '202502' then szje
+            else hjje
+        end as dfje,
+        '4' fjzs,
+        null ysdh,
+        null zt,
+        '彭雪皎' zdr,
+        null shr,
+        null jzr,
+        null zfcbwz,
+        null zbtx,
+        null ysly,
+        null wldw,
+        null bm,
+        null ry,
+        null bmysjjfl,
+        null zfgnfl,
+        null zclx,
+        null jfly,
+        '02->非专项资金' zjxz,
+        null zfysjjfl,
+        null mxkm,
+        null zffs,
+        null xm,
+        null jsfs,
+        (select a.dict_label from sys_dict_data a where a.dict_value = t.dwdm and a.dict_type = 'sys_xjgh') xjgh,
+        null xmhd,
+        null ggjcss,
+        null jfsl,
+        null dfsl,
+        null dj
+        from szqzdzzc t
     </sql>
 
-    <sql id="selectLegacyHyjzSummarySql">
-        SELECT '1'     AS PZBH,
-               '1'     AS FLBH,
-               T.HKPCH AS HKPCH,
-               NULL    AS ZH,
-               T.DWDM  AS DEPT_ID, LEFT (T.HKPCH, 4) AS KJN, CAST (SUBSTRING (T.HKPCH, 5, 2) AS UNSIGNED) AS KJQJ, 'JZ->记账' AS PZLX, CONCAT(
-            SUBSTRING (T.HKPCH, 1, 4), '-', LPAD(SUBSTRING (T.HKPCH, 5, 2), 2, '0'), '-', LPAD(SUBSTRING (T.HKPCH, 7, 2), 2, '0')
-            ) AS PZRQ, '财' AS KJTX, CASE
-            WHEN RIGHT (T.HKPCH, 1) = '1' THEN CONCAT(
-            '收', SUBSTRING (T.HKPCH, 1, 4), '年', CAST (SUBSTRING (T.HKPCH, 5, 2) AS UNSIGNED) - 1, '月', '工会经费行业分成'
-            )
-            WHEN RIGHT (T.HKPCH, 1) = '2' THEN CONCAT(
-            '收', SUBSTRING (T.HKPCH, 1, 4), '年', CAST (SUBSTRING (T.HKPCH, 5, 2) AS UNSIGNED) - 1, '月', '工会经费行业分成', '--', '（补结算）'
-            )
-            ELSE NULL
-        END
-        AS ZY,
-            '10201->银行存款/交通银行兰州分行第一支行' AS KJKMM,
-            SUM(T.HYGHJE) AS JFJE,
-            NULL AS DFJE,
-            '4' AS FJZS,
-            NULL AS YSDH,
-            NULL AS ZT,
-            '彭雪皎' AS ZDR,
-            NULL AS SHR,
-            NULL AS JZR,
-            NULL AS ZFCBWZ,
-            NULL AS ZBTX,
-            NULL AS YSLY,
-            NULL AS WLDW,
-            NULL AS BM,
-            NULL AS RY,
-            NULL AS BMYSJJFL,
-            NULL AS ZFGNFL,
-            NULL AS ZCLX,
-            NULL AS JFLY,
-            '02->非专项资金' AS ZJXZ,
-            NULL AS ZFYSJJFL,
-            NULL AS MXKM,
-            NULL AS ZFFS,
-            NULL AS XM,
-            NULL AS JSFS,
-            (
-                SELECT A.DICT_LABEL
-                FROM SYS_DICT_DATA A
-                WHERE A.DICT_VALUE = T.DWDM
-                  AND A.DICT_TYPE = 'sys_xjgh'
-            ) AS XJGH,
-            NULL AS XMHD,
-            NULL AS GGJCSS,
-            NULL AS JFSL,
-            NULL AS DFSL,
-            NULL AS DJ
-        FROM HYJFCX T
+    <!-- V1: selectSzqzjzdcVo2 — 应缴全总工会经费分成 summary (sum(hjje)/sum(szje)) -->
+    <sql id="selectMainQzSummarySql">
+        select
+        '1' pzbh,
+        '1' as flbh,
+        left(hkpch, 4) kjn,
+        cast(substring(hkpch, 5, 2) as unsigned) as kjqj,
+        'JZ->记账' pzlx,
+        concat(substring(hkpch, 1, 4), '-', lpad(substring(hkpch, 5, 2), 2, '0'), '-', lpad(substring(hkpch, 7, 2), 2, '0')) as pzrq,
+        '财' as kjtx,
+        case
+            when right(hkpch, 1) = '1' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '应缴全总工会经费分成')
+            when right(hkpch, 1) = '2' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '应缴全总工会经费分成', '--', '（补结算）')
+            else null
+        end as zy,
+        '10202->集中户' kjkmm,
+        case
+            when substring(hkpch, 1, 6) >= '202502' then sum(qzje)
+            else sum(hjje)
+        end as jfje,
+        null dfje,
+        '4' fjzs,
+        null ysdh,
+        null zt,
+        '彭雪皎' zdr,
+        null shr,
+        null jzr,
+        null zfcbwz,
+        null zbtx,
+        null ysly,
+        null wldw,
+        null bm,
+        null ry,
+        null bmysjjfl,
+        null zfgnfl,
+        null zclx,
+        null jfly,
+        '02->非专项资金' zjxz,
+        null zfysjjfl,
+        null mxkm,
+        null zffs,
+        null xm,
+        null jsfs,
+        '0000->甘肃省总工会' as xjgh,
+        null xmhd,
+        null ggjcss,
+        null jfsl,
+        null dfsl,
+        null dj
+        from szqzdzzc t
     </sql>
 
-    <sql id="selectLegacyHyjzDetailSql">
-        SELECT '1'    AS    PZBH,
-               ROW_NUMBER() OVER () + 1 AS FLBH, T.HKPCH AS HKPCH,
-               NULL   AS    ZH,
-               T.DWDM AS    DEPT_ID, LEFT (T.HKPCH, 4) AS KJN, CAST (SUBSTRING (T.HKPCH, 5, 2) AS UNSIGNED) AS KJQJ, 'JZ->记账' AS PZLX, CONCAT(
-            SUBSTRING (T.HKPCH, 1, 4), '-', LPAD(SUBSTRING (T.HKPCH, 5, 2), 2, '0'), '-', LPAD(SUBSTRING (T.HKPCH, 7, 2), 2, '0')
-            ) AS PZRQ, '财' AS KJTX, CASE
-            WHEN RIGHT (T.HKPCH, 1) = '1' THEN CONCAT(
-            '收', SUBSTRING (T.HKPCH, 1, 4), '年', CAST (SUBSTRING (T.HKPCH, 5, 2) AS UNSIGNED) - 1, '月', '工会经费行业分成', '--', T.NSRMC
-            )
-            WHEN RIGHT (T.HKPCH, 1) = '2' THEN CONCAT(
-            '收', SUBSTRING (T.HKPCH, 1, 4), '年', CAST (SUBSTRING (T.HKPCH, 5, 2) AS UNSIGNED) - 1, '月', '工会经费行业分成', '--', T.NSRMC, '（补结算）'
-            )
-            ELSE NULL
-        END
-        AS ZY,
-            '402->拨缴经费收入' AS KJKMM,
-            NULL AS JFJE,
-            T.HYGHJE AS DFJE,
-            '4' AS FJZS,
-            NULL AS YSDH,
-            NULL AS ZT,
-            '彭雪皎' AS ZDR,
-            NULL AS SHR,
-            NULL AS JZR,
-            NULL AS ZFCBWZ,
-            NULL AS ZBTX,
-            NULL AS YSLY,
-            NULL AS WLDW,
-            NULL AS BM,
-            NULL AS RY,
-            NULL AS BMYSJJFL,
-            NULL AS ZFGNFL,
-            NULL AS ZCLX,
-            NULL AS JFLY,
-            '02->非专项资金' AS ZJXZ,
-            NULL AS ZFYSJJFL,
-            NULL AS MXKM,
-            NULL AS ZFFS,
-            NULL AS XM,
-            NULL AS JSFS,
-            (
-                SELECT A.DICT_LABEL
-                FROM SYS_DICT_DATA A
-                WHERE A.DICT_VALUE = T.DJXH
-                  AND A.DICT_TYPE = 'sys_xjgh'
-            ) AS XJGH,
-            NULL AS XMHD,
-            NULL AS GGJCSS,
-            NULL AS JFSL,
-            NULL AS DFSL,
-            NULL AS DJ
-        FROM HYJFCX T
+    <!-- V1: selectSzqzjzdcVo3 — 应缴全总工会经费分成 detail (sum(qzje)/sum(hjje) group by hkpch) -->
+    <sql id="selectMainQzDetailSql">
+        select
+        '1' pzbh,
+        row_number() over () + 1 as flbh,
+        left(hkpch, 4) kjn,
+        cast(substring(hkpch, 5, 2) as unsigned) as kjqj,
+        'JZ->记账' pzlx,
+        concat(substring(hkpch, 1, 4), '-', lpad(substring(hkpch, 5, 2), 2, '0'), '-', lpad(substring(hkpch, 7, 2), 2, '0')) as pzrq,
+        '财' as kjtx,
+        case
+            when right(hkpch, 1) = '1' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '应缴全总工会经费分成')
+            when right(hkpch, 1) = '2' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '应缴全总工会经费分成', '--', '（补结算）')
+            else null
+        end as zy,
+        '211->应付上级经费' kjkmm,
+        null as jfje,
+        case
+            when substring(hkpch, 1, 6) >= '202502' then sum(qzje)
+            else sum(hjje)
+        end as dfje,
+        '4' fjzs,
+        null ysdh,
+        null zt,
+        '彭雪皎' zdr,
+        null shr,
+        null jzr,
+        null zfcbwz,
+        null zbtx,
+        null ysly,
+        null wldw,
+        null bm,
+        null ry,
+        null bmysjjfl,
+        null zfgnfl,
+        null zclx,
+        null jfly,
+        '02->非专项资金' zjxz,
+        null zfysjjfl,
+        null mxkm,
+        null zffs,
+        null xm,
+        null jsfs,
+        '0000->甘肃省总工会' as xjgh,
+        null xmhd,
+        null ggjcss,
+        null jfsl,
+        null dfsl,
+        null dj
+        from szqzdzzc t
+    </sql>
+
+    <!-- V1: selectSzqzjzdcList — main UNION ALL of 4 parts -->
+    <select id="selectLegacyMainList" resultMap="SzqzjzdcLegacyResultMap">
+        select * from (
+        <include refid="selectMainSummarySql"/>
+        <where>
+            1=1
+            <if test="req.hkpch != null and req.hkpch != ''">
+                and t.hkpch = #{req.hkpch}
+            </if>
+        </where>
+        group by t.hkpch
+
+        union all
+
+        <include refid="selectMainDetailSql"/>
+        <where>
+            1=1
+            <if test="req.hkpch != null and req.hkpch != ''">
+                and t.hkpch = #{req.hkpch}
+            </if>
+        </where>
+
+        union all
+
+        <include refid="selectMainQzSummarySql"/>
+        <where>
+            1=1
+            <if test="req.hkpch != null and req.hkpch != ''">
+                and t.hkpch = #{req.hkpch}
+            </if>
+        </where>
+        group by t.hkpch
+
+        union all
+
+        <include refid="selectMainQzDetailSql"/>
+        <where>
+            1=1
+            <if test="req.hkpch != null and req.hkpch != ''">
+                and t.hkpch = #{req.hkpch}
+            </if>
+        </where>
+        group by t.hkpch
+        ) as combined_result
+    </select>
+
+    <!-- ==================== sd list (属地, from hyjfcx) ==================== -->
+    <sql id="selectSdjzSummarySql">
+        select
+        '1' pzbh,
+        '1' as flbh,
+        left(hkpch, 4) kjn,
+        cast(substring(hkpch, 5, 2) as unsigned) as kjqj,
+        'JZ->记账' pzlx,
+        concat(substring(hkpch, 1, 4), '-', lpad(substring(hkpch, 5, 2), 2, '0'), '-', lpad(substring(hkpch, 7, 2), 2, '0')) as pzrq,
+        '财' as kjtx,
+        case
+            when right(hkpch, 1) = '1' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '属地工会经费')
+            when right(hkpch, 1) = '2' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '属地工会经费', '--', '（补结算）')
+            else null
+        end as zy,
+        '10202->集中户' kjkmm,
+        sum(sdghje) jfje,
+        null dfje,
+        '4' fjzs,
+        null ysdh,
+        null zt,
+        '彭雪皎' zdr,
+        null shr,
+        null jzr,
+        null zfcbwz,
+        null zbtx,
+        null ysly,
+        null wldw,
+        null bm,
+        null ry,
+        null bmysjjfl,
+        null zfgnfl,
+        null zclx,
+        null jfly,
+        '02->非专项资金' zjxz,
+        null zfysjjfl,
+        null mxkm,
+        null zffs,
+        null xm,
+        null jsfs,
+        '0000->甘肃省总工会' as xjgh,
+        null xmhd,
+        null ggjcss,
+        null jfsl,
+        null dfsl,
+        null dj
+        from hyjfcx t
+    </sql>
+
+    <sql id="selectSdjzDetailSql">
+        select
+        '1' pzbh,
+        row_number() over () + 1 as flbh,
+        left(hkpch, 4) kjn,
+        cast(substring(hkpch, 5, 2) as unsigned) as kjqj,
+        'JZ->记账' pzlx,
+        concat(substring(hkpch, 1, 4), '-', lpad(substring(hkpch, 5, 2), 2, '0'), '-', lpad(substring(hkpch, 7, 2), 2, '0')) as pzrq,
+        '财' as kjtx,
+        case
+            when right(hkpch, 1) = '1' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '属地工会经费', '--', nsrmc)
+            when right(hkpch, 1) = '2' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '属地工会经费', '--', nsrmc, '（补结算）')
+            else null
+        end as zy,
+        '40202->税务代收工会经费' kjkmm,
+        null as jfje,
+        sdghje dfje,
+        '4' fjzs,
+        null ysdh,
+        null zt,
+        '彭雪皎' zdr,
+        null shr,
+        null jzr,
+        null zfcbwz,
+        null zbtx,
+        null ysly,
+        null wldw,
+        null bm,
+        null ry,
+        null bmysjjfl,
+        null zfgnfl,
+        null zclx,
+        null jfly,
+        '02->非专项资金' zjxz,
+        null zfysjjfl,
+        null mxkm,
+        null zffs,
+        null xm,
+        null jsfs,
+        (select a.dict_label from sys_dict_data a where a.dict_value = t.dwdm and a.dict_type = 'sys_xjgh') xjgh,
+        null xmhd,
+        null ggjcss,
+        null jfsl,
+        null dfsl,
+        null dj
+        from hyjfcx t
     </sql>
 
     <select id="selectLegacySdjzList" resultMap="SzqzjzdcLegacyResultMap">
-        SELECT * FROM (
-        <include refid="selectLegacySdjzSummarySql"/>
+        select * from (
+        <include refid="selectSdjzSummarySql"/>
         <where>
-            T.SDGHJE != '0' AND T.JSBJ IN ('Y', 'S', 'W')
+            sdghje != '0' and jsbj in ('Y', 'S', 'W')
             <if test="req.hkpch != null and req.hkpch != ''">
-                AND T.HKPCH = #{req.hkpch}
+                and t.hkpch = #{req.hkpch}
             </if>
             <if test="req.deptId != null and req.deptId != ''">
-                AND T.DWDM = #{req.deptId}
+                and t.dwdm = #{req.deptId}
             </if>
             <if test="req.zh != null and req.zh != ''">
-                AND T.SDGHZH = #{req.zh}
+                and t.sdghzh = #{req.zh}
             </if>
         </where>
-        GROUP BY T.HKPCH
+        group by t.hkpch
 
-        UNION ALL
+        union all
 
-        <include refid="selectLegacySdjzDetailSql"/>
+        <include refid="selectSdjzDetailSql"/>
         <where>
-            T.SDGHJE != '0' AND T.JSBJ IN ('Y', 'S', 'W')
+            sdghje != '0' and jsbj in ('Y', 'S', 'W')
             <if test="req.hkpch != null and req.hkpch != ''">
-                AND T.HKPCH = #{req.hkpch}
+                and t.hkpch = #{req.hkpch}
             </if>
             <if test="req.deptId != null and req.deptId != ''">
-                AND T.DWDM = #{req.deptId}
+                and t.dwdm = #{req.deptId}
             </if>
             <if test="req.zh != null and req.zh != ''">
-                AND T.SDGHZH = #{req.zh}
+                and t.sdghzh = #{req.zh}
             </if>
         </where>
-        ) AS combined_result
+        ) as combined_result
     </select>
 
+    <!-- ==================== hy list (行业, from hyjfcx) ==================== -->
+    <sql id="selectHyjzSummarySql">
+        select
+        '1' pzbh,
+        '1' as flbh,
+        left(hkpch, 4) kjn,
+        cast(substring(hkpch, 5, 2) as unsigned) as kjqj,
+        'JZ->记账' pzlx,
+        concat(substring(hkpch, 1, 4), '-', lpad(substring(hkpch, 5, 2), 2, '0'), '-', lpad(substring(hkpch, 7, 2), 2, '0')) as pzrq,
+        '财' as kjtx,
+        case
+            when right(hkpch, 1) = '1' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '工会经费行业分成')
+            when right(hkpch, 1) = '2' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '工会经费行业分成', '--', '（补结算）')
+            else null
+        end as zy,
+        '10201->银行存款/交通银行兰州分行第一支行' kjkmm,
+        sum(hyghje) jfje,
+        null dfje,
+        '4' fjzs,
+        null ysdh,
+        null zt,
+        '彭雪皎' zdr,
+        null shr,
+        null jzr,
+        null zfcbwz,
+        null zbtx,
+        null ysly,
+        null wldw,
+        null bm,
+        null ry,
+        null bmysjjfl,
+        null zfgnfl,
+        null zclx,
+        null jfly,
+        '02->非专项资金' zjxz,
+        null zfysjjfl,
+        null mxkm,
+        null zffs,
+        null xm,
+        null jsfs,
+        (select a.dict_label from sys_dict_data a where a.dict_value = t.dwdm and a.dict_type = 'sys_xjgh') xjgh,
+        null xmhd,
+        null ggjcss,
+        null jfsl,
+        null dfsl,
+        null dj
+        from hyjfcx t
+    </sql>
+
+    <sql id="selectHyjzDetailSql">
+        select
+        '1' pzbh,
+        row_number() over () + 1 as flbh,
+        left(hkpch, 4) kjn,
+        cast(substring(hkpch, 5, 2) as unsigned) as kjqj,
+        'JZ->记账' pzlx,
+        concat(substring(hkpch, 1, 4), '-', lpad(substring(hkpch, 5, 2), 2, '0'), '-', lpad(substring(hkpch, 7, 2), 2, '0')) as pzrq,
+        '财' as kjtx,
+        case
+            when right(hkpch, 1) = '1' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '工会经费行业分成', '--', nsrmc)
+            when right(hkpch, 1) = '2' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '工会经费行业分成', '--', nsrmc, '（补结算）')
+            else null
+        end as zy,
+        '402->拨缴经费收入' kjkmm,
+        null as jfje,
+        hyghje dfje,
+        '4' fjzs,
+        null ysdh,
+        null zt,
+        '彭雪皎' zdr,
+        null shr,
+        null jzr,
+        null zfcbwz,
+        null zbtx,
+        null ysly,
+        null wldw,
+        null bm,
+        null ry,
+        null bmysjjfl,
+        null zfgnfl,
+        null zclx,
+        null jfly,
+        '02->非专项资金' zjxz,
+        null zfysjjfl,
+        null mxkm,
+        null zffs,
+        null xm,
+        null jsfs,
+        (select a.dict_label from sys_dict_data a where a.dict_value = t.djxh and a.dict_type = 'sys_xjgh') xjgh,
+        null xmhd,
+        null ggjcss,
+        null jfsl,
+        null dfsl,
+        null dj
+        from hyjfcx t
+    </sql>
+
     <select id="selectLegacyHyjzList" resultMap="SzqzjzdcLegacyResultMap">
-        SELECT * FROM (
-        <include refid="selectLegacyHyjzSummarySql"/>
+        select * from (
+        <include refid="selectHyjzSummarySql"/>
         <where>
-            T.HYGHJE != '0' AND T.JSBJ IN ('Y', 'S', 'W')
+            hyghje != '0' and jsbj in ('Y', 'S', 'W')
             <if test="req.hkpch != null and req.hkpch != ''">
-                AND T.HKPCH = #{req.hkpch}
+                and t.hkpch = #{req.hkpch}
             </if>
             <if test="req.deptId != null and req.deptId != ''">
-                AND T.DWDM = #{req.deptId}
+                and t.dwdm = #{req.deptId}
             </if>
         </where>
-        GROUP BY T.HKPCH
+        group by t.hkpch
 
-        UNION ALL
+        union all
 
-        <include refid="selectLegacyHyjzDetailSql"/>
+        <include refid="selectHyjzDetailSql"/>
         <where>
-            T.HYGHJE != '0' AND T.JSBJ IN ('Y', 'S', 'W')
+            hyghje != '0' and jsbj in ('Y', 'S', 'W')
             <if test="req.hkpch != null and req.hkpch != ''">
-                AND T.HKPCH = #{req.hkpch}
+                and t.hkpch = #{req.hkpch}
             </if>
             <if test="req.deptId != null and req.deptId != ''">
-                AND T.DWDM = #{req.deptId}
+                and t.dwdm = #{req.deptId}
             </if>
         </where>
-        ) AS combined_result
+        ) as combined_result
+    </select>
+
+    <!-- ==================== cbj list (筹备金, from cbjjzxx) ==================== -->
+    <sql id="selectCbjSummarySql">
+        select
+        '1' pzbh,
+        '1' as flbh,
+        left(hkpch, 4) kjn,
+        cast(substring(hkpch, 5, 2) as unsigned) as kjqj,
+        'JZ->记账' pzlx,
+        concat(substring(hkpch, 1, 4), '-', lpad(substring(hkpch, 5, 2), 2, '0'), '-', lpad(substring(hkpch, 7, 2), 2, '0')) as pzrq,
+        '财' as kjtx,
+        case
+            when right(hkpch, 1) = '1' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '应返基层筹备金')
+            when right(hkpch, 1) = '2' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '应返基层筹备金', '（补结算）')
+            else null
+        end as zy,
+        '10202->集中户' kjkmm,
+        sum(je) jfje,
+        null dfje,
+        '4' fjzs,
+        null ysdh,
+        null zt,
+        '彭雪皎' zdr,
+        null shr,
+        null jzr,
+        null zfcbwz,
+        null zbtx,
+        null ysly,
+        null wldw,
+        null bm,
+        null ry,
+        null bmysjjfl,
+        null zfgnfl,
+        null zclx,
+        null jfly,
+        '02->非专项资金' zjxz,
+        null zfysjjfl,
+        null mxkm,
+        null zffs,
+        null xm,
+        null jsfs,
+        '0000->甘肃省总工会' as xjgh,
+        null xmhd,
+        null ggjcss,
+        null jfsl,
+        null dfsl,
+        null dj
+        from cbjjzxx t
+    </sql>
+
+    <sql id="selectCbjDetailSql">
+        select
+        '1' pzbh,
+        row_number() over () + 1 as flbh,
+        left(hkpch, 4) kjn,
+        cast(substring(hkpch, 5, 2) as unsigned) as kjqj,
+        'JZ->记账' pzlx,
+        concat(substring(hkpch, 1, 4), '-', lpad(substring(hkpch, 5, 2), 2, '0'), '-', lpad(substring(hkpch, 7, 2), 2, '0')) as pzrq,
+        '财' as kjtx,
+        case
+            when right(hkpch, 1) = '1' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '应返基层筹备金', '--', dwmc)
+            when right(hkpch, 1) = '2' then concat('收', substring(hkpch, 1, 4), '年', cast(substring(hkpch, 5, 2) as unsigned) - 1, '月', '应返基层筹备金', '--', dwmc, '（补结算）')
+            else null
+        end as zy,
+        '21203->应付建会筹备金' kjkmm,
+        null as jfje,
+        sum(je) dfje,
+        '4' fjzs,
+        null ysdh,
+        null zt,
+        '彭雪皎' zdr,
+        null shr,
+        null jzr,
+        null zfcbwz,
+        null zbtx,
+        null ysly,
+        null wldw,
+        null bm,
+        null ry,
+        null bmysjjfl,
+        null zfgnfl,
+        null zclx,
+        null jfly,
+        '02->非专项资金' zjxz,
+        null zfysjjfl,
+        null mxkm,
+        null zffs,
+        null xm,
+        null jsfs,
+        (select a.dict_label from sys_dict_data a where a.dict_value = t.sjdm and a.dict_type = 'sys_xjgh') xjgh,
+        null xmhd,
+        null ggjcss,
+        null jfsl,
+        null dfsl,
+        null dj
+        from cbjjzxx t
+    </sql>
+
+    <select id="selectLegacyCbjList" resultMap="SzqzjzdcLegacyResultMap">
+        select * from (
+        <include refid="selectCbjSummarySql"/>
+        <where>
+            <if test="req.beginHkpch != null and req.beginHkpch != '' and req.endHkpch != null and req.endHkpch != ''">
+                and mid(hkpch, 1, 8) between #{req.beginHkpch} and #{req.endHkpch}
+            </if>
+        </where>
+        group by hkpch
+
+        union all
+
+        <include refid="selectCbjDetailSql"/>
+        <where>
+            <if test="req.beginHkpch != null and req.beginHkpch != '' and req.endHkpch != null and req.endHkpch != ''">
+                and mid(hkpch, 1, 8) between #{req.beginHkpch} and #{req.endHkpch}
+            </if>
+        </where>
+        group by hkpch, sjdm
+        ) as combined_result
     </select>
 
 </mapper>

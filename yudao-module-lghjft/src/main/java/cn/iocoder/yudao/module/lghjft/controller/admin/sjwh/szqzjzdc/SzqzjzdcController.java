@@ -8,6 +8,7 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.szqzjzdc.vo.SzqzjzdcPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.szqzjzdc.vo.SzqzjzdcResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.szqzjzdc.vo.SzqzjzdcSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.szqzjzdc.SzqzjzdcDO;
 import cn.iocoder.yudao.module.lghjft.service.sjwh.szqzjzdc.SzqzjzdcService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,10 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -40,7 +38,7 @@ public class SzqzjzdcController {
 
     @GetMapping("/get")
     @Operation(summary = "获得省总做账导出")
-    @Parameter(name = "id", description = "编号", required = true, example = "1024")
+    @Parameter(name = "id", description = "凭证编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:sjwh-szqzjzdc:query')")
     public CommonResult<SzqzjzdcResVO> getSzqzjzdc(@RequestParam("id") String id) {
         SzqzjzdcDO szqzjzdc = szqzjzdcService.getSzqzjzdc(id);
@@ -56,7 +54,7 @@ public class SzqzjzdcController {
     }
 
     @GetMapping("/export-excel")
-    @Operation(summary = "导出省总做账导出 Excel")
+    @Operation(summary = "导��省总做账导出 Excel")
     @PreAuthorize("@ss.hasPermission('lghjft:sjwh-szqzjzdc:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportSzqzjzdcExcel(@Valid SzqzjzdcPageReqVO pageReqVO,
@@ -65,5 +63,29 @@ public class SzqzjzdcController {
         List<SzqzjzdcDO> list = szqzjzdcService.getSzqzjzdcPage(pageReqVO).getList();
         ExcelUtils.write(response, "省总做账导出.xls", "数据", SzqzjzdcResVO.class,
                 BeanUtils.toBean(list, SzqzjzdcResVO.class));
+    }
+
+    @PostMapping("/create")
+    @Operation(summary = "新增省总做账导出")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-szqzjzdc:create')")
+    public CommonResult<String> createSzqzjzdc(@Valid @RequestBody SzqzjzdcSaveReqVO createReqVO) {
+        return success(szqzjzdcService.createSzqzjzdc(createReqVO));
+    }
+
+    @PutMapping("/update")
+    @Operation(summary = "修改省总做账导出")
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-szqzjzdc:update')")
+    public CommonResult<Boolean> updateSzqzjzdc(@Valid @RequestBody SzqzjzdcSaveReqVO updateReqVO) {
+        szqzjzdcService.updateSzqzjzdc(updateReqVO);
+        return success(true);
+    }
+
+    @DeleteMapping("/delete")
+    @Operation(summary = "批���删除省总做账导出")
+    @Parameter(name = "pzbhs", description = "凭证编号列表", required = true)
+    @PreAuthorize("@ss.hasPermission('lghjft:sjwh-szqzjzdc:delete')")
+    public CommonResult<Boolean> deleteSzqzjzdc(@RequestParam("pzbhs") List<String> pzbhs) {
+        szqzjzdcService.deleteSzqzjzdcByPzbhs(pzbhs);
+        return success(true);
     }
 }
