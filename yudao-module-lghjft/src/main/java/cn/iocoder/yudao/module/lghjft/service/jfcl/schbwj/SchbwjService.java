@@ -4,22 +4,20 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.schbwj.vo.SchbwjPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.schbwj.vo.SchbwjSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.schbwj.JfclSchbwjDO;
-import jakarta.validation.Valid;
 
+/**
+ * 经费处理-生成划拨文件 Service接口
+ * v1: IJfclSchbwjService — selecList + updateGhjfhb
+ */
 public interface SchbwjService {
 
-    Long createSchbwj(@Valid SchbwjSaveReqVO createReqVO);
-
-    void updateSchbwj(@Valid SchbwjSaveReqVO updateReqVO);
-
-    void deleteSchbwj(Long id);
-
-    JfclSchbwjDO getSchbwj(Long id);
-
+    /**
+     * v1 selecList: paginated query gh_hkxx LEFT JOIN sys_user
+     */
     PageResult<JfclSchbwjDO> getSchbwjPage(SchbwjPageReqVO pageReqVO);
 
     /**
-     * 生成划拨数据（v1 updateGhjfhb）
+     * v1 updateGhjfhb: async allocation generation
      */
-    String generateHbData(String jsrqStart, String jsrqEnd, java.util.Date hkrq);
+    String updateGhjfhb(SchbwjSaveReqVO reqVO);
 }

@@ -4,38 +4,23 @@ import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
-@Schema(description = "管理后台 - 实查汇报无结分页 Request VO")
+/**
+ * v1 selecList query params: hkpch, beginHkpch/endHkpch (MID date range)
+ * v1 selectGhjfhb query params: jsrqStart, jsrqEnd
+ */
+@Schema(description = "管理后台 - 生成划拨文件分页 Request VO")
 @Data
 public class SchbwjPageReqVO extends PageParam {
 
-    @Schema(description = "社会信用代码")
-    private String shxydm;
-
-    @Schema(description = "纳税人名称")
-    private String nsrmc;
-
-    @Schema(description = "工会机构代码")
-    private String deptId;
-
-    @Schema(description = "主管税务局代码")
-    private String zgswjDm;
-
-    @Schema(description = "结算标记")
-    private String jsbj;
-
-    @Schema(description = "征收品目代码")
-    private String zspmDm;
-    @Schema(description = "结算日期-起")
-    private LocalDateTime jsrqStart;
-    @Schema(description = "结算日期-止")
-    private LocalDateTime jsrqEnd;
-
+    @Schema(description = "划款批次号")
     private String hkpch;
-    private String hkrq;
+
+    @Schema(description = "拨付文件日期-起(yyyyMMdd)")
     private String beginHkpch;
+
+    @Schema(description = "拨付文件日期-止(yyyyMMdd)")
     private String endHkpch;
-    private String beginUpdateTime;
-    private String endUpdateTime;
+
+    @Schema(description = "分页偏移量(内部计算)", hidden = true)
+    private Integer offset;
 }

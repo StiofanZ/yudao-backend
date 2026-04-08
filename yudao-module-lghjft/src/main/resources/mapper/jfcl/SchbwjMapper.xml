@@ -2,114 +2,160 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.schbwj.SchbwjMapper">
 
-    <!-- v1 selectGhjfhb：查询待划拨的经费数据 -->
+    <!-- v1 selecList: paginated list, gh_hkxx LEFT JOIN sys_user WHERE yxbj='Y' ORDER BY hkpch desc -->
+    <select id="selecList" resultType="cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.schbwj.JfclSchbwjDO">
+        select t.hkxx_id, t.hkpch, t.zh, t.hm, t.hh, t.je, t.dz, t.fy, t.create_time,
+               u.user_name as create_by
+        from gh_hkxx t
+        left join sys_user u on u.user_id = t.create_by
+        where 1=1
+          and t.yxbj = 'Y'
+        <if test="hkpch != null and hkpch != ''">
+            and t.hkpch = #{hkpch}
+        </if>
+        <if test="beginHkpch != null and beginHkpch != '' and endHkpch != null and endHkpch != ''">
+            and mid(t.hkpch, 1, 8) between #{beginHkpch} and #{endHkpch}
+        </if>
+        order by t.hkpch desc
+        <if test="offset != null">limit #{pageSize} offset #{offset}</if>
+    </select>
+
+    <!-- v1 selecList count for pagination -->
+    <select id="selecListCount" resultType="long">
+        select count(*)
+        from gh_hkxx t
+        left join sys_user u on u.user_id = t.create_by
+        where 1=1
+          and t.yxbj = 'Y'
+        <if test="hkpch != null and hkpch != ''">
+            and t.hkpch = #{hkpch}
+        </if>
+        <if test="beginHkpch != null and beginHkpch != '' and endHkpch != null and endHkpch != ''">
+            and mid(t.hkpch, 1, 8) between #{beginHkpch} and #{endHkpch}
+        </if>
+    </select>
+
+    <!-- v1 selectGhjfhb: query gh_jf for allocation -->
     <select id="selectGhjfhb" resultType="java.util.Map">
-        SELECT t.SPUUID, t.RKRQ
-        FROM gh_jf t
-        WHERE #{jsrqStart} <![CDATA[<=]]> T.JSRQ
-          AND T.JSRQ <![CDATA[<=]]> #{jsrqEnd}
-          AND t.JSBJ IN ('Y', 'T', 'W', 'V', 'F', 'C')
-          AND HKPCH IS NULL
+        select t.*
+        from gh_jf t
+        where #{jsrqStart} <![CDATA[<=]]> t.jsrq
+          and t.jsrq <![CDATA[<=]]> #{jsrqEnd}
+          and t.jsbj in ('Y', 'T', 'W', 'V', 'F', 'C')
+          and hkpch is null
     </select>
 
-    <!-- v1 getSchbwjList：从 schbwj VIEW 获取划拨汇总数据 -->
+    <!-- v1 getSchbwjList: from schbwj view -->
     <select id="getSchbwjList" resultType="java.util.Map">
-        SELECT *
-        FROM schbwj t
-        WHERE #{jsrqStart} <![CDATA[<=]]> t.JSRQ
-          AND t.JSRQ <![CDATA[<=]]> #{jsrqEnd}
+        select *
+        from schbwj t
+        where (#{jsrqStart} <![CDATA[<=]]> t.jsrq and t.jsrq <![CDATA[<=]]> #{jsrqEnd})
     </select>
 
-    <!-- v1 selectHkpch：获取当天最大划款批次号 -->
+    <!-- v1 selectHkpch: get max batch number for today -->
     <select id="selectHkpch" resultType="java.lang.String">
-        SELECT MAX(t.HKPCH) HKPCH
-        FROM gh_jf t
-        WHERE t.JSBJ IN ('Y', 'T', 'W')
-          AND LEFT (T.HKPCH
-            , 8) = #{dqrq}
+        select max(t.hkpch) hkpch
+        from gh_jf t
+        where t.jsbj in ('Y', 'T', 'W')
+          and left(t.hkpch, 8) = #{dqrq}
     </select>
 
-    <!-- v1 insertBatchHkxx：批量插入 gh_hkxx -->
+    <!-- v1 insertBatchGhHkxx: batch insert gh_hkxx -->
     <insert id="insertBatchHkxx" parameterType="java.util.List">
-        INSERT INTO gh_hkxx (HKPCH, XH, LX, ZH, HH, JE, DEPT_ID, DZ, FY, JYM, THBJ, SCBZ,
-        CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME, HM, BZ)
-        VALUES
-        <foreach collection="list" item="item" separator=",">
-            (#{item.hkpch}, #{item.xh}, #{item.lx}, #{item.zh}, #{item.hh}, #{item.je},
-            #{item.deptId}, #{item.dz}, #{item.fy}, #{item.jym}, #{item.thbj}, #{item.scbz},
-            #{item.createBy}, #{item.createTime}, #{item.updateBy}, #{item.updateTime},
-            #{item.hm}, #{item.bz})
+        insert into gh_hkxx (hkpch, xh, lx, zh, hh, je, dept_id, dz, fy, jym, thbj,
+                             scbz, create_by, create_time, update_by, update_time, hm, bz)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.hkpch,jdbcType=CHAR}, #{item.xh,jdbcType=DECIMAL},
+             #{item.lx,jdbcType=CHAR}, #{item.zh,jdbcType=VARCHAR}, #{item.hh,jdbcType=CHAR},
+             #{item.je,jdbcType=DECIMAL}, #{item.deptId,jdbcType=CHAR}, #{item.dz,jdbcType=VARCHAR},
+             #{item.fy,jdbcType=VARCHAR}, #{item.jym,jdbcType=VARCHAR}, #{item.thbj,jdbcType=CHAR},
+             #{item.scbz,jdbcType=CHAR}, #{item.createBy,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP},
+             #{item.updateBy,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=TIMESTAMP},
+             #{item.hm,jdbcType=LONGVARCHAR}, #{item.bz,jdbcType=LONGVARCHAR})
         </foreach>
     </insert>
 
-    <!-- v1 updateGhjfhb：批量更新 gh_jf 的 HKPCH -->
+    <!-- v1 updateGhjfhb: batch update gh_jf HKPCH by spuuid -->
     <update id="updateGhjfhb" parameterType="java.util.List">
-        UPDATE gh_jf
-        <trim prefix="SET" suffixOverrides=",">
-            <trim prefix="HKPCH = CASE" suffix="END,">
-                <foreach collection="list" item="item">
-                    WHEN SPUUID = #{item.spuuid} THEN #{item.hkpch}
+        update gh_jf
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="hkpch = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.hkpch != null">
+                        when spuuid = #{item.spuuid} then #{item.hkpch}
+                    </if>
                 </foreach>
             </trim>
-            <trim prefix="UPDATE_BY = CASE" suffix="END,">
-                <foreach collection="list" item="item">
-                    WHEN SPUUID = #{item.spuuid} THEN #{item.updateBy}
+            <trim prefix="update_by = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.updateBy != null">
+                        when spuuid = #{item.spuuid} then #{item.updateBy}
+                    </if>
                 </foreach>
             </trim>
-            <trim prefix="UPDATE_TIME = CASE" suffix="END,">
-                <foreach collection="list" item="item">
-                    WHEN SPUUID = #{item.spuuid} THEN #{item.updateTime}
+            <trim prefix="update_time = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.updateTime != null">
+                        when spuuid = #{item.spuuid} then #{item.updateTime}
+                    </if>
                 </foreach>
             </trim>
         </trim>
-        WHERE SPUUID IN
-        <foreach collection="list" item="item" separator="," open="(" close=")">
+        where spuuid in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
             #{item.spuuid}
         </foreach>
     </update>
 
-    <!-- v1 updateBatchQsjshkrj：更新划拨日志 -->
+    <!-- v1 updateBatchQsjshkrj: update settlement logs -->
     <update id="updateBatchQsjshkrj" parameterType="java.util.List">
-        UPDATE gh_qsjshkrj
-        <trim prefix="SET" suffixOverrides=",">
-            <trim prefix="HKRQ = CASE" suffix="END,">
-                <foreach collection="list" item="item">
-                    WHEN RKRQ = #{item.rkrq} THEN #{item.hkrq}
+        update gh_qsjshkrj
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="hkrq = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.hkrq != null">
+                        when rkrq = #{item.rkrq} then #{item.hkrq}
+                    </if>
                 </foreach>
             </trim>
-            <trim prefix="PCH = CASE" suffix="END,">
-                <foreach collection="list" item="item">
-                    WHEN RKRQ = #{item.rkrq} THEN #{item.pch}
+            <trim prefix="pch = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.pch != null">
+                        when rkrq = #{item.rkrq} then #{item.pch}
+                    </if>
                 </foreach>
             </trim>
-            <trim prefix="UPDATE_BY = CASE" suffix="END,">
-                <foreach collection="list" item="item">
-                    WHEN RKRQ = #{item.rkrq} THEN #{item.updateBy}
+            <trim prefix="update_by = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.updateBy != null">
+                        when rkrq = #{item.rkrq} then #{item.updateBy}
+                    </if>
                 </foreach>
             </trim>
-            <trim prefix="UPDATE_TIME = CASE" suffix="END,">
-                <foreach collection="list" item="item">
-                    WHEN RKRQ = #{item.rkrq} THEN #{item.updateTime}
+            <trim prefix="update_time = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.updateTime != null">
+                        when rkrq = #{item.rkrq} then #{item.updateTime}
+                    </if>
                 </foreach>
             </trim>
         </trim>
-        WHERE RKRQ IN
-        <foreach collection="list" item="item" separator="," open="(" close=")">
+        where rkrq in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
             #{item.rkrq}
         </foreach>
     </update>
 
-    <!-- v1 deleteHkxxByHkpch -->
+    <!-- v1 deleteGhHkxxByHkpch -->
     <delete id="deleteHkxxByHkpch">
-        DELETE
-        FROM gh_hkxx
-        WHERE HKPCH = #{hkpch}
+        delete from gh_hkxx t where t.hkpch = #{hkpch}
     </delete>
 
-    <!-- v1 selectQsjshkrjList -->
+    <!-- v1 selectQsjshkrjList: settlement log query -->
     <select id="selectQsjshkrjList" resultType="java.util.Map">
-        SELECT * FROM gh_qsjshkrj T WHERE T.LX = '1' AND T.RKRQ IN
-        <foreach collection="list" item="item" separator="," open="(" close=")">
+        select * from gh_qsjshkrj t where t.lx = '1' and t.rkrq in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
             #{item}
         </foreach>
     </select>
