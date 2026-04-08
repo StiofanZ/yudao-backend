@@ -6,6 +6,8 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.thpzcf.vo.ThpzcfSave
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.thpzcf.ThpzcfDO;
 import jakarta.validation.Valid;
 
+import java.util.List;
+
 public interface ThpzcfService {
 
     Long createThpzcf(@Valid ThpzcfSaveReqVO createReqVO);
@@ -13,6 +15,8 @@ public interface ThpzcfService {
     void updateThpzcf(@Valid ThpzcfSaveReqVO updateReqVO);
 
     void deleteThpzcf(Long id);
+
+    void deleteThpzcfBatch(List<Long> ids);
 
     ThpzcfDO getThpzcf(Long id);
 

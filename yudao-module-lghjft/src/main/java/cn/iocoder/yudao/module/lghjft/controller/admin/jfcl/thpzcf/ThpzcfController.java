@@ -22,6 +22,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.EXPORT;
@@ -57,6 +58,16 @@ public class ThpzcfController {
     @PreAuthorize("@ss.hasPermission('lghjft:jfcl-thpzcf:delete')")
     public CommonResult<Boolean> deleteThpzcf(@RequestParam("id") Long id) {
         thpzcfService.deleteThpzcf(id);
+        return success(true);
+    }
+
+    @DeleteMapping("/delete-list")
+    @Operation(summary = "批量删除退回凭证重发")
+    @Parameter(name = "ids", description = "编号列表", required = true)
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-thpzcf:delete')")
+    public CommonResult<Boolean> deleteThpzcfList(@RequestParam("ids") String ids) {
+        List<Long> idList = Arrays.stream(ids.split(",")).map(Long::parseLong).toList();
+        thpzcfService.deleteThpzcfBatch(idList);
         return success(true);
     }
 

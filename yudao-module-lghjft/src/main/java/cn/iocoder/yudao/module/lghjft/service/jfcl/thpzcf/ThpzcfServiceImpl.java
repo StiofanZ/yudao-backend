@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils.getLoginUserId;
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.JFCL_NOT_EXISTS;
@@ -32,15 +35,36 @@ public class ThpzcfServiceImpl implements ThpzcfService {
     @Transactional(rollbackFor = Exception.class)
     public Long createThpzcf(ThpzcfSaveReqVO createReqVO) {
         ThpzcfDO entity = BeanUtils.toBean(createReqVO, ThpzcfDO.class);
+        entity.setCreateBy(getLoginUserNickname());
+        entity.setCreateTime(LocalDateTime.now());
         thpzcfMapper.insert(entity);
         return entity.getHkxxId();
     }
 
+    /**
+     * V1 update: only xzh, xhm, xhh + thbj, thyy, xgbj, bz, dept_id, audit fields
+     * Most fields are commented out in V1 XML updateThpzcf
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateThpzcf(ThpzcfSaveReqVO updateReqVO) {
         validateThpzcfExists(updateReqVO.getHkxxId());
-        ThpzcfDO updateObj = BeanUtils.toBean(updateReqVO, ThpzcfDO.class);
+        // v1: restricted update
+        ThpzcfDO updateObj = new ThpzcfDO();
+        updateObj.setHkxxId(updateReqVO.getHkxxId());
+        // v1: only xzh, xhm, xhh (new account details)
+        updateObj.setXzh(updateReqVO.getXzh());
+        updateObj.setXhm(updateReqVO.getXhm());
+        updateObj.setXhh(updateReqVO.getXhh());
+        // v1 also allows: thbj, thyy, xgbj, bz, dept_id
+        updateObj.setThbj(updateReqVO.getThbj());
+        updateObj.setThrq(updateReqVO.getThrq());
+        updateObj.setThyy(updateReqVO.getThyy());
+        updateObj.setXgbj(updateReqVO.getXgbj());
+        updateObj.setBz(updateReqVO.getBz());
+        updateObj.setDeptId(updateReqVO.getDeptId());
+        updateObj.setUpdateBy(getLoginUserNickname());
+        updateObj.setUpdateTime(LocalDateTime.now());
         thpzcfMapper.updateById(updateObj);
     }
 
@@ -49,6 +73,12 @@ public class ThpzcfServiceImpl implements ThpzcfService {
     public void deleteThpzcf(Long id) {
         validateThpzcfExists(id);
         thpzcfMapper.deleteById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteThpzcfBatch(List<Long> ids) {
+        thpzcfMapper.deleteByIds(ids);
     }
 
     @Override
@@ -76,6 +106,15 @@ public class ThpzcfServiceImpl implements ThpzcfService {
     private void validateThpzcfExists(Long id) {
         if (thpzcfMapper.selectById(id) == null) {
             throw exception(JFCL_NOT_EXISTS);
+        }
+    }
+
+    private String getLoginUserNickname() {
+        try {
+            AdminUserDO user = userService.getUser(getLoginUserId());
+            return user != null ? user.getNickname() : null;
+        } catch (Exception e) {
+            return null;
         }
     }
 }
