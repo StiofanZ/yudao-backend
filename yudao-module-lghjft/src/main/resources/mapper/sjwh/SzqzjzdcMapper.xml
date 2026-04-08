@@ -99,7 +99,7 @@
         from szqzdzzc t
     </sql>
 
-    <!-- V1: selectSzqzjzdcVo1 — detail rows (基层工会经费--dwmc, hjje/szje per row) -->
+    <!-- V1: selectSzqzjzdcVo1 — detail rows (基层工会经费-dwmc, hjje/szje per row) -->
     <sql id="selectMainDetailSql">
         select
         '1' pzbh,
