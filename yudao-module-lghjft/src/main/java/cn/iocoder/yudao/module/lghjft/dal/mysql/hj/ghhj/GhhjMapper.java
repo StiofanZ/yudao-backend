@@ -35,6 +35,11 @@ public interface GhhjMapper {
     int insertGhHj(@Param("vo") GhHjSaveReqVO vo);
 
     /**
+     * 更新户籍
+     */
+    int updateGhHj(@Param("vo") GhHjSaveReqVO vo);
+
+    /**
      * 批量删除户籍
      */
     int deleteGhHjBydjxhs(@Param("djxhs") String[] djxhs);

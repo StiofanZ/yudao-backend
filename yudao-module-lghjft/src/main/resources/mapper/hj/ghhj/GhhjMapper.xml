@@ -27,13 +27,24 @@
         <result column="zgrs" property="zgrs" />
         <result column="nsrzt_dm" property="nsrztDm" />
         <result column="nsrztmc" property="nsrztmc" />
+        <result column="fzcrq" property="fzcrq" />
+        <result column="zxrq" property="zxrq" />
         <result column="zcdz" property="zcdz" />
         <result column="yzbm" property="yzbm" />
         <result column="lxr" property="lxr" />
         <result column="lxdh" property="lxdh" />
         <result column="ghlb_dm" property="ghlbDm" />
         <result column="xtlb_dm" property="xtlbDm" />
+        <result column="hjfl1_dm" property="hjfl1Dm"/>
+        <result column="hjfl2_dm" property="hjfl2Dm"/>
+        <result column="hjfl3_dm" property="hjfl3Dm"/>
+        <result column="hjfl4_dm" property="hjfl4Dm"/>
+        <result column="hjfl5_dm" property="hjfl5Dm"/>
+        <result column="hjfl6_dm" property="hjfl6Dm"/>
+        <result column="hjfl7_dm" property="hjfl7Dm"/>
         <result column="hjfl8_dm" property="hjfl8Dm" />
+        <result column="hjfl9_dm" property="hjfl9Dm"/>
+        <result column="sdghjg_dm" property="sdghjgDm"/>
         <result column="clghbj" property="clghbj" />
         <result column="clghrq" property="clghrq" />
         <result column="jcghdm" property="jcghdm" />
@@ -42,225 +53,364 @@
         <result column="jcghhm" property="jcghhm" />
         <result column="jcghhh" property="jcghhh" />
         <result column="jcghyh" property="jcghyh" />
-        <result column="hjfl1_dm" property="hjfl1Dm"/>
-        <result column="hjfl2_dm" property="hjfl2Dm"/>
-        <result column="hjfl3_dm" property="hjfl3Dm"/>
-        <result column="hjfl5_dm" property="hjfl5Dm"/>
-        <result column="hjfl7_dm" property="hjfl7Dm"/>
-        <result column="hjfl9_dm" property="hjfl9Dm"/>
-        <result column="sdghjg_dm" property="sdghjgDm"/>
-        <result column="fzcrq" property="fzcrq"/>
-        <result column="zxrq" property="zxrq"/>
         <result column="sjtb_sj" property="sjtbSj" />
         <result column="bz" property="bz" />
+        <result column="jym" property="jym" />
         <result column="nsrsbh" property="nsrsbh" />
         <result column="deptName" property="deptName"/>
     </resultMap>
 
+    <!-- sql fragment: all columns for gh_hj -->
+    <sql id="selectGhHjColumns">
+        hj.dept_id, hj.hyghbz, hj.djxh, hj.shxydm, hj.nsrmc, hj.nsrjc, hj.jdxz_dm,
+        hj.zgswj_dm, hj.zgswjmc, hj.zgswskfj_dm, hj.zgswskfjmc, hj.ssgly_dm, hj.ssglyxm,
+        hj.zzjglx_dm, hj.zzjglxmc, hj.hy_dm, hj.hymc, hj.djzclx_dm, hj.djzclxmc,
+        hj.dwlsgx_dm, hj.dwlsgxmc, hj.zgrs, hj.nsrzt_dm, hj.nsrztmc,
+        hj.fzcrq, hj.zxrq, hj.zcdz, hj.yzbm, hj.lxr, hj.lxdh,
+        hj.ghlb_dm, hj.xtlb_dm, hj.hjfl1_dm, hj.hjfl2_dm, hj.hjfl3_dm, hj.hjfl4_dm,
+        hj.hjfl5_dm, hj.hjfl6_dm, hj.hjfl7_dm, hj.hjfl8_dm, hj.hjfl9_dm,
+        hj.sdghjg_dm, hj.clghbj, hj.clghrq, hj.jcghdm, hj.jcghmc,
+        hj.jcghzh, hj.jcghhm, hj.jcghhh, hj.jcghyh, hj.sjtb_sj,
+        hj.bz, hj.jym, hj.nsrsbh,
+        hj.create_by, hj.create_time, hj.update_by, hj.update_time
+    </sql>
+
+    <!-- sql fragment: v1 where conditions (1:1 from GhHjMapper.xml selectGhHjList) -->
+    <sql id="queryWhereConditions">
+        <if test="query.hyghbz != null and query.hyghbz != ''">and hj.hyghbz = #{query.hyghbz}</if>
+        <if test="query.djxh != null and query.djxh != ''">and hj.djxh = #{query.djxh}</if>
+        <if test="query.shxydm != null and query.shxydm != ''">and hj.shxydm = #{query.shxydm}</if>
+        <if test="query.nsrsbh != null and query.nsrsbh != ''">and hj.nsrsbh = #{query.nsrsbh}</if>
+        <if test="query.nsrmc != null and query.nsrmc != ''">and hj.nsrmc like concat('%', #{query.nsrmc}, '%')</if>
+        <if test="query.jdxzDm != null and query.jdxzDm != ''">and hj.jdxz_dm = #{query.jdxzDm}</if>
+        <if test="query.zgswjmc != null and query.zgswjmc != ''">and hj.zgswjmc like concat('%', #{query.zgswjmc}, '%')</if>
+        <if test="query.zgswskfjDm != null and query.zgswskfjDm != ''">and hj.zgswskfj_dm = #{query.zgswskfjDm}</if>
+        <if test="query.zgswskfjmc != null and query.zgswskfjmc != ''">and hj.zgswskfjmc like concat('%', #{query.zgswskfjmc}, '%')</if>
+        <if test="query.ssglyxm != null and query.ssglyxm != ''">and hj.ssglyxm = #{query.ssglyxm}</if>
+        <if test="query.hymc != null and query.hymc != ''">and hj.hymc = #{query.hymc}</if>
+        <if test="query.zcdz != null and query.zcdz != ''">and hj.zcdz like concat('%', #{query.zcdz}, '%')</if>
+        <if test="query.lxr != null and query.lxr != ''">and hj.lxr = #{query.lxr}</if>
+        <if test="query.lxdh != null and query.lxdh != ''">and hj.lxdh = #{query.lxdh}</if>
+        <if test="query.clghbj != null and query.clghbj != ''">and hj.clghbj = #{query.clghbj}</if>
+        <if test="query.beginClghrq != null and query.beginClghrq != '' and query.endClghrq != null and query.endClghrq != ''">
+            and hj.clghrq between #{query.beginClghrq} and #{query.endClghrq}
+        </if>
+        <if test="query.ghlbDm != null and query.ghlbDm != ''">and hj.ghlb_dm = #{query.ghlbDm}</if>
+        <if test="query.xtlbDm != null and query.xtlbDm != ''">and hj.xtlb_dm = #{query.xtlbDm}</if>
+        <if test="query.jcghmc != null and query.jcghmc != ''">and hj.jcghmc like concat('%', #{query.jcghmc}, '%')</if>
+        <if test="query.jcghzh != null and query.jcghzh != ''">and hj.jcghzh = #{query.jcghzh}</if>
+        <if test="query.jcghhm != null and query.jcghhm != ''">and hj.jcghhm like concat('%', #{query.jcghhm}, '%')</if>
+        <if test="query.jcghhh != null and query.jcghhh != ''">and hj.jcghhh = #{query.jcghhh}</if>
+        <if test="query.jcghyh != null and query.jcghyh != ''">and hj.jcghyh like concat('%', #{query.jcghyh}, '%')</if>
+        <if test="query.deptId != null and query.deptId != ''">and hj.dept_id = #{query.deptId}</if>
+        <if test="query.hjfl8Dm != null and query.hjfl8Dm != ''">and hj.hjfl8_dm = #{query.hjfl8Dm}</if>
+        <if test="query.hjfl9Dm != null and query.hjfl9Dm != ''">and hj.hjfl9_dm = #{query.hjfl9Dm}</if>
+    </sql>
+
     <select id="selectGhHjBydjxh" parameterType="string" resultMap="GhHjVOMap">
-        select
-            djxh,
-            dept_id,
-            hyghbz,
-            shxydm,
-            nsrmc,
-            nsrjc,
-            zgswj_dm,
-            jdxz_dm,
-            zgswjmc,
-            zgswskfj_dm,
-            zgswskfjmc,
-            ssgly_dm,
-            ssglyxm,
-            zzjglx_dm,
-            zzjglxmc,
-            hy_dm,
-            hymc,
-            djzclx_dm,
-            djzclxmc,
-            dwlsgx_dm,
-            dwlsgxmc,
-            zgrs,
-            nsrzt_dm,
-            nsrztmc,
-            fzcrq,
-            zxrq,
-            zcdz,
-            yzbm,
-            lxr,
-            lxdh,
-            ghlb_dm,
-            xtlb_dm,
-            hjfl1_dm,
-            hjfl2_dm,
-            hjfl3_dm,
-            hjfl5_dm,
-            hjfl7_dm,
-            hjfl8_dm,
-            hjfl9_dm,
-            sdghjg_dm,
-            clghbj,
-            clghrq,
-            jcghdm,
-            jcghmc,
-            jcghzh,
-            jcghhm,
-            jcghhh,
-            jcghyh,
-            sjtb_sj,
-            bz,
-            nsrsbh
-        from gh_hj
-        where djxh = #{djxh}
+        select <include refid="selectGhHjColumns"/>,
+            d.dept_name as deptName
+        from gh_hj hj
+        left join sys_dept d on hj.dept_id = d.dept_id
+        where hj.djxh = #{djxh}
     </select>
 
-    <!-- 批量复审: 根据v1 fushenPlBydjxhs 的SQL，更新HJFL9_DM为'Y' -->
+    <!-- v1: fushenPlBydjxhs updates jcghhm/jcghzh/jcghhh/jcghyhmc but is called with String[] from GET path.
+         The v1 mapper expects #{jcghhm},#{jcghzh},#{jcghhh},#{jcghyhmc} from the array param which makes no sense.
+         The actual v1 code only passes djxhs array. We keep v2 behavior: set hjfl9_dm='Y' as batch review mark. -->
     <update id="fushenPlBydjxhs">
-        UPDATE gh_hj SET HJFL9_DM = 'Y'
-        WHERE DJXH IN
+        update gh_hj set hjfl9_dm = 'Y'
+        where djxh in
         <foreach item="djxh" collection="djxhs" open="(" separator="," close=")">
             #{djxh}
         </foreach>
     </update>
 
-    <!-- 户籍调拨: 更新部门和行业工会标志，清空银行信息 -->
+    <!-- 户籍调拨: 1:1 from v1 updateAllocationGhHj -->
     <update id="updateAllocationGhHj">
-        UPDATE gh_hj
-        SET DEPT_ID = #{deptId},
-        HYGHBZ = #{hyghbz},
-        JCGHHM = NULL,
-        JCGHZH = NULL,
-        JCGHHH = NULL,
-        JCGHYH = NULL
-        WHERE DJXH IN
+        update gh_hj set dept_id = #{deptId}, hyghbz = #{hyghbz},
+            jcghhm = null, jcghzh = null, jcghhh = null, jcghyh = null
+        where djxh in
         <foreach item="djxh" collection="djxhs" open="(" separator="," close=")">
             #{djxh}
         </foreach>
     </update>
 
-    <!-- 户籍管理分页查询 -->
+    <!-- 户籍管理分页查询 (1:1 v1 where conditions, order by update_time desc) -->
     <select id="selectGhHjPage" resultMap="GhHjVOMap">
-        select h.*, d.dept_name as deptName
-        from gh_hj h
-        left join system_dept d on h.dept_id = d.id
+        select <include refid="selectGhHjColumns"/>,
+            d.dept_name as deptName
+        from gh_hj hj
+        left join sys_dept d on hj.dept_id = d.dept_id
         <where>
-            <if test="query.deptId != null and query.deptId != ''">AND h.dept_id = #{query.deptId}</if>
-            <if test="query.djxh != null and query.djxh != ''">AND h.djxh = #{query.djxh}</if>
-            <if test="query.shxydm != null and query.shxydm != ''">AND h.shxydm = #{query.shxydm}</if>
-            <if test="query.nsrmc != null and query.nsrmc != ''">AND h.nsrmc LIKE CONCAT('%', #{query.nsrmc}, '%')</if>
-            <if test="query.hyghbz != null and query.hyghbz != ''">AND h.hyghbz = #{query.hyghbz}</if>
-            <if test="query.nsrztDm != null and query.nsrztDm != ''">AND h.nsrzt_dm = #{query.nsrztDm}</if>
-            <if test="query.ghlbDm != null and query.ghlbDm != ''">AND h.ghlb_dm = #{query.ghlbDm}</if>
-            <if test="query.xtlbDm != null and query.xtlbDm != ''">AND h.xtlb_dm = #{query.xtlbDm}</if>
-            <if test="query.hjfl9Dm != null and query.hjfl9Dm != ''">AND h.hjfl9_dm = #{query.hjfl9Dm}</if>
+            <include refid="queryWhereConditions"/>
         </where>
-        ORDER BY h.djxh DESC
+        order by hj.update_time desc
     </select>
 
     <!-- 户籍管理列表查询（导出用） -->
     <select id="selectGhHjList" resultMap="GhHjVOMap">
-        select h.*, d.dept_name as deptName
-        from gh_hj h
-        left join system_dept d on h.dept_id = d.id
+        select <include refid="selectGhHjColumns"/>,
+            d.dept_name as deptName
+        from gh_hj hj
+        left join sys_dept d on hj.dept_id = d.dept_id
         <where>
-            <if test="query.deptId != null and query.deptId != ''">AND h.dept_id = #{query.deptId}</if>
-            <if test="query.djxh != null and query.djxh != ''">AND h.djxh = #{query.djxh}</if>
-            <if test="query.shxydm != null and query.shxydm != ''">AND h.shxydm = #{query.shxydm}</if>
-            <if test="query.nsrmc != null and query.nsrmc != ''">AND h.nsrmc LIKE CONCAT('%', #{query.nsrmc}, '%')</if>
-            <if test="query.hyghbz != null and query.hyghbz != ''">AND h.hyghbz = #{query.hyghbz}</if>
-            <if test="query.nsrztDm != null and query.nsrztDm != ''">AND h.nsrzt_dm = #{query.nsrztDm}</if>
-            <if test="query.ghlbDm != null and query.ghlbDm != ''">AND h.ghlb_dm = #{query.ghlbDm}</if>
-            <if test="query.xtlbDm != null and query.xtlbDm != ''">AND h.xtlb_dm = #{query.xtlbDm}</if>
-            <if test="query.hjfl9Dm != null and query.hjfl9Dm != ''">AND h.hjfl9_dm = #{query.hjfl9Dm}</if>
+            <include refid="queryWhereConditions"/>
         </where>
-        ORDER BY h.djxh DESC
+        order by hj.update_time desc
     </select>
 
-    <!-- 新增户籍 -->
+    <!-- 新增/更新户籍 (v1: insertGhHj uses ON DUPLICATE KEY UPDATE pattern, since save endpoint does insert-or-update) -->
     <insert id="insertGhHj">
-        INSERT INTO gh_hj (djxh, dept_id, hyghbz, shxydm, nsrsbh, nsrmc, nsrjc,
-                           zgswj_dm, jdxz_dm, zgswskfj_dm, ssgly_dm,
-                           zzjglx_dm, hy_dm, djzclx_dm, dwlsgx_dm,
-                           zgrs, nsrzt_dm, zcdz, yzbm, lxr, lxdh,
-                           ghlb_dm, xtlb_dm, hjfl8_dm, clghbj, clghrq,
-                           jcghdm, jcghmc, jcghzh, jcghhm, jcghhh, jcghyh,
-                           hjfl1_dm, hjfl2_dm, hjfl3_dm, hjfl5_dm, hjfl7_dm,
-                           sdghjg_dm, fzcrq, bz,
-                           create_by, create_time, update_by, update_time)
-        VALUES (#{vo.djxh}, #{vo.deptId}, #{vo.hyghbz}, #{vo.shxydm}, #{vo.nsrsbh}, #{vo.nsrmc}, #{vo.nsrjc},
-                #{vo.zgswjDm}, #{vo.jdxzDm}, #{vo.zgswskfjDm}, #{vo.ssglyDm},
-                #{vo.zzjglxDm}, #{vo.hyDm}, #{vo.djzclxDm}, #{vo.dwlsgxDm},
-                #{vo.zgrs}, #{vo.nsrztDm}, #{vo.zcdz}, #{vo.yzbm}, #{vo.lxr}, #{vo.lxdh},
-                #{vo.ghlbDm}, #{vo.xtlbDm}, #{vo.hjfl8Dm}, #{vo.clghbj}, #{vo.clghrq},
-                #{vo.jcghdm}, #{vo.jcghmc}, #{vo.jcghzh}, #{vo.jcghhm}, #{vo.jcghhh}, #{vo.jcghyh},
-                #{vo.hjfl1Dm}, #{vo.hjfl2Dm}, #{vo.hjfl3Dm}, #{vo.hjfl5Dm}, #{vo.hjfl7Dm},
-                #{vo.sdghjgDm}, #{vo.fzcrq}, #{vo.bz},
-                #{vo.createBy}, NOW(), #{vo.updateBy}, NOW())
+        insert into gh_hj
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="vo.deptId != null and vo.deptId != ''">dept_id,</if>
+            <if test="vo.hyghbz != null and vo.hyghbz != ''">hyghbz,</if>
+            <if test="vo.djxh != null and vo.djxh != ''">djxh,</if>
+            <if test="vo.shxydm != null and vo.shxydm != ''">shxydm,</if>
+            <if test="vo.nsrmc != null and vo.nsrmc != ''">nsrmc,</if>
+            <if test="vo.nsrjc != null and vo.nsrjc != ''">nsrjc,</if>
+            <if test="vo.jdxzDm != null and vo.jdxzDm != ''">jdxz_dm,</if>
+            <if test="vo.zgswjDm != null and vo.zgswjDm != ''">zgswj_dm,</if>
+            <if test="vo.zgswjmc != null and vo.zgswjmc != ''">zgswjmc,</if>
+            <if test="vo.zgswskfjDm != null and vo.zgswskfjDm != ''">zgswskfj_dm,</if>
+            <if test="vo.zgswskfjmc != null and vo.zgswskfjmc != ''">zgswskfjmc,</if>
+            <if test="vo.ssglyDm != null">ssgly_dm,</if>
+            <if test="vo.ssglyxm != null">ssglyxm,</if>
+            <if test="vo.zzjglxDm != null">zzjglx_dm,</if>
+            <if test="vo.zzjglxmc != null">zzjglxmc,</if>
+            <if test="vo.hyDm != null">hy_dm,</if>
+            <if test="vo.hymc != null">hymc,</if>
+            <if test="vo.djzclxDm != null">djzclx_dm,</if>
+            <if test="vo.djzclxmc != null">djzclxmc,</if>
+            <if test="vo.dwlsgxDm != null">dwlsgx_dm,</if>
+            <if test="vo.dwlsgxmc != null">dwlsgxmc,</if>
+            <if test="vo.zgrs != null">zgrs,</if>
+            <if test="vo.nsrztDm != null and vo.nsrztDm != ''">nsrzt_dm,</if>
+            <if test="vo.nsrztmc != null and vo.nsrztmc != ''">nsrztmc,</if>
+            <if test="vo.fzcrq != null">fzcrq,</if>
+            <if test="vo.zxrq != null">zxrq,</if>
+            <if test="vo.zcdz != null">zcdz,</if>
+            <if test="vo.yzbm != null">yzbm,</if>
+            <if test="vo.lxr != null">lxr,</if>
+            <if test="vo.lxdh != null">lxdh,</if>
+            <if test="vo.ghlbDm != null">ghlb_dm,</if>
+            <if test="vo.xtlbDm != null">xtlb_dm,</if>
+            <if test="vo.hjfl1Dm != null">hjfl1_dm,</if>
+            <if test="vo.hjfl2Dm != null">hjfl2_dm,</if>
+            <if test="vo.hjfl3Dm != null">hjfl3_dm,</if>
+            <if test="vo.hjfl4Dm != null">hjfl4_dm,</if>
+            <if test="vo.hjfl5Dm != null">hjfl5_dm,</if>
+            <if test="vo.hjfl6Dm != null">hjfl6_dm,</if>
+            <if test="vo.hjfl7Dm != null">hjfl7_dm,</if>
+            <if test="vo.hjfl8Dm != null">hjfl8_dm,</if>
+            <if test="vo.hjfl9Dm != null">hjfl9_dm,</if>
+            <if test="vo.sdghjgDm != null">sdghjg_dm,</if>
+            <if test="vo.clghbj != null">clghbj,</if>
+            <if test="vo.clghrq != null">clghrq,</if>
+            <if test="vo.jcghdm != null">jcghdm,</if>
+            <if test="vo.jcghmc != null">jcghmc,</if>
+            <if test="vo.jcghzh != null">jcghzh,</if>
+            <if test="vo.jcghhm != null">jcghhm,</if>
+            <if test="vo.jcghhh != null">jcghhh,</if>
+            <if test="vo.jcghyh != null">jcghyh,</if>
+            <if test="vo.sjtbSj != null">sjtb_sj,</if>
+            <if test="vo.bz != null">bz,</if>
+            <if test="vo.jym != null">jym,</if>
+            <if test="vo.nsrsbh != null">nsrsbh,</if>
+            create_by,
+            create_time,
+            update_by,
+            update_time,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="vo.deptId != null and vo.deptId != ''">#{vo.deptId},</if>
+            <if test="vo.hyghbz != null and vo.hyghbz != ''">#{vo.hyghbz},</if>
+            <if test="vo.djxh != null and vo.djxh != ''">#{vo.djxh},</if>
+            <if test="vo.shxydm != null and vo.shxydm != ''">#{vo.shxydm},</if>
+            <if test="vo.nsrmc != null and vo.nsrmc != ''">#{vo.nsrmc},</if>
+            <if test="vo.nsrjc != null and vo.nsrjc != ''">#{vo.nsrjc},</if>
+            <if test="vo.jdxzDm != null and vo.jdxzDm != ''">#{vo.jdxzDm},</if>
+            <if test="vo.zgswjDm != null and vo.zgswjDm != ''">#{vo.zgswjDm},</if>
+            <if test="vo.zgswjmc != null and vo.zgswjmc != ''">#{vo.zgswjmc},</if>
+            <if test="vo.zgswskfjDm != null and vo.zgswskfjDm != ''">#{vo.zgswskfjDm},</if>
+            <if test="vo.zgswskfjmc != null and vo.zgswskfjmc != ''">#{vo.zgswskfjmc},</if>
+            <if test="vo.ssglyDm != null">#{vo.ssglyDm},</if>
+            <if test="vo.ssglyxm != null">#{vo.ssglyxm},</if>
+            <if test="vo.zzjglxDm != null">#{vo.zzjglxDm},</if>
+            <if test="vo.zzjglxmc != null">#{vo.zzjglxmc},</if>
+            <if test="vo.hyDm != null">#{vo.hyDm},</if>
+            <if test="vo.hymc != null">#{vo.hymc},</if>
+            <if test="vo.djzclxDm != null">#{vo.djzclxDm},</if>
+            <if test="vo.djzclxmc != null">#{vo.djzclxmc},</if>
+            <if test="vo.dwlsgxDm != null">#{vo.dwlsgxDm},</if>
+            <if test="vo.dwlsgxmc != null">#{vo.dwlsgxmc},</if>
+            <if test="vo.zgrs != null">#{vo.zgrs},</if>
+            <if test="vo.nsrztDm != null and vo.nsrztDm != ''">#{vo.nsrztDm},</if>
+            <if test="vo.nsrztmc != null and vo.nsrztmc != ''">#{vo.nsrztmc},</if>
+            <if test="vo.fzcrq != null">#{vo.fzcrq},</if>
+            <if test="vo.zxrq != null">#{vo.zxrq},</if>
+            <if test="vo.zcdz != null">#{vo.zcdz},</if>
+            <if test="vo.yzbm != null">#{vo.yzbm},</if>
+            <if test="vo.lxr != null">#{vo.lxr},</if>
+            <if test="vo.lxdh != null">#{vo.lxdh},</if>
+            <if test="vo.ghlbDm != null">#{vo.ghlbDm},</if>
+            <if test="vo.xtlbDm != null">#{vo.xtlbDm},</if>
+            <if test="vo.hjfl1Dm != null">#{vo.hjfl1Dm},</if>
+            <if test="vo.hjfl2Dm != null">#{vo.hjfl2Dm},</if>
+            <if test="vo.hjfl3Dm != null">#{vo.hjfl3Dm},</if>
+            <if test="vo.hjfl4Dm != null">#{vo.hjfl4Dm},</if>
+            <if test="vo.hjfl5Dm != null">#{vo.hjfl5Dm},</if>
+            <if test="vo.hjfl6Dm != null">#{vo.hjfl6Dm},</if>
+            <if test="vo.hjfl7Dm != null">#{vo.hjfl7Dm},</if>
+            <if test="vo.hjfl8Dm != null">#{vo.hjfl8Dm},</if>
+            <if test="vo.hjfl9Dm != null">#{vo.hjfl9Dm},</if>
+            <if test="vo.sdghjgDm != null">#{vo.sdghjgDm},</if>
+            <if test="vo.clghbj != null">#{vo.clghbj},</if>
+            <if test="vo.clghrq != null">#{vo.clghrq},</if>
+            <if test="vo.jcghdm != null">#{vo.jcghdm},</if>
+            <if test="vo.jcghmc != null">#{vo.jcghmc},</if>
+            <if test="vo.jcghzh != null">#{vo.jcghzh},</if>
+            <if test="vo.jcghhm != null">#{vo.jcghhm},</if>
+            <if test="vo.jcghhh != null">#{vo.jcghhh},</if>
+            <if test="vo.jcghyh != null">#{vo.jcghyh},</if>
+            <if test="vo.sjtbSj != null">#{vo.sjtbSj},</if>
+            <if test="vo.bz != null">#{vo.bz},</if>
+            <if test="vo.jym != null">#{vo.jym},</if>
+            <if test="vo.nsrsbh != null">#{vo.nsrsbh},</if>
+            #{vo.createBy},
+            now(),
+            #{vo.updateBy},
+            now(),
+        </trim>
     </insert>
+
+    <!-- 更新户籍 (v1: updateGhHj) -->
+    <update id="updateGhHj">
+        update gh_hj
+        <trim prefix="set" suffixOverrides=",">
+            <if test="vo.deptId != null and vo.deptId != ''">dept_id = #{vo.deptId},</if>
+            <if test="vo.hyghbz != null and vo.hyghbz != ''">hyghbz = #{vo.hyghbz},</if>
+            <if test="vo.shxydm != null and vo.shxydm != ''">shxydm = #{vo.shxydm},</if>
+            <if test="vo.nsrmc != null and vo.nsrmc != ''">nsrmc = #{vo.nsrmc},</if>
+            <if test="vo.nsrjc != null and vo.nsrjc != ''">nsrjc = #{vo.nsrjc},</if>
+            <if test="vo.jdxzDm != null and vo.jdxzDm != ''">jdxz_dm = #{vo.jdxzDm},</if>
+            <if test="vo.zgswjDm != null and vo.zgswjDm != ''">zgswj_dm = #{vo.zgswjDm},</if>
+            <if test="vo.zgswjmc != null and vo.zgswjmc != ''">zgswjmc = #{vo.zgswjmc},</if>
+            <if test="vo.zgswskfjDm != null and vo.zgswskfjDm != ''">zgswskfj_dm = #{vo.zgswskfjDm},</if>
+            <if test="vo.zgswskfjmc != null and vo.zgswskfjmc != ''">zgswskfjmc = #{vo.zgswskfjmc},</if>
+            <if test="vo.ssglyDm != null">ssgly_dm = #{vo.ssglyDm},</if>
+            <if test="vo.ssglyxm != null">ssglyxm = #{vo.ssglyxm},</if>
+            <if test="vo.zzjglxDm != null">zzjglx_dm = #{vo.zzjglxDm},</if>
+            <if test="vo.zzjglxmc != null">zzjglxmc = #{vo.zzjglxmc},</if>
+            <if test="vo.hyDm != null">hy_dm = #{vo.hyDm},</if>
+            <if test="vo.hymc != null">hymc = #{vo.hymc},</if>
+            <if test="vo.djzclxDm != null">djzclx_dm = #{vo.djzclxDm},</if>
+            <if test="vo.djzclxmc != null">djzclxmc = #{vo.djzclxmc},</if>
+            <if test="vo.dwlsgxDm != null">dwlsgx_dm = #{vo.dwlsgxDm},</if>
+            <if test="vo.dwlsgxmc != null">dwlsgxmc = #{vo.dwlsgxmc},</if>
+            <if test="vo.zgrs != null">zgrs = #{vo.zgrs},</if>
+            <if test="vo.nsrztDm != null and vo.nsrztDm != ''">nsrzt_dm = #{vo.nsrztDm},</if>
+            <if test="vo.nsrztmc != null and vo.nsrztmc != ''">nsrztmc = #{vo.nsrztmc},</if>
+            <if test="vo.fzcrq != null">fzcrq = #{vo.fzcrq},</if>
+            <if test="vo.zxrq != null">zxrq = #{vo.zxrq},</if>
+            <if test="vo.zcdz != null">zcdz = #{vo.zcdz},</if>
+            <if test="vo.yzbm != null">yzbm = #{vo.yzbm},</if>
+            <if test="vo.lxr != null">lxr = #{vo.lxr},</if>
+            <if test="vo.lxdh != null">lxdh = #{vo.lxdh},</if>
+            <if test="vo.ghlbDm != null">ghlb_dm = #{vo.ghlbDm},</if>
+            <if test="vo.xtlbDm != null">xtlb_dm = #{vo.xtlbDm},</if>
+            <if test="vo.hjfl1Dm != null">hjfl1_dm = #{vo.hjfl1Dm},</if>
+            <if test="vo.hjfl2Dm != null">hjfl2_dm = #{vo.hjfl2Dm},</if>
+            <if test="vo.hjfl3Dm != null">hjfl3_dm = #{vo.hjfl3Dm},</if>
+            <if test="vo.hjfl4Dm != null">hjfl4_dm = #{vo.hjfl4Dm},</if>
+            <if test="vo.hjfl5Dm != null">hjfl5_dm = #{vo.hjfl5Dm},</if>
+            <if test="vo.hjfl6Dm != null">hjfl6_dm = #{vo.hjfl6Dm},</if>
+            <if test="vo.hjfl7Dm != null">hjfl7_dm = #{vo.hjfl7Dm},</if>
+            <if test="vo.hjfl8Dm != null">hjfl8_dm = #{vo.hjfl8Dm},</if>
+            <if test="vo.hjfl9Dm != null">hjfl9_dm = #{vo.hjfl9Dm},</if>
+            <if test="vo.sdghjgDm != null">sdghjg_dm = #{vo.sdghjgDm},</if>
+            <if test="vo.clghbj != null">clghbj = #{vo.clghbj},</if>
+            <if test="vo.clghrq != null">clghrq = #{vo.clghrq},</if>
+            <if test="vo.jcghdm != null">jcghdm = #{vo.jcghdm},</if>
+            <if test="vo.jcghmc != null">jcghmc = #{vo.jcghmc},</if>
+            <if test="vo.jcghzh != null">jcghzh = #{vo.jcghzh},</if>
+            <if test="vo.jcghhm != null">jcghhm = #{vo.jcghhm},</if>
+            <if test="vo.jcghhh != null">jcghhh = #{vo.jcghhh},</if>
+            <if test="vo.jcghyh != null">jcghyh = #{vo.jcghyh},</if>
+            <if test="vo.sjtbSj != null">sjtb_sj = #{vo.sjtbSj},</if>
+            <if test="vo.bz != null">bz = #{vo.bz},</if>
+            <if test="vo.jym != null">jym = #{vo.jym},</if>
+            <if test="vo.nsrsbh != null">nsrsbh = #{vo.nsrsbh},</if>
+            <if test="vo.updateBy != null and vo.updateBy != ''">update_by = #{vo.updateBy},</if>
+            update_time = now()
+        </trim>
+        where djxh = #{vo.djxh}
+    </update>
 
     <!-- 批量删除户籍 -->
     <delete id="deleteGhHjBydjxhs">
-        DELETE FROM gh_hj WHERE djxh IN
+        delete from gh_hj where djxh in
         <foreach item="djxh" collection="djxhs" open="(" separator="," close=")">
             #{djxh}
         </foreach>
     </delete>
 
-    <!-- 根据纳税人关键字查询户籍列表(含部门名称) -->
+    <!-- 根据纳税人关键字查询户籍列表(含部门名称) - 1:1 v1 getListByDjNsrxxDto -->
     <select id="getListByDjNsrxxDto" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.hj.ghhj.vo.GhHjNsrxxResVO">
-        SELECT hj.dept_id AS deptId, hj.DJXH AS djxh, hj.SHXYDM AS shxydm, hj.NSRMC AS nsrmc,
-        d.dept_name AS deptName
-        FROM gh_hj hj
-        LEFT JOIN system_dept d ON hj.dept_id = d.id
-        WHERE 1 = 1
+        select hj.dept_id as deptId, hj.djxh as djxh, hj.shxydm as shxydm, hj.nsrmc as nsrmc,
+            d.dept_name as deptName
+        from gh_hj hj
+        left join sys_dept d on hj.dept_id = d.dept_id
+        where 1 = 1
         <if test="searchNsrKey != null and searchNsrKey != ''">
-            AND ((hj.nsrsbh = #{searchNsrKey}) OR
-            (hj.NSRMC LIKE CONCAT('%', #{searchNsrKey}, '%')) OR
+            and ((hj.nsrsbh = #{searchNsrKey}) or
+            (hj.nsrmc like concat('%', #{searchNsrKey}, '%')) or
             (hj.shxydm = #{searchNsrKey}))
         </if>
         <if test="djxh != null and djxh != ''">
-            AND hj.djxh = #{djxh}
+            and hj.djxh = #{djxh}
         </if>
         <if test="shxydm != null and shxydm != ''">
-            AND hj.shxydm = #{shxydm}
+            and hj.shxydm = #{shxydm}
         </if>
-        UNION ALL
-        SELECT ds.dept_id AS deptId, ds.DJXH AS djxh, ds.SHXYDM AS shxydm, ds.NSRMC AS nsrmc,
-        d.dept_name AS deptName
-        FROM jhdwyds ds
-        LEFT JOIN system_dept d ON ds.dept_id = d.id
-        WHERE 1 = 1
+        union all
+        select ds.dept_id as deptId, ds.djxh as djxh, ds.shxydm as shxydm, ds.nsrmc as nsrmc,
+            d.dept_name as deptName
+        from jhdwyds ds
+        left join sys_dept d on ds.dept_id = d.dept_id
+        where 1 = 1
         <if test="searchNsrKey != null and searchNsrKey != ''">
-            AND ((ds.shxydm = #{searchNsrKey}) OR
-            (ds.NSRMC LIKE CONCAT('%', #{searchNsrKey}, '%')))
+            and ((ds.shxydm = #{searchNsrKey}) or
+            (ds.nsrmc like concat('%', #{searchNsrKey}, '%')))
         </if>
         <if test="djxh != null and djxh != ''">
-            AND ds.djxh = #{djxh}
+            and ds.djxh = #{djxh}
         </if>
         <if test="shxydm != null and shxydm != ''">
-            AND ds.shxydm = #{shxydm}
+            and ds.shxydm = #{shxydm}
         </if>
     </select>
 
     <!-- 根据 djxh 集合批量查询户籍记录 -->
     <select id="selectListByDjxhs" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.hj.ghhj.vo.GhHjNsrxxResVO">
-        SELECT h.djxh AS djxh, h.shxydm AS shxydm, h.nsrmc AS nsrmc,
-        h.dept_id AS deptId, h.lxdh AS lxdh
-        FROM gh_hj h
-        WHERE h.djxh IN
+        select h.djxh as djxh, h.shxydm as shxydm, h.nsrmc as nsrmc,
+            h.dept_id as deptId, h.lxdh as lxdh
+        from gh_hj h
+        where h.djxh in
         <foreach item="djxh" collection="djxhs" open="(" separator="," close=")">#{djxh}</foreach>
     </select>
 
-    <!-- 根据用户标识集合查询可绑定的户籍记录（gh_hj UNION jhdwyds） -->
+    <!-- 根据用户标识集合查询可绑定的户籍记录 -->
     <select id="selectBindableByIdentifiers" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.hj.ghhj.vo.GhHjNsrxxResVO">
-        SELECT h.djxh AS djxh, h.shxydm AS shxydm, h.nsrmc AS nsrmc,
-        h.dept_id AS deptId, h.lxdh AS lxdh
-        FROM gh_hj h
-        WHERE h.shxydm IN
+        select h.djxh as djxh, h.shxydm as shxydm, h.nsrmc as nsrmc,
+            h.dept_id as deptId, h.lxdh as lxdh
+        from gh_hj h
+        where h.shxydm in
         <foreach item="id" collection="ids" open="(" separator="," close=")">#{id}</foreach>
-        OR h.nsrsbh IN
+        or h.nsrsbh in
         <foreach item="id" collection="ids" open="(" separator="," close=")">#{id}</foreach>
-        OR h.lxdh IN
+        or h.lxdh in
         <foreach item="id" collection="ids" open="(" separator="," close=")">#{id}</foreach>
     </select>
 

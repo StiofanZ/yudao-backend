@@ -74,7 +74,13 @@ public class GhHjServiceImpl implements GhHjService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insertGhHj(GhHjSaveReqVO saveReqVO) {
-        return ghhjMapper.insertGhHj(saveReqVO);
+        // v1 logic: check if djxh exists, if so update, otherwise insert
+        String djxh = saveReqVO.getDjxh();
+        GhHjVO existing = ghhjMapper.selectGhHjBydjxh(djxh);
+        if (existing == null) {
+            return ghhjMapper.insertGhHj(saveReqVO);
+        }
+        return ghhjMapper.updateGhHj(saveReqVO);
     }
 
     @Override

@@ -34,35 +34,67 @@ public class GhHjSaveReqVO {
     @Schema(description = "缴费单位简称")
     private String nsrjc;
 
+    @Schema(description = "街道乡镇代码")
+    private String jdxzDm;
+
     @Schema(description = "主管税务机关代码")
     private String zgswjDm;
 
-    @Schema(description = "街道乡镇代码")
-    private String jdxzDm;
+    @Schema(description = "主管税务机关名称")
+    private String zgswjmc;
 
     @Schema(description = "科所分局代码")
     private String zgswskfjDm;
 
+    @Schema(description = "科所分局名称")
+    private String zgswskfjmc;
+
     @Schema(description = "税管员代码")
     private String ssglyDm;
+
+    @Schema(description = "税管员姓名")
+    private String ssglyxm;
 
     @Schema(description = "组织机构代码")
     private String zzjglxDm;
 
+    @Schema(description = "组织机构名称")
+    private String zzjglxmc;
+
     @Schema(description = "行业代码")
     private String hyDm;
+
+    @Schema(description = "行业名称")
+    private String hymc;
 
     @Schema(description = "登记注册类型代码")
     private String djzclxDm;
 
+    @Schema(description = "登记注册类型名称")
+    private String djzclxmc;
+
     @Schema(description = "单位隶属关系代码")
     private String dwlsgxDm;
+
+    @Schema(description = "单位隶属关系名称")
+    private String dwlsgxmc;
 
     @Schema(description = "职工人数")
     private BigDecimal zgrs;
 
     @Schema(description = "纳税人状态代码")
     private String nsrztDm;
+
+    @Schema(description = "纳税人状态名称")
+    private String nsrztmc;
+
+    @Schema(description = "发证成立日期")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date fzcrq;
+
+    @Schema(description = "注销日期")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date zxrq;
 
     @Schema(description = "注册地址")
     private String zcdz;
@@ -82,8 +114,35 @@ public class GhHjSaveReqVO {
     @Schema(description = "系统类别")
     private String xtlbDm;
 
+    @Schema(description = "户籍分类1")
+    private String hjfl1Dm;
+
+    @Schema(description = "户籍分类2")
+    private String hjfl2Dm;
+
+    @Schema(description = "户籍分类3")
+    private String hjfl3Dm;
+
+    @Schema(description = "户籍分类4")
+    private String hjfl4Dm;
+
+    @Schema(description = "户籍分类5")
+    private String hjfl5Dm;
+
+    @Schema(description = "户籍分类6")
+    private String hjfl6Dm;
+
+    @Schema(description = "户籍分类7")
+    private String hjfl7Dm;
+
     @Schema(description = "建会缴纳筹备金标志")
     private String hjfl8Dm;
+
+    @Schema(description = "户籍分类9")
+    private String hjfl9Dm;
+
+    @Schema(description = "属地工会机构代码")
+    private String sdghjgDm;
 
     @Schema(description = "成立工会标志")
     private String clghbj;
@@ -110,28 +169,13 @@ public class GhHjSaveReqVO {
     @Schema(description = "基层工会银行")
     private String jcghyh;
 
-    @Schema(description = "户籍分类1")
-    private String hjfl1Dm;
-
-    @Schema(description = "户籍分类2")
-    private String hjfl2Dm;
-
-    @Schema(description = "户籍分类3")
-    private String hjfl3Dm;
-
-    @Schema(description = "户籍分类5")
-    private String hjfl5Dm;
-
-    @Schema(description = "户籍分类7")
-    private String hjfl7Dm;
-
-    @Schema(description = "所得工会机构代码")
-    private String sdghjgDm;
-
-    @Schema(description = "发证成立日期")
+    @Schema(description = "税务数据同步时间")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date fzcrq;
+    private Date sjtbSj;
 
     @Schema(description = "备注")
     private String bz;
+
+    @Schema(description = "校验码")
+    private String jym;
 }

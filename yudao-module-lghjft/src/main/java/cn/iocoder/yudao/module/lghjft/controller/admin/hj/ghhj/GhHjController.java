@@ -99,13 +99,13 @@ public class GhHjController {
     }
 
     /**
-     * 批量复审
+     * 批量复审 (v1: GET /fushenPl/{djxhs})
      */
-    @PutMapping("/fushen-pl")
+    @GetMapping("/fushenPl/{djxhs}")
     @Operation(summary = "批量复审")
     @PreAuthorize("@ss.hasPermission('lghjft:hjgl:update')")
-    public CommonResult<Boolean> fushenPl(@RequestParam("djxhs") List<String> djxhs) {
-        ghHjService.fushenPlBydjxhs(djxhs);
+    public CommonResult<Boolean> fushenPl(@PathVariable String[] djxhs) {
+        ghHjService.fushenPlBydjxhs(java.util.Arrays.asList(djxhs));
         return success(true);
     }
 
