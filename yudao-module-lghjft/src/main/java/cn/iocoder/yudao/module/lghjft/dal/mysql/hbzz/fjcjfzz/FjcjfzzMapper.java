@@ -13,4 +13,6 @@ import java.util.List;
 public interface FjcjfzzMapper extends BaseMapperX<FjcjfzzDO> {
 
     List<FjcjfzzResVO> selectLegacyList(@Param("req") FjcjfzzPageReqVO reqVO);
+
+    FjcjfzzResVO selectLegacyById(@Param("id") Long id);
 }

@@ -4,12 +4,10 @@ import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.fjcjfzz.vo.FjcjfzzPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.fjcjfzz.vo.FjcjfzzResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.fjcjfzz.vo.FjcjfzzSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.fjcjfzz.FjcjfzzDO;
 import cn.iocoder.yudao.module.lghjft.service.hbzz.fjcjfzz.FjcjfzzService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -74,8 +72,7 @@ public class FjcjfzzController {
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('lghjft:hbzz-fjcjfzz:query')")
     public CommonResult<FjcjfzzResVO> getFjcjfzz(@RequestParam("id") Long id) {
-        FjcjfzzDO fjcjfzz = fjcjfzzService.getFjcjfzz(id);
-        return success(BeanUtils.toBean(fjcjfzz, FjcjfzzResVO.class));
+        return success(fjcjfzzService.getFjcjfzz(id));
     }
 
     @GetMapping("/page")
@@ -93,7 +90,6 @@ public class FjcjfzzController {
                                    HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<FjcjfzzResVO> list = fjcjfzzService.getFjcjfzzPage(pageReqVO).getList();
-        ExcelUtils.write(response, "返基层账.xls", "数据", FjcjfzzResVO.class,
-                BeanUtils.toBean(list, FjcjfzzResVO.class));
+        ExcelUtils.write(response, "返基层账.xls", "数据", FjcjfzzResVO.class, list);
     }
 }

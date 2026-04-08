@@ -30,6 +30,7 @@ public class FjcjfzzPageReqVO extends PageParam {
     private String thbj;
     private String thyy;
     private String schkpch;
+    private String scbz;
     private String createBy;
     private String updateBy;
     private String beginBfwjrq;
@@ -40,4 +41,6 @@ public class FjcjfzzPageReqVO extends PageParam {
     private String endThrq;
     private String beginCreateTime;
     private String endCreateTime;
+    private String beginUpdateTime;
+    private String endUpdateTime;
 }

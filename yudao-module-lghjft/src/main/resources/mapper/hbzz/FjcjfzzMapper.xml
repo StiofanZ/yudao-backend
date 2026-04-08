@@ -22,6 +22,8 @@
         <result property="thrq" column="THRQ"/>
         <result property="thyy" column="THYY"/>
         <result property="schkpch" column="SCHKPCH"/>
+        <result property="bz" column="BZ"/>
+        <result property="scbz" column="SCBZ"/>
         <result property="createBy" column="CREATE_BY"/>
         <result property="createTime" column="CREATE_TIME"/>
         <result property="updateBy" column="UPDATE_BY"/>
@@ -29,7 +31,25 @@
         <result property="qrrq" column="QRRQ"/>
         <result property="dzbj" column="DZBJ"/>
         <result property="yhhdh" column="YHHDH"/>
-        <result property="bz" column="BZ"/>
+    </resultMap>
+
+    <!-- 子表映射（v1 CbjQrszResult） -->
+    <resultMap type="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.fjcjfzz.vo.FjcjfzzResVO$CbjQrszItem" id="CbjQrszResult">
+        <result property="hkxxId" column="sub_HKXX_ID"/>
+        <result property="ghHkxxJym" column="sub_GH_HKXX_JYM"/>
+        <result property="dzbj" column="sub_DZBJ"/>
+        <result property="qrrq" column="sub_QRRQ"/>
+        <result property="yhhdh" column="sub_YHHDH"/>
+        <result property="bz" column="sub_BZ"/>
+        <result property="createBy" column="sub_CREATE_BY"/>
+        <result property="createTime" column="sub_CREATE_TIME"/>
+        <result property="updateBy" column="sub_UPDATE_BY"/>
+        <result property="updateTime" column="sub_UPDATE_TIME"/>
+    </resultMap>
+
+    <!-- 主表+子表集合（v1 FjcjfzzCbjQrszResult） -->
+    <resultMap id="FjcjfzzDetailResult" type="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.fjcjfzz.vo.FjcjfzzResVO" extends="FjcjfzzResult">
+        <collection property="cbjQrszList" notNullColumn="sub_HKXX_ID" javaType="java.util.List" resultMap="CbjQrszResult"/>
     </resultMap>
 
     <!-- v1 selectFjcjfzzVo（完全一致） -->
@@ -60,7 +80,11 @@
                b.QRRQ,
                b.DZBJ,
                b.YHHDH,
-               b.BZ
+               b.BZ,
+               b.CREATE_BY   as sub_CREATE_BY,
+               b.CREATE_TIME as sub_CREATE_TIME,
+               b.UPDATE_BY   as sub_UPDATE_BY,
+               b.UPDATE_TIME as sub_UPDATE_TIME
         from gh_hkxx a
                  left join gh_hkxx_qrsz b on b.HKXX_ID = a.HKXX_ID
     </sql>
@@ -96,10 +120,54 @@
             <if test="req.thyy != null and req.thyy != ''">and THYY = #{req.thyy}</if>
             <if test="req.schkpch != null and req.schkpch != ''">and SCHKPCH = #{req.schkpch}</if>
             <if test="req.bz != null and req.bz != ''">and BZ like concat('%', #{req.bz}, '%')</if>
+            <if test="req.scbz != null and req.scbz != ''">and SCBZ = #{req.scbz}</if>
             <if test="req.createBy != null and req.createBy != ''">and CREATE_BY = #{req.createBy}</if>
+            <if test="req.beginCreateTime != null and req.beginCreateTime != '' and req.endCreateTime != null and req.endCreateTime != ''">and CREATE_TIME between
+                #{req.beginCreateTime} and #{req.endCreateTime}
+            </if>
             <if test="req.updateBy != null and req.updateBy != ''">and UPDATE_BY = #{req.updateBy}</if>
+            <if test="req.beginUpdateTime != null and req.beginUpdateTime != '' and req.endUpdateTime != null and req.endUpdateTime != ''">and UPDATE_TIME between
+                #{req.beginUpdateTime} and #{req.endUpdateTime}
+            </if>
         </where>
         order by hkpch desc
+    </select>
+
+    <!-- v1 selectFjcjfzzByHkxxId（完全一致，返回子表集合） -->
+    <select id="selectLegacyById" resultMap="FjcjfzzDetailResult">
+        select a.HKXX_ID,
+               a.HKPCH,
+               a.XH,
+               a.LX,
+               a.ZH,
+               a.HM,
+               a.HH,
+               a.JE,
+               a.dept_id,
+               a.DZ,
+               a.FY,
+               a.JYM,
+               a.THBJ,
+               a.THRQ,
+               a.THYY,
+               a.SCHKPCH,
+               a.CREATE_BY,
+               a.CREATE_TIME,
+               a.UPDATE_BY,
+               a.UPDATE_TIME,
+               b.HKXX_ID     as sub_HKXX_ID,
+               b.GH_HKXX_JYM as sub_GH_HKXX_JYM,
+               b.QRRQ        as sub_QRRQ,
+               b.DZBJ        as sub_DZBJ,
+               b.YHHDH       as sub_YHHDH,
+               b.BZ          as sub_BZ,
+               b.CREATE_BY   as sub_CREATE_BY,
+               b.CREATE_TIME as sub_CREATE_TIME,
+               b.UPDATE_BY   as sub_UPDATE_BY,
+               b.UPDATE_TIME as sub_UPDATE_TIME
+        from gh_hkxx a
+                 left join gh_hkxx_qrsz b on b.HKXX_ID = a.HKXX_ID
+        where a.HKXX_ID = #{id}
     </select>
 
 </mapper>

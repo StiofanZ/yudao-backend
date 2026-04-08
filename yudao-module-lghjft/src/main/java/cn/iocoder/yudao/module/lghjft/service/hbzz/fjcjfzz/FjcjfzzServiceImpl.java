@@ -45,7 +45,7 @@ public class FjcjfzzServiceImpl implements FjcjfzzService {
                 AdminUserDO user = userService.getUser(getLoginUserId());
                 if (user != null && user.getDeptId() != null) {
                     Map<String, Object> dept = jdbcTemplate.queryForMap(
-                            "SELECT yhzh, yhzh1, yhzh2, yhzh3 FROM sys_dept WHERE dept_id = ?",
+                            "select yhzh, yhzh1, yhzh2, yhzh3 from sys_dept where dept_id = ?",
                             user.getDeptId());
                     req.setZh(dept.get("yhzh") != null ? dept.get("yhzh").toString() : null);
                     req.setZh1(dept.get("yhzh1") != null ? dept.get("yhzh1").toString() : null);
@@ -75,8 +75,8 @@ public class FjcjfzzServiceImpl implements FjcjfzzService {
     }
 
     @Override
-    public FjcjfzzDO getFjcjfzz(Long id) {
-        return fjcjfzzMapper.selectById(id);
+    public FjcjfzzResVO getFjcjfzz(Long id) {
+        return fjcjfzzMapper.selectLegacyById(id);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -84,6 +84,8 @@ public class FjcjfzzServiceImpl implements FjcjfzzService {
     public Long createFjcjfzz(FjcjfzzSaveReqVO createReqVO) {
         FjcjfzzDO fjcjfzz = BeanUtils.toBean(createReqVO, FjcjfzzDO.class);
         fjcjfzzMapper.insert(fjcjfzz);
+        // v1: 批量插入子表 gh_hkxx_qrsz
+        insertCbjQrsz(fjcjfzz.getHkxxId(), fjcjfzz.getJym(), createReqVO.getCbjQrszList());
         return fjcjfzz.getHkxxId();
     }
 
@@ -91,6 +93,12 @@ public class FjcjfzzServiceImpl implements FjcjfzzService {
     @Override
     public void updateFjcjfzz(FjcjfzzSaveReqVO updateReqVO) {
         validateExists(updateReqVO.getHkxxId());
+        // v1: 先删除旧子表记录，再批量插入新子表记录
+        jdbcTemplate.update("delete from gh_hkxx_qrsz where hkxx_id = ?", updateReqVO.getHkxxId());
+        FjcjfzzDO mainRecord = fjcjfzzMapper.selectById(updateReqVO.getHkxxId());
+        insertCbjQrsz(updateReqVO.getHkxxId(), mainRecord != null ? mainRecord.getJym() : null,
+                updateReqVO.getCbjQrszList());
+        // v1: 更新主表
         FjcjfzzDO updateObj = BeanUtils.toBean(updateReqVO, FjcjfzzDO.class);
         fjcjfzzMapper.updateById(updateObj);
     }
@@ -99,13 +107,48 @@ public class FjcjfzzServiceImpl implements FjcjfzzService {
     @Override
     public void deleteFjcjfzz(Long id) {
         validateExists(id);
+        // v1: 先删子表再删主表
+        jdbcTemplate.update("delete from gh_hkxx_qrsz where hkxx_id = ?", id);
         fjcjfzzMapper.deleteById(id);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteFjcjfzzListByIds(List<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return;
+        }
+        // v1: 先删子表再删主表
+        String placeholders = String.join(",", ids.stream().map(i -> "?").toList());
+        jdbcTemplate.update("delete from gh_hkxx_qrsz where hkxx_id in (" + placeholders + ")",
+                ids.toArray());
         fjcjfzzMapper.deleteByIds(ids);
+    }
+
+    /**
+     * v1: 批量插入 gh_hkxx_qrsz 子表
+     */
+    private void insertCbjQrsz(Long hkxxId, String jym, List<FjcjfzzSaveReqVO.CbjQrszItem> items) {
+        if (items == null || items.isEmpty()) {
+            return;
+        }
+        String nickName = null;
+        try {
+            AdminUserDO user = userService.getUser(getLoginUserId());
+            if (user != null) {
+                nickName = user.getNickname();
+            }
+        } catch (Exception e) {
+            // ignore
+        }
+        for (FjcjfzzSaveReqVO.CbjQrszItem item : items) {
+            jdbcTemplate.update(
+                    "insert into gh_hkxx_qrsz (hkxx_id, gh_hkxx_jym, qrrq, yhhdh, bz, create_by, create_time, update_by, update_time) " +
+                            "values (?, ?, ?, ?, ?, ?, sysdate(), ?, sysdate())",
+                    hkxxId, jym, item.getQrrq(), item.getYhhdh(), item.getBz(),
+                    nickName, item.getUpdateBy()
+            );
+        }
     }
 
     private void validateExists(Long id) {
