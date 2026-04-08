@@ -16,5 +16,9 @@ public interface XwqyjftjMapper {
 
     List<XwqyjftjfhAggVO> selectXwqyjftjfhList(@Param("req") XwqyjftjPageReqVO req);
 
+    long selectXwqyjftjfhCount(@Param("req") XwqyjftjPageReqVO req);
+
     List<XwqyjftjmxResVO> selectXwqyjftjmxList(@Param("req") XwqyjftjPageReqVO req);
+
+    long selectXwqyjftjmxCount(@Param("req") XwqyjftjPageReqVO req);
 }

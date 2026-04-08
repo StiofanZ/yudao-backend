@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.service.xwqy.xwqyjftj;
 
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjftj.vo.XwqyjftjAggVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjftj.vo.XwqyjftjPageReqVO;
@@ -26,15 +27,34 @@ public class XwqyjftjServiceImpl implements XwqyjftjService {
     }
 
     @Override
+    public PageResult<XwqyjftjfhAggVO> getXwqyjftjfhPage(XwqyjftjPageReqVO req) {
+        fillDeptId(req);
+        req.setOffset((req.getPageNo() - 1) * req.getPageSize());
+        List<XwqyjftjfhAggVO> list = xwqyjftjMapper.selectXwqyjftjfhList(req);
+        long total = xwqyjftjMapper.selectXwqyjftjfhCount(req);
+        return new PageResult<>(list, total);
+    }
+
+    @Override
     public List<XwqyjftjfhAggVO> getXwqyjftjfhList(XwqyjftjPageReqVO req) {
         fillDeptId(req);
+        req.setOffset(null);
         return xwqyjftjMapper.selectXwqyjftjfhList(req);
     }
 
     @Override
-    public List<XwqyjftjmxResVO> getXwqyjftjmxList(XwqyjftjPageReqVO req) {
-        // v1 listmx: deptId直接等于(不展开子部门)
+    public PageResult<XwqyjftjmxResVO> getXwqyjftjmxPage(XwqyjftjPageReqVO req) {
         fillDeptId(req);
+        req.setOffset((req.getPageNo() - 1) * req.getPageSize());
+        List<XwqyjftjmxResVO> list = xwqyjftjMapper.selectXwqyjftjmxList(req);
+        long total = xwqyjftjMapper.selectXwqyjftjmxCount(req);
+        return new PageResult<>(list, total);
+    }
+
+    @Override
+    public List<XwqyjftjmxResVO> getXwqyjftjmxList(XwqyjftjPageReqVO req) {
+        fillDeptId(req);
+        req.setOffset(null);
         return xwqyjftjMapper.selectXwqyjftjmxList(req);
     }
 

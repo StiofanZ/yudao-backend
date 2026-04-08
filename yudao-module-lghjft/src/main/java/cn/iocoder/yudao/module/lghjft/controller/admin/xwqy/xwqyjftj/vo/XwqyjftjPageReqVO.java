@@ -59,4 +59,7 @@ public class XwqyjftjPageReqVO extends PageParam {
     private String beginCbjthrq;
     @Schema(description = "筹备金退还日期止")
     private String endCbjthrq;
+
+    @Schema(description = "分页偏移量", hidden = true)
+    private Integer offset;
 }

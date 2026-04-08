@@ -2,6 +2,7 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjftj;
 
 import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjftj.vo.XwqyjftjAggVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjftj.vo.XwqyjftjPageReqVO;
@@ -34,6 +35,9 @@ public class XwqyjftjController {
     @Resource
     private XwqyjftjService xwqyjftjService;
 
+    /**
+     * v1: /xwqy/xwqyjftj/list — startPage() commented out => no pagination
+     */
     @GetMapping("/list")
     @Operation(summary = "获得小微经费统计汇总列表")
     @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqyjftj:query')")
@@ -42,20 +46,26 @@ public class XwqyjftjController {
         return success(list);
     }
 
+    /**
+     * v1: /xwqy/xwqyjftj/listfh — startPage() => paginated
+     */
     @GetMapping("/list-fh")
-    @Operation(summary = "获得小微经费统计反馈列表(按企业分组)")
+    @Operation(summary = "获得小微经费统计分户列表(按企业分组,分页)")
     @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqyjftj:query')")
-    public CommonResult<List<XwqyjftjfhAggVO>> getXwqyjftjfhList(@Valid XwqyjftjPageReqVO reqVO) {
-        List<XwqyjftjfhAggVO> list = xwqyjftjService.getXwqyjftjfhList(reqVO);
-        return success(list);
+    public CommonResult<PageResult<XwqyjftjfhAggVO>> getXwqyjftjfhPage(@Valid XwqyjftjPageReqVO reqVO) {
+        PageResult<XwqyjftjfhAggVO> page = xwqyjftjService.getXwqyjftjfhPage(reqVO);
+        return success(page);
     }
 
+    /**
+     * v1: /xwqy/xwqyjftj/listmx — startPage() => paginated
+     */
     @GetMapping("/list-mx")
-    @Operation(summary = "获得小微经费统计明细列表")
+    @Operation(summary = "获得小微经费统计明细列表(分页)")
     @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqyjftj:query')")
-    public CommonResult<List<XwqyjftjmxResVO>> getXwqyjftjmxList(@Valid XwqyjftjPageReqVO reqVO) {
-        List<XwqyjftjmxResVO> list = xwqyjftjService.getXwqyjftjmxList(reqVO);
-        return success(list);
+    public CommonResult<PageResult<XwqyjftjmxResVO>> getXwqyjftjmxPage(@Valid XwqyjftjPageReqVO reqVO) {
+        PageResult<XwqyjftjmxResVO> page = xwqyjftjService.getXwqyjftjmxPage(reqVO);
+        return success(page);
     }
 
     @GetMapping("/export-excel")
@@ -69,13 +79,14 @@ public class XwqyjftjController {
     }
 
     @GetMapping("/export-excel-fh")
-    @Operation(summary = "导出小微经费统计反馈 Excel")
+    @Operation(summary = "导出小微经费统计分户 Excel")
     @PreAuthorize("@ss.hasPermission('lghjft:xwqy-xwqyjftj:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportXwqyjftjfhExcel(@Valid XwqyjftjPageReqVO reqVO,
                                       HttpServletResponse response) throws IOException {
+        reqVO.setOffset(null);
         List<XwqyjftjfhAggVO> list = xwqyjftjService.getXwqyjftjfhList(reqVO);
-        ExcelUtils.write(response, "小微经费统计反馈.xls", "数据", XwqyjftjfhAggVO.class, list);
+        ExcelUtils.write(response, "小微经费统计分户.xls", "数据", XwqyjftjfhAggVO.class, list);
     }
 
     @GetMapping("/export-excel-mx")
@@ -84,6 +95,7 @@ public class XwqyjftjController {
     @ApiAccessLog(operateType = EXPORT)
     public void exportXwqyjftjmxExcel(@Valid XwqyjftjPageReqVO reqVO,
                                       HttpServletResponse response) throws IOException {
+        reqVO.setOffset(null);
         List<XwqyjftjmxResVO> list = xwqyjftjService.getXwqyjftjmxList(reqVO);
         ExcelUtils.write(response, "小微经费统计明细.xls", "数据", XwqyjftjmxResVO.class, list);
     }
