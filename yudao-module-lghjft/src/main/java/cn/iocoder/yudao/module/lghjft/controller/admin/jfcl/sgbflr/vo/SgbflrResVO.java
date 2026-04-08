@@ -52,4 +52,12 @@ public class SgbflrResVO {
     private String bz;
     @Schema(description = "系统生成标志")
     private String scbz;
+    @Schema(description = "创建人")
+    private String createBy;
+    @Schema(description = "创建时间")
+    private LocalDateTime createTime;
+    @Schema(description = "更新人")
+    private String updateBy;
+    @Schema(description = "更新时间")
+    private LocalDateTime updateTime;
 }

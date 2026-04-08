@@ -6,6 +6,8 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.sgbflr.vo.SgbflrSave
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.sgbflr.SgbflrDO;
 import jakarta.validation.Valid;
 
+import java.util.List;
+
 public interface SgbflrService {
 
     Long createSgbflr(@Valid SgbflrSaveReqVO createReqVO);
@@ -13,6 +15,8 @@ public interface SgbflrService {
     void updateSgbflr(@Valid SgbflrSaveReqVO updateReqVO);
 
     void deleteSgbflr(Long id);
+
+    void deleteSgbflrBatch(List<Long> ids);
 
     SgbflrDO getSgbflr(Long id);
 

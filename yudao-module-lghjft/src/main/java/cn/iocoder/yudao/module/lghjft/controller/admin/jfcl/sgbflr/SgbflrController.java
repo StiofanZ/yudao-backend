@@ -22,6 +22,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.EXPORT;
@@ -57,6 +58,16 @@ public class SgbflrController {
     @PreAuthorize("@ss.hasPermission('lghjft:jfcl-sgbflr:delete')")
     public CommonResult<Boolean> deleteSgbflr(@RequestParam("id") Long id) {
         sgbflrService.deleteSgbflr(id);
+        return success(true);
+    }
+
+    @DeleteMapping("/delete-list")
+    @Operation(summary = "批量删除手工拨付录入")
+    @Parameter(name = "ids", description = "编号列表", required = true)
+    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-sgbflr:delete')")
+    public CommonResult<Boolean> deleteSgbflrList(@RequestParam("ids") String ids) {
+        List<Long> idList = Arrays.stream(ids.split(",")).map(Long::parseLong).toList();
+        sgbflrService.deleteSgbflrBatch(idList);
         return success(true);
     }
 

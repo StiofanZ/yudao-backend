@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils.getLoginUserId;
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.JFCL_NOT_EXISTS;
@@ -32,15 +35,22 @@ public class SgbflrServiceImpl implements SgbflrService {
     @Transactional(rollbackFor = Exception.class)
     public Long createSgbflr(SgbflrSaveReqVO createReqVO) {
         SgbflrDO entity = BeanUtils.toBean(createReqVO, SgbflrDO.class);
+        entity.setCreateBy(getLoginUserNickname());
+        entity.setCreateTime(LocalDateTime.now());
         sgbflrMapper.insert(entity);
         return entity.getHkxxId();
     }
 
+    /**
+     * V1 update: all fields editable for sgbflr
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateSgbflr(SgbflrSaveReqVO updateReqVO) {
         validateSgbflrExists(updateReqVO.getHkxxId());
         SgbflrDO updateObj = BeanUtils.toBean(updateReqVO, SgbflrDO.class);
+        updateObj.setUpdateBy(getLoginUserNickname());
+        updateObj.setUpdateTime(LocalDateTime.now());
         sgbflrMapper.updateById(updateObj);
     }
 
@@ -49,6 +59,12 @@ public class SgbflrServiceImpl implements SgbflrService {
     public void deleteSgbflr(Long id) {
         validateSgbflrExists(id);
         sgbflrMapper.deleteById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteSgbflrBatch(List<Long> ids) {
+        sgbflrMapper.deleteByIds(ids);
     }
 
     @Override
@@ -76,6 +92,15 @@ public class SgbflrServiceImpl implements SgbflrService {
     private void validateSgbflrExists(Long id) {
         if (sgbflrMapper.selectById(id) == null) {
             throw exception(JFCL_NOT_EXISTS);
+        }
+    }
+
+    private String getLoginUserNickname() {
+        try {
+            AdminUserDO user = userService.getUser(getLoginUserId());
+            return user != null ? user.getNickname() : null;
+        } catch (Exception e) {
+            return null;
         }
     }
 }
