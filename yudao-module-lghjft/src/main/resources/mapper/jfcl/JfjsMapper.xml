@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.jfcl.jfjs.JfjsMapper">
+
+    <!-- v1: selectJfclJfjs — 查询 gh_jf 中待结算数据 -->
+    <select id="selectJfclJfjs" resultType="java.util.Map">
+        select t.spuuid, t.jmse
+        from gh_jf t
+        where <![CDATA[t.rkrq >= date_format(#{rkrqStart}, '%Y-%m-%d')
+          and t.rkrq <= date_format(#{rkrqEnd}, '%Y-%m-%d')]]>
+          and t.jsbj = 'N'
+        <if test="spuuid != null and spuuid != ''">
+            and t.spuuid = #{spuuid}
+        </if>
+    </select>
+
+    <!-- v1: updateJfclJfjs — 批量更新 gh_jf 的 jsbj/jsrq/update_by/update_time (CASE on spuuid) -->
+    <update id="updateJfclJfjs" parameterType="java.util.List">
+        update gh_jf
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="jsbj = case" suffix="end,">
+                <foreach collection="list" item="item">
+                    when spuuid = #{item.spuuid} then #{item.jsbj}
+                </foreach>
+            </trim>
+            <trim prefix="jsrq = case" suffix="end,">
+                <foreach collection="list" item="item">
+                    when spuuid = #{item.spuuid} then #{item.jsrq}
+                </foreach>
+            </trim>
+            <trim prefix="update_by = case" suffix="end,">
+                <foreach collection="list" item="item">
+                    when spuuid = #{item.spuuid} then #{item.updateBy}
+                </foreach>
+            </trim>
+            <trim prefix="update_time = case" suffix="end,">
+                <foreach collection="list" item="item">
+                    when spuuid = #{item.spuuid} then #{item.updateTime}
+                </foreach>
+            </trim>
+        </trim>
+        where spuuid in
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item.spuuid}
+        </foreach>
+    </update>
+
+</mapper>

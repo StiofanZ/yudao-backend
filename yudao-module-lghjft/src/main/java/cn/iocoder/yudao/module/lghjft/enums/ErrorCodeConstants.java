@@ -89,6 +89,7 @@ public interface ErrorCodeConstants {
 
     // JFCL module
     ErrorCode JFCL_NOT_EXISTS = new ErrorCode(2_026_000_001, "经费处理记录不存在");
+    ErrorCode JFCL_JFJS_NO_DATA = new ErrorCode(2_026_000_002, "无有效数据进行结算");
 
     // HJGL module - special operations
     ErrorCode HJGL_DJXHS_EMPTY = new ErrorCode(2_027_000_001, "登记序号列表不能为空");

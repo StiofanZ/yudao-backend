@@ -13,6 +13,7 @@ import java.util.Date;
 
 /**
  * 经费处理-经费结算 DO (gh_qsjshkrj 表)
+ * v1: selecList 查询此表
  */
 @TableName("gh_qsjshkrj")
 @Data

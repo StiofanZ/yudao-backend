@@ -10,25 +10,15 @@ import java.time.LocalDateTime;
 @Data
 public class JfjsPageReqVO extends PageParam {
 
-    @Schema(description = "社会信用代码")
-    private String shxydm;
+    @Schema(description = "税票ID")
+    private String spuuid;
 
-    @Schema(description = "纳税人名称")
-    private String nsrmc;
-
-    @Schema(description = "工会机构代码")
-    private String deptId;
-
-    @Schema(description = "主管税务局代码")
-    private String zgswjDm;
-
-    @Schema(description = "结算标记")
-    private String jsbj;
-
-    @Schema(description = "征收品目代码")
-    private String zspmDm;
     @Schema(description = "入库日期-起")
-    private LocalDateTime rkrqStart;
+    private String rkrqStart;
+
     @Schema(description = "入库日期-止")
-    private LocalDateTime rkrqEnd;
+    private String rkrqEnd;
+
+    @Schema(description = "结算日期")
+    private String jsrq;
 }
