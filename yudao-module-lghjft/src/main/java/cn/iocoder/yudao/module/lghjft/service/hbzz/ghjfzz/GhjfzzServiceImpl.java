@@ -7,9 +7,7 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.ghjfzz.vo.GhjfzzPage
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.ghjfzz.vo.GhjfzzResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.ghjfzz.vo.GhjfzzSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.ghjfzz.GhjfzzDO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.hkxx.HkxxQrszDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.hbzz.ghjfzz.GhjfzzMapper;
-import cn.iocoder.yudao.module.lghjft.dal.mysql.hbzz.hkxx.HkxxQrszMapper;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
 import cn.iocoder.yudao.module.system.service.user.AdminUserService;
 import jakarta.annotation.Resource;
@@ -34,9 +32,6 @@ public class GhjfzzServiceImpl implements GhjfzzService {
     private GhjfzzMapper ghjfzzMapper;
 
     @Resource
-    private HkxxQrszMapper hkxxQrszMapper;
-
-    @Resource
     private AdminUserService userService;
 
     @Resource
@@ -52,7 +47,7 @@ public class GhjfzzServiceImpl implements GhjfzzService {
                 AdminUserDO user = userService.getUser(getLoginUserId());
                 if (user != null && user.getDeptId() != null) {
                     Map<String, Object> dept = jdbcTemplate.queryForMap(
-                            "SELECT yhzh, yhzh1, yhzh2, yhzh3 FROM sys_dept WHERE dept_id = ?",
+                            "select yhzh, yhzh1, yhzh2, yhzh3 from sys_dept where dept_id = ?",
                             user.getDeptId());
                     req.setZh(dept.get("yhzh") != null ? dept.get("yhzh").toString() : null);
                     req.setZh1(dept.get("yhzh1") != null ? dept.get("yhzh1").toString() : null);
@@ -91,6 +86,8 @@ public class GhjfzzServiceImpl implements GhjfzzService {
     public Long createGhjfzz(GhjfzzSaveReqVO createReqVO) {
         GhjfzzDO ghjfzz = BeanUtils.toBean(createReqVO, GhjfzzDO.class);
         ghjfzzMapper.insert(ghjfzz);
+        // v1: 批量插入子表 gh_hkxx_qrsz
+        insertGhjfQrsz(ghjfzz.getHkxxId(), ghjfzz.getJym(), createReqVO.getGhjfQrszList());
         return ghjfzz.getHkxxId();
     }
 
@@ -98,37 +95,63 @@ public class GhjfzzServiceImpl implements GhjfzzService {
     @Override
     public void updateGhjfzz(GhjfzzSaveReqVO updateReqVO) {
         validateExists(updateReqVO.getHkxxId());
+        // v1: 先删除旧子表记录，再批量插入新子表记录
+        jdbcTemplate.update("delete from gh_hkxx_qrsz where hkxx_id = ?", updateReqVO.getHkxxId());
         GhjfzzDO mainRecord = ghjfzzMapper.selectById(updateReqVO.getHkxxId());
-        HkxxQrszDO qrsz = hkxxQrszMapper.selectLatestByHkxxId(Math.toIntExact(updateReqVO.getHkxxId()));
-        if (qrsz == null) {
-            qrsz = new HkxxQrszDO();
-            qrsz.setHkxxId(Math.toIntExact(updateReqVO.getHkxxId()));
-            qrsz.setGhHkxxJym(mainRecord.getJym());
-            qrsz.setDzbj(updateReqVO.getDzbj());
-            qrsz.setQrrq(updateReqVO.getQrrq());
-            qrsz.setYhhdh(updateReqVO.getYhhdh());
-            qrsz.setBz(updateReqVO.getBz());
-            hkxxQrszMapper.insert(qrsz);
-            return;
-        }
-        qrsz.setDzbj(updateReqVO.getDzbj() != null ? updateReqVO.getDzbj() : qrsz.getDzbj());
-        qrsz.setQrrq(updateReqVO.getQrrq());
-        qrsz.setYhhdh(updateReqVO.getYhhdh());
-        qrsz.setBz(updateReqVO.getBz());
-        hkxxQrszMapper.updateById(qrsz);
+        insertGhjfQrsz(updateReqVO.getHkxxId(), mainRecord != null ? mainRecord.getJym() : null,
+                updateReqVO.getGhjfQrszList());
+        // v1: 更新主表
+        GhjfzzDO updateObj = BeanUtils.toBean(updateReqVO, GhjfzzDO.class);
+        ghjfzzMapper.updateById(updateObj);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteGhjfzz(Long id) {
         validateExists(id);
+        // v1: 先删子表再删主表
+        jdbcTemplate.update("delete from gh_hkxx_qrsz where hkxx_id = ?", id);
         ghjfzzMapper.deleteById(id);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteGhjfzzListByIds(List<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return;
+        }
+        // v1: 先删子表再删主表
+        String placeholders = String.join(",", ids.stream().map(i -> "?").toList());
+        jdbcTemplate.update("delete from gh_hkxx_qrsz where hkxx_id in (" + placeholders + ")",
+                ids.toArray());
         ghjfzzMapper.deleteByIds(ids);
+    }
+
+    /**
+     * v1: 批量插入 gh_hkxx_qrsz 子表
+     */
+    private void insertGhjfQrsz(Long hkxxId, String jym, List<GhjfzzSaveReqVO.GhjfQrszItem> items) {
+        if (items == null || items.isEmpty()) {
+            return;
+        }
+        // 获取当前登录用户昵称作为 createBy
+        String nickName = null;
+        try {
+            AdminUserDO user = userService.getUser(getLoginUserId());
+            if (user != null) {
+                nickName = user.getNickname();
+            }
+        } catch (Exception e) {
+            // ignore
+        }
+        for (GhjfzzSaveReqVO.GhjfQrszItem item : items) {
+            jdbcTemplate.update(
+                    "insert into gh_hkxx_qrsz (hkxx_id, gh_hkxx_jym, qrrq, yhhdh, bz, create_by, create_time, update_by, update_time) " +
+                            "values (?, ?, ?, ?, ?, ?, sysdate(), ?, sysdate())",
+                    hkxxId, jym, item.getQrrq(), item.getYhhdh(), item.getBz(),
+                    nickName, item.getUpdateBy()
+            );
+        }
     }
 
     private void validateExists(Long id) {
