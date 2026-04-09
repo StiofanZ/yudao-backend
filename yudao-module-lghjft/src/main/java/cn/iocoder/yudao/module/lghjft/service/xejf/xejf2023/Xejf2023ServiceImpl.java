@@ -3,10 +3,13 @@ package cn.iocoder.yudao.module.lghjft.service.xejf.xejf2023;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xejf2023.vo.Xejf2023PageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xejf2023.vo.Xejf2023ResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xejf2023.vo.Xejf2023SaveReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xejf2023.vo.XejftjResVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.xejf.xejf2023.Xejf2023DO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.xejf.xejf2023.Xejf2023Mapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,8 +67,10 @@ public class Xejf2023ServiceImpl implements Xejf2023Service {
     }
 
     @Override
-    public PageResult<Xejf2023DO> getXejf2023Page(Xejf2023PageReqVO pageReqVO) {
-        return xejf2023Mapper.selectPage(pageReqVO);
+    public PageResult<Xejf2023ResVO> getXejf2023Page(Xejf2023PageReqVO pageReqVO) {
+        Page<Xejf2023ResVO> page = new Page<>(pageReqVO.getPageNo(), pageReqVO.getPageSize());
+        IPage<Xejf2023ResVO> ipage = xejf2023Mapper.selectPageWithJoin(page, pageReqVO);
+        return new PageResult<>(ipage.getRecords(), ipage.getTotal());
     }
 
     @Override

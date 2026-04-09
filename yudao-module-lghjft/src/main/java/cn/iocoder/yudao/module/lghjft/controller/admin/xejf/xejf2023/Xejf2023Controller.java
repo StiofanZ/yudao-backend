@@ -83,8 +83,8 @@ public class Xejf2023Controller {
     @Operation(summary = "获得小额缴费明细分页")
     @PreAuthorize("@ss.hasPermission('lghjft:xejf-xejf2023:query')")
     public CommonResult<PageResult<Xejf2023ResVO>> page(@Valid Xejf2023PageReqVO pageReqVO) {
-        PageResult<Xejf2023DO> pageResult = xejf2023Service.getXejf2023Page(pageReqVO);
-        return success(BeanUtils.toBean(pageResult, Xejf2023ResVO.class));
+        PageResult<Xejf2023ResVO> pageResult = xejf2023Service.getXejf2023Page(pageReqVO);
+        return success(pageResult);
     }
 
     @GetMapping("/page-tz")
@@ -109,8 +109,7 @@ public class Xejf2023Controller {
     public void exportExcel(@Valid Xejf2023PageReqVO pageReqVO,
                             HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
-        List<Xejf2023DO> list = xejf2023Service.getXejf2023Page(pageReqVO).getList();
-        ExcelUtils.write(response, "小额缴费明细.xls", "数据", Xejf2023ResVO.class,
-                BeanUtils.toBean(list, Xejf2023ResVO.class));
+        List<Xejf2023ResVO> list = xejf2023Service.getXejf2023Page(pageReqVO).getList();
+        ExcelUtils.write(response, "小额缴费明细.xls", "数据", Xejf2023ResVO.class, list);
     }
 }

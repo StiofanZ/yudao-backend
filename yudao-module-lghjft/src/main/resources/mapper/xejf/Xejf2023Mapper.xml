@@ -2,49 +2,100 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.xejf.xejf2023.Xejf2023Mapper">
 
+    <sql id="selectXejf2023Vo">
+        select jf.ghjf_id, jf.spuuid, jf.djxh, jf.shxydm, jf.nsrmc, jf.nsrjc, jf.dept_id,
+               jf.ghjgxzjb, jf.clghbj, jf.hyghbz, jf.sdghjg_dm, jf.sdghjgxzjb,
+               jf.zgswj_dm, jf.zgswskfj_dm, jf.ssgly_dm, jf.ghlb_dm, jf.xtlb_dm,
+               jf.zzjglx_dm, jf.hy_dm, jf.djzclx_dm, jf.dwlsgx_dm, jf.sblb_dm,
+               jf.nssbrq, jf.pzxh, jf.pzmxxh, jf.skssqq, jf.skssqz,
+               jf.zsswjg_dm, jf.skssswjg_dm, jf.skgk_dm, jf.dzsphm,
+               jf.pzzl_dm, jf.pzzg_dm, jf.pzhm, jf.kpy_dm, jf.kpy_xm,
+               jf.zspm_dm, jf.zszm_dm, jf.yskm_dm,
+               jf.gzze, jf.sl, jf.ynse, jf.jmse, jf.yjse, jf.ybtse,
+               jf.jkfs_dm, jf.jfhb, jf.jfzh, jf.jfhm, jf.jfhh, jf.jfyh,
+               jf.rkrq, jf.jsbj, jf.jsrq, jf.jsczy,
+               jf.jcghzh, jf.jcghhm, jf.jcghhh, jf.jcghbl, jf.jcghje,
+               jf.cbjzh, jf.cbjhm, jf.cbjhh, jf.cbjbl, jf.cbjje,
+               jf.hyghzh, jf.hyghhm, jf.hyghhh, jf.hyghbl, jf.hyghje,
+               jf.xjghzh, jf.xjghhm, jf.xjghhh, jf.xjghbl, jf.xjghje,
+               jf.sjghzh, jf.sjghhm, jf.sjghhh, jf.sjghbl, jf.sjghje,
+               jf.szghzh, jf.szghhm, jf.szghhh, jf.szghbl, jf.szghje,
+               jf.qgghzh, jf.qgghhm, jf.qgghhh, jf.qgghbl, jf.qgghje,
+               jf.jcjzh, jf.jcjhm, jf.jcjhh, jf.jcjbl, jf.jcjje,
+               jf.jcwsh,
+               jf.sdszh, jf.sdshm, jf.sdshh, jf.sdsbl, jf.sdsje,
+               jf.swjgzh, jf.swjghm, jf.swjghh, jf.swjgbl, jf.swjgje,
+               jf.cbjthbj, jf.cbjthrq, jf.cbjthczy, jf.jym, jf.hkpch,
+               jf.sdghzh, jf.sdghhm, jf.sdghhh, jf.sdghbl, jf.sdghje,
+               hj.hjfl6_dm as xelx23, hj.hjfl4_dm as xelx24,
+               hj.hjfl10_dm as xelx25, hj.hjfl9_dm as xwlx
+        from gh_jf jf
+        left join gh_hj hj on jf.djxh = hj.djxh
+    </sql>
+
+    <!-- 小额缴费明细分页（含 LEFT JOIN gh_hj） -->
+    <select id="selectPageWithJoin" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xejf2023.vo.Xejf2023ResVO">
+        <include refid="selectXejf2023Vo"/>
+        <where>
+            <if test="req.ghjfId != null">and jf.ghjf_id = #{req.ghjfId}</if>
+            <if test="req.djxh != null and req.djxh != ''">and jf.djxh = #{req.djxh}</if>
+            <if test="req.shxydm != null and req.shxydm != ''">and jf.shxydm = #{req.shxydm}</if>
+            <if test="req.nsrmc != null and req.nsrmc != ''">and jf.nsrmc like concat('%', #{req.nsrmc}, '%')</if>
+            <if test="req.deptId != null and req.deptId != ''">and (jf.dept_id = #{req.deptId} or jf.sdghjg_dm = #{req.deptId})</if>
+            <if test="req.zspmDm != null and req.zspmDm != ''">and jf.zspm_dm = #{req.zspmDm}</if>
+            <if test="req.jsbj != null">
+                and jf.jsbj in
+                <foreach collection="req.jsbj" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        order by jf.ghjf_id desc
+    </select>
+
     <!-- 小额缴费台账分页 -->
     <select id="selectPageTz" resultType="cn.iocoder.yudao.module.lghjft.dal.dataobject.xejf.xejf2023.Xejf2023DO">
-        SELECT * FROM gh_jf
+        select * from gh_jf
         <where>
-            <if test="req.deptId != null and req.deptId != ''">AND dept_id = #{req.deptId}</if>
-            <if test="req.djxh != null and req.djxh != ''">AND DJXH = #{req.djxh}</if>
-            <if test="req.nsrmc != null and req.nsrmc != ''">AND NSRMC LIKE CONCAT('%', #{req.nsrmc}, '%')</if>
-            <if test="req.shxydm != null and req.shxydm != ''">AND SHXYDM = #{req.shxydm}</if>
-            <if test="req.zspmDm != null and req.zspmDm != ''">AND ZSPM_DM = #{req.zspmDm}</if>
+            <if test="req.deptId != null and req.deptId != ''">and dept_id = #{req.deptId}</if>
+            <if test="req.djxh != null and req.djxh != ''">and djxh = #{req.djxh}</if>
+            <if test="req.nsrmc != null and req.nsrmc != ''">and nsrmc like concat('%', #{req.nsrmc}, '%')</if>
+            <if test="req.shxydm != null and req.shxydm != ''">and shxydm = #{req.shxydm}</if>
+            <if test="req.zspmDm != null and req.zspmDm != ''">and zspm_dm = #{req.zspmDm}</if>
         </where>
-        ORDER BY ghjf_id DESC
+        order by ghjf_id desc
     </select>
 
     <!-- 小额缴费统计(聚合) -->
     <select id="selectXetjList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xejf2023.vo.XejftjResVO">
-        SELECT
-        dept_id AS deptId,
-        JSBJ AS jsbj,
-        CBJTHBJ AS cbjthbj,
-        COUNT(*) AS bs,
-        COUNT(DISTINCT DJXH) AS hs,
-        SUM(YBTSE) AS ybtse,
-        SUM(YFJE) AS yfje,
-        SUM(GKZFJE) AS gkzfje,
-        SUM(GJTHJE) AS gjthje,
-        SUM(JCGHJE) AS jcghje,
-        SUM(CBJJE) AS cbjje,
-        SUM(HYGHJE) AS hyghje,
-        SUM(XJGHJE) AS xjghje,
-        SUM(SJGHJE) AS sjghje,
-        SUM(SZGHJE) AS szghje,
-        SUM(QGGHJE) AS qgghje,
-        SUM(SDSJE) AS sdsje,
-        SUM(SWJGJE) AS swjgje
-        FROM gh_jf
+        select
+            dept_id as deptId,
+            jsbj as jsbj,
+            cbjthbj as cbjthbj,
+            count(*) as bs,
+            count(distinct djxh) as hs,
+            sum(ybtse) as ybtse,
+            sum(yfje) as yfje,
+            sum(gkzfje) as gkzfje,
+            sum(gjthje) as gjthje,
+            sum(jcghje) as jcghje,
+            sum(cbjje) as cbjje,
+            sum(hyghje) as hyghje,
+            sum(xjghje) as xjghje,
+            sum(sjghje) as sjghje,
+            sum(szghje) as szghje,
+            sum(qgghje) as qgghje,
+            sum(sdsje) as sdsje,
+            sum(swjgje) as swjgje
+        from gh_jf
         <where>
-            <if test="req.deptId != null and req.deptId != ''">AND dept_id = #{req.deptId}</if>
-            <if test="req.djxh != null and req.djxh != ''">AND DJXH = #{req.djxh}</if>
-            <if test="req.nsrmc != null and req.nsrmc != ''">AND NSRMC LIKE CONCAT('%', #{req.nsrmc}, '%')</if>
-            <if test="req.shxydm != null and req.shxydm != ''">AND SHXYDM = #{req.shxydm}</if>
-            <if test="req.zspmDm != null and req.zspmDm != ''">AND ZSPM_DM = #{req.zspmDm}</if>
+            <if test="req.deptId != null and req.deptId != ''">and dept_id = #{req.deptId}</if>
+            <if test="req.djxh != null and req.djxh != ''">and djxh = #{req.djxh}</if>
+            <if test="req.nsrmc != null and req.nsrmc != ''">and nsrmc like concat('%', #{req.nsrmc}, '%')</if>
+            <if test="req.shxydm != null and req.shxydm != ''">and shxydm = #{req.shxydm}</if>
+            <if test="req.zspmDm != null and req.zspmDm != ''">and zspm_dm = #{req.zspmDm}</if>
         </where>
-        GROUP BY dept_id, JSBJ, CBJTHBJ
+        group by dept_id, jsbj, cbjthbj
     </select>
 
 </mapper>
