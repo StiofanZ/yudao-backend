@@ -4,10 +4,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
 
 @Schema(description = "管理后台 - 划拨失败记录 Response VO")
 @Data
+@ExcelIgnoreUnannotated
 public class HbsbjlResVO {
 
     @Schema(description = "hkxxId")
