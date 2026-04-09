@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 划拨失败已修改新增/修改 Request VO")
 @Data
@@ -26,7 +25,7 @@ public class HbsbjlyxgSaveReqVO {
     private String fy;
     private String jym;
     private String thbj;
-    private LocalDateTime thrq;
+    private String thrq;
     private String thyy;
     private String xgbj;
     private String hkxxidgl;
@@ -34,5 +33,5 @@ public class HbsbjlyxgSaveReqVO {
     private String bz;
     private String scbz;
     private String xgr;
-    private LocalDateTime xgsj;
+    private String xgsj;
 }

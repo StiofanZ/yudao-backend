@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import cn.idev.excel.annotation.ExcelProperty;
 
 @Schema(description = "管理后台 - 划拨失败记录 Response VO")
@@ -60,7 +59,7 @@ public class HbsbjlResVO {
     private String thbj;
     @Schema(description = "thrq")
     @ExcelProperty("退回日期")
-    private LocalDateTime thrq;
+    private String thrq;
     @Schema(description = "thyy")
     @ExcelProperty("退回原因")
     private String thyy;
@@ -84,5 +83,5 @@ public class HbsbjlResVO {
     private String xgr;
     @Schema(description = "xgsj")
     @ExcelProperty("修改时间")
-    private LocalDateTime xgsj;
+    private String xgsj;
 }

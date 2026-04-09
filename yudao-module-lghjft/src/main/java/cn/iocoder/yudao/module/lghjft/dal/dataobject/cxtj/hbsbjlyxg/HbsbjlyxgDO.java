@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 /**
  * 划拨失败已修改 DO (same table gh_hkxx, filtered by xgbj='1')
@@ -36,7 +35,7 @@ public class HbsbjlyxgDO {
     private String fy;
     private String jym;
     private String thbj;
-    private LocalDateTime thrq;
+    private String thrq;
     private String thyy;
     private String xgbj;
     private String hkxxidgl;
@@ -44,5 +43,5 @@ public class HbsbjlyxgDO {
     private String bz;
     private String scbz;
     private String xgr;
-    private LocalDateTime xgsj;
+    private String xgsj;
 }

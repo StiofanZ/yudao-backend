@@ -60,7 +60,7 @@ public class HbsbjlServiceImpl implements HbsbjlService {
         if (user != null) {
             updateObj.setXgr(user.getNickname());
         }
-        updateObj.setXgsj(LocalDateTime.now());
+        updateObj.setXgsj(java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         hbsbjlMapper.updateById(updateObj);
     }
 

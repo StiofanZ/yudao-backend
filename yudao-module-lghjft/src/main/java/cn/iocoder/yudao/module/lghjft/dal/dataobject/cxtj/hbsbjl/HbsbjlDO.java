@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 /**
  * Hbsbjl DO
@@ -36,7 +35,7 @@ public class HbsbjlDO {
     private String fy;
     private String jym;
     private String thbj;
-    private LocalDateTime thrq;
+    private String thrq;
     private String thyy;
     private String xgbj;
     private String hkxxidgl;
@@ -44,5 +43,5 @@ public class HbsbjlDO {
     private String bz;
     private String scbz;
     private String xgr;
-    private LocalDateTime xgsj;
+    private String xgsj;
 }
