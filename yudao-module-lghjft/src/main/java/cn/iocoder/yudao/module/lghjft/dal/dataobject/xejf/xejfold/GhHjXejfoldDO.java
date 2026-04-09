@@ -18,9 +18,9 @@ import java.time.LocalDateTime;
 @ToString(callSuper = true)
 public class GhHjXejfoldDO {
 
-    @TableId
     private String deptId;
     private String hyghbz;
+    @TableId
     private String djxh;
     private String shxydm;
     private String nsrmc;

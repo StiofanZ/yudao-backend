@@ -24,6 +24,7 @@ public class GhHjXejfoldResVO {
     private String nsrmc;
     private String nsrjc;
     private String zgswjDm;
+    @ExcelProperty("主管税务机关名称")
     private String zgswjmc;
     private String zgswskfjDm;
     private String zgswskfjmc;
@@ -39,6 +40,7 @@ public class GhHjXejfoldResVO {
     private String dwlsgxmc;
     private BigDecimal zgrs;
     private String nsrztDm;
+    @ExcelProperty("纳税人状态名称")
     private String nsrztmc;
     private LocalDateTime fzcrq;
     private LocalDateTime zxrq;
@@ -51,8 +53,11 @@ public class GhHjXejfoldResVO {
     private String hjfl1Dm;
     private String hjfl2Dm;
     private String hjfl3Dm;
+    @ExcelProperty("23小额原始情况")
     private String hjfl4Dm;
+    @ExcelProperty("23小额确认情况")
     private String hjfl5Dm;
+    @ExcelProperty("23小额类型")
     private String hjfl6Dm;
     private LocalDateTime hjfl7Dm;
     private String hjfl8Dm;
@@ -62,10 +67,15 @@ public class GhHjXejfoldResVO {
     private LocalDateTime clghrq;
     private String jcghdm;
     private String jcghmc;
+    @ExcelProperty("基层工会账户")
     private String jcghzh;
+    @ExcelProperty("基层工会户名")
     private String jcghhm;
+    @ExcelProperty("基层工会行号")
     private String jcghhh;
+    @ExcelProperty("基层工会银行")
     private String jcghyh;
+    @ExcelProperty("备注")
     private String bz;
     private String jym;
     private String nsrsbh;

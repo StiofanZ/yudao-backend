@@ -21,7 +21,6 @@ public class GhHjXejf24DO {
     /**
      * 工会机构代码
      */
-    @TableId
     private String deptId;
     /**
      * 行业工会标志
@@ -30,6 +29,7 @@ public class GhHjXejf24DO {
     /**
      * 登记序号
      */
+    @TableId
     private String djxh;
     /**
      * 社会信用代码
