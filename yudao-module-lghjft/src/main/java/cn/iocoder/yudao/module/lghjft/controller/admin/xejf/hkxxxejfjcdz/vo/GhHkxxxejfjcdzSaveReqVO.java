@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 小额缴费基层到账新增/修改 Request VO")
 @Data
@@ -27,7 +26,7 @@ public class GhHkxxxejfjcdzSaveReqVO {
     private String fy;
     private String jym;
     private String thbj;
-    private LocalDateTime thrq;
+    private String thrq;
     private String thyy;
     private String hkxxidgl;
     private String schkpch;
@@ -36,5 +35,5 @@ public class GhHkxxxejfjcdzSaveReqVO {
     private String scbz;
     private String yxbj;
     private String xgr;
-    private LocalDateTime xgsj;
+    private String xgsj;
 }

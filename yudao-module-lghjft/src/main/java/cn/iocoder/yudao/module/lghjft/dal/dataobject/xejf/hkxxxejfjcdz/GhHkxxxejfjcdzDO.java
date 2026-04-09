@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+
 
 /**
  * 小额缴费基层到账 DO
@@ -37,7 +37,7 @@ public class GhHkxxxejfjcdzDO {
     private String fy;
     private String jym;
     private String thbj;
-    private LocalDateTime thrq;
+    private String thrq;
     private String thyy;
     private String hkxxidgl;
     private String schkpch;
@@ -46,5 +46,5 @@ public class GhHkxxxejfjcdzDO {
     private String scbz;
     private String yxbj;
     private String xgr;
-    private LocalDateTime xgsj;
+    private String xgsj;
 }
