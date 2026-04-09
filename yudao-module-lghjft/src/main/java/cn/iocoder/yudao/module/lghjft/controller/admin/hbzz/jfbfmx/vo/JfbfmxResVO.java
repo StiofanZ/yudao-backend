@@ -1,6 +1,5 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.jfbfmx.vo;
 
-import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -9,7 +8,6 @@ import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 经费拨付明细 Response VO")
 @Data
-@ExcelIgnoreUnannotated
 public class JfbfmxResVO {
 
     @Schema(description = "ghjfId")

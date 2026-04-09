@@ -66,4 +66,8 @@ public class XejfghzzDO {
     private String jym;
     private String nsrsbh;
     private String fileurl;
+    private String hjfl4Dm;
+    private String hjfl5Dm;
+    private String hjfl6Dm;
+    private String hjfl10Dm;
 }

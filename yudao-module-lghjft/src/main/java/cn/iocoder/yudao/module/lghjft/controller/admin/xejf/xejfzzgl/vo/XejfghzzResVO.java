@@ -73,4 +73,10 @@ public class XejfghzzResVO {
     private String jym;
     private String nsrsbh;
     private String fileurl;
+    @ExcelProperty("25小额类型")
+    private String hjfl10Dm;
+    @ExcelProperty("确认后的小额类型")
+    private String hjfl5Dm;
+    private String hjfl4Dm;
+    private String hjfl6Dm;
 }

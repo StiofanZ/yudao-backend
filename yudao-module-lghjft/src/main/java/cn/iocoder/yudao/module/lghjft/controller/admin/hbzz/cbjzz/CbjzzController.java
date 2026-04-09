@@ -87,8 +87,9 @@ public class CbjzzController {
     @ApiAccessLog(operateType = EXPORT)
     public void exportCbjzzExcel(@Valid CbjzzPageReqVO pageReqVO,
                                  HttpServletResponse response) throws IOException {
-        // v1: export uses selectCbjzzListcbj (grouped by sjdm)
-        List<CbjzzResVO> list = cbjzzService.getCbjzzListCbj(pageReqVO);
+        // v1: export uses normal list (not grouped)
+        pageReqVO.setPageSize(-1);
+        List<CbjzzResVO> list = cbjzzService.getCbjzzPage(pageReqVO).getList();
         ExcelUtils.write(response, "筹备金做账.xls", "数据", CbjzzResVO.class, list);
     }
 
