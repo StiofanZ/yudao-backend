@@ -1,18 +1,20 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.znjzz.vo;
 
+import cn.idev.excel.annotation.ExcelIgnore;
+import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import cn.idev.excel.annotation.ExcelProperty;
 
 @Schema(description = "管理后台 - 滞纳金做账 Response VO")
 @Data
 public class ZnjzzResVO {
 
     @Schema(description = "hkxxId")
+    @ExcelIgnore
     private Long hkxxId;
 
     @Schema(description = "hkpch")
@@ -106,6 +108,7 @@ public class ZnjzzResVO {
 
     /** 经费确认收账子表 (v1 cascade) */
     @Schema(description = "确认收账子表")
+    @ExcelIgnore
     private List<GhjfQrszItem> ghjfQrszList;
 
     @Data
