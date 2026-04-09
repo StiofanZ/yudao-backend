@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import cn.idev.excel.annotation.ExcelProperty;
 import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
@@ -18,9 +17,9 @@ public class XebfResVO {
     @ExcelProperty("返拨标记")
     private String fbbj;
     @ExcelProperty("返拨日期")
-    private LocalDateTime fbrq;
+    private String fbrq;
     @ExcelProperty("资金下拨日期")
-    private LocalDateTime zjxcrq;
+    private String zjxcrq;
     @ExcelProperty("划款批次号")
     private String hkpch;
     @ExcelProperty("汇款凭证号")
@@ -29,16 +28,16 @@ public class XebfResVO {
     private String bz;
     private String spuuid;
     @ExcelProperty("入库日期")
-    private LocalDateTime rkrq;
+    private String rkrq;
     @ExcelProperty("结算日期")
-    private LocalDateTime jsrq;
+    private String jsrq;
     @ExcelProperty(value = "缴费期间", converter = DictConvert.class)
     @DictFormat("sys_xejfqj")
     private String jfqj;
     @ExcelProperty("所属期起")
-    private LocalDateTime skssqq;
+    private String skssqq;
     @ExcelProperty("所属期止")
-    private LocalDateTime skssqz;
+    private String skssqz;
     @ExcelProperty(value = "征收品目", converter = DictConvert.class)
     @DictFormat("sys_zspm_type")
     private String zspmDm;

@@ -7,7 +7,6 @@ import cn.iocoder.yudao.module.lghjft.dal.typehandler.CommaSeparatedStringArrayT
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 /**
  * 小额缴费拨付台账 DO
@@ -30,9 +29,9 @@ public class XebfDO {
     @TableField(exist = false)
     private String fbbj;
     @TableField(exist = false)
-    private LocalDateTime fbrq;
+    private String fbrq;
     @TableField(exist = false)
-    private LocalDateTime zjxcrq;
+    private String zjxcrq;
     @TableField(exist = false)
     private String hkpch;
     @TableField(exist = false)
@@ -41,11 +40,11 @@ public class XebfDO {
     private String bz;
     @TableField(exist = false)
     private String spuuid;
-    private LocalDateTime rkrq;
-    private LocalDateTime jsrq;
+    private String rkrq;
+    private String jsrq;
     private String jfqj;
-    private LocalDateTime skssqq;
-    private LocalDateTime skssqz;
+    private String skssqq;
+    private String skssqz;
     private String zspmDm;
     private BigDecimal gzze;
     private BigDecimal jmse;
