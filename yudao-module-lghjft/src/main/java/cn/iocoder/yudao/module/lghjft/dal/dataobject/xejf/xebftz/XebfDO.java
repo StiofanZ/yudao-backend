@@ -11,6 +11,9 @@ import java.time.LocalDateTime;
 
 /**
  * 小额缴费拨付台账 DO
+ *
+ * 注意：xebf 表没有 sfbje/fbbj/fbrq/zjxcrq/hkpch/hkpzh/bz/sl/spuuid 列，
+ * 需要标记 exist=false 避免 MyBatis-Plus SELECT 时报错。
  */
 @TableName(value = "xebf", autoResultMap = true)
 @Data
@@ -22,13 +25,21 @@ public class XebfDO {
 
     @TableId
     private Long ghjfId;
+    @TableField(exist = false)
     private BigDecimal sfbje;
+    @TableField(exist = false)
     private String fbbj;
+    @TableField(exist = false)
     private LocalDateTime fbrq;
+    @TableField(exist = false)
     private LocalDateTime zjxcrq;
+    @TableField(exist = false)
     private String hkpch;
+    @TableField(exist = false)
     private String hkpzh;
+    @TableField(exist = false)
     private String bz;
+    @TableField(exist = false)
     private String spuuid;
     private LocalDateTime rkrq;
     private LocalDateTime jsrq;
@@ -94,4 +105,15 @@ public class XebfDO {
     private String qgghzh;
     private String qgghhm;
     private String qgghhh;
+    private BigDecimal sdsje;
+    private String sdszh;
+    @TableField("SDSHm")
+    private String sdshm;
+    private String sdshh;
+    private BigDecimal swjgje;
+    private String swjgzh;
+    @TableField("swjghm")
+    private String swjghm;
+    @TableField("swjghh")
+    private String swjghh;
 }

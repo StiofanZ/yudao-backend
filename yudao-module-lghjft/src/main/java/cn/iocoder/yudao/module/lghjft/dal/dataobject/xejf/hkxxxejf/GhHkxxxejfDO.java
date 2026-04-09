@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.xejf.hkxxxejf;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
@@ -9,6 +10,9 @@ import java.time.LocalDateTime;
 
 /**
  * 小额拨付记账凭证 DO
+ *
+ * 注意：gh_hkxxxejf 表没有 qrrq/yhhdh/zh1/zh2/zh3 列，
+ * 这些字段仅用于查询参数传递，标记 exist=false。
  */
 @TableName("gh_hkxxxejf")
 @Data
@@ -25,8 +29,11 @@ public class GhHkxxxejfDO {
     private Long jfqj;
     private String lx;
     private String zh;
+    @TableField(exist = false)
     private String zh1;
+    @TableField(exist = false)
     private String zh2;
+    @TableField(exist = false)
     private String zh3;
     private String hm;
     private String hh;
@@ -44,7 +51,9 @@ public class GhHkxxxejfDO {
     private String thyy;
     private String hkxxidgl;
     private String schkpch;
+    @TableField(exist = false)
     private LocalDateTime qrrq;
+    @TableField(exist = false)
     private String yhhdh;
     private String bz;
     private String xgbj;

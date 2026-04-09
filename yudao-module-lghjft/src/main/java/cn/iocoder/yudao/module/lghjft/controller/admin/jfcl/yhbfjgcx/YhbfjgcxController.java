@@ -49,7 +49,7 @@ public class YhbfjgcxController {
     /**
      * 导出银行拨付结果查询列表
      */
-    @PostMapping("/export")
+    @GetMapping("/export")
     @Operation(summary = "导出银行拨付结果查询列表")
     @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfjgcx:export')")
     @ApiAccessLog(operateType = EXPORT)

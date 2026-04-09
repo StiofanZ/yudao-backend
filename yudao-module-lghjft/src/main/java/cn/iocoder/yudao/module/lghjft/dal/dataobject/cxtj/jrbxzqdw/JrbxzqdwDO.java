@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.jrbxzqdw;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
@@ -28,16 +29,19 @@ public class JrbxzqdwDO {
     @TableId(type = IdType.INPUT)
     private String id;
     private String dwdm;
-    /** 来自 gh_hj.dept_id（JOIN 字段） */
+    /** 来自 gh_hj.dept_id（JOIN 字段，非本表列） */
+    @TableField(exist = false)
     private String deptId;
     private String shxydm;
     private String nsrsbh;
     private String nsrmc;
     private String djxh;
     private String zgjrghzgdwbz;
-    /** 来自 gh_hj.ghlb_dm（JOIN 字段） */
+    /** 来自 gh_hj.ghlb_dm（JOIN 字段，非本表列） */
+    @TableField(exist = false)
     private String ghlbDm;
-    /** 来自 gh_hj.xtlb_dm（JOIN 字段） */
+    /** 来自 gh_hj.xtlb_dm（JOIN 字段，非本表列） */
+    @TableField(exist = false)
     private String xtlbDm;
     private String nsrztDm;
     private String djzclxDm;
@@ -67,21 +71,35 @@ public class JrbxzqdwDO {
     private String updateBy;
     private LocalDateTime updateTime;
 
-    // 来自 jrbxzqdwjfqk1 (b 表) — 2025 数据
+    // 来自 jrbxzqdwjfqk1 (b 表) — 2025 数据（非本表列）
+    @TableField(exist = false)
     private BigDecimal gzze;
+    @TableField(exist = false)
     private Long bs;
+    @TableField(exist = false)
     private BigDecimal je;
+    @TableField(exist = false)
     private String sl;
 
-    // 来自 jrbxzqdwjfqk (k 表) — 2020-2024 数据
+    // 来自 jrbxzqdwjfqk (k 表) — 2020-2024 数据（非本表列）
+    @TableField(exist = false)
     private Long bs2024;
+    @TableField(exist = false)
     private BigDecimal je2024;
+    @TableField(exist = false)
     private Long bs2023;
+    @TableField(exist = false)
     private BigDecimal je2023;
+    @TableField(exist = false)
     private Long bs2022;
+    @TableField(exist = false)
     private BigDecimal je2022;
+    @TableField(exist = false)
     private Long bs2021;
+    @TableField(exist = false)
     private BigDecimal je2021;
+    @TableField(exist = false)
     private Long bs2020;
+    @TableField(exist = false)
     private BigDecimal je2020;
 }

@@ -12,6 +12,12 @@ public class SwrksjPageReqVO extends PageParam {
     @Schema(description = "工会机构代码")
     private String deptId;
 
+    @Schema(description = "SPUUID")
+    private String spuuid;
+
+    @Schema(description = "登记序号")
+    private String djxh;
+
     @Schema(description = "社会信用代码")
     private String shxydm;
 

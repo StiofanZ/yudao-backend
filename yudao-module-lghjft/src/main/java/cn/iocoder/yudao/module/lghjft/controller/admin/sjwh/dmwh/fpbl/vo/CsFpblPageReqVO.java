@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 分配比例分页 Request VO")
 @Data
@@ -18,10 +17,10 @@ public class CsFpblPageReqVO extends PageParam {
     private String ms;
 
     @Schema(description = "有效期起")
-    private LocalDateTime yxqq;
+    private String yxqq;
 
     @Schema(description = "有效期止")
-    private LocalDateTime yxqz;
+    private String yxqz;
 
     @Schema(description = "有效标志")
     private String xybz;

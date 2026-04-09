@@ -19,6 +19,9 @@ public interface HjflMapper extends BaseMapperX<HjflDO> {
     default PageResult<HjflDO> selectPage(HjflPageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<HjflDO>()
                 .eqIfPresent(HjflDO::getDeptId, reqVO.getDeptId())
+                .eqIfPresent(HjflDO::getBz, reqVO.getBz())
+                .eqIfPresent(HjflDO::getHjflDm, reqVO.getHjflDm())
+                .likeIfPresent(HjflDO::getHjflmc, reqVO.getHjflmc())
                 .orderByDesc(HjflDO::getHjflid));
     }
 

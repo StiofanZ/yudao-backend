@@ -25,12 +25,8 @@ public interface GhHkxxxejfcbjMapper extends BaseMapperX<GhHkxxxejfcbjDO> {
             wrapper.apply("mid(hkpch,1,8) between {0} and {1}",
                     reqVO.getBeginHkpch(), reqVO.getEndHkpch());
         }
-        // v1: QRRQ between
-        if (reqVO.getBeginQrrq() != null && !reqVO.getBeginQrrq().isEmpty()
-                && reqVO.getEndQrrq() != null && !reqVO.getEndQrrq().isEmpty()) {
-            wrapper.apply("qrrq between {0} and {1}",
-                    reqVO.getBeginQrrq(), reqVO.getEndQrrq());
-        }
+        // Note: qrrq is on gh_hkxx_qrsz, not on gh_hkxxxejf; skip this filter
+        // for single-table QueryWrapper to avoid SQL error.
         if (reqVO.getJfqj() != null) {
             wrapper.eq("jfqj", reqVO.getJfqj());
         }
