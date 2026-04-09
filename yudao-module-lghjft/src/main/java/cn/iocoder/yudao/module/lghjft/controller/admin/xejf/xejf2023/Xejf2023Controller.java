@@ -112,4 +112,14 @@ public class Xejf2023Controller {
         List<Xejf2023ResVO> list = xejf2023Service.getXejf2023Page(pageReqVO).getList();
         ExcelUtils.write(response, "小额缴费明细.xls", "数据", Xejf2023ResVO.class, list);
     }
+
+    @GetMapping("/export-xetj")
+    @Operation(summary = "导出小额缴费统计 Excel")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xejf2023:export')")
+    @ApiAccessLog(operateType = EXPORT)
+    public void exportXetjExcel(@Valid Xejf2023PageReqVO pageReqVO,
+                                HttpServletResponse response) throws IOException {
+        List<XejftjResVO> list = xejf2023Service.getXejf2023Xetj(pageReqVO);
+        ExcelUtils.write(response, "小额缴费统计.xlsx", "数据", XejftjResVO.class, list);
+    }
 }

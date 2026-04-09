@@ -43,12 +43,39 @@
             <if test="req.nsrmc != null and req.nsrmc != ''">and jf.nsrmc like concat('%', #{req.nsrmc}, '%')</if>
             <if test="req.deptId != null and req.deptId != ''">and (jf.dept_id = #{req.deptId} or jf.sdghjg_dm = #{req.deptId})</if>
             <if test="req.zspmDm != null and req.zspmDm != ''">and jf.zspm_dm = #{req.zspmDm}</if>
+            <if test="req.ghlbDm != null and req.ghlbDm != ''">and jf.ghlb_dm = #{req.ghlbDm}</if>
+            <if test="req.xtlbDm != null and req.xtlbDm != ''">and jf.xtlb_dm = #{req.xtlbDm}</if>
+            <if test="req.hkpch != null and req.hkpch != ''">and jf.hkpch = #{req.hkpch}</if>
+            <if test="req.jcghzh != null and req.jcghzh != ''">and jf.jcghzh = #{req.jcghzh}</if>
+            <if test="req.jcghhh != null and req.jcghhh != ''">and jf.jcghhh = #{req.jcghhh}</if>
+            <if test="req.cbjthbj != null and req.cbjthbj != ''">and jf.cbjthbj = #{req.cbjthbj}</if>
             <if test="req.jsbj != null">
                 and jf.jsbj in
                 <foreach collection="req.jsbj" item="item" open="(" separator="," close=")">
                     #{item}
                 </foreach>
             </if>
+            <if test="req.xelx23 != null">
+                and hj.hjfl6_dm in
+                <foreach collection="req.xelx23" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="req.xelx24 != null">
+                and hj.hjfl4_dm in
+                <foreach collection="req.xelx24" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="req.xelx25 != null">
+                and hj.hjfl10_dm in
+                <foreach collection="req.xelx25" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">and jf.rkrq between #{req.beginRkrq} and #{req.endRkrq}</if>
+            <if test="req.beginJsrq != null and req.beginJsrq != '' and req.endJsrq != null and req.endJsrq != ''">and jf.jsrq between #{req.beginJsrq} and #{req.endJsrq}</if>
+            <if test="req.beginCbjthrq != null and req.beginCbjthrq != '' and req.endCbjthrq != null and req.endCbjthrq != ''">and jf.cbjthrq between #{req.beginCbjthrq} and #{req.endCbjthrq}</if>
         </where>
         order by jf.ghjf_id desc
     </select>
@@ -66,36 +93,215 @@
         order by ghjf_id desc
     </select>
 
-    <!-- 小额缴费统计(聚合) -->
+    <!-- 小额缴费统计(聚合) — 1:1 翻译 V1 selectXetjList，查 szjfcx UNION sjjfcx UNION sdjfcx -->
     <select id="selectXetjList" resultType="cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xejf2023.vo.XejftjResVO">
         select
-            dept_id as deptId,
-            jsbj as jsbj,
-            cbjthbj as cbjthbj,
-            count(*) as bs,
-            count(distinct djxh) as hs,
-            sum(ybtse) as ybtse,
-            sum(yfje) as yfje,
-            sum(gkzfje) as gkzfje,
-            sum(gjthje) as gjthje,
-            sum(jcghje) as jcghje,
-            sum(cbjje) as cbjje,
-            sum(hyghje) as hyghje,
-            sum(xjghje) as xjghje,
-            sum(sjghje) as sjghje,
-            sum(szghje) as szghje,
-            sum(qgghje) as qgghje,
-            sum(sdsje) as sdsje,
-            sum(swjgje) as swjgje
-        from gh_jf
+            t.dwdm as sjdm,
+            t.dept_id as xjdm,
+            t.dept_id as deptId,
+            count(t.djxh) as bs,
+            count(distinct t.djxh) as hs,
+            sum(t.gzze) as gzze,
+            sum(t.ybtse) as ybtse,
+            round(sum(t.hyghje+t.xjghje+t.sjghje+t.szghje+t.qgghje+t.swjgje+t.sdsje+t.sdghje),2) as sjje,
+            round(sum(t.hyghje+t.xjghje+t.sjghje+t.szghje+t.qgghje+t.sdghje),2) as xeje,
+            sum(t.jcghje) as jcghje,
+            sum(t.hyghje) as hyghje,
+            sum(t.sdghje) as sdghje,
+            sum(t.cbjje) as cbjje,
+            sum(t.xjghje) as xjghje,
+            sum(t.sjghje) as sjghje,
+            sum(t.szghje) as szghje,
+            sum(t.qgghje) as qgghje,
+            sum(t.swjgje) as swjgje,
+            sum(t.sdsje) as sdsje
+        from szjfcx t
         <where>
-            <if test="req.deptId != null and req.deptId != ''">and dept_id = #{req.deptId}</if>
-            <if test="req.djxh != null and req.djxh != ''">and djxh = #{req.djxh}</if>
-            <if test="req.nsrmc != null and req.nsrmc != ''">and nsrmc like concat('%', #{req.nsrmc}, '%')</if>
-            <if test="req.shxydm != null and req.shxydm != ''">and shxydm = #{req.shxydm}</if>
+            1=1
+            and `spuuid` not in (
+                '9E9224DA4801B9C0F2E750B0F331B658',
+                '1A59022355C1DE8A99ECC72ABA4F73BF',
+                '2C5503CB48B135A193D1C86DC8ED2FBE',
+                '4A19928B0A7B8230730BF3EB1AD70743',
+                '30FB4B3B6A65F4E9EEBE89861E115EAD',
+                '82734748BC80AEAA879EE8D195D30726',
+                '2025CCE085A39457C42135A7137CA719',
+                '53B68C60EFA87234DA01EBA8B9249BA7',
+                '16F9FF83CD0B7B6E075EDCA62126CDE5',
+                '917C47DA338B81CA80BAFE81300BE16C'
+            )
+            <if test="req.deptId != null and req.deptId != ''">and (dwdm = #{req.deptId} or dept_id = #{req.deptId})</if>
+            <if test="req.ghlbDm != null and req.ghlbDm != ''">and ghlb_dm = #{req.ghlbDm}</if>
+            <if test="req.xtlbDm != null and req.xtlbDm != ''">and xtlb_dm = #{req.xtlbDm}</if>
             <if test="req.zspmDm != null and req.zspmDm != ''">and zspm_dm = #{req.zspmDm}</if>
+            <if test="req.hkpch != null and req.hkpch != ''">and hkpch = #{req.hkpch}</if>
+            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">and rkrq between #{req.beginRkrq} and #{req.endRkrq}</if>
+            <if test="req.jsbj != null">
+                and jsbj in
+                <foreach collection="req.jsbj" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="req.xelx23 != null">
+                and xelx23 in
+                <foreach collection="req.xelx23" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="req.xelx24 != null">
+                and xelx24 in
+                <foreach collection="req.xelx24" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="req.xelx25 != null">
+                and xelx25 in
+                <foreach collection="req.xelx25" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
         </where>
-        group by dept_id, jsbj, cbjthbj
+        group by t.dwdm, t.dept_id
+
+        union all
+
+        select
+            t.dwdm as sjdm,
+            t.dept_id as xjdm,
+            t.dept_id as deptId,
+            count(t.djxh) as bs,
+            count(distinct t.djxh) as hs,
+            sum(t.gzze) as gzze,
+            sum(t.ybtse) as ybtse,
+            round(sum(t.hyghje+t.xjghje+t.sjghje+t.szghje+t.qgghje+t.swjgje+t.sdsje+t.sdghje),2) as sjje,
+            round(sum(t.hyghje+t.xjghje+t.sjghje+t.szghje+t.qgghje+t.sdghje),2) as xeje,
+            sum(t.jcghje) as jcghje,
+            sum(t.hyghje) as hyghje,
+            sum(t.sdghje) as sdghje,
+            sum(t.cbjje) as cbjje,
+            sum(t.xjghje) as xjghje,
+            sum(t.sjghje) as sjghje,
+            sum(t.szghje) as szghje,
+            sum(t.qgghje) as qgghje,
+            sum(t.swjgje) as swjgje,
+            sum(t.sdsje) as sdsje
+        from sjjfcx t
+        <where>
+            1=1
+            and `spuuid` not in (
+                '9E9224DA4801B9C0F2E750B0F331B658',
+                '1A59022355C1DE8A99ECC72ABA4F73BF',
+                '2C5503CB48B135A193D1C86DC8ED2FBE',
+                '4A19928B0A7B8230730BF3EB1AD70743',
+                '30FB4B3B6A65F4E9EEBE89861E115EAD',
+                '82734748BC80AEAA879EE8D195D30726',
+                '2025CCE085A39457C42135A7137CA719',
+                '53B68C60EFA87234DA01EBA8B9249BA7',
+                '16F9FF83CD0B7B6E075EDCA62126CDE5',
+                '917C47DA338B81CA80BAFE81300BE16C'
+            )
+            <if test="req.deptId != null and req.deptId != ''">and (dwdm = #{req.deptId} or dept_id = #{req.deptId})</if>
+            <if test="req.ghlbDm != null and req.ghlbDm != ''">and ghlb_dm = #{req.ghlbDm}</if>
+            <if test="req.xtlbDm != null and req.xtlbDm != ''">and xtlb_dm = #{req.xtlbDm}</if>
+            <if test="req.zspmDm != null and req.zspmDm != ''">and zspm_dm = #{req.zspmDm}</if>
+            <if test="req.hkpch != null and req.hkpch != ''">and hkpch = #{req.hkpch}</if>
+            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">and rkrq between #{req.beginRkrq} and #{req.endRkrq}</if>
+            <if test="req.jsbj != null">
+                and jsbj in
+                <foreach collection="req.jsbj" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="req.xelx23 != null">
+                and xelx23 in
+                <foreach collection="req.xelx23" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="req.xelx24 != null">
+                and xelx24 in
+                <foreach collection="req.xelx24" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="req.xelx25 != null">
+                and xelx25 in
+                <foreach collection="req.xelx25" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        group by t.dwdm, t.dept_id
+
+        union all
+
+        select
+            t.dwdm as sjdm,
+            t.sddm as xjdm,
+            t.dept_id as deptId,
+            count(t.djxh) as bs,
+            count(distinct t.djxh) as hs,
+            sum(t.gzze) as gzze,
+            sum(t.ybtse) as ybtse,
+            round(sum(t.hyghje+t.xjghje+t.sjghje+t.szghje+t.qgghje+t.swjgje+t.sdsje+t.sdghje),2) as sjje,
+            round(sum(t.hyghje+t.xjghje+t.sjghje+t.szghje+t.qgghje+t.sdghje),2) as xeje,
+            sum(t.jcghje) as jcghje,
+            sum(t.hyghje) as hyghje,
+            sum(t.sdghje) as sdghje,
+            sum(t.cbjje) as cbjje,
+            sum(t.xjghje) as xjghje,
+            sum(t.sjghje) as sjghje,
+            sum(t.szghje) as szghje,
+            sum(t.qgghje) as qgghje,
+            sum(t.swjgje) as swjgje,
+            sum(t.sdsje) as sdsje
+        from sjhyjfcx t
+        <where>
+            1=1
+            and `spuuid` not in (
+                '9E9224DA4801B9C0F2E750B0F331B658',
+                '1A59022355C1DE8A99ECC72ABA4F73BF',
+                '2C5503CB48B135A193D1C86DC8ED2FBE',
+                '4A19928B0A7B8230730BF3EB1AD70743',
+                '30FB4B3B6A65F4E9EEBE89861E115EAD',
+                '82734748BC80AEAA879EE8D195D30726',
+                '2025CCE085A39457C42135A7137CA719',
+                '53B68C60EFA87234DA01EBA8B9249BA7',
+                '16F9FF83CD0B7B6E075EDCA62126CDE5',
+                '917C47DA338B81CA80BAFE81300BE16C'
+            )
+            <if test="req.deptId != null and req.deptId != ''">and (dwdm = #{req.deptId} or sddm = #{req.deptId} or dept_id = #{req.deptId})</if>
+            <if test="req.ghlbDm != null and req.ghlbDm != ''">and ghlb_dm = #{req.ghlbDm}</if>
+            <if test="req.xtlbDm != null and req.xtlbDm != ''">and xtlb_dm = #{req.xtlbDm}</if>
+            <if test="req.zspmDm != null and req.zspmDm != ''">and zspm_dm = #{req.zspmDm}</if>
+            <if test="req.hkpch != null and req.hkpch != ''">and hkpch = #{req.hkpch}</if>
+            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">and rkrq between #{req.beginRkrq} and #{req.endRkrq}</if>
+            <if test="req.jsbj != null">
+                and jsbj in
+                <foreach collection="req.jsbj" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="req.xelx23 != null">
+                and xelx23 in
+                <foreach collection="req.xelx23" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="req.xelx24 != null">
+                and xelx24 in
+                <foreach collection="req.xelx24" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="req.xelx25 != null">
+                and xelx25 in
+                <foreach collection="req.xelx25" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        group by t.dwdm, t.sddm, t.dept_id
     </select>
 
 </mapper>

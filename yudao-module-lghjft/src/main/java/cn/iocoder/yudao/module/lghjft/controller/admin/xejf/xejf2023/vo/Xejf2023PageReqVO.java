@@ -23,4 +23,34 @@ public class Xejf2023PageReqVO extends PageParam {
     private String zspmDm;
     @Schema(description = "结算标记")
     private String[] jsbj;
+    @Schema(description = "23小额类型")
+    private String[] xelx23;
+    @Schema(description = "24小额类型")
+    private String[] xelx24;
+    @Schema(description = "25小额类型")
+    private String[] xelx25;
+    @Schema(description = "工会类别代码")
+    private String ghlbDm;
+    @Schema(description = "系统类别代码")
+    private String xtlbDm;
+    @Schema(description = "划款批次号")
+    private String hkpch;
+    @Schema(description = "入库日期-开始")
+    private String beginRkrq;
+    @Schema(description = "入库日期-结束")
+    private String endRkrq;
+    @Schema(description = "结算日期-开始")
+    private String beginJsrq;
+    @Schema(description = "结算日期-结束")
+    private String endJsrq;
+    @Schema(description = "基层工会账户")
+    private String jcghzh;
+    @Schema(description = "基层工会行号")
+    private String jcghhh;
+    @Schema(description = "基层经费拨付状态")
+    private String cbjthbj;
+    @Schema(description = "基层经费拨付处理日期-开始")
+    private String beginCbjthrq;
+    @Schema(description = "基层经费拨付处理日期-结束")
+    private String endCbjthrq;
 }
