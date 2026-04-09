@@ -8,6 +8,8 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 @Schema(description = "管理后台 - 经费明细对象 Response VO")
 @Data
@@ -68,7 +70,8 @@ public class JfResVO {
     private String nsrjc;
 
     @Schema(description = "工会机构代码")
-    @ExcelProperty("工会机构代码")
+    @ExcelProperty(value = "工会机构代码", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String deptId;
 
     @Schema(description = "工会机构行政级别")
@@ -90,7 +93,8 @@ public class JfResVO {
     private String sdghjgxzjb;
 
     @Schema(description = "主管税务局代码")
-    @ExcelProperty("主管税务局代码")
+    @ExcelProperty(value = "主管税务局代码", converter = DictConvert.class)
+    @DictFormat("sys_swjg_type")
     private String zgswjDm;
 
     @Schema(description = "主管税务分局代码")
@@ -102,11 +106,13 @@ public class JfResVO {
     private String ssglyDm;
 
     @Schema(description = "工会类别代码")
-    @ExcelProperty("工会类别代码")
+    @ExcelProperty(value = "工会类别代码", converter = DictConvert.class)
+    @DictFormat("sys_ghlb_type")
     private String ghlbDm;
 
     @Schema(description = "系统类别代码")
-    @ExcelProperty("系统类别代码")
+    @ExcelProperty(value = "系统类别代码", converter = DictConvert.class)
+    @DictFormat("sys_xtlb_type")
     private String xtlbDm;
 
     @Schema(description = "组织机构类型代码")
@@ -184,7 +190,8 @@ public class JfResVO {
     private String kpyXm;
 
     @Schema(description = "征收品目代码")
-    @ExcelProperty("征收品目代码")
+    @ExcelProperty(value = "征收品目代码", converter = DictConvert.class)
+    @DictFormat("sys_zspm_type")
     private String zspmDm;
 
     @Schema(description = "征收子目代码")
@@ -242,7 +249,8 @@ public class JfResVO {
     private LocalDateTime rkrq;
 
     @Schema(description = "结算标记")
-    @ExcelProperty("结算标记")
+    @ExcelProperty(value = "结算标记", converter = DictConvert.class)
+    @DictFormat("sys_jsbj_type")
     private List<String> jsbj;
 
     @Schema(description = "结算日期")
@@ -274,7 +282,8 @@ public class JfResVO {
     private BigDecimal jcghje;
 
     @Schema(description = "筹备金退回标记")
-    @ExcelProperty("筹备金退回标记")
+    @ExcelProperty(value = "筹备金退回标记", converter = DictConvert.class)
+    @DictFormat("sys_cbjcl_type")
     private String cbjthbj;
 
     @Schema(description = "校验码")

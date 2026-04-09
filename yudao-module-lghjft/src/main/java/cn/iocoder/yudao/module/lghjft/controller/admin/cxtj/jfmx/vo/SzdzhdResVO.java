@@ -7,6 +7,8 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 /**
  * 省总到账核对 Response VO
@@ -16,7 +18,8 @@ import java.util.Date;
 @ExcelIgnoreUnannotated
 public class SzdzhdResVO {
 
-    @ExcelProperty("省/市/行业")
+    @ExcelProperty(value = "省/市/行业", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     @Schema(description = "市级代码")
     private String sjdm;
 

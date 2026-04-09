@@ -8,6 +8,8 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 @Schema(description = "管理后台 - 经费明细导出 VO")
 @Data
@@ -25,19 +27,24 @@ public class JfmxExportVO {
     @ExcelProperty("纳税人名称")
     private String nsrmc;
 
-    @ExcelProperty("工会机构")
+    @ExcelProperty(value = "工会机构", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String deptId;
 
-    @ExcelProperty("主管税务局")
+    @ExcelProperty(value = "主管税务局", converter = DictConvert.class)
+    @DictFormat("sys_swjg_type")
     private String zgswjDm;
 
-    @ExcelProperty("工会类别")
+    @ExcelProperty(value = "工会类别", converter = DictConvert.class)
+    @DictFormat("sys_ghlb_type")
     private String ghlbDm;
 
-    @ExcelProperty("系统类别")
+    @ExcelProperty(value = "系统类别", converter = DictConvert.class)
+    @DictFormat("sys_xtlb_type")
     private String xtlbDm;
 
-    @ExcelProperty("小微类型")
+    @ExcelProperty(value = "小微类型", converter = DictConvert.class)
+    @DictFormat("sys_xwlx")
     private String xwlx;
 
     @DateTimeFormat("yyyy-MM-dd")
@@ -52,7 +59,8 @@ public class JfmxExportVO {
     @ExcelProperty("所属期止")
     private Date skssqz;
 
-    @ExcelProperty("征收品目代码")
+    @ExcelProperty(value = "征收品目代码", converter = DictConvert.class)
+    @DictFormat("sys_zspm_type")
     private String zspmDm;
 
     @ExcelProperty("工资总额")
@@ -68,14 +76,16 @@ public class JfmxExportVO {
     @ExcelProperty("入库日期")
     private Date rkrq;
 
-    @ExcelProperty("结算标记")
+    @ExcelProperty(value = "结算标记", converter = DictConvert.class)
+    @DictFormat("sys_jsbj_type")
     private String jsbj;
 
     @DateTimeFormat("yyyy-MM-dd")
     @ExcelProperty("结算日期")
     private Date jsrq;
 
-    @ExcelProperty("基层经费拨付状态")
+    @ExcelProperty(value = "基层经费拨付状态", converter = DictConvert.class)
+    @DictFormat("sys_cbjcl_type")
     private String cbjthbj;
 
     @ExcelProperty("基层工会账户")

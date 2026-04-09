@@ -7,6 +7,8 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 @Schema(description = "管理后台 - 银行拨付汇总 Response VO")
 @Data
@@ -70,11 +72,13 @@ public class YhbfhzResVO {
     private String uuid;
 
     @Schema(description = "拨付状态", requiredMode = Schema.RequiredMode.REQUIRED)
-    @ExcelProperty("拨付状态")
+    @ExcelProperty(value = "拨付状态", converter = DictConvert.class)
+    @DictFormat("sys_bfzt")
     private String bfzt;
 
     @Schema(description = "处理结果")
-    @ExcelProperty("处理结果")
+    @ExcelProperty(value = "处理结果", converter = DictConvert.class)
+    @DictFormat("sys_yhbfjg")
     private String bfjg;
 
     @Schema(description = "退回日期")

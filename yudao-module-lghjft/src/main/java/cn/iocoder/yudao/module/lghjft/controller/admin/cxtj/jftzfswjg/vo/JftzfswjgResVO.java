@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 @Schema(description = "管理后台 - 分税务机关统计 Response VO")
 @Data
@@ -13,15 +15,18 @@ import java.math.BigDecimal;
 public class JftzfswjgResVO {
 
     @Schema(description = "dwdm")
-    @ExcelProperty("默认归属工会")
+    @ExcelProperty(value = "默认归属工会", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String dwdm;
 
     @Schema(description = "deptId")
-    @ExcelProperty("主管工会")
+    @ExcelProperty(value = "主管工会", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String deptId;
 
     @Schema(description = "zgswjDm")
-    @ExcelProperty("主管税务局")
+    @ExcelProperty(value = "主管税务局", converter = DictConvert.class)
+    @DictFormat("sys_swjg_type")
     private String zgswjDm;
 
     @Schema(description = "nd")

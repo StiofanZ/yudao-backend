@@ -7,6 +7,8 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.List;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 @Schema(description = "管理后台 - 征收未主管单位 Response VO")
 @Data
@@ -18,15 +20,18 @@ public class ZswzgdwResVO {
     private String id;
 
     @Schema(description = "默认归属工会")
-    @ExcelProperty("默认归属工会")
+    @ExcelProperty(value = "默认归属工会", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String dwdm;
 
     @Schema(description = "主管工会")
-    @ExcelProperty("主管工会")
+    @ExcelProperty(value = "主管工会", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String deptId;
 
     @Schema(description = "主管税务局代码")
-    @ExcelProperty("主管税务局代码")
+    @ExcelProperty(value = "主管税务局代码", converter = DictConvert.class)
+    @DictFormat("sys_swjg_type")
     private String zgswjDm;
 
     @Schema(description = "社会信用代码")
@@ -54,7 +59,8 @@ public class ZswzgdwResVO {
     private BigDecimal jcghje;
 
     @Schema(description = "确认结果代码")
-    @ExcelProperty("确认结果代码")
+    @ExcelProperty(value = "确认结果代码", converter = DictConvert.class)
+    @DictFormat("sys_qrjg")
     private String qrjgDm;
 
     @Schema(description = "征收未主管信息确认列表")

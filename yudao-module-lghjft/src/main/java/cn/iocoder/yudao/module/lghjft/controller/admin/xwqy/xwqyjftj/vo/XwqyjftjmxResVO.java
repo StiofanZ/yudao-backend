@@ -7,6 +7,8 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 /**
  * 小微经费统计明细 Response VO (v1: selectXwqyjftjmxList 对应的行级明细)
@@ -50,14 +52,16 @@ public class XwqyjftjmxResVO {
     private Date xwsbrq;
 
     @Schema(description = "小微类型")
-    @ExcelProperty("小微类型")
+    @ExcelProperty(value = "小微类型", converter = DictConvert.class)
+    @DictFormat("sys_xwlx")
     private String xwlx;
 
     @Schema(description = "纳税人简称")
     private String nsrjc;
 
     @Schema(description = "部门ID")
-    @ExcelProperty("部门ID")
+    @ExcelProperty(value = "部门ID", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String deptId;
 
     @Schema(description = "工会机构行政级别")
@@ -127,7 +131,8 @@ public class XwqyjftjmxResVO {
     private String skssswjgDm;
 
     @Schema(description = "征收品目代码")
-    @ExcelProperty("征收品目代码")
+    @ExcelProperty(value = "征收品目代码", converter = DictConvert.class)
+    @DictFormat("sys_zspm_type")
     private String zspmDm;
 
     @Schema(description = "工资总额")
@@ -163,7 +168,8 @@ public class XwqyjftjmxResVO {
     private BigDecimal gjthje;
 
     @Schema(description = "结算标记")
-    @ExcelProperty("结算标记")
+    @ExcelProperty(value = "结算标记", converter = DictConvert.class)
+    @DictFormat("sys_jsbj_type")
     private String jsbj;
 
     @Schema(description = "结算日期")

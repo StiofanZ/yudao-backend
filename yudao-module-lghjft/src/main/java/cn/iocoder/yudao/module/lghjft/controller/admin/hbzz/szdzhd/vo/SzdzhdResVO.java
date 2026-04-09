@@ -6,13 +6,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 @Schema(description = "管理后台 - 省总到账核对 Response VO")
 @Data
 @ExcelIgnoreUnannotated
 public class SzdzhdResVO {
 
-    @ExcelProperty("省/市/行业")
+    @ExcelProperty(value = "省/市/行业", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     @Schema(description = "市级代码")
     private String sjdm;
 

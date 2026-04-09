@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 @Schema(description = "管理后台 - 缴费排行 Response VO")
 @Data
@@ -28,7 +30,8 @@ public class TopResVO {
     private String deptId;
 
     @Schema(description = "主管工会")
-    @ExcelProperty("主管工会")
+    @ExcelProperty(value = "主管工会", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String dwmc;
 
     @Schema(description = "当年缴费笔数")

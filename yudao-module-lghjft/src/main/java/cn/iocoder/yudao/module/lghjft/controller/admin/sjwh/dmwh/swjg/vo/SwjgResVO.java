@@ -4,6 +4,8 @@ import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 @Schema(description = "管理后台 - 税务机关 Response VO")
 @Data
@@ -63,7 +65,8 @@ public class SwjgResVO {
     private String jcjbj;
 
     @Schema(description = "工会机构代码", requiredMode = Schema.RequiredMode.REQUIRED)
-    @ExcelProperty("工会机构代码")
+    @ExcelProperty(value = "工会机构代码", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String ghjgDm;
 
     @Schema(description = "顺序号")

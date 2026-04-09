@@ -19,7 +19,8 @@ public class JhdwydsResVO {
     private Long jhdwId;
 
     @Schema(description = "工会机构", requiredMode = Schema.RequiredMode.REQUIRED, example = "7269")
-    @ExcelProperty("工会机构")
+    @ExcelProperty(value = "工会机构", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String deptId;
 
     @Schema(description = "登记序号", requiredMode = Schema.RequiredMode.REQUIRED)
@@ -35,7 +36,8 @@ public class JhdwydsResVO {
     private String nsrmc;
 
     @Schema(description = "主管税务机关代码")
-    @ExcelProperty("主管税务机关代码")
+    @ExcelProperty(value = "主管税务机关代码", converter = DictConvert.class)
+    @DictFormat("sys_swjg_type")
     private String zgswjDm;
 
     @Schema(description = "科所分局代码")
@@ -59,7 +61,8 @@ public class JhdwydsResVO {
     private String dwcwlxdh;
 
     @Schema(description = "纳税人状态代码")
-    @ExcelProperty("纳税人状态代码")
+    @ExcelProperty(value = "纳税人状态代码", converter = DictConvert.class)
+    @DictFormat("sys_nsrzt")
     private String nsrztDm;
 
     @Schema(description = "税务登记职工人数")
@@ -79,7 +82,8 @@ public class JhdwydsResVO {
     private String ghmc;
 
     @Schema(description = "工会类型代码")
-    @ExcelProperty("工会类型代码")
+    @ExcelProperty(value = "工会类型代码", converter = DictConvert.class)
+    @DictFormat("sys_ghlx")
     private String ghlxDm;
 
     @Schema(description = "工会联系人")
@@ -108,7 +112,8 @@ public class JhdwydsResVO {
     private LocalDateTime clghrq;
 
     @Schema(description = "工会状态代码")
-    @ExcelProperty("工会状态代码")
+    @ExcelProperty(value = "工会状态代码", converter = DictConvert.class)
+    @DictFormat("sys_ghzt")
     private String ghztDm;
 
     @Schema(description = "省级工会名称")
@@ -148,7 +153,8 @@ public class JhdwydsResVO {
     private String updateBy;
 
     @Schema(description = "街道乡镇代码")
-    @ExcelProperty("街道乡镇代码")
+    @ExcelProperty(value = "街道乡镇代码", converter = DictConvert.class)
+    @DictFormat("sys_jdxz")
     private String jdxzDm;
 
     @Schema(description = "税务数据同步时间")

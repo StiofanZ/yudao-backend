@@ -7,6 +7,8 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 /**
  * 单户经费台账 Response VO — 映射 v1 gh_hj 表字段
@@ -21,7 +23,8 @@ public class DhjftzResVO {
     @Schema(description = "登记序号")
     private String djxh;
 
-    @ExcelProperty("工会机构代码")
+    @ExcelProperty(value = "工会机构代码", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     @Schema(description = "工会机构代码")
     private String deptId;
 
@@ -40,7 +43,8 @@ public class DhjftzResVO {
     @Schema(description = "纳税人简称")
     private String nsrjc;
 
-    @ExcelProperty("主管税务机关代码")
+    @ExcelProperty(value = "主管税务机关代码", converter = DictConvert.class)
+    @DictFormat("sys_swjg_type")
     @Schema(description = "主管税务局代码")
     private String zgswjDm;
 

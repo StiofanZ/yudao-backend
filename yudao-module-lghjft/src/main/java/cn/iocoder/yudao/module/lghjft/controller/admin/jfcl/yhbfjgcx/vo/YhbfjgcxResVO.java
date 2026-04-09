@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 @Schema(description = "管理后台 - 银行拨付结果查询 Response VO")
 @Data
@@ -33,7 +35,8 @@ public class YhbfjgcxResVO {
     private String bfhzpch;
 
     @Schema(description = "拨付状态")
-    @ExcelProperty("拨付状态")
+    @ExcelProperty(value = "拨付状态", converter = DictConvert.class)
+    @DictFormat("sys_jfbfzt")
     private String bfzt;
 
     @Schema(description = "拨付总笔数")
@@ -45,7 +48,8 @@ public class YhbfjgcxResVO {
     private BigDecimal bfzje;
 
     @Schema(description = "成功结果")
-    @ExcelProperty("成功结果")
+    @ExcelProperty(value = "成功结果", converter = DictConvert.class)
+    @DictFormat("sys_yhbfjg")
     private String cgjg;
 
     @Schema(description = "成功笔数")
@@ -57,7 +61,8 @@ public class YhbfjgcxResVO {
     private BigDecimal cgje;
 
     @Schema(description = "失败结果")
-    @ExcelProperty("失败结果")
+    @ExcelProperty(value = "失败结果", converter = DictConvert.class)
+    @DictFormat("sys_yhbfjg")
     private String sbjg;
 
     @Schema(description = "失败笔数")
@@ -69,7 +74,8 @@ public class YhbfjgcxResVO {
     private BigDecimal sbje;
 
     @Schema(description = "退票结果")
-    @ExcelProperty("退票结果")
+    @ExcelProperty(value = "退票结果", converter = DictConvert.class)
+    @DictFormat("sys_yhbfjg")
     private String tpjg;
 
     @Schema(description = "退票笔数")
@@ -81,7 +87,8 @@ public class YhbfjgcxResVO {
     private BigDecimal tpje;
 
     @Schema(description = "否决结果")
-    @ExcelProperty("否决结果")
+    @ExcelProperty(value = "否决结果", converter = DictConvert.class)
+    @DictFormat("sys_yhbfjg")
     private String fjjg;
 
     @Schema(description = "否决笔数")
@@ -93,7 +100,8 @@ public class YhbfjgcxResVO {
     private BigDecimal fjje;
 
     @Schema(description = "过期结果")
-    @ExcelProperty("过期结果")
+    @ExcelProperty(value = "过期结果", converter = DictConvert.class)
+    @DictFormat("sys_yhbfjg")
     private String gqjg;
 
     @Schema(description = "过期笔数")
@@ -105,7 +113,8 @@ public class YhbfjgcxResVO {
     private BigDecimal gqje;
 
     @Schema(description = "撤销结果")
-    @ExcelProperty("撤销结果")
+    @ExcelProperty(value = "撤销结果", converter = DictConvert.class)
+    @DictFormat("sys_yhbfjg")
     private String cxjg;
 
     @Schema(description = "撤销笔数")

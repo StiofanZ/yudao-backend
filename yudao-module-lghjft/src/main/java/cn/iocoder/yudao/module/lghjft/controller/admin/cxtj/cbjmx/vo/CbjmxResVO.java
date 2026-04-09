@@ -7,6 +7,8 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 @Schema(description = "管理后台 - 筹备金统计 Response VO")
 @Data
@@ -17,7 +19,8 @@ public class CbjmxResVO {
     private Long ghjfId;
 
     @Schema(description = "征收品目代码")
-    @ExcelProperty("征收品目代码")
+    @ExcelProperty(value = "征收品目代码", converter = DictConvert.class)
+    @DictFormat("sys_zspm_type")
     private String zspmDm;
 
     @Schema(description = "年度")
@@ -25,7 +28,8 @@ public class CbjmxResVO {
     private String nd;
 
     @Schema(description = "工会机构代码")
-    @ExcelProperty("主管工会")
+    @ExcelProperty(value = "主管工会", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String deptId;
 
     @Schema(description = "社会信用代码")
@@ -53,11 +57,13 @@ public class CbjmxResVO {
     private LocalDateTime skssqz;
 
     @Schema(description = "结算标记")
-    @ExcelProperty("结算标记")
+    @ExcelProperty(value = "结算标记", converter = DictConvert.class)
+    @DictFormat("sys_jsbj_type")
     private String jsbj;
 
     @Schema(description = "筹备金拨付标记")
-    @ExcelProperty("筹备金拨付标记")
+    @ExcelProperty(value = "筹备金拨付标记", converter = DictConvert.class)
+    @DictFormat("sys_cbjcl_type")
     private String cbjthbj;
 
     @Schema(description = "筹备金全退金额")
@@ -76,7 +82,8 @@ public class CbjmxResVO {
     private LocalDateTime zjxcrq;
 
     @Schema(description = "返拨标记")
-    @ExcelProperty("返拨标记")
+    @ExcelProperty(value = "返拨标记", converter = DictConvert.class)
+    @DictFormat("cbj_fbbj")
     private String fbbj;
 
     @Schema(description = "返拨日期")

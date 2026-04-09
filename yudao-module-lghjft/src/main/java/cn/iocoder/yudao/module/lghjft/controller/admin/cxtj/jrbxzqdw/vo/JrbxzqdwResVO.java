@@ -7,6 +7,8 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 @Schema(description = "管理后台 - 金融保险证券单位 Response VO")
 @Data
@@ -17,11 +19,13 @@ public class JrbxzqdwResVO {
     private String id;
 
     @Schema(description = "单位代码")
-    @ExcelProperty("默认工会机构")
+    @ExcelProperty(value = "默认工会机构", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String dwdm;
 
     @Schema(description = "主管工会（来自 gh_hj.dept_id）")
-    @ExcelProperty("主管工会")
+    @ExcelProperty(value = "主管工会", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String deptId;
 
     @Schema(description = "社会信用代码")
@@ -41,7 +45,8 @@ public class JrbxzqdwResVO {
     private String djxh;
 
     @Schema(description = "中国金融工会在甘单位标志")
-    @ExcelProperty("中国金融工会在甘单位标志")
+    @ExcelProperty(value = "中国金融工会在甘单位标志", converter = DictConvert.class)
+    @DictFormat("sys_yes_no")
     private String zgjrghzgdwbz;
 
     @Schema(description = "工会类别代码")
@@ -120,7 +125,8 @@ public class JrbxzqdwResVO {
     private String bz;
 
     @Schema(description = "核实结果")
-    @ExcelProperty("核实结果")
+    @ExcelProperty(value = "核实结果", converter = DictConvert.class)
+    @DictFormat("sys_hsjg")
     private String hsjg;
 
     @Schema(description = "创建人")

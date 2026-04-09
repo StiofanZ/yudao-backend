@@ -8,6 +8,8 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 @Schema(description = "管理后台 - 筹备金做账 Response VO")
 @Data
@@ -36,7 +38,8 @@ public class CbjzzResVO {
     private String hh;
 
     @Schema(description = "sjdm - 市州产业（computed）")
-    @ExcelProperty("市州产业")
+    @ExcelProperty(value = "市州产业", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String sjdm;
 
     @Schema(description = "deptId")

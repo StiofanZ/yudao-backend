@@ -7,6 +7,8 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 /**
  * 经费台账明细 Response VO — v1 selectJftzmxList 映射 gh_jf LEFT JOIN gh_hj
@@ -67,11 +69,13 @@ public class JftzmxResVO {
     @Schema(description = "ssglyDm")
     private String ssglyDm;
 
-    @ExcelProperty("工会类别代码")
+    @ExcelProperty(value = "工会类别代码", converter = DictConvert.class)
+    @DictFormat("sys_ghlb_type")
     @Schema(description = "ghlbDm")
     private String ghlbDm;
 
-    @ExcelProperty("系统类别代码")
+    @ExcelProperty(value = "系统类别代码", converter = DictConvert.class)
+    @DictFormat("sys_xtlb_type")
     @Schema(description = "xtlbDm")
     private String xtlbDm;
 
@@ -135,7 +139,8 @@ public class JftzmxResVO {
     @Schema(description = "kpyXm")
     private String kpyXm;
 
-    @ExcelProperty("征收品目代码")
+    @ExcelProperty(value = "征收品目代码", converter = DictConvert.class)
+    @DictFormat("sys_zspm_type")
     @Schema(description = "zspmDm")
     private String zspmDm;
 
@@ -188,7 +193,8 @@ public class JftzmxResVO {
     @Schema(description = "rkrq")
     private String rkrq;
 
-    @ExcelProperty("结算标记")
+    @ExcelProperty(value = "结算标记", converter = DictConvert.class)
+    @DictFormat("sys_jsbj_type")
     @Schema(description = "jsbj")
     private String jsbj;
 
@@ -332,7 +338,8 @@ public class JftzmxResVO {
     @Schema(description = "swjgje")
     private BigDecimal swjgje;
 
-    @ExcelProperty("基层经费拨付状态")
+    @ExcelProperty(value = "基层经费拨付状态", converter = DictConvert.class)
+    @DictFormat("sys_cbjcl_type")
     @Schema(description = "cbjthbj")
     private String cbjthbj;
     @Schema(description = "cbjthrq")
@@ -374,7 +381,8 @@ public class JftzmxResVO {
     private LocalDateTime updateTime;
 
     /* ---- gh_hj join fields ---- */
-    @ExcelProperty("小微类型")
+    @ExcelProperty(value = "小微类型", converter = DictConvert.class)
+    @DictFormat("sys_xwlx")
     @Schema(description = "小微类型")
     private String xwlx;
     @Schema(description = "小额类型23")

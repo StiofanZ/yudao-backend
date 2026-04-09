@@ -13,7 +13,8 @@ import lombok.Data;
 public class HjflResVO {
 
     @Schema(description = "工会机构代码", requiredMode = Schema.RequiredMode.REQUIRED, example = "76")
-    @ExcelProperty("工会机构代码")
+    @ExcelProperty(value = "工会机构代码", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String deptId;
 
     @Schema(description = "大类标识", requiredMode = Schema.RequiredMode.REQUIRED)

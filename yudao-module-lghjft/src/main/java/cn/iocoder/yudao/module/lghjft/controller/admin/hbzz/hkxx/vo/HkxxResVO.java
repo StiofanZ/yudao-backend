@@ -8,6 +8,8 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 @Schema(description = "管理后台 - 基层经费到账对象 Response VO")
 @Data
@@ -25,7 +27,8 @@ public class HkxxResVO {
     @Schema(description = "序号")
     private Long xh;
 
-    @ExcelProperty("类型")
+    @ExcelProperty(value = "类型", converter = DictConvert.class)
+    @DictFormat("sys_fclx_type")
     @Schema(description = "类型")
     private String lx;
 

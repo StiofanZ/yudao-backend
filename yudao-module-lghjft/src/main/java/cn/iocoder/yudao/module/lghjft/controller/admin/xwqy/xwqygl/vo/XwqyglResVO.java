@@ -7,6 +7,8 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 @ExcelIgnoreUnannotated
 @Schema(description = "管理后台 - 小微企业管理 Response VO")
@@ -39,7 +41,8 @@ public class XwqyglResVO {
     @Schema(description = "纳税人简称")
     private String nsrjc;
 
-    @ExcelProperty("主管税务机关代码")
+    @ExcelProperty(value = "主管税务机关代码", converter = DictConvert.class)
+    @DictFormat("sys_swjg_type")
     @Schema(description = "主管税务机关代码")
     private String zgswjDm;
 
@@ -99,7 +102,8 @@ public class XwqyglResVO {
     @Schema(description = "职工人数")
     private BigDecimal zgrs;
 
-    @ExcelProperty("纳税人状态代码")
+    @ExcelProperty(value = "纳税人状态代码", converter = DictConvert.class)
+    @DictFormat("sys_nsrzt")
     @Schema(description = "纳税人状态代码")
     private String nsrztDm;
 
@@ -129,7 +133,8 @@ public class XwqyglResVO {
     @Schema(description = "联系电话")
     private String lxdh;
 
-    @ExcelProperty("工会类别代码")
+    @ExcelProperty(value = "工会类别代码", converter = DictConvert.class)
+    @DictFormat("sys_ghlb_type")
     @Schema(description = "工会类别代码")
     private String ghlbDm;
 

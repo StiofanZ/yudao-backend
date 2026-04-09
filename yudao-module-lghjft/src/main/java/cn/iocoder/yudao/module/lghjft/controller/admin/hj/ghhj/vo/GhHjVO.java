@@ -9,6 +9,8 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 /**
  * 户籍管理对象 gh_hj
@@ -23,7 +25,8 @@ public class GhHjVO {
     private String djxh;
 
     /** 工会机构代码 */
-    @ExcelProperty("工会机构")
+    @ExcelProperty(value = "工会机构", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String deptId;
 
     /** 行业工会标志 */
@@ -44,7 +47,8 @@ public class GhHjVO {
     private String zgswjDm;
 
     /** 街道乡镇代码 */
-    @ExcelProperty("街道乡镇代码")
+    @ExcelProperty(value = "街道乡镇代码", converter = DictConvert.class)
+    @DictFormat("sys_jdxz")
     private String jdxzDm;
 
     /** 主管税务机关名称 */
@@ -118,11 +122,13 @@ public class GhHjVO {
     private String lxdh;
 
     /** 工会类别 */
-    @ExcelProperty("工会类别")
+    @ExcelProperty(value = "工会类别", converter = DictConvert.class)
+    @DictFormat("sys_ghlb_type")
     private String ghlbDm;
 
     /** 系统类别 */
-    @ExcelProperty("系统类别")
+    @ExcelProperty(value = "系统类别", converter = DictConvert.class)
+    @DictFormat("sys_xtlb_type")
     private String xtlbDm;
 
     /** 建会缴纳筹备金标志 */

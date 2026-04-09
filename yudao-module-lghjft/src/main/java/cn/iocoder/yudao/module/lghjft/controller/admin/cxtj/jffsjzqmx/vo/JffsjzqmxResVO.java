@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 @Schema(description = "管理后台 - 分年各级分成情况 Response VO")
 @Data
@@ -13,15 +15,18 @@ import java.math.BigDecimal;
 public class JffsjzqmxResVO {
 
     @Schema(description = "sjdm")
-    @ExcelProperty("省/市/行业")
+    @ExcelProperty(value = "省/市/行业", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String sjdm;
 
     @Schema(description = "xjdm")
-    @ExcelProperty("省/市直/县级/属地")
+    @ExcelProperty(value = "省/市直/县级/属地", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String xjdm;
 
     @Schema(description = "deptId")
-    @ExcelProperty("主管工会")
+    @ExcelProperty(value = "主管工会", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String deptId;
 
     @Schema(description = "bs")

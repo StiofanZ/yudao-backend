@@ -8,6 +8,8 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
 @Schema(description = "管理后台 - 工会经费做账 Response VO")
 @Data
@@ -26,7 +28,8 @@ public class GhjfzzResVO {
     private Long xh;
 
     @Schema(description = "类型")
-    @ExcelProperty("类型")
+    @ExcelProperty(value = "类型", converter = DictConvert.class)
+    @DictFormat("sys_fclx_type")
     private String lx;
 
     @Schema(description = "账号")
@@ -51,7 +54,8 @@ public class GhjfzzResVO {
     private BigDecimal je;
 
     @Schema(description = "工会机构")
-    @ExcelProperty("工会机构")
+    @ExcelProperty(value = "工会机构", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String deptId;
 
     @Schema(description = "地址")
