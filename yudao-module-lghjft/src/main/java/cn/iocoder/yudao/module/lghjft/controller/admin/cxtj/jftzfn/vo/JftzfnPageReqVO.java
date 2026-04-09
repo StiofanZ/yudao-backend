@@ -84,6 +84,15 @@ public class JftzfnPageReqVO extends PageParam {
     @Schema(description = "创建人")
     private String createBy;
 
+    @Schema(description = "创建时间")
+    private String createTime;
+
+    @Schema(description = "更新人")
+    private String updateBy;
+
+    @Schema(description = "更新时间")
+    private String updateTime;
+
     @Schema(description = "划款批次号")
     private String hkpch;
 

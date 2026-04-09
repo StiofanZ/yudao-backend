@@ -376,11 +376,11 @@ public class JftzfswjgPageReqVO extends PageParam {
     private String createBy;
 
     @Schema(description = "创建时间")
-    private LocalDateTime createTime;
+    private String createTime;
 
     @Schema(description = "更新者")
     private String updateBy;
 
     @Schema(description = "更新时间")
-    private LocalDateTime updateTime;
+    private String updateTime;
 }
