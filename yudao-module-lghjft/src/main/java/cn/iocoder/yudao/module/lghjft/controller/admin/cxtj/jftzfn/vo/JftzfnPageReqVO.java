@@ -81,6 +81,9 @@ public class JftzfnPageReqVO extends PageParam {
     @Schema(description = "结算结束日期")
     private String endJsrq;
 
+    @Schema(description = "创建人")
+    private String createBy;
+
     @Schema(description = "划款批次号")
     private String hkpch;
 

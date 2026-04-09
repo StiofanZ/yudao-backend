@@ -8,6 +8,9 @@ import lombok.Data;
 @Data
 public class JffsjzqmxPageReqVO extends PageParam {
 
+    @Schema(description = "创建人")
+    private String createBy;
+
     @Schema(description = "deptId")
     private String deptId;
     @Schema(description = "djxh")
