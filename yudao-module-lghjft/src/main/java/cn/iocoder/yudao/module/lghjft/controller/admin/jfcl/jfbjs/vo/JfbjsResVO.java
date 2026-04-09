@@ -1,15 +1,16 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.jfbjs.vo;
 
-import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import cn.idev.excel.annotation.ExcelProperty;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
 
 @Schema(description = "管理后台 - 经费补结算 Response VO")
 @Data
-@ExcelIgnoreUnannotated
 public class JfbjsResVO {
 
     @Schema(description = "工会经费ID")
@@ -17,14 +18,20 @@ public class JfbjsResVO {
     @Schema(description = "税票ID")
     private String spuuid;
     @Schema(description = "登记序号")
+    @ExcelProperty("登记序号")
     private String djxh;
     @Schema(description = "社会信用代码")
+    @ExcelProperty("社会信用代码")
     private String shxydm;
     @Schema(description = "纳税人名称")
+    @ExcelProperty("纳税人名称")
     private String nsrmc;
     @Schema(description = "纳税人简称")
+    @ExcelProperty("纳税人简称")
     private String nsrjc;
     @Schema(description = "工会机构代码")
+    @ExcelProperty(value = "工会机构", converter = DictConvert.class)
+    @DictFormat("sys_ghjg_type")
     private String deptId;
     @Schema(description = "工会机构行政级别")
     private String ghjgxzjb;
@@ -37,14 +44,20 @@ public class JfbjsResVO {
     @Schema(description = "属地工会行政级别")
     private String sdghjgxzjb;
     @Schema(description = "主管税务局代码")
+    @ExcelProperty(value = "主管税务局", converter = DictConvert.class)
+    @DictFormat("sys_swjg_type")
     private String zgswjDm;
     @Schema(description = "主管税务分局代码")
     private String zgswskfjDm;
     @Schema(description = "税管员代码")
     private String ssglyDm;
     @Schema(description = "工会类别代码")
+    @ExcelProperty(value = "工会类别", converter = DictConvert.class)
+    @DictFormat("sys_ghlb_type")
     private String ghlbDm;
     @Schema(description = "系统类别代码")
+    @ExcelProperty(value = "系统类别", converter = DictConvert.class)
+    @DictFormat("sys_xtlb_type")
     private String xtlbDm;
     @Schema(description = "组织机构类型代码")
     private String zzjglxDm;
@@ -63,8 +76,10 @@ public class JfbjsResVO {
     @Schema(description = "票证明细号")
     private Long pzmxxh;
     @Schema(description = "所属期起")
+    @ExcelProperty("所属期起")
     private LocalDateTime skssqq;
     @Schema(description = "所属期止")
+    @ExcelProperty("所属期止")
     private LocalDateTime skssqz;
     @Schema(description = "征收税务局代码")
     private String zsswjgDm;
@@ -85,14 +100,18 @@ public class JfbjsResVO {
     @Schema(description = "开票员姓名")
     private String kpyXm;
     @Schema(description = "征收品目代码")
+    @ExcelProperty(value = "征收品目", converter = DictConvert.class)
+    @DictFormat("sys_zspm_type")
     private String zspmDm;
     @Schema(description = "征收子目代码")
     private String zszmDm;
     @Schema(description = "预算科目代码")
     private String yskmDm;
     @Schema(description = "工资总额")
+    @ExcelProperty("工资总额")
     private BigDecimal gzze;
     @Schema(description = "税率")
+    @ExcelProperty("税率")
     private BigDecimal sl;
     @Schema(description = "应纳税额")
     private BigDecimal ynse;
@@ -101,6 +120,7 @@ public class JfbjsResVO {
     @Schema(description = "已缴税额")
     private BigDecimal yjse;
     @Schema(description = "应补退税额")
+    @ExcelProperty("入库金额")
     private BigDecimal ybtse;
     @Schema(description = "缴款方式")
     private String jkfsDm;
@@ -115,22 +135,31 @@ public class JfbjsResVO {
     @Schema(description = "缴费银行")
     private String jfyh;
     @Schema(description = "入库日期")
+    @ExcelProperty("入库日期")
     private LocalDateTime rkrq;
     @Schema(description = "结算标记")
+    @ExcelProperty(value = "结算标记", converter = DictConvert.class)
+    @DictFormat("sys_jsbj_type")
     private String jsbj;
     @Schema(description = "结算日期")
+    @ExcelProperty("结算日期")
     private LocalDateTime jsrq;
     @Schema(description = "结算操作员")
     private String jsczy;
     @Schema(description = "基层工会账户")
+    @ExcelProperty("基层工会账号")
     private String jcghzh;
     @Schema(description = "基层工会户名")
+    @ExcelProperty("基层工会户名")
     private String jcghhm;
     @Schema(description = "基层工会行号")
+    @ExcelProperty("基层工会行号")
     private String jcghhh;
     @Schema(description = "基层工会比例")
+    @ExcelProperty("基层工会比例")
     private BigDecimal jcghbl;
     @Schema(description = "基层工会金额")
+    @ExcelProperty("基层工会金额")
     private BigDecimal jcghje;
     @Schema(description = "筹备金账号")
     private String cbjzh;
@@ -139,8 +168,10 @@ public class JfbjsResVO {
     @Schema(description = "筹备金行号")
     private String cbjhh;
     @Schema(description = "筹备金比例")
+    @ExcelProperty("筹备金比例")
     private BigDecimal cbjbl;
     @Schema(description = "筹备金金额")
+    @ExcelProperty("筹备金金额")
     private BigDecimal cbjje;
     @Schema(description = "行业工会账号")
     private String hyghzh;
@@ -225,16 +256,21 @@ public class JfbjsResVO {
     @Schema(description = "税务机关金额")
     private BigDecimal swjgje;
     @Schema(description = "基层经费拨付状态")
+    @ExcelProperty(value = "基层经费拨付状态", converter = DictConvert.class)
+    @DictFormat("sys_cbjcl_type")
     private String cbjthbj;
     @Schema(description = "处理日期")
     private LocalDateTime cbjthrq;
     @Schema(description = "操作员")
     private String cbjthczy;
     @Schema(description = "校验码")
+    @ExcelProperty("校验码")
     private String jym;
     @Schema(description = "划款批次号")
+    @ExcelProperty("划款批次号")
     private String hkpch;
     @Schema(description = "备注")
+    @ExcelProperty("备注")
     private String bz;
     @Schema(description = "分配比例UUID")
     private String bluuid;
@@ -249,10 +285,13 @@ public class JfbjsResVO {
     @Schema(description = "属地工会金额")
     private BigDecimal sdghje;
     @Schema(description = "划款日期")
+    @ExcelProperty("划款日期")
     private LocalDateTime hkrq;
     @Schema(description = "金额")
+    @ExcelProperty("金额")
     private BigDecimal je;
     @Schema(description = "批次号")
+    @ExcelProperty("批次号")
     private String pch;
     @Schema(description = "增量标记")
     private String zlbj;
