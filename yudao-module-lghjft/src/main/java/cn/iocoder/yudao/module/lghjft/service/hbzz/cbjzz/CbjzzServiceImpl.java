@@ -58,6 +58,10 @@ public class CbjzzServiceImpl implements CbjzzService {
     public PageResult<CbjzzResVO> getCbjzzPage(CbjzzPageReqVO pageReqVO) {
         fillDeptId(pageReqVO);
         List<CbjzzResVO> records = cbjzzMapper.selectLegacyList(pageReqVO);
+        // PAGE_SIZE_NONE (-1) means return all records without pagination
+        if (pageReqVO.getPageSize() == null || pageReqVO.getPageSize() < 0) {
+            return new PageResult<>(records, (long) records.size());
+        }
         // v1: database-level paging via startPage() — replicate with manual sub-list
         int fromIndex = Math.max((pageReqVO.getPageNo() - 1) * pageReqVO.getPageSize(), 0);
         if (fromIndex >= records.size()) {

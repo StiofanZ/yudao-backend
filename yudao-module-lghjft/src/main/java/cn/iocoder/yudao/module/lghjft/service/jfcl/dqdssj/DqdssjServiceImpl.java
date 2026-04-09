@@ -52,6 +52,10 @@ public class DqdssjServiceImpl implements DqdssjService {
         List<JfzcDqdssjVo> list = dqdssjMapper.selecListzl(pageReqVO);
         // Manual pagination for XML-based queries
         int total = list.size();
+        // PAGE_SIZE_NONE (-1) means return all records without pagination
+        if (page.getSize() < 0) {
+            return new PageResult<>(list, (long) total);
+        }
         int fromIndex = (int) ((page.getCurrent() - 1) * page.getSize());
         int toIndex = Math.min(fromIndex + (int) page.getSize(), total);
         List<JfzcDqdssjVo> pageList = (fromIndex >= total) ? Collections.emptyList() : list.subList(fromIndex, toIndex);

@@ -405,6 +405,10 @@ public class XxtxServiceImpl implements XxtxService {
     private PageResult<XxtxMessageReceiverDO> toPageResult(List<XxtxMessageReceiverDO> list, Integer pageNo, Integer pageSize) {
         List<XxtxMessageReceiverDO> sortList = new ArrayList<>(list);
         sortList.sort(Comparator.comparing(XxtxMessageReceiverDO::getId).reversed());
+        // PAGE_SIZE_NONE (-1) means return all records without pagination
+        if (pageSize == null || pageSize < 0) {
+            return new PageResult<>(sortList, (long) sortList.size());
+        }
         int fromIndex = Math.max((pageNo - 1) * pageSize, 0);
         if (fromIndex >= sortList.size()) {
             return new PageResult<>(Collections.emptyList(), (long) sortList.size());

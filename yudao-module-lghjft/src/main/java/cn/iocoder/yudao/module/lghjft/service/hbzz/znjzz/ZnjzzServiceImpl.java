@@ -62,6 +62,10 @@ public class ZnjzzServiceImpl implements ZnjzzService {
     public PageResult<ZnjzzResVO> getZnjzzPage(ZnjzzPageReqVO pageReqVO) {
         fillZhFromDept(pageReqVO);
         List<ZnjzzResVO> records = znjzzMapper.selectLegacyList(pageReqVO);
+        // PAGE_SIZE_NONE (-1) means return all records without pagination
+        if (pageReqVO.getPageSize() == null || pageReqVO.getPageSize() < 0) {
+            return new PageResult<>(records, (long) records.size());
+        }
         int fromIndex = Math.max((pageReqVO.getPageNo() - 1) * pageReqVO.getPageSize(), 0);
         if (fromIndex >= records.size()) {
             return new PageResult<>(new ArrayList<>(), (long) records.size());

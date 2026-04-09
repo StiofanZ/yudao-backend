@@ -94,6 +94,10 @@ public class JrbxzqdwServiceImpl implements JrbxzqdwService {
         List<JrbxzqdwDO> allList = jrbxzqdwMapper.selectJrbxzqdwList(pageReqVO);
         long total = allList.size();
 
+        // PAGE_SIZE_NONE (-1) means return all records without pagination
+        if (pageReqVO.getPageSize() == null || pageReqVO.getPageSize() < 0) {
+            return new PageResult<>(allList, total);
+        }
         // 手动分页
         int fromIndex = (pageReqVO.getPageNo() - 1) * pageReqVO.getPageSize();
         int toIndex = Math.min(fromIndex + pageReqVO.getPageSize(), allList.size());

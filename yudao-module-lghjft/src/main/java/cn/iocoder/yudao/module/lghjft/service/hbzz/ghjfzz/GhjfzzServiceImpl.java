@@ -68,6 +68,10 @@ public class GhjfzzServiceImpl implements GhjfzzService {
     public PageResult<GhjfzzResVO> getGhjfzzPage(GhjfzzPageReqVO pageReqVO) {
         fillZhFromDept(pageReqVO);
         List<GhjfzzResVO> records = ghjfzzMapper.selectLegacyList(pageReqVO);
+        // PAGE_SIZE_NONE (-1) means return all records without pagination
+        if (pageReqVO.getPageSize() == null || pageReqVO.getPageSize() < 0) {
+            return new PageResult<>(records, (long) records.size());
+        }
         int fromIndex = Math.max((pageReqVO.getPageNo() - 1) * pageReqVO.getPageSize(), 0);
         if (fromIndex >= records.size()) {
             return new PageResult<>(new ArrayList<>(), (long) records.size());

@@ -68,6 +68,10 @@ public class DwxxspServiceImpl implements DwxxspService {
                 .filter(item -> matchKeyword(item, reqVO.getKeyword()))
                 .sorted(Comparator.comparing(DwxxspResVO::getCreateTime, Comparator.nullsLast(LocalDateTime::compareTo)).reversed())
                 .toList();
+        // PAGE_SIZE_NONE (-1) means return all records without pagination
+        if (reqVO.getPageSize() == null || reqVO.getPageSize() < 0) {
+            return new PageResult<>(records, (long) records.size());
+        }
         int fromIndex = Math.max((reqVO.getPageNo() - 1) * reqVO.getPageSize(), 0);
         if (fromIndex >= records.size()) {
             return new PageResult<>(new ArrayList<>(), (long) records.size());
