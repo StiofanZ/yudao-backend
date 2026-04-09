@@ -5,11 +5,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDateTime;
-
-import static cn.iocoder.yudao.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND;
 
 @Schema(description = "管理后台 - 户籍管理/基础信息分页 Request VO")
 @Data
@@ -54,12 +49,10 @@ public class JcxxPageReqVO extends PageParam {
     private String clghbj;
 
     @Schema(description = "成立工会日期开始")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private LocalDateTime beginClghrq;
+    private String beginClghrq;
 
     @Schema(description = "成立工会日期结束")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private LocalDateTime endClghrq;
+    private String endClghrq;
 
     @Schema(description = "联系电话")
     private String lxdh;

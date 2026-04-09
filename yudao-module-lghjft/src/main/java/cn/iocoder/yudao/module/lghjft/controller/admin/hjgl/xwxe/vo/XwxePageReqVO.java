@@ -5,11 +5,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDateTime;
-
-import static cn.iocoder.yudao.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND;
 
 @Schema(description = "管理后台 - 小微小额分页 Request VO")
 @Data
@@ -30,12 +25,10 @@ public class XwxePageReqVO extends PageParam {
     private String hjfl6Dm;
 
     @Schema(description = "小微上报开始时间")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private LocalDateTime beginHjfl7Dm;
+    private String beginHjfl7Dm;
 
     @Schema(description = "小微上报结束时间")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private LocalDateTime endHjfl7Dm;
+    private String endHjfl7Dm;
 
     @Schema(description = "是否已建会缴纳筹备金")
     private String hjfl8Dm;

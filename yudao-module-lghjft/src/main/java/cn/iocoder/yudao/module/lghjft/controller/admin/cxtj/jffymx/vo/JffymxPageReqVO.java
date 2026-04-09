@@ -64,12 +64,10 @@ public class JffymxPageReqVO extends PageParam {
     private BigDecimal ybtse;
 
     @Schema(description = "入库开始日期")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private LocalDateTime beginRkrq;
+    private String beginRkrq;
 
     @Schema(description = "入库结束日期")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private LocalDateTime endRkrq;
+    private String endRkrq;
 
     @Schema(description = "入库日期")
     private LocalDateTime rkrq;
@@ -78,12 +76,10 @@ public class JffymxPageReqVO extends PageParam {
     private List<String> jsbj;
 
     @Schema(description = "结算开始日期")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private LocalDateTime beginJsrq;
+    private String beginJsrq;
 
     @Schema(description = "结算结束日期")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private LocalDateTime endJsrq;
+    private String endJsrq;
 
     @Schema(description = "划款批次号")
     private String hkpch;

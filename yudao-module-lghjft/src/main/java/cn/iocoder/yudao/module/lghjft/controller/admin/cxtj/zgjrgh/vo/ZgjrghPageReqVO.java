@@ -56,23 +56,19 @@ public class ZgjrghPageReqVO extends PageParam {
     private LocalDateTime skssqz;
 
     @Schema(description = "入库日期-开始")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private LocalDateTime beginRkrq;
+    private String beginRkrq;
 
     @Schema(description = "入库日期-结束")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private LocalDateTime endRkrq;
+    private String endRkrq;
 
     @Schema(description = "结算标记")
     private String jsbj;
 
     @Schema(description = "结算日期-开始")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private LocalDateTime beginJsrq;
+    private String beginJsrq;
 
     @Schema(description = "结算日期-结束")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private LocalDateTime endJsrq;
+    private String endJsrq;
 
     @Schema(description = "基层工会账号")
     private String jcghzh;

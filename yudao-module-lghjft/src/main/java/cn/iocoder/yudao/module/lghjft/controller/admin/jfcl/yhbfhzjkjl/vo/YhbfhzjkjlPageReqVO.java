@@ -4,11 +4,6 @@ import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDateTime;
-
-import static cn.iocoder.yudao.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND;
 
 @Schema(description = "管理后台 - 银行拨付汇总监控记录分页 Request VO")
 @Data
@@ -40,14 +35,11 @@ public class YhbfhzjkjlPageReqVO extends PageParam {
     private String updateBy;
 
     @Schema(description = "创建时间 - 开始")
-//    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private LocalDateTime beginCreateTime;
+    private String beginCreateTime;
 
     @Schema(description = "创建时间 - 结束")
-//    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private String endCreateTime;
 
     @Schema(description = "更新时间")
-//    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private String updateTime;
 }
