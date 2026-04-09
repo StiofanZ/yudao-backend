@@ -1,8 +1,11 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xejf2023;
 
+import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
+import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xejf2023.vo.Xejf2023PageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xejf2023.vo.Xejf2023ResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xejf2023.vo.Xejf2023SaveReqVO;
@@ -13,13 +16,16 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
+import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.EXPORT;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
 @Tag(name = "管理后台 - 小额缴费明细")
@@ -94,5 +100,17 @@ public class Xejf2023Controller {
     @PreAuthorize("@ss.hasPermission('lghjft:xejf-xejf2023:query')")
     public CommonResult<List<XejftjResVO>> getXejf2023Xetj(@Valid Xejf2023PageReqVO pageReqVO) {
         return success(xejf2023Service.getXejf2023Xetj(pageReqVO));
+    }
+
+    @GetMapping("/export-excel")
+    @Operation(summary = "导出小额缴费明细 Excel")
+    @PreAuthorize("@ss.hasPermission('lghjft:xejf-xejf2023:export')")
+    @ApiAccessLog(operateType = EXPORT)
+    public void exportExcel(@Valid Xejf2023PageReqVO pageReqVO,
+                            HttpServletResponse response) throws IOException {
+        pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
+        List<Xejf2023DO> list = xejf2023Service.getXejf2023Page(pageReqVO).getList();
+        ExcelUtils.write(response, "小额缴费明细.xls", "数据", Xejf2023ResVO.class,
+                BeanUtils.toBean(list, Xejf2023ResVO.class));
     }
 }

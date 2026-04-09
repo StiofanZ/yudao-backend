@@ -1,5 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.xejf.hkxxxejfcbj.vo;
 
+import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
+import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -8,24 +10,30 @@ import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 小额筹备金做账 Response VO")
 @Data
+@ExcelIgnoreUnannotated
 public class GhHkxxxejfcbjResVO {
     private Long hkxxId;
+    @ExcelProperty("划款批次号")
     private String hkpch;
     private Long xh;
     private Long jfqj;
     private String lx;
+    @ExcelProperty("账号")
     private String zh;
     private String zh1;
     private String zh2;
     private String zh3;
+    @ExcelProperty("户名")
     private String hm;
     private String hh;
     private String xzh;
     private String xhm;
     private String xhh;
     private BigDecimal wqyfje;
+    @ExcelProperty("金额")
     private BigDecimal je;
     private String sjdm;
+    @ExcelProperty("工会机构代码")
     private String deptId;
     private String dz;
     private String fy;

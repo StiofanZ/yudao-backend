@@ -1,5 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xejf24.vo;
 
+import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
+import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -8,14 +10,20 @@ import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 24年小额确认 Response VO")
 @Data
+@ExcelIgnoreUnannotated
 public class GhHjXejf24ResVO {
     @Schema(description = "工会机构代码")
+    @ExcelProperty("工会机构代码")
     private String deptId;
     private String hyghbz;
+    @ExcelProperty("登记序号")
     private String djxh;
+    @ExcelProperty("社会信用代码")
     private String shxydm;
+    @ExcelProperty("纳税人名称")
     private String nsrmc;
     private String nsrjc;
+    @ExcelProperty("主管税务机关代码")
     private String zgswjDm;
     private String zgswjmc;
     private String zgswskfjDm;
@@ -39,7 +47,9 @@ public class GhHjXejf24ResVO {
     private String yzbm;
     private String lxr;
     private String lxdh;
+    @ExcelProperty("工会类别代码")
     private String ghlbDm;
+    @ExcelProperty("系统类别代码")
     private String xtlbDm;
     private String hjfl1Dm;
     private String hjfl2Dm;
@@ -55,7 +65,9 @@ public class GhHjXejf24ResVO {
     private LocalDateTime clghrq;
     private String jcghdm;
     private String jcghmc;
+    @ExcelProperty("基层工会账户")
     private String jcghzh;
+    @ExcelProperty("基层工会户名")
     private String jcghhm;
     private String jcghhh;
     private String jcghyh;

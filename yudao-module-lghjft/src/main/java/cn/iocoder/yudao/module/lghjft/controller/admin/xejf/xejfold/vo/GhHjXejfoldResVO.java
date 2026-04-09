@@ -1,5 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xejfold.vo;
 
+import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
+import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -8,12 +10,17 @@ import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 23年小额确认(历史) Response VO")
 @Data
+@ExcelIgnoreUnannotated
 public class GhHjXejfoldResVO {
     @Schema(description = "工会机构代码")
+    @ExcelProperty("工会机构代码")
     private String deptId;
     private String hyghbz;
+    @ExcelProperty("登记序号")
     private String djxh;
+    @ExcelProperty("社会信用代码")
     private String shxydm;
+    @ExcelProperty("纳税人名称")
     private String nsrmc;
     private String nsrjc;
     private String zgswjDm;

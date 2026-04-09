@@ -1,5 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xejf2023.vo;
 
+import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
+import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -8,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 小额缴费明细 Response VO")
 @Data
+@ExcelIgnoreUnannotated
 public class Xejf2023ResVO {
     private Long ghjfId;
     private String sjdm;
@@ -16,10 +19,13 @@ public class Xejf2023ResVO {
     private BigDecimal hs;
     private String spuuid;
     private String djxh;
+    @ExcelProperty("社会信用代码")
     private String shxydm;
     private String nsrsbh;
+    @ExcelProperty("纳税人名称")
     private String nsrmc;
     private String nsrjc;
+    @ExcelProperty("工会机构代码")
     private String deptId;
     private String ghjgxzjb;
     private String clghbj;
@@ -54,6 +60,7 @@ public class Xejf2023ResVO {
     private String pzhm;
     private String kpyDm;
     private String kpyXm;
+    @ExcelProperty("征收品目代码")
     private String zspmDm;
     private String zszmDm;
     private String yskmDm;
@@ -62,6 +69,7 @@ public class Xejf2023ResVO {
     private BigDecimal ynse;
     private BigDecimal jmse;
     private BigDecimal yjse;
+    @ExcelProperty("缴费金额")
     private BigDecimal ybtse;
     private BigDecimal sjje;
     private String jkfsDm;
@@ -78,6 +86,7 @@ public class Xejf2023ResVO {
     private String jcghhm;
     private String jcghhh;
     private BigDecimal jcghbl;
+    @ExcelProperty("基层工会金额")
     private BigDecimal jcghje;
     private String cbjzh;
     private String cbjhm;
