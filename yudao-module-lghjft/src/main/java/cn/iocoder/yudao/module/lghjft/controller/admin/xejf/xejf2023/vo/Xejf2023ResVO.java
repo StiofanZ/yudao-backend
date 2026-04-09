@@ -46,11 +46,11 @@ public class Xejf2023ResVO {
     @ExcelProperty("小微类型")
     private String xwlx;
     @ExcelProperty("23小额类型")
-    private String[] xelx23;
+    private String xelx23;
     @ExcelProperty("24小额类型")
-    private String[] xelx24;
+    private String xelx24;
     @ExcelProperty("25小额类型")
-    private String[] xelx25;
+    private String xelx25;
     private String zzjglxDm;
     private String hyDm;
     private String djzclxDm;
@@ -96,7 +96,7 @@ public class Xejf2023ResVO {
     @ExcelProperty("入库日期")
     private LocalDateTime rkrq;
     @ExcelProperty("结算标记")
-    private String[] jsbj;
+    private String jsbj;
     @ExcelProperty("结算日期")
     private LocalDateTime jsrq;
     private String jsczy;
