@@ -4,13 +4,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import cn.idev.excel.annotation.ExcelProperty;
 import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 
 @Schema(description = "管理后台 - 经费补结算 Response VO")
 @Data
+@ExcelIgnoreUnannotated
 public class JfbjsResVO {
 
     @Schema(description = "工会经费ID")
@@ -70,17 +71,17 @@ public class JfbjsResVO {
     @Schema(description = "申报类别代码")
     private String sblbDm;
     @Schema(description = "申报日期")
-    private LocalDateTime nssbrq;
+    private String nssbrq;
     @Schema(description = "票证序号")
     private String pzxh;
     @Schema(description = "票证明细号")
     private Long pzmxxh;
     @Schema(description = "所属期起")
     @ExcelProperty("所属期起")
-    private LocalDateTime skssqq;
+    private String skssqq;
     @Schema(description = "所属期止")
     @ExcelProperty("所属期止")
-    private LocalDateTime skssqz;
+    private String skssqz;
     @Schema(description = "征收税务局代码")
     private String zsswjgDm;
     @Schema(description = "税款所属税务机关")
@@ -136,14 +137,14 @@ public class JfbjsResVO {
     private String jfyh;
     @Schema(description = "入库日期")
     @ExcelProperty("入库日期")
-    private LocalDateTime rkrq;
+    private String rkrq;
     @Schema(description = "结算标记")
     @ExcelProperty(value = "结算标记", converter = DictConvert.class)
     @DictFormat("sys_jsbj_type")
     private String jsbj;
     @Schema(description = "结算日期")
     @ExcelProperty("结算日期")
-    private LocalDateTime jsrq;
+    private String jsrq;
     @Schema(description = "结算操作员")
     private String jsczy;
     @Schema(description = "基层工会账户")
@@ -260,7 +261,7 @@ public class JfbjsResVO {
     @DictFormat("sys_cbjcl_type")
     private String cbjthbj;
     @Schema(description = "处理日期")
-    private LocalDateTime cbjthrq;
+    private String cbjthrq;
     @Schema(description = "操作员")
     private String cbjthczy;
     @Schema(description = "校验码")
@@ -286,7 +287,7 @@ public class JfbjsResVO {
     private BigDecimal sdghje;
     @Schema(description = "划款日期")
     @ExcelProperty("划款日期")
-    private LocalDateTime hkrq;
+    private String hkrq;
     @Schema(description = "金额")
     @ExcelProperty("金额")
     private BigDecimal je;
