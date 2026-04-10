@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 /**
  * 筹备金全返 DO - 映射 v1 表 gh_jf_cbjqf
@@ -82,7 +81,7 @@ public class GhjfcbjqfDO {
     /**
      * 入库日期
      */
-    private LocalDateTime rkrq;
+    private String rkrq;
 
     /**
      * 结算标记
@@ -97,7 +96,7 @@ public class GhjfcbjqfDO {
     /**
      * 筹备金全返日期
      */
-    private LocalDateTime cbjqfrq;
+    private String cbjqfrq;
 
     /**
      * 创建人
@@ -107,7 +106,7 @@ public class GhjfcbjqfDO {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private String createTime;
 
     /**
      * 更新人
@@ -117,5 +116,5 @@ public class GhjfcbjqfDO {
     /**
      * 更新时间
      */
-    private LocalDateTime updateTime;
+    private String updateTime;
 }
