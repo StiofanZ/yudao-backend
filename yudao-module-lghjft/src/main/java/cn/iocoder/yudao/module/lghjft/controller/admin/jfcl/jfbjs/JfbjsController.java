@@ -72,7 +72,9 @@ public class JfbjsController {
         // v1: if(null == jfclJfbjs || null == jfclJfbjs.getRkrqStart() || null == jfclJfbjs.getRkrqEnd())
         if (pageReqVO.getRkrqStart() == null || pageReqVO.getRkrqStart().isEmpty()
                 || pageReqVO.getRkrqEnd() == null || pageReqVO.getRkrqEnd().isEmpty()) {
-            throw new RuntimeException("入库日期起止不能为空");
+            throw new cn.iocoder.yudao.framework.common.exception.ServiceException(
+                    cn.iocoder.yudao.framework.common.exception.enums.GlobalErrorCodeConstants.BAD_REQUEST.getCode(),
+                    "入库日期起止不能为空");
         }
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<JfclJfbjsDO> list = jfbjsService.getJfbjsPage(pageReqVO).getList();
