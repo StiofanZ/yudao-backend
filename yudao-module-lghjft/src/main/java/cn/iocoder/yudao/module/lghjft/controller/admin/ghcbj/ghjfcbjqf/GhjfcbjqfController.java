@@ -35,6 +35,15 @@ public class GhjfcbjqfController {
     @Resource
     private GhjfcbjqfService ghjfcbjqfService;
 
+    @GetMapping("/get")
+    @Operation(summary = "获得筹备金全返详情")
+    @Parameter(name = "id", description = "工会经费ID", required = true)
+    @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-ghjfcbjqf:query')")
+    public CommonResult<GhjfcbjqfResVO> getGhjfcbjqf(@RequestParam("id") Long id) {
+        GhjfcbjqfDO data = ghjfcbjqfService.getGhjfcbjqf(id);
+        return success(BeanUtils.toBean(data, GhjfcbjqfResVO.class));
+    }
+
     @GetMapping("/page")
     @Operation(summary = "获得筹备金全返分页")
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ghjfcbjqf:query')")

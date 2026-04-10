@@ -16,4 +16,6 @@ public interface GhjfcbjqfService {
      * @return 分页结果
      */
     PageResult<GhjfcbjqfDO> getGhjfcbjqfPage(GhjfcbjqfPageReqVO pageReqVO);
+
+    GhjfcbjqfDO getGhjfcbjqf(Long id);
 }

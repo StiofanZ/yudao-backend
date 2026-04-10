@@ -7,11 +7,6 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
-/**
- * 筹备金全返 DO - 映射 v1 表 gh_jf_cbjqf
- * <p>
- * 注意：v1 表结构，禁止继承 BaseDO / TenantBaseDO，禁止 @TableLogic
- */
 @TableName("gh_jf_cbjqf")
 @Data
 @Builder
@@ -22,99 +17,131 @@ public class GhjfcbjqfDO {
 
     @TableId(type = IdType.AUTO)
     private Long ghjfId;
-
-    /**
-     * 登记序号
-     */
-    private String djxh;
-
-    /**
-     * 社会信用代码
-     */
-    private String shxydm;
-
-    /**
-     * 纳税人名称
-     */
-    private String nsrmc;
-
-    /**
-     * 缴费账号
-     */
-    private String jfzh;
-
-    /**
-     * 缴费户名
-     */
-    private String jfhm;
-
-    /**
-     * 工会机构代码
-     */
-    private String deptId;
-
-    /**
-     * 缴费金额 (应补退税额)
-     */
-    private BigDecimal ybtse;
-
-    /**
-     * 筹备金金额
-     */
-    private BigDecimal cbjje;
-
-    /**
-     * 税票UUID
-     */
     private String spuuid;
-
-    /**
-     * 纳税人简称
-     */
+    private String djxh;
+    private String shxydm;
+    private String nsrmc;
     private String nsrjc;
-
-    /**
-     * 主管税务局代码
-     */
+    private String deptId;
+    private String ghjgxzjb;
+    private String clghbj;
+    private String hyghbz;
+    private String sdghjgDm;
+    private String sdghjgxzjb;
     private String zgswjDm;
-
-    /**
-     * 入库日期
-     */
+    private String zgswskfjDm;
+    private String ssglyDm;
+    private String ghlbDm;
+    private String xtlbDm;
+    private String zzjglxDm;
+    private String hyDm;
+    private String djzclxDm;
+    private String dwlsgxDm;
+    private String sblbDm;
+    private String nssbrq;
+    private String pzxh;
+    private Long pzmxxh;
+    private String skssqq;
+    private String skssqz;
+    private String zsswjgDm;
+    private String skssswjgDm;
+    private String skgkDm;
+    private String dzsphm;
+    private String pzzlDm;
+    private String pzzgDm;
+    private String pzhm;
+    private String kpyDm;
+    private String kpyXm;
+    private String zspmDm;
+    private String zszmDm;
+    private String yskmDm;
+    private BigDecimal gzze;
+    private BigDecimal sl;
+    private BigDecimal ynse;
+    private BigDecimal jmse;
+    private BigDecimal yjse;
+    private BigDecimal ybtse;
+    private String jkfsDm;
+    private String jfhb;
+    private String jfzh;
+    private String jfhm;
+    private String jfhh;
+    private String jfyh;
     private String rkrq;
-
-    /**
-     * 结算标记
-     */
     private String jsbj;
-
-    /**
-     * 筹备金全返状态
-     */
+    private String jsrq;
+    private String jsczy;
+    private String jcghzh;
+    private String jcghhm;
+    private String jcghhh;
+    private BigDecimal jcghbl;
+    private BigDecimal jcghje;
+    private String cbjzh;
+    private String cbjhm;
+    private String cbjhh;
+    private BigDecimal cbjbl;
+    private BigDecimal cbjje;
+    private String hyghzh;
+    private String hyghhm;
+    private String hyghhh;
+    private BigDecimal hyghbl;
+    private BigDecimal hyghje;
+    private String xjghzh;
+    private String xjghhm;
+    private String xjghhh;
+    private BigDecimal xjghbl;
+    private BigDecimal xjghje;
+    private String sjghzh;
+    private String sjghhm;
+    private String sjghhh;
+    private BigDecimal sjghbl;
+    private BigDecimal sjghje;
+    private String szghzh;
+    private String szghhm;
+    private String szghhh;
+    private BigDecimal szghbl;
+    private BigDecimal szghje;
+    private String qgghzh;
+    private String qgghhm;
+    private String qgghhh;
+    private BigDecimal qgghbl;
+    private BigDecimal qgghje;
+    private String jcjzh;
+    private String jcjhm;
+    private String jcjhh;
+    private BigDecimal jcjbl;
+    private BigDecimal jcjje;
+    private String jcwsh;
+    private String sdszh;
+    private String sdshm;
+    private String sdshh;
+    private BigDecimal sdsbl;
+    private BigDecimal sdsje;
+    private String swjgzh;
+    private String swjghm;
+    private String swjghh;
+    private BigDecimal swjgbl;
+    private BigDecimal swjgje;
     private String cbjqfzt;
-
-    /**
-     * 筹备金全返日期
-     */
     private String cbjqfrq;
-
-    /**
-     * 创建人
-     */
+    private String cbjqfjg;
+    private String cbjjsbfjczt;
+    private String cbjjsbfjcrq;
+    private String cbjthbj;
+    private String cbjthrq;
+    private String cbjthczy;
+    private String jym;
+    private String hkpch;
+    private String qfpch;
+    private String bz;
+    private String bluuid;
+    private String sdghzh;
+    private String sdghhm;
+    private String sdghhh;
+    private BigDecimal sdghbl;
+    private BigDecimal sdghje;
     private String createBy;
-
-    /**
-     * 创建时间
-     */
     private String createTime;
-
-    /**
-     * 更新人
-     */
     private String updateBy;
-
-    /**
-     * 更新时间
-     */
     private String updateTime;
 }

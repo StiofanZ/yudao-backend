@@ -22,4 +22,9 @@ public class GhjfcbjqfServiceImpl implements GhjfcbjqfService {
     public PageResult<GhjfcbjqfDO> getGhjfcbjqfPage(GhjfcbjqfPageReqVO pageReqVO) {
         return ghjfcbjqfMapper.selectPage(pageReqVO);
     }
+
+    @Override
+    public GhjfcbjqfDO getGhjfcbjqf(Long id) {
+        return ghjfcbjqfMapper.selectById(id);
+    }
 }
