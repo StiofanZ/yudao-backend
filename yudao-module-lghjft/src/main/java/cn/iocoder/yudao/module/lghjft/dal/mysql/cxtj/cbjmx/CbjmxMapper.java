@@ -50,9 +50,5 @@ public interface CbjmxMapper extends BaseMapperX<CbjmxDO> {
      * v1 selectCbjmxhzList: GROUP BY dwdm, dept_id, jsbj, cbjthbj, fbbj ORDER BY dwdm
      * v1 deptId filter: (dept_id = #{deptId} or dept_id IN (SELECT t.dept_id FROM sys_dept t WHERE find_in_set(#{deptId}, ancestors)))
      */
-    List<CbjmxhzDO> selectCbjmxhzList(@Param("zspmDm") String zspmDm,
-                                        @Param("nd") String nd,
-                                        @Param("deptId") String deptId,
-                                        @Param("shxydm") String shxydm,
-                                        @Param("nsrmc") String nsrmc);
+    List<CbjmxhzDO> selectCbjmxhzList(@Param("req") CbjmxPageReqVO req);
 }

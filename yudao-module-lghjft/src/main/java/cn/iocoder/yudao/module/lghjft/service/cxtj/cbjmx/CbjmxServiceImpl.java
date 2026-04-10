@@ -36,8 +36,6 @@ public class CbjmxServiceImpl implements CbjmxService {
 
     @Override
     public List<CbjmxhzDO> getCbjmxhzList(CbjmxPageReqVO reqVO) {
-        return cbjmxMapper.selectCbjmxhzList(
-                reqVO.getZspmDm(), reqVO.getNd(), reqVO.getDeptId(),
-                reqVO.getShxydm(), reqVO.getNsrmc());
+        return cbjmxMapper.selectCbjmxhzList(reqVO);
     }
 }

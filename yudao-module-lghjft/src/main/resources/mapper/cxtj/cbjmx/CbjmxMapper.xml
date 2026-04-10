@@ -69,35 +69,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- v1 selectCbjmxhzList: GROUP BY dwdm, dept_id, jsbj, cbjthbj, fbbj ORDER BY dwdm
          v1 deptId filter uses find_in_set for ancestor lookup -->
+    <!-- v1 selectCbjmxhzList 1:1 翻译，全部 WHERE 条件 -->
     <select id="selectCbjmxhzList" resultMap="CbjmxhzResult">
         select
-            dwdm,
-            dept_id,
-            jsbj,
-            cbjthbj,
-            fbbj,
-            count(djxh) bs,
-            count(distinct djxh) hs,
-            sum(qtje) qtje,
-            sum(jfje) jfje,
-            sum(cbjje) cbjje,
-            sum(sfbje) sfbje
+            dwdm, dept_id, jsbj, cbjthbj, fbbj,
+            count(djxh) bs, count(distinct djxh) hs,
+            sum(qtje) qtje, sum(jfje) jfje, sum(cbjje) cbjje, sum(sfbje) sfbje
         from cbjmx
         <where>
-            <if test="zspmDm != null and zspmDm != ''"> and zspm_dm = #{zspmDm}</if>
-            <if test="nd != null and nd != ''"> and nd = #{nd}</if>
-            <if test="deptId != null and deptId != ''"> and (dept_id = #{deptId} or dept_id in (select t.dept_id from sys_dept t where find_in_set(#{deptId}, ancestors)))</if>
-            <if test="shxydm != null and shxydm != ''"> and shxydm = #{shxydm}</if>
-            <if test="nsrmc != null and nsrmc != ''"> and nsrmc = #{nsrmc}</if>
+            <if test="req.zspmDm != null and req.zspmDm != ''">and zspm_dm = #{req.zspmDm}</if>
+            <if test="req.nd != null and req.nd != ''">and nd = #{req.nd}</if>
+            <if test="req.deptId != null and req.deptId != ''">and (dept_id = #{req.deptId} or dept_id in (select t.dept_id from sys_dept t where find_in_set(#{req.deptId}, ancestors)))</if>
+            <if test="req.shxydm != null and req.shxydm != ''">and shxydm = #{req.shxydm}</if>
+            <if test="req.djxh != null and req.djxh != ''">and djxh = #{req.djxh}</if>
+            <if test="req.nsrmc != null and req.nsrmc != ''">and nsrmc = #{req.nsrmc}</if>
+            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">and rkrq between #{req.beginRkrq} and #{req.endRkrq}</if>
+            <if test="req.beginJsrq != null and req.beginJsrq != '' and req.endJsrq != null and req.endJsrq != ''">and jsrq between #{req.beginJsrq} and #{req.endJsrq}</if>
+            <if test="req.skssqq != null and req.skssqq != ''">and skssqq = #{req.skssqq}</if>
+            <if test="req.skssqz != null and req.skssqz != ''">and skssqz = #{req.skssqz}</if>
+            <if test="req.jsbj != null and req.jsbj != ''">and jsbj = #{req.jsbj}</if>
+            <if test="req.cbjthbj != null and req.cbjthbj != ''">and cbjthbj = #{req.cbjthbj}</if>
+            <if test="req.jfje != null and req.jfje != ''">and jfje = #{req.jfje}</if>
+            <if test="req.cbjje != null and req.cbjje != ''">and cbjje = #{req.cbjje}</if>
+            <if test="req.fbbj != null and req.fbbj != ''">and fbbj = #{req.fbbj}</if>
+            <if test="req.beginFbrq != null and req.beginFbrq != '' and req.endFbrq != null and req.endFbrq != ''">and fbrq between #{req.beginFbrq} and #{req.endFbrq}</if>
+            <if test="req.sfbje != null and req.sfbje != ''">and sfbje = #{req.sfbje}</if>
         </where>
-        group by
-            dwdm,
-            dept_id,
-            jsbj,
-            cbjthbj,
-            fbbj
-        order by
-            dwdm
+        group by dwdm, dept_id, jsbj, cbjthbj, fbbj
+        order by dwdm
     </select>
 
 </mapper>
