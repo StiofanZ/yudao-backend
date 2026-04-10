@@ -255,8 +255,4 @@ public class GhjfcbjqfResVO {
     private BigDecimal sdghbl;
     @ExcelProperty("属地工会金额")
     private BigDecimal sdghje;
-    // v1 额外字段
-    private String cbjthbj;
-    private String cbjthrq;
-    private String cbjthczy;
 }

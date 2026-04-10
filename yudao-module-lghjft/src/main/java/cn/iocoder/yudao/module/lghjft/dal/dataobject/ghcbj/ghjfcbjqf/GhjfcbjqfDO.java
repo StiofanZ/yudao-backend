@@ -127,9 +127,6 @@ public class GhjfcbjqfDO {
     private String cbjqfjg;
     private String cbjjsbfjczt;
     private String cbjjsbfjcrq;
-    private String cbjthbj;
-    private String cbjthrq;
-    private String cbjthczy;
     private String jym;
     private String hkpch;
     private String qfpch;
