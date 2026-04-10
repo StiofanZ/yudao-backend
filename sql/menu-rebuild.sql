@@ -302,7 +302,7 @@ VALUES (214714, '查询', 'lghjft:xwqy-xwqyjfyfmx:query', 3, 1, 214713, '', '', 
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater, update_time, deleted)
 VALUES (214715, '新增', 'lghjft:xwqy-xwqyjfyfmx:create', 3, 2, 214713, '', '', '', '', 0, 1, 1, 1, '1', NOW(), '1', NOW(), 0);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater, update_time, deleted)
-VALUES (216716, '修改', 'lghjft:xwqy-xwqyjfyfmx:update', 3, 3, 214713, '', '', '', '', 0, 1, 1, 1, '1', NOW(), '1', NOW(), 0);
+VALUES (214716, '修改', 'lghjft:xwqy-xwqyjfyfmx:update', 3, 3, 214713, '', '', '', '', 0, 1, 1, 1, '1', NOW(), '1', NOW(), 0);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater, update_time, deleted)
 VALUES (214717, '删除', 'lghjft:xwqy-xwqyjfyfmx:delete', 3, 4, 214713, '', '', '', '', 0, 1, 1, 1, '1', NOW(), '1', NOW(), 0);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater, update_time, deleted)
