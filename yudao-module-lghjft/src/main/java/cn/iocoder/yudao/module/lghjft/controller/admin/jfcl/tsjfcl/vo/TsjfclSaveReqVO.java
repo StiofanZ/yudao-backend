@@ -6,7 +6,6 @@ import lombok.Data;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.tsjfcl.GhJfTsjfDO;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Schema(description = "管理后台 - 特殊经费处理新增/修改 Request VO")
@@ -58,15 +57,15 @@ public class TsjfclSaveReqVO {
     @Schema(description = "申报类别代码")
     private String sblbDm;
     @Schema(description = "申报日期")
-    private LocalDateTime nssbrq;
+    private String nssbrq;
     @Schema(description = "票证序号")
     private String pzxh;
     @Schema(description = "票证明细号")
     private Long pzmxxh;
     @Schema(description = "所属期起")
-    private LocalDateTime skssqq;
+    private String skssqq;
     @Schema(description = "所属期止")
-    private LocalDateTime skssqz;
+    private String skssqz;
     @Schema(description = "征收税务局代码")
     private String zsswjgDm;
     @Schema(description = "税款所属税务机关")
@@ -116,11 +115,11 @@ public class TsjfclSaveReqVO {
     @Schema(description = "缴费银行")
     private String jfyh;
     @Schema(description = "入库日期")
-    private LocalDateTime rkrq;
+    private String rkrq;
     @Schema(description = "结算标记")
     private String jsbj;
     @Schema(description = "结算日期")
-    private LocalDateTime jsrq;
+    private String jsrq;
     @Schema(description = "结算操作员")
     private String jsczy;
     @Schema(description = "基层工会账户")
@@ -228,7 +227,7 @@ public class TsjfclSaveReqVO {
     @Schema(description = "基层经费拨付状态")
     private String cbjthbj;
     @Schema(description = "处理日期")
-    private LocalDateTime cbjthrq;
+    private String cbjthrq;
     @Schema(description = "操作员")
     private String cbjthczy;
     @Schema(description = "校验码")
@@ -256,11 +255,11 @@ public class TsjfclSaveReqVO {
     @Schema(description = "创建者")
     private String createBy;
     @Schema(description = "创建时间")
-    private LocalDateTime createTime;
+    private String createTime;
     @Schema(description = "更新者")
     private String updateBy;
     @Schema(description = "更新时间")
-    private LocalDateTime updateTime;
+    private String updateTime;
     @Schema(description = "特殊经费确认子表")
     private List<GhJfTsjfDO> ghJfTsjfList;
 }

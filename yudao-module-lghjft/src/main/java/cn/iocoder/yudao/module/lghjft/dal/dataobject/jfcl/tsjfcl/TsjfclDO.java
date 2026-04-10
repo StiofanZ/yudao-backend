@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -43,11 +42,11 @@ public class TsjfclDO {
     private String djzclxDm;
     private String dwlsgxDm;
     private String sblbDm;
-    private LocalDateTime nssbrq;
+    private String nssbrq;
     private String pzxh;
     private Long pzmxxh;
-    private LocalDateTime skssqq;
-    private LocalDateTime skssqz;
+    private String skssqq;
+    private String skssqz;
     private String zsswjgDm;
     private String skssswjgDm;
     private String skgkDm;
@@ -72,9 +71,9 @@ public class TsjfclDO {
     private String jfhm;
     private String jfhh;
     private String jfyh;
-    private LocalDateTime rkrq;
+    private String rkrq;
     private String jsbj;
-    private LocalDateTime jsrq;
+    private String jsrq;
     private String jsczy;
     private String jcghzh;
     private String jcghhm;
@@ -128,7 +127,7 @@ public class TsjfclDO {
     private BigDecimal swjgbl;
     private BigDecimal swjgje;
     private String cbjthbj;
-    private LocalDateTime cbjthrq;
+    private String cbjthrq;
     private String cbjthczy;
     private String jym;
     private String hkpch;
@@ -140,9 +139,9 @@ public class TsjfclDO {
     private BigDecimal sdghbl;
     private BigDecimal sdghje;
     private String createBy;
-    private LocalDateTime createTime;
+    private String createTime;
     private String updateBy;
-    private LocalDateTime updateTime;
+    private String updateTime;
 
     /** child records from gh_jf_tsjf (not a DB column) */
     @TableField(exist = false)

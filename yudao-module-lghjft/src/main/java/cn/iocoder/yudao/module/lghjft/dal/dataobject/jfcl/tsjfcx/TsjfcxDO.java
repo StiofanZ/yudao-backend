@@ -7,7 +7,6 @@ import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.tsjfcl.GhJfTsjfDO;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -45,11 +44,11 @@ public class TsjfcxDO {
     private String djzclxDm;
     private String dwlsgxDm;
     private String sblbDm;
-    private LocalDateTime nssbrq;
+    private String nssbrq;
     private String pzxh;
     private Long pzmxxh;
-    private LocalDateTime skssqq;
-    private LocalDateTime skssqz;
+    private String skssqq;
+    private String skssqz;
     private String zsswjgDm;
     private String skssswjgDm;
     private String skgkDm;
@@ -74,9 +73,9 @@ public class TsjfcxDO {
     private String jfhm;
     private String jfhh;
     private String jfyh;
-    private LocalDateTime rkrq;
+    private String rkrq;
     private String jsbj;
-    private LocalDateTime jsrq;
+    private String jsrq;
     private String jsczy;
     private String jcghzh;
     private String jcghhm;
@@ -130,7 +129,7 @@ public class TsjfcxDO {
     private BigDecimal swjgbl;
     private BigDecimal swjgje;
     private String cbjthbj;
-    private LocalDateTime cbjthrq;
+    private String cbjthrq;
     private String cbjthczy;
     private String jym;
     private String hkpch;
@@ -142,9 +141,9 @@ public class TsjfcxDO {
     private BigDecimal sdghbl;
     private BigDecimal sdghje;
     private String createBy;
-    private LocalDateTime createTime;
+    private String createTime;
     private String updateBy;
-    private LocalDateTime updateTime;
+    private String updateTime;
 
     /** v1: tsjfbj from LEFT JOIN gh_jf_tsjf (not a gh_jf column) */
     @TableField(exist = false)
@@ -152,7 +151,7 @@ public class TsjfcxDO {
 
     /** v1: clsj from LEFT JOIN gh_jf_tsjf (not a gh_jf column) */
     @TableField(exist = false)
-    private LocalDateTime clsj;
+    private String clsj;
 
     /** v1: tsjfsm from LEFT JOIN gh_jf_tsjf (not a gh_jf column) */
     @TableField(exist = false)

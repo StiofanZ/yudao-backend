@@ -6,14 +6,15 @@ import lombok.Data;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.tsjfcl.GhJfTsjfDO;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
+import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
 import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
 
 @Schema(description = "管理后台 - 特殊经费处理 Response VO")
 @Data
+@ExcelIgnoreUnannotated
 public class TsjfclResVO {
 
     @Schema(description = "工会经费ID")
@@ -75,17 +76,17 @@ public class TsjfclResVO {
     private String sblbDm;
     @Schema(description = "申报日期")
     @ExcelProperty("申报日期")
-    private LocalDateTime nssbrq;
+    private String nssbrq;
     @Schema(description = "票证序号")
     private String pzxh;
     @Schema(description = "票证明细号")
     private Long pzmxxh;
     @Schema(description = "所属期起")
     @ExcelProperty("所属期起")
-    private LocalDateTime skssqq;
+    private String skssqq;
     @Schema(description = "所属期止")
     @ExcelProperty("所属期止")
-    private LocalDateTime skssqz;
+    private String skssqz;
     @Schema(description = "征收税务局代码")
     private String zsswjgDm;
     @Schema(description = "税款所属税务机关")
@@ -144,14 +145,14 @@ public class TsjfclResVO {
     private String jfyh;
     @Schema(description = "入库日期")
     @ExcelProperty("入库日期")
-    private LocalDateTime rkrq;
+    private String rkrq;
     @Schema(description = "结算标记")
     @ExcelProperty(value = "结算标记", converter = DictConvert.class)
     @DictFormat("sys_jsbj_type")
     private String jsbj;
     @Schema(description = "结算日期")
     @ExcelProperty("结算日期")
-    private LocalDateTime jsrq;
+    private String jsrq;
     @Schema(description = "结算操作员")
     private String jsczy;
     @Schema(description = "基层工会账户")
@@ -307,7 +308,7 @@ public class TsjfclResVO {
     private String cbjthbj;
     @Schema(description = "处理日期")
     @ExcelProperty("处理日期")
-    private LocalDateTime cbjthrq;
+    private String cbjthrq;
     @Schema(description = "操作员")
     @ExcelProperty("操作员")
     private String cbjthczy;
@@ -346,13 +347,13 @@ public class TsjfclResVO {
     private String createBy;
     @Schema(description = "创建时间")
     @ExcelProperty("创建时间")
-    private LocalDateTime createTime;
+    private String createTime;
     @Schema(description = "更新者")
     @ExcelProperty("更新人")
     private String updateBy;
     @Schema(description = "更新时间")
     @ExcelProperty("更新时间")
-    private LocalDateTime updateTime;
+    private String updateTime;
     @Schema(description = "特殊经费确认子表")
     private List<GhJfTsjfDO> ghJfTsjfList;
 }

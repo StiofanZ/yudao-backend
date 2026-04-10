@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class TsjfcxServiceImpl implements TsjfcxService {
     @Transactional(rollbackFor = Exception.class)
     public Long createTsjfcx(TsjfcxSaveReqVO createReqVO) {
         TsjfcxDO entity = BeanUtils.toBean(createReqVO, TsjfcxDO.class);
-        entity.setCreateTime(LocalDateTime.now());
+        entity.setCreateTime(java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         // v1: set createBy from login user
         try {
             AdminUserDO user = userService.getUser(getLoginUserId());
@@ -55,7 +54,7 @@ public class TsjfcxServiceImpl implements TsjfcxService {
     public void updateTsjfcx(TsjfcxSaveReqVO updateReqVO) {
         validateTsjfcxExists(updateReqVO.getGhjfId());
         TsjfcxDO updateObj = BeanUtils.toBean(updateReqVO, TsjfcxDO.class);
-        updateObj.setUpdateTime(LocalDateTime.now());
+        updateObj.setUpdateTime(java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         // v1: set updateBy from login user
         try {
             AdminUserDO user = userService.getUser(getLoginUserId());
