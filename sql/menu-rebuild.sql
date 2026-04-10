@@ -235,7 +235,7 @@ VALUES (216318, '导出', 'lghjft:ghcbj-ghjfcbjqf:export', 3, 5, 216313, '', '',
 
 -- 筹备金统计
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater, update_time, deleted)
-VALUES (216319, '筹备金统计', '', 2, 4, 216300, 'cbjhztj', '', '/lghjft/ghcbj/cbjhztj/index', 'LghjftGhcbjCbjhztj', 0, 1, 1, 1, '1', NOW(), '1', NOW(), 0);
+VALUES (216319, '筹备金统计', '', 2, 4, 216300, 'cbjhztj', '', '/lghjft/cxtj/cbjmx/index', 'LghjftCxtjCbjmx', 0, 1, 1, 1, '1', NOW(), '1', NOW(), 0);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater, update_time, deleted)
 VALUES (216320, '查询', 'lghjft:ghcbj-cbjhztj:query', 3, 1, 216319, '', '', '', '', 0, 1, 1, 1, '1', NOW(), '1', NOW(), 0);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater, update_time, deleted)
