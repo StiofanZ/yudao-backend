@@ -4,7 +4,6 @@ import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 读取代收数据分页 Request VO")
 @Data
@@ -17,8 +16,8 @@ public class DqdssjPageReqVO extends PageParam {
     private String zlbj;
 
     @Schema(description = "入库日期-起")
-    private LocalDateTime rkrqStart;
+    private String rkrqStart;
 
     @Schema(description = "入库日期-止")
-    private LocalDateTime rkrqEnd;
+    private String rkrqEnd;
 }

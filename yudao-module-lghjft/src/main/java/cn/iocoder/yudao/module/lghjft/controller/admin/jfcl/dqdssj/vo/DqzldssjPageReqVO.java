@@ -4,7 +4,6 @@ import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 读取增量代收数据分页 Request VO")
 @Data
@@ -26,10 +25,10 @@ public class DqzldssjPageReqVO extends PageParam {
     private String deptId;
 
     @Schema(description = "所属期起")
-    private LocalDateTime skssqq;
+    private String skssqq;
 
     @Schema(description = "所属期止")
-    private LocalDateTime skssqz;
+    private String skssqz;
 
     @Schema(description = "征收品目代码")
     private String zspmDm;
@@ -38,8 +37,8 @@ public class DqzldssjPageReqVO extends PageParam {
     private String zlbj;
 
     @Schema(description = "入库日期-起")
-    private LocalDateTime rkrqStart;
+    private String rkrqStart;
 
     @Schema(description = "入库日期-止")
-    private LocalDateTime rkrqEnd;
+    private String rkrqEnd;
 }
