@@ -38,7 +38,16 @@ public class GhHjServiceImpl implements GhHjService {
 
     @Override
     public GhHjVO selectGhHjBydjxh(String djxh) {
-        return ghhjMapper.selectGhHjBydjxh(djxh);
+        GhHjVO ghHj = ghhjMapper.selectGhHjBydjxh(djxh);
+        if (ghHj != null || StringUtils.isBlank(djxh)) {
+            return ghHj;
+        }
+
+        NsrxxDO nsrxx = nsrxxService.getNsrxx(djxh);
+        if (nsrxx == null) {
+            return null;
+        }
+        return buildGhHjVoFromNsrxx(nsrxx);
     }
 
     @Override

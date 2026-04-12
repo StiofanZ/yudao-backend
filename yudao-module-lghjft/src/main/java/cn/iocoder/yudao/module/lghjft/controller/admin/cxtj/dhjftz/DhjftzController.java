@@ -8,7 +8,6 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.dhjftz.vo.DhjftzPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.dhjftz.vo.DhjftzResVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.dhjftz.vo.DhjftzSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.dhjftz.DhjftzDO;
 import cn.iocoder.yudao.module.lghjft.service.cxtj.dhjftz.DhjftzService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,36 +35,6 @@ public class DhjftzController {
     @Resource
     private DhjftzService dhjftzService;
 
-    @PostMapping("/create")
-    @Operation(summary = "创建到户经费台账")
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-dhjftz:create')")
-    public CommonResult<String> createDhjftz(@Valid @RequestBody DhjftzSaveReqVO createReqVO) {
-        return success(dhjftzService.createDhjftz(createReqVO));
-    }
-
-    @PutMapping("/update")
-    @Operation(summary = "更新到户经费台账")
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-dhjftz:update')")
-    public CommonResult<Boolean> updateDhjftz(@Valid @RequestBody DhjftzSaveReqVO updateReqVO) {
-        dhjftzService.updateDhjftz(updateReqVO);
-        return success(true);
-    }
-
-    /**
-     * 批量删除到户经费台账 — 还原 V1 DELETE /{deptIds} (String[] 数组)
-     */
-    @DeleteMapping("/delete/{deptIds}")
-    @Operation(summary = "批量删除到户经费台账")
-    @Parameter(name = "deptIds", description = "工会机构代码数组", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-dhjftz:delete')")
-    public CommonResult<Boolean> deleteDhjftz(@PathVariable("deptIds") String[] deptIds) {
-        dhjftzService.deleteDhjftzByDeptIds(deptIds);
-        return success(true);
-    }
-
-    /**
-     * 获取单户经费台账详细信息 — 还原 V1 GET /{deptId}
-     */
     @GetMapping("/get")
     @Operation(summary = "获得到户经费台账")
     @Parameter(name = "deptId", description = "工会机构代码", required = true)

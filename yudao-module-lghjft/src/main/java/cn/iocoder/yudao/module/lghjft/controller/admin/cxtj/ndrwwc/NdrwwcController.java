@@ -8,7 +8,6 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.ndrwwc.vo.NdrwwcPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.ndrwwc.vo.NdrwwcResVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.ndrwwc.vo.NdrwwcSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.ndrwwc.NdrwwcDO;
 import cn.iocoder.yudao.module.lghjft.service.cxtj.ndrwwc.NdrwwcService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,42 +35,6 @@ public class NdrwwcController {
     @Resource
     private NdrwwcService ndrwwcService;
 
-    /**
-     * V1: POST — 新增分年各级分成情况
-     */
-    @PostMapping("/create")
-    @Operation(summary = "创建分上缴周期统计")
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ndrwwc:create')")
-    public CommonResult<String> createNdrwwc(@Valid @RequestBody NdrwwcSaveReqVO createReqVO) {
-        return success(ndrwwcService.createNdrwwc(createReqVO));
-    }
-
-    /**
-     * V1: PUT — 修改分年各级分成情况
-     */
-    @PutMapping("/update")
-    @Operation(summary = "更新分上缴周期统计")
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ndrwwc:update')")
-    public CommonResult<Boolean> updateNdrwwc(@Valid @RequestBody NdrwwcSaveReqVO updateReqVO) {
-        ndrwwcService.updateNdrwwc(updateReqVO);
-        return success(true);
-    }
-
-    /**
-     * V1: DELETE /{nds} — 批量删除 (String[] 数组)
-     */
-    @DeleteMapping("/delete/{nds}")
-    @Operation(summary = "批量删除分上缴周期统计")
-    @Parameter(name = "nds", description = "年度数组", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ndrwwc:delete')")
-    public CommonResult<Boolean> deleteNdrwwc(@PathVariable("nds") String[] nds) {
-        ndrwwcService.deleteNdrwwcByNds(nds);
-        return success(true);
-    }
-
-    /**
-     * V1: GET /{nd} — 获取单条
-     */
     @GetMapping("/get")
     @Operation(summary = "获得分上缴周期统计")
     @Parameter(name = "nd", description = "年度", required = true)

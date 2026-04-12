@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.lghjft.service.cxtj.cbjmx;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.cbjmx.vo.CbjmxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.cbjmx.CbjmxDO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.cbjmx.CbjmxhzDO;
@@ -28,10 +29,22 @@ public class CbjmxServiceImpl implements CbjmxService {
     }
 
     @Override
+    public PageResult<CbjmxtjDO> getCbjmxtjPage(CbjmxPageReqVO reqVO) {
+        List<CbjmxtjDO> list = getCbjmxtjList(reqVO);
+        if (reqVO.getPageSize() == null || reqVO.getPageSize().equals(PageParam.PAGE_SIZE_NONE)) {
+            return new PageResult<>(list, (long) list.size());
+        }
+        int fromIndex = (reqVO.getPageNo() - 1) * reqVO.getPageSize();
+        if (fromIndex >= list.size()) {
+            return new PageResult<>(List.of(), (long) list.size());
+        }
+        int toIndex = Math.min(fromIndex + reqVO.getPageSize(), list.size());
+        return new PageResult<>(list.subList(fromIndex, toIndex), (long) list.size());
+    }
+
+    @Override
     public List<CbjmxtjDO> getCbjmxtjList(CbjmxPageReqVO reqVO) {
-        return cbjmxMapper.selectCbjmxtjList(
-                reqVO.getZspmDm(), reqVO.getNd(), reqVO.getDeptId(),
-                reqVO.getShxydm(), reqVO.getNsrmc());
+        return cbjmxMapper.selectCbjmxtjList(reqVO);
     }
 
     @Override

@@ -8,7 +8,6 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.ghjfjfdw.vo.GhjfjfdwPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.ghjfjfdw.vo.GhjfjfdwResVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.ghjfjfdw.vo.GhjfjfdwSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.ghjfjfdw.GhjfjfdwDO;
 import cn.iocoder.yudao.module.lghjft.service.cxtj.ghjfjfdw.GhjfjfdwService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,30 +34,6 @@ public class GhjfjfdwController {
 
     @Resource
     private GhjfjfdwService ghjfjfdwService;
-
-    @PostMapping("/create")
-    @Operation(summary = "创建近三年缴费情况")
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ghjfjfdw:create')")
-    public CommonResult<String> createGhjfjfdw(@Valid @RequestBody GhjfjfdwSaveReqVO createReqVO) {
-        return success(ghjfjfdwService.createGhjfjfdw(createReqVO));
-    }
-
-    @PutMapping("/update")
-    @Operation(summary = "更新近三年缴费情况")
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ghjfjfdw:update')")
-    public CommonResult<Boolean> updateGhjfjfdw(@Valid @RequestBody GhjfjfdwSaveReqVO updateReqVO) {
-        ghjfjfdwService.updateGhjfjfdw(updateReqVO);
-        return success(true);
-    }
-
-    @DeleteMapping("/delete/{djxhs}")
-    @Operation(summary = "批量删除近三年缴费情况")
-    @Parameter(name = "djxhs", description = "登记序号数组", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ghjfjfdw:delete')")
-    public CommonResult<Boolean> deleteGhjfjfdw(@PathVariable("djxhs") String[] djxhs) {
-        ghjfjfdwService.deleteGhjfjfdwBatch(djxhs);
-        return success(true);
-    }
 
     @GetMapping("/get")
     @Operation(summary = "获得近三年缴费情况")

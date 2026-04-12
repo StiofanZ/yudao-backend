@@ -8,7 +8,6 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.JfmxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.JfmxResVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.JfmxSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.JftzmxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.JftzmxResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jfmx.vo.SzdzhdPageReqVO;
@@ -39,39 +38,6 @@ public class JfmxController {
 
     @Resource
     private CxtjJfmxService cxtjJfmxService;
-
-    @PostMapping("/create")
-    @Operation(summary = "创建经费明细")
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-jfmx:create')")
-    public CommonResult<String> createJfmx(@Valid @RequestBody JfmxSaveReqVO createReqVO) {
-        return success(cxtjJfmxService.createJfmx(createReqVO));
-    }
-
-    @PutMapping("/update")
-    @Operation(summary = "更新经费明细")
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-jfmx:update')")
-    public CommonResult<Boolean> updateJfmx(@Valid @RequestBody JfmxSaveReqVO updateReqVO) {
-        cxtjJfmxService.updateJfmx(updateReqVO);
-        return success(true);
-    }
-
-    @DeleteMapping("/delete")
-    @Operation(summary = "删除经费明细")
-    @Parameter(name = "spuuid", description = "spuuid", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-jfmx:delete')")
-    public CommonResult<Boolean> deleteJfmx(@RequestParam("spuuid") String spuuid) {
-        cxtjJfmxService.deleteJfmx(spuuid);
-        return success(true);
-    }
-
-    @DeleteMapping("/delete-list")
-    @Operation(summary = "批量删除经费明细")
-    @Parameter(name = "spuuids", description = "spuuid 列表", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-jfmx:delete')")
-    public CommonResult<Boolean> deleteJfmxList(@RequestParam("spuuids") List<String> spuuids) {
-        cxtjJfmxService.deleteJfmxList(spuuids);
-        return success(true);
-    }
 
     @GetMapping("/get")
     @Operation(summary = "获得经费明细")

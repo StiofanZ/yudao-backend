@@ -8,7 +8,6 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.zgjrgh.vo.ZgjrghPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.zgjrgh.vo.ZgjrghResVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.zgjrgh.vo.ZgjrghSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.zgjrgh.ZgjrghDO;
 import cn.iocoder.yudao.module.lghjft.service.cxtj.zgjrgh.ZgjrghService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,30 +34,6 @@ public class ZgjrghController {
 
     @Resource
     private ZgjrghService zgjrghService;
-
-    @PostMapping("/create")
-    @Operation(summary = "创建金融工会信息核对")
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-zgjrgh:create')")
-    public CommonResult<Long> createZgjrgh(@Valid @RequestBody ZgjrghSaveReqVO createReqVO) {
-        return success(zgjrghService.createZgjrgh(createReqVO));
-    }
-
-    @PutMapping("/update")
-    @Operation(summary = "更新金融工会信息核对")
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-zgjrgh:update')")
-    public CommonResult<Boolean> updateZgjrgh(@Valid @RequestBody ZgjrghSaveReqVO updateReqVO) {
-        zgjrghService.updateZgjrgh(updateReqVO);
-        return success(true);
-    }
-
-    @DeleteMapping("/delete")
-    @Operation(summary = "删除金融工会信息核对")
-    @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-zgjrgh:delete')")
-    public CommonResult<Boolean> deleteZgjrgh(@RequestParam("id") Long id) {
-        zgjrghService.deleteZgjrgh(id);
-        return success(true);
-    }
 
     @GetMapping("/get")
     @Operation(summary = "获得金融工会信息核对")

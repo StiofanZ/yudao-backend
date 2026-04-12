@@ -30,6 +30,7 @@ public class CbjmxDO {
     private String shxydm;
     private String djxh;
     private String nsrmc;
+    private String zgswjDm;
     private LocalDateTime rkrq;
     private LocalDateTime jsrq;
     private LocalDateTime skssqq;

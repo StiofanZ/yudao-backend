@@ -8,7 +8,6 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.top.vo.TopPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.top.vo.TopResVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.top.vo.TopSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.top.TopDO;
 import cn.iocoder.yudao.module.lghjft.service.cxtj.top.TopService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,30 +34,6 @@ public class TopController {
 
     @Resource
     private TopService topService;
-
-    @PostMapping("/create")
-    @Operation(summary = "创建缴费排行")
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-top:create')")
-    public CommonResult<String> createTop(@Valid @RequestBody TopSaveReqVO createReqVO) {
-        return success(topService.createTop(createReqVO));
-    }
-
-    @PutMapping("/update")
-    @Operation(summary = "更新缴费排行")
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-top:update')")
-    public CommonResult<Boolean> updateTop(@Valid @RequestBody TopSaveReqVO updateReqVO) {
-        topService.updateTop(updateReqVO);
-        return success(true);
-    }
-
-    @DeleteMapping("/delete/{djxhs}")
-    @Operation(summary = "批量删除缴费排行")
-    @Parameter(name = "djxhs", description = "登记序号数组", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-top:delete')")
-    public CommonResult<Boolean> deleteTop(@PathVariable("djxhs") String[] djxhs) {
-        topService.deleteTopBatch(djxhs);
-        return success(true);
-    }
 
     @GetMapping("/get")
     @Operation(summary = "获得缴费排行")

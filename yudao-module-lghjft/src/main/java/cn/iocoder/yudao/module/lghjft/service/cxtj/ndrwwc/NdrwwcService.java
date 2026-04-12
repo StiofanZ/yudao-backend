@@ -2,33 +2,9 @@ package cn.iocoder.yudao.module.lghjft.service.cxtj.ndrwwc;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.ndrwwc.vo.NdrwwcPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.ndrwwc.vo.NdrwwcSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.cxtj.ndrwwc.NdrwwcDO;
-import jakarta.validation.Valid;
 
 public interface NdrwwcService {
-
-    /**
-     * 创建分上缴周期统计
-     *
-     * @param createReqVO 创建信息
-     * @return nd
-     */
-    String createNdrwwc(@Valid NdrwwcSaveReqVO createReqVO);
-
-    /**
-     * 更新分上缴周期统计
-     *
-     * @param updateReqVO 更新信息
-     */
-    void updateNdrwwc(@Valid NdrwwcSaveReqVO updateReqVO);
-
-    /**
-     * 批量删除分上缴周期统计 — V1: deleteNdrwwcByNds(String[] nds)
-     *
-     * @param nds 年度数组
-     */
-    void deleteNdrwwcByNds(String[] nds);
 
     /**
      * 获得分上缴周期统计

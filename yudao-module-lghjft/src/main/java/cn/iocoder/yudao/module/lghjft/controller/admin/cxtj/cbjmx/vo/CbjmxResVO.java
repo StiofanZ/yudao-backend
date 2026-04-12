@@ -44,6 +44,11 @@ public class CbjmxResVO {
     @ExcelProperty("纳税人名称")
     private String nsrmc;
 
+    @Schema(description = "主管税务局")
+    @ExcelProperty(value = "主管税务局", converter = DictConvert.class)
+    @DictFormat("sys_swjg_type")
+    private String zgswjDm;
+
     @Schema(description = "入库日期")
     private LocalDateTime rkrq;
 

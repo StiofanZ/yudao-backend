@@ -30,8 +30,47 @@ public interface CbjmxMapper extends BaseMapperX<CbjmxDO> {
         if (reqVO.getShxydm() != null && !reqVO.getShxydm().isEmpty()) {
             wrapper.eq("shxydm", reqVO.getShxydm());
         }
+        if (reqVO.getDjxh() != null && !reqVO.getDjxh().isEmpty()) {
+            wrapper.eq("djxh", reqVO.getDjxh());
+        }
         if (reqVO.getNsrmc() != null && !reqVO.getNsrmc().isEmpty()) {
             wrapper.eq("nsrmc", reqVO.getNsrmc());
+        }
+        if (reqVO.getBeginRkrq() != null && !reqVO.getBeginRkrq().isEmpty()
+                && reqVO.getEndRkrq() != null && !reqVO.getEndRkrq().isEmpty()) {
+            wrapper.between("rkrq", reqVO.getBeginRkrq(), reqVO.getEndRkrq());
+        }
+        if (reqVO.getBeginJsrq() != null && !reqVO.getBeginJsrq().isEmpty()
+                && reqVO.getEndJsrq() != null && !reqVO.getEndJsrq().isEmpty()) {
+            wrapper.between("jsrq", reqVO.getBeginJsrq(), reqVO.getEndJsrq());
+        }
+        if (reqVO.getSkssqq() != null && !reqVO.getSkssqq().isEmpty()) {
+            wrapper.eq("skssqq", reqVO.getSkssqq());
+        }
+        if (reqVO.getSkssqz() != null && !reqVO.getSkssqz().isEmpty()) {
+            wrapper.eq("skssqz", reqVO.getSkssqz());
+        }
+        if (reqVO.getJsbj() != null && !reqVO.getJsbj().isEmpty()) {
+            wrapper.eq("jsbj", reqVO.getJsbj());
+        }
+        if (reqVO.getCbjthbj() != null && !reqVO.getCbjthbj().isEmpty()) {
+            wrapper.eq("cbjthbj", reqVO.getCbjthbj());
+        }
+        if (reqVO.getJfje() != null && !reqVO.getJfje().isEmpty()) {
+            wrapper.eq("jfje", reqVO.getJfje());
+        }
+        if (reqVO.getCbjje() != null && !reqVO.getCbjje().isEmpty()) {
+            wrapper.eq("cbjje", reqVO.getCbjje());
+        }
+        if (reqVO.getFbbj() != null && !reqVO.getFbbj().isEmpty()) {
+            wrapper.eq("fbbj", reqVO.getFbbj());
+        }
+        if (reqVO.getBeginFbrq() != null && !reqVO.getBeginFbrq().isEmpty()
+                && reqVO.getEndFbrq() != null && !reqVO.getEndFbrq().isEmpty()) {
+            wrapper.between("fbrq", reqVO.getBeginFbrq(), reqVO.getEndFbrq());
+        }
+        if (reqVO.getSfbje() != null && !reqVO.getSfbje().isEmpty()) {
+            wrapper.eq("sfbje", reqVO.getSfbje());
         }
 
         return selectPage(reqVO, wrapper);
@@ -40,11 +79,7 @@ public interface CbjmxMapper extends BaseMapperX<CbjmxDO> {
     /**
      * v1 selectCbjmxtjList: GROUP BY dwdm, dept_id, shxydm, nsrmc, jsbj, cbjthbj, fbbj ORDER BY dwdm
      */
-    List<CbjmxtjDO> selectCbjmxtjList(@Param("zspmDm") String zspmDm,
-                                        @Param("nd") String nd,
-                                        @Param("deptId") String deptId,
-                                        @Param("shxydm") String shxydm,
-                                        @Param("nsrmc") String nsrmc);
+    List<CbjmxtjDO> selectCbjmxtjList(@Param("req") CbjmxPageReqVO req);
 
     /**
      * v1 selectCbjmxhzList: GROUP BY dwdm, dept_id, jsbj, cbjthbj, fbbj ORDER BY dwdm

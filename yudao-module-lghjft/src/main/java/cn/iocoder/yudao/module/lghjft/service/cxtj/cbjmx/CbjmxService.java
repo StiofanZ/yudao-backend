@@ -21,6 +21,11 @@ public interface CbjmxService {
     /**
      * 获得筹备金统计列表 (v1 listtj) - GROUP BY 聚合
      */
+    PageResult<CbjmxtjDO> getCbjmxtjPage(CbjmxPageReqVO reqVO);
+
+    /**
+     * 获得筹备金统计列表 (v1 listtj) - GROUP BY 聚合，导出用
+     */
     List<CbjmxtjDO> getCbjmxtjList(CbjmxPageReqVO reqVO);
 
     /**
