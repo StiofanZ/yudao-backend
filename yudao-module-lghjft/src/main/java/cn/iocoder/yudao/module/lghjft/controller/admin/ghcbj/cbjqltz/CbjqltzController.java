@@ -36,36 +36,11 @@ public class CbjqltzController {
     @Resource
     private CbjqltzService cbjqltzService;
 
-    @PostMapping("/create")
-    @Operation(summary = "创建筹备金清理台账")
-    @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-cbjqltz:create')")
-    public CommonResult<String> createCbjqltz(@Valid @RequestBody CbjqltzSaveReqVO createReqVO) {
-        return success(cbjqltzService.createCbjqltz(createReqVO));
-    }
-
     @PutMapping("/update")
     @Operation(summary = "更新筹备金清理台账")
     @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-cbjqltz:update')")
     public CommonResult<Boolean> updateCbjqltz(@Valid @RequestBody CbjqltzSaveReqVO updateReqVO) {
         cbjqltzService.updateCbjqltz(updateReqVO);
-        return success(true);
-    }
-
-    @DeleteMapping("/delete")
-    @Operation(summary = "删除筹备金清理台账")
-    @Parameter(name = "djxh", description = "登记序号", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-cbjqltz:delete')")
-    public CommonResult<Boolean> deleteCbjqltz(@RequestParam("djxh") String djxh) {
-        cbjqltzService.deleteCbjqltz(djxh);
-        return success(true);
-    }
-
-    @DeleteMapping("/delete-list")
-    @Parameter(name = "ids", description = "编号", required = true)
-    @Operation(summary = "批量删除筹备金清理台账")
-    @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-cbjqltz:delete')")
-    public CommonResult<Boolean> deleteCbjqltzList(@RequestParam("ids") List<String> ids) {
-        cbjqltzService.deleteCbjqltzListByIds(ids);
         return success(true);
     }
 

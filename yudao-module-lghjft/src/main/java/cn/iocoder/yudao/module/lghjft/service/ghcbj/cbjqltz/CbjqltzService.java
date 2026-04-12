@@ -6,16 +6,8 @@ import cn.iocoder.yudao.module.lghjft.controller.admin.ghcbj.cbjqltz.vo.CbjqltzS
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.ghcbj.cbjqltz.CbjqltzDO;
 import jakarta.validation.Valid;
 
-import java.util.List;
-
 public interface CbjqltzService {
-    String createCbjqltz(@Valid CbjqltzSaveReqVO createReqVO);
-
     void updateCbjqltz(@Valid CbjqltzSaveReqVO updateReqVO);
-
-    void deleteCbjqltz(String id);
-
-    void deleteCbjqltzListByIds(List<String> ids);
 
     CbjqltzDO getCbjqltz(String id);
 

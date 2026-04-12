@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.List;
-
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.module.lghjft.enums.ErrorCodeConstants.HKXX_NOT_EXISTS;
 
@@ -25,31 +23,10 @@ public class CbjqltzServiceImpl implements CbjqltzService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public String createCbjqltz(CbjqltzSaveReqVO createReqVO) {
-        CbjqltzDO obj = BeanUtils.toBean(createReqVO, CbjqltzDO.class);
-        cbjqltzMapper.insert(obj);
-        return obj.getDjxh();
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
     public void updateCbjqltz(CbjqltzSaveReqVO updateReqVO) {
         validateExists(updateReqVO.getDjxh());
         CbjqltzDO updateObj = BeanUtils.toBean(updateReqVO, CbjqltzDO.class);
         cbjqltzMapper.updateById(updateObj);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void deleteCbjqltz(String id) {
-        validateExists(id);
-        cbjqltzMapper.deleteById(id);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void deleteCbjqltzListByIds(List<String> ids) {
-        cbjqltzMapper.deleteByIds(ids);
     }
 
     private void validateExists(String id) {

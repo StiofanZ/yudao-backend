@@ -2,6 +2,7 @@ package cn.iocoder.yudao.module.lghjft.service.ghcbj.ghjfcbjqf;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.ghcbj.ghjfcbjqf.vo.GhjfcbjqfPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.ghcbj.ghjfcbjqf.vo.GhjfcbjqfSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.ghcbj.ghjfcbjqf.GhjfcbjqfDO;
 
 /**
@@ -18,4 +19,6 @@ public interface GhjfcbjqfService {
     PageResult<GhjfcbjqfDO> getGhjfcbjqfPage(GhjfcbjqfPageReqVO pageReqVO);
 
     GhjfcbjqfDO getGhjfcbjqf(Long id);
+
+    void updateGhjfcbjqf(GhjfcbjqfSaveReqVO updateReqVO);
 }

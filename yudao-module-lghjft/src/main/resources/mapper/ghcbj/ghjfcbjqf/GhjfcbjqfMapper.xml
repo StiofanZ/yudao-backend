@@ -2,4 +2,181 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.ghcbj.ghjfcbjqf.GhjfcbjqfMapper">
 
+    <resultMap id="GhjfcbjqfDetailResult" type="cn.iocoder.yudao.module.lghjft.dal.dataobject.ghcbj.ghjfcbjqf.GhjfcbjqfDO" autoMapping="true">
+        <id property="ghjfId" column="ghjfId"/>
+        <collection property="ghJfCbjtsjfList"
+                    ofType="cn.iocoder.yudao.module.lghjft.dal.dataobject.ghcbj.ghjfcbjqf.GhjfcbjtsjfDO"
+                    notNullColumn="sub_ghjfId">
+            <id property="ghjfId" column="sub_ghjfId"/>
+            <result property="spuuid" column="sub_spuuid"/>
+            <result property="tsjfbj" column="sub_tsjfbj"/>
+            <result property="tsjfsm" column="sub_tsjfsm"/>
+            <result property="clsj" column="sub_clsj"/>
+            <result property="tsjfwj" column="sub_tsjfwj"/>
+            <result property="tsjftp" column="sub_tsjftp"/>
+            <result property="createBy" column="sub_createBy"/>
+            <result property="createTime" column="sub_createTime"/>
+            <result property="updateBy" column="sub_updateBy"/>
+            <result property="updateTime" column="sub_updateTime"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectDetailById" resultMap="GhjfcbjqfDetailResult">
+        select
+            a.ghjf_id as ghjfId,
+            a.SPUUID as spuuid,
+            a.DJXH as djxh,
+            a.SHXYDM as shxydm,
+            a.NSRMC as nsrmc,
+            a.NSRJC as nsrjc,
+            a.dept_id as deptId,
+            a.GHJGXZJB as ghjgxzjb,
+            a.CLGHBJ as clghbj,
+            a.HYGHBZ as hyghbz,
+            a.SDGHJG_DM as sdghjgDm,
+            a.SDGHJGXZJB as sdghjgxzjb,
+            a.ZGSWJ_DM as zgswjDm,
+            a.ZGSWSKFJ_DM as zgswskfjDm,
+            a.SSGLY_DM as ssglyDm,
+            a.GHLB_DM as ghlbDm,
+            a.XTLB_DM as xtlbDm,
+            a.ZZJGLX_DM as zzjglxDm,
+            a.HY_DM as hyDm,
+            a.DJZCLX_DM as djzclxDm,
+            a.DWLSGX_DM as dwlsgxDm,
+            a.SBLB_DM as sblbDm,
+            a.NSSBRQ as nssbrq,
+            a.PZXH as pzxh,
+            a.PZMXXH as pzmxxh,
+            a.SKSSQQ as skssqq,
+            a.SKSSQZ as skssqz,
+            a.ZSSWJG_DM as zsswjgDm,
+            a.SKSSSWJG_DM as skssswjgDm,
+            a.SKGK_DM as skgkDm,
+            a.DZSPHM as dzsphm,
+            a.PZZL_DM as pzzlDm,
+            a.PZZG_DM as pzzgDm,
+            a.PZHM as pzhm,
+            a.KPY_DM as kpyDm,
+            a.KPY_XM as kpyXm,
+            a.ZSPM_DM as zspmDm,
+            a.ZSZM_DM as zszmDm,
+            a.YSKM_DM as yskmDm,
+            a.GZZE as gzze,
+            a.SL as sl,
+            a.YNSE as ynse,
+            a.JMSE as jmse,
+            a.YJSE as yjse,
+            a.YBTSE as ybtse,
+            a.JKFS_DM as jkfsDm,
+            a.JFHB as jfhb,
+            a.JFZH as jfzh,
+            a.JFHM as jfhm,
+            a.JFHH as jfhh,
+            a.JFYH as jfyh,
+            a.RKRQ as rkrq,
+            a.JSBJ as jsbj,
+            a.JSRQ as jsrq,
+            a.JSCZY as jsczy,
+            a.JCGHZH as jcghzh,
+            a.JCGHHM as jcghhm,
+            a.JCGHHH as jcghhh,
+            a.JCGHBL as jcghbl,
+            a.JCGHJE as jcghje,
+            a.CBJZH as cbjzh,
+            a.CBJHM as cbjhm,
+            a.CBJHH as cbjhh,
+            a.CBJBL as cbjbl,
+            a.CBJJE as cbjje,
+            a.HYGHZH as hyghzh,
+            a.HYGHHM as hyghhm,
+            a.HYGHHH as hyghhh,
+            a.HYGHBL as hyghbl,
+            a.HYGHJE as hyghje,
+            a.XJGHZH as xjghzh,
+            a.XJGHHM as xjghhm,
+            a.XJGHHH as xjghhh,
+            a.XJGHBL as xjghbl,
+            a.XJGHJE as xjghje,
+            a.SJGHZH as sjghzh,
+            a.SJGHHM as sjghhm,
+            a.SJGHHH as sjghhh,
+            a.SJGHBL as sjghbl,
+            a.SJGHJE as sjghje,
+            a.SZGHZH as szghzh,
+            a.SZGHHM as szghhm,
+            a.SZGHHH as szghhh,
+            a.SZGHBL as szghbl,
+            a.SZGHJE as szghje,
+            a.QGGHZH as qgghzh,
+            a.QGGHHM as qgghhm,
+            a.QGGHHH as qgghhh,
+            a.QGGHBL as qgghbl,
+            a.QGGHJE as qgghje,
+            a.JCJZH as jcjzh,
+            a.JCJHM as jcjhm,
+            a.JCJHH as jcjhh,
+            a.JCJBL as jcjbl,
+            a.JCJJE as jcjje,
+            a.JCWSH as jcwsh,
+            a.SDSZH as sdszh,
+            a.SDSHM as sdshm,
+            a.SDSHH as sdshh,
+            a.SDSBL as sdsbl,
+            a.SDSJE as sdsje,
+            a.SWJGZH as swjgzh,
+            a.SWJGHM as swjghm,
+            a.SWJGHH as swjghh,
+            a.SWJGBL as swjgbl,
+            a.SWJGJE as swjgje,
+            a.CBJQFZT as cbjqfzt,
+            a.CBJQFRQ as cbjqfrq,
+            a.CBJQFJG as cbjqfjg,
+            a.CBJJSBFJCZT as cbjjsbfjczt,
+            a.CBJJSBFJCRQ as cbjjsbfjcrq,
+            a.JYM as jym,
+            a.HKPCH as hkpch,
+            a.QFPCH as qfpch,
+            a.BZ as bz,
+            a.BLUUID as bluuid,
+            a.SDGHZH as sdghzh,
+            a.SDGHHM as sdghhm,
+            a.SDGHHH as sdghhh,
+            a.SDGHBL as sdghbl,
+            a.SDGHJE as sdghje,
+            a.CREATE_BY as createBy,
+            a.CREATE_TIME as createTime,
+            a.UPDATE_BY as updateBy,
+            a.UPDATE_TIME as updateTime,
+            b.ghjf_id as sub_ghjfId,
+            b.SPUUID as sub_spuuid,
+            b.TSJFBJ as sub_tsjfbj,
+            b.TSJFSM as sub_tsjfsm,
+            b.CLSJ as sub_clsj,
+            b.TSJFWJ as sub_tsjfwj,
+            b.TSJFTP as sub_tsjftp,
+            b.CREATE_BY as sub_createBy,
+            b.CREATE_TIME as sub_createTime,
+            b.UPDATE_BY as sub_updateBy,
+            b.UPDATE_TIME as sub_updateTime
+        from gh_jf_cbjqf a
+        left join gh_jf_cbjtsjf b on b.ghjf_id = a.ghjf_id
+        where a.ghjf_id = #{id}
+    </select>
+
+    <delete id="deleteCbjtsjfByGhjfId">
+        delete from gh_jf_cbjtsjf where ghjf_id = #{ghjfId}
+    </delete>
+
+    <insert id="batchInsertCbjtsjf">
+        insert into gh_jf_cbjtsjf (
+            ghjf_id, SPUUID, TSJFBJ, TSJFSM, CLSJ, TSJFWJ, TSJFTP, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
+        ) values
+        <foreach collection="list" item="item" separator=",">
+            (
+                #{item.ghjfId}, #{item.spuuid}, #{item.tsjfbj}, #{item.tsjfsm}, #{item.clsj},
+                #{item.tsjfwj}, #{item.tsjftp}, #{item.createBy}, #{item.createTime}, #{item.updateBy}, #{item.updateTime}
+            )
+        </foreach>
+    </insert>
 </mapper>

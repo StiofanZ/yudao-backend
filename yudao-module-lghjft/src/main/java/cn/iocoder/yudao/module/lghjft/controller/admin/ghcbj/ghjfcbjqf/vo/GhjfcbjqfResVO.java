@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
 import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
@@ -255,4 +256,22 @@ public class GhjfcbjqfResVO {
     private BigDecimal sdghbl;
     @ExcelProperty("属地工会金额")
     private BigDecimal sdghje;
+
+    @Schema(description = "筹备金特殊经费子表")
+    private List<GhJfCbjtsjfItem> ghJfCbjtsjfList;
+
+    @Data
+    public static class GhJfCbjtsjfItem {
+        private Long ghjfId;
+        private String spuuid;
+        private String tsjfbj;
+        private String tsjfsm;
+        private String clsj;
+        private String tsjfwj;
+        private String tsjftp;
+        private String createBy;
+        private String createTime;
+        private String updateBy;
+        private String updateTime;
+    }
 }

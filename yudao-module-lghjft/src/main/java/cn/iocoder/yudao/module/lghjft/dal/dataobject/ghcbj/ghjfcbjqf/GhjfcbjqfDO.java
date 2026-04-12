@@ -1,11 +1,13 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.ghcbj.ghjfcbjqf;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @TableName("gh_jf_cbjqf")
 @Data
@@ -141,4 +143,7 @@ public class GhjfcbjqfDO {
     private String createTime;
     private String updateBy;
     private String updateTime;
+
+    @TableField(exist = false)
+    private List<GhjfcbjtsjfDO> ghJfCbjtsjfList;
 }

@@ -8,6 +8,7 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.ghcbj.ghjfcbjqf.vo.GhjfcbjqfPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.ghcbj.ghjfcbjqf.vo.GhjfcbjqfResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.ghcbj.ghjfcbjqf.vo.GhjfcbjqfSaveReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.ghcbj.ghjfcbjqf.GhjfcbjqfDO;
 import cn.iocoder.yudao.module.lghjft.service.ghcbj.ghjfcbjqf.GhjfcbjqfService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,7 +29,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
 @Tag(name = "管理后台 - 筹备金全返")
 @RestController
-@RequestMapping("/lghjft/cxtj/ghjfcbjqf")
+@RequestMapping("/lghjft/ghcbj/ghjfcbjqf")
 @Validated
 public class GhjfcbjqfController {
 
@@ -41,12 +42,21 @@ public class GhjfcbjqfController {
     @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-ghjfcbjqf:query')")
     public CommonResult<GhjfcbjqfResVO> getGhjfcbjqf(@RequestParam("id") Long id) {
         GhjfcbjqfDO data = ghjfcbjqfService.getGhjfcbjqf(id);
-        return success(BeanUtils.toBean(data, GhjfcbjqfResVO.class));
+        return success(BeanUtils.toBean(data, GhjfcbjqfResVO.class, resVO ->
+                resVO.setGhJfCbjtsjfList(BeanUtils.toBean(data.getGhJfCbjtsjfList(), GhjfcbjqfResVO.GhJfCbjtsjfItem.class))));
+    }
+
+    @PutMapping("/update")
+    @Operation(summary = "更新筹备金全返")
+    @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-ghjfcbjqf:update')")
+    public CommonResult<Boolean> updateGhjfcbjqf(@Valid @RequestBody GhjfcbjqfSaveReqVO updateReqVO) {
+        ghjfcbjqfService.updateGhjfcbjqf(updateReqVO);
+        return success(true);
     }
 
     @GetMapping("/page")
     @Operation(summary = "获得筹备金全返分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ghjfcbjqf:query')")
+    @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-ghjfcbjqf:query')")
     public CommonResult<PageResult<GhjfcbjqfResVO>> getGhjfcbjqfPage(@Valid GhjfcbjqfPageReqVO pageReqVO) {
         PageResult<GhjfcbjqfDO> pageResult = ghjfcbjqfService.getGhjfcbjqfPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, GhjfcbjqfResVO.class));
@@ -54,7 +64,7 @@ public class GhjfcbjqfController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出筹备金全返 Excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ghjfcbjqf:export')")
+    @PreAuthorize("@ss.hasPermission('lghjft:ghcbj-ghjfcbjqf:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportGhjfcbjqfExcel(@Valid GhjfcbjqfPageReqVO pageReqVO,
                                      HttpServletResponse response) throws IOException {
