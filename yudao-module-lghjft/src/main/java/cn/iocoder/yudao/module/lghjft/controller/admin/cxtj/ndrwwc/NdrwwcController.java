@@ -88,6 +88,7 @@ public class NdrwwcController {
     @Operation(summary = "获得分上缴周期统计分页")
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-ndrwwc:query')")
     public CommonResult<PageResult<NdrwwcResVO>> getNdrwwcPage(@Valid NdrwwcPageReqVO pageReqVO) {
+        pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         PageResult<NdrwwcDO> pageResult = ndrwwcService.getNdrwwcPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, NdrwwcResVO.class));
     }
