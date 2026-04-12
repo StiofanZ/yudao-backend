@@ -20,4 +20,6 @@ public interface XwqyjfyfmxService {
     XwqyjfyfmxDO getXwqyjfyfmx(Long id);
 
     PageResult<XwqyjfyfmxDO> getXwqyjfyfmxPage(XwqyjfyfmxPageReqVO pageReqVO);
+
+    List<XwqyjfyfmxDO> getXwqyjfyfmxList(XwqyjfyfmxPageReqVO pageReqVO);
 }

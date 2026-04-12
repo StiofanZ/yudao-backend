@@ -5,8 +5,10 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjfyfmx.vo.XwqyjfyfmxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjfyfmx.vo.XwqyjfyfmxSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjfmx60.vo.Xwqyjfmx60PageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.xwqy.xwqyjfyfmx.XwqyjfyfmxDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.xwqy.xwqyjfyfmx.XwqyjfyfmxMapper;
+import cn.iocoder.yudao.module.lghjft.service.xwqy.xwqyjfmx60.Xwqyjfmx60Service;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +25,9 @@ public class XwqyjfyfmxServiceImpl implements XwqyjfyfmxService {
 
     @Resource
     private XwqyjfyfmxMapper xwqyjfyfmxMapper;
+
+    @Resource
+    private Xwqyjfmx60Service xwqyjfmx60Service;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -66,11 +71,12 @@ public class XwqyjfyfmxServiceImpl implements XwqyjfyfmxService {
 
     @Override
     public PageResult<XwqyjfyfmxDO> getXwqyjfyfmxPage(XwqyjfyfmxPageReqVO pageReqVO) {
-        fillDeptId(pageReqVO);
-        pageReqVO.setOffset((pageReqVO.getPageNo() - 1) * pageReqVO.getPageSize());
-        List<XwqyjfyfmxDO> list = xwqyjfyfmxMapper.selectXwqyjfyfmxList(pageReqVO);
-        long total = xwqyjfyfmxMapper.selectXwqyjfyfmxCount(pageReqVO);
-        return new PageResult<>(list, total);
+        return xwqyjfmx60Service.getXwqyjfmx60Page(BeanUtils.toBean(pageReqVO, Xwqyjfmx60PageReqVO.class));
+    }
+
+    @Override
+    public List<XwqyjfyfmxDO> getXwqyjfyfmxList(XwqyjfyfmxPageReqVO pageReqVO) {
+        return xwqyjfmx60Service.getXwqyjfmx60List(BeanUtils.toBean(pageReqVO, Xwqyjfmx60PageReqVO.class));
     }
 
     private void fillDeptId(XwqyjfyfmxPageReqVO req) {

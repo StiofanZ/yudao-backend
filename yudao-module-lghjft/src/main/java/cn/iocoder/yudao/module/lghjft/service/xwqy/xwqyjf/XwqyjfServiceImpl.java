@@ -5,8 +5,10 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjf.vo.XwqyjfPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjf.vo.XwqyjfSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.xwqy.xwqyjfmx95.vo.Xwqyjfmx95PageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.xwqy.xwqyjf.XwqyjfDO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.xwqy.xwqyjf.XwqyjfMapper;
+import cn.iocoder.yudao.module.lghjft.service.xwqy.xwqyjfmx95.Xwqyjfmx95Service;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +25,9 @@ public class XwqyjfServiceImpl implements XwqyjfService {
 
     @Resource
     private XwqyjfMapper xwqyjfMapper;
+
+    @Resource
+    private Xwqyjfmx95Service xwqyjfmx95Service;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -66,11 +71,7 @@ public class XwqyjfServiceImpl implements XwqyjfService {
 
     @Override
     public PageResult<XwqyjfDO> getXwqyjfPage(XwqyjfPageReqVO pageReqVO) {
-        fillDeptId(pageReqVO);
-        pageReqVO.setOffset((pageReqVO.getPageNo() - 1) * pageReqVO.getPageSize());
-        List<XwqyjfDO> list = xwqyjfMapper.selectXwqyjfList(pageReqVO);
-        long total = xwqyjfMapper.selectXwqyjfCount(pageReqVO);
-        return new PageResult<>(list, total);
+        return xwqyjfmx95Service.getXwqyjfmx95Page(BeanUtils.toBean(pageReqVO, Xwqyjfmx95PageReqVO.class));
     }
 
     @Override
@@ -84,9 +85,7 @@ public class XwqyjfServiceImpl implements XwqyjfService {
 
     @Override
     public List<XwqyjfDO> getXwqyjfList(XwqyjfPageReqVO pageReqVO) {
-        fillDeptId(pageReqVO);
-        pageReqVO.setOffset(null); // no pagination for export
-        return xwqyjfMapper.selectXwqyjfList(pageReqVO);
+        return xwqyjfmx95Service.getXwqyjfmx95List(BeanUtils.toBean(pageReqVO, Xwqyjfmx95PageReqVO.class));
     }
 
     private void fillDeptId(XwqyjfPageReqVO req) {
