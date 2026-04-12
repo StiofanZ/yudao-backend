@@ -2,6 +2,244 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.xejf.xebftz.XebfMapper">
 
+    <resultMap id="XebfResMap" type="cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xebftz.vo.XebfResVO">
+        <id property="ghjfId" column="ghjf_id"/>
+        <result property="sfbje" column="SFBJE"/>
+        <result property="fbbj" column="fbbj"/>
+        <result property="fbrq" column="FBRQ"/>
+        <result property="zjxcrq" column="ZJXCRQ"/>
+        <result property="hkpch" column="HKPCH"/>
+        <result property="hkpzh" column="HKPZH"/>
+        <result property="bz" column="BZ"/>
+        <result property="spuuid" column="SPUUID"/>
+        <result property="rkrq" column="RKRQ"/>
+        <result property="jsrq" column="JSRQ"/>
+        <result property="jfqj" column="jfqj"/>
+        <result property="skssqq" column="SKSSQQ"/>
+        <result property="skssqz" column="SKSSQZ"/>
+        <result property="zspmDm" column="ZSPM_DM"/>
+        <result property="gzze" column="GZZE"/>
+        <result property="jmse" column="JMSE"/>
+        <result property="yfbje" column="YFBJE"/>
+        <result property="ybtse" column="YBTSE"/>
+        <result property="jsbj" column="JSBJ" typeHandler="cn.iocoder.yudao.module.lghjft.dal.typehandler.CommaSeparatedStringArrayTypeHandler"/>
+        <result property="deptId" column="DEPT_ID"/>
+        <result property="djxh" column="DJXH"/>
+        <result property="shxydm" column="SHXYDM"/>
+        <result property="nsrmc" column="NSRMC"/>
+        <result property="xelx25" column="XELX25" typeHandler="cn.iocoder.yudao.module.lghjft.dal.typehandler.CommaSeparatedStringArrayTypeHandler"/>
+        <result property="xelx24" column="XELX24" typeHandler="cn.iocoder.yudao.module.lghjft.dal.typehandler.CommaSeparatedStringArrayTypeHandler"/>
+        <result property="xelx23" column="XELX23" typeHandler="cn.iocoder.yudao.module.lghjft.dal.typehandler.CommaSeparatedStringArrayTypeHandler"/>
+        <result property="xwlx" column="XWLX"/>
+        <result property="djzclxmc" column="DJZCLXMC"/>
+        <result property="jcghbl" column="JCGHBL"/>
+        <result property="jcghje" column="JCGHJE"/>
+        <result property="jcghhh" column="JCGHHH"/>
+        <result property="jcghzh" column="JCGHZH"/>
+        <result property="jcghhm" column="JCGHHM"/>
+        <result property="cbjbl" column="CBJBL"/>
+        <result property="cbjje" column="CBJJE"/>
+        <result property="cbjzh" column="CBJZH"/>
+        <result property="cbjhm" column="CBJHM"/>
+        <result property="cbjhh" column="CBJHH"/>
+        <result property="xjghbl" column="XJGHBL"/>
+        <result property="xjghje" column="XJGHJE"/>
+        <result property="xjghzh" column="XJGHZH"/>
+        <result property="xjghhm" column="XJGHHM"/>
+        <result property="xjghhh" column="XJGHHH"/>
+        <result property="sjghbl" column="SJGHBL"/>
+        <result property="sjghje" column="SJGHJE"/>
+        <result property="sjghzh" column="SJGHZH"/>
+        <result property="sjghhm" column="SJGHHM"/>
+        <result property="sjghhh" column="SJGHHH"/>
+        <result property="hyghbl" column="HYGHBL"/>
+        <result property="hyghje" column="HYGHJE"/>
+        <result property="hyghzh" column="HYGHZH"/>
+        <result property="hyghhm" column="HYGHHM"/>
+        <result property="hyghhh" column="HYGHHH"/>
+        <result property="sdghbl" column="SDGHBL"/>
+        <result property="sdghje" column="SDGHJE"/>
+        <result property="sdghzh" column="SDGHZH"/>
+        <result property="sdghhm" column="SDGHHM"/>
+        <result property="sdghhh" column="SDGHHH"/>
+        <result property="szghbl" column="SZGHBL"/>
+        <result property="szghje" column="SZGHJE"/>
+        <result property="szghzh" column="SZGHZH"/>
+        <result property="szghhm" column="SZGHHM"/>
+        <result property="szghhh" column="SZGHHH"/>
+        <result property="qgghbl" column="QGGHBL"/>
+        <result property="qgghje" column="QGGHJE"/>
+        <result property="qgghzh" column="QGGHZH"/>
+        <result property="qgghhm" column="QGGHHM"/>
+        <result property="qgghhh" column="QGGHHH"/>
+    </resultMap>
+
+    <sql id="selectXebfVo">
+        SELECT a.ghjf_id,
+               a.SPUUID,
+               a.RKRQ,
+               a.JSRQ,
+               a.jfqj,
+               a.SKSSQQ,
+               a.SKSSQZ,
+               a.ZSPM_DM,
+               a.GZZE,
+               a.JMSE,
+               a.YFBJE,
+               a.YBTSE,
+               a.JSBJ,
+               a.DEPT_ID,
+               a.DJXH,
+               a.SHXYDM,
+               a.NSRMC,
+               a.XELX23,
+               a.XELX24,
+               a.XELX25,
+               a.XWLX,
+               a.DJZCLXMC,
+               a.JCGHBL,
+               a.JCGHJE,
+               a.JCGHHH,
+               a.JCGHZH,
+               a.JCGHHM,
+               a.CBJBL,
+               a.CBJJE,
+               a.CBJZH,
+               a.CBJHM,
+               a.CBJHH,
+               a.XJGHBL,
+               a.XJGHJE,
+               a.XJGHZH,
+               a.XJGHHM,
+               a.XJGHHH,
+               a.SJGHBL,
+               a.SJGHJE,
+               a.SJGHZH,
+               a.SJGHHM,
+               a.SJGHHH,
+               a.HYGHBL,
+               a.HYGHJE,
+               a.HYGHZH,
+               a.HYGHHM,
+               a.HYGHHH,
+               a.SDGHBL,
+               a.SDGHJE,
+               a.SDGHZH,
+               a.SDGHHM,
+               a.SDGHHH,
+               a.SZGHBL,
+               a.SZGHJE,
+               a.SZGHZH,
+               a.SZGHHM,
+               a.SZGHHH,
+               a.QGGHBL,
+               a.QGGHJE,
+               a.QGGHZH,
+               a.QGGHHM,
+               a.QGGHHH,
+               b.SFBJE,
+               b.fbbj,
+               b.FBRQ,
+               b.ZJXCRQ,
+               b.HKPCH AS HKPCH,
+               b.HKPZH,
+               b.BZ
+        FROM xebf a
+        LEFT JOIN cxtj_xejfqrfb b ON b.ghjf_id = a.ghjf_id
+    </sql>
+
+    <select id="selectJoinedByGhjfId" resultMap="XebfResMap">
+        <include refid="selectXebfVo"/>
+        WHERE a.ghjf_id = #{ghjfId}
+    </select>
+
+    <select id="selectPageWithConfirm" resultMap="XebfResMap">
+        <include refid="selectXebfVo"/>
+        <where>
+            <if test="req.ghjfId != null">and a.ghjf_id = #{req.ghjfId}</if>
+            <if test="req.hkpch != null and req.hkpch != ''">and b.HKPCH like concat('%', #{req.hkpch}, '%')</if>
+            <if test="req.jfqj != null and req.jfqj != ''">and a.jfqj = #{req.jfqj}</if>
+            <if test="req.jsbj != null and req.jsbj.length > 0">
+                and a.jsbj in
+                <foreach collection="req.jsbj" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="req.deptId != null and req.deptId != ''">and a.DEPT_ID = #{req.deptId}</if>
+            <if test="req.djxh != null and req.djxh != ''">and a.DJXH = #{req.djxh}</if>
+            <if test="req.shxydm != null and req.shxydm != ''">and a.SHXYDM = #{req.shxydm}</if>
+            <if test="req.nsrmc != null and req.nsrmc != ''">and a.NSRMC like concat('%', #{req.nsrmc}, '%')</if>
+            <if test="req.jcghzh != null and req.jcghzh != ''">and a.JCGHZH = #{req.jcghzh}</if>
+            <if test="req.hyghzh != null and req.hyghzh != ''">and a.HYGHZH = #{req.hyghzh}</if>
+            <if test="req.xjghzh != null and req.xjghzh != ''">and a.XJGHZH = #{req.xjghzh}</if>
+            <if test="req.sjghzh != null and req.sjghzh != ''">and a.SJGHZH = #{req.sjghzh}</if>
+            <if test="req.sdghzh != null and req.sdghzh != ''">and a.SDGHZH = #{req.sdghzh}</if>
+            <if test="req.xelx23 != null and req.xelx23.length > 0">
+                and a.XELX23 in
+                <foreach collection="req.xelx23" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="req.xelx24 != null and req.xelx24.length > 0">
+                and a.XELX24 in
+                <foreach collection="req.xelx24" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="req.xelx25 != null and req.xelx25.length > 0">
+                and a.XELX25 in
+                <foreach collection="req.xelx25" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="req.zspmDm != null and req.zspmDm != ''">and a.ZSPM_DM = #{req.zspmDm}</if>
+            <if test="req.xwlx != null and req.xwlx != ''">and a.XWLX = #{req.xwlx}</if>
+            <if test="req.fbbj != null and req.fbbj != ''">and b.fbbj = #{req.fbbj}</if>
+            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">and a.RKRQ between #{req.beginRkrq} and #{req.endRkrq}</if>
+            <if test="req.beginJsrq != null and req.beginJsrq != '' and req.endJsrq != null and req.endJsrq != ''">and a.JSRQ between #{req.beginJsrq} and #{req.endJsrq}</if>
+            <if test="req.beginFbrq != null and req.beginFbrq != '' and req.endFbrq != null and req.endFbrq != ''">and b.FBRQ between #{req.beginFbrq} and #{req.endFbrq}</if>
+        </where>
+        ORDER BY a.ghjf_id DESC
+    </select>
+
+    <update id="touchMainRow">
+        update gh_jf
+        set update_time = now()
+        where ghjf_id = #{ghjfId}
+    </update>
+
+    <insert id="upsertConfirmByGhjfId">
+        insert into cxtj_xejfqrfb (
+            ghjf_id, SPUUID, SFBJE, fbbj, FBRQ, ZJXCRQ, HKPCH, HKPZH, BZ, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
+        ) values (
+            #{req.ghjfId}, #{req.spuuid}, #{req.sfbje}, #{req.fbbj}, #{req.fbrq}, #{req.zjxcrq},
+            #{req.hkpch}, #{req.hkpzh}, #{req.bz}, #{operUser}, now(), #{operUser}, now()
+        )
+        on duplicate key update
+            SPUUID = values(SPUUID),
+            SFBJE = values(SFBJE),
+            fbbj = values(fbbj),
+            FBRQ = values(FBRQ),
+            ZJXCRQ = values(ZJXCRQ),
+            HKPCH = values(HKPCH),
+            HKPZH = values(HKPZH),
+            BZ = values(BZ),
+            UPDATE_BY = values(UPDATE_BY),
+            UPDATE_TIME = values(UPDATE_TIME)
+    </insert>
+
+    <delete id="deleteConfirmByGhjfId">
+        delete from cxtj_xejfqrfb where ghjf_id = #{ghjfId}
+    </delete>
+
+    <delete id="deleteConfirmByGhjfIds">
+        delete from cxtj_xejfqrfb
+        where ghjf_id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
     <!-- 小额拨付省总列表 (v1: selectGhHkxxxejfszList, 表 xebfsz) -->
     <select id="selectGhHkxxxejfszList"
             resultType="cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xebftz.vo.GhhkxxxejfszResVO">
@@ -11,8 +249,7 @@
                JFJE  AS jfje,
                SZJE  AS szje,
                QZJE  AS qzje,
-               HJJE  AS hjje,
-               HKPCH AS hkpch
+               HJJE  AS hjje
         FROM xebfsz
         WHERE jfqj = #{jfqj}
     </select>

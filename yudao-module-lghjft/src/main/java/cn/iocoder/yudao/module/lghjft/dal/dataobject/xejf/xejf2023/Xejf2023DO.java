@@ -7,7 +7,6 @@ import cn.iocoder.yudao.module.lghjft.dal.typehandler.CommaSeparatedStringArrayT
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 /**
  * 2023年小额缴费明细 DO
@@ -43,11 +42,11 @@ public class Xejf2023DO {
     private String djzclxDm;
     private String dwlsgxDm;
     private String sblbDm;
-    private LocalDateTime nssbrq;
+    private String nssbrq;
     private String pzxh;
     private Long pzmxxh;
-    private LocalDateTime skssqq;
-    private LocalDateTime skssqz;
+    private String skssqq;
+    private String skssqz;
     private String zsswjgDm;
     private String skssswjgDm;
     private String skgkDm;
@@ -72,10 +71,10 @@ public class Xejf2023DO {
     private String jfhm;
     private String jfhh;
     private String jfyh;
-    private LocalDateTime rkrq;
+    private String rkrq;
     @TableField(typeHandler = CommaSeparatedStringArrayTypeHandler.class)
     private String[] jsbj;
-    private LocalDateTime jsrq;
+    private String jsrq;
     private String jsczy;
     private String jcghzh;
     private String jcghhm;
@@ -129,7 +128,7 @@ public class Xejf2023DO {
     private BigDecimal swjgbl;
     private BigDecimal swjgje;
     private String cbjthbj;
-    private LocalDateTime cbjthrq;
+    private String cbjthrq;
     private String cbjthczy;
     private String jym;
     private String hkpch;

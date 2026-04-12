@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.xejf.hkxxxejfcbj.GhHkxxxejfcbjMapper">
+
+    <resultMap id="GhHkxxxejfcbjResMap" type="cn.iocoder.yudao.module.lghjft.controller.admin.xejf.hkxxxejfcbj.vo.GhHkxxxejfcbjResVO">
+        <id property="hkxxId" column="HKXX_ID"/>
+        <result property="hkpch" column="HKPCH"/>
+        <result property="xh" column="XH"/>
+        <result property="jfqj" column="JFQJ"/>
+        <result property="lx" column="LX"/>
+        <result property="zh" column="ZH"/>
+        <result property="zh1" column="ZH1"/>
+        <result property="zh2" column="ZH2"/>
+        <result property="zh3" column="ZH3"/>
+        <result property="hm" column="HM"/>
+        <result property="hh" column="HH"/>
+        <result property="xzh" column="XZH"/>
+        <result property="xhm" column="XHM"/>
+        <result property="xhh" column="XHH"/>
+        <result property="wqyfje" column="WQYFJE"/>
+        <result property="je" column="JE"/>
+        <result property="deptId" column="DEPT_ID"/>
+        <result property="dz" column="DZ"/>
+        <result property="fy" column="FY"/>
+        <result property="jym" column="JYM"/>
+        <result property="thbj" column="THBJ"/>
+        <result property="thrq" column="THRQ"/>
+        <result property="thyy" column="THYY"/>
+        <result property="hkxxidgl" column="HKXXIDGL"/>
+        <result property="schkpch" column="SCHKPCH"/>
+        <result property="qrrq" column="QRRQ"/>
+        <result property="yhhdh" column="YHHDH"/>
+        <result property="dzbj" column="DZBJ"/>
+        <result property="bz" column="BZ"/>
+        <result property="xgbj" column="XGBJ"/>
+        <result property="scbz" column="SCBZ"/>
+        <result property="yxbj" column="YXBJ"/>
+        <result property="createBy" column="CREATE_BY"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateBy" column="UPDATE_BY"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+    </resultMap>
+
+    <resultMap id="GhHkxxxejfcbjQrszItemMap" type="cn.iocoder.yudao.module.lghjft.controller.admin.xejf.hkxxxejfcbj.vo.GhHkxxxejfcbjQrszItemVO">
+        <result property="hkxxId" column="HKXX_ID"/>
+        <result property="ghHkxxJym" column="GH_HKXX_JYM"/>
+        <result property="dzbj" column="DZBJ"/>
+        <result property="qrrq" column="QRRQ"/>
+        <result property="yhhdh" column="YHHDH"/>
+        <result property="bz" column="BZ"/>
+        <result property="createBy" column="CREATE_BY"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateBy" column="UPDATE_BY"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+    </resultMap>
+
+    <sql id="selectGhHkxxxejfcbjVo">
+        select a.HKXX_ID,
+               a.HKPCH,
+               a.XH,
+               a.JFQJ,
+               a.LX,
+               a.ZH,
+               #{req.zh1} as ZH1,
+               #{req.zh2} as ZH2,
+               #{req.zh3} as ZH3,
+               a.HM,
+               a.HH,
+               a.XZH,
+               a.XHM,
+               a.XHH,
+               a.WQYFJE,
+               a.JE,
+               a.DEPT_ID,
+               a.DZ,
+               a.FY,
+               a.JYM,
+               a.THBJ,
+               a.THRQ,
+               a.THYY,
+               a.HKXXIDGL,
+               a.SCHKPCH,
+               b.QRRQ,
+               b.YHHDH,
+               b.DZBJ,
+               b.BZ,
+               a.XGBJ,
+               a.SCBZ,
+               a.YXBJ,
+               a.CREATE_BY,
+               a.CREATE_TIME,
+               a.UPDATE_BY,
+               a.UPDATE_TIME
+        from gh_hkxxxejf a
+                 left join gh_hkxx_qrsz b on b.HKXX_ID = a.HKXX_ID
+    </sql>
+
+    <select id="selectByHkxxId" resultMap="GhHkxxxejfcbjResMap">
+        select a.HKXX_ID,
+               a.HKPCH,
+               a.XH,
+               a.JFQJ,
+               a.LX,
+               a.ZH,
+               null as ZH1,
+               null as ZH2,
+               null as ZH3,
+               a.HM,
+               a.HH,
+               a.XZH,
+               a.XHM,
+               a.XHH,
+               a.WQYFJE,
+               a.JE,
+               a.DEPT_ID,
+               a.DZ,
+               a.FY,
+               a.JYM,
+               a.THBJ,
+               a.THRQ,
+               a.THYY,
+               a.HKXXIDGL,
+               a.SCHKPCH,
+               b.QRRQ,
+               b.YHHDH,
+               b.DZBJ,
+               b.BZ,
+               a.XGBJ,
+               a.SCBZ,
+               a.YXBJ,
+               a.CREATE_BY,
+               a.CREATE_TIME,
+               a.UPDATE_BY,
+               a.UPDATE_TIME
+        from gh_hkxxxejf a
+                 left join gh_hkxx_qrsz b on b.HKXX_ID = a.HKXX_ID
+        where a.HKXX_ID = #{hkxxId}
+          and a.LX = '4'
+        limit 1
+    </select>
+
+    <select id="selectQrszListByHkxxId" resultMap="GhHkxxxejfcbjQrszItemMap">
+        select HKXX_ID,
+               GH_HKXX_JYM,
+               DZBJ,
+               QRRQ,
+               YHHDH,
+               BZ,
+               CREATE_BY,
+               CREATE_TIME,
+               UPDATE_BY,
+               UPDATE_TIME
+        from gh_hkxx_qrsz
+        where HKXX_ID = #{hkxxId}
+        order by UPDATE_TIME desc, CREATE_TIME desc
+    </select>
+
+    <select id="selectPageList" resultMap="GhHkxxxejfcbjResMap">
+        <include refid="selectGhHkxxxejfcbjVo"/>
+        <where>
+            and a.LX = '4'
+            <if test="req.hkxxId != null">and a.HKXX_ID = #{req.hkxxId}</if>
+            <if test="req.hkpch != null and req.hkpch != ''">and a.HKPCH = #{req.hkpch}</if>
+            <if test="req.beginHkpch != null and req.beginHkpch != '' and req.endHkpch != null and req.endHkpch != ''">
+                and MID(a.HKPCH, 1, 8) between #{req.beginHkpch} and #{req.endHkpch}
+            </if>
+            <if test="req.beginQrrq != null and req.beginQrrq != '' and req.endQrrq != null and req.endQrrq != ''">
+                and b.QRRQ between #{req.beginQrrq} and #{req.endQrrq}
+            </if>
+            <if test="req.dzbj != null and req.dzbj != ''">and b.DZBJ = #{req.dzbj}</if>
+            <if test="req.jfqj != null">and a.JFQJ = #{req.jfqj}</if>
+            <if test="req.zh != null and req.zh != ''">and a.ZH in (#{req.zh}, #{req.zh1}, #{req.zh2}, #{req.zh3})</if>
+            <if test="req.wqyfje != null">and a.WQYFJE = #{req.wqyfje}</if>
+            <if test="req.je != null">and a.JE = #{req.je}</if>
+            <if test="req.yhhdh != null and req.yhhdh != ''">and b.YHHDH = #{req.yhhdh}</if>
+            <if test="req.deptId != null and req.deptId != ''">and a.DEPT_ID = #{req.deptId}</if>
+            <if test="req.dz != null and req.dz != ''">and a.DZ = #{req.dz}</if>
+        </where>
+        order by a.DZ asc
+    </select>
+
+    <update id="touchMainRow">
+        update gh_hkxxxejf
+        set UPDATE_BY = #{operUser},
+            UPDATE_TIME = now()
+        where HKXX_ID = #{hkxxId}
+          and LX = '4'
+    </update>
+
+    <delete id="deleteQrszByHkxxId">
+        delete from gh_hkxx_qrsz
+        where HKXX_ID = #{hkxxId}
+    </delete>
+
+    <insert id="batchInsertQrsz">
+        insert into gh_hkxx_qrsz (
+            HKXX_ID, GH_HKXX_JYM, DZBJ, QRRQ, YHHDH, BZ, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME
+        ) values
+        <foreach collection="list" item="item" separator=",">
+            (
+                #{item.hkxxId}, #{item.ghHkxxJym}, #{item.dzbj}, #{item.qrrq}, #{item.yhhdh},
+                #{item.bz}, #{item.createBy}, #{item.createTime}, #{item.updateBy}, #{item.updateTime}
+            )
+        </foreach>
+    </insert>
+
+</mapper>

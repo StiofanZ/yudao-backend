@@ -1,24 +1,33 @@
-package cn.iocoder.yudao.module.lghjft.controller.admin.xejf.hkxxxejfcbj.vo;
+package cn.iocoder.yudao.module.lghjft.dal.dataobject.xejf.xejfhbsb;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
 
-@Schema(description = "管理后台 - 小额筹备金做账新增/修改 Request VO")
+/**
+ * 小额划拨失败记录 DO
+ */
+@TableName("gh_hkxxxejf")
 @Data
-public class GhHkxxxejfcbjSaveReqVO {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(callSuper = true)
+public class XejfhbsbDO {
+
+    @TableId
     private Long hkxxId;
     private String hkpch;
     private Long xh;
     private Long jfqj;
     private String lx;
     private String zh;
-    private String zh1;
-    private String zh2;
-    private String zh3;
     private String hm;
     private String hh;
     private String xzh;
@@ -26,23 +35,19 @@ public class GhHkxxxejfcbjSaveReqVO {
     private String xhh;
     private BigDecimal wqyfje;
     private BigDecimal je;
-    private String sjdm;
     private String deptId;
     private String dz;
     private String fy;
     private String jym;
     private String thbj;
-    private LocalDateTime thrq;
+    private String thrq;
     private String thyy;
     private String hkxxidgl;
     private String schkpch;
-    private LocalDateTime qrrq;
-    private String yhhdh;
-    private String dzbj;
     private String bz;
     private String xgbj;
     private String scbz;
     private String yxbj;
-    @Schema(description = "筹备金确认子表")
-    private List<GhHkxxxejfcbjQrszItemVO> cbjqrszList;
+    private String xgr;
+    private String xgsj;
 }

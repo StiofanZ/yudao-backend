@@ -4,12 +4,10 @@ import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xejf.hkxxxejfcbj.vo.GhHkxxxejfcbjPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xejf.hkxxxejfcbj.vo.GhHkxxxejfcbjResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.xejf.hkxxxejfcbj.vo.GhHkxxxejfcbjSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.xejf.hkxxxejfcbj.GhHkxxxejfcbjDO;
 import cn.iocoder.yudao.module.lghjft.service.xejf.hkxxxejfcbj.GhHkxxxejfcbjService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -74,16 +72,14 @@ public class GhHkxxxejfcbjController {
     @Parameter(name = "id", description = "编号", required = true)
     @PreAuthorize("@ss.hasPermission('lghjft:xejf-hkxxxejfcbj:query')")
     public CommonResult<GhHkxxxejfcbjResVO> get(@RequestParam("id") Long id) {
-        GhHkxxxejfcbjDO data = ghHkxxxejfcbjService.getGhHkxxxejfcbj(id);
-        return success(BeanUtils.toBean(data, GhHkxxxejfcbjResVO.class));
+        return success(ghHkxxxejfcbjService.getGhHkxxxejfcbj(id));
     }
 
     @GetMapping("/page")
     @Operation(summary = "获得小额筹备金做账分页")
     @PreAuthorize("@ss.hasPermission('lghjft:xejf-hkxxxejfcbj:query')")
     public CommonResult<PageResult<GhHkxxxejfcbjResVO>> page(@Valid GhHkxxxejfcbjPageReqVO pageReqVO) {
-        PageResult<GhHkxxxejfcbjDO> pageResult = ghHkxxxejfcbjService.getGhHkxxxejfcbjPage(pageReqVO);
-        return success(BeanUtils.toBean(pageResult, GhHkxxxejfcbjResVO.class));
+        return success(ghHkxxxejfcbjService.getGhHkxxxejfcbjPage(pageReqVO));
     }
 
     @GetMapping("/export-excel")
@@ -93,8 +89,7 @@ public class GhHkxxxejfcbjController {
     public void exportExcel(@Valid GhHkxxxejfcbjPageReqVO pageReqVO,
                             HttpServletResponse response) throws IOException {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
-        List<GhHkxxxejfcbjDO> list = ghHkxxxejfcbjService.getGhHkxxxejfcbjPage(pageReqVO).getList();
-        ExcelUtils.write(response, "小额筹备金做账.xls", "数据", GhHkxxxejfcbjResVO.class,
-                BeanUtils.toBean(list, GhHkxxxejfcbjResVO.class));
+        List<GhHkxxxejfcbjResVO> list = ghHkxxxejfcbjService.getGhHkxxxejfcbjPage(pageReqVO).getList();
+        ExcelUtils.write(response, "小额筹备金做账.xls", "数据", GhHkxxxejfcbjResVO.class, list);
     }
 }

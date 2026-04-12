@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 小额缴费明细 Response VO")
 @Data
@@ -57,13 +56,13 @@ public class Xejf2023ResVO {
     private String dwlsgxDm;
     private String sblbDm;
     @ExcelProperty("申报日期")
-    private LocalDateTime nssbrq;
+    private String nssbrq;
     private String pzxh;
     private Long pzmxxh;
     @ExcelProperty("所属期起")
-    private LocalDateTime skssqq;
+    private String skssqq;
     @ExcelProperty("所属期止")
-    private LocalDateTime skssqz;
+    private String skssqz;
     private String zsswjgDm;
     private String skssswjgDm;
     private String skgkDm;
@@ -94,11 +93,11 @@ public class Xejf2023ResVO {
     private String jfhh;
     private String jfyh;
     @ExcelProperty("入库日期")
-    private LocalDateTime rkrq;
+    private String rkrq;
     @ExcelProperty("结算标记")
     private String jsbj;
     @ExcelProperty("结算日期")
-    private LocalDateTime jsrq;
+    private String jsrq;
     private String jsczy;
     @ExcelProperty("基层工会账户")
     private String jcghzh;
@@ -199,7 +198,7 @@ public class Xejf2023ResVO {
     @ExcelProperty("基层经费拨付状态")
     private String cbjthbj;
     @ExcelProperty("基层经费拨付处理日期")
-    private LocalDateTime cbjthrq;
+    private String cbjthrq;
     private String cbjthczy;
     private String jym;
     @ExcelProperty("划款批次号")

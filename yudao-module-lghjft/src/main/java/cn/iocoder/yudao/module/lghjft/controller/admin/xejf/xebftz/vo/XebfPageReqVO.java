@@ -9,6 +9,8 @@ import lombok.Data;
 public class XebfPageReqVO extends PageParam {
     @Schema(description = "工会经费ID")
     private Long ghjfId;
+    @Schema(description = "划款批次号")
+    private String hkpch;
     @Schema(description = "缴费期间")
     private String jfqj;
     @Schema(description = "登记序号")
@@ -19,10 +21,22 @@ public class XebfPageReqVO extends PageParam {
     private String nsrmc;
     @Schema(description = "返拨标记")
     private String fbbj;
+    @Schema(description = "征收品目代码")
+    private String zspmDm;
     @Schema(description = "社会信用代码")
     private String shxydm;
     @Schema(description = "小微类型")
     private String xwlx;
+    @Schema(description = "基层工会账号")
+    private String jcghzh;
+    @Schema(description = "行业工会账号")
+    private String hyghzh;
+    @Schema(description = "县级工会账号")
+    private String xjghzh;
+    @Schema(description = "市级工会账号")
+    private String sjghzh;
+    @Schema(description = "属地工会账号")
+    private String sdghzh;
 
     // v1: jsbj IN array
     @Schema(description = "结算标记")
