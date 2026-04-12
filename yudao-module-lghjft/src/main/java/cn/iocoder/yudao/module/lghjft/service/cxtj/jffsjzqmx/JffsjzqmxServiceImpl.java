@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.service.cxtj.jffsjzqmx;
 
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jffsjzqmx.vo.JffsjzqmxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jffsjzqmx.vo.JffsjzqmxResVO;
 import cn.iocoder.yudao.module.lghjft.dal.mysql.cxtj.jffsjzqmx.JffsjzqmxMapper;
@@ -21,10 +22,11 @@ public class JffsjzqmxServiceImpl implements JffsjzqmxService {
     private DeptFilterHelper deptFilterHelper;
 
     @Override
-    public List<JffsjzqmxResVO> getJffsjzqmxList(JffsjzqmxPageReqVO pageReqVO) {
+    public PageResult<JffsjzqmxResVO> getJffsjzqmxPage(JffsjzqmxPageReqVO pageReqVO) {
         // 还原 V1 部门过滤逻辑：自动填充当前用户部门，根部门（100000）则不过滤
         String filteredDeptId = deptFilterHelper.filterDeptId(pageReqVO.getDeptId());
         pageReqVO.setDeptId(filteredDeptId);
-        return jffsjzqmxMapper.selectJffsjzqmxList(pageReqVO);
+        List<JffsjzqmxResVO> list = jffsjzqmxMapper.selectJffsjzqmxList(pageReqVO);
+        return new PageResult<>(list, (long) list.size());
     }
 }

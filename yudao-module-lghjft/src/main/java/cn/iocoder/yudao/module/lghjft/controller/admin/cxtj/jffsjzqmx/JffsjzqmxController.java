@@ -2,6 +2,8 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jffsjzqmx;
 
 import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.framework.common.pojo.PageParam;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jffsjzqmx.vo.JffsjzqmxPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.jffsjzqmx.vo.JffsjzqmxResVO;
@@ -33,10 +35,11 @@ public class JffsjzqmxController {
     private JffsjzqmxService jffsjzqmxService;
 
     @GetMapping("/page")
-    @Operation(summary = "分年各级分成情况")
+    @Operation(summary = "分年各级分成情况（V1 不分页）")
     @PreAuthorize("@ss.hasPermission('lghjft:cxtj-jffsjzqmx:query')")
-    public CommonResult<List<JffsjzqmxResVO>> getJffsjzqmxList(@Valid JffsjzqmxPageReqVO pageReqVO) {
-        return success(jffsjzqmxService.getJffsjzqmxList(pageReqVO));
+    public CommonResult<PageResult<JffsjzqmxResVO>> getJffsjzqmxList(@Valid JffsjzqmxPageReqVO pageReqVO) {
+        pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
+        return success(jffsjzqmxService.getJffsjzqmxPage(pageReqVO));
     }
 
     @GetMapping("/export-excel")
@@ -45,7 +48,8 @@ public class JffsjzqmxController {
     @ApiAccessLog(operateType = EXPORT)
     public void exportExcel(@Valid JffsjzqmxPageReqVO pageReqVO,
                             HttpServletResponse response) throws IOException {
-        List<JffsjzqmxResVO> list = jffsjzqmxService.getJffsjzqmxList(pageReqVO);
+        pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
+        List<JffsjzqmxResVO> list = jffsjzqmxService.getJffsjzqmxPage(pageReqVO).getList();
         ExcelUtils.write(response, "分年各级分成情况.xls", "数据", JffsjzqmxResVO.class, list);
     }
 }
