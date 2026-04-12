@@ -26,7 +26,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
 @Tag(name = "管理后台 - 文件管理")
 @RestController
-@RequestMapping("/lghjft/wjgl")
+@RequestMapping("/lghjft/sjwh/wjgl")
 @Validated
 public class WjglController {
 

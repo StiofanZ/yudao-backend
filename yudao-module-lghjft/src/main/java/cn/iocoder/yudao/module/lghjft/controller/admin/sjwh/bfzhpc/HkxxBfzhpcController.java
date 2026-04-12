@@ -1,13 +1,13 @@
-package cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.hkxxbfzhpc;
+package cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.bfzhpc;
 
 import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.hkxxbfzhpc.vo.HkxxBfzhpcPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.hkxxbfzhpc.vo.HkxxBfzhpcResVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.hkxxbfzhpc.vo.HkxxBfzhpcSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.service.hbzz.hkxxbfzhpc.HkxxBfzhpcService;
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.bfzhpc.vo.HkxxBfzhpcPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.bfzhpc.vo.HkxxBfzhpcResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.bfzhpc.vo.HkxxBfzhpcSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.service.sjwh.bfzhpc.HkxxBfzhpcService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,7 +26,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
 @Tag(name = "管理后台 - 拨付信息排除解除")
 @RestController
-@RequestMapping("/lghjft/hkxx-bfzhpc")
+@RequestMapping("/lghjft/sjwh/bfzhpc")
 @Validated
 public class HkxxBfzhpcController {
 

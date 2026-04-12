@@ -1,9 +1,9 @@
-package cn.iocoder.yudao.module.lghjft.dal.mysql.hbzz.hkxxbfzhpc;
+package cn.iocoder.yudao.module.lghjft.dal.mysql.sjwh.bfzhpc;
 
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.hkxxbfzhpc.vo.HkxxBfzhpcPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.hkxxbfzhpc.vo.HkxxBfzhpcResVO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.hkxxbfzhpc.HkxxBfzhpcDO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.bfzhpc.vo.HkxxBfzhpcPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.bfzhpc.vo.HkxxBfzhpcResVO;
+import cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.bfzhpc.HkxxBfzhpcDO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;

@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.hkxxbfzhpc.vo;
+package cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.bfzhpc.vo;
 
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;

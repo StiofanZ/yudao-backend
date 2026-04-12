@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.hkxxbfzhpc;
+package cn.iocoder.yudao.module.lghjft.dal.dataobject.sjwh.bfzhpc;
 
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableId;

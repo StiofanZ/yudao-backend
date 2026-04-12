@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.hkxxbfzhpc.vo;
+package cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.bfzhpc.vo;
 
 import cn.idev.excel.annotation.ExcelProperty;
 import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;

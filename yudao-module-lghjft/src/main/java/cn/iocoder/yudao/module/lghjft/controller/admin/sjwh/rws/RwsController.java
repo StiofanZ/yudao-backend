@@ -30,7 +30,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
 @Tag(name = "管理后台 - 年度任务")
 @RestController
-@RequestMapping("/lghjft/rws")
+@RequestMapping("/lghjft/sjwh/rws")
 @Validated
 public class RwsController {
 

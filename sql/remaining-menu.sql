@@ -128,7 +128,7 @@ VALUES (216142, '导出', 'lghjft:sjwh-sxfzz:export', 3, 5, 216137, '', '', '', 
 
 -- ---------- 返还经费拨付明细 hkxxbfzhpc ----------
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater, update_time, deleted)
-VALUES (216143, '拨付经费排除解除', '', 2, 33, 205047, 'hkxxbfzhpc', '', 'lghjft/sjwh/hkxxbfzhpc/index', 'Bfjfpcjc', 0, 1, 1, 1, '1', NOW(), '1', NOW(), 0);
+VALUES (216143, '拨付经费排除解除', '', 2, 33, 205047, 'bfjfpcjc', '', '/lghjft/sjwh/bfzhpc/bfjfpcjc', 'LghjftSjwhBfzhpcBfjfpcjc', 0, 1, 1, 1, '1', NOW(), '1', NOW(), 0);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater, update_time, deleted)
 VALUES (216144, '查询', 'lghjft:sjwh-bfzhpc:query', 3, 1, 216143, '', '', '', '', 0, 1, 1, 1, '1', NOW(), '1', NOW(), 0);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater, update_time, deleted)

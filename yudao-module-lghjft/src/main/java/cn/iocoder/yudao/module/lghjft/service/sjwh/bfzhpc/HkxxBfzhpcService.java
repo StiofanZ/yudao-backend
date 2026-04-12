@@ -1,9 +1,9 @@
-package cn.iocoder.yudao.module.lghjft.service.hbzz.hkxxbfzhpc;
+package cn.iocoder.yudao.module.lghjft.service.sjwh.bfzhpc;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.hkxxbfzhpc.vo.HkxxBfzhpcPageReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.hkxxbfzhpc.vo.HkxxBfzhpcResVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.hkxxbfzhpc.vo.HkxxBfzhpcSaveReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.bfzhpc.vo.HkxxBfzhpcPageReqVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.bfzhpc.vo.HkxxBfzhpcResVO;
+import cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.bfzhpc.vo.HkxxBfzhpcSaveReqVO;
 import jakarta.validation.Valid;
 
 import java.util.List;

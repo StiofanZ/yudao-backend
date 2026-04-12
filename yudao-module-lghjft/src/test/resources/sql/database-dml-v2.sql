@@ -966,134 +966,134 @@ INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon,
 VALUES (206365, '拨付信息排除解除', '', 1, 4, 205047, 'sjwh/bfzhpc', 'ep:check', null, null, 0, true, true, true, '', '2026-01-13 11:15:51', '1', '2026-01-13 16:11:36', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213602, '年度任务', '', 2, 0, 205047, 'rws', 'ep:notebook', 'lghjft/rws/index', 'Rws', 0, true, true, true, '', '2026-02-25 10:55:57', '1', '2026-02-25 10:59:52', false);
+VALUES (213602, '年度任务', '', 2, 0, 205047, 'rws', 'ep:notebook', 'lghjft/sjwh/rws/index', 'LghjftSjwhRws', 0, true, true, true, '', '2026-02-25 10:55:57', '1', '2026-02-25 10:59:52', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213603, '年度任务查询', 'lghjft:rws:query', 3, 1, 213602, '', '', '', null, 0, true, true, true, '', '2026-02-25 10:55:57', '', '2026-02-25 10:55:57', false);
+VALUES (213603, '年度任务查询', 'lghjft:sjwh-rws:query', 3, 1, 213602, '', '', '', null, 0, true, true, true, '', '2026-02-25 10:55:57', '', '2026-02-25 10:55:57', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213604, '年度任务创建', 'lghjft:rws:create', 3, 2, 213602, '', '', '', null, 0, true, true, true, '', '2026-02-25 10:55:57', '', '2026-02-25 10:55:57', false);
+VALUES (213604, '年度任务创建', 'lghjft:sjwh-rws:create', 3, 2, 213602, '', '', '', null, 0, true, true, true, '', '2026-02-25 10:55:57', '', '2026-02-25 10:55:57', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213605, '年度任务更新', 'lghjft:rws:update', 3, 3, 213602, '', '', '', null, 0, true, true, true, '', '2026-02-25 10:55:57', '', '2026-02-25 10:55:57', false);
+VALUES (213605, '年度任务更新', 'lghjft:sjwh-rws:update', 3, 3, 213602, '', '', '', null, 0, true, true, true, '', '2026-02-25 10:55:57', '', '2026-02-25 10:55:57', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213606, '年度任务删除', 'lghjft:rws:delete', 3, 4, 213602, '', '', '', null, 0, true, true, true, '', '2026-02-25 10:55:57', '', '2026-02-25 10:55:57', false);
+VALUES (213606, '年度任务删除', 'lghjft:sjwh-rws:delete', 3, 4, 213602, '', '', '', null, 0, true, true, true, '', '2026-02-25 10:55:57', '', '2026-02-25 10:55:57', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213607, '年度任务导出', 'lghjft:rws:export', 3, 5, 213602, '', '', '', null, 0, true, true, true, '', '2026-02-25 10:55:57', '', '2026-02-25 10:55:57', false);
+VALUES (213607, '年度任务导出', 'lghjft:sjwh-rws:export', 3, 5, 213602, '', '', '', null, 0, true, true, true, '', '2026-02-25 10:55:57', '', '2026-02-25 10:55:57', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213608, '行政区划', '', 2, 0, 205075, 'xzqh', 'ep:chat-line-round', 'dm/xzqh/index', 'Xzqh', 0, true, true, true, '', '2026-02-25 11:04:07', '1', '2026-02-25 11:06:36',
+VALUES (213608, '行政区划', '', 2, 0, 205075, 'xzqh', 'ep:chat-line-round', '/lghjft/sjwh/dmwh/xzqh/index', 'LghjftSjwhDmwhXzqh', 0, true, true, true, '', '2026-02-25 11:04:07', '1', '2026-02-25 11:06:36',
         false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213614, '银行网点', '', 2, 0, 205075, 'yhwd', 'fa:cny', 'dm/yhwd/index', 'Yhwd', 0, true, true, true, '', '2026-02-25 11:37:21', '1', '2026-02-25 11:40:56', false);
+VALUES (213614, '银行网点', '', 2, 0, 205075, 'yhwd', 'fa:cny', '/lghjft/sjwh/dmwh/yhwd/index', 'LghjftSjwhDmwhYhwd', 0, true, true, true, '', '2026-02-25 11:37:21', '1', '2026-02-25 11:40:56', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213620, '税务机关', '', 2, 0, 205075, 'swjg', 'fa-solid:network-wired', 'dm/swjg/index', 'Swjg', 0, true, true, true, '', '2026-02-25 11:55:12', '1', '2026-02-25 12:00:48',
+VALUES (213620, '税务机关', '', 2, 0, 205075, 'swjg', 'fa-solid:network-wired', '/lghjft/sjwh/dmwh/swjg/index', 'LghjftSjwhDmwhSwjg', 0, true, true, true, '', '2026-02-25 11:55:12', '1', '2026-02-25 12:00:48',
         false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213626, '户籍分类', '', 2, 0, 205075, 'hjfl', 'ep:user', 'dm/hjfl/index', 'Hjfl', 0, true, true, true, '', '2026-02-25 14:34:40', '1', '2026-02-25 15:30:01', false);
+VALUES (213626, '户籍分类', '', 2, 0, 205075, 'hjfl', 'ep:user', '/lghjft/sjwh/dmwh/hjfl/index', 'LghjftSjwhDmwhHjfl', 0, true, true, true, '', '2026-02-25 14:34:40', '1', '2026-02-25 15:30:01', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213632, '分配比例', '', 2, 0, 205075, 'fpbl-copy', 'ep:pie-chart', 'dm/fpblcopy/index', 'FpblCopy', 0, true, true, true, '', '2026-02-25 15:37:11', '1',
+VALUES (213632, '分配比例', '', 2, 0, 205075, 'fpbl', 'ep:pie-chart', '/lghjft/sjwh/dmwh/fpbl/index', 'LghjftSjwhDmwhFpbl', 0, true, true, true, '', '2026-02-25 15:37:11', '1',
         '2026-02-25 15:39:23', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213638, '收款国库', '', 2, 0, 205075, 'skgk', 'fa-solid:book-open', 'dm/skgk/index', 'Skgk', 0, true, true, true, '', '2026-02-25 15:41:35', '1', '2026-02-25 15:43:04',
+VALUES (213638, '收款国库', '', 2, 0, 205075, 'skgk', 'fa-solid:book-open', '/lghjft/sjwh/dmwh/skgk/index', 'LghjftSjwhDmwhSkgk', 0, true, true, true, '', '2026-02-25 15:41:35', '1', '2026-02-25 15:43:04',
         false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213609, '行政区划查询', 'dm:xzqh:query', 3, 1, 213608, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:04:07', '', '2026-02-25 11:04:07', false);
+VALUES (213609, '行政区划查询', 'lghjft:sjwh-dmwh-xzqh:query', 3, 1, 213608, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:04:07', '', '2026-02-25 11:04:07', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213610, '行政区划创建', 'dm:xzqh:create', 3, 2, 213608, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:04:07', '', '2026-02-25 11:04:07', false);
+VALUES (213610, '行政区划创建', 'lghjft:sjwh-dmwh-xzqh:create', 3, 2, 213608, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:04:07', '', '2026-02-25 11:04:07', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213611, '行政区划更新', 'dm:xzqh:update', 3, 3, 213608, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:04:07', '', '2026-02-25 11:04:07', false);
+VALUES (213611, '行政区划更新', 'lghjft:sjwh-dmwh-xzqh:update', 3, 3, 213608, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:04:07', '', '2026-02-25 11:04:07', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213612, '行政区划删除', 'dm:xzqh:delete', 3, 4, 213608, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:04:07', '', '2026-02-25 11:04:07', false);
+VALUES (213612, '行政区划删除', 'lghjft:sjwh-dmwh-xzqh:delete', 3, 4, 213608, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:04:07', '', '2026-02-25 11:04:07', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213613, '行政区划导出', 'dm:xzqh:export', 3, 5, 213608, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:04:07', '', '2026-02-25 11:04:07', false);
+VALUES (213613, '行政区划导出', 'lghjft:sjwh-dmwh-xzqh:export', 3, 5, 213608, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:04:07', '', '2026-02-25 11:04:07', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213615, '银行网点查询', 'dm:yhwd:query', 3, 1, 213614, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:37:21', '', '2026-02-25 11:37:21', false);
+VALUES (213615, '银行网点查询', 'lghjft:sjwh-dmwh-yhwd:query', 3, 1, 213614, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:37:21', '', '2026-02-25 11:37:21', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213616, '银行网点创建', 'dm:yhwd:create', 3, 2, 213614, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:37:21', '', '2026-02-25 11:37:21', false);
+VALUES (213616, '银行网点创建', 'lghjft:sjwh-dmwh-yhwd:create', 3, 2, 213614, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:37:21', '', '2026-02-25 11:37:21', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213617, '银行网点更新', 'dm:yhwd:update', 3, 3, 213614, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:37:21', '', '2026-02-25 11:37:21', false);
+VALUES (213617, '银行网点更新', 'lghjft:sjwh-dmwh-yhwd:update', 3, 3, 213614, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:37:21', '', '2026-02-25 11:37:21', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213618, '银行网点删除', 'dm:yhwd:delete', 3, 4, 213614, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:37:21', '', '2026-02-25 11:37:21', false);
+VALUES (213618, '银行网点删除', 'lghjft:sjwh-dmwh-yhwd:delete', 3, 4, 213614, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:37:21', '', '2026-02-25 11:37:21', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213619, '银行网点导出', 'dm:yhwd:export', 3, 5, 213614, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:37:21', '', '2026-02-25 11:37:21', false);
+VALUES (213619, '银行网点导出', 'lghjft:sjwh-dmwh-yhwd:export', 3, 5, 213614, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:37:21', '', '2026-02-25 11:37:21', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213621, '税务机关查询', 'dm:swjg:query', 3, 1, 213620, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:55:12', '', '2026-02-25 11:55:12', false);
+VALUES (213621, '税务机关查询', 'lghjft:sjwh-dmwh-swjg:query', 3, 1, 213620, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:55:12', '', '2026-02-25 11:55:12', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213622, '税务机关创建', 'dm:swjg:create', 3, 2, 213620, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:55:12', '', '2026-02-25 11:55:12', false);
+VALUES (213622, '税务机关创建', 'lghjft:sjwh-dmwh-swjg:create', 3, 2, 213620, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:55:12', '', '2026-02-25 11:55:12', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213623, '税务机关更新', 'dm:swjg:update', 3, 3, 213620, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:55:12', '', '2026-02-25 11:55:12', false);
+VALUES (213623, '税务机关更新', 'lghjft:sjwh-dmwh-swjg:update', 3, 3, 213620, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:55:12', '', '2026-02-25 11:55:12', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213624, '税务机关删除', 'dm:swjg:delete', 3, 4, 213620, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:55:12', '', '2026-02-25 11:55:12', false);
+VALUES (213624, '税务机关删除', 'lghjft:sjwh-dmwh-swjg:delete', 3, 4, 213620, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:55:12', '', '2026-02-25 11:55:12', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213625, '税务机关导出', 'dm:swjg:export', 3, 5, 213620, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:55:12', '', '2026-02-25 11:55:12', false);
+VALUES (213625, '税务机关导出', 'lghjft:sjwh-dmwh-swjg:export', 3, 5, 213620, '', '', '', null, 0, true, true, true, '', '2026-02-25 11:55:12', '', '2026-02-25 11:55:12', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213627, '户籍分类查询', 'dm:hjfl:query', 3, 1, 213626, '', '', '', '', 0, true, true, true, '', '2026-02-25 14:34:40', '1', '2026-02-25 15:32:49', false);
+VALUES (213627, '户籍分类查询', 'lghjft:sjwh-dmwh-hjfl:query', 3, 1, 213626, '', '', '', '', 0, true, true, true, '', '2026-02-25 14:34:40', '1', '2026-02-25 15:32:49', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213628, '户籍分类创建', 'dm:hjfl:create', 3, 2, 213626, '', '', '', '', 0, true, true, true, '', '2026-02-25 14:34:40', '1', '2026-02-25 15:30:54', false);
+VALUES (213628, '户籍分类创建', 'lghjft:sjwh-dmwh-hjfl:create', 3, 2, 213626, '', '', '', '', 0, true, true, true, '', '2026-02-25 14:34:40', '1', '2026-02-25 15:30:54', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213629, '户籍分类更新', 'dm:hjfl:update', 3, 3, 213626, '', '', '', '', 0, true, true, true, '', '2026-02-25 14:34:40', '1', '2026-02-25 15:31:00', false);
+VALUES (213629, '户籍分类更新', 'lghjft:sjwh-dmwh-hjfl:update', 3, 3, 213626, '', '', '', '', 0, true, true, true, '', '2026-02-25 14:34:40', '1', '2026-02-25 15:31:00', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213630, '户籍分类删除', 'dm:hjfl:delete', 3, 4, 213626, '', '', '', '', 0, true, true, true, '', '2026-02-25 14:34:40', '1', '2026-02-25 15:31:04', false);
+VALUES (213630, '户籍分类删除', 'lghjft:sjwh-dmwh-hjfl:delete', 3, 4, 213626, '', '', '', '', 0, true, true, true, '', '2026-02-25 14:34:40', '1', '2026-02-25 15:31:04', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213631, '户籍分类导出', 'dm:hjfl:export', 3, 5, 213626, '', '', '', '', 0, true, true, true, '', '2026-02-25 14:34:40', '1', '2026-02-25 15:31:09', false);
+VALUES (213631, '户籍分类导出', 'lghjft:sjwh-dmwh-hjfl:export', 3, 5, 213626, '', '', '', '', 0, true, true, true, '', '2026-02-25 14:34:40', '1', '2026-02-25 15:31:09', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213633, '分配比例查询', 'dm:fpbl-copy:query', 3, 1, 213632, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:37:11', '', '2026-02-25 15:37:11', false);
+VALUES (213633, '分配比例查询', 'lghjft:sjwh-dmwh-fpbl:query', 3, 1, 213632, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:37:11', '', '2026-02-25 15:37:11', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213634, '分配比例创建', 'dm:fpbl-copy:create', 3, 2, 213632, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:37:11', '', '2026-02-25 15:37:11', false);
+VALUES (213634, '分配比例创建', 'lghjft:sjwh-dmwh-fpbl:create', 3, 2, 213632, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:37:11', '', '2026-02-25 15:37:11', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213635, '分配比例更新', 'dm:fpbl-copy:update', 3, 3, 213632, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:37:11', '', '2026-02-25 15:37:11', false);
+VALUES (213635, '分配比例更新', 'lghjft:sjwh-dmwh-fpbl:update', 3, 3, 213632, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:37:11', '', '2026-02-25 15:37:11', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213636, '分配比例删除', 'dm:fpbl-copy:delete', 3, 4, 213632, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:37:11', '', '2026-02-25 15:37:11', false);
+VALUES (213636, '分配比例删除', 'lghjft:sjwh-dmwh-fpbl:delete', 3, 4, 213632, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:37:11', '', '2026-02-25 15:37:11', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213637, '分配比例导出', 'dm:fpbl-copy:export', 3, 5, 213632, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:37:11', '', '2026-02-25 15:37:11', false);
+VALUES (213637, '分配比例导出', 'lghjft:sjwh-dmwh-fpbl:export', 3, 5, 213632, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:37:11', '', '2026-02-25 15:37:11', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213639, '收款国库查询', 'dm:skgk:query', 3, 1, 213638, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:41:35', '', '2026-02-25 15:41:35', false);
+VALUES (213639, '收款国库查询', 'lghjft:sjwh-dmwh-skgk:query', 3, 1, 213638, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:41:35', '', '2026-02-25 15:41:35', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213640, '收款国库创建', 'dm:skgk:create', 3, 2, 213638, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:41:35', '', '2026-02-25 15:41:35', false);
+VALUES (213640, '收款国库创建', 'lghjft:sjwh-dmwh-skgk:create', 3, 2, 213638, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:41:35', '', '2026-02-25 15:41:35', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213641, '收款国库更新', 'dm:skgk:update', 3, 3, 213638, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:41:35', '', '2026-02-25 15:41:35', false);
+VALUES (213641, '收款国库更新', 'lghjft:sjwh-dmwh-skgk:update', 3, 3, 213638, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:41:35', '', '2026-02-25 15:41:35', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213642, '收款国库删除', 'dm:skgk:delete', 3, 4, 213638, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:41:35', '', '2026-02-25 15:41:35', false);
+VALUES (213642, '收款国库删除', 'lghjft:sjwh-dmwh-skgk:delete', 3, 4, 213638, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:41:35', '', '2026-02-25 15:41:35', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213643, '收款国库导出', 'dm:skgk:export', 3, 5, 213638, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:41:35', '', '2026-02-25 15:41:35', false);
+VALUES (213643, '收款国库导出', 'lghjft:sjwh-dmwh-skgk:export', 3, 5, 213638, '', '', '', null, 0, true, true, true, '', '2026-02-25 15:41:35', '', '2026-02-25 15:41:35', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
 VALUES (213644, '汇拨征收', '', 1, 2, 100000, 'hbzz', 'ep:coin', null, null, 0, true, true, true, '1', '2026-03-06 09:00:00', '1', '2026-03-06 09:00:00', false);
@@ -1126,19 +1126,38 @@ VALUES (213652, '应代收单位', '', 2, 2, 205047, 'jhdwyds', 'ep:office-build
         '1', '2026-03-06 09:00:00', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213653, '应代收单位查询', 'lghjft:jhdwyds:query', 3, 1, 213652, '', '', '', null, 0, true, true, true, '1', '2026-03-06 09:00:00', '1', '2026-03-06 09:00:00', false);
+VALUES (213653, '应代收单位查询', 'lghjft:sjwh-jhdwyds:query', 3, 1, 213652, '', '', '', null, 0, true, true, true, '1', '2026-03-06 09:00:00', '1', '2026-03-06 09:00:00', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213654, '应代收单位创建', 'lghjft:jhdwyds:create', 3, 2, 213652, '', '', '', null, 0, true, true, true, '1', '2026-03-06 09:00:00', '1', '2026-03-06 09:00:00', false);
+VALUES (213654, '应代收单位创建', 'lghjft:sjwh-jhdwyds:create', 3, 2, 213652, '', '', '', null, 0, true, true, true, '1', '2026-03-06 09:00:00', '1', '2026-03-06 09:00:00', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213655, '应代收单位更新', 'lghjft:jhdwyds:update', 3, 3, 213652, '', '', '', null, 0, true, true, true, '1', '2026-03-06 09:00:00', '1', '2026-03-06 09:00:00', false);
+VALUES (213655, '应代收单位更新', 'lghjft:sjwh-jhdwyds:update', 3, 3, 213652, '', '', '', null, 0, true, true, true, '1', '2026-03-06 09:00:00', '1', '2026-03-06 09:00:00', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213656, '应代收单位删除', 'lghjft:jhdwyds:delete', 3, 4, 213652, '', '', '', null, 0, true, true, true, '1', '2026-03-06 09:00:00', '1', '2026-03-06 09:00:00', false);
+VALUES (213656, '应代收单位删除', 'lghjft:sjwh-jhdwyds:delete', 3, 4, 213652, '', '', '', null, 0, true, true, true, '1', '2026-03-06 09:00:00', '1', '2026-03-06 09:00:00', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
-VALUES (213657, '应代收单位导出', 'lghjft:jhdwyds:export', 3, 5, 213652, '', '', '', null, 0, true, true, true, '1', '2026-03-06 09:00:00', '1', '2026-03-06 09:00:00', false);
+VALUES (213657, '应代收单位导出', 'lghjft:sjwh-jhdwyds:export', 3, 5, 213652, '', '', '', null, 0, true, true, true, '1', '2026-03-06 09:00:00', '1', '2026-03-06 09:00:00', false);
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214694, '户籍管理', '', 2, 1, 205047, 'hjgl', 'ep:avatar', '/lghjft/sjwh/hjgl/index', 'LghjftSjwhHjgl', 0, true, true, true, '1', '2026-03-20 09:00:00', '1',
+        '2026-03-20 09:00:00', false);
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214950, '查询', 'lghjft:hjgl:query', 3, 1, 214694, '', '', '', null, 0, true, true, true, '1', '2026-03-20 09:00:00', '1', '2026-03-20 09:00:00', false);
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214951, '新增', 'lghjft:hjgl:create', 3, 2, 214694, '', '', '', null, 0, true, true, true, '1', '2026-03-20 09:00:00', '1', '2026-03-20 09:00:00', false);
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214952, '修改', 'lghjft:hjgl:update', 3, 3, 214694, '', '', '', null, 0, true, true, true, '1', '2026-03-20 09:00:00', '1', '2026-03-20 09:00:00', false);
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214953, '删除', 'lghjft:hjgl:delete', 3, 4, 214694, '', '', '', null, 0, true, true, true, '1', '2026-03-20 09:00:00', '1', '2026-03-20 09:00:00', false);
+INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
+                        update_time, deleted)
+VALUES (214954, '导出', 'lghjft:hjgl:export', 3, 5, 214694, '', '', '', null, 0, true, true, true, '1', '2026-03-20 09:00:00', '1', '2026-03-20 09:00:00', false);
 INSERT INTO system_menu(id, name, permission, type, sort, parent_id, path, icon, component, component_name, status, visible, keep_alive, always_show, creator, create_time, updater,
                         update_time, deleted)
 VALUES (213468, '流程事项', '', 1, 1, 0, '/workflow', 'ep:baseball', '', '', 0, true, true, true, '1', '2026-01-14 09:43:34', '1', '2026-01-30 12:47:56', false);

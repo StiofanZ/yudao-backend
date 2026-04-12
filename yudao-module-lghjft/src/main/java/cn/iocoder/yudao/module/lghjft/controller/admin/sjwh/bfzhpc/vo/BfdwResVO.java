@@ -1,4 +1,4 @@
-package cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.hkxxbfzhpc.vo;
+package cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.bfzhpc.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

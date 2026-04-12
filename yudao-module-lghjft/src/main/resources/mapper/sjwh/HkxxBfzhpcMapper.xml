@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.hbzz.hkxxbfzhpc.HkxxBfzhpcMapper">
+<mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.sjwh.bfzhpc.HkxxBfzhpcMapper">
 
     <!-- ========== 结果映射 ========== -->
 
     <!-- 列表用平铺结果映射 -->
-    <resultMap type="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.hkxxbfzhpc.vo.HkxxBfzhpcResVO"
+    <resultMap type="cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.bfzhpc.vo.HkxxBfzhpcResVO"
                id="BfzhpcFlatResult">
         <result property="djxh" column="djxh"/>
         <result property="spuuid" column="spuuid"/>
@@ -34,7 +34,7 @@
     </resultMap>
 
     <!-- 详情用级联结果映射（v1 BfzhpcGhHkxxBfzhpcResult） -->
-    <resultMap type="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.hkxxbfzhpc.vo.HkxxBfzhpcResVO"
+    <resultMap type="cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.bfzhpc.vo.HkxxBfzhpcResVO"
                id="BfzhpcCascadeResult">
         <result property="djxh" column="djxh"/>
         <result property="spuuid" column="spuuid"/>
@@ -51,7 +51,7 @@
         <result property="skssqq" column="skssqq"/>
         <result property="skssqz" column="skssqz"/>
         <collection property="ghHkxxBfzhpcList" notNullColumn="zt" javaType="java.util.List"
-                    ofType="cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.hkxxbfzhpc.vo.HkxxBfzhpcSaveReqVO$GhHkxxBfzhpcItem">
+                    ofType="cn.iocoder.yudao.module.lghjft.controller.admin.sjwh.bfzhpc.vo.HkxxBfzhpcSaveReqVO$GhHkxxBfzhpcItem">
             <result property="zhpcid" column="zhpcid"/>
             <result property="spuuid" column="sub_spuuid"/>
             <result property="djxh" column="sub_djxh"/>
