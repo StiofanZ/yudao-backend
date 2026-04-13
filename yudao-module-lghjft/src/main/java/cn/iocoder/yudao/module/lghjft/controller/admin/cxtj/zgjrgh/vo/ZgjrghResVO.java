@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
 import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
 
@@ -109,7 +108,7 @@ public class ZgjrghResVO {
 
     @Schema(description = "申报日期")
     @ExcelProperty("申报日期")
-    private LocalDateTime nssbrq;
+    private String nssbrq;
 
     @Schema(description = "票证序号")
     @ExcelProperty("票证序号")
@@ -121,11 +120,11 @@ public class ZgjrghResVO {
 
     @Schema(description = "所属期起")
     @ExcelProperty("所属期起")
-    private LocalDateTime skssqq;
+    private String skssqq;
 
     @Schema(description = "所属期止")
     @ExcelProperty("所属期止")
-    private LocalDateTime skssqz;
+    private String skssqz;
 
     @Schema(description = "征收税务局代码")
     @ExcelProperty("征收税务局代码")
@@ -226,7 +225,7 @@ public class ZgjrghResVO {
 
     @Schema(description = "入库日期")
     @ExcelProperty("入库日期")
-    private LocalDateTime rkrq;
+    private String rkrq;
 
     @Schema(description = "结算标记")
     @ExcelProperty(value = "结算标记", converter = DictConvert.class)
@@ -235,7 +234,7 @@ public class ZgjrghResVO {
 
     @Schema(description = "结算日期")
     @ExcelProperty("结算日期")
-    private LocalDateTime jsrq;
+    private String jsrq;
 
     @Schema(description = "结算操作员")
     @ExcelProperty("结算操作员")
@@ -452,7 +451,7 @@ public class ZgjrghResVO {
 
     @Schema(description = "筹备金退回日期")
     @ExcelProperty("筹备金退回日期")
-    private LocalDateTime cbjthrq;
+    private String cbjthrq;
 
     @Schema(description = "筹备金退回操作员")
     @ExcelProperty("筹备金退回操作员")
@@ -500,7 +499,7 @@ public class ZgjrghResVO {
 
     @Schema(description = "创建时间")
     @ExcelProperty("创建时间")
-    private LocalDateTime createTime;
+    private String createTime;
 
     @Schema(description = "修改人")
     @ExcelProperty("修改人")
@@ -508,5 +507,5 @@ public class ZgjrghResVO {
 
     @Schema(description = "修改时间")
     @ExcelProperty("修改时间")
-    private LocalDateTime updateTime;
+    private String updateTime;
 }

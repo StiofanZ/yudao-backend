@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 /**
  * 金融工会信息核对 DO — 映射 v1 表 zgjrgh，130+ 字段
@@ -67,15 +66,15 @@ public class ZgjrghDO {
     /** 申报类别代码 */
     private String sblbDm;
     /** 申报日期 */
-    private LocalDateTime nssbrq;
+    private String nssbrq;
     /** 票证序号 */
     private String pzxh;
     /** 票证明细号 */
     private Long pzmxxh;
     /** 所属期起 */
-    private LocalDateTime skssqq;
+    private String skssqq;
     /** 所属期止 */
-    private LocalDateTime skssqz;
+    private String skssqz;
     /** 征收税务局代码 */
     private String zsswjgDm;
     /** 税款所属税务机关 */
@@ -125,11 +124,11 @@ public class ZgjrghDO {
     /** 缴费银行 */
     private String jfyh;
     /** 入库日期 */
-    private LocalDateTime rkrq;
+    private String rkrq;
     /** 结算标记 */
     private String jsbj;
     /** 结算日期 */
-    private LocalDateTime jsrq;
+    private String jsrq;
     /** 结算操作员 */
     private String jsczy;
     /** 基层工会账号 */
@@ -237,7 +236,7 @@ public class ZgjrghDO {
     /** 筹备金退回标记 */
     private String cbjthbj;
     /** 筹备金退回日期 */
-    private LocalDateTime cbjthrq;
+    private String cbjthrq;
     /** 筹备金退回操作员 */
     private String cbjthczy;
     /** 校验码 */
@@ -261,9 +260,9 @@ public class ZgjrghDO {
     /** 创建人 (v1 审计字段) */
     private String createBy;
     /** 创建时间 (v1 审计字段) */
-    private LocalDateTime createTime;
+    private String createTime;
     /** 修改人 (v1 审计字段) */
     private String updateBy;
     /** 修改时间 (v1 审计字段) */
-    private LocalDateTime updateTime;
+    private String updateTime;
 }

@@ -3,12 +3,8 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.cxtj.zgjrgh.vo;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
-import static cn.iocoder.yudao.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND;
 
 @Schema(description = "管理后台 - 金融工会信息核对分页 Request VO")
 @Data
@@ -48,12 +44,10 @@ public class ZgjrghPageReqVO extends PageParam {
     private BigDecimal ybtse;
 
     @Schema(description = "税款所属期起")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private LocalDateTime skssqq;
+    private String skssqq;
 
     @Schema(description = "税款所属期止")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    private LocalDateTime skssqz;
+    private String skssqz;
 
     @Schema(description = "入库日期-开始")
     private String beginRkrq;

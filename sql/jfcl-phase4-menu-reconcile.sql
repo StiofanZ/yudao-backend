@@ -1,0 +1,18 @@
+-- 经费处理 第四阶段（银行拨付容器）菜单/权限收敛
+START TRANSACTION;
+UPDATE system_menu SET permission = 'lghjft:jfcl-yhbfmx:query', update_time = NOW() WHERE id = 216068 AND deleted = 0;
+UPDATE system_menu SET permission = 'lghjft:jfcl-yhbfmx:update', update_time = NOW() WHERE id = 216069 AND deleted = 0;
+UPDATE system_menu SET permission = 'lghjft:jfcl-yhbfmx:export', update_time = NOW() WHERE id = 216070 AND deleted = 0;
+UPDATE system_menu SET permission = 'lghjft:jfcl-yhbfmx:js', update_time = NOW() WHERE id = 216081 AND deleted = 0;
+UPDATE system_menu SET permission = 'lghjft:jfcl-yhbfmx:bjs', update_time = NOW() WHERE id = 216082 AND deleted = 0;
+UPDATE system_menu SET permission = 'lghjft:jfcl-yhbfmx:sbthcb', update_time = NOW() WHERE id = 216083 AND deleted = 0;
+UPDATE system_menu SET permission = 'lghjft:jfcl-yhbfhz:query', update_time = NOW() WHERE id = 216071 AND deleted = 0;
+UPDATE system_menu SET permission = 'lghjft:jfcl-yhbfhz:export', update_time = NOW() WHERE id = 216072 AND deleted = 0;
+UPDATE system_menu SET permission = 'lghjft:jfcl-yhbfjgcx:query', update_time = NOW() WHERE id = 216073 AND deleted = 0;
+UPDATE system_menu SET permission = 'lghjft:jfcl-yhbfjgcx:export', update_time = NOW() WHERE id = 216074 AND deleted = 0;
+UPDATE system_menu SET permission = 'lghjft:jfcl-yhbfhzjkjl:query', update_time = NOW() WHERE id = 216075 AND deleted = 0;
+UPDATE system_menu SET permission = 'lghjft:jfcl-yhbfhzjkjl:export', update_time = NOW() WHERE id = 216076 AND deleted = 0;
+UPDATE system_menu SET permission = 'lghjft:jfcl-yhbfhz:update', update_time = NOW() WHERE id = 216077 AND deleted = 0;
+UPDATE system_menu SET permission = 'lghjft:jfcl-yhbfhz:yhbfhztj', update_time = NOW() WHERE id = 216078 AND deleted = 0;
+UPDATE system_menu SET permission = 'lghjft:jfcl-yhbfhz:zfmxcx', update_time = NOW() WHERE id = 216079 AND deleted = 0;
+COMMIT;

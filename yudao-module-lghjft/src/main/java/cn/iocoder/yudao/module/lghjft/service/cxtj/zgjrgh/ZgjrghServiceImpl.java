@@ -28,6 +28,24 @@ public class ZgjrghServiceImpl implements ZgjrghService {
     public PageResult<ZgjrghDO> getZgjrghPage(ZgjrghPageReqVO pageReqVO) {
         // 应用部门过滤逻辑（还原 V1 行为：root = "100000"）
         pageReqVO.setDeptId(deptFilterHelper.filterDeptId(pageReqVO.getDeptId()));
+        normalizeLegacyDateFields(pageReqVO);
         return zgjrghMapper.selectPage(pageReqVO);
+    }
+
+    private void normalizeLegacyDateFields(ZgjrghPageReqVO pageReqVO) {
+        pageReqVO.setSkssqq(normalizeLegacyDateField(pageReqVO.getSkssqq()));
+        pageReqVO.setSkssqz(normalizeLegacyDateField(pageReqVO.getSkssqz()));
+        pageReqVO.setBeginRkrq(normalizeLegacyDateField(pageReqVO.getBeginRkrq()));
+        pageReqVO.setEndRkrq(normalizeLegacyDateField(pageReqVO.getEndRkrq()));
+        pageReqVO.setBeginJsrq(normalizeLegacyDateField(pageReqVO.getBeginJsrq()));
+        pageReqVO.setEndJsrq(normalizeLegacyDateField(pageReqVO.getEndJsrq()));
+    }
+
+    private String normalizeLegacyDateField(String value) {
+        if (value == null || value.isBlank()) {
+            return value;
+        }
+        String digitsOnly = value.replaceAll("\\D", "");
+        return digitsOnly.isEmpty() ? value : digitsOnly;
     }
 }

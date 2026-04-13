@@ -9,9 +9,7 @@ import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.dqdssj.vo.DqdssjPageReqVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.dqdssj.vo.DqdssjResVO;
 import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.dqdssj.vo.DqdssjSaveReqVO;
-import cn.iocoder.yudao.module.lghjft.controller.admin.jfcl.dqdssj.vo.DqzldssjPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.dqdssj.JfclDqdssjDO;
-import cn.iocoder.yudao.module.lghjft.dal.dataobject.jfcl.dqdssj.JfzcDqdssjVo;
 import cn.iocoder.yudao.module.lghjft.service.jfcl.dqdssj.DqdssjService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,7 +27,7 @@ import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.EXPOR
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
 /**
- * V1: JfclDqdssjController - 5 endpoints
+ * V1: JfclDqdssjController - 读取代收数据主链
  */
 @Tag(name = "管理后台 - 经费处理-读取代收数据")
 @RestController
@@ -52,17 +50,6 @@ public class DqdssjController {
     }
 
     /**
-     * V1: GET /listzl — paginated, queries gh_jf WHERE jsbj='E' (incremental data with 60+ filters)
-     */
-    @GetMapping("/pagezl")
-    @Operation(summary = "查询读取增量代收数据列表")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-dqdssj:query')")
-    public CommonResult<PageResult<JfzcDqdssjVo>> getDqzldssjPage(@Valid DqzldssjPageReqVO pageReqVO) {
-        PageResult<JfzcDqdssjVo> pageResult = dqdssjService.getDqzldssjPage(pageReqVO);
-        return success(pageResult);
-    }
-
-    /**
      * V1: POST / — import dqdssj (async thread with complex proportion distribution)
      */
     @PostMapping("/create")
@@ -70,17 +57,6 @@ public class DqdssjController {
     @PreAuthorize("@ss.hasPermission('lghjft:jfcl-dqdssj:create')")
     public CommonResult<String> dqdssjrk(@RequestBody DqdssjSaveReqVO reqVO) {
         String msg = dqdssjService.updateDqdssjrk(reqVO);
-        return success(msg);
-    }
-
-    /**
-     * V1: POST /zl — import dqzldssj (async thread, same logic)
-     */
-    @PostMapping("/createzl")
-    @Operation(summary = "代收数据入库增量")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-dqdssj:create')")
-    public CommonResult<String> dqdssjrkzl(@RequestBody DqdssjSaveReqVO reqVO) {
-        String msg = dqdssjService.updateDqdssjrkzl(reqVO);
         return success(msg);
     }
 
