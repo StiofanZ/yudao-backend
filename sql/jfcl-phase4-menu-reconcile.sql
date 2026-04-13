@@ -1,5 +1,9 @@
 -- 经费处理 第四阶段（银行拨付容器）菜单/权限收敛
 START TRANSACTION;
+UPDATE system_menu SET component = 'lghjft/jfcl/yhbfmx/index', component_name = 'LghjftJfclYhbfmx', update_time = NOW() WHERE id = 216031 AND deleted = 0;
+UPDATE system_menu SET component = 'lghjft/jfcl/yhbfhz/index', component_name = 'LghjftJfclYhbfhz', update_time = NOW() WHERE id = 216032 AND deleted = 0;
+UPDATE system_menu SET component = 'lghjft/jfcl/yhbfjgcx/index', component_name = 'LghjftJfclYhbfjgcx', update_time = NOW() WHERE id = 216033 AND deleted = 0;
+UPDATE system_menu SET component = 'lghjft/jfcl/yhbfhzjkjl/index', component_name = 'LghjftJfclYhbfhzjkjl', update_time = NOW() WHERE id = 216034 AND deleted = 0;
 UPDATE system_menu SET permission = 'lghjft:jfcl-yhbfmx:query', update_time = NOW() WHERE id = 216068 AND deleted = 0;
 UPDATE system_menu SET permission = 'lghjft:jfcl-yhbfmx:update', update_time = NOW() WHERE id = 216069 AND deleted = 0;
 UPDATE system_menu SET permission = 'lghjft:jfcl-yhbfmx:export', update_time = NOW() WHERE id = 216070 AND deleted = 0;
