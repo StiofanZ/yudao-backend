@@ -127,8 +127,8 @@
             <if test="hjfl9Dm != null and hjfl9Dm != ''">and HJFL9_DM = #{hjfl9Dm}</if>
             <if test="sdghjgDm != null and sdghjgDm != ''">and SDGHJG_DM = #{sdghjgDm}</if>
             <if test="clghbj != null and clghbj != ''">and CLGHBJ = #{clghbj}</if>
-            <if test="beginClghrq != null and endClghrq != null">
-                and CLGHRQ between #{beginClghrq} and #{endClghrq}
+            <if test="clghrqq != null and clghrqz != null">
+                and CLGHRQ between #{clghrqq} and #{clghrqz}
             </if>
             <if test="jcghdm != null and jcghdm != ''">and JCGHDM = #{jcghdm}</if>
             <if test="jcghmc != null and jcghmc != ''">and JCGHMC like concat('%', #{jcghmc}, '%')</if>
@@ -195,8 +195,8 @@
             <if test="hjfl9Dm != null and hjfl9Dm != ''">and HJFL9_DM = #{hjfl9Dm}</if>
             <if test="sdghjgDm != null and sdghjgDm != ''">and SDGHJG_DM = #{sdghjgDm}</if>
             <if test="clghbj != null and clghbj != ''">and CLGHBJ = #{clghbj}</if>
-            <if test="beginClghrq != null and endClghrq != null">
-                and CLGHRQ between #{beginClghrq} and #{endClghrq}
+            <if test="clghrqq != null and clghrqz != null">
+                and CLGHRQ between #{clghrqq} and #{clghrqz}
             </if>
             <if test="jcghdm != null and jcghdm != ''">and JCGHDM = #{jcghdm}</if>
             <if test="jcghmc != null and jcghmc != ''">and JCGHMC like concat('%', #{jcghmc}, '%')</if>

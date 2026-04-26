@@ -4,75 +4,29 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.yudao.module.lghjft.controller.admin.hbzz.znjtz.vo.ZnjtzPageReqVO;
 import cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.znjtz.ZnjtzDO;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper
 public interface ZnjtzMapper extends BaseMapperX<ZnjtzDO> {
 
     default PageResult<ZnjtzDO> selectPage(ZnjtzPageReqVO reqVO) {
-        QueryWrapper<ZnjtzDO> wrapper = new QueryWrapper<>();
-
-        // v1 硬编码条件: jsbj != 'Y' AND zspm_dm='399001910' AND rkrq BETWEEN '2020-02-01' AND '2020-12-31'
-        wrapper.ne("jsbj", "Y");
-        wrapper.eq("zspm_dm", "399001910");
-        wrapper.between("rkrq", "2020-02-01", "2020-12-31");
-
-        // v1 搜索条件
-        if (reqVO.getDeptId() != null && !reqVO.getDeptId().isEmpty()) {
-            wrapper.eq("dept_id", reqVO.getDeptId());
+        List<ZnjtzDO> records = selectZnjtzList(reqVO);
+        if (reqVO.getPageSize() == null || reqVO.getPageSize() < 0) {
+            return new PageResult<>(records, (long) records.size());
         }
-        if (reqVO.getShxydm() != null && !reqVO.getShxydm().isEmpty()) {
-            wrapper.eq("shxydm", reqVO.getShxydm());
+        int fromIndex = Math.max((reqVO.getPageNo() - 1) * reqVO.getPageSize(), 0);
+        if (fromIndex >= records.size()) {
+            return new PageResult<>(new ArrayList<>(), (long) records.size());
         }
-        if (reqVO.getNsrmc() != null && !reqVO.getNsrmc().isEmpty()) {
-            wrapper.like("nsrmc", reqVO.getNsrmc());
-        }
-        if (reqVO.getZgswjDm() != null && !reqVO.getZgswjDm().isEmpty()) {
-            wrapper.eq("zgswj_dm", reqVO.getZgswjDm());
-        }
-        if (reqVO.getZspmDm() != null && !reqVO.getZspmDm().isEmpty()) {
-            wrapper.eq("zspm_dm", reqVO.getZspmDm());
-        }
-        if (reqVO.getSkssqq() != null && !reqVO.getSkssqq().isEmpty()) {
-            wrapper.ge("skssqq", reqVO.getSkssqq());
-        }
-        if (reqVO.getSkssqz() != null && !reqVO.getSkssqz().isEmpty()) {
-            wrapper.le("skssqz", reqVO.getSkssqz());
-        }
-        if (reqVO.getYbtse() != null && !reqVO.getYbtse().isEmpty()) {
-            wrapper.eq("ybtse", reqVO.getYbtse());
-        }
-        if (reqVO.getHkpch() != null && !reqVO.getHkpch().isEmpty()) {
-            wrapper.eq("hkpch", reqVO.getHkpch());
-        }
-        if (reqVO.getHkpzh() != null && !reqVO.getHkpzh().isEmpty()) {
-            wrapper.eq("hkpzh", reqVO.getHkpzh());
-        }
-        if (reqVO.getFbbj() != null && !reqVO.getFbbj().isEmpty()) {
-            wrapper.eq("fbbj", reqVO.getFbbj());
-        }
-        if (reqVO.getBeginRkrq() != null && !reqVO.getBeginRkrq().isEmpty()
-                && reqVO.getEndRkrq() != null && !reqVO.getEndRkrq().isEmpty()) {
-            wrapper.between("rkrq", reqVO.getBeginRkrq(), reqVO.getEndRkrq());
-        }
-        if (reqVO.getBeginJsrq() != null && !reqVO.getBeginJsrq().isEmpty()
-                && reqVO.getEndJsrq() != null && !reqVO.getEndJsrq().isEmpty()) {
-            wrapper.between("jsrq", reqVO.getBeginJsrq(), reqVO.getEndJsrq());
-        }
-        if (reqVO.getBeginFbrq() != null && !reqVO.getBeginFbrq().isEmpty()
-                && reqVO.getEndFbrq() != null && !reqVO.getEndFbrq().isEmpty()) {
-            wrapper.between("fbrq", reqVO.getBeginFbrq(), reqVO.getEndFbrq());
-        }
-
-        // v1 order by rkrq desc
-        wrapper.orderByDesc("rkrq");
-
-        return selectPage(reqVO, wrapper);
+        int toIndex = Math.min(fromIndex + reqVO.getPageSize(), records.size());
+        return new PageResult<>(records.subList(fromIndex, toIndex), (long) records.size());
     }
+
+    List<ZnjtzDO> selectZnjtzList(@Param("req") ZnjtzPageReqVO reqVO);
 
     /**
      * v1 cascade delete from cxtj_cbjqrfb

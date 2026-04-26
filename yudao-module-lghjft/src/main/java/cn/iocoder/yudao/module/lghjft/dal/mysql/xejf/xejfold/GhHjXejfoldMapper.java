@@ -16,6 +16,15 @@ public interface GhHjXejfoldMapper extends BaseMapperX<GhHjXejfoldDO> {
                 .eqIfPresent(GhHjXejfoldDO::getDjxh, reqVO.getDjxh())
                 .eqIfPresent(GhHjXejfoldDO::getShxydm, reqVO.getShxydm())
                 .likeIfPresent(GhHjXejfoldDO::getNsrmc, reqVO.getNsrmc())
+                .eqIfPresent(GhHjXejfoldDO::getLxr, reqVO.getLxr())
+                .eqIfPresent(GhHjXejfoldDO::getLxdh, reqVO.getLxdh())
+                .eqIfPresent(GhHjXejfoldDO::getGhlbDm, reqVO.getGhlbDm())
+                .eqIfPresent(GhHjXejfoldDO::getXtlbDm, reqVO.getXtlbDm())
+                .eqIfPresent(GhHjXejfoldDO::getHjfl4Dm, reqVO.getHjfl4Dm())
+                .eqIfPresent(GhHjXejfoldDO::getHjfl5Dm, reqVO.getHjfl5Dm())
+                .eqIfPresent(GhHjXejfoldDO::getHjfl6Dm, reqVO.getHjfl6Dm())
+                .eqIfPresent(GhHjXejfoldDO::getJcghzh, reqVO.getJcghzh())
+                .eqIfPresent(GhHjXejfoldDO::getJcghhh, reqVO.getJcghhh())
                 .orderByDesc(GhHjXejfoldDO::getDeptId));
     }
 }

@@ -276,6 +276,9 @@
             <if test="query.deptId != null and query.deptId != ''"> and dept_id1 = #{query.deptId}</if>
             <if test="query.zgswjDm != null and query.zgswjDm != ''"> and zgswj_dm = #{query.zgswjDm}</if>
             <if test="query.zspmDm != null and query.zspmDm != ''"> and zspm_dm = #{query.zspmDm}</if>
+            <if test="query.skssqq != null and query.skssqq != ''">and skssqq &gt;= #{query.skssqq}</if>
+            <if test="query.skssqz != null and query.skssqz != ''">and skssqz &lt;= #{query.skssqz}</if>
+            <if test="query.rkrqq != null and query.rkrqq != '' and query.rkrqz != null and query.rkrqz != ''">and rkrq between #{query.rkrqq} and #{query.rkrqz}</if>
             <if test="query.jsbj != null and query.jsbj != ''"> and jsbj = #{query.jsbj}</if>
         </where>
         order by ghjf_id desc
@@ -291,6 +294,9 @@
             <if test="query.deptId != null and query.deptId != ''"> and dept_id1 = #{query.deptId}</if>
             <if test="query.zgswjDm != null and query.zgswjDm != ''"> and zgswj_dm = #{query.zgswjDm}</if>
             <if test="query.zspmDm != null and query.zspmDm != ''"> and zspm_dm = #{query.zspmDm}</if>
+            <if test="query.skssqq != null and query.skssqq != ''">and skssqq &gt;= #{query.skssqq}</if>
+            <if test="query.skssqz != null and query.skssqz != ''">and skssqz &lt;= #{query.skssqz}</if>
+            <if test="query.rkrqq != null and query.rkrqq != '' and query.rkrqz != null and query.rkrqz != ''">and rkrq between #{query.rkrqq} and #{query.rkrqz}</if>
             <if test="query.jsbj != null and query.jsbj != ''"> and jsbj = #{query.jsbj}</if>
         </where>
         order by ghjf_id desc

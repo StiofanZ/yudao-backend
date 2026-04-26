@@ -55,6 +55,12 @@ public interface GhHkxxxejfMapper extends BaseMapperX<GhHkxxxejfDO> {
         if (reqVO.getDeptId() != null && !reqVO.getDeptId().isEmpty()) {
             wrapper.eq("dept_id", reqVO.getDeptId());
         }
+        if (reqVO.getWqyfje() != null) {
+            wrapper.eq("wqyfje", reqVO.getWqyfje());
+        }
+        if (reqVO.getJe() != null) {
+            wrapper.eq("je", reqVO.getJe());
+        }
         if (reqVO.getThbj() != null && !reqVO.getThbj().isEmpty()) {
             wrapper.eq("thbj", reqVO.getThbj());
         }

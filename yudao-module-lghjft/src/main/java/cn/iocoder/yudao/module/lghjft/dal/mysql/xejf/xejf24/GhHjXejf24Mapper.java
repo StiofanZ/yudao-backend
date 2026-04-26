@@ -16,8 +16,15 @@ public interface GhHjXejf24Mapper extends BaseMapperX<GhHjXejf24DO> {
                 .eqIfPresent(GhHjXejf24DO::getDjxh, reqVO.getDjxh())
                 .eqIfPresent(GhHjXejf24DO::getShxydm, reqVO.getShxydm())
                 .likeIfPresent(GhHjXejf24DO::getNsrmc, reqVO.getNsrmc())
+                .eqIfPresent(GhHjXejf24DO::getLxr, reqVO.getLxr())
+                .eqIfPresent(GhHjXejf24DO::getLxdh, reqVO.getLxdh())
+                .eqIfPresent(GhHjXejf24DO::getGhlbDm, reqVO.getGhlbDm())
+                .eqIfPresent(GhHjXejf24DO::getXtlbDm, reqVO.getXtlbDm())
+                .eqIfPresent(GhHjXejf24DO::getHjfl4Dm, reqVO.getHjfl4Dm())
                 .eqIfPresent(GhHjXejf24DO::getHjfl5Dm, reqVO.getHjfl5Dm())
                 .eqIfPresent(GhHjXejf24DO::getHjfl6Dm, reqVO.getHjfl6Dm())
+                .eqIfPresent(GhHjXejf24DO::getJcghzh, reqVO.getJcghzh())
+                .eqIfPresent(GhHjXejf24DO::getJcghhh, reqVO.getJcghhh())
                 .orderByDesc(GhHjXejf24DO::getDeptId));
     }
 }

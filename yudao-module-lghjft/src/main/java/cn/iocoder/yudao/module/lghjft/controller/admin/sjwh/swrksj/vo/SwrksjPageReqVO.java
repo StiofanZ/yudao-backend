@@ -32,4 +32,16 @@ public class SwrksjPageReqVO extends PageParam {
 
     @Schema(description = "zspmDm")
     private String zspmDm;
+
+    @Schema(description = "所属期起")
+    private String skssqq;
+
+    @Schema(description = "所属期止")
+    private String skssqz;
+
+    @Schema(description = "入库日期起")
+    private String rkrqq;
+
+    @Schema(description = "入库日期止")
+    private String rkrqz;
 }

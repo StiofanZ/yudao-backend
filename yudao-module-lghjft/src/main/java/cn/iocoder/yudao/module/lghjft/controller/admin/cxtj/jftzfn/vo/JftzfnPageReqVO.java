@@ -55,10 +55,10 @@ public class JftzfnPageReqVO extends PageParam {
     private String zspmDm;
 
     @Schema(description = "所属期起")
-    private LocalDateTime skssqq;
+    private String skssqq;
 
     @Schema(description = "所属期止")
-    private LocalDateTime skssqz;
+    private String skssqz;
 
     @Schema(description = "应补退税额")
     private BigDecimal ybtse;

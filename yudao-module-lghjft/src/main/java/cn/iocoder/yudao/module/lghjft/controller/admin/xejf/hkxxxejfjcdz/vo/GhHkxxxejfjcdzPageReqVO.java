@@ -4,6 +4,8 @@ import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Schema(description = "管理后台 - 小额缴费基层到账分页 Request VO")
 @Data
 public class GhHkxxxejfjcdzPageReqVO extends PageParam {
@@ -15,8 +17,16 @@ public class GhHkxxxejfjcdzPageReqVO extends PageParam {
     private Long jfqj;
     @Schema(description = "工会机构")
     private String deptId;
+    @Schema(description = "账号")
+    private String zh;
+    @Schema(description = "新账号")
+    private String xzh;
+    @Schema(description = "本期返还金额")
+    private BigDecimal je;
     @Schema(description = "退回标记")
     private String thbj;
+    @Schema(description = "退回日期")
+    private String thrq;
     @Schema(description = "户名")
     private String hm;
     @Schema(description = "新户名")
@@ -27,4 +37,6 @@ public class GhHkxxxejfjcdzPageReqVO extends PageParam {
     private String fy;
     @Schema(description = "修改标记")
     private String xgbj;
+    @Schema(description = "修改时间")
+    private String updateTime;
 }

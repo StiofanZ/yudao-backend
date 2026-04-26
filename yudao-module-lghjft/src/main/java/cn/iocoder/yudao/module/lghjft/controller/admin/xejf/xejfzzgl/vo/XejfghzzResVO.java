@@ -2,6 +2,8 @@ package cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xejfzzgl.vo;
 
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -73,9 +75,11 @@ public class XejfghzzResVO {
     private String jym;
     private String nsrsbh;
     private String fileurl;
-    @ExcelProperty("25小额类型")
+    @ExcelProperty(value = "25小额类型", converter = DictConvert.class)
+    @DictFormat("sys_xejfghzz23_type")
     private String hjfl10Dm;
-    @ExcelProperty("确认后的小额类型")
+    @ExcelProperty(value = "确认后的小额类型", converter = DictConvert.class)
+    @DictFormat("sys_xejfghzz24_type")
     private String hjfl5Dm;
     private String hjfl4Dm;
     private String hjfl6Dm;

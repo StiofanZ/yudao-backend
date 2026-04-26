@@ -2,6 +2,161 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.iocoder.yudao.module.lghjft.dal.mysql.hbzz.znjtz.ZnjtzMapper">
 
+    <sql id="selectZnjtzVo">
+        select a.ghjf_id,
+               a.SPUUID,
+               a.DJXH,
+               a.SHXYDM,
+               a.NSRMC,
+               a.NSRJC,
+               a.dept_id,
+               a.GHJGXZJB,
+               a.CLGHBJ,
+               a.HYGHBZ,
+               a.SDGHJG_DM,
+               a.SDGHJGXZJB,
+               a.ZGSWJ_DM,
+               a.ZGSWSKFJ_DM,
+               a.SSGLY_DM,
+               a.GHLB_DM,
+               a.XTLB_DM,
+               a.ZZJGLX_DM,
+               a.HY_DM,
+               a.DJZCLX_DM,
+               a.DWLSGX_DM,
+               a.SBLB_DM,
+               a.NSSBRQ,
+               a.PZXH,
+               a.PZMXXH,
+               a.SKSSQQ,
+               a.SKSSQZ,
+               a.ZSSWJG_DM,
+               a.SKSSSWJG_DM,
+               a.SKGK_DM,
+               a.DZSPHM,
+               a.PZZL_DM,
+               a.PZZG_DM,
+               a.PZHM,
+               a.KPY_DM,
+               a.KPY_XM,
+               a.ZSPM_DM,
+               a.ZSZM_DM,
+               a.YSKM_DM,
+               a.GZZE,
+               a.SL,
+               a.YNSE,
+               a.JMSE,
+               a.YJSE,
+               a.YBTSE,
+               a.JKFS_DM,
+               a.JFHB,
+               a.JFZH,
+               a.JFHM,
+               a.JFHH,
+               a.JFYH,
+               a.RKRQ,
+               a.JSBJ,
+               a.JSRQ,
+               a.JSCZY,
+               a.JCGHZH,
+               a.JCGHHM,
+               a.JCGHHH,
+               a.JCGHBL,
+               a.JCGHJE,
+               a.CBJZH,
+               a.CBJHM,
+               a.CBJHH,
+               a.CBJBL,
+               a.CBJJE,
+               a.HYGHZH,
+               a.HYGHHM,
+               a.HYGHHH,
+               a.HYGHBL,
+               a.HYGHJE,
+               a.XJGHZH,
+               a.XJGHHM,
+               a.XJGHHH,
+               a.XJGHBL,
+               a.XJGHJE,
+               a.SJGHZH,
+               a.SJGHHM,
+               a.SJGHHH,
+               a.SJGHBL,
+               a.SJGHJE,
+               a.SZGHZH,
+               a.SZGHHM,
+               a.SZGHHH,
+               a.SZGHBL,
+               a.SZGHJE,
+               a.QGGHZH,
+               a.QGGHHM,
+               a.QGGHHH,
+               a.QGGHBL,
+               a.QGGHJE,
+               a.JCJZH,
+               a.JCJHM,
+               a.JCJHH,
+               a.JCJBL,
+               a.JCJJE,
+               a.JCWSH,
+               a.SDSZH,
+               a.SDSHM,
+               a.SDSHH,
+               a.SDSBL,
+               a.SDSJE,
+               a.SWJGZH,
+               a.SWJGHM,
+               a.SWJGHH,
+               a.SWJGBL,
+               a.SWJGJE,
+               a.CBJTHBJ,
+               a.CBJTHRQ,
+               a.CBJTHCZY,
+               a.JYM,
+               a.HKPCH,
+               a.BLUUID,
+               a.SDGHZH,
+               a.SDGHHM,
+               a.SDGHHH,
+               a.SDGHBL,
+               a.SDGHJE,
+               a.CREATE_BY,
+               a.CREATE_TIME,
+               a.UPDATE_BY,
+               a.UPDATE_TIME,
+               b.SFBJE as sfbje,
+               b.FBBJ  as fbbj,
+               b.FBRQ  as fbrq,
+               b.HKPZH as hkpzh,
+               b.BZ    as bz
+        from gh_jf a
+                 left join cxtj_cbjqrfb b on b.ghjf_id = a.ghjf_id
+    </sql>
+
+    <select id="selectZnjtzList" resultType="cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.znjtz.ZnjtzDO">
+        <include refid="selectZnjtzVo"/>
+        <where>
+            a.JSBJ != 'Y'
+            and a.ZSPM_DM = '399001910'
+            and a.RKRQ between '2020-02-01' and '2020-12-31'
+            <if test="req.deptId != null and req.deptId != ''">and a.dept_id = #{req.deptId}</if>
+            <if test="req.shxydm != null and req.shxydm != ''">and a.SHXYDM = #{req.shxydm}</if>
+            <if test="req.nsrmc != null and req.nsrmc != ''">and a.NSRMC like concat('%', #{req.nsrmc}, '%')</if>
+            <if test="req.zgswjDm != null and req.zgswjDm != ''">and a.ZGSWJ_DM = #{req.zgswjDm}</if>
+            <if test="req.zspmDm != null and req.zspmDm != ''">and a.ZSPM_DM = #{req.zspmDm}</if>
+            <if test="req.skssqq != null and req.skssqq != ''">and a.SKSSQQ &gt;= #{req.skssqq}</if>
+            <if test="req.skssqz != null and req.skssqz != ''">and a.SKSSQZ &lt;= #{req.skssqz}</if>
+            <if test="req.ybtse != null and req.ybtse != ''">and a.YBTSE = #{req.ybtse}</if>
+            <if test="req.hkpch != null and req.hkpch != ''">and a.HKPCH = #{req.hkpch}</if>
+            <if test="req.hkpzh != null and req.hkpzh != ''">and b.HKPZH = #{req.hkpzh}</if>
+            <if test="req.fbbj != null and req.fbbj != ''">and b.FBBJ = #{req.fbbj}</if>
+            <if test="req.beginRkrq != null and req.beginRkrq != '' and req.endRkrq != null and req.endRkrq != ''">and a.RKRQ between #{req.beginRkrq} and #{req.endRkrq}</if>
+            <if test="req.beginJsrq != null and req.beginJsrq != '' and req.endJsrq != null and req.endJsrq != ''">and a.JSRQ between #{req.beginJsrq} and #{req.endJsrq}</if>
+            <if test="req.beginFbrq != null and req.beginFbrq != '' and req.endFbrq != null and req.endFbrq != ''">and b.FBRQ between #{req.beginFbrq} and #{req.endFbrq}</if>
+        </where>
+        order by a.RKRQ desc
+    </select>
+
     <!-- v1 cascade delete from cxtj_cbjqrfb -->
     <delete id="deleteCbjqrfbByGhjfIds">
         delete from cxtj_cbjqrfb where ghjf_id in

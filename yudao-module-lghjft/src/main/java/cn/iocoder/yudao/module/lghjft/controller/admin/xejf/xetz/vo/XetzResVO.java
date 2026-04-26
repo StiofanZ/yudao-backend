@@ -1,21 +1,30 @@
 package cn.iocoder.yudao.module.lghjft.controller.admin.xejf.xetz.vo;
 
+import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
+import cn.idev.excel.annotation.ExcelProperty;
+import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
+import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
+import cn.iocoder.yudao.module.lghjft.framework.excel.StringArrayDictConvert;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import cn.idev.excel.annotation.ExcelProperty;
-import cn.iocoder.yudao.framework.excel.core.annotations.DictFormat;
-import cn.iocoder.yudao.framework.excel.core.convert.DictConvert;
 
 @Schema(description = "管理后台 - 小额台账 Response VO")
 @Data
+@ExcelIgnoreUnannotated
 public class XetzResVO {
     @ExcelProperty(value = "小额缴费期间", converter = DictConvert.class)
     @DictFormat("sys_xejfqj")
     private String jfqj;
+    @ExcelProperty(value = "23小额类型", converter = StringArrayDictConvert.class)
+    @DictFormat("sys_xejfghzz23_type")
     private String[] xelx23;
+    @ExcelProperty(value = "24小额类型", converter = StringArrayDictConvert.class)
+    @DictFormat("sys_xejfghzz23_type")
     private String[] xelx24;
+    @ExcelProperty(value = "25小额类型", converter = StringArrayDictConvert.class)
+    @DictFormat("sys_xejfghzz23_type")
     private String[] xelx25;
     @ExcelProperty(value = "小微类型", converter = DictConvert.class)
     @DictFormat("sys_xwlx")

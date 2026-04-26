@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.lghjft.dal.dataobject.hbzz.znjtz;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
@@ -20,6 +21,14 @@ public class ZnjtzDO {
 
     @TableId
     private Long ghjfId;
+    @TableField(exist = false)
+    private BigDecimal sfbje;
+    @TableField(exist = false)
+    private String fbbj;
+    @TableField(exist = false)
+    private LocalDateTime fbrq;
+    @TableField(exist = false)
+    private String hkpzh;
     private String bz;
     private String spuuid;
     private String djxh;

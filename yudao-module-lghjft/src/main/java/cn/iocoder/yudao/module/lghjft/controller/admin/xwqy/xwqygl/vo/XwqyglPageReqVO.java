@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -67,8 +68,10 @@ public class XwqyglPageReqVO {
     private String hjfl9Dm;
     private String sdghjgDm;
     private String clghbj;
-    private Date beginClghrq;
-    private Date endClghrq;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date clghrqq;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date clghrqz;
     private String jcghdm;
     private String jcghmc;
     private String jcghzh;

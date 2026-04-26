@@ -93,8 +93,8 @@
             <if test="lxr != null and lxr != ''">and LXR = #{lxr}</if>
             <if test="lxdh != null and lxdh != ''">and LXDH = #{lxdh}</if>
             <if test="dclghbj != null and dclghbj != ''">and HJFL8_DM = #{dclghbj}</if>
-            <if test="beginClghrq != null and endClghrq != null">
-                and CLGHRQ between #{beginClghrq} and #{endClghrq}
+            <if test="clghrqq != null and clghrqz != null">
+                and CLGHRQ between #{clghrqq} and #{clghrqz}
             </if>
         </where>
         order by DJXH desc
@@ -116,8 +116,8 @@
             <if test="lxr != null and lxr != ''">and LXR = #{lxr}</if>
             <if test="lxdh != null and lxdh != ''">and LXDH = #{lxdh}</if>
             <if test="dclghbj != null and dclghbj != ''">and HJFL8_DM = #{dclghbj}</if>
-            <if test="beginClghrq != null and endClghrq != null">
-                and CLGHRQ between #{beginClghrq} and #{endClghrq}
+            <if test="clghrqq != null and clghrqz != null">
+                and CLGHRQ between #{clghrqq} and #{clghrqz}
             </if>
         </where>
     </select>
