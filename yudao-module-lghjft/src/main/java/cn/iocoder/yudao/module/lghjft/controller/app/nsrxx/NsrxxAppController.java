@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
-@Tag(name = "app - 纳税人信息")
+@Tag(name = "用户 app - 纳税人信息")
 @RestController
 @RequestMapping("/lghjft/nsrxx")
 @Validated
@@ -24,7 +24,7 @@ public class NsrxxAppController {
 
 //查询纳税人单位信息
     @GetMapping("/getByDw")
-    @PreAuthorize("@ss.hasPermission('lghjft:nsrxx:query')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<NsrxxPayFormResVO> getByShxydm(@RequestParam("shxydm") String shxydm) {
         // 2. 调用Service查询并直接返回数据（不封装多余信息）
         NsrxxPayFormResVO nsrxxPayFormResVO =  nsrxxService.getNsrdwxxByShxydm(shxydm);

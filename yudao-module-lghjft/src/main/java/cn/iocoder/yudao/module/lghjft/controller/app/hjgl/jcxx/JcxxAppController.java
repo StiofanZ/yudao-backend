@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
-@Tag(name = "用户 App - 户籍管理-基础信息")
+@Tag(name = "用户 app - 户籍管理-基础信息")
 @RestController
 @RequestMapping("/lghjft/hjgl/jcxx")
 @Validated

@@ -21,7 +21,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 
-@Tag(name = "管理后台 - 工会隶属关系调拨申请")
+@Tag(name = "用户 app - 工会隶属关系调拨申请")
 @RestController
 @RequestMapping("/lghjft/wf-dbsq")
 @Validated
@@ -32,7 +32,7 @@ public class WfDbsqAppController {
 
     @PostMapping("/create")
     @Operation(summary = "创建工会隶属关系调拨申请")
-    @PreAuthorize("@ss.hasPermission('lghjft:workflow-dwdbsq:create')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<Long> createWfDbsq(@Valid @RequestBody WfDbsqSaveReqVO createReqVO) {
         return success(wfDbsqService.create(createReqVO));
     }
@@ -40,7 +40,7 @@ public class WfDbsqAppController {
     @GetMapping("/get")
     @Operation(summary = "获得工会隶属关系调拨申请")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:workflow-dwdbsq:query')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<WfDbsqResVO> getWfDbsq(@RequestParam("id") Long id) {
         WfDbsqResVO wfDbsq = wfDbsqService.getDetail(id);
         return success(BeanUtils.toBean(wfDbsq, WfDbsqResVO.class));

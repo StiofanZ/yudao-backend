@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
-@Tag(name = "用户 App - 小微小额")
+@Tag(name = "用户 app - 小微小额")
 @RestController
 @RequestMapping("/lghjft/hjgl/xwxe/app")
 @Validated

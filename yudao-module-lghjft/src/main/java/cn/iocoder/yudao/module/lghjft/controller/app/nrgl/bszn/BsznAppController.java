@@ -27,7 +27,7 @@ import java.util.Map;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertSet;
 
-@Tag(name = "用户 App - 办事指南")
+@Tag(name = "用户 app - 办事指南")
 @RestController
 @RequestMapping("/lghjft/nrgl/bszn")
 @Validated

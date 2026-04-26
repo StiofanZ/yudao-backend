@@ -22,7 +22,7 @@ import java.util.Objects;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
-@Tag(name = "管理后台 - 部门")
+@Tag(name = "用户 app - 部门")
 @RestController
 @RequestMapping("/lghjft/system/dept")
 @Validated
@@ -36,7 +36,7 @@ public class DeptAppController {
     @GetMapping("/get")
     @Operation(summary = "获得部门信息VO")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:dept:query')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<DeptAppResVO> get(@RequestParam("id") Long id) {
         DeptDO deptDO = deptService.getDept(id);
         DeptAppResVO deptAppResVO = BeanUtils.toBean(deptDO, DeptAppResVO.class);

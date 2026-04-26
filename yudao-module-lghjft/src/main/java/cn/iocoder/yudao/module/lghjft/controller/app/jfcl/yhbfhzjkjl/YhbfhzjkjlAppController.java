@@ -26,7 +26,7 @@ import java.util.List;
 import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.*;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
-@Tag(name = "app     - 银行拨付汇总监控记录")
+@Tag(name = "用户 app - 银行拨付汇总监控记录")
 @RestController
 @RequestMapping("/gh/jkjl")
 @Validated
@@ -37,7 +37,7 @@ public class YhbfhzjkjlAppController {
 
     @GetMapping("/page")
     @Operation(summary = "查询银行拨付汇总监控记录列表")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfhzjkjl:list')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<PageResult<YhbfhzjkjlResVO>> page(@Valid YhbfhzjkjlPageReqVO pageReqVO) {
         PageResult<YhbfhzjkjlDO> pageResult = yhbfhzjkjlService.selectYhbfhzJkjlPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, YhbfhzjkjlResVO.class));
@@ -45,7 +45,7 @@ public class YhbfhzjkjlAppController {
 
     @PostMapping("/export")
     @Operation(summary = "导出银行拨付汇总监控记录列表")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfhzjkjl:export')")
+    @PreAuthorize("isAuthenticated()")
     @ApiAccessLog(operateType = EXPORT)
     public void exportExcel(HttpServletResponse response, @Valid YhbfhzjkjlPageReqVO pageReqVO) throws IOException {
         // 模板写法：直接从分页方法拿list，无需单独写list查询
@@ -57,7 +57,7 @@ public class YhbfhzjkjlAppController {
     @GetMapping("/get")
     @Operation(summary = "获取银行拨付汇总监控记录详细信息")
     @Parameter(name = "yhbfhzJkjlId", description = "ID", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfhzjkjl:query')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<YhbfhzjkjlResVO> getInfo(@RequestParam("yhbfhzJkjlId") Long yhbfhzJkjlId) {
         YhbfhzjkjlDO info = yhbfhzjkjlService.selectYhbfhzJkjlByYhbfhzJkjlId(yhbfhzJkjlId);
         return success(BeanUtils.toBean(info, YhbfhzjkjlResVO.class));
@@ -65,14 +65,14 @@ public class YhbfhzjkjlAppController {
 
     @PostMapping("/create")
     @Operation(summary = "新增银行拨付汇总监控记录")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfhzjkjl:create')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<Long> add(@Valid @RequestBody YhbfhzjkjlSaveReqVO createReqVO) {
         return success(yhbfhzjkjlService.insertYhbfhzJkjl(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "修改银行拨付汇总监控记录")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfhzjkjl:edit')")
+    @PreAuthorize("isAuthenticated()")
     @ApiAccessLog(operateType = UPDATE)
     public CommonResult<Boolean> edit(@Valid @RequestBody YhbfhzjkjlSaveReqVO updateReqVO) {
         yhbfhzjkjlService.updateYhbfhzJkjl(updateReqVO);
@@ -82,7 +82,7 @@ public class YhbfhzjkjlAppController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除银行拨付汇总监控记录")
     @Parameter(name = "ids", description = "编号数组", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfhzjkjl:remove')")
+    @PreAuthorize("isAuthenticated()")
     @ApiAccessLog(operateType = DELETE)
     public CommonResult<Boolean> remove(@RequestParam("ids") List<Long> ids) {
         yhbfhzjkjlService.deleteYhbfhzJkjlByYhbfhzJkjlIds(ids);

@@ -25,7 +25,7 @@ import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
-@Tag(name = "用户App-办事地图标注点信息")
+@Tag(name = "用户 app - 办事地图标注点信息")
 @RestController
 @RequestMapping("/lghjft/bsdt/marker-info")
 @Validated

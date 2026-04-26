@@ -28,7 +28,7 @@ public class MinioAppController {
     private IMinioStorageService minioStorageService;
 
     @GetMapping("/createBucket")
-    @PreAuthorize("@ss.hasPermission('lghjft:file:create')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<Boolean> createBucket(@RequestParam("bucketName") String bucketName) {
         minioStorageService.createBucket(bucketName);
         return success(Boolean.TRUE);
@@ -41,7 +41,7 @@ public class MinioAppController {
      * @throws IOException
      */
     @PostMapping("/uploadFile")
-    @PreAuthorize("@ss.hasPermission('lghjft:file:upload')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<FileInfoVO> uploadFile(FileInfoInputVO fileInfoInputVO) {
         return success(minioStorageService.uploadFile(fileInfoInputVO));
     }
@@ -54,7 +54,7 @@ public class MinioAppController {
      * @throws IOException
      */
     @PostMapping("/uploadWatermark")
-    @PreAuthorize("@ss.hasPermission('lghjft:file:upload')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<FileInfoVO> uploadWatermark(@RequestParam("file") MultipartFile file) {
         return success(minioStorageService.uploadWatermark(file));
     }
@@ -66,7 +66,7 @@ public class MinioAppController {
      * @return
      */
     @GetMapping("/removeFile")
-    @PreAuthorize("@ss.hasPermission('lghjft:file:delete')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<Boolean> removeFile(@RequestParam("fileId") Long fileId) {
         minioStorageService.removeFile(fileId);
         return success(Boolean.TRUE);
@@ -79,7 +79,7 @@ public class MinioAppController {
      * @return
      */
     @PostMapping("/downloadFile")
-    @PreAuthorize("@ss.hasPermission('lghjft:file:download')")
+    @PreAuthorize("isAuthenticated()")
     public void downloadFile(@RequestParam("fileId") Long fileId, HttpServletResponse response) throws IOException {
         OutputStream outputStream = null;
         // 获取文件对象

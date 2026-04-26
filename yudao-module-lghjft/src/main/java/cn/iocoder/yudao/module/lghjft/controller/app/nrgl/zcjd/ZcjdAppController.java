@@ -31,7 +31,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertMap;
 import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertSet;
 
-@Tag(name = "用户 App - 政策解读")
+@Tag(name = "用户 app - 政策解读")
 @RestController
 @RequestMapping("/lghjft/nrgl/zcjd")
 @Validated

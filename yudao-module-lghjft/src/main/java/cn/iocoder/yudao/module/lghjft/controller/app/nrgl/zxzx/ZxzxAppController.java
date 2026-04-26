@@ -29,7 +29,7 @@ import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
-@Tag(name = "用户 App - 在线咨询")
+@Tag(name = "用户 app - 在线咨询")
 @RestController
 @RequestMapping("/lghjft/nrgl/zxzx/app")
 @Validated

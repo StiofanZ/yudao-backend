@@ -28,7 +28,7 @@ import java.util.List;
 import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.EXPORT;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
-@Tag(name = "app - 基层经费到账对象")
+@Tag(name = "用户 app - 基层经费到账对象")
 @RestController
 @RequestMapping("/lghjft/hbzz/hkxx")
 @Validated
@@ -39,7 +39,7 @@ public class HkxxAppController {
 
     @GetMapping("/page")
     @Operation(summary = "获得基层经费到账分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-hkxx:query')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<PageResult<HkxxResVO>> getHkxxPage(@Valid HkxxPageReqVO pageReqVO) {
         PageResult<HkxxResVO> pageResult = hkxxService.getHkxxPage(pageReqVO);
         return success(BeanUtils.toBean(pageResult, HkxxResVO.class));
@@ -47,7 +47,7 @@ public class HkxxAppController {
 
     @GetMapping("/summary")
     @Operation(summary = "获得返拨概况")
-    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-hkxx:query')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<HkxxSummaryResVO> getHkxxSummary(@Valid HkxxPageReqVO pageReqVO) {
         return success(hkxxService.getHkxxSummary(pageReqVO));
     }
@@ -57,7 +57,7 @@ public class HkxxAppController {
     @GetMapping("/get")
     @Operation(summary = "获得基层经费到账对象")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-hkxx:query')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<HkxxResVO> getHkxx(@RequestParam("id") Integer id) {
         HkxxDO hkxx = hkxxService.getHkxx(id);
         return success(BeanUtils.toBean(hkxx, HkxxResVO.class));
@@ -65,7 +65,7 @@ public class HkxxAppController {
 
     //修改
     @PutMapping("/update")
-    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-hkxx:update')")
+    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "更新基层经费到账对象")
     public CommonResult<Boolean> updateHkxx(@Valid @RequestBody HkxxSaveReqVO updateReqVO) {
         hkxxService.updateHkxx(updateReqVO);
@@ -74,7 +74,7 @@ public class HkxxAppController {
 
 
     @GetMapping("/export-excel")
-    @PreAuthorize("@ss.hasPermission('lghjft:hbzz-hkxx:export')")
+    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "导出基层经费到账对象 Excel")
     @ApiAccessLog(operateType = EXPORT)
     public void exportHkxxExcel(@Valid HkxxPageReqVO pageReqVO,

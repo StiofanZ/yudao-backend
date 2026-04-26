@@ -29,7 +29,7 @@ public class FileInfoAppController
     /**
      * 查询文件信息列表
      */
-    @PreAuthorize("@ss.hasPermi('lghjft:file:list')")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/list")
     public CommonResult<List<FileInfoVO>> list(FileInfoDTO fileInfo)
     {
@@ -40,7 +40,7 @@ public class FileInfoAppController
     /**
      * 获取文件信息详细信息
      */
-    @PreAuthorize("@ss.hasPermi('lghjft:file:query')")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/{fileId}")
     public CommonResult<FileInfoDO> getInfo(@PathVariable("fileId") Long fileId)
     {
@@ -50,7 +50,7 @@ public class FileInfoAppController
     /**
      * 删除文件信息
      */
-    @PreAuthorize("@ss.hasPermi('lghjft:file:remove')")
+    @PreAuthorize("isAuthenticated()")
 	@DeleteMapping("/{fileIds}")
     public CommonResult<Integer> remove(@PathVariable Long[] fileIds)
     {

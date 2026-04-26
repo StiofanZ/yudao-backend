@@ -26,7 +26,7 @@ import java.util.List;
 import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.EXPORT;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
-@Tag(name = "app - 银行拨付汇总")
+@Tag(name = "用户 app - 银行拨付汇总")
 @RestController
 @RequestMapping("/jfcl/yhbfhz")
 @Validated
@@ -40,7 +40,7 @@ public class YhbfhzAppController {
      */
     @GetMapping("/page")
     @Operation(summary = "查询银行拨付汇总分页")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfhz:query')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<PageResult<YhbfhzResVO>> getYhbfhzPage(@Valid YhbfhzPageReqVO pageReqVO) {
         PageResult<YhbfhzDO> pageResult = yhbfhzService.selectYhbfhzList(pageReqVO);
         return success(BeanUtils.toBean(pageResult, YhbfhzResVO.class));
@@ -51,7 +51,7 @@ public class YhbfhzAppController {
      */
     @PostMapping("/export")
     @Operation(summary = "导出银行拨付汇总列表")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfhz:export')")
+    @PreAuthorize("isAuthenticated()")
     @ApiAccessLog(operateType = EXPORT)
     public void export(HttpServletResponse response, @Valid YhbfhzPageReqVO pageReqVO) throws IOException {
         // 直接用 pageReqVO 传入，不用转 DO！
@@ -66,7 +66,7 @@ public class YhbfhzAppController {
     @GetMapping("/{bfhzid}")
     @Operation(summary = "获取银行拨付汇总详细信息")
     @Parameter(name = "bfhzid", description = "银行拨付汇总主键", required = true)
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfhz:query')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<YhbfhzResVO> getInfo(@PathVariable("bfhzid") String bfhzid) {
         YhbfhzDO yhbfhzDO = yhbfhzService.selectYhbfhzByBfhzid(bfhzid);
         return success(BeanUtils.toBean(yhbfhzDO, YhbfhzResVO.class));
@@ -77,7 +77,7 @@ public class YhbfhzAppController {
      */
     @PostMapping
     @Operation(summary = "新增银行拨付汇总")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfhz:create')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<Boolean> add(@Valid @RequestBody YhbfhzSaveReqVO saveReqVO) {
         YhbfhzDO yhbfhzDO = BeanUtils.toBean(saveReqVO, YhbfhzDO.class);
         yhbfhzService.insertYhbfhz(yhbfhzDO);
@@ -89,7 +89,7 @@ public class YhbfhzAppController {
      */
     @PutMapping
     @Operation(summary = "修改银行拨付汇总")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfhz:update')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<Boolean> edit(@Valid @RequestBody YhbfhzSaveReqVO saveReqVO) {
         YhbfhzDO yhbfhzDO = BeanUtils.toBean(saveReqVO, YhbfhzDO.class);
         yhbfhzService.updateYhbfhz(yhbfhzDO);
@@ -101,7 +101,7 @@ public class YhbfhzAppController {
      */
     @DeleteMapping("/{bfhzids}")
     @Operation(summary = "删除银行拨付汇总")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfhz:delete')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<Boolean> remove(@PathVariable String[] bfhzids) {
         yhbfhzService.deleteYhbfhzByBfhzids(bfhzids);
         return success(true);
@@ -112,7 +112,7 @@ public class YhbfhzAppController {
      */
     @PostMapping("/yhbfhztj")
     @Operation(summary = "提交银行审核")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfhz:yhbfhztj')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<String> yhbfhztj(@Valid @RequestBody YhbfhzSaveReqVO saveReqVO) {
         YhbfhzDO yhbfhzDO = BeanUtils.toBean(saveReqVO, YhbfhzDO.class);
         yhbfhzService.updateYhbfhztj(yhbfhzDO);
@@ -124,7 +124,7 @@ public class YhbfhzAppController {
      */
     @PostMapping("/zfmxcx")
     @Operation(summary = "支付明细查询")
-    @PreAuthorize("@ss.hasPermission('lghjft:jfcl-yhbfhz:zfmxcx')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<String> zfmxcx(@Valid @RequestBody YhbfhzSaveReqVO saveReqVO) {
         YhbfhzDO yhbfhzDO = BeanUtils.toBean(saveReqVO, YhbfhzDO.class);
         yhbfhzService.updateZfmxcx(yhbfhzDO);

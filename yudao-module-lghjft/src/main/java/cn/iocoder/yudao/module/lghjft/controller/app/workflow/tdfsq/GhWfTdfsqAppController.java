@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
-@Tag(name = "APP - 退抵费申请")
+@Tag(name = "用户 app - 退抵费申请")
 @RestController
 @RequestMapping("/lghjft/workflow/tdfsq")
 @Validated

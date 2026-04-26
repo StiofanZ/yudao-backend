@@ -21,11 +21,11 @@ import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
-@Tag(name = "APP - 问题反馈")
+@Tag(name = "用户 app - 问题反馈")
 @RestController
 @RequestMapping("/lghjft/nrgl/wtfk")
 @Validated
-public class GhNrglWtfkAppController {
+public class WtfkAppController {
 
     @Resource
     private GhNrglWtfkService wtfkService;

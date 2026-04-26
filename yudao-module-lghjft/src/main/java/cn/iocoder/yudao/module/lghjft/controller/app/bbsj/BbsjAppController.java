@@ -23,7 +23,7 @@ import java.util.Map;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
-@Tag(name = "用户 App - 报表数据")
+@Tag(name = "用户 app - 报表数据")
 @RestController
 @RequestMapping("/report")
 @Validated
@@ -42,7 +42,7 @@ public class BbsjAppController {
 
     @GetMapping("/{bbbm}")
     @Operation(summary = "按报表编码获取报表数据")
-    @PreAuthorize("@ss.hasPermission('lghjft:bbsj:query')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<BbsjResVO> hqBbsj(@PathVariable("bbbm") String bbbm,
                                            HttpServletRequest request) {
         return success(bbsjService.hqBbsj(bbbm, hqCxcs(request)));

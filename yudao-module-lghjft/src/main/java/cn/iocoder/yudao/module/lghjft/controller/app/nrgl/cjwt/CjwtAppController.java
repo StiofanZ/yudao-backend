@@ -27,11 +27,11 @@ import java.util.Map;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertSet;
 
-@Tag(name = "管理后台 - 常见问题")
+@Tag(name = "用户 app - 常见问题")
 @RestController
 @RequestMapping("/lghjft/nrgl/cjwt")
 @Validated
-public class AppCjwtController {
+public class CjwtAppController {
 
     @Resource
     private CjwtService cjwtService;

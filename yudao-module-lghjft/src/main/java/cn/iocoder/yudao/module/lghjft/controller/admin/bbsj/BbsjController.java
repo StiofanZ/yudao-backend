@@ -39,7 +39,7 @@ public class BbsjController {
 
     @GetMapping("/get-dept-tree")
     @Operation(summary = "获取部门树")
-    @PreAuthorize("@ss.hasPermission('lghjft:report:query')")
+    @PreAuthorize("isAuthenticated()")
     public CommonResult<List<TreeModel>> getDeptTree(@RequestParam(name = "params", required = false) String params) {
         Set<Long> parents = ConcurrentHashMap.newKeySet();
         List<DeptDO> depts = new CopyOnWriteArrayList<>(new ArrayList<>());

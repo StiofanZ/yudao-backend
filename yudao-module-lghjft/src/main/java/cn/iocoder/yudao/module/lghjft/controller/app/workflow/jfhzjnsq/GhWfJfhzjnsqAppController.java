@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
-@Tag(name = "APP - 汇总缴纳申请")
+@Tag(name = "用户 app - 汇总缴纳申请")
 @RestController
 @RequestMapping("/lghjft/workflow/jfhzjnsq")
 @Validated

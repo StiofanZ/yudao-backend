@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
-@Tag(name = "用户 App - 通知公告")
+@Tag(name = "用户 app - 通知公告")
 @RestController
 @RequestMapping("/lghjft/xxzx/tzgg")
 @Validated
